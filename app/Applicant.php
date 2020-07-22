@@ -13,7 +13,7 @@ class Applicant extends Model
     protected $guarded = [];
 
     public function getPdfFormattedAttribute(){
-        //$pdf = route('admin.get-file',["folder"=>'files','subfolder'=>'applicants','file'=>$this->pdf]);
+        //$pdf = route('cms.get-file',["folder"=>'files','subfolder'=>'applicants','file'=>$this->pdf]);
         $pdf = Storage::disk('gcs')->url('files/applicants-16720/'.$this->pdf);
         return "<a target='_blank' href=".$pdf.">Ver PDF</a>";
     }

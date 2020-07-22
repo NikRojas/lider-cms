@@ -17,7 +17,7 @@ class CreateMasterModulesTable extends Migration
             $table->bigIncrements('id');
             $table->string('name');
             $table->string('slug')->nullable();
-            $table->integer('parent');
+            $table->integer('parent')->nullable();
             $table->string('icon',30)->nullable();
             $table->integer('index');
             $table->timestamps();

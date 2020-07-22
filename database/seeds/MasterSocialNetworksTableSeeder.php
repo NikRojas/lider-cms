@@ -29,6 +29,10 @@ class MasterSocialNetworksTableSeeder extends Seeder
                 'icon'     => 'youtube',
             ],
             [
+                'name' 		=> 'Messenger',
+                'icon'     => 'messenger',
+            ],
+            [
                 'name' 		=> 'LinkedIn',
                 'icon'     => 'linkedin',
             ],

@@ -17,10 +17,10 @@ class CreateTestimonialsTable extends Migration
             $table->bigIncrements('id');
 
             $table->string('image');
-            $table->string('company');
-            $table->text('message');
-            $table->string('full_name');
-            $table->string('job');
+            $table->string('title');
+            $table->string('title_en');
+            $table->text('description');
+            $table->text('description_en');
             $table->integer('index');    
             
             $table->timestamps();

@@ -8,33 +8,33 @@
         alt="Logo"
         class="d-block mx-auto mb-4 mt-lg-5"
       />
-      <form class="px-sm-3 px-lg-4" @submit.prevent="iniciarSesion" v-if="loginBloque">
+      <form class="px-sm-3 px-lg-4" @submit.prevent="login" v-if="loginBloque">
         <div class="form-group mb-3">
-          <label for="id_username" class="form-control-label d-block">Usuario</label>
+          <label for="email" class="form-control-label d-block">Email</label>
           <input
             class="form-control form-control-alternative"
             type="text"
-            v-model="username"
-            id="id_username"
+            v-model="email"
+            id="email"
           />
           <label
-            v-if="errores && errores.username"
+            v-if="errores && errores.email"
             class="mt-2 text-danger text-sm"
-            for="id_username"
-          >{{ errores.username[0] }}</label>
+            for="email"
+          >{{ errores.email[0] }}</label>
         </div>
         <div class="form-group">
-          <label for="id_contra" class="form-control-label d-block">Contraseña</label>
+          <label for="password" class="form-control-label d-block">Contraseña</label>
           <input
             class="form-control form-control-alternative"
-            id="id_contra"
+            id="password"
             type="password"
             v-model="clave"
           />
           <label
             v-if="errores && errores.password"
             class="mt-2 text-danger text-sm"
-            for="id_contrasena"
+            for="password"
           >{{ errores.password[0] }}</label>
         </div>
         <div class="custom-control custom-control-alternative custom-checkbox">
@@ -130,7 +130,7 @@ export default {
       requestServer: false,
       loginBloque: true,
       resetearBloque: false,
-      username: "",
+      email: "",
       clave: "",
       token_recordar: false,
       errores: {},
@@ -143,7 +143,7 @@ export default {
   methods: {
     restaurarPagina() {
       this.errores = {};
-      this.username = "";
+      this.email = "";
       this.token_recordar = false;
       this.clave = "";
       this.resetear = {
@@ -151,11 +151,11 @@ export default {
       };
       this.mensajes = {};
     },
-    iniciarSesion: function() {
+    login: function() {
       this.requestServer = true;
       axios
         .post(this.rutaLogin, {
-          username: this.username,
+          email: this.email,
           password: this.clave,
           remember: this.token_recordar
         })
@@ -173,7 +173,7 @@ export default {
             this.errores = error.response.data.errors || {};
             return;
           }
-          this.errores.usuario = [
+          this.errores.email = [
             "Ocurrió un error en nuestros servidores. Por favor inténtelo de nuevo."
           ];
         });

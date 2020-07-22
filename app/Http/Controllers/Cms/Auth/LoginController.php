@@ -46,16 +46,12 @@ class LoginController extends Controller
         return view('pages.auth.login');
     }
 
-    public function username(){
-        return "username";
-    }
-
     protected function sendLoginResponse(Request $request){
-        return ["route" => route('admin.dashboard')];
+        return ["route" => route('cms.dashboard')];
     }
 
     protected function credentials(Request $request){     
-        return ['username' => $request->{$this->username()}, 'password' => $request->password, 'status' => 1];
+        return ['email' => $request->email, 'password' => $request->password, 'status' => 1];
     }
 
     public function logout(Request $request) {

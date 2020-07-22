@@ -1,1 +1,1054 @@
-(window.webpackJsonp=window.webpackJsonp||[]).push([[17],{213:function(t,s,a){var e={"./af":71,"./af.js":71,"./ar":72,"./ar-dz":73,"./ar-dz.js":73,"./ar-kw":74,"./ar-kw.js":74,"./ar-ly":75,"./ar-ly.js":75,"./ar-ma":76,"./ar-ma.js":76,"./ar-sa":77,"./ar-sa.js":77,"./ar-tn":78,"./ar-tn.js":78,"./ar.js":72,"./az":79,"./az.js":79,"./be":80,"./be.js":80,"./bg":81,"./bg.js":81,"./bm":82,"./bm.js":82,"./bn":83,"./bn.js":83,"./bo":84,"./bo.js":84,"./br":85,"./br.js":85,"./bs":86,"./bs.js":86,"./ca":87,"./ca.js":87,"./cs":88,"./cs.js":88,"./cv":89,"./cv.js":89,"./cy":90,"./cy.js":90,"./da":91,"./da.js":91,"./de":92,"./de-at":93,"./de-at.js":93,"./de-ch":94,"./de-ch.js":94,"./de.js":92,"./dv":95,"./dv.js":95,"./el":96,"./el.js":96,"./en-SG":97,"./en-SG.js":97,"./en-au":98,"./en-au.js":98,"./en-ca":99,"./en-ca.js":99,"./en-gb":100,"./en-gb.js":100,"./en-ie":101,"./en-ie.js":101,"./en-il":102,"./en-il.js":102,"./en-nz":103,"./en-nz.js":103,"./eo":104,"./eo.js":104,"./es":105,"./es-do":106,"./es-do.js":106,"./es-us":107,"./es-us.js":107,"./es.js":105,"./et":108,"./et.js":108,"./eu":109,"./eu.js":109,"./fa":110,"./fa.js":110,"./fi":111,"./fi.js":111,"./fo":112,"./fo.js":112,"./fr":113,"./fr-ca":114,"./fr-ca.js":114,"./fr-ch":115,"./fr-ch.js":115,"./fr.js":113,"./fy":116,"./fy.js":116,"./ga":117,"./ga.js":117,"./gd":118,"./gd.js":118,"./gl":119,"./gl.js":119,"./gom-latn":120,"./gom-latn.js":120,"./gu":121,"./gu.js":121,"./he":122,"./he.js":122,"./hi":123,"./hi.js":123,"./hr":124,"./hr.js":124,"./hu":125,"./hu.js":125,"./hy-am":126,"./hy-am.js":126,"./id":127,"./id.js":127,"./is":128,"./is.js":128,"./it":129,"./it-ch":130,"./it-ch.js":130,"./it.js":129,"./ja":131,"./ja.js":131,"./jv":132,"./jv.js":132,"./ka":133,"./ka.js":133,"./kk":134,"./kk.js":134,"./km":135,"./km.js":135,"./kn":136,"./kn.js":136,"./ko":137,"./ko.js":137,"./ku":138,"./ku.js":138,"./ky":139,"./ky.js":139,"./lb":140,"./lb.js":140,"./lo":141,"./lo.js":141,"./lt":142,"./lt.js":142,"./lv":143,"./lv.js":143,"./me":144,"./me.js":144,"./mi":145,"./mi.js":145,"./mk":146,"./mk.js":146,"./ml":147,"./ml.js":147,"./mn":148,"./mn.js":148,"./mr":149,"./mr.js":149,"./ms":150,"./ms-my":151,"./ms-my.js":151,"./ms.js":150,"./mt":152,"./mt.js":152,"./my":153,"./my.js":153,"./nb":154,"./nb.js":154,"./ne":155,"./ne.js":155,"./nl":156,"./nl-be":157,"./nl-be.js":157,"./nl.js":156,"./nn":158,"./nn.js":158,"./pa-in":159,"./pa-in.js":159,"./pl":160,"./pl.js":160,"./pt":161,"./pt-br":162,"./pt-br.js":162,"./pt.js":161,"./ro":163,"./ro.js":163,"./ru":164,"./ru.js":164,"./sd":165,"./sd.js":165,"./se":166,"./se.js":166,"./si":167,"./si.js":167,"./sk":168,"./sk.js":168,"./sl":169,"./sl.js":169,"./sq":170,"./sq.js":170,"./sr":171,"./sr-cyrl":172,"./sr-cyrl.js":172,"./sr.js":171,"./ss":173,"./ss.js":173,"./sv":174,"./sv.js":174,"./sw":175,"./sw.js":175,"./ta":176,"./ta.js":176,"./te":177,"./te.js":177,"./tet":178,"./tet.js":178,"./tg":179,"./tg.js":179,"./th":180,"./th.js":180,"./tl-ph":181,"./tl-ph.js":181,"./tlh":182,"./tlh.js":182,"./tr":183,"./tr.js":183,"./tzl":184,"./tzl.js":184,"./tzm":185,"./tzm-latn":186,"./tzm-latn.js":186,"./tzm.js":185,"./ug-cn":187,"./ug-cn.js":187,"./uk":188,"./uk.js":188,"./ur":189,"./ur.js":189,"./uz":190,"./uz-latn":191,"./uz-latn.js":191,"./uz.js":190,"./vi":192,"./vi.js":192,"./x-pseudo":193,"./x-pseudo.js":193,"./yo":194,"./yo.js":194,"./zh-cn":195,"./zh-cn.js":195,"./zh-hk":196,"./zh-hk.js":196,"./zh-tw":197,"./zh-tw.js":197};function i(t){var s=r(t);return a(s)}function r(t){if(!a.o(e,t)){var s=new Error("Cannot find module '"+t+"'");throw s.code="MODULE_NOT_FOUND",s}return e[t]}i.keys=function(){return Object.keys(e)},i.resolve=r,t.exports=i,i.id=213},218:function(t,s,a){"use strict";a.r(s);var e=a(49),i=a(48),r=a(199),c={extends:r.a,props:{chartdata:{type:Object,default:null},options:{type:Object,default:null}},mounted:function(){this.renderChart(this.chartdata,this.options)}},n={extends:r.b,props:{chartdata:{type:Object,default:null},options:{type:Object,default:null}},mounted:function(){this.renderChart(this.chartdata,this.options)}},l={components:{BreadCrumb:e.a,Loader:i.a,ChartBar:c,ChartLine:n},data:function(){return{statistics:{success_stories:[]},loading:!1,chartOptions:{responsive:!0,maintainAspectRatio:!1,legend:{display:!1},scales:{yAxes:[{ticks:{precision:0}}]}}}},methods:{getStatistics:function(){var t=this;this.loading=!0,axios.get("json/dashboard").then((function(s){t.statistics=s.data,t.loading=!1})).catch((function(t){}))}},created:function(){this.getStatistics()}},o=a(43),d=Object(o.a)(l,(function(){var t=this,s=t.$createElement,a=t._self._c||s;return a("div",[a("div",{staticClass:"header pb-6"},[a("div",{staticClass:"container-fluid"},[a("div",{staticClass:"header-body"},[a("div",{staticClass:"row align-items-center pt-0 pt-md-2 pb-4"},[a("div",{staticClass:"col-12"},[a("BreadCrumb",{attrs:{title:"Dashboard",active:"Dashboard"}})],1)])])])]),t._v(" "),a("div",{staticClass:"container-fluid mt--6"},[a("div",{staticClass:"row"},[a("div",{staticClass:"col-xl-3 col-lg-6 mb-4"},[a("div",{staticClass:"card card-stats shadow"},[a("div",{staticClass:"card-body"},[a("div",{staticClass:"row"},[a("div",{staticClass:"col"},[a("h4",{staticClass:"card-title text-uppercase text-muted mb-0"},[t._v("Clientes Home")]),t._v(" "),t.loading?a("Loader",{attrs:{iconClasses:["my-2"],iconHeight:20,iconWidth:20,estilo:{display:"inline-block"}}}):a("span",{staticClass:"h2 font-weight-bold mb-0"},[t._v(t._s(t.statistics.customers))])],1),t._v(" "),t._m(0)]),t._v(" "),t._m(1)])])]),t._v(" "),a("div",{staticClass:"col-xl-3 col-lg-6 mb-4"},[a("div",{staticClass:"card card-stats shadow"},[a("div",{staticClass:"card-body"},[a("div",{staticClass:"row"},[a("div",{staticClass:"col"},[a("h4",{staticClass:"card-title text-uppercase text-muted mb-0"},[t._v("Players")]),t._v(" "),t.loading?a("Loader",{attrs:{iconClasses:["my-2"],iconHeight:20,iconWidth:20,estilo:{display:"inline-block"}}}):a("span",{staticClass:"h2 font-weight-bold mb-0"},[t._v(t._s(t.statistics.players))])],1),t._v(" "),t._m(2)]),t._v(" "),t._m(3)])])]),t._v(" "),a("div",{staticClass:"col-xl-3 col-lg-6 mb-4"},[a("div",{staticClass:"card card-stats shadow"},[a("div",{staticClass:"card-body"},[a("div",{staticClass:"row"},[a("div",{staticClass:"col"},[a("h4",{staticClass:"card-title text-uppercase text-muted mb-0"},[t._v("Postulantes")]),t._v(" "),t.loading?a("Loader",{attrs:{iconClasses:["my-2"],iconHeight:20,iconWidth:20,estilo:{display:"inline-block"}}}):a("span",{staticClass:"h2 font-weight-bold mb-0"},[t._v(t._s(t.statistics.applicants))])],1),t._v(" "),t._m(4)]),t._v(" "),t._m(5)])])]),t._v(" "),a("div",{staticClass:"col-xl-3 col-lg-6 mb-4"},[a("div",{staticClass:"card card-stats shadow"},[a("div",{staticClass:"card-body"},[a("div",{staticClass:"row"},[a("div",{staticClass:"col"},[a("h4",{staticClass:"card-title text-uppercase text-muted mb-0"},[t._v("Notas Activas Blog")]),t._v(" "),t.loading?a("Loader",{attrs:{iconClasses:["my-2"],iconHeight:20,iconWidth:20,estilo:{display:"inline-block"}}}):a("span",{staticClass:"h2 font-weight-bold mb-0"},[t._v(t._s(t.statistics.posts))])],1),t._v(" "),t._m(6)]),t._v(" "),t._m(7)])])])]),t._v(" "),a("div",{staticClass:"row"},[a("div",{staticClass:"col-12 col-lg-7 col-xl-8 mb-4"},[a("div",{staticClass:"card shadow"},[t._m(8),t._v(" "),a("div",{staticClass:"card-body pt-0"},[t.loading?a("Loader",{attrs:{iconClasses:["my-2"],iconHeight:20,iconWidth:20,styles:{display:"inline-block",height:"300px"}}}):a("ChartLine",{attrs:{chartdata:t.statistics.leads,options:t.chartOptions}})],1)])]),t._v(" "),a("div",{staticClass:"col-12 col-lg-5 col-xl-4 mb-4"},[a("div",{staticClass:"card shadow"},[t._m(9),t._v(" "),a("div",{staticClass:"card-body pt-0"},[t.loading?a("Loader",{attrs:{iconClasses:["my-2"],iconHeight:20,iconWidth:20,styles:{display:"inline-block",height:"300px"}}}):a("ChartBar",{attrs:{chartdata:t.statistics.success_stories,options:t.chartOptions}})],1)])])])])])}),[function(){var t=this.$createElement,s=this._self._c||t;return s("div",{staticClass:"col-auto"},[s("div",{staticClass:"icon icon-shape bg-warning text-white rounded-circle shadow"},[s("i",{staticClass:"fas fa-handshake"})])])},function(){var t=this.$createElement,s=this._self._c||t;return s("p",{staticClass:"mt-3 mb-0 text-muted text-sm"},[s("span",{staticClass:"text-nowrap"},[this._v("Registrado(s) totales")])])},function(){var t=this.$createElement,s=this._self._c||t;return s("div",{staticClass:"col-auto"},[s("div",{staticClass:"icon icon-shape bg-success text-white rounded-circle shadow"},[s("i",{staticClass:"fas fa-ghost"})])])},function(){var t=this.$createElement,s=this._self._c||t;return s("p",{staticClass:"mt-3 mb-0 text-muted text-sm"},[s("span",{staticClass:"text-nowrap"},[this._v("Registrado(s) totales")])])},function(){var t=this.$createElement,s=this._self._c||t;return s("div",{staticClass:"col-auto"},[s("div",{staticClass:"icon icon-shape bg-default text-white rounded-circle shadow"},[s("i",{staticClass:"fas fa-users"})])])},function(){var t=this.$createElement,s=this._self._c||t;return s("p",{staticClass:"mt-3 mb-0 text-muted text-sm"},[s("span",{staticClass:"text-nowrap"},[this._v("Registrado(s) totales")])])},function(){var t=this.$createElement,s=this._self._c||t;return s("div",{staticClass:"col-auto"},[s("div",{staticClass:"icon icon-shape bg-primary text-white rounded-circle shadow"},[s("i",{staticClass:"fas fa-newspaper"})])])},function(){var t=this.$createElement,s=this._self._c||t;return s("p",{staticClass:"mt-3 mb-0 text-muted text-sm"},[s("span",{staticClass:"text-nowrap"},[this._v("Registrado(s) totales")])])},function(){var t=this.$createElement,s=this._self._c||t;return s("div",{staticClass:"card-header border-0"},[s("h4",{staticClass:"card-title text-uppercase text-muted mb-0"},[this._v("Leads")])])},function(){var t=this.$createElement,s=this._self._c||t;return s("div",{staticClass:"card-header border-0"},[s("h4",{staticClass:"card-title text-uppercase text-muted mb-0"},[this._v("Casos de Éxito")])])}],!1,null,null,null);s.default=d.exports},44:function(t,s,a){var e=a(51);"string"==typeof e&&(e=[[t.i,e,""]]);var i={hmr:!0,transform:void 0,insertInto:void 0};a(47)(e,i);e.locals&&(t.exports=e.locals)},48:function(t,s,a){"use strict";var e={props:{iconClasses:Array,iconoEstilos:Object,texto:String,styles:Object,iconWidth:{type:Number,required:!0},iconHeight:{type:Number,required:!0}}},i=a(43),r=Object(i.a)(e,(function(){var t=this,s=t.$createElement,a=t._self._c||s;return a("div",{staticClass:"component-loader text-sm w-100",style:t.styles},[a("div",{staticClass:"d-flex align-items-center justify-content-center h-100"},[t.texto?a("span",[t._v(t._s(t.texto))]):t._e(),t._v(" "),a("svg",{class:t.iconClasses,style:t.iconoEstilos,attrs:{xmlns:"http://www.w3.org/2000/svg",width:t.iconWidth,height:t.iconHeight,viewBox:"0 0 40 40",stroke:"#525f7f"}},[a("g",{attrs:{fill:"none","fill-rule":"evenodd"}},[a("g",{attrs:{transform:"translate(1 1)","stroke-width":"2"}},[a("circle",{attrs:{"stroke-opacity":"1",cx:"0",cy:"0",r:"0"}}),t._v(" "),a("path",{attrs:{d:"M36 18c0-9.94-8.06-18-18-18",transform:"rotate(83.9974 18 18)"}},[a("animateTransform",{attrs:{attributeName:"transform",type:"rotate",from:"0 18 18",to:"360 18 18",dur:"1s",repeatCount:"indefinite"}})],1)])])])])])}),[],!1,null,null,null);s.a=r.exports},49:function(t,s,a){"use strict";var e={props:{title:String,parent:String,active:String}},i=(a(50),a(43)),r=Object(i.a)(e,(function(){var t=this,s=t.$createElement,a=t._self._c||s;return a("div",[a("h6",{staticClass:"h2 text-primary text-uppercase d-inline-block mb-0"},[t._v(t._s(t.title))]),t._v(" "),a("nav",{staticClass:"d-none d-lg-inline-block ml-md-4",attrs:{"aria-label":"breadcrumb"}},[a("ol",{staticClass:"breadcrumb p-0 m-0 breadcrumb-links bg-transparent"},[t._m(0),t._v(" "),t.parent?a("li",{staticClass:"breadcrumb-item"},[a("a",[t._v(t._s(t.parent))])]):t._e(),t._v(" "),t.active?a("li",{staticClass:"breadcrumb-item text-primary",attrs:{"aria-current":"page"}},[t._v(t._s(t.active))]):t._e()])])])}),[function(){var t=this.$createElement,s=this._self._c||t;return s("li",{staticClass:"breadcrumb-item"},[s("a",{attrs:{href:"/dashboard"}},[s("i",{staticClass:"fas fa-chart-bar"})])])}],!1,null,"cb11d98c",null);s.a=r.exports},50:function(t,s,a){"use strict";var e=a(44);a.n(e).a},51:function(t,s,a){(t.exports=a(46)(!1)).push([t.i,"\n.breadcrumb-dark .breadcrumb-item+.breadcrumb-item[data-v-cb11d98c]::before {\r\n    color: #adb5bd;\n}\n.breadcrumb-item+.breadcrumb-item[data-v-cb11d98c]::before {\r\n    display: inline-block;\r\n    padding-right: .5rem;\r\n    content: '-';\r\n    color: #8898aa;\n}\n.bg-transparent[data-v-cb11d98c]{\r\n  background: transparent;\n}\r\n",""])}}]);
+(window["webpackJsonp"] = window["webpackJsonp"] || []).push([["js/dashboard"],{
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/views/Dashboard.vue?vue&type=script&lang=js&":
+/*!***************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/views/Dashboard.vue?vue&type=script&lang=js& ***!
+  \***************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _components_BreadCrumb__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../components/BreadCrumb */ "./resources/js/components/BreadCrumb.vue");
+/* harmony import */ var _components_Loader__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../components/Loader */ "./resources/js/components/Loader.vue");
+/* harmony import */ var _components_charts_Bar_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../components/charts/Bar.js */ "./resources/js/components/charts/Bar.js");
+/* harmony import */ var _components_charts_Line_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../components/charts/Line.js */ "./resources/js/components/charts/Line.js");
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  components: {
+    //Footer,
+    BreadCrumb: _components_BreadCrumb__WEBPACK_IMPORTED_MODULE_0__["default"],
+    Loader: _components_Loader__WEBPACK_IMPORTED_MODULE_1__["default"],
+    ChartBar: _components_charts_Bar_js__WEBPACK_IMPORTED_MODULE_2__["default"],
+    ChartLine: _components_charts_Line_js__WEBPACK_IMPORTED_MODULE_3__["default"]
+  },
+  data: function data() {
+    return {
+      statistics: {
+        success_stories: []
+      },
+      loading: false,
+      chartOptions: {
+        responsive: true,
+        maintainAspectRatio: false,
+        legend: {
+          display: false
+        },
+        scales: {
+          yAxes: [{
+            ticks: {
+              precision: 0
+            }
+          }]
+        }
+      }
+    };
+  },
+  methods: {
+    getStatistics: function getStatistics() {
+      var _this = this;
+
+      this.loading = true;
+      axios.get("json/dashboard").then(function (response) {
+        _this.statistics = response.data;
+        _this.loading = false;
+      })["catch"](function (error) {});
+    }
+  },
+  created: function created() {
+    this.getStatistics();
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/moment/locale sync recursive ^\\.\\/.*$":
+/*!**************************************************!*\
+  !*** ./node_modules/moment/locale sync ^\.\/.*$ ***!
+  \**************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+var map = {
+	"./af": "./node_modules/moment/locale/af.js",
+	"./af.js": "./node_modules/moment/locale/af.js",
+	"./ar": "./node_modules/moment/locale/ar.js",
+	"./ar-dz": "./node_modules/moment/locale/ar-dz.js",
+	"./ar-dz.js": "./node_modules/moment/locale/ar-dz.js",
+	"./ar-kw": "./node_modules/moment/locale/ar-kw.js",
+	"./ar-kw.js": "./node_modules/moment/locale/ar-kw.js",
+	"./ar-ly": "./node_modules/moment/locale/ar-ly.js",
+	"./ar-ly.js": "./node_modules/moment/locale/ar-ly.js",
+	"./ar-ma": "./node_modules/moment/locale/ar-ma.js",
+	"./ar-ma.js": "./node_modules/moment/locale/ar-ma.js",
+	"./ar-sa": "./node_modules/moment/locale/ar-sa.js",
+	"./ar-sa.js": "./node_modules/moment/locale/ar-sa.js",
+	"./ar-tn": "./node_modules/moment/locale/ar-tn.js",
+	"./ar-tn.js": "./node_modules/moment/locale/ar-tn.js",
+	"./ar.js": "./node_modules/moment/locale/ar.js",
+	"./az": "./node_modules/moment/locale/az.js",
+	"./az.js": "./node_modules/moment/locale/az.js",
+	"./be": "./node_modules/moment/locale/be.js",
+	"./be.js": "./node_modules/moment/locale/be.js",
+	"./bg": "./node_modules/moment/locale/bg.js",
+	"./bg.js": "./node_modules/moment/locale/bg.js",
+	"./bm": "./node_modules/moment/locale/bm.js",
+	"./bm.js": "./node_modules/moment/locale/bm.js",
+	"./bn": "./node_modules/moment/locale/bn.js",
+	"./bn.js": "./node_modules/moment/locale/bn.js",
+	"./bo": "./node_modules/moment/locale/bo.js",
+	"./bo.js": "./node_modules/moment/locale/bo.js",
+	"./br": "./node_modules/moment/locale/br.js",
+	"./br.js": "./node_modules/moment/locale/br.js",
+	"./bs": "./node_modules/moment/locale/bs.js",
+	"./bs.js": "./node_modules/moment/locale/bs.js",
+	"./ca": "./node_modules/moment/locale/ca.js",
+	"./ca.js": "./node_modules/moment/locale/ca.js",
+	"./cs": "./node_modules/moment/locale/cs.js",
+	"./cs.js": "./node_modules/moment/locale/cs.js",
+	"./cv": "./node_modules/moment/locale/cv.js",
+	"./cv.js": "./node_modules/moment/locale/cv.js",
+	"./cy": "./node_modules/moment/locale/cy.js",
+	"./cy.js": "./node_modules/moment/locale/cy.js",
+	"./da": "./node_modules/moment/locale/da.js",
+	"./da.js": "./node_modules/moment/locale/da.js",
+	"./de": "./node_modules/moment/locale/de.js",
+	"./de-at": "./node_modules/moment/locale/de-at.js",
+	"./de-at.js": "./node_modules/moment/locale/de-at.js",
+	"./de-ch": "./node_modules/moment/locale/de-ch.js",
+	"./de-ch.js": "./node_modules/moment/locale/de-ch.js",
+	"./de.js": "./node_modules/moment/locale/de.js",
+	"./dv": "./node_modules/moment/locale/dv.js",
+	"./dv.js": "./node_modules/moment/locale/dv.js",
+	"./el": "./node_modules/moment/locale/el.js",
+	"./el.js": "./node_modules/moment/locale/el.js",
+	"./en-SG": "./node_modules/moment/locale/en-SG.js",
+	"./en-SG.js": "./node_modules/moment/locale/en-SG.js",
+	"./en-au": "./node_modules/moment/locale/en-au.js",
+	"./en-au.js": "./node_modules/moment/locale/en-au.js",
+	"./en-ca": "./node_modules/moment/locale/en-ca.js",
+	"./en-ca.js": "./node_modules/moment/locale/en-ca.js",
+	"./en-gb": "./node_modules/moment/locale/en-gb.js",
+	"./en-gb.js": "./node_modules/moment/locale/en-gb.js",
+	"./en-ie": "./node_modules/moment/locale/en-ie.js",
+	"./en-ie.js": "./node_modules/moment/locale/en-ie.js",
+	"./en-il": "./node_modules/moment/locale/en-il.js",
+	"./en-il.js": "./node_modules/moment/locale/en-il.js",
+	"./en-nz": "./node_modules/moment/locale/en-nz.js",
+	"./en-nz.js": "./node_modules/moment/locale/en-nz.js",
+	"./eo": "./node_modules/moment/locale/eo.js",
+	"./eo.js": "./node_modules/moment/locale/eo.js",
+	"./es": "./node_modules/moment/locale/es.js",
+	"./es-do": "./node_modules/moment/locale/es-do.js",
+	"./es-do.js": "./node_modules/moment/locale/es-do.js",
+	"./es-us": "./node_modules/moment/locale/es-us.js",
+	"./es-us.js": "./node_modules/moment/locale/es-us.js",
+	"./es.js": "./node_modules/moment/locale/es.js",
+	"./et": "./node_modules/moment/locale/et.js",
+	"./et.js": "./node_modules/moment/locale/et.js",
+	"./eu": "./node_modules/moment/locale/eu.js",
+	"./eu.js": "./node_modules/moment/locale/eu.js",
+	"./fa": "./node_modules/moment/locale/fa.js",
+	"./fa.js": "./node_modules/moment/locale/fa.js",
+	"./fi": "./node_modules/moment/locale/fi.js",
+	"./fi.js": "./node_modules/moment/locale/fi.js",
+	"./fo": "./node_modules/moment/locale/fo.js",
+	"./fo.js": "./node_modules/moment/locale/fo.js",
+	"./fr": "./node_modules/moment/locale/fr.js",
+	"./fr-ca": "./node_modules/moment/locale/fr-ca.js",
+	"./fr-ca.js": "./node_modules/moment/locale/fr-ca.js",
+	"./fr-ch": "./node_modules/moment/locale/fr-ch.js",
+	"./fr-ch.js": "./node_modules/moment/locale/fr-ch.js",
+	"./fr.js": "./node_modules/moment/locale/fr.js",
+	"./fy": "./node_modules/moment/locale/fy.js",
+	"./fy.js": "./node_modules/moment/locale/fy.js",
+	"./ga": "./node_modules/moment/locale/ga.js",
+	"./ga.js": "./node_modules/moment/locale/ga.js",
+	"./gd": "./node_modules/moment/locale/gd.js",
+	"./gd.js": "./node_modules/moment/locale/gd.js",
+	"./gl": "./node_modules/moment/locale/gl.js",
+	"./gl.js": "./node_modules/moment/locale/gl.js",
+	"./gom-latn": "./node_modules/moment/locale/gom-latn.js",
+	"./gom-latn.js": "./node_modules/moment/locale/gom-latn.js",
+	"./gu": "./node_modules/moment/locale/gu.js",
+	"./gu.js": "./node_modules/moment/locale/gu.js",
+	"./he": "./node_modules/moment/locale/he.js",
+	"./he.js": "./node_modules/moment/locale/he.js",
+	"./hi": "./node_modules/moment/locale/hi.js",
+	"./hi.js": "./node_modules/moment/locale/hi.js",
+	"./hr": "./node_modules/moment/locale/hr.js",
+	"./hr.js": "./node_modules/moment/locale/hr.js",
+	"./hu": "./node_modules/moment/locale/hu.js",
+	"./hu.js": "./node_modules/moment/locale/hu.js",
+	"./hy-am": "./node_modules/moment/locale/hy-am.js",
+	"./hy-am.js": "./node_modules/moment/locale/hy-am.js",
+	"./id": "./node_modules/moment/locale/id.js",
+	"./id.js": "./node_modules/moment/locale/id.js",
+	"./is": "./node_modules/moment/locale/is.js",
+	"./is.js": "./node_modules/moment/locale/is.js",
+	"./it": "./node_modules/moment/locale/it.js",
+	"./it-ch": "./node_modules/moment/locale/it-ch.js",
+	"./it-ch.js": "./node_modules/moment/locale/it-ch.js",
+	"./it.js": "./node_modules/moment/locale/it.js",
+	"./ja": "./node_modules/moment/locale/ja.js",
+	"./ja.js": "./node_modules/moment/locale/ja.js",
+	"./jv": "./node_modules/moment/locale/jv.js",
+	"./jv.js": "./node_modules/moment/locale/jv.js",
+	"./ka": "./node_modules/moment/locale/ka.js",
+	"./ka.js": "./node_modules/moment/locale/ka.js",
+	"./kk": "./node_modules/moment/locale/kk.js",
+	"./kk.js": "./node_modules/moment/locale/kk.js",
+	"./km": "./node_modules/moment/locale/km.js",
+	"./km.js": "./node_modules/moment/locale/km.js",
+	"./kn": "./node_modules/moment/locale/kn.js",
+	"./kn.js": "./node_modules/moment/locale/kn.js",
+	"./ko": "./node_modules/moment/locale/ko.js",
+	"./ko.js": "./node_modules/moment/locale/ko.js",
+	"./ku": "./node_modules/moment/locale/ku.js",
+	"./ku.js": "./node_modules/moment/locale/ku.js",
+	"./ky": "./node_modules/moment/locale/ky.js",
+	"./ky.js": "./node_modules/moment/locale/ky.js",
+	"./lb": "./node_modules/moment/locale/lb.js",
+	"./lb.js": "./node_modules/moment/locale/lb.js",
+	"./lo": "./node_modules/moment/locale/lo.js",
+	"./lo.js": "./node_modules/moment/locale/lo.js",
+	"./lt": "./node_modules/moment/locale/lt.js",
+	"./lt.js": "./node_modules/moment/locale/lt.js",
+	"./lv": "./node_modules/moment/locale/lv.js",
+	"./lv.js": "./node_modules/moment/locale/lv.js",
+	"./me": "./node_modules/moment/locale/me.js",
+	"./me.js": "./node_modules/moment/locale/me.js",
+	"./mi": "./node_modules/moment/locale/mi.js",
+	"./mi.js": "./node_modules/moment/locale/mi.js",
+	"./mk": "./node_modules/moment/locale/mk.js",
+	"./mk.js": "./node_modules/moment/locale/mk.js",
+	"./ml": "./node_modules/moment/locale/ml.js",
+	"./ml.js": "./node_modules/moment/locale/ml.js",
+	"./mn": "./node_modules/moment/locale/mn.js",
+	"./mn.js": "./node_modules/moment/locale/mn.js",
+	"./mr": "./node_modules/moment/locale/mr.js",
+	"./mr.js": "./node_modules/moment/locale/mr.js",
+	"./ms": "./node_modules/moment/locale/ms.js",
+	"./ms-my": "./node_modules/moment/locale/ms-my.js",
+	"./ms-my.js": "./node_modules/moment/locale/ms-my.js",
+	"./ms.js": "./node_modules/moment/locale/ms.js",
+	"./mt": "./node_modules/moment/locale/mt.js",
+	"./mt.js": "./node_modules/moment/locale/mt.js",
+	"./my": "./node_modules/moment/locale/my.js",
+	"./my.js": "./node_modules/moment/locale/my.js",
+	"./nb": "./node_modules/moment/locale/nb.js",
+	"./nb.js": "./node_modules/moment/locale/nb.js",
+	"./ne": "./node_modules/moment/locale/ne.js",
+	"./ne.js": "./node_modules/moment/locale/ne.js",
+	"./nl": "./node_modules/moment/locale/nl.js",
+	"./nl-be": "./node_modules/moment/locale/nl-be.js",
+	"./nl-be.js": "./node_modules/moment/locale/nl-be.js",
+	"./nl.js": "./node_modules/moment/locale/nl.js",
+	"./nn": "./node_modules/moment/locale/nn.js",
+	"./nn.js": "./node_modules/moment/locale/nn.js",
+	"./pa-in": "./node_modules/moment/locale/pa-in.js",
+	"./pa-in.js": "./node_modules/moment/locale/pa-in.js",
+	"./pl": "./node_modules/moment/locale/pl.js",
+	"./pl.js": "./node_modules/moment/locale/pl.js",
+	"./pt": "./node_modules/moment/locale/pt.js",
+	"./pt-br": "./node_modules/moment/locale/pt-br.js",
+	"./pt-br.js": "./node_modules/moment/locale/pt-br.js",
+	"./pt.js": "./node_modules/moment/locale/pt.js",
+	"./ro": "./node_modules/moment/locale/ro.js",
+	"./ro.js": "./node_modules/moment/locale/ro.js",
+	"./ru": "./node_modules/moment/locale/ru.js",
+	"./ru.js": "./node_modules/moment/locale/ru.js",
+	"./sd": "./node_modules/moment/locale/sd.js",
+	"./sd.js": "./node_modules/moment/locale/sd.js",
+	"./se": "./node_modules/moment/locale/se.js",
+	"./se.js": "./node_modules/moment/locale/se.js",
+	"./si": "./node_modules/moment/locale/si.js",
+	"./si.js": "./node_modules/moment/locale/si.js",
+	"./sk": "./node_modules/moment/locale/sk.js",
+	"./sk.js": "./node_modules/moment/locale/sk.js",
+	"./sl": "./node_modules/moment/locale/sl.js",
+	"./sl.js": "./node_modules/moment/locale/sl.js",
+	"./sq": "./node_modules/moment/locale/sq.js",
+	"./sq.js": "./node_modules/moment/locale/sq.js",
+	"./sr": "./node_modules/moment/locale/sr.js",
+	"./sr-cyrl": "./node_modules/moment/locale/sr-cyrl.js",
+	"./sr-cyrl.js": "./node_modules/moment/locale/sr-cyrl.js",
+	"./sr.js": "./node_modules/moment/locale/sr.js",
+	"./ss": "./node_modules/moment/locale/ss.js",
+	"./ss.js": "./node_modules/moment/locale/ss.js",
+	"./sv": "./node_modules/moment/locale/sv.js",
+	"./sv.js": "./node_modules/moment/locale/sv.js",
+	"./sw": "./node_modules/moment/locale/sw.js",
+	"./sw.js": "./node_modules/moment/locale/sw.js",
+	"./ta": "./node_modules/moment/locale/ta.js",
+	"./ta.js": "./node_modules/moment/locale/ta.js",
+	"./te": "./node_modules/moment/locale/te.js",
+	"./te.js": "./node_modules/moment/locale/te.js",
+	"./tet": "./node_modules/moment/locale/tet.js",
+	"./tet.js": "./node_modules/moment/locale/tet.js",
+	"./tg": "./node_modules/moment/locale/tg.js",
+	"./tg.js": "./node_modules/moment/locale/tg.js",
+	"./th": "./node_modules/moment/locale/th.js",
+	"./th.js": "./node_modules/moment/locale/th.js",
+	"./tl-ph": "./node_modules/moment/locale/tl-ph.js",
+	"./tl-ph.js": "./node_modules/moment/locale/tl-ph.js",
+	"./tlh": "./node_modules/moment/locale/tlh.js",
+	"./tlh.js": "./node_modules/moment/locale/tlh.js",
+	"./tr": "./node_modules/moment/locale/tr.js",
+	"./tr.js": "./node_modules/moment/locale/tr.js",
+	"./tzl": "./node_modules/moment/locale/tzl.js",
+	"./tzl.js": "./node_modules/moment/locale/tzl.js",
+	"./tzm": "./node_modules/moment/locale/tzm.js",
+	"./tzm-latn": "./node_modules/moment/locale/tzm-latn.js",
+	"./tzm-latn.js": "./node_modules/moment/locale/tzm-latn.js",
+	"./tzm.js": "./node_modules/moment/locale/tzm.js",
+	"./ug-cn": "./node_modules/moment/locale/ug-cn.js",
+	"./ug-cn.js": "./node_modules/moment/locale/ug-cn.js",
+	"./uk": "./node_modules/moment/locale/uk.js",
+	"./uk.js": "./node_modules/moment/locale/uk.js",
+	"./ur": "./node_modules/moment/locale/ur.js",
+	"./ur.js": "./node_modules/moment/locale/ur.js",
+	"./uz": "./node_modules/moment/locale/uz.js",
+	"./uz-latn": "./node_modules/moment/locale/uz-latn.js",
+	"./uz-latn.js": "./node_modules/moment/locale/uz-latn.js",
+	"./uz.js": "./node_modules/moment/locale/uz.js",
+	"./vi": "./node_modules/moment/locale/vi.js",
+	"./vi.js": "./node_modules/moment/locale/vi.js",
+	"./x-pseudo": "./node_modules/moment/locale/x-pseudo.js",
+	"./x-pseudo.js": "./node_modules/moment/locale/x-pseudo.js",
+	"./yo": "./node_modules/moment/locale/yo.js",
+	"./yo.js": "./node_modules/moment/locale/yo.js",
+	"./zh-cn": "./node_modules/moment/locale/zh-cn.js",
+	"./zh-cn.js": "./node_modules/moment/locale/zh-cn.js",
+	"./zh-hk": "./node_modules/moment/locale/zh-hk.js",
+	"./zh-hk.js": "./node_modules/moment/locale/zh-hk.js",
+	"./zh-tw": "./node_modules/moment/locale/zh-tw.js",
+	"./zh-tw.js": "./node_modules/moment/locale/zh-tw.js"
+};
+
+
+function webpackContext(req) {
+	var id = webpackContextResolve(req);
+	return __webpack_require__(id);
+}
+function webpackContextResolve(req) {
+	if(!__webpack_require__.o(map, req)) {
+		var e = new Error("Cannot find module '" + req + "'");
+		e.code = 'MODULE_NOT_FOUND';
+		throw e;
+	}
+	return map[req];
+}
+webpackContext.keys = function webpackContextKeys() {
+	return Object.keys(map);
+};
+webpackContext.resolve = webpackContextResolve;
+module.exports = webpackContext;
+webpackContext.id = "./node_modules/moment/locale sync recursive ^\\.\\/.*$";
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/views/Dashboard.vue?vue&type=template&id=1f79daf6&":
+/*!*******************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/views/Dashboard.vue?vue&type=template&id=1f79daf6& ***!
+  \*******************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", [
+    _c("div", { staticClass: "header pb-6" }, [
+      _c("div", { staticClass: "container-fluid" }, [
+        _c("div", { staticClass: "header-body" }, [
+          _c(
+            "div",
+            { staticClass: "row align-items-center pt-0 pt-md-2 pb-4" },
+            [
+              _c(
+                "div",
+                { staticClass: "col-12" },
+                [
+                  _c("BreadCrumb", {
+                    attrs: { title: "Dashboard", active: "Dashboard" }
+                  })
+                ],
+                1
+              )
+            ]
+          )
+        ])
+      ])
+    ]),
+    _vm._v(" "),
+    _c("div", { staticClass: "container-fluid mt--6" }, [
+      _c("div", { staticClass: "row" }, [
+        _c("div", { staticClass: "col-xl-3 col-lg-6 mb-4" }, [
+          _c("div", { staticClass: "card card-stats shadow" }, [
+            _c("div", { staticClass: "card-body" }, [
+              _c("div", { staticClass: "row" }, [
+                _c(
+                  "div",
+                  { staticClass: "col" },
+                  [
+                    _c(
+                      "h4",
+                      {
+                        staticClass: "card-title text-uppercase text-muted mb-0"
+                      },
+                      [_vm._v("Clientes Home")]
+                    ),
+                    _vm._v(" "),
+                    _vm.loading
+                      ? _c("Loader", {
+                          attrs: {
+                            iconClasses: ["my-2"],
+                            iconHeight: 20,
+                            iconWidth: 20,
+                            estilo: { display: "inline-block" }
+                          }
+                        })
+                      : _c(
+                          "span",
+                          { staticClass: "h2 font-weight-bold mb-0" },
+                          [_vm._v(_vm._s(_vm.statistics.customers))]
+                        )
+                  ],
+                  1
+                ),
+                _vm._v(" "),
+                _vm._m(0)
+              ]),
+              _vm._v(" "),
+              _vm._m(1)
+            ])
+          ])
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "col-xl-3 col-lg-6 mb-4" }, [
+          _c("div", { staticClass: "card card-stats shadow" }, [
+            _c("div", { staticClass: "card-body" }, [
+              _c("div", { staticClass: "row" }, [
+                _c(
+                  "div",
+                  { staticClass: "col" },
+                  [
+                    _c(
+                      "h4",
+                      {
+                        staticClass: "card-title text-uppercase text-muted mb-0"
+                      },
+                      [_vm._v("Players")]
+                    ),
+                    _vm._v(" "),
+                    _vm.loading
+                      ? _c("Loader", {
+                          attrs: {
+                            iconClasses: ["my-2"],
+                            iconHeight: 20,
+                            iconWidth: 20,
+                            estilo: { display: "inline-block" }
+                          }
+                        })
+                      : _c(
+                          "span",
+                          { staticClass: "h2 font-weight-bold mb-0" },
+                          [_vm._v(_vm._s(_vm.statistics.players))]
+                        )
+                  ],
+                  1
+                ),
+                _vm._v(" "),
+                _vm._m(2)
+              ]),
+              _vm._v(" "),
+              _vm._m(3)
+            ])
+          ])
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "col-xl-3 col-lg-6 mb-4" }, [
+          _c("div", { staticClass: "card card-stats shadow" }, [
+            _c("div", { staticClass: "card-body" }, [
+              _c("div", { staticClass: "row" }, [
+                _c(
+                  "div",
+                  { staticClass: "col" },
+                  [
+                    _c(
+                      "h4",
+                      {
+                        staticClass: "card-title text-uppercase text-muted mb-0"
+                      },
+                      [_vm._v("Postulantes")]
+                    ),
+                    _vm._v(" "),
+                    _vm.loading
+                      ? _c("Loader", {
+                          attrs: {
+                            iconClasses: ["my-2"],
+                            iconHeight: 20,
+                            iconWidth: 20,
+                            estilo: { display: "inline-block" }
+                          }
+                        })
+                      : _c(
+                          "span",
+                          { staticClass: "h2 font-weight-bold mb-0" },
+                          [_vm._v(_vm._s(_vm.statistics.applicants))]
+                        )
+                  ],
+                  1
+                ),
+                _vm._v(" "),
+                _vm._m(4)
+              ]),
+              _vm._v(" "),
+              _vm._m(5)
+            ])
+          ])
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "col-xl-3 col-lg-6 mb-4" }, [
+          _c("div", { staticClass: "card card-stats shadow" }, [
+            _c("div", { staticClass: "card-body" }, [
+              _c("div", { staticClass: "row" }, [
+                _c(
+                  "div",
+                  { staticClass: "col" },
+                  [
+                    _c(
+                      "h4",
+                      {
+                        staticClass: "card-title text-uppercase text-muted mb-0"
+                      },
+                      [_vm._v("Notas Activas Blog")]
+                    ),
+                    _vm._v(" "),
+                    _vm.loading
+                      ? _c("Loader", {
+                          attrs: {
+                            iconClasses: ["my-2"],
+                            iconHeight: 20,
+                            iconWidth: 20,
+                            estilo: { display: "inline-block" }
+                          }
+                        })
+                      : _c(
+                          "span",
+                          { staticClass: "h2 font-weight-bold mb-0" },
+                          [_vm._v(_vm._s(_vm.statistics.posts))]
+                        )
+                  ],
+                  1
+                ),
+                _vm._v(" "),
+                _vm._m(6)
+              ]),
+              _vm._v(" "),
+              _vm._m(7)
+            ])
+          ])
+        ])
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "row" }, [
+        _c("div", { staticClass: "col-12 col-lg-7 col-xl-8 mb-4" }, [
+          _c("div", { staticClass: "card shadow" }, [
+            _vm._m(8),
+            _vm._v(" "),
+            _c(
+              "div",
+              { staticClass: "card-body pt-0" },
+              [
+                _vm.loading
+                  ? _c("Loader", {
+                      attrs: {
+                        iconClasses: ["my-2"],
+                        iconHeight: 20,
+                        iconWidth: 20,
+                        styles: { display: "inline-block", height: "300px" }
+                      }
+                    })
+                  : _c("ChartLine", {
+                      attrs: {
+                        chartdata: _vm.statistics.leads,
+                        options: _vm.chartOptions
+                      }
+                    })
+              ],
+              1
+            )
+          ])
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "col-12 col-lg-5 col-xl-4 mb-4" }, [
+          _c("div", { staticClass: "card shadow" }, [
+            _vm._m(9),
+            _vm._v(" "),
+            _c(
+              "div",
+              { staticClass: "card-body pt-0" },
+              [
+                _vm.loading
+                  ? _c("Loader", {
+                      attrs: {
+                        iconClasses: ["my-2"],
+                        iconHeight: 20,
+                        iconWidth: 20,
+                        styles: { display: "inline-block", height: "300px" }
+                      }
+                    })
+                  : _c("ChartBar", {
+                      attrs: {
+                        chartdata: _vm.statistics.success_stories,
+                        options: _vm.chartOptions
+                      }
+                    })
+              ],
+              1
+            )
+          ])
+        ])
+      ])
+    ])
+  ])
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "col-auto" }, [
+      _c(
+        "div",
+        {
+          staticClass:
+            "icon icon-shape bg-warning text-white rounded-circle shadow"
+        },
+        [_c("i", { staticClass: "fas fa-handshake" })]
+      )
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("p", { staticClass: "mt-3 mb-0 text-muted text-sm" }, [
+      _c("span", { staticClass: "text-nowrap" }, [
+        _vm._v("Registrado(s) totales")
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "col-auto" }, [
+      _c(
+        "div",
+        {
+          staticClass:
+            "icon icon-shape bg-success text-white rounded-circle shadow"
+        },
+        [_c("i", { staticClass: "fas fa-ghost" })]
+      )
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("p", { staticClass: "mt-3 mb-0 text-muted text-sm" }, [
+      _c("span", { staticClass: "text-nowrap" }, [
+        _vm._v("Registrado(s) totales")
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "col-auto" }, [
+      _c(
+        "div",
+        {
+          staticClass:
+            "icon icon-shape bg-default text-white rounded-circle shadow"
+        },
+        [_c("i", { staticClass: "fas fa-users" })]
+      )
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("p", { staticClass: "mt-3 mb-0 text-muted text-sm" }, [
+      _c("span", { staticClass: "text-nowrap" }, [
+        _vm._v("Registrado(s) totales")
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "col-auto" }, [
+      _c(
+        "div",
+        {
+          staticClass:
+            "icon icon-shape bg-primary text-white rounded-circle shadow"
+        },
+        [_c("i", { staticClass: "fas fa-newspaper" })]
+      )
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("p", { staticClass: "mt-3 mb-0 text-muted text-sm" }, [
+      _c("span", { staticClass: "text-nowrap" }, [
+        _vm._v("Registrado(s) totales")
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "card-header border-0" }, [
+      _c("h4", { staticClass: "card-title text-uppercase text-muted mb-0" }, [
+        _vm._v("Leads")
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "card-header border-0" }, [
+      _c("h4", { staticClass: "card-title text-uppercase text-muted mb-0" }, [
+        _vm._v("Casos de Éxito")
+      ])
+    ])
+  }
+]
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./resources/js/components/charts/Bar.js":
+/*!***********************************************!*\
+  !*** ./resources/js/components/charts/Bar.js ***!
+  \***********************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var vue_chartjs__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue-chartjs */ "./node_modules/vue-chartjs/es/index.js");
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  "extends": vue_chartjs__WEBPACK_IMPORTED_MODULE_0__["Bar"],
+  props: {
+    chartdata: {
+      type: Object,
+      "default": null
+    },
+    options: {
+      type: Object,
+      "default": null
+    }
+  },
+  mounted: function mounted() {
+    this.renderChart(this.chartdata, this.options);
+  }
+});
+
+/***/ }),
+
+/***/ "./resources/js/components/charts/Line.js":
+/*!************************************************!*\
+  !*** ./resources/js/components/charts/Line.js ***!
+  \************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var vue_chartjs__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue-chartjs */ "./node_modules/vue-chartjs/es/index.js");
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  "extends": vue_chartjs__WEBPACK_IMPORTED_MODULE_0__["Line"],
+  props: {
+    chartdata: {
+      type: Object,
+      "default": null
+    },
+    options: {
+      type: Object,
+      "default": null
+    }
+  },
+  mounted: function mounted() {
+    this.renderChart(this.chartdata, this.options);
+  }
+});
+
+/***/ }),
+
+/***/ "./resources/js/views/Dashboard.vue":
+/*!******************************************!*\
+  !*** ./resources/js/views/Dashboard.vue ***!
+  \******************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _Dashboard_vue_vue_type_template_id_1f79daf6___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Dashboard.vue?vue&type=template&id=1f79daf6& */ "./resources/js/views/Dashboard.vue?vue&type=template&id=1f79daf6&");
+/* harmony import */ var _Dashboard_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Dashboard.vue?vue&type=script&lang=js& */ "./resources/js/views/Dashboard.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _Dashboard_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _Dashboard_vue_vue_type_template_id_1f79daf6___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _Dashboard_vue_vue_type_template_id_1f79daf6___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/views/Dashboard.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/views/Dashboard.vue?vue&type=script&lang=js&":
+/*!*******************************************************************!*\
+  !*** ./resources/js/views/Dashboard.vue?vue&type=script&lang=js& ***!
+  \*******************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Dashboard_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib??ref--4-0!../../../node_modules/vue-loader/lib??vue-loader-options!./Dashboard.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/views/Dashboard.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Dashboard_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/views/Dashboard.vue?vue&type=template&id=1f79daf6&":
+/*!*************************************************************************!*\
+  !*** ./resources/js/views/Dashboard.vue?vue&type=template&id=1f79daf6& ***!
+  \*************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Dashboard_vue_vue_type_template_id_1f79daf6___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib??vue-loader-options!./Dashboard.vue?vue&type=template&id=1f79daf6& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/views/Dashboard.vue?vue&type=template&id=1f79daf6&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Dashboard_vue_vue_type_template_id_1f79daf6___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Dashboard_vue_vue_type_template_id_1f79daf6___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ })
+
+}]);

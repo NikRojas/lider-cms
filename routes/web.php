@@ -1,13 +1,13 @@
 <?php
 
-Route::get('/','Admin\Auth\LoginController@showLoginForm')->name('login');
-Route::post('login','Admin\Auth\LoginController@login')->name('login.post');
-Route::post('logout','Admin\Auth\LoginController@logout')->name('logout');
-Route::post('login/email', 'Admin\Auth\ForgotPasswordController@sendResetLinkEmail')->name('password.email');
-Route::get('login/restablecer/{token}', 'Admin\Auth\ResetPasswordController@showResetForm')->name('password.reset');
-Route::post('login/reset', 'Admin\Auth\ResetPasswordController@reset')->name('password.update');
+Route::get('/','Cms\Auth\LoginController@showLoginForm')->name('login');
+Route::post('login','Cms\Auth\LoginController@login')->name('login.post');
+Route::post('logout','Cms\Auth\LoginController@logout')->name('logout');
+Route::post('login/email', 'Cms\Auth\ForgotPasswordController@sendResetLinkEmail')->name('password.email');
+Route::get('login/restablecer/{token}', 'Cms\Auth\ResetPasswordController@showResetForm')->name('password.reset');
+Route::post('login/reset', 'Cms\Auth\ResetPasswordController@reset')->name('password.update');
 
-Route::middleware(['auth'])->namespace('Admin')->name('admin.')->group(function() { 
+Route::middleware(['auth'])->namespace('Cms')->name('cms.')->group(function() { 
     Route::get('/dashboard', 'DashboardController@index')->name('dashboard');  
     Route::get('json/dashboard', 'DashboardController@getStatistics')->name('dashboard.get-statistics');
 
@@ -116,6 +116,6 @@ Route::middleware(['auth'])->namespace('Admin')->name('admin.')->group(function(
     Route::get('applicants/json/contact-email-destination', 'ApplicantsController@getEmailDestination')->name('applicants.json.contact-email-destination');*/
 
     #Misc
-    Route::get('files/{folder}/{subfolder}/{file}','AdminController@getFile')->name('get-file');
-    Route::get('json/select/categories', 'AdminController@getCategories')->name('json.get-categories');
+    Route::get('files/{folder}/{subfolder}/{file}','CmsController@getFile')->name('get-file');
+    Route::get('json/select/categories', 'CmsController@getCategories')->name('json.get-categories');
 });

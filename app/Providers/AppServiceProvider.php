@@ -12,6 +12,7 @@ use App\Observers\ApplicantObserver;
 
 use App\Lead;
 use App\Observers\LeadObserver;
+use App\Module;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -35,8 +36,8 @@ class AppServiceProvider extends ServiceProvider
         //Carbon::setLocale(config('app.locale'));
         view()->composer('layouts.dashboard',function($view){
             $menu = [];
-            foreach( Auth::user()->relRole->relModules()->get() as $i => $module){
-                if($module->parent == 0){  
+            foreach( Module::get() as $i => $module){
+                if(!$module->parent){  
                     $menu[$i]["id"] = $module->id;
                     $menu[$i]["name"] = $module->name;
                     $menu[$i]["variable"] = Str::slug($module->name, '-');
@@ -44,7 +45,7 @@ class AppServiceProvider extends ServiceProvider
                     $menu[$i]["slug"] = $module->slug;
                 }
             }
-            foreach( Auth::user()->relRole->relModules()->get() as $j => $module){
+            foreach( Module::get() as $j => $module){
                 foreach($menu as $k => $item){
                     if($item["id"] == $module->parent){
                         //$menu[$k]["clase"] = "dropdown";

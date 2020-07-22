@@ -21,7 +21,7 @@ class ApplicantRepository
         }   
         foreach($applicants as $applicant){
             $pdf = NULL;
-            //$pdf = route('admin.get-file',["folder"=>'files','subfolder'=>'applicants','file'=>$applicant["pdf"]]);
+            //$pdf = route('cms.get-file',["folder"=>'files','subfolder'=>'applicants','file'=>$applicant["pdf"]]);
             $pdf = Storage::disk('gcs')->url('files/applicants-16720/'.$applicant["pdf"]);
             $data[] = array(
                 "id" => $applicant["id"],

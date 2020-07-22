@@ -1,14 +1,12 @@
 {
-    "/vendors~js/awards~js/customers~js/departments~js/gallery~js/general~js/pages~js/players~js/posts~js/~259efe99.js": "/vendors~js/awards~js/customers~js/departments~js/gallery~js/general~js/pages~js/players~js/posts~js/~259efe99.js",
-    "/vendors~js/adn~js/awards~js/customers~js/gallery~js/general~js/players~js/social~js/success-stories~~31384034.js": "/vendors~js/adn~js/awards~js/customers~js/gallery~js/general~js/players~js/social~js/success-stories~~31384034.js",
-    "/vendors~js/posts~js/roles~js/users.js": "/vendors~js/posts~js/roles~js/users.js",
-    "/js/applicants~js/contacts.js": "/js/applicants~js/contacts.js",
-    "/vendors~js/pages~js/posts.js": "/vendors~js/pages~js/posts.js",
     "/js/app.js": "/js/app.js",
     "/js/manifest.js": "/js/manifest.js",
     "/js/vendor.js": "/js/vendor.js",
     "/js/adn.js": "/js/adn.js",
+    "/js/adn~js/applicants~js/awards~js/category~js/contacts~js/customers~js/dashboard~js/departments~js/g~98caab3d.js": "/js/adn~js/applicants~js/awards~js/category~js/contacts~js/customers~js/dashboard~js/departments~js/g~98caab3d.js",
+    "/js/adn~js/awards~js/customers~js/gallery~js/players~js/success-stories~js/testimonials.js": "/js/adn~js/awards~js/customers~js/gallery~js/players~js/success-stories~js/testimonials.js",
     "/js/applicants.js": "/js/applicants.js",
+    "/js/applicants~js/category~js/contacts~js/posts~js/roles~js/users.js": "/js/applicants~js/category~js/contacts~js/posts~js/roles~js/users.js",
     "/js/awards.js": "/js/awards.js",
     "/js/button-close.js": "/js/button-close.js",
     "/js/button-icons.js": "/js/button-icons.js",
@@ -20,6 +18,7 @@
     "/js/departments.js": "/js/departments.js",
     "/js/gallery.js": "/js/gallery.js",
     "/js/general.js": "/js/general.js",
+    "/js/general~js/social.js": "/js/general~js/social.js",
     "/js/login.js": "/js/login.js",
     "/js/pages.js": "/js/pages.js",
     "/js/players.js": "/js/players.js",
@@ -32,6 +31,11 @@
     "/js/success-stories.js": "/js/success-stories.js",
     "/js/testimonials.js": "/js/testimonials.js",
     "/js/users.js": "/js/users.js",
+    "/vendors~js/adn~js/applicants~js/awards~js/category~js/contacts~js/customers~js/dashboard~js/departme~9f284599.js": "/vendors~js/adn~js/applicants~js/awards~js/category~js/contacts~js/customers~js/dashboard~js/departme~9f284599.js",
+    "/vendors~js/adn~js/awards~js/customers~js/gallery~js/general~js/players~js/social~js/success-stories~~31384034.js": "/vendors~js/adn~js/awards~js/customers~js/gallery~js/general~js/players~js/social~js/success-stories~~31384034.js",
+    "/vendors~js/awards~js/customers~js/departments~js/gallery~js/general~js/pages~js/players~js/posts~js/~259efe99.js": "/vendors~js/awards~js/customers~js/departments~js/gallery~js/general~js/pages~js/players~js/posts~js/~259efe99.js",
     "/vendors~js/dashboard.js": "/vendors~js/dashboard.js",
-    "/vendors~js/posts.js": "/vendors~js/posts.js"
+    "/vendors~js/pages~js/posts.js": "/vendors~js/pages~js/posts.js",
+    "/vendors~js/posts.js": "/vendors~js/posts.js",
+    "/vendors~js/posts~js/roles~js/users.js": "/vendors~js/posts~js/roles~js/users.js"
 }

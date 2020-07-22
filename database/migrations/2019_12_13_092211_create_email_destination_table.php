@@ -15,8 +15,10 @@ class CreateEmailDestinationTable extends Migration
     {
         Schema::create('email_destination', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('email_destination_leads')->nullable();
-            $table->string('email_destination_job')->nullable();
+            $table->string('leads_traditional')->nullable();
+            $table->string('leads_videocall')->nullable();
+            $table->string('leads_sale_land')->nullable();
+            $table->string('type')->nullable();
             $table->timestamps();
         });
     }
@@ -28,6 +30,6 @@ class CreateEmailDestinationTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('contact_email_destination');
+        Schema::dropIfExists('email_destination');
     }
 }

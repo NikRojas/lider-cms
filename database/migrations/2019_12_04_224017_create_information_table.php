@@ -16,14 +16,9 @@ class CreateInformationTable extends Migration
         Schema::create('information', function (Blueprint $table) {
             $table->bigIncrements('id');
 
-            $table->string('description');
-            $table->string('address_line_1');
-            $table->string('address_line_2')->nullable();
-            $table->string('district');
+            $table->string('location');
             $table->string('phone',15)->nullable();
-            $table->string('cellphone',15)->nullable();
-            $table->string('email');
-            
+            $table->string('email')->nullable();
 
             $table->timestamps();
         });

@@ -16,7 +16,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'full_name', 'email', 'password','username','role_id','status','avatar'
+        'name', 'email', 'password','role_id','status','avatar'
     ];
 
     /**
@@ -37,10 +37,10 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    public function relRole()
+    /*public function relRole()
     {
         return $this->hasOne('App\Role','id','role_id');
-    }
+    }*/
 
     protected $appends = ['status_format'];
 

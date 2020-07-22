@@ -7,7 +7,7 @@
     <div class="container-fluid">
         <button-menu></button-menu>
         <!-- Brand -->
-        <a class="navbar-brand" href="{{ route('admin.dashboard') }}">
+        <a class="navbar-brand" href="{{ route('cms.dashboard') }}">
             <img src="/storage/img/logo-pg.svg" class="align-middle" width="auto" />
         </a>
         <!-- User -->
@@ -19,10 +19,10 @@
                             <span class="avatar avatar-sm rounded-circle shadow">
 
                                 @if(Auth::user()->avatar)
-                                <img src="{{ route('admin.get-file',[ 'folder' => 'img', 'subfolder' => 'users', 'file' => Auth::user()->avatar ]) }}"
+                                <img src="{{ route('cms.get-file',[ 'folder' => 'img', 'subfolder' => 'users', 'file' => Auth::user()->avatar ]) }}"
                                     alt="User">
                                 @else
-                                <img src="{{ route('admin.get-file',[ 'folder' => 'img', 'subfolder' => 'users', 'file' => 'avatar.jpg' ]) }}"
+                                <img src="{{ route('cms.get-file',[ 'folder' => 'img', 'subfolder' => 'users', 'file' => 'avatar.jpg' ]) }}"
                                     alt="User" />
                                 @endif
 
@@ -33,7 +33,7 @@
                         <h6 class="text-overflow m-0">Bienvenido!</h6>
                     </b-dropdown-header>
                     <b-dropdown-divider></b-dropdown-divider>
-                    <b-dropdown-item href="{{ route('admin.profile') }}">
+                    <b-dropdown-item href="{{ route('cms.profile') }}">
                         <i class="fas fa-user-alt v-align-middle"></i> Mi perfil
                     </b-dropdown-item>
                     <b-dropdown-item href="{{ route('logout') }}"
@@ -53,7 +53,7 @@
             <div class="navbar-collapse-header d-md-none">
                 <div class="row">
                     <div class="col-6 collapse-brand">
-                        <a href="{{ route('admin.dashboard') }}">
+                        <a href="{{ route('cms.dashboard') }}">
                             <img src="/storage/img/logo-pg.svg" class="align-middle" height="70px" width="auto" />
                         </a>
                     </div>
@@ -138,10 +138,10 @@
                             <div class="media align-items-center">
                                 <span class="avatar avatar-md rounded-circle shadow">
                                     @if(Auth::user()->avatar)
-                                    <img src="{{ route('admin.get-file',[ 'folder' => 'img', 'subfolder' => 'users', 'file' => Auth::user()->avatar ]) }}"
+                                    <img src="{{ route('cms.get-file',[ 'folder' => 'img', 'subfolder' => 'users', 'file' => Auth::user()->avatar ]) }}"
                                         alt="Usuario" />
                                     @else
-                                    <img src="{{ route('admin.get-file',[ 'folder' => 'img', 'subfolder' => 'users', 'file' => 'avatar.jpg' ]) }}"
+                                    <img src="{{ route('cms.get-file',[ 'folder' => 'img', 'subfolder' => 'users', 'file' => 'avatar.jpg' ]) }}"
                                         alt="Usuario" />
                                     @endif
                                 </span>
@@ -154,7 +154,7 @@
                             <h6 class="text-overflow m-0">Bienvenido!</h6>
                         </b-dropdown-header>
                         <b-dropdown-divider></b-dropdown-divider>
-                        <b-dropdown-item href="{{ route('admin.profile') }}">
+                        <b-dropdown-item href="{{ route('cms.profile') }}">
                             <i class="fas fa-user-alt v-align-middle"></i> Mi perfil
                         </b-dropdown-item>
                         <b-dropdown-item href="{{ route('logout') }}"

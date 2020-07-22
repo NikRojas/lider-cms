@@ -17,15 +17,20 @@ class CreatePostsTable extends Migration
             $table->bigIncrements('id');
 
             $table->string('title');
+            $table->string('title_en');
             $table->string('slug');
+            $table->string('slug_en');
             $table->string('excerpt');
+            $table->string('excerpt_en');
 
             $table->longText('content');
+            $table->longText('content_en');
             $table->string('image');
             $table->string('thumbnail');
             $table->boolean('published');
             //$table->dateTime('published_at');
             $table->string('seo_keywords')->nullable();
+            $table->string('seo_keywords_en')->nullable();
 
             $table->bigInteger('user_id')->unsigned();
             $table->bigInteger('category_id')->unsigned();

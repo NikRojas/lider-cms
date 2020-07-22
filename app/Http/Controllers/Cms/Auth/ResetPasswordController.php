@@ -40,7 +40,7 @@ class ResetPasswordController extends Controller
     }
 
     protected function sendResetResponse(Request $request, $response){
-        return ['status' => trans($response), "route" => route('admin.dashboard')];
+        return ['status' => trans($response), "route" => route('cms.dashboard')];
     }
     
     protected function sendResetFailedResponse(Request $request, $response){

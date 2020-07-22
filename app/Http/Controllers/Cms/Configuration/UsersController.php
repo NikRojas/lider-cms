@@ -26,7 +26,7 @@ class UsersController extends Controller
     }
 
     public function actualizar(UserRequest $request, User $usuario){
-        $request_usuario = request(['username','role_id','email','full_name']);
+        $request_usuario = request(['email','name']);
         if($request->filled('password')){
             $request_usuario = array_merge($request_usuario,['password' => Hash::make($request->password) ]);
         }
@@ -61,7 +61,7 @@ class UsersController extends Controller
     }
 
     public function registrar(UserRequest $request){
-        $usuario = request(['username','role_id','full_name','email']);
+        $usuario = request(['name','email']);
         if($request->hasFile('avatar')){
             $nombre_archivo = $this->setFileName('u-'.time(),$request->file('avatar'));
             Storage::disk('private')->putFileAs('img/users',$request->file('avatar'),$nombre_archivo);
@@ -104,7 +104,7 @@ class UsersController extends Controller
 
     public function obtenerUsuarios(Request $request,UsuariosRepositorio $repo){
         $buscar = $request->buscar;
-        $headers = ["Id", "Nombre", "Usuario", "Rol","Estado"];
+        $headers = ["Id", "Nombre", "Usuario","Estado"];
             if($buscar){
                 $usuarios = $repo->buscar(Auth::user()->id,$buscar,$request->desde);
             }

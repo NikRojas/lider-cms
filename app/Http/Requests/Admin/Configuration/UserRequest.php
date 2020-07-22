@@ -15,10 +15,10 @@ class UserRequest extends FormRequest
     public function rules()
     {
         $rules = [
-            'username' => ['required',Rule::unique('users')->ignore($this->id),'alpha_dash'],
+            //'username' => ['required',Rule::unique('users')->ignore($this->id),'alpha_dash'],
             'email' => ['required',Rule::unique('users')->ignore($this->id),'email'],
-            'full_name' => 'required',
-            'role_id' => 'required',
+            'name' => 'required',
+            //'role_id' => 'required',
         ];
 
         switch ($this->method()) {

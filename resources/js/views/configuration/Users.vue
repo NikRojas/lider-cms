@@ -69,19 +69,19 @@
               </div>
               <div class="col-12 col-md-6">
                 <div class="form-group">
-                  <label class="font-weight-bold" for="id_full_name">Nombre Completo:</label>
+                  <label class="font-weight-bold" for="id_name">Nombre Completo:</label>
                   <input
                     type="text"
                     class="form-control form-control-alternative"
-                    id="id_full_name"
-                    v-model="usuario.full_name"
+                    id="id_name"
+                    v-model="usuario.name"
                     placeholder="Nombre Completo"
                   />
                   <label
-                    v-if="errores && errores.full_name"
+                    v-if="errores && errores.name"
                     class="mt-2 mb-0 text-danger"
-                    for="id_full_name"
-                  >{{ errores.full_name[0] }}</label>
+                    for="id_name"
+                  >{{ errores.name[0] }}</label>
                 </div>
               </div>
 
@@ -136,20 +136,6 @@
                 </div>
               </div>
 
-              <div class="col-12 col-md-6">
-                <div class="form-group">
-                  <label class="font-weight-bold" for="id_rol">Rol:</label>
-                  <select class="form-control form-control-alternative" v-model="usuario.role_id">
-                    <option disabled value>Selecciona el Rol</option>
-                    <option v-for="item in roles" :value="item.id" :key="item.id">{{ item.name }}</option>
-                  </select>
-                  <label
-                    v-if="errores && errores.id_rol"
-                    class="mt-2 mb-0 text-danger"
-                    for="id_rol"
-                  >{{ errores.role_id[0] }}</label>
-                </div>
-              </div>
 
               <div class="col-12 col-lg-6" v-if="!usuario.status">
                 <div class="form-group">
@@ -207,19 +193,19 @@
               </div>
               <div class="col-12 col-md-6">
                 <div class="form-group">
-                  <label class="font-weight-bold" for="id_full_name">Nombre Completo:</label>
+                  <label class="font-weight-bold" for="id_name">Nombre Completo:</label>
                   <input
                     type="text"
                     class="form-control form-control-alternative"
-                    id="id_full_name"
-                    v-model="usuario.full_name"
+                    id="id_name"
+                    v-model="usuario.name"
                     placeholder="Nombre Completo"
                   />
                   <label
-                    v-if="errores && errores.full_name"
+                    v-if="errores && errores.name"
                     class="mt-2 mb-0 text-danger"
-                    for="id_full_name"
-                  >{{ errores.full_name[0] }}</label>
+                    for="id_name"
+                  >{{ errores.name[0] }}</label>
                 </div>
               </div>
 
@@ -279,21 +265,6 @@
                 </div>
               </div>
 
-              <div class="col-12 col-md-6">
-                <div class="form-group">
-                  <label class="font-weight-bold" for="id_rol">Rol:</label>
-
-                  <select class="form-control form-control-alternative" v-model="usuario.role_id">
-                    <option disabled value>Selecciona el Rol</option>
-                    <option v-for="item in roles" :value="item.id" :key="item.id">{{ item.name }}</option>
-                  </select>
-                  <label
-                    v-if="errores && errores.role_id"
-                    class="mt-2 mb-0 text-danger"
-                    for="id_rol"
-                  >{{ errores.role_id[0] }}</label>
-                </div>
-              </div>
               <div class="col-12 text-right mt-2">
                 <Boton
                   :text="'Guardar'"
@@ -327,9 +298,9 @@
             </div>
             <div class="col-12 col-md-6">
               <div class="form-group">
-                <label class="font-weight-bold" for="id_full_name">Nombre:</label>
+                <label class="font-weight-bold" for="id_name">Nombre:</label>
 
-                <p>{{ this.usuario.full_name }}</p>
+                <p>{{ this.usuario.name }}</p>
               </div>
             </div>
 
@@ -436,7 +407,6 @@ export default {
       crearBloque: false,
       editBlock: false,
       verBloque: false,
-      roles: {},
       dropzoneOptions: {
         url: "/",
         maxFiles: 1,
@@ -451,7 +421,7 @@ export default {
         role_id: "",
         username: "",
         password: "",
-        full_name: "",
+        name: "",
         email: "",
         status: false,
         available: false
@@ -463,13 +433,13 @@ export default {
   methods: {
     restoreEl() {
       this.crearBloque = this.editBlock = this.verBloque = this.requestServer = false;
-      (this.errores = this.roles = {}),
+      (this.errores =  {}),
         (this.usuario = {
           rel_role: {},
           role_id: "",
           username: "",
           password: "",
-          full_name: "",
+          name: "",
           email: ""
         });
       this.$refs["modal-eliminar"].hide();
@@ -481,24 +451,15 @@ export default {
       this.crearBloque = this.editBlock = this.verBloque = this.requestServer = false;
       this.$refs["modal-eliminar"].hide();
       this.$refs["modal-disable"].hide();
-      (this.errores = this.roles = {}),
+      (this.errores = {}),
         (this.usuario = {
           rel_role: {},
           role_id: "",
           username: "",
           password: "",
-          full_name: "",
+          name: "",
           email: ""
         });
-    },
-    getRoles() {
-      let url = "/json/select/roles";
-      axios
-        .get(url)
-        .then(response => {
-          this.roles = response.data;
-        })
-        .catch(error => {});
     },
     getUser(id) {
       axios
@@ -520,9 +481,7 @@ export default {
         })
         .catch(error => {});
     },
-    getSelects() {
-      this.getRoles();
-    },
+    
     showUser(id) {
       this.getUser(id);
       this.showBlock = false;
@@ -530,7 +489,6 @@ export default {
     },
     editUser(id) {
       this.getUser(id);
-      this.getSelects();
       this.showBlock = false;
       this.editBlock = true;
     },
@@ -587,7 +545,7 @@ export default {
     updateUser() {
       this.requestServer = true;
       const fd = new FormData();
-      fd.append("full_name", this.usuario.full_name);
+      fd.append("name", this.usuario.name);
       fd.append("username", this.usuario.username);
       fd.append("email", this.usuario.email);
       /*if (this.eliminarImagen === true) {
@@ -635,10 +593,9 @@ export default {
     createUser() {
       this.requestServer = true;
       const fd = new FormData();
-      fd.append("full_name", this.usuario.full_name);
-      fd.append("username", this.usuario.username);
+      fd.append("name", this.usuario.name);
+      //fd.append("username", this.usuario.username);
       fd.append("email", this.usuario.email);
-      fd.append("role_id", this.usuario.role_id);
       fd.append("password", this.usuario.password);
       if (this.$refs.ref_image.dropzone.files[0]) {
         fd.append("avatar", this.$refs.ref_image.dropzone.files[0]);

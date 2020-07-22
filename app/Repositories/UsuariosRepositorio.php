@@ -7,12 +7,12 @@ use App\User;
 class UsuariosRepositorio
 {
     public function buscar($id,$q,$pagination){
-        $select = 'users.id, users.full_name, users.username, users.status, roles.name as role';
-        $condicion = 'users.id != ? and users.id != ? and users.id != ? and (users.username like ? or users.full_name like ?)';
-        $valores = [ 1, 2, $id,$q.'%',$q.'%',$q.'%',$q.'%',$q.'%' ];
+        $select = 'users.id, users.name, users.email, users.status';
+        $condicion = 'users.id != ? and (users.email like ? or users.name like ?)';
+        $valores = [ $id,$q.'%',$q.'%',$q.'%',$q.'%',$q.'%' ];
         $users = User::
         selectRaw($select)
-        ->join('roles','users.role_id','roles.id')
+        //->join('roles','users.role_id','roles.id')
         ->whereRaw($condicion,$valores)
         ->orderBy('users.created_at', 'DESC')
         ->paginate($pagination);
@@ -20,9 +20,9 @@ class UsuariosRepositorio
         foreach($users as $user){
             $data[] = array(
                 "id" => $user["id"],
-                "full_name" => $user["full_name"],
-                "user" => $user["username"],
-                "role" => $user["role"],
+                "name" => $user["name"],
+                //"user" => $user["username"],
+                //"role" => $user["role"],
                 "status" => $user["status_format"],
             );
         }
@@ -35,12 +35,12 @@ class UsuariosRepositorio
     }
 
     public function datatable($id,$pagination){
-        $select = 'users.id, users.full_name, users.username, roles.name  as role, users.status';   
-        $condicion = 'users.id != ? and users.id != ? and users.id != ?';
-        $valores = [$id,1,2];
+        $select = 'users.id, users.name, users.email, users.status';   
+        $condicion = 'users.id != ?';
+        $valores = [$id];
         $users = User::
         selectRaw($select)
-        ->join('roles','users.role_id','roles.id')
+        //->join('roles','users.role_id','roles.id')
         ->whereRaw($condicion,$valores)
         ->orderBy('users.created_at', 'DESC')
         ->paginate($pagination);
@@ -48,9 +48,8 @@ class UsuariosRepositorio
         foreach($users as $user){
             $data[] = array(
                 "id" => $user["id"],
-                "full_name" => $user["full_name"],
-                "user" => $user["username"],
-                "role" => $user["role"],
+                "name" => $user["name"],
+                "user" => $user["email"],
                 "status" => $user["status_format"],
             );
         }

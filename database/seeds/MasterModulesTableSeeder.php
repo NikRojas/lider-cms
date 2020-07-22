@@ -227,14 +227,14 @@ class MasterModulesTableSeeder extends Seeder
             [
                 'name' 	=> 'Configuración',
 				'slug' 		=> NULL,
-				'parent' 	=> $pConfiguracion,
+				'parent' 	=> NULL,
 				'icon' 		=> 'fas fa-cogs',
                 'index'    => $position++
             ],
                 [
                     'name' 	=> 'Usuarios',
                     'slug' 		=> 'configuracion/usuarios',
-                    'parent' 	=> 21,
+                    'parent' 	=> $pConfiguracion,
                     'icon' 		=> NULL,
                     'index'    => 1
                 ],

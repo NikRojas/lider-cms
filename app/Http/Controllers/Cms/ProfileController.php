@@ -24,12 +24,12 @@ class ProfileController extends Controller
 
     public function getProfile(){
         $user = Auth::user();
-        return response()->json($user->load('relRole'));
+        return response()->json($user);
     }
 
     public function updateProfile(ProfileRequest $request){
-        $user = Auth::user()->load('relRole');
-        $request_user = request(['full_name','username','email']);
+        $user = Auth::user();
+        $request_user = request(['name','email']);
         if($request->hasFile('avatar')){
             $avatar_name = $this->setFileName('u-'.uniqid(),$request->file('avatar'));
             $store_avatar = Storage::disk('private')->putFileAs('img/users/',$request->file('avatar'),$avatar_name);

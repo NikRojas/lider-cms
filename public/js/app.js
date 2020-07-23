@@ -38719,14 +38719,16 @@ var app = new Vue({
       return __webpack_require__.e(/*! import() | js/button-icons */ "js/button-icons").then(__webpack_require__.bind(null, /*! ./components/layout/ButtonIcons.vue */ "./resources/js/components/layout/ButtonIcons.vue"));
     },
     'users': function users() {
-      return Promise.all(/*! import() | js/users */[__webpack_require__.e("vendors~js/users"), __webpack_require__.e("js/users")]).then(__webpack_require__.bind(null, /*! ./views/configuration/Users.vue */ "./resources/js/views/configuration/Users.vue"));
+      return Promise.all(/*! import() | js/users */[__webpack_require__.e("vendors~js/profile~js/users"), __webpack_require__.e("vendors~js/users"), __webpack_require__.e("js/users")]).then(__webpack_require__.bind(null, /*! ./views/configuration/Users.vue */ "./resources/js/views/configuration/Users.vue"));
     },
     //'general': () => import('./views/info/General.vue' /* webpackChunkName: "js/general" */),
     //'social': () => import('./views/info/Social.vue' /* webpackChunkName: "js/social" */),
     //'seo': () => import('./views/info/Seo.vue' /* webpackChunkName: "js/seo" */),
     //'category': () => import('./views/blog/Category.vue' /* webpackChunkName: "js/category" */),
     //'posts': () => import('./views/blog/Post.vue' /* webpackChunkName: "js/posts" */),
-    //'profile': () => import('./views/Profile.vue' /* webpackChunkName: "js/profile" */),
+    'profile': function profile() {
+      return Promise.all(/*! import() | js/profile */[__webpack_require__.e("vendors~js/profile~js/users"), __webpack_require__.e("js/profile")]).then(__webpack_require__.bind(null, /*! ./views/Profile.vue */ "./resources/js/views/Profile.vue"));
+    },
     //'dashboard': () => import('./views/Dashboard.vue' /* webpackChunkName: "js/dashboard" */),
     //'applicants': () => import('./views/Applicants.vue' /* webpackChunkName: "js/applicants" */),
     //'testimonials': () => import('./views/Testimonials.vue' /* webpackChunkName: "js/testimonials" */),

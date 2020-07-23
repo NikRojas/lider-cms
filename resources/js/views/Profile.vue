@@ -70,7 +70,7 @@
                   <h2
                     class="font-weight-light text-center mb-3"
                     v-if="!editEmail && !editPassword"
-                  >{{ usuario.full_name }}</h2>
+                  >{{ usuario.name }}</h2>
 
                   <div class="row" v-if="editEmail && !editPassword">
                     <div class="col-12">
@@ -79,7 +79,7 @@
                         <input
                           type="text"
                           class="d-inline-block form-control form-control-alternative w-100"
-                          v-model="usuario.full_name"
+                          v-model="usuario.name"
                           v-if="editEmail && !editPassword"
                         />
                         <label
@@ -92,24 +92,6 @@
                 </div>
                 <div>
                   <div class="row">
-                    <div class="col-12">
-                      <span class="font-weight-bold">Usuario:</span>
-                      <span
-                        class="font-weight-light mb-4 d-block"
-                        v-if="!editEmail && !editPassword"
-                      >{{ usuario.username }}</span>
-                      <div class="form-group" v-if="editEmail && !editPassword">
-                        <input
-                          type="text"
-                          class="mt-1 form-control-alternative d-inline-block form-control w-100"
-                          v-model="usuario.username"
-                        />
-                        <label
-                          v-if="errors && errors.username"
-                          class="d-block text-sm mt-2 mb-0 text-danger"
-                        >{{ errors.username[0] }}</label>
-                      </div>
-                    </div>
                     <div class="col-12">
                       <span class="font-weight-bold">Correo Electrónico:</span>
                       <span
@@ -128,10 +110,6 @@
                           class="d-block text-sm mt-2 mb-0 text-danger"
                         >{{ errors.email[0] }}</label>
                       </div>
-                    </div>
-                    <div class="col-12" v-if="!editEmail && !editPassword">
-                      <span class="font-weight-bold">Rol:</span>
-                      <span class="font-weight-light mb-4 d-block">{{ usuario.rel_role.name }}</span>
                     </div>
                   </div>
                 </div>
@@ -257,7 +235,7 @@ export default {
         rel_role: {
           name: ""
         },
-        full_name: "",
+        name: "",
         username: "",
         email: "",
         contrasena_actual: "",
@@ -295,7 +273,7 @@ export default {
         rel_role: {
           name: ""
         },
-        full_name: "",
+        name: "",
         username: "",
         email: "",
         contrasena_actual: "",
@@ -324,10 +302,10 @@ export default {
         } else {
           fd.append("email", "");
         }
-        if (this.usuario.full_name) {
-          fd.append("full_name", this.usuario.full_name);
+        if (this.usuario.name) {
+          fd.append("name", this.usuario.name);
         } else {
-          fd.append("full_name", "");
+          fd.append("name", "");
         }
 
         if (this.$refs.ref_image.dropzone.files[0]) {

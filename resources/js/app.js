@@ -24,7 +24,7 @@ const app = new Vue({
         //'category': () => import('./views/blog/Category.vue' /* webpackChunkName: "js/category" */),
         //'posts': () => import('./views/blog/Post.vue' /* webpackChunkName: "js/posts" */),
         
-        //'profile': () => import('./views/Profile.vue' /* webpackChunkName: "js/profile" */),
+        'profile': () => import('./views/Profile.vue' /* webpackChunkName: "js/profile" */),
 
         //'dashboard': () => import('./views/Dashboard.vue' /* webpackChunkName: "js/dashboard" */),
         //'applicants': () => import('./views/Applicants.vue' /* webpackChunkName: "js/applicants" */),

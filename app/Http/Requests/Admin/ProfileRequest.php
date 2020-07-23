@@ -20,8 +20,8 @@ class ProfileRequest extends FormRequest
     public function rules()
     {
         return [
-            'full_name' => 'required|max:50',
-            'username' => 'required|max:50',
+            'name' => 'required|max:50',
+            //'username' => 'required|max:50',
             'email' => ['required',Rule::unique('users')->ignore($this->id),'email'],
         ];
         

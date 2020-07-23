@@ -71,5 +71,6 @@
     "/js/awards~js/pages~js/testimonials~js/users.js": "/js/awards~js/pages~js/testimonials~js/users.js",
     "/js/awards~js/testimonials.js": "/js/awards~js/testimonials.js",
     "/vendors~js/awards~js/pages~js/testimonials~js/users.js": "/vendors~js/awards~js/pages~js/testimonials~js/users.js",
-    "/vendors~js/awards~js/testimonials.js": "/vendors~js/awards~js/testimonials.js"
+    "/vendors~js/awards~js/testimonials.js": "/vendors~js/awards~js/testimonials.js",
+    "/vendors~js/profile~js/users.js": "/vendors~js/profile~js/users.js"
 }

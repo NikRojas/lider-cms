@@ -264,28 +264,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -316,7 +294,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         rel_role: {
           name: ""
         },
-        full_name: "",
+        name: "",
         username: "",
         email: "",
         contrasena_actual: "",
@@ -350,7 +328,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         rel_role: {
           name: ""
         },
-        full_name: "",
+        name: "",
         username: "",
         email: "",
         contrasena_actual: "",
@@ -383,10 +361,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           fd.append("email", "");
         }
 
-        if (this.usuario.full_name) {
-          fd.append("full_name", this.usuario.full_name);
+        if (this.usuario.name) {
+          fd.append("name", this.usuario.name);
         } else {
-          fd.append("full_name", "");
+          fd.append("name", "");
         }
 
         if (this.$refs.ref_image.dropzone.files[0]) {
@@ -778,7 +756,7 @@ var render = function() {
                             {
                               staticClass: "font-weight-light text-center mb-3"
                             },
-                            [_vm._v(_vm._s(_vm.usuario.full_name))]
+                            [_vm._v(_vm._s(_vm.usuario.name))]
                           )
                         : _vm._e(),
                       _vm._v(" "),
@@ -798,16 +776,14 @@ var render = function() {
                                         {
                                           name: "model",
                                           rawName: "v-model",
-                                          value: _vm.usuario.full_name,
-                                          expression: "usuario.full_name"
+                                          value: _vm.usuario.name,
+                                          expression: "usuario.name"
                                         }
                                       ],
                                       staticClass:
                                         "d-inline-block form-control form-control-alternative w-100",
                                       attrs: { type: "text" },
-                                      domProps: {
-                                        value: _vm.usuario.full_name
-                                      },
+                                      domProps: { value: _vm.usuario.name },
                                       on: {
                                         input: function($event) {
                                           if ($event.target.composing) {
@@ -815,7 +791,7 @@ var render = function() {
                                           }
                                           _vm.$set(
                                             _vm.usuario,
-                                            "full_name",
+                                            "name",
                                             $event.target.value
                                           )
                                         }
@@ -841,64 +817,6 @@ var render = function() {
                     _vm._v(" "),
                     _c("div", [
                       _c("div", { staticClass: "row" }, [
-                        _c("div", { staticClass: "col-12" }, [
-                          _c("span", { staticClass: "font-weight-bold" }, [
-                            _vm._v("Usuario:")
-                          ]),
-                          _vm._v(" "),
-                          !_vm.editEmail && !_vm.editPassword
-                            ? _c(
-                                "span",
-                                {
-                                  staticClass: "font-weight-light mb-4 d-block"
-                                },
-                                [_vm._v(_vm._s(_vm.usuario.username))]
-                              )
-                            : _vm._e(),
-                          _vm._v(" "),
-                          _vm.editEmail && !_vm.editPassword
-                            ? _c("div", { staticClass: "form-group" }, [
-                                _c("input", {
-                                  directives: [
-                                    {
-                                      name: "model",
-                                      rawName: "v-model",
-                                      value: _vm.usuario.username,
-                                      expression: "usuario.username"
-                                    }
-                                  ],
-                                  staticClass:
-                                    "mt-1 form-control-alternative d-inline-block form-control w-100",
-                                  attrs: { type: "text" },
-                                  domProps: { value: _vm.usuario.username },
-                                  on: {
-                                    input: function($event) {
-                                      if ($event.target.composing) {
-                                        return
-                                      }
-                                      _vm.$set(
-                                        _vm.usuario,
-                                        "username",
-                                        $event.target.value
-                                      )
-                                    }
-                                  }
-                                }),
-                                _vm._v(" "),
-                                _vm.errors && _vm.errors.username
-                                  ? _c(
-                                      "label",
-                                      {
-                                        staticClass:
-                                          "d-block text-sm mt-2 mb-0 text-danger"
-                                      },
-                                      [_vm._v(_vm._s(_vm.errors.username[0]))]
-                                    )
-                                  : _vm._e()
-                              ])
-                            : _vm._e()
-                        ]),
-                        _vm._v(" "),
                         _c("div", { staticClass: "col-12" }, [
                           _c("span", { staticClass: "font-weight-bold" }, [
                             _vm._v("Correo Electrónico:")
@@ -957,23 +875,7 @@ var render = function() {
                                   : _vm._e()
                               ])
                             : _vm._e()
-                        ]),
-                        _vm._v(" "),
-                        !_vm.editEmail && !_vm.editPassword
-                          ? _c("div", { staticClass: "col-12" }, [
-                              _c("span", { staticClass: "font-weight-bold" }, [
-                                _vm._v("Rol:")
-                              ]),
-                              _vm._v(" "),
-                              _c(
-                                "span",
-                                {
-                                  staticClass: "font-weight-light mb-4 d-block"
-                                },
-                                [_vm._v(_vm._s(_vm.usuario.rel_role.name))]
-                              )
-                            ])
-                          : _vm._e()
+                        ])
                       ])
                     ])
                   ]
@@ -1269,113 +1171,6 @@ var staticRenderFns = [
 ]
 render._withStripped = true
 
-
-
-/***/ }),
-
-/***/ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js":
-/*!********************************************************************!*\
-  !*** ./node_modules/vue-loader/lib/runtime/componentNormalizer.js ***!
-  \********************************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return normalizeComponent; });
-/* globals __VUE_SSR_CONTEXT__ */
-
-// IMPORTANT: Do NOT use ES2015 features in this file (except for modules).
-// This module is a runtime utility for cleaner component module output and will
-// be included in the final webpack user bundle.
-
-function normalizeComponent (
-  scriptExports,
-  render,
-  staticRenderFns,
-  functionalTemplate,
-  injectStyles,
-  scopeId,
-  moduleIdentifier, /* server only */
-  shadowMode /* vue-cli only */
-) {
-  // Vue.extend constructor export interop
-  var options = typeof scriptExports === 'function'
-    ? scriptExports.options
-    : scriptExports
-
-  // render functions
-  if (render) {
-    options.render = render
-    options.staticRenderFns = staticRenderFns
-    options._compiled = true
-  }
-
-  // functional template
-  if (functionalTemplate) {
-    options.functional = true
-  }
-
-  // scopedId
-  if (scopeId) {
-    options._scopeId = 'data-v-' + scopeId
-  }
-
-  var hook
-  if (moduleIdentifier) { // server build
-    hook = function (context) {
-      // 2.3 injection
-      context =
-        context || // cached call
-        (this.$vnode && this.$vnode.ssrContext) || // stateful
-        (this.parent && this.parent.$vnode && this.parent.$vnode.ssrContext) // functional
-      // 2.2 with runInNewContext: true
-      if (!context && typeof __VUE_SSR_CONTEXT__ !== 'undefined') {
-        context = __VUE_SSR_CONTEXT__
-      }
-      // inject component styles
-      if (injectStyles) {
-        injectStyles.call(this, context)
-      }
-      // register component module identifier for async chunk inferrence
-      if (context && context._registeredComponents) {
-        context._registeredComponents.add(moduleIdentifier)
-      }
-    }
-    // used by ssr in case component is cached and beforeCreate
-    // never gets called
-    options._ssrRegister = hook
-  } else if (injectStyles) {
-    hook = shadowMode
-      ? function () { injectStyles.call(this, this.$root.$options.shadowRoot) }
-      : injectStyles
-  }
-
-  if (hook) {
-    if (options.functional) {
-      // for template-only hot-reload because in that case the render fn doesn't
-      // go through the normalizer
-      options._injectStyles = hook
-      // register for functioal component in vue file
-      var originalRender = options.render
-      options.render = function renderWithStyleInjection (h, context) {
-        hook.call(context)
-        return originalRender(h, context)
-      }
-    } else {
-      // inject component registration as beforeCreate hook
-      var existing = options.beforeCreate
-      options.beforeCreate = existing
-        ? [].concat(existing, hook)
-        : [hook]
-    }
-  }
-
-  return {
-    exports: scriptExports,
-    options: options
-  }
-}
 
 
 /***/ }),

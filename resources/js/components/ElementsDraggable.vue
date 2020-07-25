@@ -30,7 +30,7 @@
           :key="element.id"
           @click="clickElement(element.id)"
         >
-          <div class="card shadow player" v-if="type == 'players'">
+          <div class="card player" v-if="type == 'players'">
             <div class="player__img ">
               <img
                 :src="'https://storage.googleapis.com/playgroup-web/img/players/'+element.image_1"
@@ -61,7 +61,7 @@
             </div>
           </div>
 
-          <div class="card shadow" v-if="type == 'success-stories'">
+          <div class="card" v-if="type == 'success-stories'">
             <div class="card-body position-relative">
                 <img
                   :src="'https://storage.googleapis.com/playgroup-web/img/stories/'+element.image"
@@ -90,7 +90,7 @@
                 Eliminar</button>
             </div>
           </div>
-          <div class="card shadow" v-if="type == 'customers'">
+          <div class="card" v-if="type == 'customers'">
             <div class="card-body">
               <div class="row align-items-center">
                 <div class="col-12 text-center mb-3">
@@ -121,7 +121,7 @@
           </div>
 
 
-          <div class="card shadow" v-if="type == 'cooltura'">
+          <div class="card" v-if="type == 'cooltura'">
             <div class="card-body position-relative">
                 <img
                   :src="'https://storage.googleapis.com/playgroup-web/img/cooltura/'+element.image"
@@ -147,7 +147,7 @@
 
 
 
-          <div class="card shadow" v-if="type == 'testimonials'">
+          <div class="card" v-if="type == 'testimonials'">
 
             <div class="card-body">
               <div class="row align-items-start">
@@ -185,7 +185,7 @@
           </div>
 
 
-          <div class="card shadow" v-if="type == 'awards'">
+          <div class="card" v-if="type == 'awards'">
 
             <div class="card-body">
               <div class="row">
@@ -219,7 +219,7 @@
           </div>
 
 
-          <div class="card shadow" v-if="type == 'adn'">
+          <div class="card" v-if="type == 'adn'">
 
             <div class="card-body">
               <div class="row">

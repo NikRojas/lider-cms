@@ -3,49 +3,41 @@
     <div class="container-fluid mt-0 mt-md-3">
       <div class="row">
         <div class="col-lg-12">
-          <div class="card shadow mb-4">
-            <div class="card-header border-0">
-              <h2 class="h2 text-primary text-uppercase mb-0">Mi Perfil</h2>
-            </div>
+          <h1 class="h1 mb-4">Mi Perfil</h1>
+        </div>
+        <div class="col-lg-8 mx-auto">
+          <div class="card mb-4">
             <form @submit.prevent="updateProfile">
               <div class="card-body" v-show="startBlock">
-                <div class="rounded-circle text-center mb-2" v-if="!editEmail && !editPassword">
+                <div class="rounded-circle mx-auto d-flex avatar avatar-lg  text-center mb-2 bg-default" style="height:120px; width: 120px;" v-if="!editEmail && !editPassword">
                   <img
-                    class="shadow rounded-circle shadow object-fit--cover"
+                    class="shadow rounded-circle object-fit--cover"
                     v-if="usuario.avatar"
-                    height="120"
-                    width="120"
                     :src="'/files/img/users/'+ usuario.avatar"
                     alt="Perfil"
                   />
-                  <img
-                    class="shadow rounded-circle shadow object-fit--cover"
-                    v-else
-                    height="120"
-                    width="120"
-                    src="/files/img/users/avatar.jpg"
-                    alt="Perfil"
-                  />
+                  <span v-else style="font-size: 26px;">{{ usuario.avatar_initials }}</span>
                 </div>
 
                 <div v-if="editEmail && !editPassword" class="text-center mb-3">
                   <span class="font-weight-bold mb-2 d-block">Avatar</span>
-                  <a
-                    v-if="usuario.avatar"
-                    class="btn btn-danger btn-sm mb-3"
-                    href="#"
-                    @click.prevent="() => { usuario.avatar = ''; usuario.eliminar_imagen = true;}"
-                  >Eliminar Imagen Actual</a>
-                  <img
-                    v-if="usuario.avatar"
-                    class="rounded-circle shadow object-fit--cover d-block mx-auto mb-3"
-                    alt="Colaborador"
-                    height="120"
-                    width="120"
-                    :src="'/files/img/users/' + usuario.avatar"
-                  />
                   <div class="row">
                     <div class="col-lg"></div>
+                    
+                    <div class="col-12 col-lg-3 mb-3 mb-lg-0" v-if="usuario.avatar">
+                      <img
+                        class="rounded-circle object-fit--cover d-block mx-auto mb-3"
+                        alt="Colaborador"
+                        height="120"
+                        width="120"
+                        :src="'/files/img/users/' + usuario.avatar"
+                      />
+                      <a
+                        class="btn btn-inverse-danger btn-sm"
+                        href="#"
+                        @click.prevent="() => { usuario.avatar = ''; usuario.eliminar_imagen = true;}"
+                      >Eliminar Avatar Actual</a>
+                    </div>
                     <div class="col-12 col-lg-3">
                       <vue-dropzone
                         ref="ref_image"
@@ -78,7 +70,7 @@
                         <span class="font-weight-bold">Nombre Completo:</span>
                         <input
                           type="text"
-                          class="d-inline-block form-control form-control-alternative w-100"
+                          class="d-inline-block form-control  w-100"
                           v-model="usuario.name"
                           v-if="editEmail && !editPassword"
                         />
@@ -122,7 +114,7 @@
                       <input
                         type="password"
                         placeholder="Contraseña Actual"
-                        class="form-control form-control-alternative"
+                        class="form-control "
                         id="id_contrasena_actual"
                         v-model="usuario.contrasena_actual"
                       />
@@ -139,7 +131,7 @@
                       <input
                         type="password"
                         placeholder="Contraseña Nueva"
-                        class="form-control form-control-alternative"
+                        class="form-control "
                         id="id_contrasena_nueva"
                         v-model="usuario.contrasena_nueva"
                       />
@@ -159,7 +151,7 @@
                       <input
                         type="password"
                         placeholder="Confirmar Nueva Contraseña"
-                        class="form-control form-control-alternative"
+                        class="form-control "
                         id="id_confirmar_contrasena"
                         v-model="usuario.contrasena_nueva_confirmation"
                       />
@@ -172,17 +164,20 @@
                   </div>
                 </div>
               </div>
-              <div class="card-footer text-right border-0">
+              <div
+                class="card-footer border-0 pt-0"
+                :class="!editEmail && !editPassword ? 'text-center' : 'text-right'"
+              >
                 <a
                   href="#"
                   @click.prevent="toggleEmail"
-                  class="btn btn-info mr-2"
+                  class="btn btn-inverse-info mr-2"
                   v-if="!editEmail && !editPassword"
                 >Editar</a>
                 <a
                   href="#"
                   @click.prevent="cambiarContrasena"
-                  class="btn btn-neutral"
+                  class="btn btn-inverse-primary"
                   v-if="!editPassword && !editEmail"
                 >Cambiar Contraseña</a>
                 <Button
@@ -213,17 +208,17 @@ export default {
   props: {
     routeLogin: {
       type: String,
-      required: true
+      required: true,
     },
     routeLogout: {
       type: String,
-      required: true
-    }
+      required: true,
+    },
   },
   components: {
     //Footer,
     Button,
-    vueDropzone: vue2Dropzone
+    vueDropzone: vue2Dropzone,
   },
   data() {
     return {
@@ -233,14 +228,14 @@ export default {
       editPassword: false,
       usuario: {
         rel_role: {
-          name: ""
+          name: "",
         },
         name: "",
         username: "",
         email: "",
         contrasena_actual: "",
         contrasena_nueva: "",
-        contrasena_nueva_confirmation: ""
+        contrasena_nueva_confirmation: "",
       },
       dropzoneOptions: {
         url: "/",
@@ -249,21 +244,21 @@ export default {
         autoProcessQueue: false,
         thumbnailWidth: 100,
         addRemoveLinks: true,
-        dictRemoveFile: "Remover"
+        dictRemoveFile: "Remover",
       },
       startBlock: true,
       passwordBlock: false,
-      requestServer: false
+      requestServer: false,
     };
   },
   methods: {
     getUser() {
       axios
         .get("json/profile")
-        .then(response => {
+        .then((response) => {
           this.usuario = response.data;
         })
-        .catch(error => {});
+        .catch((error) => {});
     },
     restorePage() {
       this.errors = {};
@@ -271,14 +266,14 @@ export default {
       this.editPassword = this.editEmail = this.passwordBlock = this.requestServer = false;
       this.usuario = {
         rel_role: {
-          name: ""
+          name: "",
         },
         name: "",
         username: "",
         email: "",
         contrasena_actual: "",
         contrasena_nueva: "",
-        contrasena_nueva_confirmation: ""
+        contrasena_nueva_confirmation: "",
       };
       this.getUser();
     },
@@ -309,7 +304,7 @@ export default {
         }
 
         if (this.$refs.ref_image.dropzone.files[0]) {
-            fd.append("avatar", this.$refs.ref_image.dropzone.files[0]);
+          fd.append("avatar", this.$refs.ref_image.dropzone.files[0]);
         }
 
         if (this.usuario.eliminar_imagen) {
@@ -318,7 +313,7 @@ export default {
         fd.append("_method", "put");
         axios
           .post("profile", fd)
-          .then(response => {
+          .then((response) => {
             this.requestServer = false;
             this.restorePage();
             Swal.fire({
@@ -328,11 +323,11 @@ export default {
               confirmButtonText: "OK",
               buttonsStyling: false,
               customClass: {
-                confirmButton: "btn btn-primary"
-              }
+                confirmButton: "btn btn-inverse-primary",
+              },
             });
           })
-          .catch(error => {
+          .catch((error) => {
             this.requestServer = false;
             if (error.response.status === 422) {
               this.errors = error.response.data.errors || {};
@@ -346,15 +341,15 @@ export default {
               confirmButtonText: "OK",
               buttonsStyling: false,
               customClass: {
-                confirmButton: "btn btn-primary"
-              }
+                confirmButton: "btn btn-inverse-primary",
+              },
             });
           });
       }
       if (this.editPassword) {
         axios
           .put("change-password", this.usuario)
-          .then(response => {
+          .then((response) => {
             this.requestServer = false;
             this.restorePage();
             Swal.fire({
@@ -364,21 +359,21 @@ export default {
               confirmButtonText: "OK",
               buttonsStyling: false,
               customClass: {
-                confirmButton: "btn btn-primary"
-              }
+                confirmButton: "btn btn-inverse-primary",
+              },
             });
             setTimeout(
               () =>
                 axios
                   .post(this.routeLogout)
-                  .then(response => {
+                  .then((response) => {
                     document.location.href = this.routeLogin;
                   })
-                  .catch(error => {}),
+                  .catch((error) => {}),
               5000
             );
           })
-          .catch(error => {
+          .catch((error) => {
             this.requestServer = false;
             if (error.response.status === 422) {
               this.errors = error.response.data.errors || {};
@@ -392,8 +387,8 @@ export default {
               confirmButtonText: "OK",
               buttonsStyling: false,
               customClass: {
-                confirmButton: "btn btn-primary"
-              }
+                confirmButton: "btn btn-inverse-primary",
+              },
             });
           });
       }
@@ -402,10 +397,10 @@ export default {
       this.startBlock = false;
       this.passwordBlock = true;
       this.editPassword = true;
-    }
+    },
   },
   created() {
     this.getUser();
-  }
+  },
 };
 </script>

@@ -99,7 +99,7 @@ class UsersController extends Controller
 
 
     public function obtenerUsuario(User $usuario){
-        return response()->json($usuario->load('relRole:id,name'));    
+        return response()->json($usuario);    
     }
 
     public function obtenerUsuarios(Request $request,UsuariosRepositorio $repo){

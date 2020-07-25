@@ -62,7 +62,7 @@
       ></DataTable>
       <div class="row" v-if="newBlock">
         <div class="col-12 col-xl-8 mb-4 mb-xl-0">
-          <div class="card shadow">
+          <div class="card">
             <div class="card-body">
               <div>
                 <form @submit.prevent="createPost">
@@ -141,7 +141,7 @@
                         <textarea
                           v-model="post.excerpt"
                           rows="2"
-                          class="form-control form-control-alternative"
+                          class="form-control "
                           id="id_excerpt"
                           placeholder="Breve Descripción"
                         ></textarea>
@@ -178,7 +178,7 @@
           </div>
         </div>
         <div class="col-12 col-xl-4">
-          <div class="card shadow">
+          <div class="card">
             <div class="card-body">
               <div class="form-group">
                 <label for="image" class="d-block">
@@ -254,7 +254,7 @@
 
       <div class="row" v-if="editBlock">
         <div class="col-12 col-xl-8 mb-4 mb-xl-0">
-          <div class="card shadow">
+          <div class="card">
             <div class="card-body">
               <div>
                 <form @submit.prevent="createPost">
@@ -336,7 +336,7 @@
                         <textarea
                           v-model="post.excerpt"
                           rows="2"
-                          class="form-control form-control-alternative"
+                          class="form-control "
                           id="id_excerpt"
                           placeholder="Breve Descripción"
                         ></textarea>
@@ -386,7 +386,7 @@
           </div>
         </div>
         <div class="col-12 col-xl">
-          <div class="card shadow">
+          <div class="card">
             <div class="card-body">
 
               <div class="form-group">
@@ -703,7 +703,7 @@ export default {
             confirmButtonText: "OK",
             buttonsStyling: false,
             customClass: {
-              confirmButton: "btn btn-primary"
+              confirmButton: "btn btn-inverse-primary"
             }
           });
         })
@@ -717,7 +717,7 @@ export default {
             confirmButtonText: "OK",
             buttonsStyling: false,
             customClass: {
-              confirmButton: "btn btn-primary"
+              confirmButton: "btn btn-inverse-primary"
             }
           });
         });
@@ -845,7 +845,7 @@ export default {
             confirmButtonText: "OK",
             buttonsStyling: false,
             customClass: {
-              confirmButton: "btn btn-primary"
+              confirmButton: "btn btn-inverse-primary"
             }
           });
         })
@@ -863,7 +863,7 @@ export default {
             confirmButtonText: "OK",
             buttonsStyling: false,
             customClass: {
-              confirmButton: "btn btn-primary"
+              confirmButton: "btn btn-inverse-primary"
             }
           });
         });
@@ -911,7 +911,7 @@ export default {
             confirmButtonText: "OK",
             buttonsStyling: false,
             customClass: {
-              confirmButton: "btn btn-primary"
+              confirmButton: "btn btn-inverse-primary"
             }
           });
         })
@@ -929,7 +929,7 @@ export default {
             confirmButtonText: "OK",
             buttonsStyling: false,
             customClass: {
-              confirmButton: "btn btn-primary"
+              confirmButton: "btn btn-inverse-primary"
             }
           });
         });

@@ -23,22 +23,22 @@ class MasterModulesTableSeeder extends Seeder
                 'name' 	=> 'Dashboard',
 				'slug' 		=> 'dashboard',
 				'parent' 	=> NULL,
-				'icon' 		=> 'fas fa-chart-bar',
+				'icon' 		=> 'pie-chart',
                 'index'    => $position++
             ],
             [
                 'name' 	=> 'Proyectos',
 				'slug' 		=> 'proyectos',
 				'parent' 	=> NULL,
-				'icon' 		=> 'fas fa-project-diagram',
+				'icon' 		=> 'building',
                 'index'    => $position++
             ],
 
             [
-                'name' 	=> 'Ventas y Estadísticas',
+                'name' 	=> 'Ventas y Estad.',
 				'slug' 		=> null,
 				'parent' 	=> NULL,
-				'icon' 		=> 'fas fa-handshake',
+				'icon' 		=> 'shopping-cart',
                 'index'    => $position++
             ],  
 
@@ -62,7 +62,7 @@ class MasterModulesTableSeeder extends Seeder
                 'name' 	=> 'Administración',
 				'slug' 		=> NULL,
 				'parent' 	=> NULL,
-				'icon' 		=> 'fas fa-award',
+				'icon' 		=> 'magic',
                 'index'    => $position++
             ],
                 [
@@ -105,14 +105,14 @@ class MasterModulesTableSeeder extends Seeder
                 'name' 	=> 'Slider',
                 'slug' 		=> 'slider',
                 'parent' 	=> NULL,
-                'icon' 		=> 'fas fa-award',
+                'icon' 		=> 'pictures',
                 'index'    => $position++
             ],
             [
                 'name' 	=> 'Contenido General',
 				'slug' 		=> NULL,
 				'parent' 	=> NULL,
-				'icon' 		=> 'fas fa-info',
+				'icon' 		=> 'screen',
                 'index'    => $position++
             ],
                 [
@@ -151,7 +151,7 @@ class MasterModulesTableSeeder extends Seeder
                 'name' 	=> 'Leads',
                 'slug' 		=> NULL,
                 'parent' 	=> NULL,
-                'icon' 		=> 'fas fa-info',
+                'icon' 		=> 'database',
                 'index'    => $position++
             ],
                 [
@@ -182,7 +182,7 @@ class MasterModulesTableSeeder extends Seeder
                 'name' 	=> 'Cami',
                 'slug' 		=> 'cami',
                 'parent' 	=> NULL,
-                'icon' 		=> 'fas fa-burn',
+                'icon' 		=> 'heart',
                 'index'    => $position++
             ], 
             
@@ -190,7 +190,7 @@ class MasterModulesTableSeeder extends Seeder
                 'name' 	=> 'Testimoniales',
                 'slug' 		=> 'testimoniales',
                 'parent' 	=> NULL,
-                'icon' 		=> 'fas fa-award',
+                'icon' 		=> 'id-card',
                 'index'    => $position++
             ],
 
@@ -198,7 +198,7 @@ class MasterModulesTableSeeder extends Seeder
                 'name' 	=> 'Blog',
 				'slug' 		=> NULL,
 				'parent' 	=> NULL,
-				'icon' 		=> 'fas fa-newspaper',
+				'icon' 		=> 'newspaper',
                 'index'    => $position++
             ],
                 [
@@ -220,7 +220,7 @@ class MasterModulesTableSeeder extends Seeder
                 'name' 	=> 'Postulantes',
 				'slug' 		=> 'postulantes',
 				'parent' 	=> NULL,
-				'icon' 		=> 'fas fa-users',
+				'icon' 		=> 'book',
                 'index'    => $position++
             ],
 
@@ -228,7 +228,7 @@ class MasterModulesTableSeeder extends Seeder
                 'name' 	=> 'Configuración',
 				'slug' 		=> NULL,
 				'parent' 	=> NULL,
-				'icon' 		=> 'fas fa-cogs',
+				'icon' 		=> 'wrench',
                 'index'    => $position++
             ],
                 [

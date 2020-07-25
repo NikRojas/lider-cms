@@ -1,7 +1,7 @@
 <template>
     <div>
         <label class="font-weight-bold" for="id_title">Título</label> 
-        <input type="text" class="form-control form-control-alternative" placeholder="Título" v-model="name" id="id_title">    
+        <input type="text" class="form-control " placeholder="Título" v-model="name" id="id_title">    
         <div class="mt-2"> 
             <small>{{ url }}{{ (categorySlug ? categorySlug+'/' : '') }}</small><small class="bg-primary text-white" v-if="!editBlock">{{ slug }}</small> 
             <input type="text" class="form-control form-control-sm d-inline w-50" v-model="slug" @keydown.enter.prevent="getSlug" v-if="editBlock">

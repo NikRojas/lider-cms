@@ -20,12 +20,14 @@
 // Nav links
 
 .nav-link {
-    color: $nav-link-color;
-
+    color: $nav-link-color !important;
+    font-weight: 500;
     &:hover {
         color: $nav-link-hover-color;
     }
-
+    &.active{
+        color: $gray-900 !important;
+    }
     i.ni {
         position: relative;
         top: 2px;

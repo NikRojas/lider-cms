@@ -64,7 +64,7 @@
 /******/
 /******/ 	// script path function
 /******/ 	function jsonpScriptSrc(chunkId) {
-/******/ 		return __webpack_require__.p + "" + ({"js/button-close":"js/button-close","js/button-icons":"js/button-icons","js/button-menu":"js/button-menu","js/login":"js/login","js/reset":"js/reset","vendors~js/profile~js/users":"vendors~js/profile~js/users","js/profile":"js/profile","vendors~js/users":"vendors~js/users","js/users":"js/users"}[chunkId]||chunkId) + ".js"
+/******/ 		return __webpack_require__.p + "" + ({"js/components/button-close":"js/components/button-close","js/components/button-icons":"js/components/button-icons","js/components/button-menu":"js/components/button-menu","js/pages/login":"js/pages/login","js/pages/reset":"js/pages/reset","vendors~js/pages/profile~js/pages/users":"vendors~js/pages/profile~js/pages/users","js/pages/profile":"js/pages/profile","vendors~js/pages/users":"vendors~js/pages/users","js/pages/users":"js/pages/users"}[chunkId]||chunkId) + ".js"
 /******/ 	}
 /******/
 /******/ 	// The require function

@@ -44,7 +44,7 @@
           <div class="col-12">
             <div class="form-group">
               <label class="form-control-label d-block" for="id_name">Nombre</label>
-              <select v-model="network.master_social_network_id" id="id_name" class="form-control form-control-alternative">
+              <select v-model="network.master_social_network_id" id="id_name" class="form-control ">
                 <option value disabled>Seleccionar Red Social</option>
                 <option
                   v-for="network in masterNetworks"
@@ -60,7 +60,7 @@
             </div>
             <div class="form-group">
               <label class="form-control-label d-block" for="id_url">URL</label>
-              <input type="text" class="form-control form-control-alternative" placeholder="URL" v-model="network.url" id="id_url" />
+              <input type="text" class="form-control " placeholder="URL" v-model="network.url" id="id_url" />
               <label
                 v-if="errors && errors.url"
                 class="mt-2 text-danger text-sm"
@@ -101,7 +101,7 @@
           <div class="col-12">
             <div class="form-group">
               <label class="form-control-label d-block" for="id_name">Nombre</label>
-              <select v-model="network.master_social_network_id" id="id_name" class="form-control form-control-alternative">
+              <select v-model="network.master_social_network_id" id="id_name" class="form-control ">
                 <option value disabled>Seleccionar Red Social</option>
                 <option
                   v-for="network in masterNetworks"
@@ -117,7 +117,7 @@
             </div>
             <div class="form-group">
               <label class="form-control-label d-block" for="id_url">URL</label>
-              <input type="text" class="form-control form-control-alternative" v-model="network.url" id="id_url" />
+              <input type="text" class="form-control " v-model="network.url" id="id_url" />
               <label
                 v-if="errors && errors.url"
                 class="mt-2 text-danger text-sm"
@@ -203,7 +203,7 @@ export default {
             confirmButtonText: "OK",
             buttonsStyling: false,
             customClass: {
-              confirmButton: "btn btn-primary"
+              confirmButton: "btn btn-inverse-primary"
             }
           });
         })
@@ -221,7 +221,7 @@ export default {
             confirmButtonText: "OK",
             buttonsStyling: false,
             customClass: {
-              confirmButton: "btn btn-primary"
+              confirmButton: "btn btn-inverse-primary"
             }
           });
         });
@@ -238,7 +238,7 @@ export default {
             confirmButtonText: "OK",
             buttonsStyling: false,
             customClass: {
-              confirmButton: "btn btn-primary"
+              confirmButton: "btn btn-inverse-primary"
             }
           });
         })
@@ -250,7 +250,7 @@ export default {
             confirmButtonText: "OK",
             buttonsStyling: false,
             customClass: {
-              confirmButton: "btn btn-primary"
+              confirmButton: "btn btn-inverse-primary"
             }
           });
         });
@@ -272,7 +272,7 @@ export default {
             confirmButtonText: "OK",
             buttonsStyling: false,
             customClass: {
-              confirmButton: "btn btn-primary"
+              confirmButton: "btn btn-inverse-primary"
             }
           });
         })
@@ -290,7 +290,7 @@ export default {
             confirmButtonText: "OK",
             buttonsStyling: false,
             customClass: {
-              confirmButton: "btn btn-primary"
+              confirmButton: "btn btn-inverse-primary"
             }
           });
         });
@@ -309,7 +309,7 @@ export default {
             confirmButtonText: "OK",
             buttonsStyling: false,
             customClass: {
-              confirmButton: "btn btn-primary"
+              confirmButton: "btn btn-inverse-primary"
             }
           });
         })
@@ -322,7 +322,7 @@ export default {
             confirmButtonText: "OK",
             buttonsStyling: false,
             customClass: {
-              confirmButton: "btn btn-primary"
+              confirmButton: "btn btn-inverse-primary"
             }
           });
         });

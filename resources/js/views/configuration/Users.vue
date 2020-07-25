@@ -4,18 +4,18 @@
       <div class="container-fluid">
         <div class="header-body">
           <div class="row align-items-center pt-0 pt-md-2 pb-4">
-             <div class="col-6 col-md-7">
-              <BreadCrumb title="Usuarios" parent="Configuración" active="Usuarios"></BreadCrumb>
-              </div>
-            <div class="col-6 col-md-5 text-right">
+            <div class="col-12 col-lg-7">
+              <BreadCrumb :title="crearBloque ? 'Crear Usuario' : verBloque ? 'Ver Usuario' : editBlock ? 'Actualizar Usuario' : 'Usuarios'" parent="Configuración" active="Usuarios"></BreadCrumb>
+            </div>
+            <div class="col-12 col-lg text-right">
               <a
                 href="#"
-                class="btn btn-icon btn-neutral"
-                @click.prevent="()=>{showBlock = false; crearBloque = true;getSelects()}"
+                class="btn btn-icon btn-inverse-primary"
+                @click.prevent="()=>{showBlock = false; crearBloque = true;}"
                 v-if="showBlock"
               >
                 <span class="btn-inner--icon">
-                  <i class="fas fa-cog"></i>
+                  <jam-user-circle class="current-color" />
                 </span>
                 <span class="btn-inner--text">Nuevo Usuario</span>
               </a>
@@ -41,10 +41,10 @@
         v-show="showBlock"
       ></DataTable>
 
-      <div class="card shadow mb-4" v-if="editBlock">
-        <div class="card-header border-0">
+      <div class="card mb-4" v-if="editBlock">
+        <!--<div class="card-header border-0">
           <h2 class="mb-0 text-uppercase text-primary">Actualizar Usuario</h2>
-        </div>
+        </div>-->
         <div class="card-body">
           <form @submit.prevent="updateUser" enctype="multipart/form-data">
             <div class="row">
@@ -72,7 +72,7 @@
                   <label class="font-weight-bold" for="id_name">Nombre Completo:</label>
                   <input
                     type="text"
-                    class="form-control form-control-alternative"
+                    class="form-control "
                     id="id_name"
                     v-model="usuario.name"
                     placeholder="Nombre Completo"
@@ -93,7 +93,7 @@
                   </label>
                   <input
                     type="text"
-                    class="form-control form-control-alternative"
+                    class="form-control "
                     id="id_email"
                     v-model="usuario.email"
                     placeholder="Correo Electrónico"
@@ -108,22 +108,10 @@
 
               <div class="col-12 col-md-6">
                 <div class="form-group">
-                  <label class="font-weight-bold" for="id_username">Nombre Usuario:</label>
-                  <input
-                    type="text"
-                    class="form-control form-control-alternative"
-                    id="id_username"
-                    v-model="usuario.username"
-                    placeholder="Nombre Usuario"
-                  />
-                </div>
-              </div>
-              <div class="col-12 col-md-6">
-                <div class="form-group">
                   <label class="font-weight-bold" for="id_password">Contraseña:</label>
                   <input
                     type="password"
-                    class="form-control form-control-alternative"
+                    class="form-control "
                     id="id_password"
                     v-model="usuario.contrasena"
                     placeholder="Contraseña"
@@ -135,7 +123,6 @@
                   >{{ errores.contrasena[0] }}</label>
                 </div>
               </div>
-
 
               <div class="col-12 col-lg-6" v-if="!usuario.status">
                 <div class="form-group">
@@ -150,13 +137,13 @@
               <div class="col-12 text-right">
                 <Boton
                   :text="'Actualizar'"
-                  :classes="['btn-primary','mr-2']"
+                  :classes="['btn-inverse-primary','mr-2']"
                   :request-server="requestServer"
                   º
                 ></Boton>
                 <button
                   type="button"
-                  class="btn btn-danger"
+                  class="btn btn-secondary"
                   @click.prevent="restorePage"
                 >Cancelar</button>
               </div>
@@ -165,10 +152,10 @@
         </div>
       </div>
 
-      <div class="card shadow mb-4" v-if="crearBloque">
-        <div class="card-header border-0">
+      <div class="card mb-4" v-if="crearBloque">
+        <!--<div class="card-header border-0">
           <h2 class="mb-0 text-uppercase text-primary">Crear Usuario</h2>
-        </div>
+        </div>-->
         <div class="card-body">
           <form @submit.prevent="createUser" enctype="multipart/form-data">
             <div class="row">
@@ -196,7 +183,7 @@
                   <label class="font-weight-bold" for="id_name">Nombre Completo:</label>
                   <input
                     type="text"
-                    class="form-control form-control-alternative"
+                    class="form-control "
                     id="id_name"
                     v-model="usuario.name"
                     placeholder="Nombre Completo"
@@ -209,24 +196,7 @@
                 </div>
               </div>
 
-              <div class="col-12 col-md-6">
-                <div class="form-group">
-                  <label class="font-weight-bold" for="id_username">Usuario:</label>
-
-                  <input
-                    type="text"
-                    class="form-control form-control-alternative"
-                    id="id_username"
-                    v-model="usuario.username"
-                    placeholder="Usuario"
-                  />
-                  <label
-                    v-if="errores && errores.username"
-                    class="mt-2 mb-0 text-danger"
-                    for="id_username"
-                  >{{ errores.username[0] }}</label>
-                </div>
-              </div>
+              
 
               <div class="col-12 col-md-6">
                 <div class="form-group">
@@ -234,7 +204,7 @@
 
                   <input
                     type="password"
-                    class="form-control form-control-alternative"
+                    class="form-control "
                     id="id_password"
                     v-model="usuario.password"
                     placeholder="Contraseña"
@@ -252,7 +222,7 @@
 
                   <input
                     type="text"
-                    class="form-control form-control-alternative"
+                    class="form-control "
                     id="id_email"
                     v-model="usuario.email"
                     placeholder="Correo Electrónico"
@@ -268,12 +238,12 @@
               <div class="col-12 text-right mt-2">
                 <Boton
                   :text="'Guardar'"
-                  :classes="['btn-primary','mr-2']"
+                  :classes="['btn-inverse-primary','mr-2']"
                   :request-server="requestServer"
                 ></Boton>
                 <button
                   type="button"
-                  class="btn btn-danger"
+                  class="btn btn-secondary"
                   @click.prevent="restorePage"
                 >Cancelar</button>
               </div>
@@ -282,17 +252,17 @@
         </div>
       </div>
 
-      <div class="card shadow mb-4" v-if="verBloque">
-        <div class="card-header border-0">
+      <div class="card mb-4" v-if="verBloque">
+        <!--<div class="card-header border-0">
           <h2 class="mb-0 text-uppercase text-primary">Ver Usuario</h2>
-        </div>
+        </div>-->
         <div class="card-body">
           <div class="row">
             <div class="col-12" v-if="usuario.avatar">
               <div class="form-group text-center">
                 <img
-                  class="object-fit--cover shadow d-block mx-auto img-180 rounded-circle"
-                  :src="rutaSistema + '/files/img/users/'+usuario.avatar"
+                  class="object-fit--cover shadow d-block mx-auto rounded-circle"
+                  :src="rutaSistema + '/files/img/users/'+usuario.avatar" height="180" width="180"
                 />
               </div>
             </div>
@@ -306,24 +276,9 @@
 
             <div class="col-12 col-md-6">
               <div class="form-group">
-                <label class="font-weight-bold" for="id_username">Usuario:</label>
-
-                <p>{{ this.usuario.username }}</p>
-              </div>
-            </div>
-            <div class="col-12 col-md-6">
-              <div class="form-group">
                 <label class="font-weight-bold" for="id_email">Correo Electrónico:</label>
 
                 <p>{{ this.usuario.email }}</p>
-              </div>
-            </div>
-
-            <div class="col-12 col-md-6">
-              <div class="form-group">
-                <label class="font-weight-bold" for="id_rol">Rol:</label>
-
-                <p>{{ this.usuario.rel_role.name }}</p>
               </div>
             </div>
 
@@ -336,11 +291,7 @@
             </div>
 
             <div class="col-12 text-right mt-2">
-              <button
-                type="button"
-                class="btn btn-primary"
-                @click.prevent="restorePage"
-              >Regresar</button>
+              <button type="button" class="btn btn-primary" @click.prevent="restorePage">Regresar</button>
             </div>
           </div>
         </div>
@@ -354,7 +305,7 @@
       <p class="mb-0">Esta seguro que desea eliminar el usuario?</p>
       <template slot="modal-footer" slot-scope="{ ok, cancel }">
         <Boton
-          :classes="['btn-danger']"
+          :classes="['btn-inverse-danger']"
           :text="'Eliminar'"
           @click="deleteUserConfirm"
           :request-server="requestServer"
@@ -370,7 +321,7 @@
       <p class="mb-0">Esta seguro que desea deshabilitar el usuario?</p>
       <template slot="modal-footer" slot-scope="{ ok, cancel }">
         <Boton
-          :classes="['btn-danger']"
+          :classes="['btn-inverse-danger']"
           :text="'Deshabilitar'"
           @click="disableUserConfirm"
           :request-server="requestServer"
@@ -390,15 +341,15 @@ export default {
   props: {
     rutaSistema: {
       type: String,
-      required: true
-    }
+      required: true,
+    },
   },
   components: {
     DataTable,
     Boton,
     BreadCrumb,
     ModelListSelect,
-    vueDropzone: vue2Dropzone
+    vueDropzone: vue2Dropzone,
   },
   data() {
     return {
@@ -414,7 +365,7 @@ export default {
         autoProcessQueue: false,
         thumbnailWidth: 100,
         addRemoveLinks: true,
-        dictRemoveFile: "Remover"
+        dictRemoveFile: "Remover",
       },
       usuario: {
         rel_role: {},
@@ -424,23 +375,23 @@ export default {
         name: "",
         email: "",
         status: false,
-        available: false
+        available: false,
       },
       errores: {},
-      requestServer: false
+      requestServer: false,
     };
   },
   methods: {
     restoreEl() {
       this.crearBloque = this.editBlock = this.verBloque = this.requestServer = false;
-      (this.errores =  {}),
+      (this.errores = {}),
         (this.usuario = {
           rel_role: {},
           role_id: "",
           username: "",
           password: "",
           name: "",
-          email: ""
+          email: "",
         });
       this.$refs["modal-eliminar"].hide();
       this.$refs["modal-disable"].hide();
@@ -458,16 +409,16 @@ export default {
           username: "",
           password: "",
           name: "",
-          email: ""
+          email: "",
         });
     },
     getUser(id) {
       axios
         .get("json/usuarios/" + id)
-        .then(response => {
+        .then((response) => {
           this.usuario = response.data;
         })
-        .catch(error => {});
+        .catch((error) => {});
     },
     getUsers(pagina, desde, buscar = null) {
       let url = "json/usuarios?page=" + pagina + "&desde=" + desde;
@@ -476,12 +427,12 @@ export default {
       }
       axios
         .get(url)
-        .then(response => {
+        .then((response) => {
           this.usuarios = response.data;
         })
-        .catch(error => {});
+        .catch((error) => {});
     },
-    
+
     showUser(id) {
       this.getUser(id);
       this.showBlock = false;
@@ -504,7 +455,7 @@ export default {
       this.requestServer = true;
       axios
         .put("usuarios/deshabilitar/" + this.usuario.id)
-        .then(response => {
+        .then((response) => {
           this.restorePage();
           Swal.fire({
             title: response.data.title,
@@ -513,11 +464,11 @@ export default {
             confirmButtonText: "OK",
             buttonsStyling: false,
             customClass: {
-              confirmButton: "btn btn-primary"
-            }
+              confirmButton: "btn btn-inverse-primary",
+            },
           });
         })
-        .catch(error => {
+        .catch((error) => {
           this.restoreEl();
         });
     },
@@ -525,7 +476,7 @@ export default {
       this.requestServer = true;
       axios
         .delete("usuarios/" + this.usuario.id)
-        .then(response => {
+        .then((response) => {
           this.restorePage();
           Swal.fire({
             title: response.data.title,
@@ -534,11 +485,11 @@ export default {
             confirmButtonText: "OK",
             buttonsStyling: false,
             customClass: {
-              confirmButton: "btn btn-primary"
-            }
+              confirmButton: "btn btn-inverse-primary",
+            },
           });
         })
-        .catch(error => {
+        .catch((error) => {
           this.restoreEl();
         });
     },
@@ -567,7 +518,7 @@ export default {
       fd.append("_method", "put");
       axios
         .post("usuarios/" + this.usuario.id, fd)
-        .then(response => {
+        .then((response) => {
           this.requestServer = false;
           this.restorePage();
           Swal.fire({
@@ -577,11 +528,11 @@ export default {
             confirmButtonText: "OK",
             buttonsStyling: false,
             customClass: {
-              confirmButton: "btn btn-primary"
-            }
+              confirmButton: "btn btn-inverse-primary",
+            },
           });
         })
-        .catch(error => {
+        .catch((error) => {
           if (error.response.status === 422) {
             this.requestServer = false;
             this.errores = error.response.data.errors || {};
@@ -602,7 +553,7 @@ export default {
       }
       axios
         .post("usuarios", fd)
-        .then(response => {
+        .then((response) => {
           this.requestServer = false;
           this.restorePage();
           Swal.fire({
@@ -612,11 +563,11 @@ export default {
             confirmButtonText: "OK",
             buttonsStyling: false,
             customClass: {
-              confirmButton: "btn btn-primary"
-            }
+              confirmButton: "btn btn-inverse-primary",
+            },
           });
         })
-        .catch(error => {
+        .catch((error) => {
           this.requestServer = false;
           if (error.response.status === 422) {
             this.errores = error.response.data.errors || {};
@@ -624,10 +575,10 @@ export default {
           }
           this.restorePage();
         });
-    }
+    },
   },
   created() {
     this.getUsers(1, 5);
-  }
+  },
 };
 </script>

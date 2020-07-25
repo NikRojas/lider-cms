@@ -9,7 +9,7 @@ Validation.install = function (Vue, options) {
                 confirmButtonText: "OK",
                 buttonsStyling: false,
                 customClass: {
-                  confirmButton: "btn btn-primary"
+                  confirmButton: "btn btn-inverse-primary"
                 }
               });
             ref.files.pop();
@@ -27,7 +27,7 @@ Validation.install = function (Vue, options) {
                 confirmButtonText: "OK",
                 buttonsStyling: false,
                 customClass: {
-                  confirmButton: "btn btn-primary"
+                  confirmButton: "btn btn-inverse-primary"
                 }
               });
             if(ref.files.length){
@@ -46,7 +46,7 @@ Validation.install = function (Vue, options) {
                 confirmButtonText: "OK",
                 buttonsStyling: false,
                 customClass: {
-                  confirmButton: "btn btn-primary"
+                  confirmButton: "btn btn-inverse-primary"
                 }
               });
             ref.files.pop();
@@ -64,7 +64,7 @@ Validation.install = function (Vue, options) {
               confirmButtonText: "OK",
               buttonsStyling: false,
               customClass: {
-                confirmButton: "btn btn-primary"
+                confirmButton: "btn btn-inverse-primary"
               }
             });
           ref.files.pop();
@@ -82,7 +82,7 @@ Validation.install = function (Vue, options) {
               confirmButtonText: "OK",
               buttonsStyling: false,
               customClass: {
-                confirmButton: "btn btn-primary"
+                confirmButton: "btn btn-inverse-primary"
               }
             });
           if(ref.files.length){
@@ -101,7 +101,7 @@ Validation.install = function (Vue, options) {
               confirmButtonText: "OK",
               buttonsStyling: false,
               customClass: {
-                confirmButton: "btn btn-primary"
+                confirmButton: "btn btn-inverse-primary"
               }
             });
           ref.files.pop();
@@ -126,7 +126,7 @@ Validation.install = function (Vue, options) {
                 confirmButtonText: "OK",
                 buttonsStyling: false,
                 customClass: {
-                  confirmButton: "btn btn-primary"
+                  confirmButton: "btn btn-inverse-primary"
                 }
               });
             return;
@@ -146,7 +146,7 @@ Validation.install = function (Vue, options) {
                 confirmButtonText: "OK",
                 buttonsStyling: false,
                 customClass: {
-                  confirmButton: "btn btn-primary"
+                  confirmButton: "btn btn-inverse-primary"
                 }
               });
             return;
@@ -203,7 +203,7 @@ Validation.install = function (Vue, options) {
                         confirmButtonText: "OK",
                         buttonsStyling: false,
                         customClass: {
-                          confirmButton: "btn btn-primary"
+                          confirmButton: "btn btn-inverse-primary"
                         }
                       });
 

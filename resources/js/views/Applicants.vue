@@ -30,7 +30,7 @@
          <div class="col-12 col-lg-4">
           <div class="row">
             <div class="col-12">
-              <div class="card shadow">
+              <div class="card">
                 <div class="card-header border-0">
                   <h2 class="mb-0 text-uppercase text-primary">Correos Destino</h2>
                 </div>
@@ -246,7 +246,7 @@ export default {
             confirmButtonText: "OK",
             buttonsStyling: false,
             customClass: {
-              confirmButton: "btn btn-primary"
+              confirmButton: "btn btn-inverse-primary"
             }
           });
         })
@@ -259,7 +259,7 @@ export default {
             confirmButtonText: "OK",
             buttonsStyling: false,
             customClass: {
-              confirmButton: "btn btn-primary"
+              confirmButton: "btn btn-inverse-primary"
             }
           });
         });   
@@ -310,7 +310,7 @@ export default {
             confirmButtonText: "OK",
             buttonsStyling: false,
             customClass: {
-              confirmButton: "btn btn-primary"
+              confirmButton: "btn btn-inverse-primary"
             }
           });
         })
@@ -328,7 +328,7 @@ export default {
             confirmButtonText: "OK",
             buttonsStyling: false,
             customClass: {
-              confirmButton: "btn btn-primary"
+              confirmButton: "btn btn-inverse-primary"
             }
           });
         });

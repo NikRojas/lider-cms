@@ -13,7 +13,7 @@
           <label class="form-control-label" for="id_correo_electronico">Correo Electrónico</label>
           <input
             type="text"
-            class="form-control form-control-alternative"
+            class="form-control "
             id="id_correo_electronico"
             placeholder="Ingrese su correo electrónico"
             v-model="email"
@@ -33,7 +33,7 @@
           <label class="form-control-label" for="id_password">Nueva Contraseña</label>
           <input
             type="password"
-            class="form-control form-control-alternative"
+            class="form-control "
             id="id_password"
             placeholder="Ingrese su contraseña"
             v-model="restore.password"
@@ -51,7 +51,7 @@
           </label>
           <input
             type="password"
-            class="form-control form-control-alternative"
+            class="form-control "
             id="id_confirm_password"
             placeholder="Ingrese su contraseña"
             v-model="restore.password_confirmation"

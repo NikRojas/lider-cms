@@ -3,7 +3,7 @@
     <div class="row">
         <div class="col-12">
             
-            <div class="card shadow">
+            <div class="card">
                 <div class="card-header border-0" v-if="title">
                     <h2 class="mb-0 text-uppercase text-primary">{{ title }}</h2>
                 </div>  

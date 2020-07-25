@@ -41,7 +41,7 @@
           <div class="col-12">
             <div class="form-group">
               <label class="form-control-label d-block" for="id_name">Nombre</label>
-              <input type="text" class="form-control form-control-alternative" v-model="category.name" id="id_name" />
+              <input type="text" class="form-control " v-model="category.name" id="id_name" />
               <label
                 v-if="errors && errors.name"
                 class="mt-2 text-danger text-sm"
@@ -85,7 +85,7 @@
           <div class="col-12">
             <div class="form-group">
               <label class="form-control-label d-block" for="id_name">Nombre</label>
-              <input type="text" class="form-control form-control-alternative" v-model="category.name" id="id_name" />
+              <input type="text" class="form-control " v-model="category.name" id="id_name" />
               <label
                 v-if="errors && errors.name"
                 class="mt-2 text-danger text-sm"
@@ -155,7 +155,7 @@ export default {
             confirmButtonText: "OK",
             buttonsStyling: false,
             customClass: {
-              confirmButton: "btn btn-primary"
+              confirmButton: "btn btn-inverse-primary"
             }
           });
         })
@@ -169,7 +169,7 @@ export default {
             confirmButtonText: "OK",
             buttonsStyling: false,
             customClass: {
-              confirmButton: "btn btn-primary"
+              confirmButton: "btn btn-inverse-primary"
             }
           });
         });
@@ -214,7 +214,7 @@ export default {
             confirmButtonText: "OK",
             buttonsStyling: false,
             customClass: {
-              confirmButton: "btn btn-primary"
+              confirmButton: "btn btn-inverse-primary"
             }
           });
         })
@@ -232,7 +232,7 @@ export default {
             confirmButtonText: "OK",
             buttonsStyling: false,
             customClass: {
-              confirmButton: "btn btn-primary"
+              confirmButton: "btn btn-inverse-primary"
             }
           });
         });
@@ -251,7 +251,7 @@ export default {
             confirmButtonText: "OK",
             buttonsStyling: false,
             customClass: {
-              confirmButton: "btn btn-primary"
+              confirmButton: "btn btn-inverse-primary"
             }
           });
         })

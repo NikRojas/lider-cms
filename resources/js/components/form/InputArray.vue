@@ -3,7 +3,7 @@
         <div v-for="(elemento, index) in arreglo.length" :key="index">
             <div class="row">
                 <div class="col-10 col-lg-8">
-                    <input type="text" class="form-control form-control-alternative mb-2 d-inline-block" v-model="arreglo[index]" @keydown.enter.prevent="agregarElemento">
+                    <input type="text" class="form-control  mb-2 d-inline-block" v-model="arreglo[index]" @keydown.enter.prevent="agregarElemento">
                 </div>
                 <div class="col-auto">
                     <button class="btn btn-icon-only rounded-circle btn-secondary" @click.prevent="agregarElemento(index)" v-if="(arreglo.length - 1) == index">

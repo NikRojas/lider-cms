@@ -35,7 +35,7 @@
         :object.sync="testimonials"
         :classes="['col-12','col-sm-6','col-lg-6','col-xl-4','mb-4']"
       ></ElementsDraggable>
-      <div class="card shadow mb-4" v-if="newBlock">
+      <div class="card mb-4" v-if="newBlock">
         <div class="card-header border-0">
           <h2 class="mb-0 text-uppercase text-primary">Crear Testimonio</h2>
         </div>
@@ -76,7 +76,7 @@
                       <label class="font-weight-bold" for="id_full_name">Nombre Completo</label>
                       <input
                         type="text"
-                        class="form-control form-control-alternative"
+                        class="form-control "
                         v-model="testimonial.full_name"
                         id="id_full_name"
                       />
@@ -93,7 +93,7 @@
                       <label class="font-weight-bold" for="id_job">Cargo</label>
                       <input
                         type="text"
-                        class="form-control form-control-alternative"
+                        class="form-control "
                         v-model="testimonial.job"
                         id="id_job"
                       />
@@ -110,7 +110,7 @@
                       <label class="font-weight-bold" for="id_company">Empresa</label>
                       <input
                         type="text"
-                        class="form-control form-control-alternative"
+                        class="form-control "
                         v-model="testimonial.company"
                         id="id_company"
                       />
@@ -126,7 +126,7 @@
                     <div class="form-group">
                       <label class="font-weight-bold" for="id_message">Testimonio</label>
                       <textarea
-                        class="form-control form-control-alternative"
+                        class="form-control "
                         v-model="testimonial.message"
                         id="id_message"
                         rows="4"
@@ -153,7 +153,7 @@
           </form>
         </div>
       </div>
-      <div class="card shadow" v-if="editBlock">
+      <div class="card" v-if="editBlock">
         <div class="card-header bg-white border-0">
           <h2 class="mb-0 text-uppercase text-primary">Actualizar Testimonio</h2>
         </div>
@@ -205,7 +205,7 @@
                       <label class="font-weight-bold" for="id_full_name">Nombre Completo</label>
                       <input
                         type="text"
-                        class="form-control form-control-alternative"
+                        class="form-control "
                         v-model="testimonial.full_name"
                         id="id_full_name"
                       />
@@ -222,7 +222,7 @@
                       <label class="font-weight-bold" for="id_job">Cargo</label>
                       <input
                         type="text"
-                        class="form-control form-control-alternative"
+                        class="form-control "
                         v-model="testimonial.job"
                         id="id_job"
                       />
@@ -239,7 +239,7 @@
                       <label class="font-weight-bold" for="id_company">Empresa</label>
                       <input
                         type="text"
-                        class="form-control form-control-alternative"
+                        class="form-control "
                         v-model="testimonial.company"
                         id="id_company"
                       />
@@ -255,7 +255,7 @@
                     <div class="form-group">
                       <label class="font-weight-bold" for="id_message">Testimonio</label>
                       <textarea
-                        class="form-control form-control-alternative"
+                        class="form-control "
                         v-model="testimonial.message"
                         id="id_message"
                         rows="4"
@@ -381,7 +381,7 @@ export default {
             confirmButtonText: "OK",
             buttonsStyling: false,
             customClass: {
-              confirmButton: "btn btn-primary"
+              confirmButton: "btn btn-inverse-primary"
             }
           });
         })
@@ -394,7 +394,7 @@ export default {
             confirmButtonText: "OK",
             buttonsStyling: false,
             customClass: {
-              confirmButton: "btn btn-primary"
+              confirmButton: "btn btn-inverse-primary"
             }
           });
         });
@@ -472,7 +472,7 @@ export default {
             confirmButtonText: "OK",
             buttonsStyling: false,
             customClass: {
-              confirmButton: "btn btn-primary"
+              confirmButton: "btn btn-inverse-primary"
             }
           });
         })
@@ -490,7 +490,7 @@ export default {
             confirmButtonText: "OK",
             buttonsStyling: false,
             customClass: {
-              confirmButton: "btn btn-primary"
+              confirmButton: "btn btn-inverse-primary"
             }
           });
         });
@@ -528,7 +528,7 @@ export default {
             confirmButtonText: "OK",
             buttonsStyling: false,
             customClass: {
-              confirmButton: "btn btn-primary"
+              confirmButton: "btn btn-inverse-primary"
             }
           });
         })
@@ -546,7 +546,7 @@ export default {
             confirmButtonText: "OK",
             buttonsStyling: false,
             customClass: {
-              confirmButton: "btn btn-primary"
+              confirmButton: "btn btn-inverse-primary"
             }
           });
         });
@@ -563,7 +563,7 @@ export default {
             confirmButtonText: "OK",
             buttonsStyling: false,
             customClass: {
-              confirmButton: "btn btn-primary"
+              confirmButton: "btn btn-inverse-primary"
             }
           });
         })
@@ -575,7 +575,7 @@ export default {
             confirmButtonText: "OK",
             buttonsStyling: false,
             customClass: {
-              confirmButton: "btn btn-primary"
+              confirmButton: "btn btn-inverse-primary"
             }
           });
         });

@@ -8,7 +8,8 @@
         <button-menu></button-menu>
         <!-- Brand -->
         <a class="navbar-brand" href="{{ route('cms.dashboard') }}">
-            <img src="/storage/img/logo-pg.svg" class="align-middle" width="auto" />
+            <img src="/storage/img/logo-mini.png" class="align-middle d-block d-md-none logo-mini mx-auto" height="50" width="auto" />
+            <img src="/storage/img/logo.png" class="align-middle d-none d-md-block logo" height="40" width="auto" />
         </a>
         <!-- User -->
         <ul class="nav align-items-center d-md-none">
@@ -16,29 +17,29 @@
                 <b-dropdown id="id_dropdown_navbar" class="nav-link border-0 pr-0" :lazy="true" variant="link" v-cloak>
                     <template slot="button-content">
                         <div class="media align-items-center">
-                            <span class="avatar avatar-sm rounded-circle shadow">
-
+                            <span class="avatar avatar-sm rounded-circle bg-default">
                                 @if(Auth::user()->avatar)
                                 <img src="{{ route('cms.get-file',[ 'folder' => 'img', 'subfolder' => 'users', 'file' => Auth::user()->avatar ]) }}"
                                     alt="User">
                                 @else
-                                <img src="{{ route('cms.get-file',[ 'folder' => 'img', 'subfolder' => 'users', 'file' => 'avatar.jpg' ]) }}"
-                                    alt="User" />
+                                <!--<img src="{{ route('cms.get-file',[ 'folder' => 'img', 'subfolder' => 'users', 'file' => 'avatar.jpg' ]) }}"
+                                    alt="User" />-->
+                                    {{ Auth::user()->avatar_initials }}
                                 @endif
-
                             </span>
                         </div>
                     </template>
-                    <b-dropdown-header class="dropdown-header p-0">
+                    <!--<b-dropdown-header class="dropdown-header p-0">
                         <h6 class="text-overflow m-0">Bienvenido!</h6>
                     </b-dropdown-header>
-                    <b-dropdown-divider></b-dropdown-divider>
+                    <b-dropdown-divider></b-dropdown-divider>-->
                     <b-dropdown-item href="{{ route('cms.profile') }}">
-                        <i class="fas fa-user-alt v-align-middle"></i> Mi perfil
+                        <span data-jam="user-circle" class="current-color mr-3" data-with="20" data-height="20"></span> <span class="v-align-middle">Mi perfil</span>
                     </b-dropdown-item>
+                    <b-dropdown-divider></b-dropdown-divider>
                     <b-dropdown-item href="{{ route('logout') }}"
                         onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                        <i class="fas fa-power-off v-align-middle"></i> Cerrar Sesión
+                        <span data-jam="power" class="current-color text-danger mr-3" data-with="20" data-height="20"></span> <span class="v-align-middle">Cerrar Sesión</span>
                     </b-dropdown-item>
                 </b-dropdown>
 
@@ -54,7 +55,7 @@
                 <div class="row">
                     <div class="col-6 collapse-brand">
                         <a href="{{ route('cms.dashboard') }}">
-                            <img src="/storage/img/logo-pg.svg" class="align-middle" height="70px" width="auto" />
+                            <img src="/storage/img/logo.png" class="align-middle" height="70px" width="auto" />
                         </a>
                     </div>
                     <div class="col-6 collapse-close">
@@ -68,9 +69,11 @@
                     @isset($module["menu_secondary"])
                         <a class="nav-link position-relative d-inline-block w-100 py-3 {{ Request::segment(1) ==  $module["variable"] ? 'active' : ''   }}"
                             v-b-toggle.{{$module["variable"]}}>
-                            <i class="text-blue {{$module["icon"]}}"></i>
+                            <!--<i class="{{$module["icon"]}}"></i>-->
+                            <span class="current-color mr-3" data-jam="{{$module["icon"]}}" data-with="20" data-height="20"></span>
+                            <!--<span class="current-color" data-jam="box-f" data-with="20" data-height="20"></span>-->
                             <span class="nav-link__text">{{ $module["name"] }}</span>
-                            <span class="arrow"><i class="menu-arrow"> <i class="fas fa-chevron-down"></i> </i></span>
+                            <span class="arrow"><i class="menu-arrow"> <!--<i class="fas fa-chevron-down"></i>--> <span class="current-color" data-jam="arrow-right" data-with="16" data-height="16"></span> </i></span>
                         </a>
                         <b-collapse id="{{$module["variable"]}}" v-cloak>
                             <ul class="nav flex-column sub-menu">
@@ -82,35 +85,30 @@
                             </ul>
                         </b-collapse>
 
-
-
-
                         <a class="nav-link position-relative text-center d-inline-block w-100 py-3 nav-link--hover {{ Request::segment(1) ==  $module["variable"] ? 'active' : ''   }}" :id="'popover-{{$module["variable"]}}'">
-                            <i class="text-blue {{$module["icon"]}}"></i>
+                            <!--<i class="{{$module["icon"]}}"></i>-->
+                            <span class="current-color mr-3" data-jam="{{$module["icon"]}}" data-with="20" data-height="20"></span>
                         </a>
-                        <b-popover :target="'popover-{{$module["variable"]}}'" :show="true" custom-class="ml-0 border-0 pl-0" triggers="hover" placement="right" v-cloak>
-                                <template v-slot:title>{{ $module["name"] }}</template>
-                                <ul class="nav flex-column sub-menu">
+                        <b-popover :target="'popover-{{$module["variable"]}}'" custom-class="ml-0 border-0 pl-0 pt-1 pb-2" triggers="hover" placement="right" v-cloak>
+                                <template v-slot:title >
+                                    <div class="ml-2">{{ $module["name"] }}</div></template>
+                                <ul class="nav flex-column sub-menu ml-2">
                                         @foreach($module["menu_secondary"] as $submodule)
                                             <li class="nav-item">
                                                 <a class="nav-link py-1 px-0" href="/{{ $submodule["slug"] }}">{{ $submodule["name"] }}</a>
                                             </li>
                                         @endforeach
                                 </ul>
-                          </b-popover>
-
-
-
+                        </b-popover>
                     @else 
                     <a
                         class="nav-link position-relative d-inline-block w-100 py-3 {{  Request::path() ==  $module["slug"] ? 'active' : '' }}"
                         href="/{{ $module["slug"] }}">
-                            <i class="text-blue {{$module["icon"]}}"></i>
+                            <!--<i class="{{$module["icon"]}}"></i>--><span class="current-color mr-3" data-jam="{{$module["icon"]}}" data-with="20" data-height="20"></span>
                             <span class="nav-link__text">{{ $module["name"] }}</span>
                     </a>
-
                     <a class="nav-link position-relative text-center d-inline-block w-100 py-3 nav-link--hover {{  Request::path() ==  $module["slug"] ? 'active' : '' }}" :id="'popover-{{$module["slug"]}}'">
-                        <i class="text-blue {{$module["icon"]}}"></i>
+                        <!--<i class="{{$module["icon"]}}"></i>--><span class="current-color mr-3" data-jam="{{$module["icon"]}}" data-with="20" data-height="20"></span>
                     </a>
                     <b-popover :target="'popover-{{$module["slug"]}}'" custom-class="ml-0 border-0 pl-0 pr-5" triggers="hover" placement="right" v-cloak>
                         <a class="nav-link pt-1 px-0" href="/{{ $module["slug"] }}">
@@ -127,39 +125,42 @@
 
 
 <div class="main-content" id="main-content">
+    <!--<div class="header-color bg-primary position-absolute w-100"></div>-->
     <nav class="navbar navbar-top navbar-expand navbar-light position-relative" id="navbar-main">
         <div class="container-fluid">
             <button-icons></button-icons>
             <ul class="navbar-nav align-items-center d-none d-md-flex ml-auto">
                 <li class="nav-item">
-                    <b-dropdown id="id_dropdown_navbar" class="nav-link border-0 pr-0" :lazy="true" variant="link"
+                    <b-dropdown id="id_dropdown_navbar" class="border-0 pr-0" :lazy="true" variant="link"
                         v-cloak>
                         <template slot="button-content">
                             <div class="media align-items-center">
-                                <span class="avatar avatar-md rounded-circle shadow">
+                                <span class="avatar rounded-circle bg-default">
                                     @if(Auth::user()->avatar)
                                     <img src="{{ route('cms.get-file',[ 'folder' => 'img', 'subfolder' => 'users', 'file' => Auth::user()->avatar ]) }}"
                                         alt="Usuario" />
                                     @else
-                                    <img src="{{ route('cms.get-file',[ 'folder' => 'img', 'subfolder' => 'users', 'file' => 'avatar.jpg' ]) }}"
-                                        alt="Usuario" />
+                                    <!--<img src="{{ route('cms.get-file',[ 'folder' => 'img', 'subfolder' => 'users', 'file' => 'avatar.jpg' ]) }}"
+                                        alt="Usuario" />-->
+                                        {{ Auth::user()->avatar_initials }}
                                     @endif
                                 </span>
                                 <div class="media-body ml-2">
-                                    <span class="mb-0 text-sm font-weight-bold">{{ Auth::user()->full_name }}</span>
+                                    <span class="mb-0 text-sm font-weight-semibold">{{ Auth::user()->name }}</span>
                                 </div>
                             </div>
                         </template>
-                        <b-dropdown-header class="dropdown-header p-0">
+                        <!--<b-dropdown-header class="dropdown-header p-0">
                             <h6 class="text-overflow m-0">Bienvenido!</h6>
                         </b-dropdown-header>
-                        <b-dropdown-divider></b-dropdown-divider>
-                        <b-dropdown-item href="{{ route('cms.profile') }}">
-                            <i class="fas fa-user-alt v-align-middle"></i> Mi perfil
+                        <b-dropdown-divider></b-dropdown-divider>-->
+                        <b-dropdown-item class="my-1" href="{{ route('cms.profile') }}">
+                            <span data-jam="user-circle" class="current-color mr-3" data-with="20" data-height="20"></span> <span class="v-align-middle">Mi perfil</span>
                         </b-dropdown-item>
-                        <b-dropdown-item href="{{ route('logout') }}"
+                        <b-dropdown-divider></b-dropdown-divider>
+                        <b-dropdown-item class="my-1" href="{{ route('logout') }}"
                             onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                            <i class="fas fa-power-off v-align-middle"></i> Cerrar Sesión
+                            <span data-jam="power" class="current-color text-danger mr-3" data-with="20" data-height="20"></span> <span class="v-align-middle">Cerrar Sesión</span>
                         </b-dropdown-item>
                     </b-dropdown>
                 </li>
@@ -169,11 +170,11 @@
     <div class="content-wrapper">
     @yield('content')
 </div>
-    <footer class="py-3">
+    <footer class="pb-2">
         <div class="container-fluid">
             <div class="row">
                 <div class="col-12">
-                    <span class="text-muted text-center text-sm-left d-block d-sm-inline-block">Copyright © @php echo date('Y') @endphp <a href="{{ env('APP_URL') }}" target="_blank">PLAY Group</a>. All rights reserved.</span>
+                    <small class="text-center text-sm-left d-block d-sm-inline-block">Copyright © @php echo date('Y') @endphp <a href="https://playgroup.pe" target="_blank">PLAY Group</a>. All rights reserved.</small>
                 </div>
             </div>
         </div>

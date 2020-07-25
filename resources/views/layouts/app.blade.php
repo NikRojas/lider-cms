@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>{{ config('app.name') }}</title>
     <meta name="robots" content="noindex,nofollow">
-    <link rel="apple-touch-icon" sizes="57x57" href="{{ asset('storage/img/favicon/apple-icon-57x57.png') }}">
+    <!--<link rel="apple-touch-icon" sizes="57x57" href="{{ asset('storage/img/favicon/apple-icon-57x57.png') }}">
     <link rel="apple-touch-icon" sizes="60x60" href="{{ asset('storage/img/favicon/apple-icon-60x60.png') }}">
     <link rel="apple-touch-icon" sizes="72x72" href="{{ asset('storage/img/favicon/apple-icon-72x72.png') }}">
     <link rel="apple-touch-icon" sizes="76x76" href="{{ asset('storage/img/favicon/apple-icon-76x76.png') }}">
@@ -22,18 +22,20 @@
     <link rel="manifest" href="{{ asset('storage/img/favicon/manifest.json') }}">
     <meta name="msapplication-TileColor" content="#ffffff">
     <meta name="msapplication-TileImage" content="{{ asset('storage/img/ms-icon-144x144.png') }}">
-    <meta name="theme-color" content="#ffffff">
+    <meta name="theme-color" content="#ffffff">-->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet" >
-    <link href="{{ asset('css/font-awesome.min.css') }}" rel="stylesheet">
+    <!--<link href="{{ asset('css/font-awesome.min.css') }}" rel="stylesheet">-->
     <link href="{{ asset('css/fonts.css') }}" rel="stylesheet">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     @yield('head')
 </head>
-<body @isset($class) class="{{ $class }}" @endisset id="body">
+<body @isset($class) class="{{ $class }}" @endisset @empty($class) class="sidebar-icon-only" @endempty id="body">
+<!--<body @isset($class) class="{{ $class }}" @endisset id="body">-->
     <div id="app">
         @yield('page')
     </div>
     @stack('scripts')
+    <script src="{{ asset('js/vendors/jam-icons/jam.min.js') }}"></script>
     <script src="{{ asset('js/manifest.js') }}"></script>
     <script src="{{ asset('js/vendor.js') }}"></script>
     <script src="{{ asset('js/app.js') }}"></script>

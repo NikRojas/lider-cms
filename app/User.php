@@ -42,7 +42,7 @@ class User extends Authenticatable
         return $this->hasOne('App\Role','id','role_id');
     }*/
 
-    protected $appends = ['status_format'];
+    protected $appends = ['avatar_initials','status_format'];
 
     public function getStatusFormatAttribute(){
         if($this->status){
@@ -51,5 +51,14 @@ class User extends Authenticatable
         else{
             return "<i class='fas fa-circle text-danger'></i>";
         }
+    }
+
+    public function getAvatarInitialsAttribute(){
+        $temp = explode(' ',trim($this->name));
+        $initials = strtoupper(substr($temp[0],0,1));
+        if(count($temp) > 1){
+            $initials = $initials.strtoupper(substr($temp[1],0,1));
+        }
+        return $initials;
     }
 }

@@ -25,7 +25,7 @@
       </div>
     </div>
     <div class="container-fluid mt--6">
-      <div class="card shadow mb-4" v-if="inicioBloque">
+      <div class="card mb-4" v-if="inicioBloque">
         <div class="card-header border-0">
           <h2 class="mb-0 text-uppercase text-primary">Información General</h2>
         </div>
@@ -83,7 +83,7 @@
           </div>
         </div>
       </div>
-      <div class="card shadow mb-4" v-if="editarBloque">
+      <div class="card mb-4" v-if="editarBloque">
         <div class="card-header border-0">
           <h2 class="mb-0 text-uppercase text-primary">Actualizar Información General</h2>
         </div>
@@ -95,7 +95,7 @@
                   <label class="font-weight-bold" for="id_description">Descripción</label>
                   <textarea
                     type="text"
-                    class="form-control form-control-alternative mb-2"
+                    class="form-control  mb-2"
                     v-model="informacion.description"
                     id="id_description"
                     placeholder="Descripción"
@@ -113,7 +113,7 @@
                   <label class="font-weight-bold" for="id_phone">Teléfono</label>
                   <input
                     type="text"
-                    class="form-control form-control-alternative mb-2"
+                    class="form-control  mb-2"
                     v-model="informacion.phone"
                     id="id_phone"
                     placeholder="Teléfono"
@@ -131,7 +131,7 @@
                   <input
                     type="text"
                     placeholder="Móvil"
-                    class="form-control form-control-alternative mb-2"
+                    class="form-control  mb-2"
                     v-model="informacion.cellphone"
                     id="id_cellphone"
                   />
@@ -148,7 +148,7 @@
                   <input
                     type="text"
                     placeholder="Email"
-                    class="form-control form-control-alternative mb-2"
+                    class="form-control  mb-2"
                     v-model="informacion.email"
                     id="id_correo_electronico"
                   />
@@ -165,7 +165,7 @@
                   <input
                     type="text"
                     placeholder="Ubicación Línea 1"
-                    class="form-control form-control-alternative mb-2"
+                    class="form-control  mb-2"
                     v-model="informacion.address_line_1"
                     id="id_address_line_1"
                   />
@@ -182,7 +182,7 @@
                   <input
                     type="text"
                     placeholder="Ubicación Línea 2"
-                    class="form-control form-control-alternative mb-2"
+                    class="form-control  mb-2"
                     v-model="informacion.address_line_2"
                     id="id_address_line_2"
                   />
@@ -200,7 +200,7 @@
                   <input
                     type="text"
                     placeholder="Distrito"
-                    class="form-control form-control-alternative mb-2"
+                    class="form-control  mb-2"
                     v-model="informacion.district"
                     id="id_district"
                   />
@@ -281,7 +281,7 @@ export default {
             confirmButtonText: "Ok",
             buttonsStyling: false,
             customClass: {
-              confirmButton: "btn btn-primary"
+              confirmButton: "btn btn-inverse-primary"
             }
           });
         })
@@ -299,7 +299,7 @@ export default {
             confirmButtonText: "Ok",
             buttonsStyling: false,
             customClass: {
-              confirmButton: "btn btn-primary"
+              confirmButton: "btn btn-inverse-primary"
             }
           });
         });

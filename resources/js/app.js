@@ -2,20 +2,26 @@ window.Vue = require('vue');
 require('./bootstrap-vue');
 require('./axios');
 
+
+
 import Sweetalert2 from 'sweetalert2/src/sweetalert2.js';
 window.Swal = Sweetalert2;
 window.Slug = require('slug');
 Slug.defaults.mode = "rfc3986";
 
+import VueJamIcons from 'vue-jam-icons'
+Vue.use(VueJamIcons)
+
+
 const app = new Vue({
     el: '#app',
     components: {
-        login: () => import('./views/auth/Login.vue' /* webpackChunkName: "js/login" */),
-        'button-menu': () => import('./components/layout/ButtonMenu.vue' /* webpackChunkName: "js/button-menu" */),
-        'button-close': () => import('./components/layout/ButtonClose.vue' /* webpackChunkName: "js/button-close" */),
-        'button-icons': () => import('./components/layout/ButtonIcons.vue' /* webpackChunkName: "js/button-icons" */),
+        login: () => import('./views/auth/Login.vue' /* webpackChunkName: "js/pages/login" */),
+        'button-menu': () => import('./components/layout/ButtonMenu.vue' /* webpackChunkName: "js/components/button-menu" */),
+        'button-close': () => import('./components/layout/ButtonClose.vue' /* webpackChunkName: "js/components/button-close" */),
+        'button-icons': () => import('./components/layout/ButtonIcons.vue' /* webpackChunkName: "js/components/button-icons" */),
 
-        'users': () => import('./views/configuration/Users.vue' /* webpackChunkName: "js/users" */),
+        'users': () => import('./views/configuration/Users.vue' /* webpackChunkName: "js/pages/users" */),
 
         //'general': () => import('./views/info/General.vue' /* webpackChunkName: "js/general" */),
         //'social': () => import('./views/info/Social.vue' /* webpackChunkName: "js/social" */),
@@ -24,14 +30,14 @@ const app = new Vue({
         //'category': () => import('./views/blog/Category.vue' /* webpackChunkName: "js/category" */),
         //'posts': () => import('./views/blog/Post.vue' /* webpackChunkName: "js/posts" */),
         
-        'profile': () => import('./views/Profile.vue' /* webpackChunkName: "js/profile" */),
+        'profile': () => import('./views/Profile.vue' /* webpackChunkName: "js/pages/profile" */),
 
         //'dashboard': () => import('./views/Dashboard.vue' /* webpackChunkName: "js/dashboard" */),
         //'applicants': () => import('./views/Applicants.vue' /* webpackChunkName: "js/applicants" */),
 
         //'testimonials': () => import('./views/Testimonials.vue' /* webpackChunkName: "js/testimonials" */),
 
-        'reset': () => import('./views/auth/Reset.vue' /* webpackChunkName: "js/reset" */),
+        'reset': () => import('./views/auth/Reset.vue' /* webpackChunkName: "js/pages/reset" */),
     }
 });
 import Validation from './functions/validation.js'

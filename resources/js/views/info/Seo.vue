@@ -31,7 +31,7 @@
                 </div>
 
 
-                <div class="card shadow">
+                <div class="card">
                   <div class="card-body ">
 
                     <div>
@@ -72,7 +72,7 @@
                         <label class="font-weight-bold" for="id_titulo">Título</label>
                         <input
                           type="text"
-                          class="form-control form-control-alternative"
+                          class="form-control "
                           v-model="page.title"
                           id="id_titulo"
                         />
@@ -98,7 +98,7 @@
                           >Descripción SEO</label>
                           <textarea
                             type="text"
-                            class="form-control form-control-alternative"
+                            class="form-control "
                             v-model="page.seo_description"
                             id="id_seo_description"
                             rows="4"
@@ -123,7 +123,7 @@
                           <label class="font-weight-bold" for="id_seo_keywords">Keywords SEO</label>
                           <textarea
                             type="text"
-                            class="form-control form-control-alternative"
+                            class="form-control "
                             v-model="page.seo_keywords"
                             id="id_seo_keywords"
                             rows="4"
@@ -279,7 +279,7 @@ export default {
             confirmButtonText: "OK",
             buttonsStyling: false,
             customClass: {
-              confirmButton: "btn btn-primary"
+              confirmButton: "btn btn-inverse-primary"
             }
           });
         })
@@ -297,7 +297,7 @@ export default {
             confirmButtonText: "OK",
             buttonsStyling: false,
             customClass: {
-              confirmButton: "btn btn-primary"
+              confirmButton: "btn btn-inverse-primary"
             }
           });
         });

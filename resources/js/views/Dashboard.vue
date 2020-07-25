@@ -132,7 +132,7 @@
 
       <div class="row">
         <div class="col-12 col-lg-7 col-xl-8 mb-4">
-          <div class="card shadow">
+          <div class="card">
             <div class="card-header border-0">
               <h4 class="card-title text-uppercase text-muted mb-0">Leads</h4>
             </div>
@@ -149,7 +149,7 @@
           </div>
         </div>
         <div class="col-12 col-lg-5 col-xl-4 mb-4">
-          <div class="card shadow">
+          <div class="card">
             <div class="card-header border-0">
               <h4 class="card-title text-uppercase text-muted mb-0">Casos de Éxito</h4>
             </div>

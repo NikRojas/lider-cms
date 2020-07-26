@@ -9,10 +9,9 @@
             <select
               id="show"
               class="mx-2 form-control bg-white form-control-sm w-auto d-inline-block"
-              @change="cambiarPaginado()"
-              v-model="entradas"
+              @change="changePagination()"
+              v-model="entries"
             >
-              <option value="5">5</option>
               <option value="10">10</option>
               <option value="20">20</option>
               <option value="50">50</option>
@@ -22,13 +21,28 @@
           </label>
         </div>
         <div class="col-12 col-md-6">
-          <input
+          <!--<input
             type="search"
             class="form-control bg-white"
             id="id_buscar"
             :placeholder="'Buscar por ' + placeholder"
             v-model="buscar"
-          />
+          />-->
+          <div class="input-group input-group-merge">
+            <div class="input-group-prepend bg-white">
+              <span class="input-group-text bg-white" id="search">
+                <jam-search class="current-color" height="22" width="22"></jam-search>
+              </span>
+            </div>
+            <input
+              type="search"
+              class="form-control bg-white"
+              :placeholder="'Buscar por ' + placeholder"
+              aria-label="search"
+              aria-describedby="search"
+              v-model="search"
+            />
+          </div>
         </div>
       </div>
     </div>
@@ -37,67 +51,82 @@
         <!--<div class="card-header">
                     <h2 class="mb-0 text-uppercase text-primary">{{ titulo }}</h2>
         </div>-->
-        <div v-if="cargando">
-          <Loader
-            texto="Cargando..."
+
+        
+        <div v-if="loading">
+          <!--<Loader
+            texto="loading..."
             :iconClasses="['ml-1']"
             :iconWidth="20"
             :iconHeight="20"
             :styles="{ height: '300px' }"
-          />
-        </div>
-        <div class="table-responsive" v-if="!cargando">
+          />-->
           <table class="table align-items-center">
             <thead class="thead-light">
               <tr>
-                <th width="3%">#</th>
-                <th v-for="(el,index) in headers" :key="index">{{ el }}</th>
+                <th class="border-0" v-for="i in 5" :key="i">
+                  <Skeleton />
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr v-for="i in 5" :key="i">
+                <td v-for="j in 5" :key="j">
+                  <Skeleton />
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="table-responsive">
+          <simplebar data-simplebar-auto-hide="false"  v-if="!loading">
+          <table class="table align-items-center">
+            <thead class="thead-light">
+              <tr>
+                <th class="border-0" width="3%">#</th>
+                <th class="border-0" v-for="(el,index) in headers" :key="index">{{ el }}</th>
                 <slot name="cabecera_accion"></slot>
-                <th>Operaciones</th>
+                <th class="border-0">Operaciones</th>
               </tr>
             </thead>
             <tbody v-if="object.data && object.data.length > 0">
-              <tr v-for="(elemento,i) in object.data" :key="elemento.id">
+              <tr v-for="(element,i) in object.data" :key="element.id">
                 <td>{{ object.from + i }}</td>
-                <td v-for="(el,j) in elementos[i]" :key="j" v-html="el"></td>
+                <td v-for="(el,j) in elements[i]" :key="j" v-html="el"></td>
 
-                <slot :name="'td_accion_'+elemento.id"></slot>
+                <slot :name="'td_accion_'+element.id"></slot>
 
                 <td class="table-actions">
                   <a
                     v-if="buttonRead == true"
                     href="#"
-                    @click.prevent="clickRead(elemento.id)"
-                    class="btn btn-icon-only rounded-circle btn-inverse-info"
+                    @click.prevent="clickRead(element.id)"
+                    class="btn btn-sm btn-icon-only rounded-circle btn-secondary"
                   >
-                    <!--<i class="far fa-eye text-primary"></i> -->
                     <jam-eye class="current-color" height="18" width="18" />
                   </a>
                   <a
                     v-if="buttonUpdate == true"
                     href="#"
-                    @click.prevent="clickUpdate(elemento.id)"
-                    class="btn btn-icon-only rounded-circle btn-inverse-info"
+                    @click.prevent="clickUpdate(element.id)"
+                    class="btn btn-sm btn-icon-only rounded-circle btn-secondary"
                   >
-                    <!--<i class="fas fa-pen-alt text-warning"></i> -->
                     <jam-pencil class="current-color" height="18" width="18" />
                   </a>
                   <a
                     v-if="buttonDisable == true"
                     href="#"
-                    @click.prevent="clickDisable(elemento.id)"
-                    class="btn btn-icon-only rounded-circle btn-inverse-info"
+                    @click.prevent="clickDisable(element.id)"
+                    class="btn btn-sm btn-icon-only rounded-circle btn-secondary"
                   >
-                    <!--<i class="fas fa-ban text-danger"></i> -->
                     <jam-stop-sign class="current-color" height="18" width="18" />
                   </a>
                   <a
                     v-if="buttonDelete == true"
                     href="#"
-                    @click.prevent="clickDelete(elemento.id)"
-                    class="btn btn-icon-only rounded-circle btn-inverse-danger"
+                    @click.prevent="clickDelete(element.id)"
+                    class="btn btn-sm btn-icon-only rounded-circle btn-inverse-danger"
                   >
-                    <!--<i class="fas fa-trash-alt text-danger"></i> -->
                     <jam-trash class="current-color" height="18" width="18" />
                   </a>
                 </td>
@@ -111,71 +140,72 @@
               </tr>
             </tbody>
           </table>
+          </simplebar>
         </div>
       </div>
-      <div class="row mt-4" v-if="!cargando">
-            <div class="col-6 pt-2">
-              <small
-                class
-                v-if="desde && hasta"
-              >Mostrando {{ desde }} de {{ hasta }} de {{ total }} entradas</small>
-              <small v-else>
-                <span v-if="desde">{{ total }} entradas</span>
-              </small>
-            </div>
-            <div class="col-6">
-              <ul class="pagination justify-content-end mb-0">
-                <li class="page-item">
-                  <a
-                    href="#"
-                    class="page-link rounded-circle"
-                    @click.prevent="clickPrevPage()"
-                    v-if="pagina_actual > 1"
-                  >
-                    <jam-arrow-left class="current-color" />
-                  </a>
-                </li>
-                <li
-                  class="page-item"
-                  v-for="pagina in cantidad_paginas"
-                  :key="pagina"
-                  v-bind:class="[ pagina == activo ? 'active disabled' : '']"
-                >
-                  <a
-                    class="page-link rounded-circle"
-                    href="#"
-                    @click.prevent="clickPagina(pagina)"
-                  >{{ pagina }}</a>
-                </li>
-                <li class="page-item">
-                  <a
-                    href="#"
-                    class="page-link rounded-circle"
-                    @click.prevent="clickNextPage()"
-                    v-if="pagina_actual < ultima_pagina"
-                  >
-                    <jam-arrow-right class="current-color" />
-                  </a>
-                </li>
-              </ul>
-            </div>
-          </div>
+      <div class="row mt-4" v-if="!loading">
+        <div class="col-6 pt-2">
+          <small class v-if="to && from">Mostrando {{ to }} de {{ from }} de {{ total }} entradas</small>
+          <small v-else>
+            <span v-if="to">{{ total }} entradas</span>
+          </small>
+        </div>
+        <div class="col-6">
+          <ul class="pagination justify-content-end mb-0">
+            <li class="page-item">
+              <a
+                href="#"
+                class="page-link rounded-circle"
+                @click.prevent="clickPrevPage()"
+                v-if="currentPage > 1"
+              >
+                <jam-arrow-left class="current-color" />
+              </a>
+            </li>
+            <li
+              class="page-item"
+              v-for="page in quantityPages"
+              :key="page"
+              v-bind:class="[ page == active ? 'active disabled' : '']"
+            >
+              <a
+                class="page-link rounded-circle"
+                href="#"
+                @click.prevent="clickPage(page)"
+              >{{ page }}</a>
+            </li>
+            <li class="page-item">
+              <a
+                href="#"
+                class="page-link rounded-circle"
+                @click.prevent="clickNextPage()"
+                v-if="currentPage < lastPage"
+              >
+                <jam-arrow-right class="current-color" />
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
     </div>
   </div>
 </template>
 <script>
 import Loader from "./Loader";
+import { Skeleton } from "vue-loading-skeleton";
+import simplebar from 'simplebar-vue';
+import 'simplebar/dist/simplebar.min.css';
 export default {
   props: {
-    entradasProp: {
+    entriesProp: {
       type: Number,
       required: false,
     },
-    cargandoProp: {
+    loadingProp: {
       type: Boolean,
       required: false,
     },
-    buscarProp: {
+    searchProp: {
       type: String,
       required: false,
     },
@@ -207,14 +237,16 @@ export default {
   },
   data() {
     return {
-      entradas: 5,
+      entries: 10,
       offset: 1,
-      buscar: "",
-      cargando: true,
+      search: "",
+      loading: true,
     };
   },
   components: {
     Loader,
+    Skeleton,
+    simplebar
   },
   methods: {
     clickDisable(id) {
@@ -230,67 +262,67 @@ export default {
       this.$emit("update", id);
     },
     clickNextPage() {
-      if (this.buscar) {
-        this.$emit("get", this.pagina_actual + 1, this.entradas, this.buscar);
+      if (this.search) {
+        this.$emit("get", this.currentPage + 1, this.entries, this.search);
       } else {
-        this.$emit("get", this.pagina_actual + 1, this.entradas);
+        this.$emit("get", this.currentPage + 1, this.entries);
       }
-      this.cargando = true;
+      this.loading = true;
     },
     clickPrevPage() {
-      if (this.buscar) {
-        this.$emit("get", this.pagina_actual - 1, this.entradas, this.buscar);
+      if (this.search) {
+        this.$emit("get", this.currentPage - 1, this.entries, this.search);
       } else {
-        this.$emit("get", this.pagina_actual - 1, this.entradas);
+        this.$emit("get", this.currentPage - 1, this.entries);
       }
-      this.cargando = true;
+      this.loading = true;
     },
-    clickPagina(pagina) {
-      if (this.buscar) {
-        this.$emit("get", pagina, this.entradas, this.buscar);
+    clickPage(page) {
+      if (this.search) {
+        this.$emit("get", page, this.entries, this.search);
       } else {
-        this.$emit("get", pagina, this.entradas);
+        this.$emit("get", page, this.entries);
       }
-      this.cargando = true;
+      this.loading = true;
     },
-    cambiarPaginado() {
-      if (this.buscar) {
-        this.$emit("get", 1, this.entradas, this.buscar);
+    changePagination() {
+      if (this.search) {
+        this.$emit("get", 1, this.entries, this.search);
       } else {
-        this.$emit("get", 1, this.entradas);
+        this.$emit("get", 1, this.entries);
       }
-      this.cargando = true;
+      this.loading = true;
     },
   },
   watch: {
-    buscar: function (newValue, oldValue) {
-      this.$emit("get", 1, this.entradas, newValue);
-      this.$emit("update:buscarProp", String(newValue));
-      this.cargando = true;
+    search: function (newValue, oldValue) {
+      this.$emit("get", 1, this.entries, newValue);
+      this.$emit("update:searchProp", String(newValue));
+      this.loading = true;
     },
     object: function (newValue, oldValue) {
-      this.cargando = true;
+      this.loading = true;
       if (newValue) {
-        this.cargando = false;
+        this.loading = false;
       }
     },
-    cargandoProp: function (newValue, oldValue) {
-      this.cargando = newValue;
+    loadingProp: function (newValue, oldValue) {
+      this.loading = newValue;
     },
-    cargando: function (newValue, oldValue) {
-      this.$emit("update:cargandoProp", Boolean(newValue));
+    loading: function (newValue, oldValue) {
+      this.$emit("update:loadingProp", Boolean(newValue));
     },
-    entradasProp: function (newValue, oldValue) {
-      this.entradas = newValue;
+    entriesProp: function (newValue, oldValue) {
+      this.entries = newValue;
     },
-    entradas: function (newValue, oldValue) {
-      this.$emit("update:entradasProp", Number(newValue));
+    entries: function (newValue, oldValue) {
+      this.$emit("update:entriesProp", Number(newValue));
     },
-    buscarProp: function (newValue, oldValue) {
-      this.buscar = newValue;
+    searchProp: function (newValue, oldValue) {
+      this.search = newValue;
     },
     /*buscar: function (newValue,oldValue) {
-                this.$emit('update:buscarProp', String(newValue));
+                this.$emit('update:searchProp', String(newValue));
             },*/
   },
   computed: {
@@ -299,7 +331,7 @@ export default {
         return this.object.headers.filter((valor, i) => i > 0);
       }
     },
-    elementos: function () {
+    elements: function () {
       if (this.object.data) {
         var data = [];
         let object = this.object.data;
@@ -315,42 +347,42 @@ export default {
         return data;
       }
     },
-    activo: function () {
+    active: function () {
       return this.object.current_page;
     },
-    desde: function () {
+    to: function () {
       return this.object.from;
     },
-    hasta: function () {
+    from: function () {
       return this.object.to;
     },
     total: function () {
       return this.object.total;
     },
-    ultima_pagina: function () {
+    lastPage: function () {
       return this.object.last_page;
     },
-    pagina_actual: function () {
+    currentPage: function () {
       return this.object.current_page;
     },
-    cantidad_paginas() {
+    quantityPages() {
       if (!this.object.to) {
         return [];
       }
-      var desde = this.object.current_page - this.offset;
-      if (desde < 1) {
-        desde = 1;
+      var to = this.object.current_page - this.offset;
+      if (to < 1) {
+        to = 1;
       }
-      var hasta = desde + this.offset * 2;
-      if (hasta >= this.object.last_page) {
-        hasta = this.object.last_page;
+      var from = to + this.offset * 2;
+      if (from >= this.object.last_page) {
+        from = this.object.last_page;
       }
-      var paginas = [];
-      while (desde <= hasta) {
-        paginas.push(desde);
-        desde++;
+      var pages = [];
+      while (to <= from) {
+        pages.push(to);
+        to++;
       }
-      return paginas;
+      return pages;
     },
   },
 };

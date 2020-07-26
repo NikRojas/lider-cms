@@ -93,7 +93,7 @@
                       <div class="form-group" v-if="editEmail && !editPassword">
                         <input
                           type="text"
-                          class="mt-1 form-control-alternative d-inline-block form-control w-100"
+                          class="mt-1  d-inline-block form-control w-100"
                           v-model="usuario.email"
                           v-if="editEmail && !editPassword"
                         />

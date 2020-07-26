@@ -103,6 +103,37 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Loader__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Loader */ "./resources/js/components/Loader.vue");
+/* harmony import */ var vue_loading_skeleton__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vue-loading-skeleton */ "./node_modules/vue-loading-skeleton/dist/vue-loading-skeleton.esm.js");
+/* harmony import */ var simplebar_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! simplebar-vue */ "./node_modules/simplebar-vue/dist/simplebar-vue.esm.js");
+/* harmony import */ var simplebar_dist_simplebar_min_css__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! simplebar/dist/simplebar.min.css */ "./node_modules/simplebar/dist/simplebar.min.css");
+/* harmony import */ var simplebar_dist_simplebar_min_css__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(simplebar_dist_simplebar_min_css__WEBPACK_IMPORTED_MODULE_3__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -269,17 +300,20 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 
+
+
+
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
-    entradasProp: {
+    entriesProp: {
       type: Number,
       required: false
     },
-    cargandoProp: {
+    loadingProp: {
       type: Boolean,
       required: false
     },
-    buscarProp: {
+    searchProp: {
       type: String,
       required: false
     },
@@ -311,14 +345,16 @@ __webpack_require__.r(__webpack_exports__);
   },
   data: function data() {
     return {
-      entradas: 5,
+      entries: 10,
       offset: 1,
-      buscar: "",
-      cargando: true
+      search: "",
+      loading: true
     };
   },
   components: {
-    Loader: _Loader__WEBPACK_IMPORTED_MODULE_0__["default"]
+    Loader: _Loader__WEBPACK_IMPORTED_MODULE_0__["default"],
+    Skeleton: vue_loading_skeleton__WEBPACK_IMPORTED_MODULE_1__["Skeleton"],
+    simplebar: simplebar_vue__WEBPACK_IMPORTED_MODULE_2__["default"]
   },
   methods: {
     clickDisable: function clickDisable(id) {
@@ -334,72 +370,72 @@ __webpack_require__.r(__webpack_exports__);
       this.$emit("update", id);
     },
     clickNextPage: function clickNextPage() {
-      if (this.buscar) {
-        this.$emit("get", this.pagina_actual + 1, this.entradas, this.buscar);
+      if (this.search) {
+        this.$emit("get", this.currentPage + 1, this.entries, this.search);
       } else {
-        this.$emit("get", this.pagina_actual + 1, this.entradas);
+        this.$emit("get", this.currentPage + 1, this.entries);
       }
 
-      this.cargando = true;
+      this.loading = true;
     },
     clickPrevPage: function clickPrevPage() {
-      if (this.buscar) {
-        this.$emit("get", this.pagina_actual - 1, this.entradas, this.buscar);
+      if (this.search) {
+        this.$emit("get", this.currentPage - 1, this.entries, this.search);
       } else {
-        this.$emit("get", this.pagina_actual - 1, this.entradas);
+        this.$emit("get", this.currentPage - 1, this.entries);
       }
 
-      this.cargando = true;
+      this.loading = true;
     },
-    clickPagina: function clickPagina(pagina) {
-      if (this.buscar) {
-        this.$emit("get", pagina, this.entradas, this.buscar);
+    clickPage: function clickPage(page) {
+      if (this.search) {
+        this.$emit("get", page, this.entries, this.search);
       } else {
-        this.$emit("get", pagina, this.entradas);
+        this.$emit("get", page, this.entries);
       }
 
-      this.cargando = true;
+      this.loading = true;
     },
-    cambiarPaginado: function cambiarPaginado() {
-      if (this.buscar) {
-        this.$emit("get", 1, this.entradas, this.buscar);
+    changePagination: function changePagination() {
+      if (this.search) {
+        this.$emit("get", 1, this.entries, this.search);
       } else {
-        this.$emit("get", 1, this.entradas);
+        this.$emit("get", 1, this.entries);
       }
 
-      this.cargando = true;
+      this.loading = true;
     }
   },
   watch: {
-    buscar: function buscar(newValue, oldValue) {
-      this.$emit("get", 1, this.entradas, newValue);
-      this.$emit("update:buscarProp", String(newValue));
-      this.cargando = true;
+    search: function search(newValue, oldValue) {
+      this.$emit("get", 1, this.entries, newValue);
+      this.$emit("update:searchProp", String(newValue));
+      this.loading = true;
     },
     object: function object(newValue, oldValue) {
-      this.cargando = true;
+      this.loading = true;
 
       if (newValue) {
-        this.cargando = false;
+        this.loading = false;
       }
     },
-    cargandoProp: function cargandoProp(newValue, oldValue) {
-      this.cargando = newValue;
+    loadingProp: function loadingProp(newValue, oldValue) {
+      this.loading = newValue;
     },
-    cargando: function cargando(newValue, oldValue) {
-      this.$emit("update:cargandoProp", Boolean(newValue));
+    loading: function loading(newValue, oldValue) {
+      this.$emit("update:loadingProp", Boolean(newValue));
     },
-    entradasProp: function entradasProp(newValue, oldValue) {
-      this.entradas = newValue;
+    entriesProp: function entriesProp(newValue, oldValue) {
+      this.entries = newValue;
     },
-    entradas: function entradas(newValue, oldValue) {
-      this.$emit("update:entradasProp", Number(newValue));
+    entries: function entries(newValue, oldValue) {
+      this.$emit("update:entriesProp", Number(newValue));
     },
-    buscarProp: function buscarProp(newValue, oldValue) {
-      this.buscar = newValue;
+    searchProp: function searchProp(newValue, oldValue) {
+      this.search = newValue;
     }
     /*buscar: function (newValue,oldValue) {
-                this.$emit('update:buscarProp', String(newValue));
+                this.$emit('update:searchProp', String(newValue));
             },*/
 
   },
@@ -411,7 +447,7 @@ __webpack_require__.r(__webpack_exports__);
         });
       }
     },
-    elementos: function elementos() {
+    elements: function elements() {
       if (this.object.data) {
         var data = [];
         var object = this.object.data;
@@ -430,49 +466,49 @@ __webpack_require__.r(__webpack_exports__);
         return data;
       }
     },
-    activo: function activo() {
+    active: function active() {
       return this.object.current_page;
     },
-    desde: function desde() {
+    to: function to() {
       return this.object.from;
     },
-    hasta: function hasta() {
+    from: function from() {
       return this.object.to;
     },
     total: function total() {
       return this.object.total;
     },
-    ultima_pagina: function ultima_pagina() {
+    lastPage: function lastPage() {
       return this.object.last_page;
     },
-    pagina_actual: function pagina_actual() {
+    currentPage: function currentPage() {
       return this.object.current_page;
     },
-    cantidad_paginas: function cantidad_paginas() {
+    quantityPages: function quantityPages() {
       if (!this.object.to) {
         return [];
       }
 
-      var desde = this.object.current_page - this.offset;
+      var to = this.object.current_page - this.offset;
 
-      if (desde < 1) {
-        desde = 1;
+      if (to < 1) {
+        to = 1;
       }
 
-      var hasta = desde + this.offset * 2;
+      var from = to + this.offset * 2;
 
-      if (hasta >= this.object.last_page) {
-        hasta = this.object.last_page;
+      if (from >= this.object.last_page) {
+        from = this.object.last_page;
       }
 
-      var paginas = [];
+      var pages = [];
 
-      while (desde <= hasta) {
-        paginas.push(desde);
-        desde++;
+      while (to <= from) {
+        pages.push(to);
+        to++;
       }
 
-      return paginas;
+      return pages;
     }
   }
 });
@@ -537,9 +573,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_DataTable__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../components/DataTable */ "./resources/js/components/DataTable.vue");
 /* harmony import */ var vue2_dropzone__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! vue2-dropzone */ "./node_modules/vue2-dropzone/dist/vue2Dropzone.js");
 /* harmony import */ var vue2_dropzone__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(vue2_dropzone__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var vue_search_select__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! vue-search-select */ "./node_modules/vue-search-select/dist/VueSearchSelect.common.js");
-/* harmony import */ var vue_search_select__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(vue_search_select__WEBPACK_IMPORTED_MODULE_3__);
-/* harmony import */ var _components_BreadCrumb__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../components/BreadCrumb */ "./resources/js/components/BreadCrumb.vue");
+/* harmony import */ var _components_BreadCrumb__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../components/BreadCrumb */ "./resources/js/components/BreadCrumb.vue");
 //
 //
 //
@@ -873,7 +907,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-
 
 
 
@@ -887,9 +920,8 @@ __webpack_require__.r(__webpack_exports__);
   },
   components: {
     DataTable: _components_DataTable__WEBPACK_IMPORTED_MODULE_1__["default"],
-    Boton: _components_Button__WEBPACK_IMPORTED_MODULE_0__["default"],
-    BreadCrumb: _components_BreadCrumb__WEBPACK_IMPORTED_MODULE_4__["default"],
-    ModelListSelect: vue_search_select__WEBPACK_IMPORTED_MODULE_3__["ModelListSelect"],
+    Button: _components_Button__WEBPACK_IMPORTED_MODULE_0__["default"],
+    BreadCrumb: _components_BreadCrumb__WEBPACK_IMPORTED_MODULE_3__["default"],
     vueDropzone: vue2_dropzone__WEBPACK_IMPORTED_MODULE_2___default.a
   },
   data: function data() {
@@ -938,7 +970,7 @@ __webpack_require__.r(__webpack_exports__);
     },
     restorePage: function restorePage() {
       this.showBlock = true;
-      this.getUsers(1, 5);
+      this.getUsers(1, 10);
       this.crearBloque = this.editBlock = this.verBloque = this.requestServer = false;
       this.$refs["modal-eliminar"].hide();
       this.$refs["modal-disable"].hide();
@@ -1127,7 +1159,7 @@ __webpack_require__.r(__webpack_exports__);
     }
   },
   created: function created() {
-    this.getUsers(1, 5);
+    this.getUsers(1, 10);
   }
 });
 
@@ -1383,8 +1415,8 @@ var render = function() {
                     {
                       name: "model",
                       rawName: "v-model",
-                      value: _vm.entradas,
-                      expression: "entradas"
+                      value: _vm.entries,
+                      expression: "entries"
                     }
                   ],
                   staticClass:
@@ -1401,19 +1433,17 @@ var render = function() {
                             var val = "_value" in o ? o._value : o.value
                             return val
                           })
-                        _vm.entradas = $event.target.multiple
+                        _vm.entries = $event.target.multiple
                           ? $$selectedVal
                           : $$selectedVal[0]
                       },
                       function($event) {
-                        return _vm.cambiarPaginado()
+                        return _vm.changePagination()
                       }
                     ]
                   }
                 },
                 [
-                  _c("option", { attrs: { value: "5" } }, [_vm._v("5")]),
-                  _vm._v(" "),
                   _c("option", { attrs: { value: "10" } }, [_vm._v("10")]),
                   _vm._v(" "),
                   _c("option", { attrs: { value: "20" } }, [_vm._v("20")]),
@@ -1429,31 +1459,51 @@ var render = function() {
           ]),
           _vm._v(" "),
           _c("div", { staticClass: "col-12 col-md-6" }, [
-            _c("input", {
-              directives: [
-                {
-                  name: "model",
-                  rawName: "v-model",
-                  value: _vm.buscar,
-                  expression: "buscar"
-                }
-              ],
-              staticClass: "form-control bg-white",
-              attrs: {
-                type: "search",
-                id: "id_buscar",
-                placeholder: "Buscar por " + _vm.placeholder
-              },
-              domProps: { value: _vm.buscar },
-              on: {
-                input: function($event) {
-                  if ($event.target.composing) {
-                    return
+            _c("div", { staticClass: "input-group input-group-merge" }, [
+              _c("div", { staticClass: "input-group-prepend bg-white" }, [
+                _c(
+                  "span",
+                  {
+                    staticClass: "input-group-text bg-white",
+                    attrs: { id: "search" }
+                  },
+                  [
+                    _c("jam-search", {
+                      staticClass: "current-color",
+                      attrs: { height: "22", width: "22" }
+                    })
+                  ],
+                  1
+                )
+              ]),
+              _vm._v(" "),
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.search,
+                    expression: "search"
                   }
-                  _vm.buscar = $event.target.value
+                ],
+                staticClass: "form-control bg-white",
+                attrs: {
+                  type: "search",
+                  placeholder: "Buscar por " + _vm.placeholder,
+                  "aria-label": "search",
+                  "aria-describedby": "search"
+                },
+                domProps: { value: _vm.search },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.search = $event.target.value
+                  }
                 }
-              }
-            })
+              })
+            ])
           ])
         ])
       ],
@@ -1462,204 +1512,266 @@ var render = function() {
     _vm._v(" "),
     _c("div", { staticClass: "col-12" }, [
       _c("div", { staticClass: "card" }, [
-        _vm.cargando
-          ? _c(
-              "div",
-              [
-                _c("Loader", {
-                  attrs: {
-                    texto: "Cargando...",
-                    iconClasses: ["ml-1"],
-                    iconWidth: 20,
-                    iconHeight: 20,
-                    styles: { height: "300px" }
-                  }
-                })
-              ],
-              1
-            )
-          : _vm._e(),
-        _vm._v(" "),
-        !_vm.cargando
-          ? _c("div", { staticClass: "table-responsive" }, [
+        _vm.loading
+          ? _c("div", [
               _c("table", { staticClass: "table align-items-center" }, [
                 _c("thead", { staticClass: "thead-light" }, [
                   _c(
                     "tr",
-                    [
-                      _c("th", { attrs: { width: "3%" } }, [_vm._v("#")]),
-                      _vm._v(" "),
-                      _vm._l(_vm.headers, function(el, index) {
-                        return _c("th", { key: index }, [_vm._v(_vm._s(el))])
-                      }),
-                      _vm._v(" "),
-                      _vm._t("cabecera_accion"),
-                      _vm._v(" "),
-                      _c("th", [_vm._v("Operaciones")])
-                    ],
-                    2
+                    _vm._l(5, function(i) {
+                      return _c(
+                        "th",
+                        { key: i, staticClass: "border-0" },
+                        [_c("Skeleton")],
+                        1
+                      )
+                    }),
+                    0
                   )
                 ]),
                 _vm._v(" "),
-                _vm.object.data && _vm.object.data.length > 0
-                  ? _c(
-                      "tbody",
-                      _vm._l(_vm.object.data, function(elemento, i) {
-                        return _c(
+                _c(
+                  "tbody",
+                  _vm._l(5, function(i) {
+                    return _c(
+                      "tr",
+                      { key: i },
+                      _vm._l(5, function(j) {
+                        return _c("td", { key: j }, [_c("Skeleton")], 1)
+                      }),
+                      0
+                    )
+                  }),
+                  0
+                )
+              ])
+            ])
+          : _vm._e(),
+        _vm._v(" "),
+        _c(
+          "div",
+          { staticClass: "table-responsive" },
+          [
+            !_vm.loading
+              ? _c(
+                  "simplebar",
+                  { attrs: { "data-simplebar-auto-hide": "false" } },
+                  [
+                    _c("table", { staticClass: "table align-items-center" }, [
+                      _c("thead", { staticClass: "thead-light" }, [
+                        _c(
                           "tr",
-                          { key: elemento.id },
                           [
-                            _c("td", [_vm._v(_vm._s(_vm.object.from + i))]),
+                            _c(
+                              "th",
+                              {
+                                staticClass: "border-0",
+                                attrs: { width: "3%" }
+                              },
+                              [_vm._v("#")]
+                            ),
                             _vm._v(" "),
-                            _vm._l(_vm.elementos[i], function(el, j) {
-                              return _c("td", {
-                                key: j,
-                                domProps: { innerHTML: _vm._s(el) }
-                              })
+                            _vm._l(_vm.headers, function(el, index) {
+                              return _c(
+                                "th",
+                                { key: index, staticClass: "border-0" },
+                                [_vm._v(_vm._s(el))]
+                              )
                             }),
                             _vm._v(" "),
-                            _vm._t("td_accion_" + elemento.id),
+                            _vm._t("cabecera_accion"),
                             _vm._v(" "),
-                            _c("td", { staticClass: "table-actions" }, [
-                              _vm.buttonRead == true
-                                ? _c(
-                                    "a",
-                                    {
-                                      staticClass:
-                                        "btn btn-icon-only rounded-circle btn-inverse-info",
-                                      attrs: { href: "#" },
-                                      on: {
-                                        click: function($event) {
-                                          $event.preventDefault()
-                                          return _vm.clickRead(elemento.id)
-                                        }
-                                      }
-                                    },
-                                    [
-                                      _c("jam-eye", {
-                                        staticClass: "current-color",
-                                        attrs: { height: "18", width: "18" }
-                                      })
-                                    ],
-                                    1
-                                  )
-                                : _vm._e(),
-                              _vm._v(" "),
-                              _vm.buttonUpdate == true
-                                ? _c(
-                                    "a",
-                                    {
-                                      staticClass:
-                                        "btn btn-icon-only rounded-circle btn-inverse-info",
-                                      attrs: { href: "#" },
-                                      on: {
-                                        click: function($event) {
-                                          $event.preventDefault()
-                                          return _vm.clickUpdate(elemento.id)
-                                        }
-                                      }
-                                    },
-                                    [
-                                      _c("jam-pencil", {
-                                        staticClass: "current-color",
-                                        attrs: { height: "18", width: "18" }
-                                      })
-                                    ],
-                                    1
-                                  )
-                                : _vm._e(),
-                              _vm._v(" "),
-                              _vm.buttonDisable == true
-                                ? _c(
-                                    "a",
-                                    {
-                                      staticClass:
-                                        "btn btn-icon-only rounded-circle btn-inverse-info",
-                                      attrs: { href: "#" },
-                                      on: {
-                                        click: function($event) {
-                                          $event.preventDefault()
-                                          return _vm.clickDisable(elemento.id)
-                                        }
-                                      }
-                                    },
-                                    [
-                                      _c("jam-stop-sign", {
-                                        staticClass: "current-color",
-                                        attrs: { height: "18", width: "18" }
-                                      })
-                                    ],
-                                    1
-                                  )
-                                : _vm._e(),
-                              _vm._v(" "),
-                              _vm.buttonDelete == true
-                                ? _c(
-                                    "a",
-                                    {
-                                      staticClass:
-                                        "btn btn-icon-only rounded-circle btn-inverse-danger",
-                                      attrs: { href: "#" },
-                                      on: {
-                                        click: function($event) {
-                                          $event.preventDefault()
-                                          return _vm.clickDelete(elemento.id)
-                                        }
-                                      }
-                                    },
-                                    [
-                                      _c("jam-trash", {
-                                        staticClass: "current-color",
-                                        attrs: { height: "18", width: "18" }
-                                      })
-                                    ],
-                                    1
-                                  )
-                                : _vm._e()
+                            _c("th", { staticClass: "border-0" }, [
+                              _vm._v("Operaciones")
                             ])
                           ],
                           2
                         )
-                      }),
-                      0
-                    )
-                  : _c("tbody", [
-                      _c("tr", [
-                        _c(
-                          "td",
-                          {
-                            attrs: {
-                              colspan:
-                                _vm.object.headers &&
-                                _vm.object.headers.length + 1
-                            }
-                          },
-                          [_vm._v("No se encontraron resultados.")]
-                        )
-                      ])
+                      ]),
+                      _vm._v(" "),
+                      _vm.object.data && _vm.object.data.length > 0
+                        ? _c(
+                            "tbody",
+                            _vm._l(_vm.object.data, function(element, i) {
+                              return _c(
+                                "tr",
+                                { key: element.id },
+                                [
+                                  _c("td", [
+                                    _vm._v(_vm._s(_vm.object.from + i))
+                                  ]),
+                                  _vm._v(" "),
+                                  _vm._l(_vm.elements[i], function(el, j) {
+                                    return _c("td", {
+                                      key: j,
+                                      domProps: { innerHTML: _vm._s(el) }
+                                    })
+                                  }),
+                                  _vm._v(" "),
+                                  _vm._t("td_accion_" + element.id),
+                                  _vm._v(" "),
+                                  _c("td", { staticClass: "table-actions" }, [
+                                    _vm.buttonRead == true
+                                      ? _c(
+                                          "a",
+                                          {
+                                            staticClass:
+                                              "btn btn-sm btn-icon-only rounded-circle btn-secondary",
+                                            attrs: { href: "#" },
+                                            on: {
+                                              click: function($event) {
+                                                $event.preventDefault()
+                                                return _vm.clickRead(element.id)
+                                              }
+                                            }
+                                          },
+                                          [
+                                            _c("jam-eye", {
+                                              staticClass: "current-color",
+                                              attrs: {
+                                                height: "18",
+                                                width: "18"
+                                              }
+                                            })
+                                          ],
+                                          1
+                                        )
+                                      : _vm._e(),
+                                    _vm._v(" "),
+                                    _vm.buttonUpdate == true
+                                      ? _c(
+                                          "a",
+                                          {
+                                            staticClass:
+                                              "btn btn-sm btn-icon-only rounded-circle btn-secondary",
+                                            attrs: { href: "#" },
+                                            on: {
+                                              click: function($event) {
+                                                $event.preventDefault()
+                                                return _vm.clickUpdate(
+                                                  element.id
+                                                )
+                                              }
+                                            }
+                                          },
+                                          [
+                                            _c("jam-pencil", {
+                                              staticClass: "current-color",
+                                              attrs: {
+                                                height: "18",
+                                                width: "18"
+                                              }
+                                            })
+                                          ],
+                                          1
+                                        )
+                                      : _vm._e(),
+                                    _vm._v(" "),
+                                    _vm.buttonDisable == true
+                                      ? _c(
+                                          "a",
+                                          {
+                                            staticClass:
+                                              "btn btn-sm btn-icon-only rounded-circle btn-secondary",
+                                            attrs: { href: "#" },
+                                            on: {
+                                              click: function($event) {
+                                                $event.preventDefault()
+                                                return _vm.clickDisable(
+                                                  element.id
+                                                )
+                                              }
+                                            }
+                                          },
+                                          [
+                                            _c("jam-stop-sign", {
+                                              staticClass: "current-color",
+                                              attrs: {
+                                                height: "18",
+                                                width: "18"
+                                              }
+                                            })
+                                          ],
+                                          1
+                                        )
+                                      : _vm._e(),
+                                    _vm._v(" "),
+                                    _vm.buttonDelete == true
+                                      ? _c(
+                                          "a",
+                                          {
+                                            staticClass:
+                                              "btn btn-sm btn-icon-only rounded-circle btn-inverse-danger",
+                                            attrs: { href: "#" },
+                                            on: {
+                                              click: function($event) {
+                                                $event.preventDefault()
+                                                return _vm.clickDelete(
+                                                  element.id
+                                                )
+                                              }
+                                            }
+                                          },
+                                          [
+                                            _c("jam-trash", {
+                                              staticClass: "current-color",
+                                              attrs: {
+                                                height: "18",
+                                                width: "18"
+                                              }
+                                            })
+                                          ],
+                                          1
+                                        )
+                                      : _vm._e()
+                                  ])
+                                ],
+                                2
+                              )
+                            }),
+                            0
+                          )
+                        : _c("tbody", [
+                            _c("tr", [
+                              _c(
+                                "td",
+                                {
+                                  attrs: {
+                                    colspan:
+                                      _vm.object.headers &&
+                                      _vm.object.headers.length + 1
+                                  }
+                                },
+                                [_vm._v("No se encontraron resultados.")]
+                              )
+                            ])
+                          ])
                     ])
-              ])
-            ])
-          : _vm._e()
+                  ]
+                )
+              : _vm._e()
+          ],
+          1
+        )
       ]),
       _vm._v(" "),
-      !_vm.cargando
+      !_vm.loading
         ? _c("div", { staticClass: "row mt-4" }, [
             _c("div", { staticClass: "col-6 pt-2" }, [
-              _vm.desde && _vm.hasta
+              _vm.to && _vm.from
                 ? _c("small", {}, [
                     _vm._v(
                       "Mostrando " +
-                        _vm._s(_vm.desde) +
+                        _vm._s(_vm.to) +
                         " de " +
-                        _vm._s(_vm.hasta) +
+                        _vm._s(_vm.from) +
                         " de " +
                         _vm._s(_vm.total) +
                         " entradas"
                     )
                   ])
                 : _c("small", [
-                    _vm.desde
+                    _vm.to
                       ? _c("span", [_vm._v(_vm._s(_vm.total) + " entradas")])
                       : _vm._e()
                   ])
@@ -1671,7 +1783,7 @@ var render = function() {
                 { staticClass: "pagination justify-content-end mb-0" },
                 [
                   _c("li", { staticClass: "page-item" }, [
-                    _vm.pagina_actual > 1
+                    _vm.currentPage > 1
                       ? _c(
                           "a",
                           {
@@ -1694,13 +1806,13 @@ var render = function() {
                       : _vm._e()
                   ]),
                   _vm._v(" "),
-                  _vm._l(_vm.cantidad_paginas, function(pagina) {
+                  _vm._l(_vm.quantityPages, function(page) {
                     return _c(
                       "li",
                       {
-                        key: pagina,
+                        key: page,
                         staticClass: "page-item",
-                        class: [pagina == _vm.activo ? "active disabled" : ""]
+                        class: [page == _vm.active ? "active disabled" : ""]
                       },
                       [
                         _c(
@@ -1711,18 +1823,18 @@ var render = function() {
                             on: {
                               click: function($event) {
                                 $event.preventDefault()
-                                return _vm.clickPagina(pagina)
+                                return _vm.clickPage(page)
                               }
                             }
                           },
-                          [_vm._v(_vm._s(pagina))]
+                          [_vm._v(_vm._s(page))]
                         )
                       ]
                     )
                   }),
                   _vm._v(" "),
                   _c("li", { staticClass: "page-item" }, [
-                    _vm.pagina_actual < _vm.ultima_pagina
+                    _vm.currentPage < _vm.lastPage
                       ? _c(
                           "a",
                           {
@@ -2251,7 +2363,7 @@ var render = function() {
                           "div",
                           { staticClass: "col-12 text-right" },
                           [
-                            _c("Boton", {
+                            _c("Button", {
                               attrs: {
                                 text: "Actualizar",
                                 classes: ["btn-inverse-primary", "mr-2"],
@@ -2528,7 +2640,7 @@ var render = function() {
                           "div",
                           { staticClass: "col-12 text-right mt-2" },
                           [
-                            _c("Boton", {
+                            _c("Button", {
                               attrs: {
                                 text: "Guardar",
                                 classes: ["btn-inverse-primary", "mr-2"],
@@ -2666,7 +2778,7 @@ var render = function() {
                 var ok = ref.ok
                 var cancel = ref.cancel
                 return [
-                  _c("Boton", {
+                  _c("Button", {
                     attrs: {
                       classes: ["btn-inverse-danger"],
                       text: "Eliminar",
@@ -2715,7 +2827,7 @@ var render = function() {
                 var ok = ref.ok
                 var cancel = ref.cancel
                 return [
-                  _c("Boton", {
+                  _c("Button", {
                     attrs: {
                       classes: ["btn-inverse-danger"],
                       text: "Deshabilitar",

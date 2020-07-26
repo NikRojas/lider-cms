@@ -51,7 +51,8 @@ $gray-200: #e9ecef !default;
 $gray-300: #F0F0F0 !default;
 
 $gray-400: #ced4da !default;
-$gray-500: #B8B9BA !default;
+//$gray-500: #B8B9BA !default;
+$gray-500:   #7E8388 !default;
 
 //$gray-600: #8898aa !default;   // Line footer color
 $gray-600: #C1C2C4 !default; 
@@ -89,7 +90,8 @@ $cyan:    #2bffc6 !default;*/
 
 
 //$blue:    #2C42AF !default;
-$blue:    #1E73C3 !default;
+//$blue:    #1E73C3 !default;
+$blue:    #1762e6 !default;
 $indigo:  #4740AA !default;
 $purple:  #C496F9 !default;
 $pink:    #e83e8c !default;
@@ -121,7 +123,8 @@ $colors: map-merge((
 
 $default:       #172b4d !default;
 //$primary:       #5e72e4 !default;
-$primary:       #1E73C3 !default;
+//$primary:       #1E73C3 !default;
+$primary:         #1762e6 !default;
 //$secondary:     #f7fafc !default;
 $secondary:     #dcdcdc !default;
 $success:       $green !default;
@@ -440,7 +443,8 @@ $display4-weight:             $font-weight-bold !default;
 $display-line-height:         $headings-line-height !default;
 
 $paragraph-font-size:         0.9rem !default;
-$paragraph-font-weight:       300 !default;
+//$paragraph-font-weight:       300 !default;
+$paragraph-font-weight:       400 !default;
 $paragraph-line-height:       1.7 !default;
 
 $lead-font-size:              ($paragraph-font-size * 1.25) !default;
@@ -486,10 +490,15 @@ $table-hover-bg:              $gray-100 !default;
 $table-active-bg:             $table-hover-bg !default;
 
 $table-border-width:          $border-width !default;
-$table-border-color:          $gray-200 !default;
+//$table-border-color:          $gray-200 !default;
+$table-border-color:          $border-color !default;
 
-$table-head-bg:               $gray-100 !default;
+/*$table-head-bg:               $gray-100 !default;
 $table-head-color:            $gray-600 !default;
+$table-head-spacer-y:         .75rem !default;*/
+
+$table-head-bg:               $body-bg !default;
+$table-head-color:            $primary !default;
 $table-head-spacer-y:         .75rem !default;
 
 $table-head-font-size:        .65rem !default;
@@ -746,6 +755,7 @@ $dropdown-box-shadow:            0 50px 100px rgba(50, 50, 93, .1), 0 15px 35px 
 
 $nav-link-padding-y:                .25rem !default;
 $nav-link-padding-x:                .75rem !default;
+//$nav-link-color:                    $gray-500 !default;
 $nav-link-color:                    $gray-500 !default;
 $nav-link-hover-color:              theme-color("primary") !default;
 $nav-link-disabled-color:           $gray-600 !default;
@@ -821,7 +831,7 @@ $navbar-search-light-focus-color:    rgba(0, 0, 0, .9) !default;
 // Vertical navbar
 //$navbar-vertical-box-shadow: 0 0 2rem 0 rgba(136, 152, 170, .15) !important;
 $navbar-vertical-box-shadow: $box-shadow !important;
-$navbar-vertical-width: 290px !default;
+$navbar-vertical-width: 250px !default;
 //$navbar-vertical-width: 270px !default;
 $navbar-vertical-padding-x: 1.5rem !default;
 $navbar-vertical-nav-link-padding-x:  1.5rem !default;
@@ -941,7 +951,8 @@ $badge-circle-size:                 2rem !default;
 // $pagination-padding-x-lg:           1.5rem !default;
 // $pagination-line-height:            1.25 !default;
 
-$pagination-color:                  $gray-600 !default;
+//$pagination-color:                  $gray-600 !default;
+$pagination-color:                  rgba($gray-900, .7) !default;
 $pagination-bg:                     $white  !default;
 $pagination-border-width:           $border-width !default;
 $pagination-border-color:           $gray-300 !default;

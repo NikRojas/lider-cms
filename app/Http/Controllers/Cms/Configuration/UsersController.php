@@ -104,9 +104,9 @@ class UsersController extends Controller
 
     public function obtenerUsuarios(Request $request,UsuariosRepositorio $repo){
         $buscar = $request->buscar;
-        $headers = ["Id", "Nombre", "Usuario","Estado"];
+        $headers = ["Id", "Nombre", "Usuario"];
             if($buscar){
-                $usuarios = $repo->buscar(Auth::user()->id,$buscar,$request->desde);
+                $usuarios = $repo->search(Auth::user()->id,$buscar,$request->desde);
             }
             else{
                 $usuarios = $repo->datatable(Auth::user()->id,$request->desde);

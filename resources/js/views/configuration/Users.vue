@@ -135,12 +135,12 @@
               </div>
 
               <div class="col-12 text-right">
-                <Boton
+                <Button
                   :text="'Actualizar'"
                   :classes="['btn-inverse-primary','mr-2']"
                   :request-server="requestServer"
                   º
-                ></Boton>
+                ></Button>
                 <button
                   type="button"
                   class="btn btn-secondary"
@@ -236,11 +236,11 @@
               </div>
 
               <div class="col-12 text-right mt-2">
-                <Boton
+                <Button
                   :text="'Guardar'"
                   :classes="['btn-inverse-primary','mr-2']"
                   :request-server="requestServer"
-                ></Boton>
+                ></Button>
                 <button
                   type="button"
                   class="btn btn-secondary"
@@ -304,12 +304,12 @@
       </template>
       <p class="mb-0">Esta seguro que desea eliminar el usuario?</p>
       <template slot="modal-footer" slot-scope="{ ok, cancel }">
-        <Boton
+        <Button
           :classes="['btn-inverse-danger']"
           :text="'Eliminar'"
           @click="deleteUserConfirm"
           :request-server="requestServer"
-        ></Boton>
+        ></Button>
         <button type="button" class="btn btn-secondary" @click="restoreEl">Cancelar</button>
       </template>
     </b-modal>
@@ -320,22 +320,21 @@
       </template>
       <p class="mb-0">Esta seguro que desea deshabilitar el usuario?</p>
       <template slot="modal-footer" slot-scope="{ ok, cancel }">
-        <Boton
+        <Button
           :classes="['btn-inverse-danger']"
           :text="'Deshabilitar'"
           @click="disableUserConfirm"
           :request-server="requestServer"
-        ></Boton>
+        ></Button>
         <button type="button" class="btn btn-secondary" @click="restoreEl">Cancelar</button>
       </template>
     </b-modal>
   </div>
 </template>
 <script>
-import Boton from "../../components/Button";
+import Button from "../../components/Button";
 import DataTable from "../../components/DataTable";
 import vue2Dropzone from "vue2-dropzone";
-import { ModelListSelect } from "vue-search-select";
 import BreadCrumb from "../../components/BreadCrumb";
 export default {
   props: {
@@ -346,9 +345,8 @@ export default {
   },
   components: {
     DataTable,
-    Boton,
+    Button,
     BreadCrumb,
-    ModelListSelect,
     vueDropzone: vue2Dropzone,
   },
   data() {
@@ -398,7 +396,7 @@ export default {
     },
     restorePage() {
       this.showBlock = true;
-      this.getUsers(1, 5);
+      this.getUsers(1, 10);
       this.crearBloque = this.editBlock = this.verBloque = this.requestServer = false;
       this.$refs["modal-eliminar"].hide();
       this.$refs["modal-disable"].hide();
@@ -578,7 +576,7 @@ export default {
     },
   },
   created() {
-    this.getUsers(1, 5);
+    this.getUsers(1, 10);
   },
 };
 </script>

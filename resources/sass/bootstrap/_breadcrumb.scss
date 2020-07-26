@@ -10,6 +10,7 @@
 
 .breadcrumb-item {
   // The separator between breadcrumbs (by default, a forward-slash: "/")
+  font-weight: 300;
   + .breadcrumb-item {
     padding-left: $breadcrumb-item-padding;
 

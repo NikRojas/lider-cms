@@ -846,7 +846,7 @@ var render = function() {
                                         }
                                       ],
                                       staticClass:
-                                        "mt-1 form-control-alternative d-inline-block form-control w-100",
+                                        "mt-1  d-inline-block form-control w-100",
                                       attrs: { type: "text" },
                                       domProps: { value: _vm.usuario.email },
                                       on: {

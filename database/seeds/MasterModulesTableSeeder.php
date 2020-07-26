@@ -109,7 +109,7 @@ class MasterModulesTableSeeder extends Seeder
                 'index'    => $position++
             ],
             [
-                'name' 	=> 'Contenido General',
+                'name' 	=> 'Contenido',
 				'slug' 		=> NULL,
 				'parent' 	=> NULL,
 				'icon' 		=> 'screen',
@@ -117,7 +117,7 @@ class MasterModulesTableSeeder extends Seeder
             ],
                 [
                     'name' 	=> 'SEO',
-                    'slug' 		=> 'contenido-general/seo',
+                    'slug' 		=> 'contenido/seo',
                     'parent' 	=> $pContenido,
                     'icon' 		=> NULL,
                     'index'    => 1
@@ -125,7 +125,7 @@ class MasterModulesTableSeeder extends Seeder
 
                 [
                     'name' 	=> 'Inf. General & Miembros',
-                    'slug' 		=> 'contenido-general/general',
+                    'slug' 		=> 'contenido/informacion-general',
                     'parent' 	=> $pContenido,
                     'icon' 		=> NULL,
                     'index'    => 2
@@ -133,7 +133,7 @@ class MasterModulesTableSeeder extends Seeder
                 
                 [
                     'name' 	=> 'Contenido General',
-                    'slug' 		=> 'contenido-general',
+                    'slug' 		=> 'contenido/contenido-general',
                     'parent' 	=> $pContenido,
                     'icon' 		=> NULL,
                     'index'    => 3
@@ -141,7 +141,7 @@ class MasterModulesTableSeeder extends Seeder
                 
                 [
                     'name' 	=> 'Redes Sociales',
-                    'slug' 		=> 'contenido-general/redes-sociales',
+                    'slug' 		=> 'contenido/redes-sociales',
                     'parent' 	=> $pContenido,
                     'icon' 		=> NULL,
                     'index'    => 4

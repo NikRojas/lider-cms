@@ -23,13 +23,15 @@
     color: $nav-link-color !important;
     font-weight: 500;
     &:hover {
-        color: $nav-link-hover-color;
+        //color: $nav-link-hover-color;
+        color: $primary;
     }
     &.active{
-        color: $gray-900 !important;
+        //color: $gray-900 !important;
+        color: $primary !important;
     }
-    i.ni {
+    /*i.ni {
         position: relative;
         top: 2px;
-    }
+    }*/
 }

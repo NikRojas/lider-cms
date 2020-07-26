@@ -6,24 +6,24 @@ use App\User;
 
 class UsuariosRepositorio
 {
-    public function buscar($id,$q,$pagination){
-        $select = 'users.id, users.name, users.email, users.status';
-        $condicion = 'users.id != ? and (users.email like ? or users.name like ?)';
-        $valores = [ $id,$q.'%',$q.'%',$q.'%',$q.'%',$q.'%' ];
-        $users = User::
-        selectRaw($select)
-        //->join('roles','users.role_id','roles.id')
-        ->whereRaw($condicion,$valores)
-        ->orderBy('users.created_at', 'DESC')
+    public function search($id,$q,$pagination){
+        $users = User::where('id','!=',1)->where('id','!=',$id)->where(function($query) use ($q) {
+            $query->where('email', '%'.$q.'%')
+              ->orWhere('name', '%'.$q.'%');
+        })->orderBy('created_at', 'DESC')
         ->paginate($pagination);
-
         foreach($users as $user){
+            if($user["avatar"]){
+                $avatar = route('cms.get-file',[ 'folder' => 'img', 'subfolder' => 'users', 'file' => $user["avatar"]]);
+                $avatarHtml = "<div class='media align-items-center'><span class='avatar avatar-sm mr-3 rounded-circle bg-primary'><img src='".$avatar."' /></span>".$user["name"]."</div> ";
+            }
+            else{
+                $avatarHtml = "<div class='media align-items-center'><span class='avatar avatar-sm mr-3 rounded-circle bg-primary'>".$user["avatar_initials"]."</span>".$user["name"]."</div> ";
+            }
             $data[] = array(
                 "id" => $user["id"],
-                "name" => $user["name"],
-                //"user" => $user["username"],
-                //"role" => $user["role"],
-                "status" => $user["status_format"],
+                "name" => $avatarHtml.$user["name"],
+                "user" => $user["email"],
             );
         }
         $users = $users->toArray();
@@ -35,22 +35,21 @@ class UsuariosRepositorio
     }
 
     public function datatable($id,$pagination){
-        $select = 'users.id, users.name, users.email, users.status';   
-        $condicion = 'users.id != ?';
-        $valores = [$id];
-        $users = User::
-        selectRaw($select)
-        //->join('roles','users.role_id','roles.id')
-        ->whereRaw($condicion,$valores)
-        ->orderBy('users.created_at', 'DESC')
+        $users = User::where('id','!=',1)->where('id','!=',$id)->orderBy('created_at', 'DESC')
         ->paginate($pagination);
-
         foreach($users as $user){
+            if($user["avatar"]){
+                $avatar = route('cms.get-file',[ 'folder' => 'img', 'subfolder' => 'users', 'file' => $user["avatar"]]);
+                $avatarHtml = "<div class='media align-items-center'><span class='avatar avatar-sm mr-3 rounded-circle bg-primary'><img src='".$avatar."' /></span>".$user["name"]."</div> ";
+            }
+            else{
+                $avatarHtml = "<div class='media align-items-center'><span class='avatar avatar-sm mr-3 rounded-circle bg-primary'>".$user["avatar_initials"]."</span>".$user["name"]."</div> ";
+            }
             $data[] = array(
                 "id" => $user["id"],
-                "name" => $user["name"],
+                "name" => $avatarHtml,
                 "user" => $user["email"],
-                "status" => $user["status_format"],
+                //"status" => $user["status_format"],
             );
         }
         $users = $users->toArray();

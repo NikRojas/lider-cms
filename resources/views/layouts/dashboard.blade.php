@@ -133,7 +133,7 @@
                         v-cloak>
                         <template slot="button-content">
                             <div class="media align-items-center">
-                                <span class="avatar rounded-circle bg-default">
+                                <span class="avatar rounded-circle bg-default" style="font-size: 18px !important;">
                                     @if(Auth::user()->avatar)
                                     <img src="{{ route('cms.get-file',[ 'folder' => 'img', 'subfolder' => 'users', 'file' => Auth::user()->avatar ]) }}"
                                         alt="Usuario" />

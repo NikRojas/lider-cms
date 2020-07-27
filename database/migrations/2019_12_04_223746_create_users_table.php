@@ -22,11 +22,12 @@ class CreateUsersTable extends Migration
             $table->string('avatar')->nullable();
             //$table->timestamp('email_verified_at')->nullable();
             $table->string('password');
-            $table->boolean('status');
+            //$table->boolean('status');
             /*$table->bigInteger('role_id')->unsigned();
             $table->foreign('role_id')->references('id')->on('roles');*/
             $table->rememberToken();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
@@ -37,6 +38,9 @@ class CreateUsersTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('users');
+        //Schema::dropIfExists('users');
+        Schema::table('users', function (Blueprint $table) {
+            $table->dropSoftDeletes();
+        });
     }
 }

@@ -1060,6 +1060,17 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -2651,7 +2662,7 @@ var render = function() {
                               attrs: {
                                 type: "text",
                                 id: "name",
-                                placeholder: "Nombre Completo"
+                                placeholder: "Nombre"
                               },
                               domProps: { value: _vm.user.name },
                               on: {
@@ -2963,7 +2974,7 @@ var render = function() {
                               attrs: {
                                 type: "text",
                                 id: "name",
-                                placeholder: "Nombre Completo"
+                                placeholder: "Nombre"
                               },
                               domProps: { value: _vm.user.name },
                               on: {

@@ -9,8 +9,7 @@
     "/js/pages/profile.js": "/js/pages/profile.js",
     "/js/pages/reset.js": "/js/pages/reset.js",
     "/js/pages/users.js": "/js/pages/users.js",
-    "/vendors~js/pages/profile~js/pages/users.js": "/vendors~js/pages/profile~js/pages/users.js",
-    "/vendors~js/pages/users.js": "/vendors~js/pages/users.js",
     "/vendors~js/pages/login~js/pages/profile~js/pages/reset~js/pages/users.js": "/vendors~js/pages/login~js/pages/profile~js/pages/reset~js/pages/users.js",
-    "/vendors~js/pages/login~js/pages/reset~js/pages/users.js": "/vendors~js/pages/login~js/pages/reset~js/pages/users.js"
+    "/vendors~js/pages/profile~js/pages/users.js": "/vendors~js/pages/profile~js/pages/users.js",
+    "/vendors~js/pages/users.js": "/vendors~js/pages/users.js"
 }

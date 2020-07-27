@@ -51,7 +51,8 @@ class LoginController extends Controller
     }
 
     protected function credentials(Request $request){     
-        return ['email' => $request->email, 'password' => $request->password, 'status' => 1];
+        //return ['email' => $request->email, 'password' => $request->password, 'status' => 1];
+        return ['email' => $request->email, 'password' => $request->password];
     }
 
     public function logout(Request $request) {

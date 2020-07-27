@@ -12,6 +12,17 @@
               ></BreadCrumb>
             </div>
             <div class="col-12 col-lg text-right">
+              
+              <!--<a
+                href="#"
+                class="btn btn-icon btn-inverse-dark"
+                v-if="showBlock"
+                @click.prevent="getUsers(true)"
+                >
+                 <span class="btn-inner--icon">
+                  <jam-trash class="current-color" width="22" height="22"/>
+                </span><span class="btn-inner--text">Usuarios Eliminados</span>
+              </a>-->
               <a
                 href="#"
                 class="btn btn-icon btn-inverse-primary"
@@ -120,7 +131,7 @@
                     class="form-control"
                     id="name"
                     v-model="user.name"
-                    placeholder="Nombre Completo"
+                    placeholder="Nombre"
                   />
                   <label
                     v-if="errors && errors.name"
@@ -226,7 +237,7 @@
                     class="form-control"
                     id="name"
                     v-model="user.name"
-                    placeholder="Nombre Completo"
+                    placeholder="Nombre"
                   />
                   <label
                     v-if="errors && errors.name"

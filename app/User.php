@@ -2,6 +2,7 @@
 
 namespace App;
 
+use Carbon\Carbon;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -42,7 +43,7 @@ class User extends Authenticatable
         return $this->hasOne('App\Role','id','role_id');
     }*/
 
-    protected $appends = ['avatar_initials','status_format'];
+    protected $appends = ['avatar_initials','status_format','created_at_format'];
 
     public function getStatusFormatAttribute(){
         if($this->status){
@@ -60,5 +61,10 @@ class User extends Authenticatable
             $initials = $initials.strtoupper(substr($temp[1],0,1));
         }
         return $initials;
+    }
+
+    public function getCreatedAtFormatAttribute( $value ) {
+        $date = Carbon::parse($this->created_at);
+        return $date->isoFormat('DD').' de '.ucfirst($date->isoFormat('MMMM')).', '.$date->isoFormat('YYYY');
     }
 }

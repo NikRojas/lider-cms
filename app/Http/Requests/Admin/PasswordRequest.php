@@ -19,9 +19,9 @@ class PasswordRequest extends FormRequest
     public function rules()
     {
         return [
-            'contrasena_actual' => 'required|min:8',
-            'contrasena_nueva' => 'required|min:8|confirmed|alpha_dash',
-            'contrasena_nueva_confirmation' => 'required'
+            'current_password' => 'required|min:8',
+            'new_password' => 'required|min:8|confirmed|alpha_dash',
+            'new_password_confirmation' => 'required'
         ];
         
     }

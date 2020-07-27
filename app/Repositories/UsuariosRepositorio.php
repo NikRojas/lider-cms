@@ -8,8 +8,8 @@ class UsuariosRepositorio
 {
     public function search($id,$q,$pagination){
         $users = User::where('id','!=',1)->where('id','!=',$id)->where(function($query) use ($q) {
-            $query->where('email', '%'.$q.'%')
-              ->orWhere('name', '%'.$q.'%');
+            $query->where('email','like', '%'.$q.'%')
+              ->orWhere('name','like', '%'.$q.'%');
         })->orderBy('created_at', 'DESC')
         ->paginate($pagination);
         foreach($users as $user){
@@ -22,7 +22,7 @@ class UsuariosRepositorio
             }
             $data[] = array(
                 "id" => $user["id"],
-                "name" => $avatarHtml.$user["name"],
+                "name" => $avatarHtml,
                 "user" => $user["email"],
             );
         }

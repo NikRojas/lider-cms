@@ -275,11 +275,13 @@ body {
 
     &::before {
         pointer-events: none;
-        background-color: #fff;
+        background-color: $body-bg;
         //border: 1px solid darken($body-bg, 30%);
-        border: 0;
-        box-shadow: $input-alternative-box-shadow;
-        border-radius: $border-radius;
+        border: 1px solid $border-color !important;
+        box-shadow: none !important;
+        //border: 0;
+        //box-shadow: $input-alternative-box-shadow;
+        //border-radius: $border-radius;
     }
 }
 
@@ -748,4 +750,12 @@ $sidebar-width-icon: 70px;
 
 .navbar-vertical .navbar-nav .nav .nav-link {
     padding-left: 3.6rem;
+}
+
+.sub-menu{
+    .nav-link.active{
+        &::before{
+            content: none !important;
+        }
+    }
 }

@@ -8,15 +8,15 @@
         <div class="col-lg-8 mx-auto">
           <div class="card mb-4">
             <form @submit.prevent="updateProfile">
-              <div class="card-body" v-show="startBlock">
+              <div class="card-body" v-show="!requestLoading && startBlock">
                 <div class="rounded-circle mx-auto d-flex avatar avatar-lg  text-center mb-2 bg-default" style="height:120px; width: 120px;" v-if="!editEmail && !editPassword">
                   <img
                     class="shadow rounded-circle object-fit--cover"
-                    v-if="usuario.avatar"
-                    :src="'/files/img/users/'+ usuario.avatar"
+                    v-if="user.avatar"
+                    :src="'/files/img/users/'+ user.avatar"
                     alt="Perfil"
                   />
-                  <span v-else style="font-size: 26px;">{{ usuario.avatar_initials }}</span>
+                  <span v-else style="font-size: 54px;">{{ user.avatar_initials }}</span>
                 </div>
 
                 <div v-if="editEmail && !editPassword" class="text-center mb-3">
@@ -24,18 +24,18 @@
                   <div class="row">
                     <div class="col-lg"></div>
                     
-                    <div class="col-12 col-lg-3 mb-3 mb-lg-0" v-if="usuario.avatar">
+                    <div class="col-12 col-lg-3 mb-3 mb-lg-0" v-if="user.avatar">
                       <img
                         class="rounded-circle object-fit--cover d-block mx-auto mb-3"
                         alt="Colaborador"
                         height="120"
                         width="120"
-                        :src="'/files/img/users/' + usuario.avatar"
+                        :src="'/files/img/users/' + user.avatar"
                       />
                       <a
                         class="btn btn-inverse-danger btn-sm"
                         href="#"
-                        @click.prevent="() => { usuario.avatar = ''; usuario.eliminar_imagen = true;}"
+                        @click.prevent="() => { user.avatar = ''; user.eliminar_imagen = true;}"
                       >Eliminar Avatar Actual</a>
                     </div>
                     <div class="col-12 col-lg-3">
@@ -43,6 +43,7 @@
                         ref="ref_image"
                         @vdropzone-file-added="$validateImageDropzone($event,$refs.ref_image.dropzone,1,100000,'100kb')"
                         id="id_image"
+                        class="text-center"
                         :options="dropzoneOptions"
                         :duplicateCheck="true"
                         :useCustomSlot="true"
@@ -60,18 +61,18 @@
 
                 <div class="mb-0">
                   <h2
-                    class="font-weight-light text-center mb-3"
+                    class=" text-center mb-3"
                     v-if="!editEmail && !editPassword"
-                  >{{ usuario.name }}</h2>
+                  >{{ user.name }}</h2>
 
                   <div class="row" v-if="editEmail && !editPassword">
                     <div class="col-12">
                       <div class="form-group">
-                        <span class="font-weight-bold">Nombre Completo:</span>
+                        <span class="font-weight-bold">Nombre:</span>
                         <input
                           type="text"
                           class="d-inline-block form-control  w-100"
-                          v-model="usuario.name"
+                          v-model="user.name"
                           v-if="editEmail && !editPassword"
                         />
                         <label
@@ -85,16 +86,16 @@
                 <div>
                   <div class="row">
                     <div class="col-12">
-                      <span class="font-weight-bold">Correo Electrónico:</span>
+                      <span class="font-weight-bold">Email:</span>
                       <span
-                        class="font-weight-light mb-4 d-block"
+                        class=" mb-4 d-block"
                         v-if="!editEmail && !editPassword"
-                      >{{ usuario.email }}</span>
+                      >{{ user.email }}</span>
                       <div class="form-group" v-if="editEmail && !editPassword">
                         <input
                           type="text"
                           class="mt-1  d-inline-block form-control w-100"
-                          v-model="usuario.email"
+                          v-model="user.email"
                           v-if="editEmail && !editPassword"
                         />
                         <label
@@ -110,36 +111,36 @@
                 <div class="row">
                   <div class="col-12">
                     <div class="form-group">
-                      <label class="font-weight-bold" for="id_contrasena_actual">Contraseña Actual:</label>
+                      <label class="font-weight-bold" for="id_current_password">Contraseña Actual:</label>
                       <input
                         type="password"
                         placeholder="Contraseña Actual"
                         class="form-control "
-                        id="id_contrasena_actual"
-                        v-model="usuario.contrasena_actual"
+                        id="id_current_password"
+                        v-model="user.current_password"
                       />
                       <label
-                        v-if="errors && errors.contrasena_actual"
+                        v-if="errors && errors.current_password"
                         class="mt-2 mb-0 d-block text-sm text-danger"
-                        for="id_contrasena_actual"
-                      >{{ errors.contrasena_actual[0] }}</label>
+                        for="id_current_password"
+                      >{{ errors.current_password[0] }}</label>
                     </div>
                   </div>
                   <div class="col-12">
                     <div class="form-group">
-                      <label class="font-weight-bold" for="id_contrasena_nueva">Contraseña Nueva:</label>
+                      <label class="font-weight-bold" for="id_new_password">Contraseña Nueva:</label>
                       <input
                         type="password"
                         placeholder="Contraseña Nueva"
                         class="form-control "
-                        id="id_contrasena_nueva"
-                        v-model="usuario.contrasena_nueva"
+                        id="id_new_password"
+                        v-model="user.new_password"
                       />
                       <label
-                        v-if="errors && errors.contrasena_nueva"
+                        v-if="errors && errors.new_password"
                         class="mt-2 mb-0 d-block text-sm text-danger"
-                        for="id_contrasena_nueva"
-                      >{{ errors.contrasena_nueva[0] }}</label>
+                        for="id_new_password"
+                      >{{ errors.new_password[0] }}</label>
                     </div>
                   </div>
                   <div class="col-12">
@@ -153,14 +154,33 @@
                         placeholder="Confirmar Nueva Contraseña"
                         class="form-control "
                         id="id_confirmar_contrasena"
-                        v-model="usuario.contrasena_nueva_confirmation"
+                        v-model="user.new_password_confirmation"
                       />
                       <label
-                        v-if="errors && errors.contrasena_nueva_confirmation"
+                        v-if="errors && errors.new_password_confirmation"
                         class="mt-2 mb-0 d-block text-sm text-danger"
                         for="id_confirmar_contrasena"
-                      >{{ errors.contrasena_nueva_confirmation[0] }}</label>
+                      >{{ errors.new_password_confirmation[0] }}</label>
                     </div>
+                  </div>
+                </div>
+              </div>
+              <div class="card-body" v-if="requestLoading && startBlock">
+                <div class="row">
+                  <div class="col-12 text-center mb-4">
+                    <Skeleton circle height="120px" width="120px" />
+                  </div>
+                  <div class="col-6 mb-4">
+                    <Skeleton />
+                  </div>
+                  <div class="col-6 mb-4">
+                    <Skeleton />
+                  </div>
+                  <div class="col-6 mb-4">
+                    <Skeleton />
+                  </div>
+                  <div class="col-6">
+                    <Skeleton />
                   </div>
                 </div>
               </div>
@@ -204,6 +224,7 @@
 <script>
 import Button from "../components/Button";
 import vue2Dropzone from "vue2-dropzone";
+import { Skeleton } from "vue-loading-skeleton";
 export default {
   props: {
     routeLogin: {
@@ -217,6 +238,7 @@ export default {
   },
   components: {
     //Footer,
+    Skeleton,
     Button,
     vueDropzone: vue2Dropzone,
   },
@@ -226,26 +248,27 @@ export default {
       startBlock: true,
       editEmail: false,
       editPassword: false,
-      usuario: {
+      user: {
         rel_role: {
           name: "",
         },
         name: "",
         username: "",
         email: "",
-        contrasena_actual: "",
-        contrasena_nueva: "",
-        contrasena_nueva_confirmation: "",
+        current_password: "",
+        new_password: "",
+        new_password_confirmation: "",
       },
       dropzoneOptions: {
         url: "/",
         maxFiles: 1,
         acceptedFiles: "image/png,image/jpeg,image/jpg,image/svg+xml",
         autoProcessQueue: false,
-        thumbnailWidth: 100,
+        thumbnailWidth: 150,
         addRemoveLinks: true,
         dictRemoveFile: "Remover",
       },
+      requestLoading: false,
       startBlock: true,
       passwordBlock: false,
       requestServer: false,
@@ -253,10 +276,12 @@ export default {
   },
   methods: {
     getUser() {
+      this.requestLoading = true;
       axios
         .get("json/profile")
         .then((response) => {
-          this.usuario = response.data;
+          this.user = response.data;
+          this.requestLoading = false;
         })
         .catch((error) => {});
     },
@@ -264,16 +289,16 @@ export default {
       this.errors = {};
       this.startBlock = true;
       this.editPassword = this.editEmail = this.passwordBlock = this.requestServer = false;
-      this.usuario = {
+      this.user = {
         rel_role: {
           name: "",
         },
         name: "",
         username: "",
         email: "",
-        contrasena_actual: "",
-        contrasena_nueva: "",
-        contrasena_nueva_confirmation: "",
+        current_password: "",
+        new_password: "",
+        new_password_confirmation: "",
       };
       this.getUser();
     },
@@ -286,19 +311,19 @@ export default {
 
       if (this.editEmail) {
         const fd = new FormData();
-        fd.append("id", this.usuario.id);
-        if (this.usuario.username) {
-          fd.append("username", this.usuario.username);
+        fd.append("id", this.user.id);
+        if (this.user.username) {
+          fd.append("username", this.user.username);
         } else {
           fd.append("username", "");
         }
-        if (this.usuario.email) {
-          fd.append("email", this.usuario.email);
+        if (this.user.email) {
+          fd.append("email", this.user.email);
         } else {
           fd.append("email", "");
         }
-        if (this.usuario.name) {
-          fd.append("name", this.usuario.name);
+        if (this.user.name) {
+          fd.append("name", this.user.name);
         } else {
           fd.append("name", "");
         }
@@ -307,8 +332,8 @@ export default {
           fd.append("avatar", this.$refs.ref_image.dropzone.files[0]);
         }
 
-        if (this.usuario.eliminar_imagen) {
-          fd.append("eliminar_imagen", this.usuario.eliminar_imagen);
+        if (this.user.eliminar_imagen) {
+          fd.append("eliminar_imagen", this.user.eliminar_imagen);
         }
         fd.append("_method", "put");
         axios
@@ -348,7 +373,7 @@ export default {
       }
       if (this.editPassword) {
         axios
-          .put("change-password", this.usuario)
+          .put("change-password", this.user)
           .then((response) => {
             this.requestServer = false;
             this.restorePage();

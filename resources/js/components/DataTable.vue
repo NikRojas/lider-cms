@@ -21,13 +21,6 @@
           </label>
         </div>
         <div class="col-12 col-md-6">
-          <!--<input
-            type="search"
-            class="form-control bg-white"
-            id="id_buscar"
-            :placeholder="'Buscar por ' + placeholder"
-            v-model="buscar"
-          />-->
           <div class="input-group input-group-merge">
             <div class="input-group-prepend bg-white">
               <span class="input-group-text bg-white" id="search">
@@ -48,19 +41,7 @@
     </div>
     <div class="col-12">
       <div class="card">
-        <!--<div class="card-header">
-                    <h2 class="mb-0 text-uppercase text-primary">{{ titulo }}</h2>
-        </div>-->
-
-        
         <div v-if="loading">
-          <!--<Loader
-            texto="loading..."
-            :iconClasses="['ml-1']"
-            :iconWidth="20"
-            :iconHeight="20"
-            :styles="{ height: '300px' }"
-          />-->
           <table class="table align-items-center">
             <thead class="thead-light">
               <tr>

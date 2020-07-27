@@ -5,13 +5,17 @@
         <div class="header-body">
           <div class="row align-items-center pt-0 pt-md-2 pb-4">
             <div class="col-12 col-lg-7">
-              <BreadCrumb :title="crearBloque ? 'Crear Usuario' : verBloque ? 'Ver Usuario' : editBlock ? 'Actualizar Usuario' : 'Usuarios'" parent="Configuración" active="Usuarios"></BreadCrumb>
+              <BreadCrumb
+                :title="createBlock ? 'Crear Usuario' : showBlock ? 'Ver Usuario' : editBlock ? 'Actualizar Usuario' : 'Usuarios'"
+                parent="Configuración"
+                active="Usuarios"
+              ></BreadCrumb>
             </div>
             <div class="col-12 col-lg text-right">
               <a
                 href="#"
                 class="btn btn-icon btn-inverse-primary"
-                @click.prevent="()=>{showBlock = false; crearBloque = true;}"
+                @click.prevent="()=>{showBlock = false; createBlock = true;}"
                 v-if="showBlock"
               >
                 <span class="btn-inner--icon">
@@ -19,6 +23,14 @@
                 </span>
                 <span class="btn-inner--text">Nuevo Usuario</span>
               </a>
+              <button
+                type="button"
+                class="btn btn-secondary"
+                @click.prevent="restorePage"
+                v-if="detailBlock"
+              >
+                <jam-arrow-left class="mr-2 current-color" />Regresar
+              </button>
             </div>
           </div>
         </div>
@@ -26,109 +38,140 @@
     </div>
     <div class="container-fluid mt--6">
       <DataTable
-        :object="usuarios"
-        placeholder="Nombre Completo, Usuario"
+        :object="users"
+        placeholder="Nombre, Usuario"
         :button-update="true"
         :button-read="true"
         :button-delete="true"
-        :button-disable="true"
-        titulo="Usuarios"
+        :button-disable="false"
         @get="getUsers"
         @read="showUser"
-        @disable="disableUser"
         @delete="deleteUser"
         @update="editUser"
         v-show="showBlock"
       ></DataTable>
 
-      <div class="card mb-4" v-if="editBlock">
-        <!--<div class="card-header border-0">
-          <h2 class="mb-0 text-uppercase text-primary">Actualizar Usuario</h2>
-        </div>-->
+      <div class="card" v-if="editBlock && requestLoading || detailBlock && requestLoading">
+        <div class="card-body">
+          <div class="row">
+            <div class="col-12 text-center mb-4">
+              <Skeleton circle height="120px" width="120px" />
+            </div>
+            <div class="col-6 mb-4">
+              <Skeleton />
+            </div>
+            <div class="col-6 mb-4">
+              <Skeleton />
+            </div>
+            <div class="col-6 mb-4">
+              <Skeleton />
+            </div>
+            <div class="col-6">
+              <Skeleton />
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="card mb-4" v-if="editBlock && !requestLoading">
         <div class="card-body">
           <form @submit.prevent="updateUser" enctype="multipart/form-data">
             <div class="row">
               <div class="col-12">
-                <div class="form-group">
+                <div class="form-group text-center">
                   <label class="font-weight-bold" for="id_imagen">Avatar</label>
-                  <vue-dropzone
-                    ref="ref_image"
-                    @vdropzone-file-added="$validateImageDropzone($event,$refs.ref_image.dropzone,1,100000,'100kb')"
-                    id="id_imagen"
-                    :options="dropzoneOptions"
-                    :duplicateCheck="true"
-                    :useCustomSlot="true"
-                  >
-                    <div class="dropzone-custom-content">
-                      <h3
-                        class="dropzone-custom-title text-primary"
-                      >Suelte el archivo aquí o haga click para cargarlo.</h3>
+                  <div class="row">
+                    <div class="col-lg"></div>
+                    
+                    <div class="col-12 col-lg-3 mb-3 mb-lg-0" v-if="user.avatar">
+                      <img
+                        class="rounded-circle object-fit--cover d-block mx-auto mb-3"
+                        alt="Colaborador"
+                        height="120"
+                        width="120"
+                        :src="'/files/img/users/' + user.avatar"
+                      />
                     </div>
-                  </vue-dropzone>
+                    <div class="col-12 col-lg-3">
+                      <vue-dropzone
+                        class="text-center"
+                        ref="ref_image"
+                        @vdropzone-file-added="$validateImageDropzone($event,$refs.ref_image.dropzone,1,100000,'100kb')"
+                        id="id_imagen"
+                        :options="dropzoneOptions"
+                        :duplicateCheck="true"
+                        :useCustomSlot="true"
+                      >
+                        <div class="dropzone-custom-content">
+                          <h3
+                            class="dropzone-custom-title text-primary"
+                          >Suelte el archivo aquí o haga click para cargarlo.</h3>
+                        </div>
+                      </vue-dropzone>
+                    </div>
+                    <div class="col-lg"></div>
+                  </div>
                 </div>
               </div>
               <div class="col-12 col-md-6">
                 <div class="form-group">
-                  <label class="font-weight-bold" for="id_name">Nombre Completo:</label>
+                  <label class="font-weight-bold" for="name">Nombre:</label>
                   <input
                     type="text"
-                    class="form-control "
-                    id="id_name"
-                    v-model="usuario.name"
+                    class="form-control"
+                    id="name"
+                    v-model="user.name"
                     placeholder="Nombre Completo"
                   />
                   <label
-                    v-if="errores && errores.name"
+                    v-if="errors && errors.name"
                     class="mt-2 mb-0 text-danger"
-                    for="id_name"
-                  >{{ errores.name[0] }}</label>
+                    for="name"
+                  >{{ errors.name[0] }}</label>
                 </div>
               </div>
 
               <div class="col-12 col-md-6">
                 <div class="form-group">
-                  <label class="font-weight-bold" for="id_email">
-                    Correo
-                    Electrónico:
-                  </label>
+                  <label class="font-weight-bold" for="email">Email:</label>
                   <input
                     type="text"
-                    class="form-control "
-                    id="id_email"
-                    v-model="usuario.email"
-                    placeholder="Correo Electrónico"
+                    class="form-control"
+                    id="email"
+                    v-model="user.email"
+                    placeholder="Email"
                   />
                   <label
-                    v-if="errores && errores.email"
+                    v-if="errors && errors.email"
                     class="mt-2 mb-0 text-danger"
-                    for="id_email"
-                  >{{ errores.email[0] }}</label>
+                    for="email"
+                  >{{ errors.email[0] }}</label>
                 </div>
               </div>
 
               <div class="col-12 col-md-6">
                 <div class="form-group">
-                  <label class="font-weight-bold" for="id_password">Contraseña:</label>
+                  <label class="font-weight-bold" for="password">Contraseña:</label>
                   <input
                     type="password"
-                    class="form-control "
-                    id="id_password"
-                    v-model="usuario.contrasena"
+                    class="form-control"
+                    id="password"
+                    v-model="user.contrasena"
                     placeholder="Contraseña"
                   />
+                  <small id="password" class>La contraseña debe tener mínimo 8 caracteres.</small>
                   <label
-                    v-if="errores && errores.contrasena"
+                    v-if="errors && errors.contrasena"
                     class="mt-2 mb-0 text-danger"
-                    for="id_password"
-                  >{{ errores.contrasena[0] }}</label>
+                    for="password"
+                  >{{ errors.contrasena[0] }}</label>
                 </div>
               </div>
 
-              <div class="col-12 col-lg-6" v-if="!usuario.status">
+              <div class="col-12 col-lg-6" v-if="!user.status">
                 <div class="form-group">
                   <b-form-checkbox
                     id="id_checkbox_status"
-                    v-model="usuario.available"
+                    v-model="user.available"
                     name="available"
                   >Activar</b-form-checkbox>
                 </div>
@@ -152,10 +195,7 @@
         </div>
       </div>
 
-      <div class="card mb-4" v-if="crearBloque">
-        <!--<div class="card-header border-0">
-          <h2 class="mb-0 text-uppercase text-primary">Crear Usuario</h2>
-        </div>-->
+      <div class="card mb-4" v-if="createBlock">
         <div class="card-body">
           <form @submit.prevent="createUser" enctype="multipart/form-data">
             <div class="row">
@@ -180,58 +220,57 @@
               </div>
               <div class="col-12 col-md-6">
                 <div class="form-group">
-                  <label class="font-weight-bold" for="id_name">Nombre Completo:</label>
+                  <label class="font-weight-bold" for="name">Nombre:</label>
                   <input
                     type="text"
-                    class="form-control "
-                    id="id_name"
-                    v-model="usuario.name"
+                    class="form-control"
+                    id="name"
+                    v-model="user.name"
                     placeholder="Nombre Completo"
                   />
                   <label
-                    v-if="errores && errores.name"
+                    v-if="errors && errors.name"
                     class="mt-2 mb-0 text-danger"
-                    for="id_name"
-                  >{{ errores.name[0] }}</label>
+                    for="name"
+                  >{{ errors.name[0] }}</label>
                 </div>
               </div>
 
-              
-
               <div class="col-12 col-md-6">
                 <div class="form-group">
-                  <label class="font-weight-bold" for="id_password">Contraseña:</label>
+                  <label class="font-weight-bold" for="password">Contraseña:</label>
 
                   <input
                     type="password"
-                    class="form-control "
-                    id="id_password"
-                    v-model="usuario.password"
+                    class="form-control"
+                    id="password"
+                    v-model="user.password"
                     placeholder="Contraseña"
                   />
+                  <small id="password" class>La contraseña debe tener mínimo 8 caracteres.</small>
                   <label
-                    v-if="errores && errores.password"
+                    v-if="errors && errors.password"
                     class="mt-2 mb-0 text-danger"
-                    for="id_password"
-                  >{{ errores.password[0] }}</label>
+                    for="password"
+                  >{{ errors.password[0] }}</label>
                 </div>
               </div>
               <div class="col-12 col-md-6">
                 <div class="form-group">
-                  <label class="font-weight-bold" for="id_email">Correo Electrónico:</label>
+                  <label class="font-weight-bold" for="email">Email:</label>
 
                   <input
                     type="text"
-                    class="form-control "
-                    id="id_email"
-                    v-model="usuario.email"
-                    placeholder="Correo Electrónico"
+                    class="form-control"
+                    id="email"
+                    v-model="user.email"
+                    placeholder="Email"
                   />
                   <label
-                    v-if="errores && errores.email"
+                    v-if="errors && errors.email"
                     class="mt-2 mb-0 text-danger"
-                    for="id_email"
-                  >{{ errores.email[0] }}</label>
+                    for="email"
+                  >{{ errors.email[0] }}</label>
                 </div>
               </div>
 
@@ -252,53 +291,58 @@
         </div>
       </div>
 
-      <div class="card mb-4" v-if="verBloque">
-        <!--<div class="card-header border-0">
-          <h2 class="mb-0 text-uppercase text-primary">Ver Usuario</h2>
-        </div>-->
+      <div class="card mb-4" v-if="detailBlock  && !requestLoading">
         <div class="card-body">
           <div class="row">
-            <div class="col-12" v-if="usuario.avatar">
+            <div class="col-12">
               <div class="form-group text-center">
-                <img
+                <!--<img
                   class="object-fit--cover shadow d-block mx-auto rounded-circle"
-                  :src="rutaSistema + '/files/img/users/'+usuario.avatar" height="180" width="180"
-                />
+                  :src="routeSystem + '/files/img/users/'+user.avatar" height="180" width="180"
+                />-->
+                <div
+                  class="rounded-circle mx-auto d-flex avatar avatar-lg text-center mb-2 bg-default"
+                  style="height:120px; width: 120px;"
+                >
+                  <img
+                    class="shadow rounded-circle object-fit--cover"
+                    v-if="user.avatar"
+                    :src="'/files/img/users/'+ user.avatar"
+                    alt="Perfil"
+                  />
+                  <span v-else style="font-size: 54px;">{{ user.avatar_initials }}</span>
+                </div>
               </div>
             </div>
             <div class="col-12 col-md-6">
               <div class="form-group">
-                <label class="font-weight-bold" for="id_name">Nombre:</label>
+                <label class="font-weight-bold" for="name">Nombre:</label>
 
-                <p>{{ this.usuario.name }}</p>
+                <p>{{ this.user.name }}</p>
               </div>
             </div>
 
             <div class="col-12 col-md-6">
               <div class="form-group">
-                <label class="font-weight-bold" for="id_email">Correo Electrónico:</label>
+                <label class="font-weight-bold" for="email">Email:</label>
 
-                <p>{{ this.usuario.email }}</p>
+                <p>{{ this.user.email }}</p>
               </div>
             </div>
 
             <div class="col-12 col-md-6">
               <div class="form-group">
                 <label class="font-weight-bold" for="id_fecha_nacimiento">Registrado el:</label>
-                <p v-if="this.usuario.created_at">{{ this.usuario.created_at }}</p>
+                <p v-if="this.user.created_at">{{ this.user.created_at_format }}</p>
                 <p v-else>No registrado</p>
               </div>
-            </div>
-
-            <div class="col-12 text-right mt-2">
-              <button type="button" class="btn btn-primary" @click.prevent="restorePage">Regresar</button>
             </div>
           </div>
         </div>
       </div>
     </div>
 
-    <b-modal centered ref="modal-eliminar">
+    <!--<b-modal centered ref="modal-eliminar">
       <template slot="modal-title">
         <h2 class="mb-0 text-uppercase text-primary">Eliminar Usuario</h2>
       </template>
@@ -307,7 +351,7 @@
         <Button
           :classes="['btn-inverse-danger']"
           :text="'Eliminar'"
-          @click="deleteUserConfirm"
+          @click="destroyConfirm"
           :request-server="requestServer"
         ></Button>
         <button type="button" class="btn btn-secondary" @click="restoreEl">Cancelar</button>
@@ -328,17 +372,27 @@
         ></Button>
         <button type="button" class="btn btn-secondary" @click="restoreEl">Cancelar</button>
       </template>
-    </b-modal>
+    </b-modal>-->
+    <destroy
+      element="usuario"
+      @cancel="restoreEl"
+      :open="modalDestroy"
+      @submit="destroyConfirm"
+      :loading-get="requestLoading"
+      :loading-submit="requestServer"
+    ></destroy>
   </div>
 </template>
 <script>
+import { Skeleton } from "vue-loading-skeleton";
 import Button from "../../components/Button";
 import DataTable from "../../components/DataTable";
 import vue2Dropzone from "vue2-dropzone";
 import BreadCrumb from "../../components/BreadCrumb";
+import Destroy from "../../components/modals/Destroy";
 export default {
   props: {
-    rutaSistema: {
+    routeSystem: {
       type: String,
       required: true,
     },
@@ -347,25 +401,27 @@ export default {
     DataTable,
     Button,
     BreadCrumb,
+    Skeleton,
     vueDropzone: vue2Dropzone,
+    Destroy,
   },
   data() {
     return {
-      usuarios: {},
+      users: {},
       showBlock: true,
-      crearBloque: false,
+      createBlock: false,
       editBlock: false,
-      verBloque: false,
+      detailBlock: false,
       dropzoneOptions: {
         url: "/",
         maxFiles: 1,
         acceptedFiles: "image/png,image/jpeg,image/jpg,image/svg+xml",
         autoProcessQueue: false,
-        thumbnailWidth: 100,
+        thumbnailWidth: 150,
         addRemoveLinks: true,
         dictRemoveFile: "Remover",
       },
-      usuario: {
+      user: {
         rel_role: {},
         role_id: "",
         username: "",
@@ -375,15 +431,17 @@ export default {
         status: false,
         available: false,
       },
-      errores: {},
+      errors: {},
+      requestLoading: false,
       requestServer: false,
+      modalDestroy: false,
     };
   },
   methods: {
     restoreEl() {
-      this.crearBloque = this.editBlock = this.verBloque = this.requestServer = false;
-      (this.errores = {}),
-        (this.usuario = {
+      this.createBlock = this.editBlock = this.detailBlock = this.requestServer = this.modalDestroy = false;
+      (this.errors = {}),
+        (this.user = {
           rel_role: {},
           role_id: "",
           username: "",
@@ -391,17 +449,17 @@ export default {
           name: "",
           email: "",
         });
-      this.$refs["modal-eliminar"].hide();
-      this.$refs["modal-disable"].hide();
+      /*this.$refs["modal-eliminar"].hide();
+      this.$refs["modal-disable"].hide();*/
     },
     restorePage() {
       this.showBlock = true;
       this.getUsers(1, 10);
-      this.crearBloque = this.editBlock = this.verBloque = this.requestServer = false;
-      this.$refs["modal-eliminar"].hide();
-      this.$refs["modal-disable"].hide();
-      (this.errores = {}),
-        (this.usuario = {
+      this.createBlock = this.editBlock = this.detailBlock = this.requestServer = this.modalDestroy = false;
+      /* this.$refs["modal-eliminar"].hide();
+      this.$refs["modal-disable"].hide();*/
+      (this.errors = {}),
+        (this.user = {
           rel_role: {},
           role_id: "",
           username: "",
@@ -411,10 +469,12 @@ export default {
         });
     },
     getUser(id) {
+      this.requestLoading = true;
       axios
         .get("json/usuarios/" + id)
         .then((response) => {
-          this.usuario = response.data;
+          this.user = response.data;
+          this.requestLoading = false;
         })
         .catch((error) => {});
     },
@@ -426,15 +486,14 @@ export default {
       axios
         .get(url)
         .then((response) => {
-          this.usuarios = response.data;
+          this.users = response.data;
         })
         .catch((error) => {});
     },
-
     showUser(id) {
       this.getUser(id);
       this.showBlock = false;
-      this.verBloque = true;
+      this.detailBlock = true;
     },
     editUser(id) {
       this.getUser(id);
@@ -442,17 +501,18 @@ export default {
       this.editBlock = true;
     },
     deleteUser(id) {
-      this.$refs["modal-eliminar"].show();
+      //this.$refs["modal-eliminar"].show();
+      this.modalDestroy = true;
       this.getUser(id);
     },
-    disableUser(id) {
+    /*disableUser(id) {
       this.$refs["modal-disable"].show();
       this.getUser(id);
     },
     disableUserConfirm() {
       this.requestServer = true;
       axios
-        .put("usuarios/deshabilitar/" + this.usuario.id)
+        .put("usuarios/deshabilitar/" + this.user.id)
         .then((response) => {
           this.restorePage();
           Swal.fire({
@@ -469,11 +529,11 @@ export default {
         .catch((error) => {
           this.restoreEl();
         });
-    },
-    deleteUserConfirm() {
+    },*/
+    destroyConfirm() {
       this.requestServer = true;
       axios
-        .delete("usuarios/" + this.usuario.id)
+        .delete("usuarios/" + this.user.id)
         .then((response) => {
           this.restorePage();
           Swal.fire({
@@ -494,28 +554,28 @@ export default {
     updateUser() {
       this.requestServer = true;
       const fd = new FormData();
-      fd.append("name", this.usuario.name);
-      fd.append("username", this.usuario.username);
-      fd.append("email", this.usuario.email);
+      fd.append("name", this.user.name);
+      fd.append("username", this.user.username);
+      fd.append("email", this.user.email);
       /*if (this.eliminarImagen === true) {
         fd.append("eliminar", this.eliminarImagen);
       }*/
-      if (this.usuario.password) {
-        fd.append("password", this.usuario.password);
+      if (this.user.password) {
+        fd.append("password", this.user.password);
       }
 
-      if (this.usuario.available) {
+      if (this.user.available) {
         fd.append("available", 1);
       }
 
-      fd.append("role_id", this.usuario.role_id);
-      fd.append("id", this.usuario.id);
+      fd.append("role_id", this.user.role_id);
+      fd.append("id", this.user.id);
       if (this.$refs.ref_image.dropzone.files[0]) {
         fd.append("avatar", this.$refs.ref_image.dropzone.files[0]);
       }
       fd.append("_method", "put");
       axios
-        .post("usuarios/" + this.usuario.id, fd)
+        .post("usuarios/" + this.user.id, fd)
         .then((response) => {
           this.requestServer = false;
           this.restorePage();
@@ -533,7 +593,7 @@ export default {
         .catch((error) => {
           if (error.response.status === 422) {
             this.requestServer = false;
-            this.errores = error.response.data.errors || {};
+            this.errors = error.response.data.errors || {};
             return;
           }
           this.restorePage();
@@ -542,10 +602,10 @@ export default {
     createUser() {
       this.requestServer = true;
       const fd = new FormData();
-      fd.append("name", this.usuario.name);
-      //fd.append("username", this.usuario.username);
-      fd.append("email", this.usuario.email);
-      fd.append("password", this.usuario.password);
+      fd.append("name", this.user.name);
+      //fd.append("username", this.user.username);
+      fd.append("email", this.user.email);
+      fd.append("password", this.user.password);
       if (this.$refs.ref_image.dropzone.files[0]) {
         fd.append("avatar", this.$refs.ref_image.dropzone.files[0]);
       }
@@ -568,7 +628,7 @@ export default {
         .catch((error) => {
           this.requestServer = false;
           if (error.response.status === 422) {
-            this.errores = error.response.data.errors || {};
+            this.errors = error.response.data.errors || {};
             return;
           }
           this.restorePage();

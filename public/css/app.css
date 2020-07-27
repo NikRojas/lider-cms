@@ -4309,7 +4309,7 @@ textarea.form-control {
   padding: 0.5rem 1rem;
   font-size: 0.9rem;
   line-height: 1.5;
-  border-radius: 5px;
+  border-radius: 7.5px;
   -webkit-transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
   transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
 }
@@ -5312,7 +5312,7 @@ fieldset:disabled a.btn {
   padding: 0.875rem 1rem;
   font-size: 1.125rem;
   line-height: 1.5;
-  border-radius: 5px;
+  border-radius: 7.5px;
 }
 
 .btn-sm,
@@ -5320,7 +5320,7 @@ fieldset:disabled a.btn {
   padding: 0.25rem 0.75rem;
   font-size: 0.7875rem;
   line-height: 1.5;
-  border-radius: 5px;
+  border-radius: 7.5px;
 }
 
 .btn-block {
@@ -6060,7 +6060,7 @@ input[type=button].btn-block {
   line-height: 1;
   background-color: transparent;
   border: 1px solid transparent;
-  border-radius: 5px;
+  border-radius: 7.5px;
 }
 
 .navbar-toggler:hover,
@@ -23105,10 +23105,9 @@ body.login {
 
 .custom-control-label::before {
   pointer-events: none;
-  background-color: #fff;
-  border: 0;
-  box-shadow: 0 1px 3px rgba(50, 50, 93, 0.15), 0 1px 0 rgba(0, 0, 0, 0.02);
-  border-radius: 0;
+  background-color: #FDFBFA;
+  border: 1px solid #e9ecef !important;
+  box-shadow: none !important;
 }
 
 .custom-control {
@@ -23518,5 +23517,9 @@ h6,
 
 .navbar-vertical .navbar-nav .nav .nav-link {
   padding-left: 3.6rem;
+}
+
+.sub-menu .nav-link.active::before {
+  content: none !important;
 }
 

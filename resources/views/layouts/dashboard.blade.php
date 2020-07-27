@@ -77,7 +77,7 @@
                             <ul class="nav flex-column sub-menu">
                                 @foreach($module["menu_secondary"] as $submodule)
                                 <li class="nav-item">
-                                    <a class="nav-link" href="/{{ $submodule["slug"] }}">{{ $submodule["name"] }}</a>
+                                    <a class="nav-link  {{ Request::path() ==  $submodule["slug"] ? 'active' : ''   }}" href="/{{ $submodule["slug"] }}">{{ $submodule["name"] }}</a>
                                 </li>
                                 @endforeach
                             </ul>
@@ -177,6 +177,3 @@
     </footer>
 </div>
 @endsection
-@push('scripts')
-
-@endpush

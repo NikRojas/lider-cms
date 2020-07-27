@@ -57,11 +57,11 @@ class ProfileController extends Controller
 
     public function updatePassword(PasswordRequest $request){
         $user = Auth::user();
-        if(!Hash::check($request->contrasena_actual, $user->password)){
+        if(!Hash::check($request->current_password, $user->password)){
             return response()->json(['title'=> trans('custom.title.error'), 'message'=> 'Lo sentimos, la contraseña actual es incorrecta.' ],401);
         }
         try{
-            $comercio = User::UpdateOrCreate(["id"=>$user->id],['password' => Hash::make($request->contrasena_nueva)]);
+            $user = User::UpdateOrCreate(["id"=>$user->id],['password' => Hash::make($request->new_password)]);
             return response()->json(['title'=> trans('custom.title.success'), 'message'=> trans('custom.message.update.success', ['name' => trans('custom.attribute.password')]) . ' Se cerrará la sesión en 5 segundos.' ],200);
         }
         catch(\Exception $e){

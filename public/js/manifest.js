@@ -64,7 +64,7 @@
 /******/
 /******/ 	// script path function
 /******/ 	function jsonpScriptSrc(chunkId) {
-/******/ 		return __webpack_require__.p + "" + ({"js/components/button-close":"js/components/button-close","js/components/button-icons":"js/components/button-icons","js/components/button-menu":"js/components/button-menu","js/pages/login":"js/pages/login","js/pages/reset":"js/pages/reset","vendors~js/pages/profile~js/pages/users":"vendors~js/pages/profile~js/pages/users","js/pages/profile":"js/pages/profile","vendors~js/pages/users":"vendors~js/pages/users","js/pages/users":"js/pages/users"}[chunkId]||chunkId) + ".js"
+/******/ 		return __webpack_require__.p + "" + ({"js/components/button-close":"js/components/button-close","js/components/button-icons":"js/components/button-icons","js/components/button-menu":"js/components/button-menu","vendors~js/pages/login~js/pages/profile~js/pages/reset~js/pages/users":"vendors~js/pages/login~js/pages/profile~js/pages/reset~js/pages/users","js/pages/login":"js/pages/login","js/pages/reset":"js/pages/reset","vendors~js/pages/profile~js/pages/users":"vendors~js/pages/profile~js/pages/users","js/pages/profile":"js/pages/profile","vendors~js/pages/users":"vendors~js/pages/users","js/pages/users":"js/pages/users"}[chunkId]||chunkId) + ".js"
 /******/ 	}
 /******/
 /******/ 	// The require function

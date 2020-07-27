@@ -56,7 +56,7 @@
           ></Button>
         </div>
       </form>
-      <form @submit.prevent="resetPassword" v-if="resetearBlock" class="px-lg-3">
+      <form @submit.prevent="resetPassword" v-if="resetearBlock" class="px-sm-3 px-lg-4">
         <div class="form-group">
           <label for="id_correo_electronico" class="form-control-label d-block">Correo Electronico</label>
           <input
@@ -80,7 +80,7 @@
           >{{ messages.status }}</label>
         </div>
         <div class="text-center">
-          <Button :text="'Enviar'" :classes="['btn-primary']" :request-server="requestServer"></Button>
+          <Button :text="'Enviar'" :classes="['btn-primary','btn-block','mb-4']" :request-server="requestServer"></Button>
         </div>
       </form>
       <div class="row px-sm-3 px-lg-4" v-if="loginBlock">

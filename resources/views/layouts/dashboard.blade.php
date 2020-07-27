@@ -133,7 +133,7 @@
                         v-cloak>
                         <template slot="button-content">
                             <div class="media align-items-center">
-                                <span class="avatar rounded-circle bg-default" style="font-size: 18px !important;">
+                                <span class="avatar rounded-circle bg-default" style="font-size: 20px !important;">
                                     @if(Auth::user()->avatar)
                                     <img src="{{ route('cms.get-file',[ 'folder' => 'img', 'subfolder' => 'users', 'file' => Auth::user()->avatar ]) }}"
                                         alt="Usuario" />
@@ -142,7 +142,7 @@
                                     @endif
                                 </span>
                                 <div class="media-body ml-2">
-                                    <span class="mb-0 text-sm font-weight-semibold">{{ Auth::user()->name }}</span>
+                                    <span class="mb-0 font-weight-semibold">{{ Auth::user()->name }}</span>
                                 </div>
                             </div>
                         </template>

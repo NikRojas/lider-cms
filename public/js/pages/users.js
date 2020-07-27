@@ -2373,7 +2373,7 @@ var render = function() {
                       attrs: {
                         title: _vm.createBlock
                           ? "Crear Usuario"
-                          : _vm.showBlock
+                          : _vm.detailBlock
                           ? "Ver Usuario"
                           : _vm.editBlock
                           ? "Actualizar Usuario"

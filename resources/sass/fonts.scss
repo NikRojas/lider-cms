@@ -1,64 +1,77 @@
 @font-face {
-    font-family: 'Poppins';
-    src: url('../fonts/Poppins/Poppins-Regular.eot');
-    src: local('../fonts/Poppins/Poppins-Regular'), local('../fonts/Poppins/Poppins-Regular'),
-        url('../fonts/Poppins/Poppins-Regular.eot?#iefix') format('embedded-opentype'),
-        url('../fonts/Poppins/Poppins-Regular.woff2') format('woff2'),
-        url('../fonts/Poppins/Poppins-Regular.woff') format('woff'),
-        url('../fonts/Poppins/Poppins-Regular.ttf') format('truetype');
+    font-family: 'Jost';
+    src: url('../fonts/Jost/Jost-Regular.eot');
+    src: local('../fonts/Jost/Jost-Regular'), local('../fonts/Jost/Jost-Regular'),
+        url('../fonts/Jost/Jost-Regular.eot?#iefix') format('embedded-opentype'),
+        url('../fonts/Jost/Jost-Regular.woff2') format('woff2'),
+        url('../fonts/Jost/Jost-Regular.woff') format('woff'),
+        url('../fonts/Jost/Jost-Regular.ttf') format('truetype');
     font-weight: normal;
     font-style: normal;
     font-display: swap;
 }
 
 @font-face {
-    font-family: 'Poppins';
-    src: url('../fonts/Poppins/Poppins-Light.eot');
-    src: local('../fonts/Poppins/Poppins-Light'),
-        url('../fonts/Poppins/Poppins-Light.eot?#iefix') format('embedded-opentype'),
-        url('../fonts/Poppins/Poppins-Light.woff2') format('woff2'),
-        url('../fonts/Poppins/Poppins-Light.woff') format('woff'),
-        url('../fonts/Poppins/Poppins-Light.ttf') format('truetype');
+    font-family: 'Jost';
+    src: url('../fonts/Jost/Jost-Light.eot');
+    src: local('../fonts/Jost/Jost-Light'),
+        url('../fonts/Jost/Jost-Light.eot?#iefix') format('embedded-opentype'),
+        url('../fonts/Jost/Jost-Light.woff2') format('woff2'),
+        url('../fonts/Jost/Jost-Light.woff') format('woff'),
+        url('../fonts/Jost/Jost-Light.ttf') format('truetype');
     font-weight: 300;
     font-style: normal;
     font-display: swap;
 }
 
 @font-face {
-    font-family: 'Poppins';
-    src: url('../fonts/Poppins/Poppins-Medium.eot');
-    src: local('../fonts/Poppins/Poppins-Medium'),
-        url('../fonts/Poppins/Poppins-Medium.eot?#iefix') format('embedded-opentype'),
-        url('../fonts/Poppins/Poppins-Medium.woff2') format('woff2'),
-        url('../fonts/Poppins/Poppins-Medium.woff') format('woff'),
-        url('../fonts/Poppins/Poppins-Medium.ttf') format('truetype');
+    font-family: 'Jost';
+    src: url('../fonts/Jost/Jost-Medium.eot');
+    src: local('../fonts/Jost/Jost-Medium'),
+        url('../fonts/Jost/Jost-Medium.eot?#iefix') format('embedded-opentype'),
+        url('../fonts/Jost/Jost-Medium.woff2') format('woff2'),
+        url('../fonts/Jost/Jost-Medium.woff') format('woff'),
+        url('../fonts/Jost/Jost-Medium.ttf') format('truetype');
     font-weight: 500;
     font-style: normal;
     font-display: swap;
 }
 
 @font-face {
-    font-family: 'Poppins';
-    src: url('../fonts/Poppins/Poppins-SemiBold.eot');
-    src: local('../fonts/Poppins/Poppins-SemiBold'),
-        url('../fonts/Poppins/Poppins-SemiBold.eot?#iefix') format('embedded-opentype'),
-        url('../fonts/Poppins/Poppins-SemiBold.woff2') format('woff2'),
-        url('../fonts/Poppins/Poppins-SemiBold.woff') format('woff'),
-        url('../fonts/Poppins/Poppins-SemiBold.ttf') format('truetype');
+    font-family: 'Jost';
+    src: url('../fonts/Jost/Jost-SemiBold.eot');
+    src: local('../fonts/Jost/Jost-SemiBold'),
+        url('../fonts/Jost/Jost-SemiBold.eot?#iefix') format('embedded-opentype'),
+        url('../fonts/Jost/Jost-SemiBold.woff2') format('woff2'),
+        url('../fonts/Jost/Jost-SemiBold.woff') format('woff'),
+        url('../fonts/Jost/Jost-SemiBold.ttf') format('truetype');
     font-weight: 600;
     font-style: normal;
     font-display: swap;
 }
 
 @font-face {
-    font-family: 'Poppins';
-    src: url('../fonts/Poppins/Poppins-Bold.eot');
-    src: local('../fonts/Poppins/Poppins-Bold'),
-        url('../fonts/Poppins/Poppins-Bold.eot?#iefix') format('embedded-opentype'),
-        url('../fonts/Poppins/Poppins-Bold.woff2') format('woff2'),
-        url('../fonts/Poppins/Poppins-Bold.woff') format('woff'),
-        url('../fonts/Poppins/Poppins-Bold.ttf') format('truetype');
+    font-family: 'Jost';
+    src: url('../fonts/Jost/Jost-Bold.eot');
+    src: local('../fonts/Jost/Jost-Bold'),
+        url('../fonts/Jost/Jost-Bold.eot?#iefix') format('embedded-opentype'),
+        url('../fonts/Jost/Jost-Bold.woff2') format('woff2'),
+        url('../fonts/Jost/Jost-Bold.woff') format('woff'),
+        url('../fonts/Jost/Jost-Bold.ttf') format('truetype');
     font-weight: 700;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Jost';
+    src: url('../fonts/Jost/Jost-ExtraBold.eot');
+    src: local('../fonts/Jost/Jost-ExtraBold'),
+        url('../fonts/Jost/Jost-ExtraBold.eot?#iefix') format('embedded-opentype'),
+        url('../fonts/Jost/Jost-ExtraBold.woff2') format('woff2'),
+        url('../fonts/Jost/Jost-ExtraBold.woff') format('woff'),
+        url('../fonts/Jost/Jost-ExtraBold.ttf') format('truetype');
+    font-weight: 800;
     font-style: normal;
     font-display: swap;
 }

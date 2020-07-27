@@ -6,7 +6,7 @@
           <div class="row align-items-center pt-0 pt-md-2 pb-4">
             <div class="col-12 col-lg-7">
               <BreadCrumb
-                :title="createBlock ? 'Crear Usuario' : showBlock ? 'Ver Usuario' : editBlock ? 'Actualizar Usuario' : 'Usuarios'"
+                :title="createBlock ? 'Crear Usuario' : detailBlock ? 'Ver Usuario' : editBlock ? 'Actualizar Usuario' : 'Usuarios'"
                 parent="Configuración"
                 active="Usuarios"
               ></BreadCrumb>

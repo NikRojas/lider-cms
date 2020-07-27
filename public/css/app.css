@@ -1697,7 +1697,7 @@ $btn-border-radius-sm:        $input-border-radius !default;*/
   --breakpoint-md: 768px;
   --breakpoint-lg: 992px;
   --breakpoint-xl: 1200px;
-  --font-family-sans-serif: "Poppins", sans-serif;
+  --font-family-sans-serif: "Jost", sans-serif;
   --font-family-monospace: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
 }
 
@@ -1735,7 +1735,7 @@ section {
 
 body {
   margin: 0;
-  font-family: "Poppins", sans-serif;
+  font-family: "Jost", sans-serif;
   font-size: 0.9rem;
   font-weight: 400;
   line-height: 1.5;
@@ -6716,10 +6716,6 @@ input[type=button].btn-block {
   border-radius: 0;
 }
 
-.breadcrumb-item {
-  font-weight: 300;
-}
-
 .breadcrumb-item + .breadcrumb-item {
   padding-left: 0.5rem;
 }
@@ -7799,7 +7795,7 @@ button.close {
   z-index: 1070;
   display: block;
   margin: 0;
-  font-family: "Poppins", sans-serif;
+  font-family: "Jost", sans-serif;
   font-style: normal;
   font-weight: 400;
   line-height: 1.5;
@@ -7924,7 +7920,7 @@ button.close {
   z-index: 1060;
   display: block;
   max-width: 276px;
-  font-family: "Poppins", sans-serif;
+  font-family: "Jost", sans-serif;
   font-style: normal;
   font-weight: 400;
   line-height: 1.5;
@@ -16675,7 +16671,7 @@ a.text-lighter:focus {
   -webkit-transition: all 0.15s ease;
   transition: all 0.15s ease;
   letter-spacing: 0.025em;
-  font-size: 13px;
+  font-size: 14px;
   will-change: transform;
   box-shadow: none !important;
 }
@@ -16714,7 +16710,7 @@ a.text-lighter:focus {
 
 .btn-lg,
 .btn-group-lg > .btn {
-  font-size: 13px;
+  font-size: 14px;
 }
 
 [class*=btn-outline-] {
@@ -18135,7 +18131,7 @@ a.btn-icon-only {
 }
 
 .form-control {
-  font-size: 13px;
+  font-size: 14px;
 }
 
 .form-control:focus::-webkit-input-placeholder {
@@ -22905,7 +22901,7 @@ body.swal2-toast-column .swal2-toast .swal2-validation-message {
 
 .vue-dropzone > .dz-preview .dz-remove {
   text-transform: capitalize;
-  font-family: "Poppins", sans-serif;
+  font-family: "Jost", sans-serif;
   font-weight: 400;
   letter-spacing: initial;
 }
@@ -23345,7 +23341,7 @@ h6,
 }
 
 .vue-tags-input .ti-new-tag-input {
-  font: 400 0.875rem "Poppins", sans-serif;
+  font: 400 0.875rem "Jost", sans-serif;
 }
 
 /*

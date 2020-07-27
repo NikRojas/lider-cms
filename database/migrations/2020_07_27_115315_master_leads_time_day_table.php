@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateApplicantsTable extends Migration
+class MasterLeadsTimeDayTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,14 +13,9 @@ class CreateApplicantsTable extends Migration
      */
     public function up()
     {
-        Schema::create('applicants', function (Blueprint $table) {
+        Schema::create('master_leads_time_day', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('name');
-            $table->string('email');
-            $table->string('mobile',15);
-            $table->string('job');
-            $table->text('url')->nullable();
-            $table->string('pdf');
             $table->timestamps();
         });
     }
@@ -32,6 +27,6 @@ class CreateApplicantsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('applicants');
+        Schema::dropIfExists('master_leads_time_day');
     }
 }

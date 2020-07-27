@@ -37,7 +37,7 @@ class MasterSocialNetworksTableSeeder extends Seeder
                 'icon'     => 'linkedin',
             ],
             [
-                'name' 		=> 'Instragram',
+                'name' 		=> 'Instagram',
                 'icon'     => 'instagram',
             ],
         ]);

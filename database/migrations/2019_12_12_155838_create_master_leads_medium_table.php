@@ -17,7 +17,7 @@ class CreateMasterLeadsMediumTable extends Migration
             //$table->bigIncrements('id');
             $table->string('id')->primary();
             $table->string('name');
-            $table->boolean('videocall')->default(false);
+            $table->boolean('videocall');
             $table->timestamps();
         });
     }

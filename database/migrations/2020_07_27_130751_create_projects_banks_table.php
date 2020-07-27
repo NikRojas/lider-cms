@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateApplicantsTable extends Migration
+class CreateProjectsBanksTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,14 +13,14 @@ class CreateApplicantsTable extends Migration
      */
     public function up()
     {
-        Schema::create('applicants', function (Blueprint $table) {
+        Schema::create('projects_banks', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('name');
-            $table->string('email');
-            $table->string('mobile',15);
-            $table->string('job');
-            $table->text('url')->nullable();
-            $table->string('pdf');
+
+            $table->bigInteger('bank_id')->unsigned();
+            $table->string('project_id');
+            $table->foreign('bank_id')->references('id')->on('banks');
+            $table->foreign('project_id')->references('id')->on('projects');
+
             $table->timestamps();
         });
     }
@@ -32,6 +32,6 @@ class CreateApplicantsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('applicants');
+        Schema::dropIfExists('projects_banks');
     }
 }

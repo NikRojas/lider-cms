@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateApplicantsTable extends Migration
+class CreateLeadsSaleLandTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,14 +13,13 @@ class CreateApplicantsTable extends Migration
      */
     public function up()
     {
-        Schema::create('applicants', function (Blueprint $table) {
+        Schema::create('leads_sale_land', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('name');
             $table->string('email');
             $table->string('mobile',15);
-            $table->string('job');
-            $table->text('url')->nullable();
-            $table->string('pdf');
+            $table->text('message');
+            $table->float('area');
             $table->timestamps();
         });
     }
@@ -32,6 +31,6 @@ class CreateApplicantsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('applicants');
+        Schema::dropIfExists('leads_sale_land');
     }
 }

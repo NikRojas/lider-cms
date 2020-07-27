@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateApplicantsTable extends Migration
+class CreateLeadsVideocallTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,14 +13,15 @@ class CreateApplicantsTable extends Migration
      */
     public function up()
     {
-        Schema::create('applicants', function (Blueprint $table) {
+        Schema::create('leads_videocall', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('name');
             $table->string('email');
             $table->string('mobile',15);
-            $table->string('job');
-            $table->text('url')->nullable();
-            $table->string('pdf');
+            $table->string('lead_medium_id')->nullable();
+            $table->foreign('lead_medium_id')->references('id')->on('master_leads_medium');
+            $table->bigInteger('lead_time_day')->unsigned();
+            $table->foreign('lead_time_day')->references('id')->on('master_leads_time_day');
             $table->timestamps();
         });
     }
@@ -32,6 +33,6 @@ class CreateApplicantsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('applicants');
+        Schema::dropIfExists('leads_videocall');
     }
 }

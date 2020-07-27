@@ -16,20 +16,20 @@ class CreatePostsTable extends Migration
         Schema::create('posts', function (Blueprint $table) {
             $table->bigIncrements('id');
 
-            $table->string('title');
+            $table->string('title_es');
             $table->string('title_en');
-            $table->string('slug');
+            $table->string('slug_es');
             $table->string('slug_en');
-            $table->string('excerpt');
+            $table->string('excerpt_es');
             $table->string('excerpt_en');
 
-            $table->longText('content');
+            $table->longText('content_es');
             $table->longText('content_en');
             $table->string('image');
             $table->string('thumbnail');
             $table->boolean('published');
             //$table->dateTime('published_at');
-            $table->string('seo_keywords')->nullable();
+            $table->string('seo_keywords_es')->nullable();
             $table->string('seo_keywords_en')->nullable();
 
             $table->bigInteger('user_id')->unsigned();

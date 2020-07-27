@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateApplicantsTable extends Migration
+class CreateMasterFieldsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,14 +13,15 @@ class CreateApplicantsTable extends Migration
      */
     public function up()
     {
-        Schema::create('applicants', function (Blueprint $table) {
+        Schema::create('master_fields', function (Blueprint $table) {
             $table->bigIncrements('id');
+
             $table->string('name');
-            $table->string('email');
-            $table->string('mobile',15);
-            $table->string('job');
-            $table->text('url')->nullable();
-            $table->string('pdf');
+            $table->string('variable');
+            $table->string('type');
+            $table->bigInteger('master_section_id')->unsigned();
+            $table->foreign('master_section_id')->references('id')->on('master_sections');
+            
             $table->timestamps();
         });
     }
@@ -32,6 +33,6 @@ class CreateApplicantsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('applicants');
+        Schema::dropIfExists('master_fields');
     }
 }

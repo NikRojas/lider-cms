@@ -12,11 +12,11 @@ use App\Repositories\ApplicantRepository;
 use App\Http\Requests\Admin\ApplicantDestinationRequest;
 use App\EmailDestination;
 
-use App\Http\Traits\AdminTrait;
+use App\Http\Traits\CmsTrait;
 
 class ApplicantsController extends Controller
 {
-    use AdminTrait;
+    use CmsTrait;
 
     public function index(){
         return view ("pages.applicants");    

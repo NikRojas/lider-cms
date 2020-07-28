@@ -14,11 +14,11 @@ use Auth;
 use App\Http\Requests\Admin\Configuration\UserRequest;
 use App\Repositories\UsuariosRepositorio;
 
-use App\Http\Traits\AdminTrait;
+use App\Http\Traits\CmsTrait;
 
 class UsersController extends Controller
 {
-    use AdminTrait;
+    use CmsTrait;
 
     public function index()
     {

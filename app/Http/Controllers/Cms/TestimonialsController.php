@@ -8,13 +8,13 @@ use App\Http\Controllers\Controller;
 use App\Testimonial;
 
 use App\Http\Requests\Admin\TestimonialRequest;
-use App\Http\Traits\AdminTrait;
+use App\Http\Traits\CmsTrait;
 
 use Illuminate\Support\Facades\Storage;
 
 class TestimonialsController extends Controller
 {
-    use AdminTrait;
+    use CmsTrait;
 
     public function index()
     {

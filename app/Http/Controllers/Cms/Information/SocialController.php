@@ -9,11 +9,11 @@ use App\SocialNetwork;
 use App\MasterSocialNetwork;
 use App\Http\Requests\Admin\Information\SocialNetworkRequest;
 
-use App\Http\Traits\AdminTrait;
+use App\Http\Traits\CmsTrait;
 
 class SocialController extends Controller
 {
-    use AdminTrait;
+    use CmsTrait;
 
     public function index()
     {

@@ -33,6 +33,16 @@ Route::middleware(['auth'])->namespace('Cms')->name('cms.')->group(function() {
     Route::get('configuracion/json/roles/{rol}', 'Configuration\RolesController@obtenerRol')->name('json.roles.get-rol');
     Route::get('configuracion/json/modulos', 'Configuration\RolesController@obtenerModulos')->name('json.roles.get-modulos')*/
 
+    #Administration
+    Route::namespace('Administration')->prefix('administracion')->name('administration.')->group(function() {
+        Route::name('status-project.')->group(function() {
+            Route::get('/', 'StatusProyectController@index')->name('index');
+        });
+        Route::name('features-project.')->prefix('caracteristicas-proyectos')->group(function() {
+            Route::get('/', 'FeaturesProyectController@index')->name('index');
+            Route::post('/', 'FeaturesProyectController@store')->name('store');
+        });
+    });
     #Information
     #SEO
     Route::get('informacion/seo', 'Information\SeoController@index')->name('information.seo');

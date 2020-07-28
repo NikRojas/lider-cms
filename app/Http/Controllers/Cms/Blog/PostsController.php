@@ -14,11 +14,11 @@ use App\Repositories\PostRepository;
 use Auth;
 use App\Tag;
 
-use App\Http\Traits\AdminTrait;
+use App\Http\Traits\CmsTrait;
 
 class PostsController extends Controller
 {
-    use AdminTrait;
+    use CmsTrait;
 
     public function index(){
         return view ("pages.blog.posts");    

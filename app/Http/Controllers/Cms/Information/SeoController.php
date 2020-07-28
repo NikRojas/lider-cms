@@ -6,13 +6,13 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Storage;
 
-use App\Http\Traits\AdminTrait;
+use App\Http\Traits\CmsTrait;
 use App\Http\Requests\Admin\Information\SeoRequest;
 use App\MasterPage;
 
 class SeoController extends Controller
 {
-    use AdminTrait;
+    use CmsTrait;
 
     public function index(){
         return view("pages.info.seo");

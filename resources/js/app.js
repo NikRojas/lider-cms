@@ -12,6 +12,11 @@ Slug.defaults.mode = "rfc3986";
 import VueJamIcons from 'vue-jam-icons'
 Vue.use(VueJamIcons)
 
+import VueFlags from "@growthbunker/vueflags";
+Vue.use(VueFlags, {
+    // Specify the path of the folder where the flags are stored.
+    iconPath: '/files/img/flags/',
+  });
 
 const app = new Vue({
     el: '#app',
@@ -38,6 +43,8 @@ const app = new Vue({
         //'testimonials': () => import('./views/Testimonials.vue' /* webpackChunkName: "js/testimonials" */),
 
         'reset': () => import('./views/auth/Reset.vue' /* webpackChunkName: "js/pages/reset" */),
+        'administration-status-project': () => import('./views/administration/StatusProject.vue' /* webpackChunkName: "js/pages/administration/status-project" */),
+        'administration-features-project': () => import('./views/administration/FeaturesProject.vue' /* webpackChunkName: "js/pages/administration/features-project" */),
     }
 });
 import Validation from './functions/validation.js'

@@ -32,6 +32,7 @@
         "vuedraggable": "^2.23.2"
     },
     "dependencies": {
+        "@growthbunker/vueflags": "^0.1.2",
         "chart.js": "^2.9.3",
         "simplebar-vue": "^1.5.1",
         "vue-chartjs": "^3.5.0",

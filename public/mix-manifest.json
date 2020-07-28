@@ -5,11 +5,15 @@
     "/js/components/button-close.js": "/js/components/button-close.js",
     "/js/components/button-icons.js": "/js/components/button-icons.js",
     "/js/components/button-menu.js": "/js/components/button-menu.js",
+    "/js/pages/administration/features-project.js": "/js/pages/administration/features-project.js",
+    "/js/pages/administration/status-project.js": "/js/pages/administration/status-project.js",
     "/js/pages/login.js": "/js/pages/login.js",
     "/js/pages/profile.js": "/js/pages/profile.js",
     "/js/pages/reset.js": "/js/pages/reset.js",
     "/js/pages/users.js": "/js/pages/users.js",
-    "/vendors~js/pages/login~js/pages/profile~js/pages/reset~js/pages/users.js": "/vendors~js/pages/login~js/pages/profile~js/pages/reset~js/pages/users.js",
+    "/vendors~js/pages/administration/features-project~js/pages/administration/status-project~js/pages/log~9bc425e8.js": "/vendors~js/pages/administration/features-project~js/pages/administration/status-project~js/pages/log~9bc425e8.js",
     "/vendors~js/pages/profile~js/pages/users.js": "/vendors~js/pages/profile~js/pages/users.js",
-    "/vendors~js/pages/users.js": "/vendors~js/pages/users.js"
+    "/vendors~js/pages/users.js": "/vendors~js/pages/users.js",
+    "/vendors~js/pages/administration/features-project.js": "/vendors~js/pages/administration/features-project.js",
+    "/vendors~js/pages/administration/features-project~js/pages/profile~js/pages/users.js": "/vendors~js/pages/administration/features-project~js/pages/profile~js/pages/users.js"
 }

@@ -22,7 +22,8 @@ return [
         'testimonial' => 'El testimonio',
         'partner' => 'El socio',
         'award' => 'El premio',
-        'lead' => 'El lead'
+        'lead' => 'El lead',
+        'features' => 'La característica'
     ],
     'title' => [
         'error' => 'Error',

@@ -7,12 +7,12 @@ use Illuminate\Http\Request;
 
 use App\Applicant;
 use App\Http\Requests\Api\ApplicantRequest;
-use App\Http\Traits\AdminTrait;
+use App\Http\Traits\CmsTrait;
 use Illuminate\Support\Facades\Storage;
 
 class ApplicantController extends Controller
 {
-  use AdminTrait;
+  use CmsTrait;
 
     public function save(ApplicantRequest $request)
     {

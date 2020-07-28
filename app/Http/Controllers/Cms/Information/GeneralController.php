@@ -11,11 +11,11 @@ use App\Partner;
 use App\Http\Requests\Admin\Information\GeneralRequest;
 use App\Http\Requests\Admin\Information\PartnerRequest;
 use Illuminate\Support\Facades\Storage;
-use App\Http\Traits\AdminTrait;
+use App\Http\Traits\CmsTrait;
 
 class GeneralController extends Controller
 {
-    use AdminTrait;
+    use CmsTrait;
 
     public function index()
     {

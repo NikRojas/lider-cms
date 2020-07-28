@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Cms;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
-use App\Http\Traits\AdminTrait;
+use App\Http\Traits\CmsTrait;
 use Illuminate\Support\Facades\Storage;
 
 use App\Http\Requests\Admin\ProfileRequest;
@@ -15,7 +15,7 @@ use App\User;
 
 class ProfileController extends Controller
 {
-    use AdminTrait;
+    use CmsTrait;
 
     public function index()
     {

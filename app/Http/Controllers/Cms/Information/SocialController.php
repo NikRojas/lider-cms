@@ -7,7 +7,7 @@ use App\Http\Controllers\Controller;
 
 use App\SocialNetwork;
 use App\MasterSocialNetwork;
-use App\Http\Requests\Admin\Information\SocialNetworkRequest;
+use App\Http\Requests\Cms\Information\SocialNetworkRequest;
 
 use App\Http\Traits\CmsTrait;
 

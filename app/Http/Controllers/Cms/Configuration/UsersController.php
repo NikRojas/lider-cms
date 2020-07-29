@@ -11,7 +11,7 @@ use Illuminate\Support\Str;
 use App\User;
 use Auth;
 
-use App\Http\Requests\Admin\Configuration\UserRequest;
+use App\Http\Requests\Cms\Configuration\UserRequest;
 use App\Repositories\UsuariosRepositorio;
 
 use App\Http\Traits\CmsTrait;

@@ -904,7 +904,7 @@ var render = function() {
                                         staticClass: "btn btn-sm btn-secondary",
                                         attrs: {
                                           title:
-                                            "No se puede eliminar debido a que existe en al menos un proyecto"
+                                            "No se puede eliminar debido a que existe anidado en al menos un proyecto"
                                         }
                                       },
                                       [_vm._v("Eliminar")]

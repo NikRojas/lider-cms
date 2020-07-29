@@ -50,7 +50,7 @@
                 <div class="mt-4 text-center">
                   <button @click="editEl(el.id)" class="btn btn-inverse-info btn-sm">Editar</button>
                   <button @click="deleteEl(el.id)" class="btn btn-inverse-danger btn-sm" v-if="el.can_delete">Eliminar</button>
-                  <button v-else class="btn btn-sm btn-secondary" v-b-tooltip.hover title="No se puede eliminar debido a que existe en al menos un proyecto">Eliminar</button>
+                  <button v-else class="btn btn-sm btn-secondary" v-b-tooltip.hover title="No se puede eliminar debido a que existe anidado en al menos un proyecto">Eliminar</button>
                 </div>
               </div>
             </div>

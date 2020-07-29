@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Storage;
 
 use App\Applicant;
 use App\Repositories\ApplicantRepository;
-use App\Http\Requests\Admin\ApplicantDestinationRequest;
+use App\Http\Requests\Cms\ApplicantDestinationRequest;
 use App\EmailDestination;
 
 use App\Http\Traits\CmsTrait;

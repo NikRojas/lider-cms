@@ -7,7 +7,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Storage;
 
-use App\Http\Requests\Admin\Blog\PostRequest;
+use App\Http\Requests\Cms\Blog\PostRequest;
 
 use App\Post;
 use App\Repositories\PostRepository;

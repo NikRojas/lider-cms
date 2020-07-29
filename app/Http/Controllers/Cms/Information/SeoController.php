@@ -7,7 +7,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Storage;
 
 use App\Http\Traits\CmsTrait;
-use App\Http\Requests\Admin\Information\SeoRequest;
+use App\Http\Requests\Cms\Information\SeoRequest;
 use App\MasterPage;
 
 class SeoController extends Controller

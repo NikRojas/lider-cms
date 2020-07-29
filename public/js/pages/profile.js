@@ -991,7 +991,6 @@ var render = function() {
                             staticClass: "form-control ",
                             attrs: {
                               type: "password",
-                              placeholder: "Contraseña Actual",
                               id: "id_current_password"
                             },
                             domProps: { value: _vm.user.current_password },
@@ -1044,11 +1043,7 @@ var render = function() {
                               }
                             ],
                             staticClass: "form-control ",
-                            attrs: {
-                              type: "password",
-                              placeholder: "Contraseña Nueva",
-                              id: "id_new_password"
-                            },
+                            attrs: { type: "password", id: "id_new_password" },
                             domProps: { value: _vm.user.new_password },
                             on: {
                               input: function($event) {
@@ -1101,7 +1096,6 @@ var render = function() {
                             staticClass: "form-control ",
                             attrs: {
                               type: "password",
-                              placeholder: "Confirmar Nueva Contraseña",
                               id: "id_confirmar_contrasena"
                             },
                             domProps: {
@@ -1219,7 +1213,7 @@ var render = function() {
                       ? _c(
                           "a",
                           {
-                            staticClass: "btn btn-inverse-primary",
+                            staticClass: "btn btn-inverse-dark",
                             attrs: { href: "#" },
                             on: {
                               click: function($event) {
@@ -1236,7 +1230,7 @@ var render = function() {
                       ? _c("Button", {
                           attrs: {
                             text: "Actualizar",
-                            classes: ["btn-primary", "mr-2"],
+                            classes: ["btn-inverse-primary", "mr-2"],
                             "request-server": _vm.requestServer
                           }
                         })

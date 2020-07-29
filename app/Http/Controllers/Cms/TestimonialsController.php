@@ -7,7 +7,7 @@ use App\Http\Controllers\Controller;
 
 use App\Testimonial;
 
-use App\Http\Requests\Admin\TestimonialRequest;
+use App\Http\Requests\Cms\TestimonialRequest;
 use App\Http\Traits\CmsTrait;
 
 use Illuminate\Support\Facades\Storage;

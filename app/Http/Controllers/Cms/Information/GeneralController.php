@@ -8,8 +8,8 @@ use App\Http\Controllers\Controller;
 use App\Information;
 use App\Partner;
 
-use App\Http\Requests\Admin\Information\GeneralRequest;
-use App\Http\Requests\Admin\Information\PartnerRequest;
+use App\Http\Requests\Cms\Information\GeneralRequest;
+use App\Http\Requests\Cms\Information\PartnerRequest;
 use Illuminate\Support\Facades\Storage;
 use App\Http\Traits\CmsTrait;
 

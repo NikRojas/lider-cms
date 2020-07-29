@@ -114,7 +114,7 @@
                       <label class="font-weight-bold" for="id_current_password">Contraseña Actual:</label>
                       <input
                         type="password"
-                        placeholder="Contraseña Actual"
+                        
                         class="form-control "
                         id="id_current_password"
                         v-model="user.current_password"
@@ -131,7 +131,7 @@
                       <label class="font-weight-bold" for="id_new_password">Contraseña Nueva:</label>
                       <input
                         type="password"
-                        placeholder="Contraseña Nueva"
+                        
                         class="form-control "
                         id="id_new_password"
                         v-model="user.new_password"
@@ -151,7 +151,7 @@
                       >Confirmar Nueva Contraseña:</label>
                       <input
                         type="password"
-                        placeholder="Confirmar Nueva Contraseña"
+                        
                         class="form-control "
                         id="id_confirmar_contrasena"
                         v-model="user.new_password_confirmation"
@@ -197,12 +197,12 @@
                 <a
                   href="#"
                   @click.prevent="cambiarContrasena"
-                  class="btn btn-inverse-primary"
+                  class="btn btn-inverse-dark"
                   v-if="!editPassword && !editEmail"
                 >Cambiar Contraseña</a>
                 <Button
                   :text="'Actualizar'"
-                  :classes="['btn-primary','mr-2']"
+                  :classes="['btn-inverse-primary','mr-2']"
                   :request-server="requestServer"
                   v-if="editPassword || editEmail"
                 ></Button>

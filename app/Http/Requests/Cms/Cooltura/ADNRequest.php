@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Requests\Admin\Cooltura;
+namespace App\Http\Requests\Cms\Cooltura;
 
 use Illuminate\Foundation\Http\FormRequest;
 

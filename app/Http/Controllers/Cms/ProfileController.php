@@ -8,8 +8,8 @@ use Illuminate\Support\Facades\Hash;
 use App\Http\Traits\CmsTrait;
 use Illuminate\Support\Facades\Storage;
 
-use App\Http\Requests\Admin\ProfileRequest;
-use App\Http\Requests\Admin\PasswordRequest;
+use App\Http\Requests\Cms\ProfileRequest;
+use App\Http\Requests\Cms\PasswordRequest;
 use Auth;
 use App\User;
 

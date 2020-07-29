@@ -16,9 +16,9 @@ class CreateProjectsProjectFeaturesTable extends Migration
         Schema::create('projects_project_features', function (Blueprint $table) {
             $table->bigIncrements('id');
 
-            $table->bigInteger('features_id')->unsigned();
+            $table->bigInteger('feature_id')->unsigned();
             $table->string('project_id');
-            $table->foreign('features_id')->references('id')->on('project_features');
+            $table->foreign('feature_id')->references('id')->on('project_features');
             $table->foreign('project_id')->references('id')->on('projects');
 
             $table->timestamps();

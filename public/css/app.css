@@ -23519,3 +23519,7 @@ h6,
   content: none !important;
 }
 
+.tooltip {
+  opacity: 1 !important;
+}
+

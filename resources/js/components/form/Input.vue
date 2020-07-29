@@ -1,5 +1,6 @@
 <template>
   <div class="form-group">
+    <div class="d-flex">
     <a
       href="#"
       class="btn btn-sm py-0 px-2 btn-icon mr-1"
@@ -22,9 +23,10 @@
       </span>
       <span class="btn-inner--text">Inglés</span>
     </a>
-    <div class="d-inline-block ml-auto text-danger" v-if="Object.keys(errors).length">{{ countError }}</div>
+    <div class="d-inline-block ml-auto text-danger mt-1" v-if="countErrors">{{ countErrors }}  Error(es)</div>
+    </div>
     <div class="mt-2">
-      <label class="font-weight-bold" :for="label+random">{{ label }}:</label>  
+      <label class="font-weight-bold" :for="label+random">{{ label }}:</label>
     </div>
     <input type="text" class="form-control" v-model="value[ active ]" />
 
@@ -34,24 +36,19 @@
       class="text-danger text-sm d-block"
       :for="label+random"
     >{{ i == variable+active }}</label>-->
-    <div v-for="(el,i) in errors"
-      :key="i">
-      <label class="text-danger text-sm d-block" v-if="i == variable+'_'+active">
-        {{ el[0] }}
-      </label>
+    <div v-for="(el,i) in errors" :key="i">
+      <label class="text-danger text-sm d-block" v-if="i == variable+'_'+active">{{ el[0] }}</label>
     </div>
   </div>
 </template>
 <script>
-import VueFlags from "@growthbunker/vueflags";
 export default {
   props: {
     label: String,
     variable: String,
     errors: Object,
-  },
-  components: {
-    //gbFlags: VueFlags,
+    valueEnParent: String,
+    valueEsParent: String,
   },
   data() {
     return {
@@ -69,6 +66,18 @@ export default {
     },
   },
   watch: {
+    valueEnParent: {
+      immediate: true,
+      handler: function (newValue) {
+        this.value.en = newValue;
+      },
+    },
+    valueEsParent: {
+      immediate: true,
+      handler: function (newValue) {
+        this.value.es = newValue;
+      },
+    },
     "value.en": function (newValue, oldValue) {
       this.$emit("update:valueEn", newValue);
     },
@@ -76,10 +85,21 @@ export default {
       this.$emit("update:valueEs", newValue);
     },
   },
-  computed:{
-    countError: function () {
-      return this.errors.filter(e => e === this.variable+'_'+this.active).length;
-    }
-  }
+  computed: {
+    countErrors: function () {
+      if (Object.keys(this.errors).length) {
+        let total = 0;
+        for (const el in this.errors) {
+          if (
+            el == this.variable + "_en" ||
+            el == this.variable + "_es"
+          ) {
+            total++;
+          }
+        }
+        return total;
+      }
+    },
+  },
 };
 </script>

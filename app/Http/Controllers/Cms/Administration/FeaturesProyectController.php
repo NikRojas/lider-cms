@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Cms\Administration;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Cms\Administration\FeatureProjectRequest;
+use App\Http\Requests\Cms\Administration\ProjectFeatureRequest;
 use App\Http\Traits\CmsTrait;
 use App\ProjectFeature;
 use Illuminate\Support\Facades\Storage;
@@ -22,7 +22,7 @@ class FeaturesProyectController extends Controller
         return view ("pages.administration.features-project");    
     }
 
-    public function store(FeatureProjectRequest $request){
+    public function store(ProjectFeatureRequest $request){
         $element = request(["name_en","name_es"]);
         $imageName = $this->setFileName('f-',$request->file('image'));
         $storeImage = Storage::disk('public')->putFileAs('img/features/',$request->file('image'),$imageName);
@@ -35,62 +35,49 @@ class FeaturesProyectController extends Controller
             return response()->json(['title'=> trans('custom.title.success'), 'message'=> trans('custom.message.create.success', ['name' => trans('custom.attribute.features')]) ],200);
         }
         catch(\Exception $e){
-            dd($e);
             return response()->json(['title'=> trans('custom.title.error'), 'message'=> trans('custom.message.create.error', ['name' => trans('custom.attribute.features')]) ],500);
         }
     }
 
-    /*public function getCategory(Category $category){
-        return response()->json($category);
+    public function getAll(){
+        $elements = ProjectFeature::with('projectsRel')->get();
+        return response()->json($elements); 
     }
 
-    public function getCategories(Request $request){
-        $search = $request->search;
-        if($search){
-            $categories = Category::select('id','name','slug')->where('name','like',$search.'%')->orderBy('created_at','desc')->paginate($request->desde)->toArray();
+    public function get(ProjectFeature $element){
+        return response()->json($element);
+    }
+
+    public function update(ProjectFeature $element,ProjectFeatureRequest $request){
+        $request_element = request(["name_en","name_es"]);;
+        if($request->hasFile('image')){
+            $fileName = $this->setFileName('u-'.time(),$request->file('image'));
+            Storage::disk('public')->putFileAs('img/features',$request->file('image'),$fileName);
+            $request_element = array_merge($request_element,["image" => $fileName]);
         }
-        else{
-            $categories = Category::select('id','name','slug')->orderBy('created_at','desc')->paginate($request->desde)->toArray();
-        }   
-        $categories["headers"] = ["Id","Nombre","Slug"];
-        return response()->json($categories); 
-    }
-
-    public function create(CategoryRequest $request){
-        $category = request(['name']);
+        if($request->hasFile('image') && $element->image){
+            Storage::disk('public')->delete('img/features/'.$element->image);
+        }
         try{
-            $category = Category::UpdateOrCreate(array_merge($category,['slug'=> Str::slug($request->name, '-')])); 
-            return response()->json(['title'=> trans('custom.title.success'), 'message'=> trans('custom.message.create.success', ['name' => trans('custom.attribute.category')]) ],200);
+            $element = ProjectFeature::UpdateOrCreate(["id"=>$element->id],$request_element); 
+            return response()->json(['title'=> trans('custom.title.success'), 'message'=> trans('custom.message.update.success', ['name' => trans('custom.attribute.features')]) ],200);
         }
         catch(\Exception $e){
-            return response()->json(['title'=> trans('custom.title.error'), 'message'=> trans('custom.message.create.error', ['name' => trans('custom.attribute.category')]) ],500);
+            return response()->json(['title'=> trans('custom.title.error'), 'message'=> trans('custom.message.update.error', ['name' => trans('custom.attribute.features')]) ],500);
         }
     }
 
-    public function update(Category $category,CategoryRequest $request){
-        $request_category = request(['name']);
-        try{
-            $category = Category::UpdateOrCreate(["id"=>$category->id],array_merge($request_category,['slug'=> Str::slug($request->name, '-')])); 
-            return response()->json(['title'=> trans('custom.title.success'), 'message'=> trans('custom.message.update.success', ['name' => trans('custom.attribute.category')]) ],200);
-        }
-        catch(\Exception $e){
-            return response()->json(['title'=> trans('custom.title.error'), 'message'=> trans('custom.message.update.error', ['name' => trans('custom.attribute.category')]) ],500);
-        }
-    }
-
-    public function delete(Category $category){
+    public function destroy(ProjectFeature $element){
+        $image = $element->image;
         try {
-            $category->delete();
-            return response()->json(['title'=> trans('custom.title.success'), 'message'=> trans('custom.message.delete.success', ['name' => trans('custom.attribute.category')]) ],200);
+            $destroy = $element->delete();
+            if($destroy){
+                Storage::disk('public')->delete('img/features/'.$image);   
+            }
+            return response()->json(['title'=> trans('custom.title.success'), 'message'=> trans('custom.message.delete.success', ['name' => trans('custom.attribute.features')]) ],200);
         } 
         catch (\Exception $e){
-            return response()->json(['title'=> trans('custom.title.error'), 'message'=> trans('custom.message.delete.error', ['name' => trans('custom.attribute.category')]) ],500);
+            return response()->json(['title'=> trans('custom.title.error'), 'message'=> trans('custom.message.delete.error', ['name' => trans('custom.attribute.features')]) ],500);
         }
     }
-
-    public function autocomplete(){
-        $categories = Category::all();
-        return response()->json($categories);
-    }*/
-
 }

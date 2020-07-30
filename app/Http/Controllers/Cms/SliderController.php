@@ -51,7 +51,6 @@ class SliderController extends Controller
             return response()->json(["route" => route('cms.slider.index')]);
         }
         catch(\Exception $e){
-            dd($e);
             $request->session()->flash('error', trans('custom.message.create.error', ['name' => trans('custom.attribute.slide')]));
             return response()->json(["route" => route('cms.slider.index')],500);
         }
@@ -96,6 +95,93 @@ class SliderController extends Controller
         } 
         catch (\Exception $e){
             return response()->json(['title'=> trans('custom.title.error'), 'message'=> trans('custom.message.update.error', ['name' => trans('custom.attribute.slide')])],500);
+        }
+    }
+
+    public function edit(Slider $element){
+        return view("pages.slider.edit", compact('element')); 
+    }
+
+    public function update(SliderRequest $request,Slider $element){
+        //$request_element = request(["url","posicion"]);
+        $request_element = [];
+        if($request->hasFile('image_es')){
+            $imageNameEs = $this->setFileName('se-',$request->file('image_es'));
+            $storeImageEs = Storage::disk('public')->putFileAs('img/slider/',$request->file('image_es'),$imageNameEs);
+            if(!$storeImageEs){
+                $request->session()->flash('error', trans('custom.message.delete.error', ['name' => trans('custom.attribute.slide')]));
+                return response()->json(["route" => route('cms.slider.index')],500);    
+            }
+            $request_element = array_merge($request_element,["image_es" => $imageNameEs]);   
+        }  
+        else{
+            $request_element = array_merge($request_element,["image_es" => $element->image_es]);   
+        }
+        if($request->hasFile('image_responsive_es')){
+            $imageResponsiveEs = $this->setFileName('sre-',$request->file('image_responsive_es'));
+            $storeImageResponsiveEs = Storage::disk('public')->putFileAs('img/slider/',$request->file('image_responsive_es'),$imageResponsiveEs);
+            if(!$storeImageResponsiveEs){
+                $request->session()->flash('error', trans('custom.message.delete.error', ['name' => trans('custom.attribute.slide')]));
+                return response()->json(["route" => route('cms.slider.index')],500);   
+            }
+            $request_element = array_merge($request_element,["image_responsive_es" => $imageResponsiveEs]);   
+        }  
+        else{
+            $request_element = array_merge($request_element,["image_responsive_es" => $element->image_responsive_es]);   
+        }
+
+
+        if($request->hasFile('image_en')){
+            $imageNameEn = $this->setFileName('sen-',$request->file('image_en'));
+            $storeImageEn = Storage::disk('public')->putFileAs('img/slider/',$request->file('image_en'),$imageNameEn);
+            if(!$storeImageEn){
+                $request->session()->flash('error', trans('custom.message.delete.error', ['name' => trans('custom.attribute.slide')]));
+                return response()->json(["route" => route('cms.slider.index')],500);    
+            }
+            $request_element = array_merge($request_element,["image_en" => $imageNameEn]);   
+        }  
+        else{
+            $request_element = array_merge($request_element,["image_en" => $element->image_en]);   
+        }
+        if($request->hasFile('image_responsive_en')){
+            $imageResponsiveEn = $this->setFileName('sren-',$request->file('image_responsive_en'));
+            $storeImageResponsiveEn = Storage::disk('public')->putFileAs('img/slider/',$request->file('image_responsive_en'),$imageResponsiveEn);
+            if(!$storeImageResponsiveEn){
+                $request->session()->flash('error', trans('custom.message.delete.error', ['name' => trans('custom.attribute.slide')]));
+                return response()->json(["route" => route('cms.slider.index')],500);   
+            }
+            $request_element = array_merge($request_element,["image_responsive_en" => $imageResponsiveEn]);   
+        }  
+        else{
+            $request_element = array_merge($request_element,["image_responsive_en" => $element->image_responsive_en]);   
+        }
+
+        if($request->hasFile('image_es') && $element->image_es){
+            Storage::disk('public')->delete('img/slider/'.$element->image_es);
+        } 
+        if($request->hasFile('image_responsive_es') && $element->image_responsive_es){
+            Storage::disk('public')->delete('img/slider/'.$element->imagen_responsive_es);
+        } 
+        if($request->hasFile('image_en') && $element->image_en){
+            Storage::disk('public')->delete('img/slider/'.$element->image_en);
+        } 
+        if($request->hasFile('image_responsive_en') && $element->image_responsive_en){
+            Storage::disk('public')->delete('img/slider/'.$element->imagen_responsive_en);
+        } 
+        if($request->from){
+            $request_element = array_merge($request_element,["from" => date("Y-m-d H:i:s", strtotime($request->from))]);
+        }
+        if($request->to){
+            $request_element = array_merge($request_element,["to" => date("Y-m-d H:i:s", strtotime($request->to))]);
+        }
+        try{
+            $element = Slider::UpdateOrCreate(["id"=>$element->id],$request_element); 
+            $request->session()->flash('success', trans('custom.message.update.success', ['name' => trans('custom.attribute.slide')]));
+            return response()->json(["route" => route('cms.slider.index')]);
+        }
+        catch(\Exception $e){
+            $request->session()->flash('error', trans('custom.message.update.error', ['name' => trans('custom.attribute.slide')]));
+            return response()->json(["route" => route('cms.slider.index')],500);
         }
     }
 

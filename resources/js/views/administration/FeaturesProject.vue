@@ -35,7 +35,7 @@
             <div class="card">
               <div class="card-body">
                 <div class="text-center mb-3">
-                  <img :src="imageUrl+'/features/'+el.image" height="75" :alt="el.name_es" />
+                  <img :src="imagesUrl+'/features/'+el.image" height="75" :alt="el.name_es" />
                 </div>
                 <h3 class="mb-1">
                   <span class="font-weight-normal">Nombre ES:</span>
@@ -93,7 +93,7 @@
                 <div class="row">
                   <div class="col-1"></div>
                   <div class="col text-center" v-if="element.image">
-                    <img :src="imageUrl+'/features/'+element.image" height="75" :alt="element.name_es" />
+                    <img :src="imagesUrl+'/features/'+element.image" height="75" :alt="element.name_es" />
                   </div>
                   <div class="col">
                     <vue-dropzone
@@ -176,7 +176,7 @@ export default {
   props: {
     route: String,
     routeGetAll: String,
-    imageUrl: String,
+    imagesUrl: String,
   },
   data() {
     return {

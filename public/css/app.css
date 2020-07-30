@@ -23538,3 +23538,7 @@ h6,
   opacity: 1 !important;
 }
 
+.mx-datepicker * {
+  font-family: "Jost", sans-serif !important;
+}
+

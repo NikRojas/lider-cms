@@ -774,3 +774,8 @@ $sidebar-width-icon: 70px;
 .tooltip {
     opacity: 1 !important;
   }
+
+  
+.mx-datepicker *{
+    font-family: $font-family-sans-serif !important;
+}

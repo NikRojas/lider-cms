@@ -19,113 +19,19 @@
               <form @submit.prevent="submit">
                 <div class="row">
                   <div class="col-12 col-md-6">
-                    <div class="form-group">
-                      <label class="font-weight-bold d-block" for="image_es">Imagen ES</label>
-                      <vue-dropzone
-                        class
-                        ref="ref_image_es"
-                        @vdropzone-file-added="$validateImageDropzone($event,$refs.ref_image_es.dropzone,1,1024000,'1mb')"
-                        id="image_es"
-                        :options="dropzoneOptions"
-                        :duplicateCheck="true"
-                        :useCustomSlot="true"
-                      >
-                        <div class="dropzone-custom-content">
-                          <h5
-                            class="dropzone-custom-title text-primary"
-                          >Suelte el archivo aquí o haga click para cargarlo.</h5>
-                        </div>
-                      </vue-dropzone>
-                      <label
-                        v-if="errors && errors.image_es"
-                        class="text-danger text-sm d-block mt-2"
-                        for="file"
-                      >{{ errors.image_es[0] }}</label>
-                    </div>
+                    <ImageForm label="Imagen"
+                    variable="image"
+                    :errors="errors"
+                    :valueEn.sync="element.image_en"
+                    :valueEs.sync="element.image_es"></ImageForm>
                   </div>
 
                   <div class="col-12 col-md-6">
-                    <div class="form-group">
-                      <label
-                        class="font-weight-bold d-block"
-                        for="image_responsive_es"
-                      >Imagen Responsiva ES</label>
-                      <vue-dropzone
-                        class
-                        ref="ref_image_responsive_es"
-                        @vdropzone-file-added="$validateImageDropzone($event,$refs.ref_image_responsive_es.dropzone,1,1024000,'1mb')"
-                        id="image_es"
-                        :options="dropzoneOptions"
-                        :duplicateCheck="true"
-                        :useCustomSlot="true"
-                      >
-                        <div class="dropzone-custom-content">
-                          <h5
-                            class="dropzone-custom-title text-primary"
-                          >Suelte el archivo aquí o haga click para cargarlo.</h5>
-                        </div>
-                      </vue-dropzone>
-                      <label
-                        v-if="errors && errors.image_responsive_es"
-                        class="text-danger text-sm d-block mt-2"
-                        for="file"
-                      >{{ errors.image_responsive_es[0] }}</label>
-                    </div>
-                  </div>
-
-                  <div class="col-12 col-md-6">
-                    <div class="form-group">
-                      <label class="font-weight-bold d-block" for="image_en">Imagen EN</label>
-                      <vue-dropzone
-                        class
-                        ref="ref_image_en"
-                        @vdropzone-file-added="$validateImageDropzone($event,$refs.ref_image_en.dropzone,1,1024000,'1mb')"
-                        id="image_es"
-                        :options="dropzoneOptions"
-                        :duplicateCheck="true"
-                        :useCustomSlot="true"
-                      >
-                        <div class="dropzone-custom-content">
-                          <h5
-                            class="dropzone-custom-title text-primary"
-                          >Suelte el archivo aquí o haga click para cargarlo.</h5>
-                        </div>
-                      </vue-dropzone>
-                      <label
-                        v-if="errors && errors.image_en"
-                        class="text-danger text-sm d-block mt-2"
-                        for="file"
-                      >{{ errors.image_en[0] }}</label>
-                    </div>
-                  </div>
-
-                  <div class="col-12 col-md-6">
-                    <div class="form-group">
-                      <label
-                        class="font-weight-bold d-block"
-                        for="image_responsive_en"
-                      >Imagen Responsiva EN</label>
-                      <vue-dropzone
-                        class
-                        ref="ref_image_responsive_en"
-                        @vdropzone-file-added="$validateImageDropzone($event,$refs.ref_image_responsive_en.dropzone,1,1024000,'1mb')"
-                        id="image_es"
-                        :options="dropzoneOptions"
-                        :duplicateCheck="true"
-                        :useCustomSlot="true"
-                      >
-                        <div class="dropzone-custom-content">
-                          <h5
-                            class="dropzone-custom-title text-primary"
-                          >Suelte el archivo aquí o haga click para cargarlo.</h5>
-                        </div>
-                      </vue-dropzone>
-                      <label
-                        v-if="errors && errors.image_responsive_en"
-                        class="text-danger text-sm d-block mt-2"
-                        for="file"
-                      >{{ errors.image_responsive_en[0] }}</label>
-                    </div>
+                    <ImageForm label="Imagen Responsive"
+                    variable="image_responsive"
+                    :errors="errors"
+                    :valueEn.sync="element.image_responsive_en"
+                    :valueEs.sync="element.image_responsive_es"></ImageForm>
                   </div>
 
                   <!--<div class="col-12 col-lg-6">
@@ -146,8 +52,9 @@
                   </div>-->
 
                   <div class="col-12 col-lg-6">
+                    
                     <div class="form-group">
-                      <label class="font-weight-bold" for="from">Mostrar desde</label>
+                      <label class="font-weight-bold" for="from">Válido desde</label>
                       <date-picker
                         :input-attr="{id: 'from'}"
                         value-type="format"
@@ -172,7 +79,7 @@
 
                   <div class="col-12 col-lg-6">
                     <div class="form-group">
-                      <label class="font-weight-bold" for="to">Mostrar hasta</label>
+                      <label class="font-weight-bold" for="to">Válido hasta</label>
                       <date-picker
                         :input-attr="{id: 'to'}"
                         value-type="format"
@@ -201,7 +108,6 @@
                       :classes="['btn-inverse-primary','mr-2']"
                       :request-server="requestServer"
                     ></Button>
-
                     <a type="button" class="btn btn-secondary" :href="routeReturn">Cancelar</a>
                   </div>
                 </div>
@@ -218,12 +124,14 @@ import Button from "../../components/Button";
 import BreadCrumb from "../../components/BreadCrumb";
 import vue2Dropzone from "vue2-dropzone";
 import DatePicker from "vue2-datepicker";
+import ImageForm from "../../components/form/Image";
 export default {
   components: {
     BreadCrumb,
     Button,
     vueDropzone: vue2Dropzone,
     DatePicker,
+    ImageForm
   },
   props: {
     routeStore: String,
@@ -254,18 +162,24 @@ export default {
       if (this.element.to) {
         fd.append("to", this.element.to);
       }
-      if (this.$refs.ref_image_es.dropzone.files[0]) {
-        fd.append("image_es", this.$refs.ref_image_es.dropzone.files[0]);
+      if(this.element.image_en){
+        fd.append("image_en", this.element.image_en);
       }
-      if (this.$refs.ref_image_en.dropzone.files[0]) {
-        fd.append("image_en", this.$refs.ref_image_en.dropzone.files[0]);
+      if(this.element.image_es){
+        fd.append("image_es", this.element.image_es);
       }
-      if (this.$refs.ref_image_responsive_en.dropzone.files[0]) {
+       if(this.element.image_responsive_en){
+        fd.append("image_responsive_en", this.element.image_responsive_en);
+      }
+      if(this.element.image_responsive_es){
+        fd.append("image_responsive_es", this.element.image_responsive_es);
+      }
+      /*if (this.$refs.ref_image_responsive_en.dropzone.files[0]) {
         fd.append("image_responsive_en", this.$refs.ref_image_responsive_en.dropzone.files[0]);
       }
       if (this.$refs.ref_image_responsive_es.dropzone.files[0]) {
         fd.append("image_responsive_es", this.$refs.ref_image_responsive_es.dropzone.files[0]);
-      }
+      }*/
       axios
         .post(this.routeStore, fd)
         .then((response) => {

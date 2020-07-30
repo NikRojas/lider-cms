@@ -143,6 +143,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 
 
@@ -159,7 +160,8 @@ __webpack_require__.r(__webpack_exports__);
     route: String,
     routeGetAll: String,
     routeOrder: String,
-    imageUrl: String
+    messageOrder: String,
+    imagesUrl: String
   },
   data: function data() {
     return {
@@ -354,7 +356,13 @@ var render = function() {
           : _c(
               "div",
               [
-                _vm._m(0),
+                _vm.elements.length
+                  ? _c("div", { staticClass: "row" }, [
+                      _c("div", { staticClass: "col-12" }, [
+                        _c("p", [_vm._v(" " + _vm._s(_vm.messageOrder) + " ")])
+                      ])
+                    ])
+                  : _vm._e(),
                 _vm._v(" "),
                 _vm.elements.length
                   ? _c(
@@ -381,6 +389,18 @@ var render = function() {
                                 { staticClass: "card-body position-relative" },
                                 [
                                   _c("div", { staticClass: "text-right" }, [
+                                    _c(
+                                      "a",
+                                      {
+                                        staticClass:
+                                          "btn btn-sm btn-inverse-info",
+                                        attrs: {
+                                          href: _vm.route + "/editar/" + el.id
+                                        }
+                                      },
+                                      [_vm._v("Editar")]
+                                    ),
+                                    _vm._v(" "),
                                     _c(
                                       "button",
                                       {
@@ -418,7 +438,7 @@ var render = function() {
                                                 "btn btn-outline-info btn-sm ml-3",
                                               attrs: {
                                                 href:
-                                                  _vm.imageUrl +
+                                                  _vm.imagesUrl +
                                                   "/slider/" +
                                                   el.image_es,
                                                 target: "_blank"
@@ -432,7 +452,7 @@ var render = function() {
                                           staticClass: "img-fluid",
                                           attrs: {
                                             src:
-                                              _vm.imageUrl +
+                                              _vm.imagesUrl +
                                               "/slider/" +
                                               el.image_es,
                                             height: "400",
@@ -471,7 +491,7 @@ var render = function() {
                                                         "btn btn-outline-info btn-sm ml-3",
                                                       attrs: {
                                                         href:
-                                                          _vm.imageUrl +
+                                                          _vm.imagesUrl +
                                                           "/slider/" +
                                                           el.image_en,
                                                         target: "_blank"
@@ -485,7 +505,7 @@ var render = function() {
                                               _c("img", {
                                                 attrs: {
                                                   src:
-                                                    _vm.imageUrl +
+                                                    _vm.imagesUrl +
                                                     "/slider/" +
                                                     el.image_en,
                                                   height: "100",
@@ -525,7 +545,7 @@ var render = function() {
                                                         "btn btn-outline-info btn-sm ml-3",
                                                       attrs: {
                                                         href:
-                                                          _vm.imageUrl +
+                                                          _vm.imagesUrl +
                                                           "/slider/" +
                                                           el.image_responsive_es,
                                                         target: "_blank"
@@ -539,7 +559,7 @@ var render = function() {
                                               _c("img", {
                                                 attrs: {
                                                   src:
-                                                    _vm.imageUrl +
+                                                    _vm.imagesUrl +
                                                     "/slider/" +
                                                     el.image_responsive_es,
                                                   alt: "",
@@ -579,7 +599,7 @@ var render = function() {
                                                         "btn btn-outline-info btn-sm ml-3",
                                                       attrs: {
                                                         href:
-                                                          _vm.imageUrl +
+                                                          _vm.imagesUrl +
                                                           "/slider/" +
                                                           el.image_responsive_en,
                                                         target: "_blank"
@@ -593,7 +613,7 @@ var render = function() {
                                               _c("img", {
                                                 attrs: {
                                                   src:
-                                                    _vm.imageUrl +
+                                                    _vm.imagesUrl +
                                                     "/slider/" +
                                                     el.image_responsive_en,
                                                   alt: "",
@@ -613,12 +633,13 @@ var render = function() {
                                                   staticClass:
                                                     "font-weight-bold d-block"
                                                 },
-                                                [_vm._v("Válido desde y hasta")]
+                                                [_vm._v("Válido")]
                                               ),
                                               _vm._v(" "),
                                               _c("p", { staticClass: "mb-0" }, [
                                                 _vm._v(
-                                                  _vm._s(el.from_format) +
+                                                  "Desde " +
+                                                    _vm._s(el.from_format) +
                                                     " hasta " +
                                                     _vm._s(el.to_format)
                                                 )
@@ -640,11 +661,11 @@ var render = function() {
                                               { staticClass: "mb-0" },
                                               [
                                                 el.active
-                                                  ? _c("jam-check", {
+                                                  ? _c("jam-shield-check-f", {
                                                       staticClass:
                                                         "text-success current-color"
                                                     })
-                                                  : _c("jam-close", {
+                                                  : _c("jam-shield-close-f", {
                                                       staticClass:
                                                         "text-danger current-color"
                                                     })
@@ -687,20 +708,7 @@ var render = function() {
     1
   )
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "row" }, [
-      _c("div", { staticClass: "col-12" }, [
-        _c("p", [
-          _vm._v(" Ordene los elementos en el orden que desee mostrarlos")
-        ])
-      ])
-    ])
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 
 

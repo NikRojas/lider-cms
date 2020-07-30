@@ -13,6 +13,7 @@ return [
     | a conventional file to locate the various service credentials.
     |
     */
+    'images_url' => env('IMAGES_URL', 'http://127.0.0.1:8000/storage/img'),
 
     'mailgun' => [
         'domain' => env('MAILGUN_DOMAIN'),

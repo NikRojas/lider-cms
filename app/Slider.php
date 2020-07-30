@@ -31,4 +31,16 @@ class Slider extends Model
         }
         return $value;
     }
+
+    public function getFromAttribute($value) {
+        if($value){
+            return (new Carbon($value))->format('H:i d-m-Y');
+        }
+    }
+
+    public function getToAttribute($value) {
+        if($value){
+            return (new Carbon($value))->format('H:i d-m-Y');
+        }
+    }
 }

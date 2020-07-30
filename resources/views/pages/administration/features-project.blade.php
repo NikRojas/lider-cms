@@ -1,6 +1,6 @@
 @extends('layouts.dashboard')
 @section('content')
   <administration-features-project route="{{ route('cms.administration.features-project.index') }}" 
-  image-url="{{ env('IMAGES_URL') }}"
+  images-url="{{ config('services.images_url') }}"
   route-get-all="{{ route('cms.administration.features-project.get-all') }}"></administration-features-project>
 @endsection

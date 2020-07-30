@@ -45,13 +45,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
     label: String,
@@ -360,7 +353,7 @@ __webpack_require__.r(__webpack_exports__);
   props: {
     route: String,
     routeGetAll: String,
-    imageUrl: String
+    imagesUrl: String
   },
   data: function data() {
     return {
@@ -618,7 +611,13 @@ var render = function() {
           ? _c(
               "div",
               { staticClass: "d-inline-block ml-auto text-danger mt-1" },
-              [_vm._v(_vm._s(_vm.countErrors) + "  Error(es)")]
+              [
+                _vm._v(
+                  _vm._s(_vm.countErrors) +
+                    "  " +
+                    _vm._s(_vm.countErrors > 1 ? "Errores" : "Error")
+                )
+              ]
             )
           : _vm._e()
       ]),
@@ -826,7 +825,8 @@ var render = function() {
                               _c("div", { staticClass: "text-center mb-3" }, [
                                 _c("img", {
                                   attrs: {
-                                    src: _vm.imageUrl + "/features/" + el.image,
+                                    src:
+                                      _vm.imagesUrl + "/features/" + el.image,
                                     height: "75",
                                     alt: el.name_es
                                   }
@@ -1026,7 +1026,7 @@ var render = function() {
                                   _c("img", {
                                     attrs: {
                                       src:
-                                        _vm.imageUrl +
+                                        _vm.imagesUrl +
                                         "/features/" +
                                         _vm.element.image,
                                       height: "75",

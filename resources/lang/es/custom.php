@@ -55,6 +55,7 @@ return [
         'delete' => [
             'success' => ':name se ha eliminado.',
             'error' => "Lo sentimos, :name no se pudo eliminar debido a un error.",
-        ]
+        ],
+        'order'  => 'Arrastre los elementos en el orden que desee mostrarlos'
     ]
 ];

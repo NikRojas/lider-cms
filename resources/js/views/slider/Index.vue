@@ -26,9 +26,9 @@
         </div>
       </div>
       <div v-else>
-        <div class="row">
+        <div class="row" v-if="elements.length">
           <div class="col-12">
-            <p> Ordene los elementos en el orden que desee mostrarlos</p>
+            <p> {{ messageOrder}} </p>
           </div>
         </div>
         <draggable class="row" v-if="elements.length" v-model="elements" @change="handleChange">
@@ -36,19 +36,20 @@
             <div class="card">
               <div class="card-body position-relative">
                 <div class="text-right">
-                <button class="btn btn-sm btn-inverse-danger" @click="deleteEl(el.id)">Eliminar</button>
+                  <a :href="route + '/editar/' +  el.id" class="btn btn-sm btn-inverse-info">Editar</a>
+                  <button class="btn btn-sm btn-inverse-danger" @click="deleteEl(el.id)">Eliminar</button>
                 </div>
                 <div class="row">
                   <div class="col-12 col-lg-6 mb-3 mb-lg-0">
                     <div class=" mb-2">
                       <label class="font-weight-bold">Banner ES</label>
                       <a
-                        :href="imageUrl + '/slider/'+ el.image_es"
+                        :href="imagesUrl + '/slider/'+ el.image_es"
                         target="_blank"
                         class="btn btn-outline-info btn-sm ml-3"
                       >Ver imagen</a>
                     </div>
-                    <img :src="imageUrl + '/slider/'+ el.image_es" height="400" alt class="img-fluid" />
+                    <img :src="imagesUrl + '/slider/'+ el.image_es" height="400" alt class="img-fluid" />
                   </div>
                   <div class="col-12 col-lg-6">
                     <div class="row">
@@ -56,24 +57,24 @@
                         <div class=" mb-2">
                           <label class="font-weight-bold">Banner EN</label>
                           <a
-                            :href="imageUrl + '/slider/'+ el.image_en"
+                            :href="imagesUrl + '/slider/'+ el.image_en"
                             target="_blank"
                             class="btn btn-outline-info btn-sm ml-3"
                           >Ver imagen</a>
                         </div>
-                        <img :src="imageUrl + '/slider/'+ el.image_en" height="100" alt class />
+                        <img :src="imagesUrl + '/slider/'+ el.image_en" height="100" alt class />
                       </div>
                       <div class="col col-lg-6 mb-3">
                         <div class=" mb-2">
                           <label class="font-weight-bold">Banner Responsive ES</label>
                           <a
-                            :href="imageUrl + '/slider/'+ el.image_responsive_es"
+                            :href="imagesUrl + '/slider/'+ el.image_responsive_es"
                             target="_blank"
                             class="btn btn-outline-info btn-sm ml-3"
                           >Ver imagen</a>
                         </div>
                         <img
-                          :src="imageUrl + '/slider/'+ el.image_responsive_es"
+                          :src="imagesUrl + '/slider/'+ el.image_responsive_es"
                           alt
                           height="75"
                           class
@@ -83,25 +84,25 @@
                         <div class=" mb-2">
                           <label class="font-weight-bold">Banner Responsive EN</label>
                           <a
-                            :href="imageUrl + '/slider/'+ el.image_responsive_en"
+                            :href="imagesUrl + '/slider/'+ el.image_responsive_en"
                             target="_blank"
                             class="btn btn-outline-info btn-sm ml-3"
                           >Ver imagen</a>
                         </div>
                         <img
-                          :src="imageUrl + '/slider/'+ el.image_responsive_en"
+                          :src="imagesUrl + '/slider/'+ el.image_responsive_en"
                           alt
                           height="75"
                           class
                         />
                       </div>
                       <div class="col-12 mb-3">
-                        <label class="font-weight-bold d-block">Válido desde y hasta</label>
-                        <p class="mb-0">{{ el.from_format }} hasta {{ el.to_format }}</p>
+                        <label class="font-weight-bold d-block">Válido</label>
+                        <p class="mb-0">Desde {{ el.from_format }} hasta {{ el.to_format }}</p>
                       </div>
                       <div class="col-12">
                         <label class="font-weight-bold">Activo</label>
-                        <p class="mb-0"><jam-check class="text-success current-color" v-if="el.active"></jam-check><jam-close class="text-danger current-color" v-else></jam-close></p>
+                        <p class="mb-0"><jam-shield-check-f class="text-success current-color" v-if="el.active"></jam-shield-check-f><jam-shield-close-f class="text-danger current-color" v-else></jam-shield-close-f></p>
                       </div>
                     </div>
                   </div>
@@ -144,7 +145,8 @@ export default {
     route: String,
     routeGetAll: String,
     routeOrder: String,
-    imageUrl: String,
+    messageOrder: String,
+    imagesUrl: String,
   },
   data() {
     return {

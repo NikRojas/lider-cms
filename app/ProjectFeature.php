@@ -12,7 +12,7 @@ class ProjectFeature extends Model
 
     public function projectsRel()
     {
-        return $this->belongsToMany('App\Project','projects_project_features', 'features_id', 'project_id');
+        return $this->belongsToMany('App\Project','projects_project_features', 'feature_id', 'project_id');
     }
 
     public function getCanDeleteAttribute(){

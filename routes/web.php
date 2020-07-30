@@ -52,8 +52,10 @@ Route::middleware(['auth'])->namespace('Cms')->name('cms.')->group(function() {
     Route::prefix('slider')->name('slider.')->group(function() {
         Route::get('/', 'SliderController@index')->name('index');
         Route::get('/nuevo', 'SliderController@create')->name('create');
+        Route::get('/editar/{element}', 'SliderController@edit')->name('edit');
         Route::put('/order', 'SliderController@order')->name('order');
         Route::post('/', 'SliderController@store')->name('store');
+        Route::put('/{element}', 'SliderController@update')->name('update');
         Route::delete('/{element}', 'SliderController@destroy')->name('destroy');
         Route::get('/json/get-all', 'SliderController@getAll')->name('get-all');
         Route::get('/json/get/{element}', 'SliderController@get')->name('get');

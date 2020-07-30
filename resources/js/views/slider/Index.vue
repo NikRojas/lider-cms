@@ -96,13 +96,13 @@
                           class
                         />
                       </div>
-                      <div class="col-12 mb-3">
+                      <div class="col-12 col-lg-6">
                         <label class="font-weight-bold d-block">Válido</label>
-                        <p class="mb-0">Desde {{ el.from_format }} hasta {{ el.to_format }}</p>
+                        <p>Desde {{ el.from_format }} hasta {{ el.to_format }}</p>
                       </div>
-                      <div class="col-12">
-                        <label class="font-weight-bold">Activo</label>
-                        <p class="mb-0"><jam-shield-check-f class="text-success current-color" v-if="el.active"></jam-shield-check-f><jam-shield-close-f class="text-danger current-color" v-else></jam-shield-close-f></p>
+                      <div class="col-12 col-lg-6">
+                        <label class="font-weight-bold">Estado</label>
+                        <p class="mb-0"><jam-check class="text-success current-color" v-if="el.active"></jam-check><jam-close class="text-danger current-color" v-else></jam-close>{{ el.active ? 'Activo' : 'Inactivo'}}</p>
                       </div>
                     </div>
                   </div>

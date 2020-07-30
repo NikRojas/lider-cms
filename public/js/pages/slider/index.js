@@ -625,7 +625,7 @@ var render = function() {
                                           _vm._v(" "),
                                           _c(
                                             "div",
-                                            { staticClass: "col-12 mb-3" },
+                                            { staticClass: "col-12 col-lg-6" },
                                             [
                                               _c(
                                                 "label",
@@ -636,7 +636,7 @@ var render = function() {
                                                 [_vm._v("Válido")]
                                               ),
                                               _vm._v(" "),
-                                              _c("p", { staticClass: "mb-0" }, [
+                                              _c("p", [
                                                 _vm._v(
                                                   "Desde " +
                                                     _vm._s(el.from_format) +
@@ -647,32 +647,44 @@ var render = function() {
                                             ]
                                           ),
                                           _vm._v(" "),
-                                          _c("div", { staticClass: "col-12" }, [
-                                            _c(
-                                              "label",
-                                              {
-                                                staticClass: "font-weight-bold"
-                                              },
-                                              [_vm._v("Activo")]
-                                            ),
-                                            _vm._v(" "),
-                                            _c(
-                                              "p",
-                                              { staticClass: "mb-0" },
-                                              [
-                                                el.active
-                                                  ? _c("jam-shield-check-f", {
-                                                      staticClass:
-                                                        "text-success current-color"
-                                                    })
-                                                  : _c("jam-shield-close-f", {
-                                                      staticClass:
-                                                        "text-danger current-color"
-                                                    })
-                                              ],
-                                              1
-                                            )
-                                          ])
+                                          _c(
+                                            "div",
+                                            { staticClass: "col-12 col-lg-6" },
+                                            [
+                                              _c(
+                                                "label",
+                                                {
+                                                  staticClass:
+                                                    "font-weight-bold"
+                                                },
+                                                [_vm._v("Estado")]
+                                              ),
+                                              _vm._v(" "),
+                                              _c(
+                                                "p",
+                                                { staticClass: "mb-0" },
+                                                [
+                                                  el.active
+                                                    ? _c("jam-check", {
+                                                        staticClass:
+                                                          "text-success current-color"
+                                                      })
+                                                    : _c("jam-close", {
+                                                        staticClass:
+                                                          "text-danger current-color"
+                                                      }),
+                                                  _vm._v(
+                                                    _vm._s(
+                                                      el.active
+                                                        ? "Activo"
+                                                        : "Inactivo"
+                                                    )
+                                                  )
+                                                ],
+                                                1
+                                              )
+                                            ]
+                                          )
                                         ])
                                       ]
                                     )

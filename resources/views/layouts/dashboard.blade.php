@@ -100,12 +100,12 @@
                         </b-popover>
                     @else 
                     <a
-                        class="nav-link position-relative d-inline-block w-100 py-3 {{  Request::path() ==  $module["slug"] ? 'active' : '' }}"
+                        class="nav-link position-relative d-inline-block w-100 py-3 {{  Request::segment(1) ==  $module["variable"] ? 'active' : '' }}"
                         href="/{{ $module["slug"] }}">
                             <span class="current-color mr-3" data-jam="{{$module["icon"]}}" data-with="20" data-height="20"></span>
                             <span class="nav-link__text">{{ $module["name"] }}</span>
                     </a>
-                    <a class="nav-link position-relative text-center d-inline-block w-100 py-3 nav-link--hover {{  Request::path() ==  $module["slug"] ? 'active' : '' }}" :id="'popover-{{$module["slug"]}}'">
+                    <a class="nav-link position-relative text-center d-inline-block w-100 py-3 nav-link--hover {{  Request::segment(1) ==  $module["variable"] ? 'active' : '' }}" :id="'popover-{{$module["slug"]}}'">
                         <span class="current-color mr-3" data-jam="{{$module["icon"]}}" data-with="20" data-height="20"></span>
                     </a>
                     <b-popover :target="'popover-{{$module["slug"]}}'" custom-class="ml-0 shadow-none pl-0 pr-5" triggers="hover" placement="right" v-cloak>

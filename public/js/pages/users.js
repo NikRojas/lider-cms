@@ -1078,6 +1078,17 @@ __webpack_require__.r(__webpack_exports__);
           return;
         }
 
+        Swal.fire({
+          title: error.response.data.title,
+          text: error.response.data.message,
+          type: "error",
+          confirmButtonText: "OK",
+          buttonsStyling: false,
+          customClass: {
+            confirmButton: "btn btn-inverse-primary"
+          }
+        });
+
         _this4.restorePage();
       });
     },
@@ -1117,6 +1128,17 @@ __webpack_require__.r(__webpack_exports__);
           _this5.errors = error.response.data.errors || {};
           return;
         }
+
+        Swal.fire({
+          title: error.response.data.title,
+          text: error.response.data.message,
+          type: "error",
+          confirmButtonText: "OK",
+          buttonsStyling: false,
+          customClass: {
+            confirmButton: "btn btn-inverse-primary"
+          }
+        });
 
         _this5.restorePage();
       });

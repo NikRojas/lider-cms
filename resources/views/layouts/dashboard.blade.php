@@ -176,4 +176,38 @@
         </div>
     </footer>
 </div>
+<div id="alert"></div>
 @endsection
+@push('scripts')
+<script type="text/javascript">
+const app = new Vue({
+     el: '#alert' ,
+     created(){
+        @if(Session::has('success'))
+            Swal.fire({
+                title: "{{ trans('custom.title.success') }}",
+                text: "{{ Session::get('success') }}",
+                type: "success",
+                confirmButtonText: "OK",
+                buttonsStyling: false,
+                customClass: {
+                confirmButton: "btn btn-inverse-primary"
+                }
+            });
+        @endif
+        @if(Session::has('error'))
+            Swal.fire({
+                title: "{{ trans('custom.title.error') }}",
+                text: "{{ Session::get('error') }}",
+                type: "error",
+                confirmButtonText: "OK",
+                buttonsStyling: false,
+                customClass: {
+                confirmButton: "btn btn-inverse-primary"
+                }
+            });
+        @endif
+     }
+});
+</script>
+@endpush

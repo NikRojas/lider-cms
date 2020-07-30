@@ -47,6 +47,18 @@ Route::middleware(['auth'])->namespace('Cms')->name('cms.')->group(function() {
             Route::get('/json/get/{element}', 'FeaturesProyectController@get')->name('get');
         });
     });
+
+    #Administration
+    Route::prefix('slider')->name('slider.')->group(function() {
+        Route::get('/', 'SliderController@index')->name('index');
+        Route::get('/nuevo', 'SliderController@create')->name('create');
+        Route::put('/order', 'SliderController@order')->name('order');
+        Route::post('/', 'SliderController@store')->name('store');
+        Route::delete('/{element}', 'SliderController@destroy')->name('destroy');
+        Route::get('/json/get-all', 'SliderController@getAll')->name('get-all');
+        Route::get('/json/get/{element}', 'SliderController@get')->name('get');
+    });
+
     #Information
     #SEO
     Route::get('informacion/seo', 'Information\SeoController@index')->name('information.seo');

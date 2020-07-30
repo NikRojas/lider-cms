@@ -34,10 +34,10 @@
     <div id="app">
         @yield('page')
     </div>
-    @stack('scripts')
     <script src="{{ asset('js/vendors/jam-icons/jam.min.js') }}"></script>
     <script src="{{ asset('js/manifest.js') }}"></script>
     <script src="{{ asset('js/vendor.js') }}"></script>
     <script src="{{ asset('js/app.js') }}"></script>
+    @stack('scripts')
 </body>
 </html>

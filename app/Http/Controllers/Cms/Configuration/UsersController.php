@@ -47,9 +47,9 @@ class UsersController extends Controller
             Storage::disk('private')->delete('img/users/'.$usuario->avatar);
         }
 
-        if($request->filled('available')){
+        /*if($request->filled('available')){
             $request_usuario = array_merge($request_usuario,["status" => 1]);
-        }
+        }*/
 
         try{
             $usuario = User::UpdateOrCreate(['id' => $usuario->id], $request_usuario);
@@ -68,7 +68,7 @@ class UsersController extends Controller
             $usuario = array_merge($usuario,["avatar" => $nombre_archivo]);
         }
         try{
-            $usuario = User::UpdateOrCreate(array_merge($usuario,["password"=> Hash::make($request->password), "status" => 1 ]));
+            $usuario = User::UpdateOrCreate(array_merge($usuario,["password"=> Hash::make($request->password) ]));
             return response()->json(['title'=> trans('custom.title.success'), 'message'=> trans('custom.message.create.success', ['name' => trans('custom.attribute.user')])]);
         }
         catch(\Exception $e){

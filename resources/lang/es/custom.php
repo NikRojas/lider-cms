@@ -23,7 +23,8 @@ return [
         'partner' => 'El socio',
         'award' => 'El premio',
         'lead' => 'El lead',
-        'features' => 'La característica'
+        'features' => 'La característica',
+        'slide' => 'El slide'
     ],
     'title' => [
         'error' => 'Error',

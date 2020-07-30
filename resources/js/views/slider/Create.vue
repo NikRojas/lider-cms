@@ -1,0 +1,286 @@
+<template>
+  <div>
+    <div class="header pb-6">
+      <div class="container-fluid">
+        <div class="header-body">
+          <div class="row align-items-center pt-0 pt-md-2 pb-4">
+            <div class="col-6 col-md-7">
+              <BreadCrumb title="Crear Slide" parent active="Slider"></BreadCrumb>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="container-fluid mt--6">
+      <div class="row">
+        <div class="col-12">
+          <div class="card">
+            <div class="card-body">
+              <form @submit.prevent="submit">
+                <div class="row">
+                  <div class="col-12 col-md-6">
+                    <div class="form-group">
+                      <label class="font-weight-bold d-block" for="image_es">Imagen ES</label>
+                      <vue-dropzone
+                        class
+                        ref="ref_image_es"
+                        @vdropzone-file-added="$validateImageDropzone($event,$refs.ref_image_es.dropzone,1,1024000,'1mb')"
+                        id="image_es"
+                        :options="dropzoneOptions"
+                        :duplicateCheck="true"
+                        :useCustomSlot="true"
+                      >
+                        <div class="dropzone-custom-content">
+                          <h5
+                            class="dropzone-custom-title text-primary"
+                          >Suelte el archivo aquí o haga click para cargarlo.</h5>
+                        </div>
+                      </vue-dropzone>
+                      <label
+                        v-if="errors && errors.image_es"
+                        class="text-danger text-sm d-block mt-2"
+                        for="file"
+                      >{{ errors.image_es[0] }}</label>
+                    </div>
+                  </div>
+
+                  <div class="col-12 col-md-6">
+                    <div class="form-group">
+                      <label
+                        class="font-weight-bold d-block"
+                        for="image_responsive_es"
+                      >Imagen Responsiva ES</label>
+                      <vue-dropzone
+                        class
+                        ref="ref_image_responsive_es"
+                        @vdropzone-file-added="$validateImageDropzone($event,$refs.ref_image_responsive_es.dropzone,1,1024000,'1mb')"
+                        id="image_es"
+                        :options="dropzoneOptions"
+                        :duplicateCheck="true"
+                        :useCustomSlot="true"
+                      >
+                        <div class="dropzone-custom-content">
+                          <h5
+                            class="dropzone-custom-title text-primary"
+                          >Suelte el archivo aquí o haga click para cargarlo.</h5>
+                        </div>
+                      </vue-dropzone>
+                      <label
+                        v-if="errors && errors.image_responsive_es"
+                        class="text-danger text-sm d-block mt-2"
+                        for="file"
+                      >{{ errors.image_responsive_es[0] }}</label>
+                    </div>
+                  </div>
+
+                  <div class="col-12 col-md-6">
+                    <div class="form-group">
+                      <label class="font-weight-bold d-block" for="image_en">Imagen EN</label>
+                      <vue-dropzone
+                        class
+                        ref="ref_image_en"
+                        @vdropzone-file-added="$validateImageDropzone($event,$refs.ref_image_en.dropzone,1,1024000,'1mb')"
+                        id="image_es"
+                        :options="dropzoneOptions"
+                        :duplicateCheck="true"
+                        :useCustomSlot="true"
+                      >
+                        <div class="dropzone-custom-content">
+                          <h5
+                            class="dropzone-custom-title text-primary"
+                          >Suelte el archivo aquí o haga click para cargarlo.</h5>
+                        </div>
+                      </vue-dropzone>
+                      <label
+                        v-if="errors && errors.image_en"
+                        class="text-danger text-sm d-block mt-2"
+                        for="file"
+                      >{{ errors.image_en[0] }}</label>
+                    </div>
+                  </div>
+
+                  <div class="col-12 col-md-6">
+                    <div class="form-group">
+                      <label
+                        class="font-weight-bold d-block"
+                        for="image_responsive_en"
+                      >Imagen Responsiva EN</label>
+                      <vue-dropzone
+                        class
+                        ref="ref_image_responsive_en"
+                        @vdropzone-file-added="$validateImageDropzone($event,$refs.ref_image_responsive_en.dropzone,1,1024000,'1mb')"
+                        id="image_es"
+                        :options="dropzoneOptions"
+                        :duplicateCheck="true"
+                        :useCustomSlot="true"
+                      >
+                        <div class="dropzone-custom-content">
+                          <h5
+                            class="dropzone-custom-title text-primary"
+                          >Suelte el archivo aquí o haga click para cargarlo.</h5>
+                        </div>
+                      </vue-dropzone>
+                      <label
+                        v-if="errors && errors.image_responsive_en"
+                        class="text-danger text-sm d-block mt-2"
+                        for="file"
+                      >{{ errors.image_responsive_en[0] }}</label>
+                    </div>
+                  </div>
+
+                  <!--<div class="col-12 col-lg-6">
+                      <div class="form-group">
+                        <label class="font-weight-bold d-block" for="id_url">URL</label>
+                        <input
+                          type="text"
+                          class="form-control form-control-alternative"
+                          v-model="element.url"
+                          id="id_url"
+                        />
+                        <label
+                          v-if="errors && errors.url"
+                          class="mt-2 text-danger text-sm"
+                          for="id_url"
+                        >{{ errors.url[0] }}</label>
+                      </div>
+                  </div>-->
+
+                  <div class="col-12 col-lg-6">
+                    <div class="form-group">
+                      <label class="font-weight-bold" for="from">Mostrar desde</label>
+                      <date-picker
+                        :input-attr="{id: 'from'}"
+                        value-type="format"
+                        v-model="element.from"
+                        format="HH:mm DD-MM-YYYY"
+                        type="datetime"
+                        :time-picker-options="{ start: '06:00', step: '00:05', end: '24:00' }"
+                        :first-day-of-week="1"
+                        lang="es"
+                        input-class="form-control"
+                        width="100%"
+                      >
+                        <jam-calendar></jam-calendar>
+                      </date-picker>
+                      <label
+                        v-if="errors && errors.from"
+                        class="mt-2 text-danger text-sm"
+                        for="from"
+                      >{{ errors.from[0] }}</label>
+                    </div>
+                  </div>
+
+                  <div class="col-12 col-lg-6">
+                    <div class="form-group">
+                      <label class="font-weight-bold" for="to">Mostrar hasta</label>
+                      <date-picker
+                        :input-attr="{id: 'to'}"
+                        value-type="format"
+                        v-model="element.to"
+                        format="HH:mm DD-MM-YYYY"
+                        type="datetime"
+                        :time-picker-options="{ start: '06:00', step: '00:05', end: '24:00' }"
+                        :first-day-of-week="1"
+                        lang="es"
+                        input-class="form-control"
+                        width="100%"
+                      >
+                        <jam-calendar></jam-calendar>
+                      </date-picker>
+                      <label
+                        v-if="errors && errors.to"
+                        class="mt-2 text-danger text-sm"
+                        for="to"
+                      >{{ errors.to[0] }}</label>
+                    </div>
+                  </div>
+
+                  <div class="col-12 text-right">
+                    <Button
+                      :text="'Guardar'"
+                      :classes="['btn-inverse-primary','mr-2']"
+                      :request-server="requestServer"
+                    ></Button>
+
+                    <a type="button" class="btn btn-secondary" :href="routeReturn">Cancelar</a>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
+<script>
+import Button from "../../components/Button";
+import BreadCrumb from "../../components/BreadCrumb";
+import vue2Dropzone from "vue2-dropzone";
+import DatePicker from "vue2-datepicker";
+export default {
+  components: {
+    BreadCrumb,
+    Button,
+    vueDropzone: vue2Dropzone,
+    DatePicker,
+  },
+  props: {
+    routeStore: String,
+    routeReturn: String,
+  },
+  data() {
+    return {
+      element: {},
+      errors: {},
+      dropzoneOptions: {
+        url: "/",
+        maxFiles: 1,
+        acceptedFiles: "image/png,image/jpeg,image/jpg",
+        autoProcessQueue: false,
+        thumbnailWidth: 400,
+        addRemoveLinks: true,
+      },
+      requestServer: false,
+    };
+  },
+  methods: {
+    submit() {
+      this.requestServer = true;
+      const fd = new FormData();
+      if (this.element.from) {
+        fd.append("from", this.element.from);
+      }
+      if (this.element.to) {
+        fd.append("to", this.element.to);
+      }
+      if (this.$refs.ref_image_es.dropzone.files[0]) {
+        fd.append("image_es", this.$refs.ref_image_es.dropzone.files[0]);
+      }
+      if (this.$refs.ref_image_en.dropzone.files[0]) {
+        fd.append("image_en", this.$refs.ref_image_en.dropzone.files[0]);
+      }
+      if (this.$refs.ref_image_responsive_en.dropzone.files[0]) {
+        fd.append("image_responsive_en", this.$refs.ref_image_responsive_en.dropzone.files[0]);
+      }
+      if (this.$refs.ref_image_responsive_es.dropzone.files[0]) {
+        fd.append("image_responsive_es", this.$refs.ref_image_responsive_es.dropzone.files[0]);
+      }
+      axios
+        .post(this.routeStore, fd)
+        .then((response) => {
+          this.requestServer = false;
+          document.location.href = response.data.route;
+        })
+        .catch((error) => {
+          this.requestServer = false;
+          if (error.response.status === 422) {
+            this.errors = error.response.data.errors || {};
+            return;
+          }
+          document.location.href = error.response.data.route;
+        });
+    },
+  },
+};
+</script>

@@ -22949,6 +22949,10 @@ body.swal2-toast-column .swal2-toast .swal2-validation-message {
   border-color: #F5503A;
 }
 
+.dropzone.dz-clickable {
+  overflow: hidden;
+}
+
 .dropdown-menu.show {
   top: 100% !important;
   left: auto !important;
@@ -23264,13 +23268,24 @@ h6,
     }
 }*/
 
-.mx-panel-time .mx-time-list {
-  width: 50% !important;
+.mx-datepicker-popup {
+  box-shadow: none !important;
+  border: 1px solid #e9ecef !important;
 }
 
-.mx-panel-time .mx-time-list:last-child {
-  display: none !important;
+.mx-input-append {
+  right: 5px !important;
 }
+
+/*.mx-panel-time {
+    .mx-time-list {
+        width: 50% !important;
+    }
+
+    .mx-time-list:last-child {
+        display: none !important;
+    }
+}*/
 
 .ql-height-25 .ql-container.ql-snow {
   height: 25rem;

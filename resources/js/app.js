@@ -45,6 +45,8 @@ const app = new Vue({
         'reset': () => import('./views/auth/Reset.vue' /* webpackChunkName: "js/pages/reset" */),
         'administration-status-project': () => import('./views/administration/StatusProject.vue' /* webpackChunkName: "js/pages/administration/status-project" */),
         'administration-features-project': () => import('./views/administration/FeaturesProject.vue' /* webpackChunkName: "js/pages/administration/features-project" */),
+        'slider-index': () => import('./views/slider/Index.vue' /* webpackChunkName: "js/pages/slider/index" */),
+        'slider-create': () => import('./views/slider/Create.vue' /* webpackChunkName: "js/pages/slider/create" */),
     }
 });
 import Validation from './functions/validation.js'

@@ -111,6 +111,10 @@
     border-color: $danger;
 }
 
+.dropzone.dz-clickable{
+    overflow: hidden;
+}
+
 .dropdown-menu.show {
     top: 100% !important;
     left: auto !important;
@@ -480,7 +484,14 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6{
     }
 }*/
 
-.mx-panel-time {
+.mx-datepicker-popup{
+    box-shadow: none !important;
+    border: 1px solid $border-color !important;
+}
+.mx-input-append{
+    right: 5px !important;
+}
+/*.mx-panel-time {
     .mx-time-list {
         width: 50% !important;
     }
@@ -488,7 +499,7 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6{
     .mx-time-list:last-child {
         display: none !important;
     }
-}
+}*/
 
 .ql-height-25 {
     .ql-container.ql-snow {

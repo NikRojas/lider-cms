@@ -11,8 +11,17 @@
     "/js/pages/login.js": "/js/pages/login.js",
     "/js/pages/profile.js": "/js/pages/profile.js",
     "/js/pages/reset.js": "/js/pages/reset.js",
+    "/js/pages/slider/index.js": "/js/pages/slider/index.js",
     "/js/pages/users.js": "/js/pages/users.js",
-    "/vendors~js/pages/administration/features-project~js/pages/administration/status-project~js/pages/log~9bc425e8.js": "/vendors~js/pages/administration/features-project~js/pages/administration/status-project~js/pages/log~9bc425e8.js",
+    "/vendors~js/pages/administration/features-project~js/pages/administration/status-project~js/pages/log~f1a6046b.js": "/vendors~js/pages/administration/features-project~js/pages/administration/status-project~js/pages/log~f1a6046b.js",
     "/vendors~js/pages/administration/features-project~js/pages/profile~js/pages/users.js": "/vendors~js/pages/administration/features-project~js/pages/profile~js/pages/users.js",
-    "/vendors~js/pages/users.js": "/vendors~js/pages/users.js"
+    "/vendors~js/pages/users.js": "/vendors~js/pages/users.js",
+    "/js/pages/slider/create.js": "/js/pages/slider/create.js",
+    "/vendors~js/pages/administration/features-project~js/pages/administration/status-project~js/pages/log~e883e439.js": "/vendors~js/pages/administration/features-project~js/pages/administration/status-project~js/pages/log~e883e439.js",
+    "/vendors~js/pages/administration/features-project~js/pages/profile~js/pages/slider/create~js/pages/users.js": "/vendors~js/pages/administration/features-project~js/pages/profile~js/pages/slider/create~js/pages/users.js",
+    "/vendors~js/pages/slider/create.js": "/vendors~js/pages/slider/create.js",
+    "/vendors~js/pages/administration/features-project~js/pages/profile~js/pages/slider/index~js/pages/users.js": "/vendors~js/pages/administration/features-project~js/pages/profile~js/pages/slider/index~js/pages/users.js",
+    "/js/pages/administration/features-project~js/pages/slider/index~js/pages/users.js": "/js/pages/administration/features-project~js/pages/slider/index~js/pages/users.js",
+    "/vendors~js/pages/administration/features-project~js/pages/administration/status-project~js/pages/log~abf46e44.js": "/vendors~js/pages/administration/features-project~js/pages/administration/status-project~js/pages/log~abf46e44.js",
+    "/vendors~js/pages/slider/index.js": "/vendors~js/pages/slider/index.js"
 }

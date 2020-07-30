@@ -187,6 +187,20 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -234,7 +248,8 @@ __webpack_require__.r(__webpack_exports__);
   data: function data() {
     return {
       entries: 10,
-      offset: 1,
+      //offset: 1,
+      pageActive: 1,
       search: "",
       loading: true
     };
@@ -295,6 +310,11 @@ __webpack_require__.r(__webpack_exports__);
     }
   },
   watch: {
+    elementsPerPage: function elementsPerPage(newValue, oldValue) {
+      if (newValue) {
+        this.entries = newValue;
+      }
+    },
     search: function search(newValue, oldValue) {
       this.$emit("get", 1, this.entries, newValue);
       this.$emit("update:searchProp", String(newValue));
@@ -321,11 +341,12 @@ __webpack_require__.r(__webpack_exports__);
     },
     searchProp: function searchProp(newValue, oldValue) {
       this.search = newValue;
+    },
+    currentPage: function currentPage(newValue, oldValue) {
+      if (newValue) {
+        this.pageActive = newValue;
+      }
     }
-    /*buscar: function (newValue,oldValue) {
-                this.$emit('update:searchProp', String(newValue));
-            },*/
-
   },
   computed: {
     headers: function headers() {
@@ -345,7 +366,7 @@ __webpack_require__.r(__webpack_exports__);
           data[key_object] = [];
 
           for (var key_element in object_2) {
-            if (key_element != "id" && key_element != "accion") {
+            if (key_element != "id" && key_element != "action") {
               data[key_object].push(object_2[key_element]);
             }
           }
@@ -353,9 +374,6 @@ __webpack_require__.r(__webpack_exports__);
 
         return data;
       }
-    },
-    active: function active() {
-      return this.object.current_page;
     },
     to: function to() {
       return this.object.from;
@@ -371,32 +389,6 @@ __webpack_require__.r(__webpack_exports__);
     },
     currentPage: function currentPage() {
       return this.object.current_page;
-    },
-    quantityPages: function quantityPages() {
-      if (!this.object.to) {
-        return [];
-      }
-
-      var to = this.object.current_page - this.offset;
-
-      if (to < 1) {
-        to = 1;
-      }
-
-      var from = to + this.offset * 2;
-
-      if (from >= this.object.last_page) {
-        from = this.object.last_page;
-      }
-
-      var pages = [];
-
-      while (to <= from) {
-        pages.push(to);
-        to++;
-      }
-
-      return pages;
     }
   }
 });
@@ -845,21 +837,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 
 
@@ -907,6 +884,7 @@ __webpack_require__.r(__webpack_exports__);
         status: false,
         available: false
       },
+      elementsPerPage: 10,
       errors: {},
       requestLoading: false,
       requestServer: false,
@@ -915,6 +893,7 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     restoreEl: function restoreEl() {
+      this.showBlock = true;
       this.createBlock = this.editBlock = this.detailBlock = this.requestServer = this.modalDestroy = false;
       this.errors = {}, this.user = {
         rel_role: {},
@@ -924,16 +903,11 @@ __webpack_require__.r(__webpack_exports__);
         name: "",
         email: ""
       };
-      /*this.$refs["modal-eliminar"].hide();
-      this.$refs["modal-disable"].hide();*/
     },
     restorePage: function restorePage() {
       this.showBlock = true;
-      this.getUsers(1, 10);
+      this.getUsers(1, this.elementsPerPage);
       this.createBlock = this.editBlock = this.detailBlock = this.requestServer = this.modalDestroy = false;
-      /* this.$refs["modal-eliminar"].hide();
-      this.$refs["modal-disable"].hide();*/
-
       this.errors = {}, this.user = {
         rel_role: {},
         role_id: "",
@@ -1145,7 +1119,7 @@ __webpack_require__.r(__webpack_exports__);
     }
   },
   created: function created() {
-    this.getUsers(1, 10);
+    this.getUsers(1, this.elementsPerPage);
   }
 });
 
@@ -1349,7 +1323,7 @@ var render = function() {
                               )
                             }),
                             _vm._v(" "),
-                            _vm._t("cabecera_accion"),
+                            _vm._t("header_action"),
                             _vm._v(" "),
                             _c("th", { staticClass: "border-0" }, [
                               _vm._v("Operaciones")
@@ -1378,7 +1352,7 @@ var render = function() {
                                     })
                                   }),
                                   _vm._v(" "),
-                                  _vm._t("td_accion_" + element.id),
+                                  _vm._t("td_action_" + element.id),
                                   _vm._v(" "),
                                   _c("td", { staticClass: "table-actions" }, [
                                     _vm.buttonRead == true
@@ -1548,87 +1522,109 @@ var render = function() {
             ]),
             _vm._v(" "),
             _c("div", { staticClass: "col-6" }, [
-              _c(
-                "ul",
-                { staticClass: "pagination justify-content-end mb-0" },
-                [
-                  _c("li", { staticClass: "page-item" }, [
-                    _vm.currentPage > 1
-                      ? _c(
-                          "a",
-                          {
-                            staticClass: "page-link rounded-circle",
-                            attrs: { href: "#" },
-                            on: {
-                              click: function($event) {
-                                $event.preventDefault()
-                                return _vm.clickPrevPage()
-                              }
+              _c("ul", { staticClass: "pagination justify-content-end mb-0" }, [
+                _c("li", { staticClass: "page-item" }, [
+                  _vm.currentPage > 1
+                    ? _c(
+                        "a",
+                        {
+                          staticClass: "page-link rounded-circle",
+                          attrs: { href: "#" },
+                          on: {
+                            click: function($event) {
+                              $event.preventDefault()
+                              return _vm.clickPrevPage()
                             }
-                          },
-                          [
-                            _c("jam-arrow-left", {
-                              staticClass: "current-color"
-                            })
-                          ],
-                          1
-                        )
-                      : _vm._e()
-                  ]),
-                  _vm._v(" "),
-                  _vm._l(_vm.quantityPages, function(page) {
-                    return _c(
-                      "li",
+                          }
+                        },
+                        [
+                          _c("jam-arrow-left", { staticClass: "current-color" })
+                        ],
+                        1
+                      )
+                    : _vm._e()
+                ]),
+                _vm._v(" "),
+                _c(
+                  "li",
+                  {
+                    staticClass: "page-item mx-2",
+                    class: [
+                      _vm.pageActive == _vm.currentPage ? "active disabled" : ""
+                    ]
+                  },
+                  [
+                    _c(
+                      "select",
                       {
-                        key: page,
-                        staticClass: "page-item",
-                        class: [page == _vm.active ? "active disabled" : ""]
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.pageActive,
+                            expression: "pageActive"
+                          }
+                        ],
+                        staticClass: "form-control bg-white px-2 py-0",
+                        staticStyle: { height: "36px" },
+                        attrs: { id: "" },
+                        on: {
+                          change: [
+                            function($event) {
+                              var $$selectedVal = Array.prototype.filter
+                                .call($event.target.options, function(o) {
+                                  return o.selected
+                                })
+                                .map(function(o) {
+                                  var val = "_value" in o ? o._value : o.value
+                                  return val
+                                })
+                              _vm.pageActive = $event.target.multiple
+                                ? $$selectedVal
+                                : $$selectedVal[0]
+                            },
+                            function($event) {
+                              return _vm.clickPage(_vm.pageActive)
+                            }
+                          ]
+                        }
                       },
-                      [
-                        _c(
-                          "a",
-                          {
-                            staticClass: "page-link rounded-circle",
-                            attrs: { href: "#" },
-                            on: {
-                              click: function($event) {
-                                $event.preventDefault()
-                                return _vm.clickPage(page)
-                              }
-                            }
-                          },
-                          [_vm._v(_vm._s(page))]
+                      _vm._l(_vm.lastPage, function(i) {
+                        return _c(
+                          "option",
+                          { key: i, domProps: { value: i } },
+                          [_vm._v(_vm._s(i++))]
                         )
-                      ]
+                      }),
+                      0
                     )
-                  }),
-                  _vm._v(" "),
-                  _c("li", { staticClass: "page-item" }, [
-                    _vm.currentPage < _vm.lastPage
-                      ? _c(
-                          "a",
-                          {
-                            staticClass: "page-link rounded-circle",
-                            attrs: { href: "#" },
-                            on: {
-                              click: function($event) {
-                                $event.preventDefault()
-                                return _vm.clickNextPage()
-                              }
+                  ]
+                ),
+                _vm._v(" "),
+                _c("li", { staticClass: "page-item" }, [
+                  _vm.currentPage < _vm.lastPage
+                    ? _c(
+                        "a",
+                        {
+                          staticClass: "page-link rounded-circle",
+                          attrs: { href: "#" },
+                          on: {
+                            click: function($event) {
+                              $event.preventDefault()
+                              return _vm.clickNextPage()
                             }
-                          },
-                          [
-                            _c("jam-arrow-right", {
-                              staticClass: "current-color"
-                            })
-                          ],
-                          1
-                        )
-                      : _vm._e()
-                  ])
-                ],
-                2
-              )
+                          }
+                        },
+                        [
+                          _c("jam-arrow-right", {
+                            staticClass: "current-color"
+                          })
+                        ],
+                        1
+                      )
+                    : _vm._e()
+                ])
+              ])
             ])
           ])
         : _vm._e()
@@ -1824,7 +1820,7 @@ var render = function() {
                           on: {
                             click: function($event) {
                               $event.preventDefault()
-                              return _vm.restorePage($event)
+                              return _vm.restoreEl($event)
                             }
                           }
                         },
@@ -1863,13 +1859,20 @@ var render = function() {
               "button-update": true,
               "button-read": true,
               "button-delete": true,
-              "button-disable": false
+              "button-disable": false,
+              "entries-prop": _vm.elementsPerPage
             },
             on: {
               get: _vm.getUsers,
               read: _vm.showUser,
               delete: _vm.deleteUser,
-              update: _vm.editUser
+              update: _vm.editUser,
+              "update:entriesProp": function($event) {
+                _vm.elementsPerPage = $event
+              },
+              "update:entries-prop": function($event) {
+                _vm.elementsPerPage = $event
+              }
             }
           }),
           _vm._v(" "),

@@ -60,67 +60,67 @@
           </table>
         </div>
         <div class="table-responsive">
-          <simplebar data-simplebar-auto-hide="false"  v-if="!loading">
-          <table class="table align-items-center">
-            <thead class="thead-light">
-              <tr>
-                <th class="border-0" width="3%">#</th>
-                <th class="border-0" v-for="(el,index) in headers" :key="index">{{ el }}</th>
-                <slot name="cabecera_accion"></slot>
-                <th class="border-0">Operaciones</th>
-              </tr>
-            </thead>
-            <tbody v-if="object.data && object.data.length > 0">
-              <tr v-for="(element,i) in object.data" :key="element.id">
-                <td>{{ object.from + i }}</td>
-                <td v-for="(el,j) in elements[i]" :key="j" v-html="el"></td>
+          <simplebar data-simplebar-auto-hide="false" v-if="!loading">
+            <table class="table align-items-center">
+              <thead class="thead-light">
+                <tr>
+                  <th class="border-0" width="3%">#</th>
+                  <th class="border-0" v-for="(el,index) in headers" :key="index">{{ el }}</th>
+                  <slot name="header_action"></slot>
+                  <th class="border-0">Operaciones</th>
+                </tr>
+              </thead>
+              <tbody v-if="object.data && object.data.length > 0">
+                <tr v-for="(element,i) in object.data" :key="element.id">
+                  <td>{{ object.from + i }}</td>
+                  <td v-for="(el,j) in elements[i]" :key="j" v-html="el"></td>
 
-                <slot :name="'td_accion_'+element.id"></slot>
+                  <slot :name="'td_action_'+element.id"></slot>
 
-                <td class="table-actions">
-                  <a
-                    v-if="buttonRead == true"
-                    href="#"
-                    @click.prevent="clickRead(element.id)"
-                    class="btn btn-sm btn-icon-only rounded-circle btn-secondary"
-                  >
-                    <jam-eye class="current-color" height="18" width="18" />
-                  </a>
-                  <a
-                    v-if="buttonUpdate == true"
-                    href="#"
-                    @click.prevent="clickUpdate(element.id)"
-                    class="btn btn-sm btn-icon-only rounded-circle btn-secondary"
-                  >
-                    <jam-pencil class="current-color" height="18" width="18" />
-                  </a>
-                  <a
-                    v-if="buttonDisable == true"
-                    href="#"
-                    @click.prevent="clickDisable(element.id)"
-                    class="btn btn-sm btn-icon-only rounded-circle btn-secondary"
-                  >
-                    <jam-stop-sign class="current-color" height="18" width="18" />
-                  </a>
-                  <a
-                    v-if="buttonDelete == true"
-                    href="#"
-                    @click.prevent="clickDelete(element.id)"
-                    class="btn btn-sm btn-icon-only rounded-circle btn-inverse-danger"
-                  >
-                    <jam-trash class="current-color" height="18" width="18" />
-                  </a>
-                </td>
-              </tr>
-            </tbody>
-            <tbody v-else>
-              <tr>
-                <td
-                  :colspan="object.headers && object.headers.length + 1"
-                >No se encontraron resultados.</td>
-              </tr>
-            </tbody>
-          </table>
+                  <td class="table-actions">
+                    <a
+                      v-if="buttonRead == true"
+                      href="#"
+                      @click.prevent="clickRead(element.id)"
+                      class="btn btn-sm btn-icon-only rounded-circle btn-secondary"
+                    >
+                      <jam-eye class="current-color" height="18" width="18" />
+                    </a>
+                    <a
+                      v-if="buttonUpdate == true"
+                      href="#"
+                      @click.prevent="clickUpdate(element.id)"
+                      class="btn btn-sm btn-icon-only rounded-circle btn-secondary"
+                    >
+                      <jam-pencil class="current-color" height="18" width="18" />
+                    </a>
+                    <a
+                      v-if="buttonDisable == true"
+                      href="#"
+                      @click.prevent="clickDisable(element.id)"
+                      class="btn btn-sm btn-icon-only rounded-circle btn-secondary"
+                    >
+                      <jam-stop-sign class="current-color" height="18" width="18" />
+                    </a>
+                    <a
+                      v-if="buttonDelete == true"
+                      href="#"
+                      @click.prevent="clickDelete(element.id)"
+                      class="btn btn-sm btn-icon-only rounded-circle btn-inverse-danger"
+                    >
+                      <jam-trash class="current-color" height="18" width="18" />
+                    </a>
+                  </td>
+                </tr>
+              </tbody>
+              <tbody v-else>
+                <tr>
+                  <td
+                    :colspan="object.headers && object.headers.length + 1"
+                  >No se encontraron resultados.</td>
+                </tr>
+              </tbody>
+            </table>
           </simplebar>
         </div>
       </div>
@@ -143,7 +143,7 @@
                 <jam-arrow-left class="current-color" />
               </a>
             </li>
-            <li
+            <!--<li
               class="page-item"
               v-for="page in quantityPages"
               :key="page"
@@ -154,6 +154,20 @@
                 href="#"
                 @click.prevent="clickPage(page)"
               >{{ page }}</a>
+            </li>-->
+            <li
+              class="page-item mx-2"
+              v-bind:class="[ pageActive == currentPage ? 'active disabled' : '']"
+            >
+              <select
+                id
+                @change="clickPage(pageActive)"
+                class="form-control bg-white px-2 py-0"
+                style="height: 36px"
+                v-model="pageActive"
+              >
+                <option :value="i" v-for="i in lastPage" :key="i">{{ i++ }}</option>
+              </select>
             </li>
             <li class="page-item">
               <a
@@ -174,8 +188,8 @@
 <script>
 import Loader from "./Loader";
 import { Skeleton } from "vue-loading-skeleton";
-import simplebar from 'simplebar-vue';
-import 'simplebar/dist/simplebar.min.css';
+import simplebar from "simplebar-vue";
+import "simplebar/dist/simplebar.min.css";
 export default {
   props: {
     entriesProp: {
@@ -219,7 +233,8 @@ export default {
   data() {
     return {
       entries: 10,
-      offset: 1,
+      //offset: 1,
+      pageActive: 1,
       search: "",
       loading: true,
     };
@@ -227,7 +242,7 @@ export default {
   components: {
     Loader,
     Skeleton,
-    simplebar
+    simplebar,
   },
   methods: {
     clickDisable(id) {
@@ -276,6 +291,11 @@ export default {
     },
   },
   watch: {
+    elementsPerPage: function (newValue, oldValue) {
+      if(newValue){
+        this.entries = newValue;
+      }
+    },
     search: function (newValue, oldValue) {
       this.$emit("get", 1, this.entries, newValue);
       this.$emit("update:searchProp", String(newValue));
@@ -302,9 +322,11 @@ export default {
     searchProp: function (newValue, oldValue) {
       this.search = newValue;
     },
-    /*buscar: function (newValue,oldValue) {
-                this.$emit('update:searchProp', String(newValue));
-            },*/
+    currentPage: function (newValue, oldValue) {
+      if (newValue) {
+        this.pageActive = newValue;
+      }
+    },
   },
   computed: {
     headers: function () {
@@ -320,16 +342,13 @@ export default {
           let object_2 = object[key_object];
           data[key_object] = [];
           for (const key_element in object_2) {
-            if (key_element != "id" && key_element != "accion") {
+            if (key_element != "id" && key_element != "action") {
               data[key_object].push(object_2[key_element]);
             }
           }
         }
         return data;
       }
-    },
-    active: function () {
-      return this.object.current_page;
     },
     to: function () {
       return this.object.from;
@@ -345,25 +364,6 @@ export default {
     },
     currentPage: function () {
       return this.object.current_page;
-    },
-    quantityPages() {
-      if (!this.object.to) {
-        return [];
-      }
-      var to = this.object.current_page - this.offset;
-      if (to < 1) {
-        to = 1;
-      }
-      var from = to + this.offset * 2;
-      if (from >= this.object.last_page) {
-        from = this.object.last_page;
-      }
-      var pages = [];
-      while (to <= from) {
-        pages.push(to);
-        to++;
-      }
-      return pages;
     },
   },
 };

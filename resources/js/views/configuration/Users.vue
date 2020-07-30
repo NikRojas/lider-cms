@@ -37,7 +37,7 @@
               <button
                 type="button"
                 class="btn btn-secondary"
-                @click.prevent="restorePage"
+                @click.prevent="restoreEl"
                 v-if="detailBlock"
               >
                 <jam-arrow-left class="mr-2 current-color" />Regresar
@@ -60,6 +60,7 @@
         @delete="deleteUser"
         @update="editUser"
         v-show="showBlock"
+        :entries-prop.sync="elementsPerPage"
       ></DataTable>
 
       <div class="card" v-if="editBlock && requestLoading || detailBlock && requestLoading">
@@ -353,23 +354,7 @@
       </div>
     </div>
 
-    <!--<b-modal centered ref="modal-eliminar">
-      <template slot="modal-title">
-        <h2 class="mb-0 text-uppercase text-primary">Eliminar Usuario</h2>
-      </template>
-      <p class="mb-0">Esta seguro que desea eliminar el usuario?</p>
-      <template slot="modal-footer" slot-scope="{ ok, cancel }">
-        <Button
-          :classes="['btn-inverse-danger']"
-          :text="'Eliminar'"
-          @click="destroyConfirm"
-          :request-server="requestServer"
-        ></Button>
-        <button type="button" class="btn btn-secondary" @click="restoreEl">Cancelar</button>
-      </template>
-    </b-modal>
-
-    <b-modal centered ref="modal-disable">
+    <!--<b-modal centered ref="modal-disable">
       <template slot="modal-title">
         <h2 class="mb-0 text-uppercase text-primary">Deshabilitar Usuario</h2>
       </template>
@@ -442,6 +427,7 @@ export default {
         status: false,
         available: false,
       },
+      elementsPerPage: 10,
       errors: {},
       requestLoading: false,
       requestServer: false,
@@ -450,6 +436,7 @@ export default {
   },
   methods: {
     restoreEl() {
+      this.showBlock = true;
       this.createBlock = this.editBlock = this.detailBlock = this.requestServer = this.modalDestroy = false;
       (this.errors = {}),
         (this.user = {
@@ -460,15 +447,11 @@ export default {
           name: "",
           email: "",
         });
-      /*this.$refs["modal-eliminar"].hide();
-      this.$refs["modal-disable"].hide();*/
     },
     restorePage() {
       this.showBlock = true;
-      this.getUsers(1, 10);
+      this.getUsers(1, this.elementsPerPage);
       this.createBlock = this.editBlock = this.detailBlock = this.requestServer = this.modalDestroy = false;
-      /* this.$refs["modal-eliminar"].hide();
-      this.$refs["modal-disable"].hide();*/
       (this.errors = {}),
         (this.user = {
           rel_role: {},
@@ -667,7 +650,7 @@ export default {
     },
   },
   created() {
-    this.getUsers(1, 10);
+    this.getUsers(1, this.elementsPerPage);
   },
 };
 </script>

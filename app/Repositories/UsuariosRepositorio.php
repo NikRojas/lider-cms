@@ -35,7 +35,7 @@ class UsuariosRepositorio
     }
 
     public function datatable($id,$pagination){
-        $users = User::where('id','!=',1)->where('id','!=',$id)->orderBy('created_at', 'DESC')
+        $users = User::where('id','!=',1)->where('id','!=',$id)->orderBy('id', 'DESC')
         ->paginate($pagination);
         foreach($users as $user){
             if($user["avatar"]){

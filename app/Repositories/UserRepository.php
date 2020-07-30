@@ -4,7 +4,7 @@ namespace App\Repositories;
 
 use App\User;
 
-class UsuariosRepositorio
+class UserRepository
 {
     public function search($id,$q,$pagination){
         $users = User::where('id','!=',1)->where('id','!=',$id)->where(function($query) use ($q) {
@@ -49,7 +49,6 @@ class UsuariosRepositorio
                 "id" => $user["id"],
                 "name" => $avatarHtml,
                 "user" => $user["email"],
-                //"status" => $user["status_format"],
             );
         }
         $users = $users->toArray();

@@ -833,10 +833,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
 
 
 
@@ -845,10 +841,8 @@ __webpack_require__.r(__webpack_exports__);
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
-    routeSystem: {
-      type: String,
-      required: true
-    }
+    routeGetAll: String,
+    route: String
   },
   components: {
     DataTable: _components_DataTable__WEBPACK_IMPORTED_MODULE_2__["default"],
@@ -921,19 +915,19 @@ __webpack_require__.r(__webpack_exports__);
       var _this = this;
 
       this.requestLoading = true;
-      axios.get("json/usuarios/" + id).then(function (response) {
+      axios.get(this.route + '/json/get/' + id).then(function (response) {
         _this.user = response.data;
         _this.requestLoading = false;
       })["catch"](function (error) {});
     },
-    getUsers: function getUsers(pagina, desde) {
+    getUsers: function getUsers(page, itemsPerPage) {
       var _this2 = this;
 
-      var buscar = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : null;
-      var url = "json/usuarios?page=" + pagina + "&desde=" + desde;
+      var q = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : null;
+      var url = this.routeGetAll + "?page=" + page + "&itemsPerPage=" + itemsPerPage;
 
-      if (buscar) {
-        url = url + "&buscar=" + buscar;
+      if (q) {
+        url = url + "&q=" + q;
       }
 
       axios.get(url).then(function (response) {
@@ -1010,9 +1004,6 @@ __webpack_require__.r(__webpack_exports__);
       fd.append("name", this.user.name);
       fd.append("username", this.user.username);
       fd.append("email", this.user.email);
-      /*if (this.eliminarImagen === true) {
-        fd.append("eliminar", this.eliminarImagen);
-      }*/
 
       if (this.user.password) {
         fd.append("password", this.user.password);
@@ -1022,7 +1013,6 @@ __webpack_require__.r(__webpack_exports__);
         fd.append("available", 1);
       }
 
-      fd.append("role_id", this.user.role_id);
       fd.append("id", this.user.id);
 
       if (this.$refs.ref_image.dropzone.files[0]) {
@@ -1071,8 +1061,7 @@ __webpack_require__.r(__webpack_exports__);
 
       this.requestServer = true;
       var fd = new FormData();
-      fd.append("name", this.user.name); //fd.append("username", this.user.username);
-
+      fd.append("name", this.user.name);
       fd.append("email", this.user.email);
       fd.append("password", this.user.password);
 

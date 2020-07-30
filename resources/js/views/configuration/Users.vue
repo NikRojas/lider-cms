@@ -308,10 +308,6 @@
           <div class="row">
             <div class="col-12">
               <div class="form-group text-center">
-                <!--<img
-                  class="object-fit--cover shadow d-block mx-auto rounded-circle"
-                  :src="routeSystem + '/files/img/users/'+user.avatar" height="180" width="180"
-                />-->
                 <div
                   class="rounded-circle mx-auto d-flex avatar avatar-lg text-center mb-2 bg-default"
                   style="height:120px; width: 120px;"
@@ -388,10 +384,8 @@ import BreadCrumb from "../../components/BreadCrumb";
 import Destroy from "../../components/modals/Destroy";
 export default {
   props: {
-    routeSystem: {
-      type: String,
-      required: true,
-    },
+    routeGetAll: String,
+    route: String,
   },
   components: {
     DataTable,
@@ -465,17 +459,17 @@ export default {
     getUser(id) {
       this.requestLoading = true;
       axios
-        .get("json/usuarios/" + id)
+        .get(this.route + '/json/get/' + id)
         .then((response) => {
           this.user = response.data;
           this.requestLoading = false;
         })
         .catch((error) => {});
     },
-    getUsers(pagina, desde, buscar = null) {
-      let url = "json/usuarios?page=" + pagina + "&desde=" + desde;
-      if (buscar) {
-        url = url + "&buscar=" + buscar;
+    getUsers(page, itemsPerPage, q = null) {
+      let url = this.routeGetAll + "?page=" + page + "&itemsPerPage=" + itemsPerPage;
+      if (q) {
+        url = url + "&q=" + q;
       }
       axios
         .get(url)
@@ -551,9 +545,6 @@ export default {
       fd.append("name", this.user.name);
       fd.append("username", this.user.username);
       fd.append("email", this.user.email);
-      /*if (this.eliminarImagen === true) {
-        fd.append("eliminar", this.eliminarImagen);
-      }*/
       if (this.user.password) {
         fd.append("password", this.user.password);
       }
@@ -561,8 +552,6 @@ export default {
       if (this.user.available) {
         fd.append("available", 1);
       }
-
-      fd.append("role_id", this.user.role_id);
       fd.append("id", this.user.id);
       if (this.$refs.ref_image.dropzone.files[0]) {
         fd.append("avatar", this.$refs.ref_image.dropzone.files[0]);
@@ -607,7 +596,6 @@ export default {
       this.requestServer = true;
       const fd = new FormData();
       fd.append("name", this.user.name);
-      //fd.append("username", this.user.username);
       fd.append("email", this.user.email);
       fd.append("password", this.user.password);
       if (this.$refs.ref_image.dropzone.files[0]) {

@@ -12,7 +12,7 @@ use App\User;
 use Auth;
 
 use App\Http\Requests\Cms\Configuration\UserRequest;
-use App\Repositories\UsuariosRepositorio;
+use App\Repositories\UserRepository;
 
 use App\Http\Traits\CmsTrait;
 
@@ -22,37 +22,24 @@ class UsersController extends Controller
 
     public function index()
     {
-        return view('pages.configuracion.usuarios');
+        return view('pages.configuration.users');
     }
 
-    public function actualizar(UserRequest $request, User $usuario){
-        $request_usuario = request(['email','name']);
+    public function update(UserRequest $request, User $user){
+        $request_user = request(['email','name']);
         if($request->filled('password')){
-            $request_usuario = array_merge($request_usuario,['password' => Hash::make($request->password) ]);
+            $request_user = array_merge($request_user,['password' => Hash::make($request->password) ]);
         }
-        #Si el request tiene logo, guardarlo
         if($request->hasFile('avatar')){
-            $nombre_archivo = $this->setFileName('u-'.time(),$request->file('avatar'));
-            Storage::disk('private')->putFileAs('img/users',$request->file('avatar'),$nombre_archivo);
-            $request_usuario = array_merge($request_usuario,["avatar" => $nombre_archivo]);
+            $fileName = $this->setFileName('u-'.time(),$request->file('avatar'));
+            Storage::disk('private')->putFileAs('img/users',$request->file('avatar'),$fileName);
+            $request_user = array_merge($request_user,["avatar" => $fileName]);
         }
-        #Si el request no tiene imagen y se puso en eliminar imagen
-        /*if(!$request->hasFile('avatar') && $request->eliminar){
-            Storage::disk('private')->delete('img/users/'.$usuario->avatar);
-            $request_usuario = array_merge($request_usuario,["imagen" => NULL]);
-        }*/
-
-        #Si el request tiene logo y tiene logo en la bd
-        if($request->hasFile('avatar') && $usuario->avatar){
-            Storage::disk('private')->delete('img/users/'.$usuario->avatar);
+        if($request->hasFile('avatar') && $user->avatar){
+            Storage::disk('private')->delete('img/users/'.$user->avatar);
         }
-
-        /*if($request->filled('available')){
-            $request_usuario = array_merge($request_usuario,["status" => 1]);
-        }*/
-
         try{
-            $usuario = User::UpdateOrCreate(['id' => $usuario->id], $request_usuario);
+            $user = User::UpdateOrCreate(['id' => $user->id], $request_user);
             return response()->json(['title'=> trans('custom.title.success'), 'message'=> trans('custom.message.update.success', ['name' => trans('custom.attribute.user')])]);
         }
         catch(\Exception $e){
@@ -60,15 +47,15 @@ class UsersController extends Controller
         }
     }
 
-    public function registrar(UserRequest $request){
-        $usuario = request(['name','email']);
+    public function store(UserRequest $request){
+        $user = request(['name','email']);
         if($request->hasFile('avatar')){
-            $nombre_archivo = $this->setFileName('u-'.time(),$request->file('avatar'));
-            Storage::disk('private')->putFileAs('img/users',$request->file('avatar'),$nombre_archivo);
-            $usuario = array_merge($usuario,["avatar" => $nombre_archivo]);
+            $fileName = $this->setFileName('u-'.time(),$request->file('avatar'));
+            Storage::disk('private')->putFileAs('img/users',$request->file('avatar'),$fileName);
+            $user = array_merge($user,["avatar" => $fileName]);
         }
         try{
-            $usuario = User::UpdateOrCreate(array_merge($usuario,["password"=> Hash::make($request->password) ]));
+            $user = User::UpdateOrCreate(array_merge($user,["password"=> Hash::make($request->password) ]));
             return response()->json(['title'=> trans('custom.title.success'), 'message'=> trans('custom.message.create.success', ['name' => trans('custom.attribute.user')])]);
         }
         catch(\Exception $e){
@@ -76,10 +63,9 @@ class UsersController extends Controller
         }
     }
 
-    public function eliminar(User $usuario){
+    public function destroy(User $user){
         try{
-            //$usuario = User::UpdateOrCreate(["id" => $usuario->id],["status" => 0,"updated_at" =>  date("Y-m-d H:i:s")]);
-            $usuario->delete();
+            $user->delete();
             return response()->json(['title'=> trans('custom.title.success'), 'message'=> trans('custom.message.delete.success', ['name' => trans('custom.attribute.user')])]);
         }   
         catch(\Exception $e){
@@ -87,9 +73,9 @@ class UsersController extends Controller
         } 
     }
 
-    public function disable(User $usuario){
+    public function disable(User $user){
         try{
-            $usuario = User::UpdateOrCreate(["id" => $usuario->id],["status" => 0,"updated_at" =>  date("Y-m-d H:i:s")]);
+            $user = User::UpdateOrCreate(["id" => $user->id],["status" => 0,"updated_at" =>  date("Y-m-d H:i:s")]);
             return response()->json(['title'=> trans('custom.title.success'), 'message'=> trans('custom.message.disable.success', ['name' => trans('custom.attribute.user')])]);
         }   
         catch(\Exception $e){
@@ -97,23 +83,20 @@ class UsersController extends Controller
         } 
     }
 
-
-    public function obtenerUsuario(User $usuario){
-        return response()->json($usuario);    
+    public function get(User $user){
+        return response()->json($user);    
     }
 
-    public function obtenerUsuarios(Request $request,UsuariosRepositorio $repo){
-        $buscar = $request->buscar;
+    public function getAll(Request $request,UserRepository $repo){
+        $q = $request->q;
         $headers = ["Id", "Nombre", "Usuario"];
-            if($buscar){
-                $usuarios = $repo->search(Auth::user()->id,$buscar,$request->desde);
-            }
-            else{
-                $usuarios = $repo->datatable(Auth::user()->id,$request->desde);
-            }
-        #Agregar al array las headers
-        $usuarios["headers"] = $headers;
-        return response()->json($usuarios);
+        if($q){
+            $elements = $repo->search(Auth::user()->id,$q,$request->itemsPerPage);
+        }
+        else{
+            $elements = $repo->datatable(Auth::user()->id,$request->itemsPerPage);
+        }
+        $elements["headers"] = $headers;
+        return response()->json($elements);
     }
-    
 }

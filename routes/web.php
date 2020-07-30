@@ -17,13 +17,24 @@ Route::middleware(['auth'])->namespace('Cms')->name('cms.')->group(function() {
     Route::put('change-password', 'ProfileController@updatePassword')->name('profile.update-contrasena');
 
     #Users
-    Route::get('configuracion/usuarios', 'Configuration\UsersController@index')->name('users');
-    Route::post('configuracion/usuarios', 'Configuration\UsersController@registrar')->name('users.registrar');
-    Route::put('configuracion/usuarios/{usuario}', 'Configuration\UsersController@actualizar')->name('users.update');
-    Route::delete('configuracion/usuarios/{usuario}', 'Configuration\UsersController@eliminar')->name('users.delete');
-    Route::put('configuracion/usuarios/deshabilitar/{usuario}', 'Configuration\UsersController@disable')->name('users.update');
-    Route::get('configuracion/json/usuarios', 'Configuration\UsersController@obtenerUsuarios')->name('json.users');
-    Route::get('configuracion/json/usuarios/{usuario}', 'Configuration\UsersController@obtenerUsuario')->name('json.user');
+    Route::namespace('Configuration')->prefix('configuracion')->name('configuration.')->group(function() {
+        /*Route::get('configuracion/usuarios', 'Configuration\UsersController@index')->name('users');
+        Route::post('configuracion/usuarios', 'Configuration\UsersController@registrar')->name('users.registrar');
+        Route::put('configuracion/usuarios/{usuario}', 'Configuration\UsersController@actualizar')->name('users.update');
+        Route::delete('configuracion/usuarios/{usuario}', 'Configuration\UsersController@eliminar')->name('users.delete');
+        Route::put('configuracion/usuarios/deshabilitar/{usuario}', 'Configuration\UsersController@disable')->name('users.update');
+        Route::get('configuracion/json/usuarios', 'Configuration\UsersController@obtenerUsuarios')->name('json.users');
+        Route::get('configuracion/json/usuarios/{usuario}', 'Configuration\UsersController@obtenerUsuario')->name('json.user');*/
+        Route::name('users.')->prefix('usuarios')->group(function() {
+            Route::get('/', 'UsersController@index')->name('index');
+            Route::post('/', 'UsersController@store')->name('store');
+            Route::put('/{user}', 'UsersController@update')->name('update');
+            Route::delete('/{user}', 'UsersController@destroy')->name('destroy');
+            //Route::put('/deshabilitar/{usuario}', 'UsersController@disable')->name('update');
+            Route::get('/json/get-all', 'UsersController@getAll')->name('get-all');
+            Route::get('/json/get/{user}', 'UsersController@get')->name('get');
+        });  
+    });
     #Roles
     /*Route::get('configuracion/roles', 'Configuration\RolesController@index')->name('roles');
     Route::post('configuracion/roles', 'Configuration\RolesController@registrar')->name('roles.registrar');

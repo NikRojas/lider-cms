@@ -46,8 +46,13 @@ Route::middleware(['auth'])->namespace('Cms')->name('cms.')->group(function() {
 
     #Administration
     Route::namespace('Administration')->prefix('administracion')->name('administration.')->group(function() {
-        Route::name('status-project.')->group(function() {
-            Route::get('/', 'StatusProyectController@index')->name('index');
+        Route::name('statuses-project.')->prefix('estados-proyecto')->group(function() {
+            Route::get('/', 'StatusesProyectController@index')->name('index');
+            Route::post('/', 'StatusesProyectController@store')->name('store');
+            Route::put('/{element}', 'StatusesProyectController@update')->name('update');
+            Route::delete('/{element}', 'StatusesProyectController@destroy')->name('destroy');
+            Route::get('/json/get-all', 'StatusesProyectController@getAll')->name('get-all');
+            Route::get('/json/get/{element}', 'StatusesProyectController@get')->name('get');
         });
         Route::name('financial-entities.')->prefix('entidades-financieras')->group(function() {
             Route::get('/', 'FinancialEntitiesController@index')->name('index');

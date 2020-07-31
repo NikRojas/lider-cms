@@ -16,7 +16,7 @@ import VueFlags from "@growthbunker/vueflags";
 Vue.use(VueFlags, {
     // Specify the path of the folder where the flags are stored.
     iconPath: '/files/img/flags/',
-  });
+});
 
 const app = new Vue({
     el: '#app',

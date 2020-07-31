@@ -7,26 +7,23 @@ return [
         'password' => 'La contraseña',
         'information' => 'La información',
         'network' => 'La red social',
-        'player' => 'El player',
         'seo' => 'El seo',
         'element' => 'El elemento',
         'category' => 'La categoría',
         'post' => 'El post',
-        'department' => 'La especialidad',
         'profile' => 'El perfil',
         'customer' => 'El cliente',
         'emails' => 'Los correos',
         'applicant' => 'El postulante',
-        'story' => 'El caso de éxito',
         'section' => 'La sección',
         'testimonial' => 'El testimonio',
-        'partner' => 'El socio',
-        'award' => 'El premio',
+        'member' => 'El miembro',
         'lead' => 'El lead',
         'features' => 'La característica',
         'bank' => 'La entidad financiera',
         'slide' => 'El slide',
-        'advisor' => 'El asesor'
+        'advisor' => 'El asesor',
+        'status' => 'El estado'
     ],
     'title' => [
         'error' => 'Error',
@@ -58,6 +55,7 @@ return [
             'success' => ':name se ha eliminado.',
             'error' => "Lo sentimos, :name no se pudo eliminar debido a un error.",
         ],
-        'order'  => 'Arrastre los elementos en el orden que desee mostrarlos'
+        'order'  => 'Arrastre los elementos en el orden que desee mostrarlos',
+        'cant_delete'  => 'No se puede eliminar debido a que está anidado en al menos un proyecto'
     ]
 ];

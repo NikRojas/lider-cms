@@ -58,7 +58,7 @@
                     v-else
                     class="btn btn-sm btn-secondary"
                     v-b-tooltip.hover
-                    title="No se puede eliminar debido a que existe anidado en al menos un proyecto"
+                    :title="messageCantDelete"
                   >Eliminar</button>
                 </div>
               </div>
@@ -199,6 +199,7 @@ import SkeletonForm from "../../components/skeleton/form";
 export default {
   components: {
     BreadCrumb,
+    messageCantDelete: String,
     Destroy,
     Button,
     Input,
@@ -210,6 +211,7 @@ export default {
     route: String,
     routeGetAll: String,
     imagesUrl: String,
+    messageCantDelete: String
   },
   data() {
     return {

@@ -82,7 +82,7 @@
                       v-if="buttonRead == true"
                       href="#"
                       @click.prevent="clickRead(element.id)"
-                      class="btn btn-sm btn-icon-only rounded-circle btn-secondary"
+                      class="btn btn-sm btn-icon-only rounded-circle btn-inverse-info"
                     >
                       <jam-eye class="current-color" height="18" width="18" />
                     </a>
@@ -90,7 +90,7 @@
                       v-if="buttonUpdate == true"
                       href="#"
                       @click.prevent="clickUpdate(element.id)"
-                      class="btn btn-sm btn-icon-only rounded-circle btn-secondary"
+                      class="btn btn-sm btn-icon-only rounded-circle btn-inverse-info"
                     >
                       <jam-pencil class="current-color" height="18" width="18" />
                     </a>
@@ -98,18 +98,55 @@
                       v-if="buttonDisable == true"
                       href="#"
                       @click.prevent="clickDisable(element.id)"
-                      class="btn btn-sm btn-icon-only rounded-circle btn-secondary"
+                      class="btn btn-sm btn-icon-only rounded-circle btn-inverse-info"
                     >
                       <jam-stop-sign class="current-color" height="18" width="18" />
                     </a>
-                    <a
-                      v-if="buttonDelete == true"
-                      href="#"
-                      @click.prevent="clickDelete(element.id)"
-                      class="btn btn-sm btn-icon-only rounded-circle btn-inverse-danger"
-                    >
-                      <jam-trash class="current-color" height="18" width="18" />
-                    </a>
+                    <template v-if="buttonDelete == true">
+                      <template v-if="typeof element.can_delete !== 'undefined'">
+                        <a
+                          href="#"
+                          v-if="element.can_delete"
+                          @click.prevent="clickDelete(element.id)"
+                          class="btn btn-sm btn-icon-only rounded-circle btn-inverse-danger"
+                        >
+                          <jam-trash class="current-color" height="18" width="18" />
+                        </a>
+                        <button
+                          v-else
+                          class="btn btn-sm btn-icon-only rounded-circle btn-secondary"
+                          v-b-tooltip.hover
+                          :title="messageCantDelete"
+                        >
+                          <jam-info class="current-color" height="18" width="18" />
+                        </button>
+                      </template>
+                      <template v-else>
+                        <a
+                          href="#"
+                          @click.prevent="clickDelete(element.id)"
+                          class="btn btn-sm btn-icon-only rounded-circle btn-inverse-danger"
+                        >
+                          <jam-trash class="current-color" height="18" width="18" />
+                        </a>
+                      </template>
+                      <!--<a
+                        v-else
+                        href="#"
+                        class="btn btn-sm btn-icon-only rounded-circle btn-secondary"
+                      >
+                        <jam-info class="current-color" height="18" width="18" />
+                      </a>-->
+                    </template>
+                    <template v-else>
+                      <a
+                        href="#"
+                        @click.prevent="clickDelete(element.id)"
+                        class="btn btn-sm btn-icon-only rounded-circle btn-inverse-danger"
+                      >
+                        <jam-trash class="current-color" height="18" width="18" />
+                      </a>
+                    </template>
                   </td>
                 </tr>
               </tbody>
@@ -143,18 +180,6 @@
                 <jam-arrow-left class="current-color" />
               </a>
             </li>
-            <!--<li
-              class="page-item"
-              v-for="page in quantityPages"
-              :key="page"
-              v-bind:class="[ page == active ? 'active disabled' : '']"
-            >
-              <a
-                class="page-link rounded-circle"
-                href="#"
-                @click.prevent="clickPage(page)"
-              >{{ page }}</a>
-            </li>-->
             <li
               class="page-item mx-2"
               v-if="elements && elements.length"
@@ -230,6 +255,7 @@ export default {
       type: Boolean,
       required: true,
     },
+    messageCantDelete: String,
   },
   data() {
     return {
@@ -293,7 +319,7 @@ export default {
   },
   watch: {
     elementsPerPage: function (newValue, oldValue) {
-      if(newValue){
+      if (newValue) {
         this.entries = newValue;
       }
     },
@@ -332,7 +358,7 @@ export default {
   computed: {
     headers: function () {
       if (this.object.headers) {
-        return this.object.headers.filter((valor, i) => i > 0);
+        return this.object.headers.filter((value, i) => i > 0);
       }
     },
     elements: function () {
@@ -343,7 +369,11 @@ export default {
           let object_2 = object[key_object];
           data[key_object] = [];
           for (const key_element in object_2) {
-            if (key_element != "id" && key_element != "action") {
+            if (
+              key_element != "id" &&
+              key_element != "action" &&
+              key_element != "can_delete"
+            ) {
               data[key_object].push(object_2[key_element]);
             }
           }

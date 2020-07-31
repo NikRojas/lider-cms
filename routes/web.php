@@ -78,6 +78,14 @@ Route::middleware(['auth'])->namespace('Cms')->name('cms.')->group(function() {
             Route::get('/json/get-all', 'AdvisorsController@getAll')->name('get-all');
             Route::get('/json/get/{element}', 'AdvisorsController@get')->name('get');
         });
+
+        Route::name('exchange.')->prefix('tipo-cambio')->group(function() {
+            Route::get('/', 'ExchangeController@index')->name('index');
+            Route::post('/', 'ExchangeController@store')->name('store');
+            Route::put('/{element}', 'ExchangeController@update')->name('update');
+            Route::get('/json/get-all', 'ExchangeController@getAll')->name('get-all');
+            //Route::get('/json/get/{element}', 'AdvisorsController@get')->name('get');
+        });
     });
 
     #Administration

@@ -50,6 +50,7 @@ const app = new Vue({
         'slider-edit': () => import('./views/slider/Edit.vue' /* webpackChunkName: "js/pages/slider/edit" */),
         'administration-financial-entities': () => import('./views/administration/FinancialEntities.vue' /* webpackChunkName: "js/pages/administration/financial-entities" */),
         'administration-advisors': () => import('./views/administration/Advisors.vue' /* webpackChunkName: "js/pages/administration/advisors" */),
+        'administration-exchange': () => import('./views/administration/Exchange.vue' /* webpackChunkName: "js/pages/administration/exchange" */),
     }
 });
 import Validation from './functions/validation.js'

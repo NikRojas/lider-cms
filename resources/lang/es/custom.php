@@ -23,7 +23,8 @@ return [
         'bank' => 'La entidad financiera',
         'slide' => 'El slide',
         'advisor' => 'El asesor',
-        'status' => 'El estado'
+        'status' => 'El estado',
+        'currency' => 'El tipo de moneda'
     ],
     'title' => [
         'error' => 'Error',

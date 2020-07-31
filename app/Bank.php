@@ -9,14 +9,14 @@ class Bank extends Model
     protected $guarded = [];
     protected $appends = ['can_delete'];
 
-    public function banksRel()
+    public function projectsRel()
     {
-        return $this->belongsToMany('App\Project','projects_bank', 'bank_id', 'project_id');
+        return $this->belongsToMany('App\Project','projects_banks', 'bank_id', 'project_id');
     }
 
     public function getCanDeleteAttribute(){
         $value = true;
-        if(count($this->banksRel) > 0){
+        if(count($this->projectsRel) > 0){
             $value = false;
         }
         return $value;

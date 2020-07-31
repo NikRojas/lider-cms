@@ -34,32 +34,32 @@
           <div class="col-12 col-md-6 col-lg-3 mb-4" v-for="(el,i) in elements" :key="el.id">
             <div class="card">
               <div class="card-body">
-                <div class="text-center mb-3">
-                  <img :src="imagesUrl+'/features/'+el.image" height="75" :alt="el.name_es" />
+                <div class="mb-3">
+                  <img :src="imagesUrl+'/banks/'+el.logo" height="75" :alt="el.name" />
                 </div>
-                <h3 class="mb-1">
-                  <span class="font-weight-normal">Nombre ES:</span>
-                  {{ el.name_es }}
+                <h3 class="mb-1 font-weight-normal">
+                  {{ el.name }}
                 </h3>
-                <span></span>
-                <h3 class>
-                  <span class="font-weight-normal">Nombre EN:</span>
-                  {{ el.name_en }}
-                </h3>
-                <span></span>
-                <div class="mt-4 text-center">
+                <div class="mt-4 text-right">
                   <button @click="editEl(el.id)" class="btn btn-inverse-info btn-sm">Editar</button>
-                  <button @click="deleteEl(el.id)" class="btn btn-inverse-danger btn-sm" v-if="el.can_delete">Eliminar</button>
-                  <button v-else class="btn btn-sm btn-secondary" v-b-tooltip.hover title="No se puede eliminar debido a que existe anidado en al menos un proyecto">Eliminar</button>
+                  <button
+                    @click="deleteEl(el.id)"
+                    class="btn btn-inverse-danger btn-sm"
+                    v-if="el.can_delete"
+                  >Eliminar</button>
+                  <button
+                    v-else
+                    class="btn btn-sm btn-secondary"
+                    v-b-tooltip.hover
+                    title="No se puede eliminar debido a que existe anidado en al menos un proyecto"
+                  >Eliminar</button>
                 </div>
               </div>
             </div>
           </div>
         </div>
         <div v-else class="row">
-          <div class="col-12">
-            No data
-          </div>
+          <div class="col-12">No data</div>
         </div>
       </div>
     </div>
@@ -93,7 +93,11 @@
                 <div class="row">
                   <div class="col-1"></div>
                   <div class="col text-center" v-if="element.image">
-                    <img :src="imagesUrl+'/features/'+element.image" height="75" :alt="element.name_es" />
+                    <img
+                      :src="imagesUrl+'/features/'+element.image"
+                      height="75"
+                      :alt="element.name_es"
+                    />
                   </div>
                   <div class="col">
                     <vue-dropzone
@@ -113,24 +117,29 @@
                   </div>
                   <div class="col-1"></div>
                 </div>
-                
+
                 <label
-                  v-if="errors && errors.image"
+                  v-if="errors && errors.logo"
                   class="text-danger text-sm d-block mt-2"
                   for="image"
-                >{{ errors.image[0] }}</label>
+                >{{ errors.logo[0] }}</label>
               </div>
             </div>
             <div class="col-12">
-              <Input
-                label="Nombre"
-                variable="name"
-                :errors="errors"
-                :valueEn.sync="element.name_en"
-                :valueEs.sync="element.name_es"
-                :valueEnParent="element.name_en"
-                :valueEsParent="element.name_es"
-              />
+              <div class="form-group">
+                <label class="font-weight-bold" for="name">Nombre</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  v-model="element.name"
+                  id="name"
+                />
+                <label
+                  v-if="errors && errors.name"
+                  class="mt-2 text-danger text-sm"
+                  for="name"
+                >{{ errors.name[0] }}</label>
+              </div>
             </div>
           </div>
         </form>
@@ -208,7 +217,7 @@ export default {
     destroyConfirm() {
       this.requestSubmit = true;
       axios
-        .delete(this.route + '/' + this.element.id)
+        .delete(this.route + "/" + this.element.id)
         .then((response) => {
           this.requestSubmit = false;
           this.restore();
@@ -257,16 +266,13 @@ export default {
       } else {
         url = this.route + "/" + this.element.id;
         method = "post";
-        fd.append('_method','put');
+        fd.append("_method", "put");
       }
-      if (this.element.name_es) {
-        fd.append("name_es", this.element.name_es);
-      }
-      if (this.element.name_en) {
-        fd.append("name_en", this.element.name_en);
+      if (this.element.name) {
+        fd.append("name", this.element.name);
       }
       if (this.$refs.ref_image.dropzone.files[0]) {
-        fd.append("image", this.$refs.ref_image.dropzone.files[0]);
+        fd.append("logo", this.$refs.ref_image.dropzone.files[0]);
       }
       axios({
         method: method,
@@ -310,11 +316,11 @@ export default {
       (this.element = {
         image: "",
       }),
-        (this.modalCreateUpdate = this.modalDestroy = false );
+        (this.modalCreateUpdate = this.modalDestroy = false);
       this.getEls();
       this.errors = {};
     },
-    deleteEl(id){
+    deleteEl(id) {
       this.modalDestroy = true;
       this.getEl(id);
     },
@@ -323,7 +329,7 @@ export default {
         image: "",
       }),
         (this.modalCreateUpdate = this.modalDestroy = false);
-        this.errors = {};
+      this.errors = {};
     },
     getEls() {
       this.loadingEls = true;
@@ -335,16 +341,16 @@ export default {
         })
         .catch((error) => {});
     },
-    getEl(id){
+    getEl(id) {
       this.loadingGet = true;
       axios
-        .get(this.route + '/json/get/' + id)
+        .get(this.route + "/json/get/" + id)
         .then((response) => {
           this.element = response.data;
           this.loadingGet = false;
         })
         .catch((error) => {});
-    }
+    },
   },
   created() {
     this.getEls();

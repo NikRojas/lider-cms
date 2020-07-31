@@ -20,12 +20,12 @@ class FinancialEntitiesController extends Controller
 
     public function store(BankRequest $request){
         $element = request(["name"]);
-        $imageName = $this->setFileName('b-',$request->file('image'));
-        $storeImage = Storage::disk('public')->putFileAs('img/banks/',$request->file('image'),$imageName);
+        $imageName = $this->setFileName('b-',$request->file('logo'));
+        $storeImage = Storage::disk('public')->putFileAs('img/banks/',$request->file('logo'),$imageName);
         if(!$storeImage){
             return response()->json(['title'=> trans('custom.title.error'), 'message'=> trans('custom.errors.image') ],500);    
         }
-        $element = array_merge($element,["image"=>$imageName]);
+        $element = array_merge($element,["logo"=>$imageName]);
         try{
             $element = Bank::UpdateOrCreate($element); 
             return response()->json(['title'=> trans('custom.title.success'), 'message'=> trans('custom.message.create.success', ['name' => trans('custom.attribute.bank')]) ],200);
@@ -46,12 +46,12 @@ class FinancialEntitiesController extends Controller
 
     public function update(Bank $element,BankRequest $request){
         $request_element = request(["name_en","name_es"]);;
-        if($request->hasFile('image')){
-            $fileName = $this->setFileName('u-'.time(),$request->file('image'));
-            Storage::disk('public')->putFileAs('img/bank',$request->file('image'),$fileName);
-            $request_element = array_merge($request_element,["image" => $fileName]);
+        if($request->hasFile('logo')){
+            $fileName = $this->setFileName('u-'.time(),$request->file('logo'));
+            Storage::disk('public')->putFileAs('img/banks',$request->file('logo'),$fileName);
+            $request_element = array_merge($request_element,["logo" => $fileName]);
         }
-        if($request->hasFile('image') && $element->image){
+        if($request->hasFile('logo') && $element->image){
             Storage::disk('public')->delete('img/banks/'.$element->image);
         }
         try{

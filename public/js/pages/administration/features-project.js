@@ -711,6 +711,15 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -764,7 +773,7 @@ __webpack_require__.r(__webpack_exports__);
       var _this = this;
 
       this.requestSubmit = true;
-      axios["delete"](this.route + '/' + this.element.id).then(function (response) {
+      axios["delete"](this.route + "/" + this.element.id).then(function (response) {
         _this.requestSubmit = false;
 
         _this.restore();
@@ -817,19 +826,15 @@ __webpack_require__.r(__webpack_exports__);
       } else {
         url = this.route + "/" + this.element.id;
         method = "post";
-        fd.append('_method', 'put');
+        fd.append("_method", "put");
       }
 
-      if (this.element.name_es) {
-        fd.append("name_es", this.element.name_es);
-      }
-
-      if (this.element.name_en) {
-        fd.append("name_en", this.element.name_en);
+      if (this.element.name) {
+        fd.append("name", this.element.name);
       }
 
       if (this.$refs.ref_image.dropzone.files[0]) {
-        fd.append("image", this.$refs.ref_image.dropzone.files[0]);
+        fd.append("logo", this.$refs.ref_image.dropzone.files[0]);
       }
 
       axios({
@@ -902,7 +907,7 @@ __webpack_require__.r(__webpack_exports__);
       var _this4 = this;
 
       this.loadingGet = true;
-      axios.get(this.route + '/json/get/' + id).then(function (response) {
+      axios.get(this.route + "/json/get/" + id).then(function (response) {
         _this4.element = response.data;
         _this4.loadingGet = false;
       })["catch"](function (error) {});
@@ -1647,48 +1652,29 @@ var render = function() {
                         [
                           _c("div", { staticClass: "card" }, [
                             _c("div", { staticClass: "card-body" }, [
-                              _c("div", { staticClass: "text-center mb-3" }, [
+                              _c("div", { staticClass: "mb-3" }, [
                                 _c("img", {
                                   attrs: {
-                                    src:
-                                      _vm.imagesUrl + "/features/" + el.image,
+                                    src: _vm.imagesUrl + "/banks/" + el.logo,
                                     height: "75",
-                                    alt: el.name_es
+                                    alt: el.name
                                   }
                                 })
                               ]),
                               _vm._v(" "),
-                              _c("h3", { staticClass: "mb-1" }, [
-                                _c(
-                                  "span",
-                                  { staticClass: "font-weight-normal" },
-                                  [_vm._v("Nombre ES:")]
-                                ),
-                                _vm._v(
-                                  "\n                " +
-                                    _vm._s(el.name_es) +
-                                    "\n              "
-                                )
-                              ]),
+                              _c(
+                                "h3",
+                                { staticClass: "mb-1 font-weight-normal" },
+                                [
+                                  _vm._v(
+                                    "\n                " +
+                                      _vm._s(el.name) +
+                                      "\n              "
+                                  )
+                                ]
+                              ),
                               _vm._v(" "),
-                              _c("span"),
-                              _vm._v(" "),
-                              _c("h3", {}, [
-                                _c(
-                                  "span",
-                                  { staticClass: "font-weight-normal" },
-                                  [_vm._v("Nombre EN:")]
-                                ),
-                                _vm._v(
-                                  "\n                " +
-                                    _vm._s(el.name_en) +
-                                    "\n              "
-                                )
-                              ]),
-                              _vm._v(" "),
-                              _c("span"),
-                              _vm._v(" "),
-                              _c("div", { staticClass: "mt-4 text-center" }, [
+                              _c("div", { staticClass: "mt-4 text-right" }, [
                                 _c(
                                   "button",
                                   {
@@ -1743,9 +1729,7 @@ var render = function() {
                     0
                   )
                 : _c("div", { staticClass: "row" }, [
-                    _c("div", { staticClass: "col-12" }, [
-                      _vm._v("\n          No data\n        ")
-                    ])
+                    _c("div", { staticClass: "col-12" }, [_vm._v("No data")])
                   ])
             ])
       ]),
@@ -1917,7 +1901,7 @@ var render = function() {
                             _c("div", { staticClass: "col-1" })
                           ]),
                           _vm._v(" "),
-                          _vm.errors && _vm.errors.image
+                          _vm.errors && _vm.errors.logo
                             ? _c(
                                 "label",
                                 {
@@ -1925,44 +1909,61 @@ var render = function() {
                                     "text-danger text-sm d-block mt-2",
                                   attrs: { for: "image" }
                                 },
-                                [_vm._v(_vm._s(_vm.errors.image[0]))]
+                                [_vm._v(_vm._s(_vm.errors.logo[0]))]
                               )
                             : _vm._e()
                         ])
                       ]),
                       _vm._v(" "),
-                      _c(
-                        "div",
-                        { staticClass: "col-12" },
-                        [
-                          _c("Input", {
-                            attrs: {
-                              label: "Nombre",
-                              variable: "name",
-                              errors: _vm.errors,
-                              valueEn: _vm.element.name_en,
-                              valueEs: _vm.element.name_es,
-                              valueEnParent: _vm.element.name_en,
-                              valueEsParent: _vm.element.name_es
+                      _c("div", { staticClass: "col-12" }, [
+                        _c("div", { staticClass: "form-group" }, [
+                          _c(
+                            "label",
+                            {
+                              staticClass: "font-weight-bold",
+                              attrs: { for: "name" }
                             },
+                            [_vm._v("Nombre")]
+                          ),
+                          _vm._v(" "),
+                          _c("input", {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.element.name,
+                                expression: "element.name"
+                              }
+                            ],
+                            staticClass: "form-control",
+                            attrs: { type: "text", id: "name" },
+                            domProps: { value: _vm.element.name },
                             on: {
-                              "update:valueEn": function($event) {
-                                return _vm.$set(_vm.element, "name_en", $event)
-                              },
-                              "update:value-en": function($event) {
-                                return _vm.$set(_vm.element, "name_en", $event)
-                              },
-                              "update:valueEs": function($event) {
-                                return _vm.$set(_vm.element, "name_es", $event)
-                              },
-                              "update:value-es": function($event) {
-                                return _vm.$set(_vm.element, "name_es", $event)
+                              input: function($event) {
+                                if ($event.target.composing) {
+                                  return
+                                }
+                                _vm.$set(
+                                  _vm.element,
+                                  "name",
+                                  $event.target.value
+                                )
                               }
                             }
-                          })
-                        ],
-                        1
-                      )
+                          }),
+                          _vm._v(" "),
+                          _vm.errors && _vm.errors.name
+                            ? _c(
+                                "label",
+                                {
+                                  staticClass: "mt-2 text-danger text-sm",
+                                  attrs: { for: "name" }
+                                },
+                                [_vm._v(_vm._s(_vm.errors.name[0]))]
+                              )
+                            : _vm._e()
+                        ])
+                      ])
                     ])
                   ]
                 )

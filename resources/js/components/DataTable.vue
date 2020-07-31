@@ -1,7 +1,7 @@
 <template>
   <div class="row">
     <div class="col-12 mb-4">
-      <slot name="filtros"></slot>
+      <slot name="filters"></slot>
       <div class="row d-flex align-items-center" v-if="elements && elements.length">
         <div class="col-12 col-md-6 mb-3 mb-md-0">
           <label for="show" class="mb-0">
@@ -59,15 +59,15 @@
             </tbody>
           </table>
         </div>
-        <div class="table-responsive">
-          <simplebar data-simplebar-auto-hide="false" v-if="!loading">
+        <div class="table-responsive" v-if="!loading">
+          <simplebar data-simplebar-auto-hide="false">
             <table class="table align-items-center">
               <thead class="thead-light">
                 <tr>
                   <th class="border-0" width="3%">#</th>
                   <th class="border-0" v-for="(el,index) in headers" :key="index">{{ el }}</th>
                   <slot name="header_action"></slot>
-                  <th class="border-0">Operaciones</th>
+                  <th class="border-0">Acciones</th>
                 </tr>
               </thead>
               <tbody v-if="object.data && object.data.length > 0">

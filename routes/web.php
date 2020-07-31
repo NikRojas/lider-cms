@@ -88,7 +88,7 @@ Route::middleware(['auth'])->namespace('Cms')->name('cms.')->group(function() {
         });
     });
 
-    #Administration
+    #Slider
     Route::prefix('slider')->name('slider.')->group(function() {
         Route::get('/', 'SliderController@index')->name('index');
         Route::get('/nuevo', 'SliderController@create')->name('create');
@@ -99,6 +99,19 @@ Route::middleware(['auth'])->namespace('Cms')->name('cms.')->group(function() {
         Route::delete('/{element}', 'SliderController@destroy')->name('destroy');
         Route::get('/json/get-all', 'SliderController@getAll')->name('get-all');
         Route::get('/json/get/{element}', 'SliderController@get')->name('get');
+    });
+
+    Route::namespace('Content')->prefix('contenido')->name('content.')->group(function() {
+        #Social Networks
+        Route::name('social-networks.')->prefix('redes-sociales')->group(function() {
+            Route::get('/', 'SocialController@index')->name('index');
+            Route::post('/', 'SocialController@store')->name('store');
+            Route::put('/order', 'SocialController@order')->name('order');
+            Route::delete('/{element}', 'SocialController@destroy')->name('destroy');
+            Route::put('/{element}', 'SocialController@update')->name('update');
+            Route::get('/json/get-all', 'SocialController@getAll')->name('get-all');
+            Route::get('/json/get/{element}', 'SocialController@get')->name('get');
+        });
     });
 
     #Information
@@ -128,15 +141,6 @@ Route::middleware(['auth'])->namespace('Cms')->name('cms.')->group(function() {
     Route::post('informacion/pages', 'Information\PagesController@updateSection')->name('pages.update-section');
     Route::post('informacion/pages/image', 'Information\PagesController@storeImage')->name('pages.store-image');*/
     
-    #Social Networks
-    Route::get('informacion/redes-sociales', 'Information\SocialController@index')->name('information.social');
-    Route::get('informacion/json/social', 'Information\SocialController@getNetworks')->name('information.social.json.get-networks');
-    Route::post('informacion/social', 'Information\SocialController@create')->name('information.social.create');
-    Route::put('informacion/social/order', 'Information\SocialController@order')->name('information.social.order');
-    Route::get('informacion/json/social/{social}', 'Information\SocialController@getNetwork')->name('information.social.json.get-social');
-    Route::delete('informacion/social/{social}', 'Information\SocialController@delete')->name('information.social.delete');
-    Route::put('informacion/social/{social}', 'Information\SocialController@update')->name('information.social.update');
-
     #Blog
     #Category
     Route::get('blog/categorias', 'Blog\CategoriesController@index')->name('blog.categories');

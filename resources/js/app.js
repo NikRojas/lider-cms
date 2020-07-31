@@ -29,7 +29,7 @@ const app = new Vue({
         'users': () => import('./views/configuration/Users.vue' /* webpackChunkName: "js/pages/users" */),
 
         //'general': () => import('./views/info/General.vue' /* webpackChunkName: "js/general" */),
-        //'social': () => import('./views/info/Social.vue' /* webpackChunkName: "js/social" */),
+        'social-networks': () => import('./views/content/SocialNetworks.vue' /* webpackChunkName: "js/pages/content/social-networks" */),
         //'seo': () => import('./views/info/Seo.vue' /* webpackChunkName: "js/seo" */),
 
         //'category': () => import('./views/blog/Category.vue' /* webpackChunkName: "js/category" */),

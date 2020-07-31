@@ -2,7 +2,7 @@
   <div class="row">
     <div class="col-12 mb-4">
       <slot name="filtros"></slot>
-      <div class="row d-flex align-items-center">
+      <div class="row d-flex align-items-center" v-if="elements && elements.length">
         <div class="col-12 col-md-6 mb-3 mb-md-0">
           <label for="show" class="mb-0">
             <small>Mostrar</small>
@@ -157,6 +157,7 @@
             </li>-->
             <li
               class="page-item mx-2"
+              v-if="elements && elements.length"
               v-bind:class="[ pageActive == currentPage ? 'active disabled' : '']"
             >
               <select

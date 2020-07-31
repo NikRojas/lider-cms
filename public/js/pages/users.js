@@ -201,6 +201,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 
 
@@ -1136,109 +1137,111 @@ var render = function() {
       [
         _vm._t("filtros"),
         _vm._v(" "),
-        _c("div", { staticClass: "row d-flex align-items-center" }, [
-          _c("div", { staticClass: "col-12 col-md-6 mb-3 mb-md-0" }, [
-            _c("label", { staticClass: "mb-0", attrs: { for: "show" } }, [
-              _c("small", [_vm._v("Mostrar")]),
-              _vm._v(" "),
-              _c(
-                "select",
-                {
-                  directives: [
+        _vm.elements && _vm.elements.length
+          ? _c("div", { staticClass: "row d-flex align-items-center" }, [
+              _c("div", { staticClass: "col-12 col-md-6 mb-3 mb-md-0" }, [
+                _c("label", { staticClass: "mb-0", attrs: { for: "show" } }, [
+                  _c("small", [_vm._v("Mostrar")]),
+                  _vm._v(" "),
+                  _c(
+                    "select",
                     {
-                      name: "model",
-                      rawName: "v-model",
-                      value: _vm.entries,
-                      expression: "entries"
-                    }
-                  ],
-                  staticClass:
-                    "mx-2 form-control bg-white form-control-sm w-auto d-inline-block",
-                  attrs: { id: "show" },
-                  on: {
-                    change: [
-                      function($event) {
-                        var $$selectedVal = Array.prototype.filter
-                          .call($event.target.options, function(o) {
-                            return o.selected
-                          })
-                          .map(function(o) {
-                            var val = "_value" in o ? o._value : o.value
-                            return val
-                          })
-                        _vm.entries = $event.target.multiple
-                          ? $$selectedVal
-                          : $$selectedVal[0]
-                      },
-                      function($event) {
-                        return _vm.changePagination()
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.entries,
+                          expression: "entries"
+                        }
+                      ],
+                      staticClass:
+                        "mx-2 form-control bg-white form-control-sm w-auto d-inline-block",
+                      attrs: { id: "show" },
+                      on: {
+                        change: [
+                          function($event) {
+                            var $$selectedVal = Array.prototype.filter
+                              .call($event.target.options, function(o) {
+                                return o.selected
+                              })
+                              .map(function(o) {
+                                var val = "_value" in o ? o._value : o.value
+                                return val
+                              })
+                            _vm.entries = $event.target.multiple
+                              ? $$selectedVal
+                              : $$selectedVal[0]
+                          },
+                          function($event) {
+                            return _vm.changePagination()
+                          }
+                        ]
                       }
+                    },
+                    [
+                      _c("option", { attrs: { value: "10" } }, [_vm._v("10")]),
+                      _vm._v(" "),
+                      _c("option", { attrs: { value: "20" } }, [_vm._v("20")]),
+                      _vm._v(" "),
+                      _c("option", { attrs: { value: "50" } }, [_vm._v("50")]),
+                      _vm._v(" "),
+                      _c("option", { attrs: { value: "100" } }, [_vm._v("100")])
                     ]
-                  }
-                },
-                [
-                  _c("option", { attrs: { value: "10" } }, [_vm._v("10")]),
+                  ),
                   _vm._v(" "),
-                  _c("option", { attrs: { value: "20" } }, [_vm._v("20")]),
-                  _vm._v(" "),
-                  _c("option", { attrs: { value: "50" } }, [_vm._v("50")]),
-                  _vm._v(" "),
-                  _c("option", { attrs: { value: "100" } }, [_vm._v("100")])
-                ]
-              ),
-              _vm._v(" "),
-              _c("small", [_vm._v("entradas")])
-            ])
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "col-12 col-md-6" }, [
-            _c("div", { staticClass: "input-group input-group-merge" }, [
-              _c("div", { staticClass: "input-group-prepend bg-white" }, [
-                _c(
-                  "span",
-                  {
-                    staticClass: "input-group-text bg-white",
-                    attrs: { id: "search" }
-                  },
-                  [
-                    _c("jam-search", {
-                      staticClass: "current-color",
-                      attrs: { height: "22", width: "22" }
-                    })
-                  ],
-                  1
-                )
+                  _c("small", [_vm._v("entradas")])
+                ])
               ]),
               _vm._v(" "),
-              _c("input", {
-                directives: [
-                  {
-                    name: "model",
-                    rawName: "v-model",
-                    value: _vm.search,
-                    expression: "search"
-                  }
-                ],
-                staticClass: "form-control bg-white",
-                attrs: {
-                  type: "search",
-                  placeholder: "Buscar por " + _vm.placeholder,
-                  "aria-label": "search",
-                  "aria-describedby": "search"
-                },
-                domProps: { value: _vm.search },
-                on: {
-                  input: function($event) {
-                    if ($event.target.composing) {
-                      return
+              _c("div", { staticClass: "col-12 col-md-6" }, [
+                _c("div", { staticClass: "input-group input-group-merge" }, [
+                  _c("div", { staticClass: "input-group-prepend bg-white" }, [
+                    _c(
+                      "span",
+                      {
+                        staticClass: "input-group-text bg-white",
+                        attrs: { id: "search" }
+                      },
+                      [
+                        _c("jam-search", {
+                          staticClass: "current-color",
+                          attrs: { height: "22", width: "22" }
+                        })
+                      ],
+                      1
+                    )
+                  ]),
+                  _vm._v(" "),
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.search,
+                        expression: "search"
+                      }
+                    ],
+                    staticClass: "form-control bg-white",
+                    attrs: {
+                      type: "search",
+                      placeholder: "Buscar por " + _vm.placeholder,
+                      "aria-label": "search",
+                      "aria-describedby": "search"
+                    },
+                    domProps: { value: _vm.search },
+                    on: {
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.search = $event.target.value
+                      }
                     }
-                    _vm.search = $event.target.value
-                  }
-                }
-              })
+                  })
+                ])
+              ])
             ])
-          ])
-        ])
+          : _vm._e()
       ],
       2
     ),
@@ -1534,61 +1537,66 @@ var render = function() {
                     : _vm._e()
                 ]),
                 _vm._v(" "),
-                _c(
-                  "li",
-                  {
-                    staticClass: "page-item mx-2",
-                    class: [
-                      _vm.pageActive == _vm.currentPage ? "active disabled" : ""
-                    ]
-                  },
-                  [
-                    _c(
-                      "select",
+                _vm.elements && _vm.elements.length
+                  ? _c(
+                      "li",
                       {
-                        directives: [
-                          {
-                            name: "model",
-                            rawName: "v-model",
-                            value: _vm.pageActive,
-                            expression: "pageActive"
-                          }
-                        ],
-                        staticClass: "form-control bg-white px-2 py-0",
-                        staticStyle: { height: "36px" },
-                        attrs: { id: "" },
-                        on: {
-                          change: [
-                            function($event) {
-                              var $$selectedVal = Array.prototype.filter
-                                .call($event.target.options, function(o) {
-                                  return o.selected
-                                })
-                                .map(function(o) {
-                                  var val = "_value" in o ? o._value : o.value
-                                  return val
-                                })
-                              _vm.pageActive = $event.target.multiple
-                                ? $$selectedVal
-                                : $$selectedVal[0]
-                            },
-                            function($event) {
-                              return _vm.clickPage(_vm.pageActive)
-                            }
-                          ]
-                        }
+                        staticClass: "page-item mx-2",
+                        class: [
+                          _vm.pageActive == _vm.currentPage
+                            ? "active disabled"
+                            : ""
+                        ]
                       },
-                      _vm._l(_vm.lastPage, function(i) {
-                        return _c(
-                          "option",
-                          { key: i, domProps: { value: i } },
-                          [_vm._v(_vm._s(i++))]
+                      [
+                        _c(
+                          "select",
+                          {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.pageActive,
+                                expression: "pageActive"
+                              }
+                            ],
+                            staticClass: "form-control bg-white px-2 py-0",
+                            staticStyle: { height: "36px" },
+                            attrs: { id: "" },
+                            on: {
+                              change: [
+                                function($event) {
+                                  var $$selectedVal = Array.prototype.filter
+                                    .call($event.target.options, function(o) {
+                                      return o.selected
+                                    })
+                                    .map(function(o) {
+                                      var val =
+                                        "_value" in o ? o._value : o.value
+                                      return val
+                                    })
+                                  _vm.pageActive = $event.target.multiple
+                                    ? $$selectedVal
+                                    : $$selectedVal[0]
+                                },
+                                function($event) {
+                                  return _vm.clickPage(_vm.pageActive)
+                                }
+                              ]
+                            }
+                          },
+                          _vm._l(_vm.lastPage, function(i) {
+                            return _c(
+                              "option",
+                              { key: i, domProps: { value: i } },
+                              [_vm._v(_vm._s(i++))]
+                            )
+                          }),
+                          0
                         )
-                      }),
-                      0
+                      ]
                     )
-                  ]
-                ),
+                  : _vm._e(),
                 _vm._v(" "),
                 _c("li", { staticClass: "page-item" }, [
                   _vm.currentPage < _vm.lastPage

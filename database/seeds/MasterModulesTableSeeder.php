@@ -73,8 +73,8 @@ class MasterModulesTableSeeder extends Seeder
                     'index'    => 1
                 ],
                 [
-                    'name' 	=> 'Estado del Proyecto',
-                    'slug' 		=> 'administracion/estado-proyecto',
+                    'name' 	=> 'Estados del Proyecto',
+                    'slug' 		=> 'administracion/estados-proyecto',
                     'parent' 	=> $pAdmin,
                     'icon' 		=> NULL,
                     'index'    => 2
@@ -87,8 +87,8 @@ class MasterModulesTableSeeder extends Seeder
                     'index'    => 3
                 ],
                 [
-                    'name' 	=> 'Entidad Financiera',
-                    'slug' 		=> 'administracion/entidad-financiera',
+                    'name' 	=> 'Entidades Financieras',
+                    'slug' 		=> 'administracion/entidades-financieras',
                     'parent' 	=> $pAdmin,
                     'icon' 		=> NULL,
                     'index'    => 4

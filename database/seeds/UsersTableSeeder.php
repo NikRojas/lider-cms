@@ -11,7 +11,7 @@ class UsersTableSeeder extends Seeder
      */
     public function run()
     {
-        /*DB::table('users')->insert([
+        DB::table('users')->insert([
             [
                 'name' => 'Anthony Tucto',
                 //'username' => 'atucto',
@@ -20,7 +20,7 @@ class UsersTableSeeder extends Seeder
                 //'status' => 1,
                 //'role_id' => 1
             ],
-        ]);*/
-        $users = factory(App\User::class, 200)->create();
+        ]);
+        //$users = factory(App\User::class, 200)->create();
     }
 }

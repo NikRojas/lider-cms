@@ -24,6 +24,7 @@ return [
         'award' => 'El premio',
         'lead' => 'El lead',
         'features' => 'La característica',
+        'bank' => 'La entidad financiera',
         'slide' => 'El slide'
     ],
     'title' => [

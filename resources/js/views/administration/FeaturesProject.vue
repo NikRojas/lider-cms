@@ -91,13 +91,13 @@
               <div class="form-group">
                 <label class="font-weight-bold" for="image">Imagen:</label>
                 <div class="row">
-                  <div class="col-1"></div>
                   <div class="col text-center" v-if="element.image">
                     <img :src="imagesUrl+'/features/'+element.image" height="75" :alt="element.name_es" />
                   </div>
                   <div class="col">
                     <vue-dropzone
                       ref="ref_image"
+                      class="text-center"
                       @vdropzone-file-added="$validateImageDropzone($event,$refs.ref_image.dropzone,1,512000,'500kb')"
                       id="image"
                       :options="dropzoneOptions"
@@ -111,7 +111,6 @@
                       </div>
                     </vue-dropzone>
                   </div>
-                  <div class="col-1"></div>
                 </div>
                 
                 <label

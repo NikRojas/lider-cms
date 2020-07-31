@@ -14,7 +14,7 @@
             <div class="col-6 col-md-5 text-right">
               <a href="#" class="btn btn-icon btn-inverse-primary" @click.prevent="newEl">
                 <span class="btn-inner--icon">
-                  <jam-star class="current-color" />
+                  <jam-magic class="current-color" />
                 </span>
                 <span class="btn-inner--text">Nueva Entidad Financiera</span>
               </a>
@@ -37,7 +37,8 @@
                 <div class="mb-3">
                   <img :src="imagesUrl+'/banks/'+el.logo" height="75" :alt="el.name" />
                 </div>
-                <h3 class="mb-1 font-weight-normal">
+                <h3 class="mb-1 font-weight-bold">
+                  <span class="font-weight-normal">Nombre:</span>
                   {{ el.name }}
                 </h3>
                 <div class="mt-4 text-right">
@@ -91,17 +92,17 @@
               <div class="form-group">
                 <label class="font-weight-bold" for="image">Imagen:</label>
                 <div class="row">
-                  <div class="col-1"></div>
-                  <div class="col text-center" v-if="element.image">
+                  <div class="col text-center" v-if="element.logo">
                     <img
-                      :src="imagesUrl+'/features/'+element.image"
+                      :src="imagesUrl+'/banks/'+element.logo"
                       height="75"
-                      :alt="element.name_es"
+                      :alt="element.name"
                     />
                   </div>
                   <div class="col">
                     <vue-dropzone
                       ref="ref_image"
+                      class="text-center"
                       @vdropzone-file-added="$validateImageDropzone($event,$refs.ref_image.dropzone,1,512000,'500kb')"
                       id="image"
                       :options="dropzoneOptions"
@@ -115,7 +116,6 @@
                       </div>
                     </vue-dropzone>
                   </div>
-                  <div class="col-1"></div>
                 </div>
 
                 <label

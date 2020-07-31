@@ -18,7 +18,7 @@ class CreateAdvisorsTable extends Migration
             $table->string('name');
             $table->string('email');
             $table->string('mobile',15);
-            $table->string('avatar',100);
+            $table->string('avatar',100)->nullable();
             $table->timestamps();
         });
     }

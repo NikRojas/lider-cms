@@ -58,12 +58,20 @@ Route::middleware(['auth'])->namespace('Cms')->name('cms.')->group(function() {
             Route::get('/json/get/{element}', 'FinancialEntitiesController@get')->name('get');
         });
         Route::name('features-project.')->prefix('caracteristicas-proyectos')->group(function() {
-            Route::get('/', 'FeaturesProyectController@index')->name('index');
+            Route::get('/', 'AdvisorsController@index')->name('index');
             Route::post('/', 'FeaturesProyectController@store')->name('store');
             Route::put('/{element}', 'FeaturesProyectController@update')->name('update');
             Route::delete('/{element}', 'FeaturesProyectController@destroy')->name('destroy');
             Route::get('/json/get-all', 'FeaturesProyectController@getAll')->name('get-all');
             Route::get('/json/get/{element}', 'FeaturesProyectController@get')->name('get');
+        });
+        Route::name('advisors.')->prefix('asesores')->group(function() {
+            Route::get('/', 'AdvisorsController@index')->name('index');
+            Route::post('/', 'AdvisorsController@store')->name('store');
+            Route::put('/{element}', 'AdvisorsController@update')->name('update');
+            Route::delete('/{element}', 'AdvisorsController@destroy')->name('destroy');
+            Route::get('/json/get-all', 'AdvisorsController@getAll')->name('get-all');
+            Route::get('/json/get/{element}', 'AdvisorsController@get')->name('get');
         });
     });
 

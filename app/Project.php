@@ -15,4 +15,9 @@ class Project extends Model
     {
         return $this->belongsToMany('App\Bank','projects_banks', 'project_id', 'bank_id');
     }
+
+    public function advisorsRel()
+    {
+        return $this->belongsToMany('App\Bank','projects_advisors', 'project_id', 'advisor_id');
+    }
 }

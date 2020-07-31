@@ -45,14 +45,14 @@ class FinancialEntitiesController extends Controller
     }
 
     public function update(Bank $element,BankRequest $request){
-        $request_element = request(["name_en","name_es"]);;
+        $request_element = request(["name"]);;
         if($request->hasFile('logo')){
-            $fileName = $this->setFileName('u-'.time(),$request->file('logo'));
+            $fileName = $this->setFileName('b-',$request->file('logo'));
             Storage::disk('public')->putFileAs('img/banks',$request->file('logo'),$fileName);
             $request_element = array_merge($request_element,["logo" => $fileName]);
         }
-        if($request->hasFile('logo') && $element->image){
-            Storage::disk('public')->delete('img/banks/'.$element->image);
+        if($request->hasFile('logo') && $element->logo){
+            Storage::disk('public')->delete('img/banks/'.$element->logo);
         }
         try{
             $element = Bank::UpdateOrCreate(["id"=>$element->id],$request_element); 
@@ -64,7 +64,7 @@ class FinancialEntitiesController extends Controller
     }
 
     public function destroy(Bank $element){
-        $image = $element->image;
+        $image = $element->logo;
         try {
             $destroy = $element->delete();
             if($destroy){

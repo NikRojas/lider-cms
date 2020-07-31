@@ -25,7 +25,8 @@ return [
         'lead' => 'El lead',
         'features' => 'La característica',
         'bank' => 'La entidad financiera',
-        'slide' => 'El slide'
+        'slide' => 'El slide',
+        'advisor' => 'El asesor'
     ],
     'title' => [
         'error' => 'Error',

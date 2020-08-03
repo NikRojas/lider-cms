@@ -9,17 +9,17 @@ class Information extends Model
     protected $table = 'information';
     protected $guarded = [];
 
-    protected $appends = ['cellphone_formatted','phone_formatted'];
-
-    public function getCellphoneFormattedAttribute(){
-        if($this->cellphone){
-            return trim(str_replace('-','',$this->cellphone));
-        }
-    }
+    protected $appends = ['phone_formatted', 'phone_value'];
 
     public function getPhoneFormattedAttribute(){
         if($this->phone){
-            return '01'.trim(str_replace('-','',$this->phone));
+            return '(511) '.substr($this->phone,0,3).'-'.substr($this->phone,3,4);
+        }
+    }
+
+    public function getPhoneValueAttribute(){
+        if($this->phone){
+            return '(511)'.$this->phone;
         }
     }
 }

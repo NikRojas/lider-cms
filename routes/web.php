@@ -18,19 +18,12 @@ Route::middleware(['auth'])->namespace('Cms')->name('cms.')->group(function() {
 
     #Users
     Route::namespace('Configuration')->prefix('configuracion')->name('configuration.')->group(function() {
-        /*Route::get('configuracion/usuarios', 'Configuration\UsersController@index')->name('users');
-        Route::post('configuracion/usuarios', 'Configuration\UsersController@registrar')->name('users.registrar');
-        Route::put('configuracion/usuarios/{usuario}', 'Configuration\UsersController@actualizar')->name('users.update');
-        Route::delete('configuracion/usuarios/{usuario}', 'Configuration\UsersController@eliminar')->name('users.delete');
-        Route::put('configuracion/usuarios/deshabilitar/{usuario}', 'Configuration\UsersController@disable')->name('users.update');
-        Route::get('configuracion/json/usuarios', 'Configuration\UsersController@obtenerUsuarios')->name('json.users');
-        Route::get('configuracion/json/usuarios/{usuario}', 'Configuration\UsersController@obtenerUsuario')->name('json.user');*/
         Route::name('users.')->prefix('usuarios')->group(function() {
             Route::get('/', 'UsersController@index')->name('index');
             Route::post('/', 'UsersController@store')->name('store');
             Route::put('/{user}', 'UsersController@update')->name('update');
             Route::delete('/{user}', 'UsersController@destroy')->name('destroy');
-            //Route::put('/deshabilitar/{usuario}', 'UsersController@disable')->name('update');
+            //Route::put('/disable/{usuario}', 'UsersController@disable')->name('update');
             Route::get('/json/get-all', 'UsersController@getAll')->name('get-all');
             Route::get('/json/get/{user}', 'UsersController@get')->name('get');
         });  
@@ -84,7 +77,6 @@ Route::middleware(['auth'])->namespace('Cms')->name('cms.')->group(function() {
             Route::post('/', 'ExchangeController@store')->name('store');
             Route::put('/{element}', 'ExchangeController@update')->name('update');
             Route::get('/json/get-all', 'ExchangeController@getAll')->name('get-all');
-            //Route::get('/json/get/{element}', 'AdvisorsController@get')->name('get');
         });
     });
 
@@ -112,6 +104,20 @@ Route::middleware(['auth'])->namespace('Cms')->name('cms.')->group(function() {
             Route::get('/json/get-all', 'SocialController@getAll')->name('get-all');
             Route::get('/json/get/{element}', 'SocialController@get')->name('get');
         });
+
+        Route::name('general-information.')->prefix('informacion-general')->group(function() {
+            #General Information
+            Route::get('/', 'GeneralInformationController@index')->name('index');
+            Route::post('/', 'GeneralInformationController@store')->name('store');
+            Route::get('/json/get', 'GeneralInformationController@get')->name('get');
+            #Members
+            Route::get('/members/json/get-all', 'GeneralInformationController@membersGetAll')->name('members.get-all');
+            Route::post('/members', 'GeneralInformationController@membersStore')->name('members.store');
+            Route::put('/members/order', 'GeneralInformationController@membersOrder')->name('members.order');
+            Route::get('/members/json/get/{element}', 'GeneralInformationController@membersGet')->name('members.get');
+            Route::delete('/members/{element}', 'GeneralInformationController@membersDestroy')->name('members.destroy');
+            Route::put('/members/{element}', 'GeneralInformationController@membersUpdate')->name('members.update');
+        });
     });
 
     #Information
@@ -119,18 +125,7 @@ Route::middleware(['auth'])->namespace('Cms')->name('cms.')->group(function() {
     Route::get('informacion/seo', 'Information\SeoController@index')->name('information.seo');
     Route::get('informacion/json/seo', 'Information\SeoController@getPages')->name('information.seo.json.get-pages');
     Route::put('informacion/seo/{page}', 'Information\SeoController@update')->name('information.seo.update');
-    #General
-    Route::get('informacion/general', 'Information\GeneralController@index')->name('information');
-    Route::get('informacion/json/informacion', 'Information\GeneralController@get')->name('information.get');
-    Route::post('informacion/general', 'Information\GeneralController@registrar')->name('information.registrar');
-
-
-    Route::get('informacion/json/partners', 'Information\GeneralController@getPartners')->name('information.partners.json.get-partners');
-    Route::post('informacion/partners', 'Information\GeneralController@createPartner')->name('information.partners.create');
-    Route::put('informacion/partners/order', 'Information\GeneralController@orderPartners')->name('information.partners.order');
-    Route::get('informacion/json/partners/{partner}', 'Information\GeneralController@getPartner')->name('information.partners.json.get-partner');
-    Route::delete('informacion/partners/{partner}', 'Information\GeneralController@deletePartner')->name('information.partners.delete');
-    Route::put('informacion/partners/{partner}', 'Information\GeneralController@updatePartner')->name('information.partners.update');
+    
 
 
     #Pages

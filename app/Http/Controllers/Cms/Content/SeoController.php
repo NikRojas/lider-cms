@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Http\Controllers\Cms\Information;
+namespace App\Http\Controllers\Cms\Content;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Storage;
 
 use App\Http\Traits\CmsTrait;
-use App\Http\Requests\Cms\Information\SeoRequest;
+use App\Http\Requests\Cms\Content\SeoRequest;
 use App\MasterPage;
 
 class SeoController extends Controller
@@ -15,10 +15,10 @@ class SeoController extends Controller
     use CmsTrait;
 
     public function index(){
-        return view("pages.info.seo");
+        return view("pages.content.seo");
     }
 
-    public function getPages(){
+    public function getAll(){
         $pages = MasterPage::all();
         return response()->json($pages);    
     }
@@ -48,5 +48,4 @@ class SeoController extends Controller
             return response()->json(['title'=> trans('custom.title.error'), 'message'=> trans('custom.message.update.error', ['name' => trans('custom.attribute.seo')]) ],500);
         }
     }
-
 }

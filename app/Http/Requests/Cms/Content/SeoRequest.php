@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Requests\Cms\Information;
+namespace App\Http\Requests\Cms\Content;
 
 use Illuminate\Foundation\Http\FormRequest;
 
@@ -25,8 +25,12 @@ class SeoRequest extends FormRequest
     {
         return [
             'seo_image' => 'sometimes|required',
-            'title' => 'required|max:60',
-            'seo_description' => 'required|max:160'
+            'title_es' => 'required|max:60',
+            'title_en' => 'required|max:60',
+            'seo_keywords_es' => 'required|max:100',
+            'seo_keywords_en' => 'required|max:100',
+            'seo_description_es' => 'required|max:160',
+            'seo_description_en' => 'required|max:160'
         ];
     }
 }

@@ -118,15 +118,14 @@ Route::middleware(['auth'])->namespace('Cms')->name('cms.')->group(function() {
             Route::delete('/members/{element}', 'GeneralInformationController@membersDestroy')->name('members.destroy');
             Route::put('/members/{element}', 'GeneralInformationController@membersUpdate')->name('members.update');
         });
+
+        #SEO
+        Route::name('seo.')->prefix('seo')->group(function() {
+            Route::get('/', 'SeoController@index')->name('index');
+            Route::get('/json/get-all', 'SeoController@getPages')->name('get-all');
+            Route::put('/{page}', 'SeoController@update')->name('update');
+        });
     });
-
-    #Information
-    #SEO
-    Route::get('informacion/seo', 'Information\SeoController@index')->name('information.seo');
-    Route::get('informacion/json/seo', 'Information\SeoController@getPages')->name('information.seo.json.get-pages');
-    Route::put('informacion/seo/{page}', 'Information\SeoController@update')->name('information.seo.update');
-    
-
 
     #Pages
     /*Route::get('informacion/paginas', 'Information\PagesController@index')->name('pages');

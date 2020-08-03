@@ -19,5 +19,6 @@ class DatabaseSeeder extends Seeder
         $this->call(MasterCurrenciesTableSeeder::class);
         $this->call(MasterLeadsTimeDayTableSeeder::class);
         $this->call(MasterUbigeoTableSeeder::class);
+        $this->call(MasterPagesTableSeeder::class);
     }
 }

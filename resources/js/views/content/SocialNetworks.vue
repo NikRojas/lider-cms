@@ -244,6 +244,7 @@ export default {
         });
     },
     editEl(id) {
+      this.title = "Actualizar";
       this.modalCreateUpdate = true;
       this.getEl(id);
     },

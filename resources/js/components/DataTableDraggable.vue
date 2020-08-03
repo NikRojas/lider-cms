@@ -6,13 +6,22 @@
     <div class="col-12">
       <div class="card">
         <div v-if="loading">
-          <Loader
-            texto="Cargando..."
-            :iconClasses="['ml-1']"
-            :iconWidth="20"
-            :iconHeight="20"
-            :styles="{ height: '300px' }"
-          />
+          <table class="table align-items-center">
+            <thead class="thead-light">
+              <tr>
+                <th class="border-0" v-for="i in 5" :key="i">
+                  <Skeleton />
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr v-for="i in 5" :key="i">
+                <td v-for="j in 5" :key="j">
+                  <Skeleton />
+                </td>
+              </tr>
+            </tbody>
+          </table>
         </div>
         
       <div class="table-responsive" v-if="!loading">
@@ -77,19 +86,12 @@
           <p class="mb-0" v-else>{{ total }} entradas</p>
         </div>
       </div>
-
-      <!--<div class="card-footer" v-if="!loading">
-          <div class="col-12 mt-3 text-right">
-            <p class="mb-0" v-if="!total == 0">Mostrando {{ total }} entrada(s)</p>
-            <p class="mb-0" v-else>{{ total }} entradas</p>
-          </div>
-      </div>-->
     </div>
   </div>
 </template>
 <script>
 import draggable from "vuedraggable";
-import Loader from "./Loader";
+import { Skeleton } from "vue-loading-skeleton";
 import simplebar from "simplebar-vue";
 import "simplebar/dist/simplebar.min.css";
 export default {
@@ -137,9 +139,9 @@ export default {
     },
   },
   components: {
-    Loader,
     draggable,
-    simplebar
+    simplebar,
+    Skeleton
   },
   watch: {
     object: function (newValue, oldValue) {

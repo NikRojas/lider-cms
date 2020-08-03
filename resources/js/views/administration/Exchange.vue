@@ -16,7 +16,7 @@
         <div class="col-lg-3 mb-4 mb-lg-0">
           <p
             v-if="!loadingEls"
-          >En este apartado usted puede modificar el cambio de los tipos de moneda, tomar en consideración que el cambio se redondea a Entero Superior.</p>
+          >En este apartado usted puede modificar el cambio de las moneda, tomar en consideración que el cambio se redondea a Entero Superior.</p>
           <!--<p
             v-if="!loadingEls"
           >Secciones donde se toma en consideración este tipo de cambio:</p>

@@ -308,7 +308,7 @@ var render = function() {
           !_vm.loadingEls
             ? _c("p", [
                 _vm._v(
-                  "En este apartado usted puede modificar el cambio de los tipos de moneda, tomar en consideración que el cambio se redondea a Entero Superior."
+                  "En este apartado usted puede modificar el cambio de las moneda, tomar en consideración que el cambio se redondea a Entero Superior."
                 )
               ])
             : _vm._e(),

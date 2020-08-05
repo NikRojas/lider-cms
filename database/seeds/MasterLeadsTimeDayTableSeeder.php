@@ -11,6 +11,13 @@ class MasterLeadsTimeDayTableSeeder extends Seeder
      */
     public function run()
     {
-        //
+        DB::table('master_leads_time_day')->insert([
+            [
+                'name' 	=> 'Mañana',
+            ],
+            [
+                'name' 	=> 'Tarde',
+            ],
+        ]);
     }
 }

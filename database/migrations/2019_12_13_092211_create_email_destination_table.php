@@ -18,6 +18,7 @@ class CreateEmailDestinationTable extends Migration
             $table->string('leads_traditional')->nullable();
             $table->string('leads_videocall')->nullable();
             $table->string('leads_sale_land')->nullable();
+            $table->string('leads_job')->nullable();
             $table->string('type')->nullable();
             $table->timestamps();
         });

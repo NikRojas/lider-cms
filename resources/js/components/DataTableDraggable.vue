@@ -73,7 +73,9 @@
               <tr>
                 <td
                   :colspan="object.headers && object.headers.length + 1"
-                >No se encontraron resultados.</td>
+                >
+                  <NoData :show-title="false"/>
+                </td>
               </tr>
             </tbody>
           </table>
@@ -94,6 +96,7 @@ import draggable from "vuedraggable";
 import { Skeleton } from "vue-loading-skeleton";
 import simplebar from "simplebar-vue";
 import "simplebar/dist/simplebar.min.css";
+import NoData from "../components/NoData";
 export default {
   props: {
     messageOrder: String,
@@ -141,7 +144,8 @@ export default {
   components: {
     draggable,
     simplebar,
-    Skeleton
+    Skeleton,
+    NoData
   },
   watch: {
     object: function (newValue, oldValue) {

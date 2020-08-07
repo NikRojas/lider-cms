@@ -111,11 +111,7 @@
             </div>
           </div>
         </draggable>
-        <div class="row" v-else>
-          <div class="col-12">
-            No data
-          </div>
-        </div>
+        <NoData v-else />
       </div>
     </div>
     <destroy
@@ -133,12 +129,14 @@ import BreadCrumb from "../../components/BreadCrumb";
 import { Skeleton } from "vue-loading-skeleton";
 import Destroy from "../../components/modals/Destroy";
 import draggable from "vuedraggable";
+import NoData from "../../components/NoData";
 export default {
   components: {
     BreadCrumb,
     Skeleton,
     Destroy,
-    draggable
+    draggable,
+    NoData
   },
   props: {
     routeCreate: String,

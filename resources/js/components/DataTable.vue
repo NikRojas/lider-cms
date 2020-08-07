@@ -154,7 +154,9 @@
                 <tr>
                   <td
                     :colspan="object.headers && object.headers.length + 1"
-                  >No se encontraron resultados.</td>
+                  >
+                    <NoData :show-title="false"/>
+                  </td>
                 </tr>
               </tbody>
             </table>
@@ -216,6 +218,7 @@ import Loader from "./Loader";
 import { Skeleton } from "vue-loading-skeleton";
 import simplebar from "simplebar-vue";
 import "simplebar/dist/simplebar.min.css";
+import NoData from "../components/NoData";
 export default {
   props: {
     entriesProp: {
@@ -270,6 +273,7 @@ export default {
     Loader,
     Skeleton,
     simplebar,
+    NoData
   },
   methods: {
     clickDisable(id) {

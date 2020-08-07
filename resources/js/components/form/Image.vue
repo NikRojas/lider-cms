@@ -43,7 +43,7 @@
             @vdropzone-file-added="$validateImageDropzone($event,$refs.ref_image_es.dropzone,1,1024000,'1mb')"
             :id="label+random"
             :options="dropzoneOptions"
-            @vdropzone-files-added="handAaddedFiles($event,'es')"
+            @vdropzone-files-added="handleAddedFiles($event,'es')"
             :duplicateCheck="true"
             :useCustomSlot="true"
           >
@@ -66,7 +66,7 @@
             class
             ref="ref_image_en"
             @vdropzone-file-added="$validateImageDropzone($event,$refs.ref_image_en.dropzone,1,1024000,'1mb')"
-            @vdropzone-files-added="handAaddedFiles($event,'en')"
+            @vdropzone-files-added="handleAddedFiles($event,'en')"
             :id="label+random"
             :options="dropzoneOptions"
             :duplicateCheck="true"
@@ -122,13 +122,15 @@ export default {
     toggle(lang) {
       this.active = lang;
     },
-    handAaddedFiles(e, lang){
-      if(lang == 'es'){
-        this.$emit("update:valueEs", this.$refs.ref_image_es.dropzone.files[0]);
-      }
-      else{
-        this.$emit("update:valueEn", this.$refs.ref_image_en.dropzone.files[0]);
-      }
+    handleAddedFiles(e, lang){
+      setTimeout(() => {
+        if(lang == 'es'){
+          this.$emit("update:valueEs", this.$refs.ref_image_es.dropzone.files[0]);
+        }
+        else if(lang == 'en'){
+          this.$emit("update:valueEn", this.$refs.ref_image_en.dropzone.files[0]);
+        }
+      }, 500);
     }
   },
   watch: {

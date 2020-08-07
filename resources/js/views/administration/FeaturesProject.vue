@@ -56,11 +56,7 @@
             </div>
           </div>
         </div>
-        <div v-else class="row">
-          <div class="col-12">
-            No data
-          </div>
-        </div>
+        <NoData v-else />
       </div>
     </div>
 
@@ -162,6 +158,7 @@ import Button from "../../components/Button";
 import { Skeleton } from "vue-loading-skeleton";
 import Destroy from "../../components/modals/Destroy";
 import SkeletonForm from "../../components/skeleton/form";
+import NoData from "../../components/NoData";
 export default {
   components: {
     BreadCrumb,
@@ -171,6 +168,7 @@ export default {
     vueDropzone: vue2Dropzone,
     Skeleton,
     SkeletonForm,
+    NoData
   },
   props: {
     route: String,

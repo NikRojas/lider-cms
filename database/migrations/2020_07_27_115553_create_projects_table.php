@@ -30,8 +30,8 @@ class CreateProjectsTable extends Migration
             $table->string('banner_en',100);
             $table->string('text_place_es',100);
             $table->string('text_place_en',100);
-            $table->text('url_google_maps');
-            $table->text('url_waze');
+            $table->text('url_google_maps')->nullable();
+            $table->text('url_waze')->nullable();
             $table->string('map_image_es',100);
             $table->string('map_image_en',100);
             $table->text('map_indications_es');

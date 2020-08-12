@@ -93,6 +93,11 @@ Route::middleware(['auth'])->namespace('Cms')->name('cms.')->group(function() {
         Route::get('/json/get/{element}', 'SliderController@get')->name('get');
     });
 
+    #Projects
+    Route::namespace('Projects')->prefix('proyectos')->name('projects.')->group(function() {
+        Route::get('/', 'ProjectController@index')->name('index');
+    });
+
     Route::namespace('Content')->prefix('contenido')->name('content.')->group(function() {
         #Social Networks
         Route::name('social-networks.')->prefix('redes-sociales')->group(function() {

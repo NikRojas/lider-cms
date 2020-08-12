@@ -122,7 +122,7 @@ Route::middleware(['auth'])->namespace('Cms')->name('cms.')->group(function() {
         #SEO
         Route::name('seo.')->prefix('seo')->group(function() {
             Route::get('/', 'SeoController@index')->name('index');
-            Route::get('/json/get-all', 'SeoController@getPages')->name('get-all');
+            Route::get('/json/get-all', 'SeoController@getAll')->name('get-all');
             Route::put('/{page}', 'SeoController@update')->name('update');
         });
     });

@@ -1,6 +1,4 @@
 @extends('layouts.dashboard')
 @section('content')
-  <seo app-url="{{ config('app.url') }}"></seo>
-
-  
+  <content-seo app-url="{{ config('app.web_url') }}" asset-url="{{ config('app.files_url') }}"></content-seo>
 @endsection

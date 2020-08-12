@@ -16,15 +16,15 @@
               <form @submit.prevent="updatePage">
                 <div v-if="pageSelected != page.id">
                   <div
-                    class="img-holder bg-seo  card-img-top position-relative"
+                    class="img-holder bg-seo card-img-top position-relative"
                     v-if="page.seo_image"
-                    :style="{ 'background-image': 'url('+ 'https://storage.googleapis.com/playgroup-web/img/pages/' + page.seo_image +')' }"
+                    :style="{ 'background-image': 'url('+ assetUrl + '/img/pages/' + page.seo_image +')' }"
                   >
                     <a
-                      :href="'https://storage.googleapis.com/playgroup-web/img/pages/'+page.seo_image"
+                      :href="assetUrl + '/img/pages/'+page.seo_image"
                       target="_blank"
                       rel="noopener noreferrer"
-                      class="btn btn-info btn-sm right position-absolute m-2"
+                      class="btn btn-primary btn-sm right position-absolute m-2"
                     >Ver Imagen</a>
                   </div>
 
@@ -62,84 +62,83 @@
                         </div>
                   
                       <div class="text-right" v-if="!editBlock">
-                        <a target="_blank" rel="noopener noreferrer" :href="'https://playgroup.pe'+(page.slug ? '/' +page.slug : '' )" class="d-inline-block">https://playgroup.pe<small v-if="page.slug">/{{ page.slug }}</small></a>
+                        <a style="text-decoration: underline;" target="_blank" rel="noopener noreferrer" :href="appUrl+(page.slug_es ? '/' +page.slug_es : '' )" class="d-inline-block">{{ appUrl}}<small v-if="page.slug_es">/{{ page.slug_es }}</small></a> <br>
+                        <a style="text-decoration: underline;" target="_blank" rel="noopener noreferrer" :href="appUrl+(page.slug_en ? '/' +page.slug_en : '' )" class="d-inline-block">{{ appUrl}}<small v-if="page.slug_en">/{{ page.slug_en }}</small></a>
                       </div>
                       <h4
                         class="mb-3 font-weight-bold"
                         v-if="pageSelected != page.id"
-                      >{{ page.title }}</h4>
+                      >Título ES: {{ page.title_es }} <br> Título EN: {{ page.title_en }}</h4>
                       <div class="form-group" v-if="editBlock && pageSelected == page.id">
-                        <label class="font-weight-bold" for="id_titulo">Título</label>
-                        <input
-                          type="text"
-                          class="form-control "
-                          v-model="page.title"
-                          id="id_titulo"
+                        <Input
+                          label="Título"
+                          variable="title"
+                          :errors="errors"
+                          :valueEn.sync="page.title_en"
+                          :valueEs.sync="page.title_es"
+                          :valueEnParent="page.title_en"
+                          :valueEsParent="page.title_es"
                         />
-                        <label
-                          v-if="errors && errors.title"
-                          class="text-danger text-sm d-block mt-2"
-                          for="id_titulo"
-                        >{{ errors.title[0] }}</label>
                       </div>
                       <div class="mb-2">
                         <div v-if="pageSelected != page.id">
                           <p class="mb-0 text-primary font-weight-bold">Descripción SEO</p>
-                          <p class="project-description" v-if="page.seo_description">{{ page.seo_description }}</p>
-                          <p class="mb-0" v-else>No registrado</p>
+                          <div>
+                            <p class="project-description mb-0" v-if="page.seo_description_es">ES: {{ page.seo_description_es }}</p>
+                            <p class="mb-0" v-else>ES: No registrado</p>
+                          </div>
+                          <div>
+                            <p class="project-description mb-0" v-if="page.seo_description_en">EN: {{ page.seo_description_en }}</p>
+                            <p class="mb-0" v-else>ES: No registrado</p>
+                          </div>
                         </div>
                         <div
                           class="form-group"
                           v-if="editBlock && pageSelected == page.id"
                         >
-                          <label
-                            class="font-weight-bold"
-                            for="id_seo_description"
-                          >Descripción SEO</label>
-                          <textarea
-                            type="text"
-                            class="form-control "
-                            v-model="page.seo_description"
-                            id="id_seo_description"
-                            rows="4"
-                          ></textarea>
-                          <label
-                            v-if="errors && errors.seo_description"
-                            class="text-danger text-sm d-block mt-2"
-                            for="id_seo_description"
-                          >{{ errors.seo_description[0] }}</label>
+                          <Textarea
+                          label="Descripción SEO"
+                          variable="seo_description"
+                          :errors="errors"
+                          :valueEn.sync="page.seo_description_en"
+                          :valueEs.sync="page.seo_description_es"
+                          :valueEnParent="page.seo_description_en"
+                          :valueEsParent="page.seo_description_es"
+                          />
                         </div>
                       </div>
                       <div>
                         <div v-if="pageSelected != page.id">
                           <p class="mb-0 text-primary font-weight-bold">Keywords SEO</p>
-                          <p class="mb-0" v-if="page.seo_keywords">{{ page.seo_keywords }}</p>
-                          <p class="mb-0" v-else>No registrado</p>
+                          <div>
+                            <p class="mb-0" v-if="page.seo_keywords_es">ES: {{ page.seo_keywords_es }}</p>
+                            <p class="mb-0" v-else>ES: No registrado</p>
+                          </div>
+                          <div>
+                            <p class="mb-0" v-if="page.seo_keywords_en">EN: {{ page.seo_keywords_en }}</p>
+                            <p class="mb-0" v-else>EN: No registrado</p>
+                          </div>
                         </div>
                         <div
                           class="form-group"
                           v-if="editBlock && pageSelected == page.id"
                         >
-                          <label class="font-weight-bold" for="id_seo_keywords">Keywords SEO</label>
-                          <textarea
-                            type="text"
-                            class="form-control "
-                            v-model="page.seo_keywords"
-                            id="id_seo_keywords"
-                            rows="4"
-                          ></textarea>
-                          <label
-                            v-if="errors && errors.seo_keywords"
-                            class="text-danger text-sm d-block mt-2"
-                            for="id_seo_keywords"
-                          >{{ errors.seo_keywords[0] }}</label>
+                          <Textarea
+                          label="Keywords SEO"
+                          variable="seo_keywords"
+                          :errors="errors"
+                          :valueEn.sync="page.seo_keywords_en"
+                          :valueEs.sync="page.seo_keywords_es"
+                          :valueEnParent="page.seo_keywords_en"
+                          :valueEsParent="page.seo_keywords_es"
+                          />
                         </div>
                       </div>
                       <div class="text-right mt-2">
                         <a
                           href="#"
                           @click.prevent="editPage(page.id)"
-                          class="btn btn-secondary"
+                          class="btn btn-inverse-info btn-sm"
                           v-if="pageSelected != page.id"
                         >
                         <i class="fas fa-pen-alt text-warning mr-1"></i> Editar</a>
@@ -147,13 +146,13 @@
                         <Button
                           v-if="editBlock && pageSelected == page.id"
                           :text="'Actualizar'"
-                          :classes="['btn-primary']"
+                          :classes="['btn-inverse-primary']"
                           :request-server="requestServer"
                         ></Button>
                         <button
                           v-if="editBlock && pageSelected == page.id"
                           type="button"
-                          class="btn btn-danger"
+                          class="btn btn-secondary"
                           @click.prevent="restoreEl"
                         >Cancelar</button>
                       </div>
@@ -177,19 +176,24 @@
 }
 </style>
 <script>
+import Input from "../../components/form/Input";
+import Textarea from "../../components/form/Textarea";
 import Loader from "../../components/Loader";
 import vue2Dropzone from "vue2-dropzone";
 import Button from "../../components/Button";
 import BreadCrumb from "../../components/BreadCrumb";
 export default {
   props:{
-    appUrl: { type: String }
+    appUrl: { type: String },
+    assetUrl: { type: String }
   },
   components: {
     Button,
     vueDropzone: vue2Dropzone,
     Loader,
-    BreadCrumb
+    BreadCrumb,
+    Input,
+    Textarea
   },
   data() {
     return {
@@ -244,7 +248,7 @@ export default {
     getPages() {
       this.requestServerGet = true;
       axios
-        .get("json/seo")
+        .get("seo/json/get-all")
         .then(response => {
           this.pages = response.data;
           this.requestServerGet = false;
@@ -254,15 +258,24 @@ export default {
     updatePage() {
       this.requestServer = true;
       const fd = new FormData();
-      this.page.title
-        ? fd.append("title", this.page.title)
-        : fd.append("title", "");
-      this.page.seo_keywords
-        ? fd.append("seo_keywords", this.page.seo_keywords)
-        : fd.append("seo_keywords", "");
-      this.page.seo_description
-        ? fd.append("seo_description", this.page.seo_description)
-        : fd.append("seo_description", "");
+      this.page.title_es
+        ? fd.append("title_es", this.page.title_es)
+        : fd.append("title_es", "");
+        this.page.title_en
+        ? fd.append("title_en", this.page.title_en)
+        : fd.append("title_en", "");
+      this.page.seo_keywords_es
+        ? fd.append("seo_keywords_es", this.page.seo_keywords_es)
+        : fd.append("seo_keywords_es", "");
+        this.page.seo_keywords_en
+        ? fd.append("seo_keywords_en", this.page.seo_keywords_en)
+        : fd.append("seo_keywords_en", "");
+      this.page.seo_description_es
+        ? fd.append("seo_description_es", this.page.seo_description_es)
+        : fd.append("seo_description_es", "");
+        this.page.seo_description_en
+        ? fd.append("seo_description_en", this.page.seo_description_en)
+        : fd.append("seo_description_en", "");
       if (this.$refs.ref_image[0].dropzone.files[0]) {
         fd.append("seo_image", this.$refs.ref_image[0].dropzone.files[0]);
       }

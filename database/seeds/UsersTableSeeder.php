@@ -20,6 +20,14 @@ class UsersTableSeeder extends Seeder
                 //'status' => 1,
                 //'role_id' => 1
             ],
+            [
+                'name' => 'Javier Leonardo',
+                //'username' => 'atucto',
+                'email' => 'javier@playgroup.pe',
+                'password' => bcrypt('Qwerty123'),
+                //'status' => 1,
+                //'role_id' => 1
+            ],
         ]);
         //$users = factory(App\User::class, 200)->create();
     }

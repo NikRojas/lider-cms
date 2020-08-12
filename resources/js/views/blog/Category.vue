@@ -8,11 +8,11 @@
               <BreadCrumb title="Categorías" parent="Blog" active="Categorías"></BreadCrumb>
             </div>
             <div class="col-6 col-md-5 text-right">
-              <a href="#" class="btn btn-icon btn-neutral" @click.prevent="newCategory">
+              <a href="#" class="btn btn-icon btn-inverse-primary" @click.prevent="newEl">
                 <span class="btn-inner--icon">
-                  <i class="fas fa-newspaper"></i>
+                  <jam-magic class="current-color" />
                 </span>
-                <span class="btn-inner--text">Nueva Categoria</span>
+                <span class="btn-inner--text">Nueva Categoría</span>
               </a>
             </div>
           </div>
@@ -21,133 +21,128 @@
     </div>
     <div class="container-fluid mt--6">
       <DataTable
-        placeholder="Nombre"
-        :object.sync="categories"
-        :buttonRead="false"
-        :buttonUpdate="true"
-        :buttonDelete="true"
-        @update="editCategory"
-        @delete="deleteCategory"
-        @get="getCategories"
+        :object="elements"
+        placeholder="Nombre ES, Nombre EN"
+        :button-update="true"
+        :button-read="false"
+        :button-delete="true"
+        @get="getElements"
+        @delete="deleteEl"
+        @update="editEl"
+        :entries-prop.sync="elementsPerPage"
+        :messageCantDelete="messageCantDelete"
       ></DataTable>
     </div>
 
-    <b-modal centered ref="modal-create">
+    <b-modal
+      v-model="modalCreateUpdate"
+      @close="restoreEl"
+      no-close-on-esc
+      no-close-on-backdrop
+      centered
+      footer-class="border-0 pt-0"
+      body-class="pt-0"
+    >
       <template slot="modal-title">
-        <h2 class="mb-0 text-uppercase text-primary">Crear Categoria</h2>
+        <div class="text-primary h2">{{ title }} Categoría</div>
       </template>
-      <form @submit.prevent="createCategory">
-        <div class="row">
-          <div class="col-12">
-            <div class="form-group">
-              <label class="form-control-label d-block" for="id_name">Nombre</label>
-              <input type="text" class="form-control " v-model="category.name" id="id_name" />
-              <label
-                v-if="errors && errors.name"
-                class="mt-2 text-danger text-sm"
-                for="id_name"
-              >{{ errors.name[0] }}</label>
+      <template slot="modal-header-close">
+        <button type="button" class="btn p-0 bg-transparent" @click="restoreEl">
+          <jam-close></jam-close>
+        </button>
+      </template>
+      <div v-if="loadingGet">
+        <SkeletonForm></SkeletonForm>
+      </div>
+      <div v-else>
+        <form @submit.prevent="submit">
+          <div class="row">
+            <div class="col-12">
+              <InputSlug
+                label="Nombre"
+                variable="name"
+                type="Etiqueta"
+                :errors="errors"
+                :valueEn.sync="element.name_en"
+                :valueEs.sync="element.name_es"
+                :slugEn.sync="element.slug_en"
+                :slugEs.sync="element.slug_es"
+                :valueEnParent="element.name_en"
+                :valueEsParent="element.name_es"
+                :slugEnParent="element.slug_en"
+                :slugEsParent="element.slug_es"
+              />
             </div>
           </div>
-        </div>
-      </form>
-      <template slot="modal-footer" slot-scope="{ ok, cancel }">
+        </form>
+      </div>
+      <template v-slot:modal-footer="{ ok }">
         <Button
-          :classes="['btn-primary']"
-          :text="'Registrar'"
-          @click="createCategory()"
-          :request-server="requestServer"
+          :classes="['btn-inverse-primary']"
+          :text="title == 'Nueva' ? 'Crear' : 'Actualizar'"
+          @click="submit"
+          :request-server="requestSubmit"
         ></Button>
-        <button type="button" class="btn btn-outline-danger" @click="closeModal()">Cancelar</button>
+        <button type="button" class="btn btn-secondary" @click="restoreEl">Cancelar</button>
       </template>
     </b-modal>
-    <b-modal centered ref="modal-delete">
-      <template slot="modal-title">
-        <h2 class="mb-0 text-uppercase text-primary">Eliminar Categoria</h2>
-      </template>
-      <p class="my-3">Esta seguro que desea eliminar el categoria?</p>
-      <template slot="modal-footer" slot-scope="{ ok, cancel }">
-        <Button
-          :classes="['btn-danger']"
-          :text="'Eliminar'"
-          @click="deleteCategoryConfirm()"
-          :request-server="requestServer"
-        ></Button>
-        <button type="button" class="btn btn-secondary" @click="closeModal()">Cancelar</button>
-      </template>
-    </b-modal>
-    <b-modal centered ref="modal-edit">
-      <template slot="modal-title">
-        <h2 class="mb-0 text-uppercase text-primary">Actualizar Categoria</h2>
-      </template>
-      <form @submit.prevent="updateCategory">
-        <div class="row">
-          <div class="col-12">
-            <div class="form-group">
-              <label class="form-control-label d-block" for="id_name">Nombre</label>
-              <input type="text" class="form-control " v-model="category.name" id="id_name" />
-              <label
-                v-if="errors && errors.name"
-                class="mt-2 text-danger text-sm"
-                for="id_name"
-              >{{ errors.name[0] }}</label>
-            </div>
-          </div>
-        </div>
-      </form>
-      <template slot="modal-footer" slot-scope="{ ok, cancel }">
-        <Button
-          :classes="['btn-primary']"
-          :text="'Actualizar'"
-          @click="updateCategory()"
-          :request-server="requestServer"
-        ></Button>
-        <button type="button" class="btn btn-outline-danger" @click="closeModal()">Cancelar</button>
-      </template>
-    </b-modal>
+    <destroy
+      element="categoría"
+      @cancel="restoreEl"
+      :open="modalDestroy"
+      @submit="destroyConfirm"
+      :loading-get="loadingGet"
+      :loading-submit="requestSubmit"
+    ></destroy>
   </div>
 </template>
 <script>
 import BreadCrumb from "../../components/BreadCrumb";
 import DataTable from "../../components/DataTable";
 import Button from "../../components/Button";
+import InputSlug from "../../components/form/InputSlug";
+import SkeletonForm from "../../components/skeleton/form";
+import Destroy from "../../components/modals/Destroy";
 export default {
   components: {
     DataTable,
     Button,
-    BreadCrumb
+    BreadCrumb,
+    InputSlug,
+    SkeletonForm,
+    Destroy
+  },
+  props: {
+    routeGetAll: String,
+    route: String,
+    messageCantDelete: String
   },
   data() {
     return {
-      requestServer: false,
-      errors: {},
-      category: {
-        id: "",
-        name: ""
+      elements: {},
+      element: {
+        slug_en: "",
+        slug_es: "",
+        name_en: "",
+        name_es: ""
       },
-      categories: {}
+      loadingGet: false,
+      title: "",
+      elementsPerPage: 10,
+      errors: {},
+      modalCreateUpdate: false,
+      modalDestroy: false,
+      requestSubmit: false
     };
   },
   methods: {
-    closeModal() {
-      this.errors = {};
-      this.requestServer = false;
-      this.$refs["modal-create"].hide();
-      this.$refs["modal-delete"].hide();
-      this.$refs["modal-edit"].hide();
-      this.category = {
-        id: "",
-        nombre: ""
-      };
-    },
-    deleteCategoryConfirm() {
-      this.requestServer = true;
+    destroyConfirm() {
+      this.requestSubmit = true;
       axios
-        .delete("categories/" + this.category.id)
+        .delete(this.route + "/" + this.element.id)
         .then(response => {
-          this.requestServer = false;
-          this.$refs["modal-delete"].hide();
-          this.restorePage();
+          this.requestSubmit = false;
+          this.restore();
           Swal.fire({
             title: response.data.title,
             text: response.data.message,
@@ -160,8 +155,6 @@ export default {
           });
         })
         .catch(error => {
-          this.requestServer = false;
-          this.$refs["modal-delete"].hide();
           Swal.fire({
             title: error.response.data.title,
             text: error.response.data.message,
@@ -172,41 +165,43 @@ export default {
               confirmButton: "btn btn-inverse-primary"
             }
           });
+          this.restoreEl();
         });
     },
-    getCategory(id) {
-      axios
-        .get("json/categories/" + id)
-        .then(response => {
-          this.category = response.data;
-        })
-        .catch(error => {});
-    },
-    deleteCategory(id) {
-      this.$refs["modal-delete"].show();
-      this.getCategory(id);
-    },
-    editCategory(id) {
-      this.$refs["modal-edit"].show();
-      this.getCategory(id);
-    },
-    restorePage() {
-      this.errors = this.categories = {};
-      this.requestServer = false;
-      this.getCategories(1, 5);
-      this.category = {
-        id: "",
-        nombre: ""
+    restore() {
+      this.errors = {};
+      this.element = {
+        slug_en: "",
+        slug_es: "",
+        name_en: "",
+        name_es: ""
       };
+      this.modalCreateUpdate = this.modalDestroy = false;
+      this.getElements(1, this.elementsPerPage);
     },
-    createCategory() {
-      this.requestServer = true;
-      axios
-        .post("categories", this.category)
+    editEl(id) {
+      this.title = "Actualizar";
+      this.modalCreateUpdate = true;
+      this.getEl(id);
+    },
+    submit() {
+      this.requestSubmit = true;
+      let url;
+      let method;
+      if (this.title == "Nueva") {
+        url = this.route;
+        method = "post";
+      } else {
+        url = this.route + "/" + this.element.id;
+        method = "put";
+      }
+      axios({
+        method: method,
+        url: url,
+        data: this.element
+      })
         .then(response => {
-          this.requestServer = false;
-          this.$refs["modal-create"].hide();
-          this.restorePage();
+          this.requestSubmit = false;
           Swal.fire({
             title: response.data.title,
             text: response.data.message,
@@ -217,14 +212,14 @@ export default {
               confirmButton: "btn btn-inverse-primary"
             }
           });
+          this.restore();
         })
         .catch(error => {
-          this.requestServer = false;
+          this.requestSubmit = false;
           if (error.response.status === 422) {
             this.errors = error.response.data.errors || {};
             return;
           }
-          this.$refs["modal-create"].hide();
           Swal.fire({
             title: error.response.data.title,
             text: error.response.data.message,
@@ -235,53 +230,53 @@ export default {
               confirmButton: "btn btn-inverse-primary"
             }
           });
+          this.restoreEl();
         });
     },
-    updateCategory() {
-      this.requestServer = true;
-      axios
-        .put("categories/" + this.category.id, this.category)
-        .then(response => {
-          this.closeModal();
-          this.restorePage();
-          Swal.fire({
-            title: response.data.title,
-            text: response.data.message,
-            type: "success",
-            confirmButtonText: "OK",
-            buttonsStyling: false,
-            customClass: {
-              confirmButton: "btn btn-inverse-primary"
-            }
-          });
-        })
-        .catch(error => {
-          this.requestServer = false;
-          if (error.response.status === 422) {
-            this.errores = error.response.data.errors || {};
-            return;
-          }
-          this.closeModal();
-        });
+    restoreEl() {
+      this.errors = {};
+      this.element = {
+        slug_en: "",
+        slug_es: "",
+        name_en: "",
+        name_es: ""
+      };
+      this.modalCreateUpdate = false;
     },
-    getCategories(pagina, desde, search = null) {
-      let url = "json/categories?page=" + pagina + "&desde=" + desde;
-      if (search) {
-        url = url + "&search=" + search;
+    deleteEl(id) {
+      this.modalDestroy = true;
+      this.getEl(id);
+    },
+    getElements(page, itemsPerPage, q = null) {
+      let url =
+        this.routeGetAll + "?page=" + page + "&itemsPerPage=" + itemsPerPage;
+      if (q) {
+        url = url + "&q=" + q;
       }
       axios
         .get(url)
         .then(response => {
-          this.categories = response.data;
+          this.elements = response.data;
         })
         .catch(error => {});
     },
-    newCategory() {
-      this.$refs["modal-create"].show();
+    getEl(id) {
+      this.loadingGet = true;
+      axios
+        .get(this.route + "/json/get/" + id)
+        .then(response => {
+          this.element = response.data;
+          this.loadingGet = false;
+        })
+        .catch(error => {});
+    },
+    newEl() {
+      this.title = "Nueva";
+      this.modalCreateUpdate = true;
     }
   },
   created() {
-    this.getCategories(1, 5);
+    this.getElements(1, this.elementsPerPage);
   }
 };
 </script>

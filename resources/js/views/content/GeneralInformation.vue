@@ -53,6 +53,29 @@
                 <p v-else>No registrado</p>
               </div>
             </div>
+            <div class="col-12 col-md-6 col-lg-4">
+              <div class="form-group">
+                <label class="font-weight-bold">Link de Facturación</label>
+                <p v-if="el.billing_url"><a style="text-decoration: underline;" :href="el.billing_url" target="_blank">{{ el.billing_url }}</a></p>
+                <p v-else>No registrado</p>
+              </div>
+            </div>
+            <div class="col-12 col-md-6 col-lg-4">
+              <div class="form-group">
+                <label class="font-weight-bold">Whatsapps</label>
+                <p v-if="!el.whatsapp_numbers">No registrado</p>
+                <p v-else> <span class="d-block" v-for="(el2,i) in el.whatsapp_formatted" :key="i">{{ el2.department }} - {{ el2.number }}</span> </p>
+              </div>
+            </div>
+
+            <div class="col-12 col-md-6 col-lg-4">
+              <div class="form-group">
+                <label class="font-weight-bold">Oficinas</label>
+                <p v-if="!el.phone_numbers">No registrado</p>
+                <p v-else> <span class="d-block" v-for="(el2,i) in el.phone_numbers_formatted" :key="i">{{ el2.department }} - {{ el2.number }}</span> </p>
+              </div>
+            </div>
+
           </div>
         </div>
         <div class="card-body" v-else>
@@ -113,6 +136,34 @@
                 </div>
               </div>
 
+              <div class="col-12 col-md-6 col-lg-4">
+                <div class="form-group">
+                  <label class="font-weight-bold" for="email">Link Facturación</label>
+                  <input type="text" class="form-control" v-model="el.billing_url" id="billing_url" />
+                  <label
+                    v-if="errors && errors.billing_url"
+                    class="mt-2 text-danger text-sm"
+                    for="billing_url"
+                  >{{ errors.billing_url[0] }}</label>
+                </div>
+              </div>
+
+              <div class="col-12 col-md-6 col-lg-4">
+                <InputSelectArray fieldName="whatsapp_numbers"
+                :errorsProp.sync="errors"
+                 :headers="[{variable: 'number', label : 'Whatsapp'},{ variable: 'department', label: 'departamento'}]"
+                        :array.sync="el.whatsapp_numbers"
+                        :array-prop="el.whatsapp_numbers" :selectItems="departments"/>
+              </div>
+
+              <div class="col-12 col-md-6 col-lg-4">
+                <InputSelectArray fieldName="phone_numbers"
+                :errorsProp.sync="errors"
+                 :headers="[{variable: 'number', label : 'teléfono'},{ variable: 'department', label: 'departamento'}]"
+                        :array.sync="el.phone_numbers"
+                        :array-prop="el.phone_numbers" :selectItems="departments"/>
+              </div>
+
               <div class="col-12 text-right">
                 <Button
                   :text="'Actualizar'"
@@ -132,15 +183,18 @@
 import { Skeleton } from "vue-loading-skeleton";
 import Button from "../../components/Button";
 import BreadCrumb from "../../components/BreadCrumb";
+import InputSelectArray from "../../components/form/InputSelectArray";
 export default {
   props: {
     routeGet: String,
     routeUpdate: String,
+    departments: Array
   },
   components: {
     Button,
     BreadCrumb,
     Skeleton,
+    InputSelectArray
   },
   data() {
     return {
@@ -148,6 +202,7 @@ export default {
         location: "",
         phone: "",
         email: "",
+        billing_url: "",
       },
       errors: {},
       requestSubmit: false,

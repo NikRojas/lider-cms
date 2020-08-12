@@ -20,6 +20,12 @@ class CreateInformationTable extends Migration
             $table->string('phone',15)->nullable();
             $table->string('email')->nullable();
 
+            $table->string('billing_url')->nullable();
+            
+            $table->json('whatsapp_numbers')->nullable();
+            $table->json('phone_numbers')->nullable();
+
+
             $table->timestamps();
         });
     }

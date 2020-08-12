@@ -2,6 +2,8 @@
 
 namespace App\Http\Traits;
 
+use App\Ubigeo;
+
 trait CmsTrait {
 
     public function setFileName($nombre,$archivo) {
@@ -21,6 +23,12 @@ trait CmsTrait {
     public function getArrayColumn($value){
         $array = implode(',', $value);
         return $array;
+    }
+
+    public function getDepartments()
+    {
+        $data = Ubigeo::select('code_department','department')->distinct()->orderBy('department')->get();
+        return $data;
     }
 
 }

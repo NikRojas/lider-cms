@@ -18,9 +18,10 @@ class CreateMasterUbigeoTable extends Migration
             $table->string('code_department', 2);
             $table->string('department', 50);
             $table->string('code_province', 2);
-            $table->string('province', 50);
+            $table->string('province', 50)->nullable();
             $table->string('code_district', 2);
-            $table->string('district', 50);
+            $table->string('district', 50)->nullable();
+            $table->string('code_number', 2)->nullable();
 
             $table->timestamps();
         });

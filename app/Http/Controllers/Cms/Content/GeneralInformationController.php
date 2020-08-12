@@ -20,11 +20,12 @@ class GeneralInformationController extends Controller
 
     public function index()
     {
-        return view ("pages.content.general-information");
+        $departments = $this->getDepartments();
+        return view ("pages.content.general-information",compact('departments'));
     }
 
     public function store(GeneralInformationRequest $request){
-        $request_information = request(["location","phone","email"]);
+        $request_information = request(["location","phone","email","billing_url","whatsapp_numbers","phone_numbers"]);
         $information_registered = Information::first();
         try{
             if($information_registered){

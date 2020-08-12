@@ -16,6 +16,15 @@ class GeneralInformationRequest extends FormRequest
         return true;
     }
 
+    public function attributes(){
+            return [
+                'phone_fields.*.number' => 'teléfono',
+                'whatsapp_fields.*.number' => 'whatsapp',
+                'phone_fields.*.department' => 'departamento',
+                'whatsapp_fields.*.department' => 'departamento',
+            ];
+    }
+
     /**
      * Get the validation rules that apply to the request.
      *
@@ -27,6 +36,12 @@ class GeneralInformationRequest extends FormRequest
             'location' => 'required',
             'phone' => 'required|digits:7',
             'email' => 'required|email|max:100',
+            'billing_url' => 'required|sometimes|url',
+            //'whatsapp_fields' => 'required',
+            'whatsapp_fields.*.number' => 'required',
+            'whatsapp_fields.*.department' => 'required',
+            'phone_fields.*.number' => 'required',
+            'phone_fields.*.department' => 'required'
         ];
     }
 }

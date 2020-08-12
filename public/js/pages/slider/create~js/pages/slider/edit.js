@@ -134,12 +134,16 @@ __webpack_require__.r(__webpack_exports__);
     toggle: function toggle(lang) {
       this.active = lang;
     },
-    handAaddedFiles: function handAaddedFiles(e, lang) {
-      if (lang == 'es') {
-        this.$emit("update:valueEs", this.$refs.ref_image_es.dropzone.files[0]);
-      } else {
-        this.$emit("update:valueEn", this.$refs.ref_image_en.dropzone.files[0]);
-      }
+    handleAddedFiles: function handleAddedFiles(e, lang) {
+      var _this = this;
+
+      setTimeout(function () {
+        if (lang == 'es') {
+          _this.$emit("update:valueEs", _this.$refs.ref_image_es.dropzone.files[0]);
+        } else if (lang == 'en') {
+          _this.$emit("update:valueEn", _this.$refs.ref_image_en.dropzone.files[0]);
+        }
+      }, 500);
     }
   },
   watch: {
@@ -330,7 +334,7 @@ var render = function() {
                         )
                       },
                       "vdropzone-files-added": function($event) {
-                        return _vm.handAaddedFiles($event, "es")
+                        return _vm.handleAddedFiles($event, "es")
                       }
                     }
                   },
@@ -406,7 +410,7 @@ var render = function() {
                         )
                       },
                       "vdropzone-files-added": function($event) {
-                        return _vm.handAaddedFiles($event, "en")
+                        return _vm.handleAddedFiles($event, "en")
                       }
                     }
                   },

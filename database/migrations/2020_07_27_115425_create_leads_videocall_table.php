@@ -18,6 +18,7 @@ class CreateLeadsVideocallTable extends Migration
             $table->string('name');
             $table->string('email');
             $table->string('mobile',15);
+            $table->string('document_number',15);
             $table->string('lead_medium_id')->nullable();
             $table->foreign('lead_medium_id')->references('id')->on('master_leads_medium');
             $table->bigInteger('lead_time_day')->unsigned();

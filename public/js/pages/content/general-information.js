@@ -356,8 +356,8 @@ __webpack_require__.r(__webpack_exports__);
       el: {
         location: "",
         phone: "",
-        email: "",
-        billing_url: ""
+        email: "" //billing_url: "",
+
       },
       errors: {},
       requestSubmit: false,

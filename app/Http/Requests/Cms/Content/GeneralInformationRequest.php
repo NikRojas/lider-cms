@@ -18,10 +18,10 @@ class GeneralInformationRequest extends FormRequest
 
     public function attributes(){
             return [
-                'phone_fields.*.number' => 'teléfono',
-                'whatsapp_fields.*.number' => 'whatsapp',
-                'phone_fields.*.department' => 'departamento',
-                'whatsapp_fields.*.department' => 'departamento',
+                'phone_numbers.*.number' => 'teléfono',
+                'whatsapp_numbers.*.number' => 'whatsapp',
+                'phone_numbers.*.department' => 'departamento',
+                'whatsapp_numbers.*.department' => 'departamento',
             ];
     }
 
@@ -36,12 +36,12 @@ class GeneralInformationRequest extends FormRequest
             'location' => 'required',
             'phone' => 'required|digits:7',
             'email' => 'required|email|max:100',
-            'billing_url' => 'required|sometimes|url',
-            //'whatsapp_fields' => 'required',
-            'whatsapp_fields.*.number' => 'required',
-            'whatsapp_fields.*.department' => 'required',
-            'phone_fields.*.number' => 'required',
-            'phone_fields.*.department' => 'required'
+            'billing_url' => 'nullable|sometimes|url',
+            //'whatsapp_numbers' => 'required',
+            'whatsapp_numbers.*.number' => 'required',
+            'whatsapp_numbers.*.department' => 'required',
+            'phone_numbers.*.number' => 'required',
+            'phone_numbers.*.department' => 'required'
         ];
     }
 }

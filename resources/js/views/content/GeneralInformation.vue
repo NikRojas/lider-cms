@@ -202,7 +202,7 @@ export default {
         location: "",
         phone: "",
         email: "",
-        billing_url: "",
+        //billing_url: "",
       },
       errors: {},
       requestSubmit: false,

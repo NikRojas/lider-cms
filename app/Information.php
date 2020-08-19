@@ -48,6 +48,7 @@ class Information extends Model
     public function getPhoneNumbersFormattedAttribute(){
         $data = [];
         $department = [];
+        //$code_department = NULL;
         if($this->phone_numbers){
             foreach ($this->phone_numbers as $key => $value) {
                 foreach ($value as $key2 => $value2) {
@@ -56,7 +57,9 @@ class Information extends Model
                         $data[$key]["department"] = $department->department; 
                     }
                     else{
-                        $data[$key][$key2] = '(0'.$department->code_number.') '.$value2;
+                        $department = Ubigeo::where('code_department',$value["department"])->first();
+                        //dd($department);
+                        $data[$key]["number"] = '(0'.$department["code_number"].') '.$value2;
                     }
                 }
             }

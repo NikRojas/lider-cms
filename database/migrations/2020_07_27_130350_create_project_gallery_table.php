@@ -21,6 +21,9 @@ class CreateProjectGalleryTable extends Migration
             $table->integer('index');  
             $table->string('project_id');
             $table->foreign('project_id')->references('id')->on('projects');
+
+            $table->bigInteger('master_type_gallery_id')->unsigned();
+            $table->foreign('master_type_gallery_id')->references('id')->on('master_type_gallery');
             $table->timestamps();
         });
     }

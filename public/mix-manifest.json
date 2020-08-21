@@ -12,6 +12,7 @@
     "/js/pages/administration/features-project.js": "/js/pages/administration/features-project.js",
     "/js/pages/administration/financial-entities.js": "/js/pages/administration/financial-entities.js",
     "/js/pages/administration/status-project.js": "/js/pages/administration/status-project.js",
+    "/js/pages/administration/status-project~js/pages/projects/create.js": "/js/pages/administration/status-project~js/pages/projects/create.js",
     "/js/pages/administration/status-project~js/pages/users.js": "/js/pages/administration/status-project~js/pages/users.js",
     "/js/pages/content/general-information.js": "/js/pages/content/general-information.js",
     "/js/pages/content/members.js": "/js/pages/content/members.js",

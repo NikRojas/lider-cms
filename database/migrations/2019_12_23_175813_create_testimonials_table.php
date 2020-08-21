@@ -21,7 +21,7 @@ class CreateTestimonialsTable extends Migration
             $table->string('title_en');
             $table->text('description_es');
             $table->text('description_en');
-            $table->integer('index');    
+            $table->bigInteger('index');    
             
             $table->timestamps();
         });

@@ -18,8 +18,8 @@ class CreateProjectFilesTable extends Migration
             $table->string('name_es');
             $table->string('name_en');
             $table->string('file',100);
-            $table->integer('index');  
-            $table->string('project_id');
+            $table->bigInteger('index');  
+            $table->bigInteger('project_id')->unsigned();
             $table->foreign('project_id')->references('id')->on('projects');
             $table->timestamps();
         });

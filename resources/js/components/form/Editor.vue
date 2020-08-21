@@ -39,7 +39,7 @@
       ref="ref_content"
     ></quill-Editor>
     <!--<input type="text" class="form-control" v-model="value[ active ]" />-->
-    <div v-for="(el,i) in errors" :key="i">
+    <div class="mt-2" v-for="(el,i) in errors" :key="i">
       <label class="text-danger text-sm d-block" v-if="i == variable+'_'+active">{{ el[0] }}</label>
     </div>
   </div>

@@ -50,13 +50,41 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {
     BreadCrumb: _components_BreadCrumb__WEBPACK_IMPORTED_MODULE_0__["default"],
-    NoData: _components_NoData__WEBPACK_IMPORTED_MODULE_2__["default"]
+    NoData: _components_NoData__WEBPACK_IMPORTED_MODULE_2__["default"],
+    Skeleton: vue_loading_skeleton__WEBPACK_IMPORTED_MODULE_1__["Skeleton"]
   },
   props: {
     routeCreate: String,
@@ -75,6 +103,20 @@ __webpack_require__.r(__webpack_exports__);
       loadingGet: false,
       requestSubmit: false
     };
+  },
+  methods: {
+    getEls: function getEls() {
+      var _this = this;
+
+      this.loadingEls = true;
+      axios.get(this.routeGetAll).then(function (response) {
+        _this.elements = response.data;
+        _this.loadingEls = false;
+      })["catch"](function (error) {});
+    }
+  },
+  created: function created() {
+    this.getEls();
   }
 });
 
@@ -153,8 +195,8 @@ var render = function() {
             _vm._l(4, function(i) {
               return _c(
                 "div",
-                { key: i, staticClass: "col-12 mb-4" },
-                [_c("Skeleton", { attrs: { height: "150px" } })],
+                { key: i, staticClass: "col-12 col-lg-4 mb-4" },
+                [_c("Skeleton", { attrs: { height: "400px" } })],
                 1
               )
             }),
@@ -164,11 +206,192 @@ var render = function() {
             "div",
             [
               _vm.elements.length
-                ? _c("div", { staticClass: "row" }, [
-                    _c("div", { staticClass: "col-12" }, [
-                      _c("p", [_vm._v(" " + _vm._s(_vm.messageOrder) + " ")])
-                    ])
-                  ])
+                ? _c(
+                    "div",
+                    { staticClass: "row" },
+                    [
+                      _c("div", { staticClass: "col-12" }, [
+                        _c("p", [_vm._v(_vm._s(_vm.messageOrder))])
+                      ]),
+                      _vm._v(" "),
+                      _vm._l(_vm.elements, function(el) {
+                        return _c(
+                          "div",
+                          { key: el.id, staticClass: "col-12 col-lg-4 mb-4" },
+                          [
+                            _c(
+                              "div",
+                              { staticClass: "card position-relative" },
+                              [
+                                _c(
+                                  "div",
+                                  {
+                                    staticClass:
+                                      "text-center position-absolute pl-2 pt-2"
+                                  },
+                                  [
+                                    _c("img", {
+                                      attrs: {
+                                        src:
+                                          _vm.imagesUrl +
+                                          "/projects/" +
+                                          el.logo,
+                                        height: "50",
+                                        alt: el.name_es
+                                      }
+                                    })
+                                  ]
+                                ),
+                                _vm._v(" "),
+                                _c("img", {
+                                  staticClass: "object-fit--cover",
+                                  attrs: {
+                                    height: "300",
+                                    src:
+                                      _vm.imagesUrl +
+                                      "/projects/" +
+                                      el.images_format[0],
+                                    alt: ""
+                                  }
+                                }),
+                                _vm._v(" "),
+                                _c("div", { staticClass: "card-body" }, [
+                                  _c("div", [
+                                    _c(
+                                      "span",
+                                      {
+                                        staticClass: "badge badge-info badge-md"
+                                      },
+                                      [_vm._v(_vm._s(el.status_rel.name_es))]
+                                    ),
+                                    _vm._v(" "),
+                                    _c("h2", { staticClass: "mt-1" }, [
+                                      _vm._v(_vm._s(el.name_es))
+                                    ]),
+                                    _vm._v(" "),
+                                    _c("div", { staticClass: "mb-2" }, [
+                                      _c("div", [
+                                        _c(
+                                          "h4",
+                                          {
+                                            staticClass:
+                                              "d-inline-block font-weight-normal"
+                                          },
+                                          [_vm._v("Ubicación:")]
+                                        ),
+                                        _vm._v(" "),
+                                        _c(
+                                          "h4",
+                                          { staticClass: "d-inline-block" },
+                                          [_vm._v(_vm._s(el.location))]
+                                        )
+                                      ]),
+                                      _vm._v(" "),
+                                      _c("div", [
+                                        _c(
+                                          "h4",
+                                          {
+                                            staticClass:
+                                              "d-inline-block font-weight-normal"
+                                          },
+                                          [_vm._v("Habitaciones:")]
+                                        ),
+                                        _vm._v(" "),
+                                        _c(
+                                          "h4",
+                                          { staticClass: "d-inline-block" },
+                                          [_vm._v(_vm._s(el.rooms_es))]
+                                        )
+                                      ]),
+                                      _vm._v(" "),
+                                      _c("div", [
+                                        _c(
+                                          "h4",
+                                          {
+                                            staticClass:
+                                              "d-inline-block font-weight-normal"
+                                          },
+                                          [_vm._v("Metraje:")]
+                                        ),
+                                        _vm._v(" "),
+                                        _c(
+                                          "h4",
+                                          { staticClass: "d-inline-block" },
+                                          [_vm._v(_vm._s(el.footage_es))]
+                                        )
+                                      ])
+                                    ]),
+                                    _vm._v(" "),
+                                    _c("div", { staticClass: "text-right" }, [
+                                      _c("div", [
+                                        _c("div", [
+                                          _c(
+                                            "h4",
+                                            {
+                                              staticClass:
+                                                "d-inline-block font-weight-normal"
+                                            },
+                                            [_vm._v("Precio Total Soles:")]
+                                          ),
+                                          _vm._v(" "),
+                                          _c(
+                                            "h4",
+                                            { staticClass: "d-inline-block" },
+                                            [
+                                              _vm._v(
+                                                "S/" + _vm._s(el.price_total)
+                                              )
+                                            ]
+                                          )
+                                        ]),
+                                        _vm._v(" "),
+                                        _c("div", [
+                                          _c(
+                                            "h4",
+                                            {
+                                              staticClass:
+                                                "d-inline-block font-weight-normal"
+                                            },
+                                            [_vm._v("Precio Total Dolares:")]
+                                          ),
+                                          _vm._v(" "),
+                                          _c(
+                                            "h4",
+                                            { staticClass: "d-inline-block" },
+                                            [
+                                              _vm._v(
+                                                "$" +
+                                                  _vm._s(el.price_total_foreign)
+                                              )
+                                            ]
+                                          )
+                                        ])
+                                      ]),
+                                      _c(
+                                        "h4",
+                                        {
+                                          staticClass:
+                                            "d-inline-block font-weight-normal"
+                                        },
+                                        [_vm._v("Precio de Reserva:")]
+                                      ),
+                                      _vm._v(" "),
+                                      _c(
+                                        "h2",
+                                        { staticClass: "d-inline-block" },
+                                        [_vm._v("S/. " + _vm._s(el.price))]
+                                      )
+                                    ])
+                                  ])
+                                ])
+                              ]
+                            )
+                          ]
+                        )
+                      })
+                    ],
+                    2
+                  )
                 : _c("NoData")
             ],
             1

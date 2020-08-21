@@ -17,7 +17,7 @@ class CreateProjectsBanksTable extends Migration
             $table->bigIncrements('id');
 
             $table->bigInteger('bank_id')->unsigned();
-            $table->string('project_id');
+            $table->bigInteger('project_id')->unsigned();
             $table->foreign('bank_id')->references('id')->on('banks');
             $table->foreign('project_id')->references('id')->on('projects');
 

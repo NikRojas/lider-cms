@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\Cms\Project;
 
+use Illuminate\Validation\Rule;
 use Illuminate\Foundation\Http\FormRequest;
 
 class ProjectRequest extends FormRequest
@@ -24,31 +25,36 @@ class ProjectRequest extends FormRequest
     public function rules()
     {
         $rules = [
-            'title_es' => 'required|max:60',
-            'title_en' => 'required|max:60',
+            'name_en' => ['required',Rule::unique('projects')->ignore($this->id),'max:100'],
+            'name_es' => ['required',Rule::unique('projects')->ignore($this->id),'max:100'],
             'rooms_es' => 'required|max:60',
             'rooms_en' => 'required|max:60',
             'footage_es' => 'required|max:60',
             'footage_en' => 'required|max:60',
-            'advisors' => 'required|array',
+            'advisors' => 'required',
             'district'              => 'required',
             'department'            => 'required',
             'province'              => 'required',
-            'url_google_maps' => 'required|url',
-            'url_waze' => 'required|url',
+            'url_google_maps' => 'sometimes|required|url',
+            'url_waze' => 'sometimes|required|url',
             'text_place_es' => 'required|max:80',
             'text_place_en' => 'required|max:80',
             'project_status_id' => 'required',
             'location' => 'required',
-            'statuses' => 'required|array',
-            'financial_entities' => 'required|array',
-            'features' => 'required|array',
+            //'statuses' => 'required',
+            'financial_entities' => 'required',
+            'features' => 'required',
             'price_total' => 'required',
             'description_en' => 'required',
             'description_es' => 'required',
             'price_total_foreign' => 'required',
+            'price' => 'required',
             'latitude' => 'required',
             'longitude' => 'required',
+            'sales_room_es' => 'required',
+            'sales_room_en' => 'required',
+            'schedule_attention_es' => 'required',
+            'schedule_attention_en' => 'required',
         ];
         switch ($this->method()) {
             case 'POST':   

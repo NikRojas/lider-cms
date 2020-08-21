@@ -922,8 +922,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_form_Input__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../../components/form/Input */ "./resources/js/components/form/Input.vue");
 /* harmony import */ var _components_Button__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../../components/Button */ "./resources/js/components/Button.vue");
 /* harmony import */ var _components_form_Editor__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../../components/form/Editor */ "./resources/js/components/form/Editor.vue");
-/* harmony import */ var v_money__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! v-money */ "./node_modules/v-money/dist/v-money.js");
-/* harmony import */ var v_money__WEBPACK_IMPORTED_MODULE_11___default = /*#__PURE__*/__webpack_require__.n(v_money__WEBPACK_IMPORTED_MODULE_11__);
+/* harmony import */ var _components_form_InputSlug__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../../components/form/InputSlug */ "./resources/js/components/form/InputSlug.vue");
+/* harmony import */ var v_money__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! v-money */ "./node_modules/v-money/dist/v-money.js");
+/* harmony import */ var v_money__WEBPACK_IMPORTED_MODULE_12___default = /*#__PURE__*/__webpack_require__.n(v_money__WEBPACK_IMPORTED_MODULE_12__);
 //
 //
 //
@@ -1350,6 +1351,23 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
 
 
 
@@ -1365,7 +1383,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {
     BreadCrumb: _components_BreadCrumb__WEBPACK_IMPORTED_MODULE_1__["default"],
-    Money: v_money__WEBPACK_IMPORTED_MODULE_11__["Money"],
+    Money: v_money__WEBPACK_IMPORTED_MODULE_12__["Money"],
     Editor: _components_form_Editor__WEBPACK_IMPORTED_MODULE_10__["default"],
     Statuses: _components_form_Statuses__WEBPACK_IMPORTED_MODULE_5__["default"],
     Ubigeo: _components_form_Ubigeo__WEBPACK_IMPORTED_MODULE_7__["default"],
@@ -1375,7 +1393,8 @@ __webpack_require__.r(__webpack_exports__);
     Button: _components_Button__WEBPACK_IMPORTED_MODULE_9__["default"],
     FinancialEntities: _components_form_FinancialEntities__WEBPACK_IMPORTED_MODULE_3__["default"],
     Advisors: _components_form_Advisors__WEBPACK_IMPORTED_MODULE_4__["default"],
-    Features: _components_form_Features__WEBPACK_IMPORTED_MODULE_6__["default"]
+    Features: _components_form_Features__WEBPACK_IMPORTED_MODULE_6__["default"],
+    InputSlug: _components_form_InputSlug__WEBPACK_IMPORTED_MODULE_11__["default"]
   },
   props: {
     imagesUrl: String,
@@ -1450,6 +1469,29 @@ __webpack_require__.r(__webpack_exports__);
       this.requestServer = true;
       var fd = new FormData();
 
+      if (this.$refs.ref_images.dropzone.files.length) {
+        this.$refs.ref_images.dropzone.files.forEach(function (el, i) {
+          fd.append("images" + i, el);
+        });
+        fd.append('images_count', this.$refs.ref_images.dropzone.files.length);
+      }
+
+      if (this.element.name_en) {
+        fd.append("name_en", this.element.name_en);
+      }
+
+      if (this.element.name_es) {
+        fd.append("name_es", this.element.name_es);
+      }
+
+      if (this.element.slug_en) {
+        fd.append("slug_en", this.element.slug_en);
+      }
+
+      if (this.element.slug_es) {
+        fd.append("slug_es", this.element.slug_es);
+      }
+
       if (this.element.banner_en) {
         fd.append("banner_en", this.element.banner_en);
       }
@@ -1461,13 +1503,134 @@ __webpack_require__.r(__webpack_exports__);
       if (this.$refs.ref_logo.dropzone.files[0]) {
         fd.append("logo", this.$refs.ref_logo.dropzone.files[0]);
       }
-      /*if(this.element.logo_en){
-        fd.append("logo_en", this.element.logo_en);
-      }
-      if(this.element.image_responsive_es){
-        fd.append("image_responsive_es", this.element.image_responsive_es);
-      }*/
 
+      if (this.element.project_status_id) {
+        fd.append("project_status_id", this.element.project_status_id);
+      }
+
+      if (this.element.description_en) {
+        fd.append("description_en", this.element.description_en);
+      }
+
+      if (this.element.description_es) {
+        fd.append("description_es", this.element.description_es);
+      }
+
+      if (this.element.location) {
+        fd.append("location", this.element.location);
+      }
+
+      if (this.element.rooms_en) {
+        fd.append("rooms_en", this.element.rooms_en);
+      }
+
+      if (this.element.rooms_es) {
+        fd.append("rooms_es", this.element.rooms_es);
+      }
+
+      if (this.element.footage_en) {
+        fd.append("footage_en", this.element.footage_en);
+      }
+
+      if (this.element.footage_es) {
+        fd.append("footage_es", this.element.footage_es);
+      }
+
+      if (this.$refs.ref_brochure.dropzone.files[0]) {
+        fd.append("brochure", this.$refs.ref_brochure.dropzone.files[0]);
+      }
+
+      if (this.element.text_place_en) {
+        fd.append("text_place_en", this.element.text_place_en);
+      }
+
+      if (this.element.text_place_es) {
+        fd.append("text_place_es", this.element.text_place_es);
+      }
+
+      if (this.element.url_google_maps) {
+        fd.append("url_google_maps", this.element.url_google_maps);
+      }
+
+      if (this.element.url_waze) {
+        fd.append("url_waze", this.element.url_waze);
+      }
+
+      if (this.element.map_indication_en) {
+        fd.append("map_indication_en", this.element.map_indication_en);
+      }
+
+      if (this.element.map_indication_es) {
+        fd.append("map_indication_es", this.element.map_indication_es);
+      }
+
+      if (this.element.sales_room_en) {
+        fd.append("sales_room_en", this.element.sales_room_en);
+      }
+
+      if (this.element.sales_room_es) {
+        fd.append("sales_room_es", this.element.sales_room_es);
+      }
+
+      if (this.element.schedule_attention_en) {
+        fd.append("schedule_attention_en", this.element.schedule_attention_en);
+      }
+
+      if (this.element.schedule_attention_es) {
+        fd.append("schedule_attention_es", this.element.schedule_attention_es);
+      }
+
+      if (this.element.map_indications_en) {
+        fd.append("map_indications_en", this.element.map_indications_en);
+      }
+
+      if (this.element.map_indications_es) {
+        fd.append("map_indications_es", this.element.map_indications_es);
+      }
+
+      if (this.element.price_total) {
+        fd.append("price_total", this.element.price_total);
+      }
+
+      if (this.element.price_total_foreign) {
+        fd.append("price_total_foreign", this.element.price_total_foreign);
+      }
+
+      if (this.element.price) {
+        fd.append("price", this.element.price);
+      }
+
+      if (this.element.latitude) {
+        fd.append("latitude", this.element.latitude);
+      }
+
+      if (this.element.longitude) {
+        fd.append("longitude", this.element.longitude);
+      }
+
+      if (this.element.district) {
+        fd.append("district", this.element.district);
+      }
+
+      if (this.element.department) {
+        fd.append("department", this.element.department);
+      }
+
+      if (this.element.province) {
+        fd.append("province", this.element.province);
+      }
+
+      if (this.element.advisors) {
+        fd.append("advisors", JSON.stringify(this.element.advisors));
+      }
+
+      if (this.element.features) {
+        fd.append("features", JSON.stringify(this.element.features));
+      }
+
+      if (this.element.financial_entities) {
+        fd.append("financial_entities", JSON.stringify(this.element.financial_entities));
+      }
 
       axios.post(this.routeStore, fd).then(function (response) {
         _this.requestServer = false;
@@ -1764,7 +1927,7 @@ var render = function() {
       }),
       _vm._v(" "),
       _vm._l(_vm.errors, function(el, i) {
-        return _c("div", { key: i }, [
+        return _c("div", { key: i, staticClass: "mt-2" }, [
           i == _vm.variable + "_" + _vm.active
             ? _c("label", { staticClass: "text-danger text-sm d-block" }, [
                 _vm._v(_vm._s(el[0]))
@@ -2648,6 +2811,56 @@ var render = function() {
               _c("div", { staticClass: "card" }, [
                 _c("div", { staticClass: "card-body" }, [
                   _c("div", { staticClass: "row" }, [
+                    _c(
+                      "div",
+                      { staticClass: "col-12" },
+                      [
+                        _c("InputSlug", {
+                          attrs: {
+                            label: "Nombre",
+                            variable: "name",
+                            type: "Ruta",
+                            errors: _vm.errors,
+                            valueEn: _vm.element.name_en,
+                            valueEs: _vm.element.name_es,
+                            slugEn: _vm.element.slug_en,
+                            slugEs: _vm.element.slug_es,
+                            valueEnParent: _vm.element.name_en,
+                            valueEsParent: _vm.element.name_es,
+                            slugEnParent: _vm.element.slug_en,
+                            slugEsParent: _vm.element.slug_es
+                          },
+                          on: {
+                            "update:valueEn": function($event) {
+                              return _vm.$set(_vm.element, "name_en", $event)
+                            },
+                            "update:value-en": function($event) {
+                              return _vm.$set(_vm.element, "name_en", $event)
+                            },
+                            "update:valueEs": function($event) {
+                              return _vm.$set(_vm.element, "name_es", $event)
+                            },
+                            "update:value-es": function($event) {
+                              return _vm.$set(_vm.element, "name_es", $event)
+                            },
+                            "update:slugEn": function($event) {
+                              return _vm.$set(_vm.element, "slug_en", $event)
+                            },
+                            "update:slug-en": function($event) {
+                              return _vm.$set(_vm.element, "slug_en", $event)
+                            },
+                            "update:slugEs": function($event) {
+                              return _vm.$set(_vm.element, "slug_es", $event)
+                            },
+                            "update:slug-es": function($event) {
+                              return _vm.$set(_vm.element, "slug_es", $event)
+                            }
+                          }
+                        })
+                      ],
+                      1
+                    ),
+                    _vm._v(" "),
                     _c("div", { staticClass: "col-12 col-lg-6" }, [
                       _c(
                         "div",
@@ -2804,14 +3017,18 @@ var render = function() {
                       [
                         _c("Statuses", {
                           attrs: {
-                            selected: _vm.element.statuses,
+                            selected: _vm.element.project_status_id,
                             errors: _vm.errors,
                             "route-create": _vm.routeStatusesCreate,
                             "route-get-all": _vm.routeStatusesGetAll
                           },
                           on: {
                             "update:selected": function($event) {
-                              return _vm.$set(_vm.element, "statuses", $event)
+                              return _vm.$set(
+                                _vm.element,
+                                "project_status_id",
+                                $event
+                              )
                             }
                           }
                         })
@@ -3159,7 +3376,7 @@ var render = function() {
                             "label",
                             {
                               staticClass: "font-weight-bold",
-                              attrs: { for: "price_total" }
+                              attrs: { for: "price" }
                             },
                             [_vm._v("Precio Reserva:")]
                           ),
@@ -3170,11 +3387,11 @@ var render = function() {
                               {
                                 staticClass: "form-control form-control-lg",
                                 model: {
-                                  value: _vm.element.price_reserve,
+                                  value: _vm.element.price,
                                   callback: function($$v) {
-                                    _vm.$set(_vm.element, "price_reserve", $$v)
+                                    _vm.$set(_vm.element, "price", $$v)
                                   },
-                                  expression: "element.price_reserve"
+                                  expression: "element.price"
                                 }
                               },
                               "money",
@@ -3183,15 +3400,15 @@ var render = function() {
                             )
                           ),
                           _vm._v(" "),
-                          _vm.errors && _vm.errors.price_reserve
+                          _vm.errors && _vm.errors.price
                             ? _c(
                                 "label",
                                 {
                                   staticClass:
                                     "text-danger text-sm d-block mt-2",
-                                  attrs: { for: "price_reserve" }
+                                  attrs: { for: "price" }
                                 },
-                                [_vm._v(_vm._s(_vm.errors.price_reserve[0]))]
+                                [_vm._v(_vm._s(_vm.errors.price[0]))]
                               )
                             : _vm._e()
                         ],
@@ -3408,7 +3625,7 @@ var render = function() {
                         _c("Editor", {
                           attrs: {
                             size: "sm",
-                            label: "Indicaciones de Dirección",
+                            label: "Indicaciones de Dirección (Opcional)",
                             variable: "map_indications",
                             errors: _vm.errors,
                             valueEn: _vm.element.map_indications_en,

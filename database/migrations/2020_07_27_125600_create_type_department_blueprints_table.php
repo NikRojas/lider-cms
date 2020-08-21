@@ -17,7 +17,7 @@ class CreateTypeDepartmentBlueprintsTable extends Migration
             $table->bigIncrements('id');
             $table->text('description_es');
             $table->text('description_en');
-            $table->integer('index'); 
+            $table->bigInteger('index'); 
             $table->string('image',100)->nullable(); 
 
             $table->bigInteger('type_department_id')->unsigned();

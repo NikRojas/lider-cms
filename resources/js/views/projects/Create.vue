@@ -30,6 +30,22 @@
             <div class="card">
               <div class="card-body">
                 <div class="row">
+                  <div class="col-12">
+                      <InputSlug
+                        label="Nombre"
+                        variable="name"
+                        type="Ruta"
+                        :errors="errors"
+                        :valueEn.sync="element.name_en"
+                        :valueEs.sync="element.name_es"
+                        :slugEn.sync="element.slug_en"
+                        :slugEs.sync="element.slug_es"
+                        :valueEnParent="element.name_en"
+                        :valueEsParent="element.name_es"
+                        :slugEnParent="element.slug_en"
+                        :slugEsParent="element.slug_es"
+                      />
+                    </div>
                   <div class="col-12 col-lg-6">
                     <div class="form-group">
                       <label class="font-weight-bold" for="image">Logo:</label>
@@ -84,7 +100,7 @@
                   </div>
                   <div class="col-12">
                     <Statuses
-                      :selected.sync="element.statuses"
+                      :selected.sync="element.project_status_id"
                       :errors="errors"
                       :route-create="routeStatusesCreate"
                       :route-get-all="routeStatusesGetAll"
@@ -208,17 +224,17 @@
                   </div>
                   <div class="col-12">
                     <div class="form-group">
-                      <label class="font-weight-bold" for="price_total">Precio Reserva:</label>
+                      <label class="font-weight-bold" for="price">Precio Reserva:</label>
                       <money
                         class="form-control form-control-lg"
-                        v-model="element.price_reserve"
+                        v-model="element.price"
                         v-bind="moneyLocal"
                       ></money>
                       <label
-                        v-if="errors && errors.price_reserve"
+                        v-if="errors && errors.price"
                         class="text-danger text-sm d-block mt-2"
-                        for="price_reserve"
-                      >{{ errors.price_reserve[0] }}</label>
+                        for="price"
+                      >{{ errors.price[0] }}</label>
                     </div>
                     </div>
                 </div>
@@ -306,7 +322,7 @@
                   <div class="col-12">
                     <Editor
                       size="sm"
-                      label="Indicaciones de Dirección"
+                      label="Indicaciones de Dirección (Opcional)"
                       variable="map_indications"
                       :errors="errors"
                       :valueEn.sync="element.map_indications_en"
@@ -436,6 +452,7 @@ import Ubigeo from "../../components/form/Ubigeo";
 import Input from "../../components/form/Input";
 import Button from "../../components/Button";
 import Editor from "../../components/form/Editor";
+import InputSlug from "../../components/form/InputSlug";
 import { Money } from "v-money";
 export default {
   components: {
@@ -451,6 +468,7 @@ export default {
     FinancialEntities,
     Advisors,
     Features,
+    InputSlug
   },
   props: {
     imagesUrl: String,
@@ -522,6 +540,24 @@ export default {
     submit() {
       this.requestServer = true;
       const fd = new FormData();
+      if(this.$refs.ref_images.dropzone.files.length){
+        this.$refs.ref_images.dropzone.files.forEach( (el, i) => {
+          fd.append("images"+i,el);
+        });
+        fd.append('images_count',this.$refs.ref_images.dropzone.files.length);
+      }
+      if (this.element.name_en) {
+        fd.append("name_en", this.element.name_en);
+      }
+      if (this.element.name_es) {
+        fd.append("name_es", this.element.name_es);
+      }
+      if (this.element.slug_en) {
+        fd.append("slug_en", this.element.slug_en);
+      }
+      if (this.element.slug_es) {
+        fd.append("slug_es", this.element.slug_es);
+      }
       if (this.element.banner_en) {
         fd.append("banner_en", this.element.banner_en);
       }
@@ -531,12 +567,102 @@ export default {
       if (this.$refs.ref_logo.dropzone.files[0]) {
         fd.append("logo", this.$refs.ref_logo.dropzone.files[0]);
       }
-      /*if(this.element.logo_en){
-        fd.append("logo_en", this.element.logo_en);
+      if(this.element.project_status_id){
+        fd.append("project_status_id", this.element.project_status_id);
       }
-      if(this.element.image_responsive_es){
-        fd.append("image_responsive_es", this.element.image_responsive_es);
-      }*/
+      if (this.element.description_en) {
+        fd.append("description_en", this.element.description_en);
+      }
+      if (this.element.description_es) {
+        fd.append("description_es", this.element.description_es);
+      }
+       if (this.element.location) {
+        fd.append("location", this.element.location);
+      }
+      if (this.element.rooms_en) {
+        fd.append("rooms_en", this.element.rooms_en);
+      }
+      if (this.element.rooms_es) {
+        fd.append("rooms_es", this.element.rooms_es);
+      }
+      if (this.element.footage_en) {
+        fd.append("footage_en", this.element.footage_en);
+      }
+      if (this.element.footage_es) {
+        fd.append("footage_es", this.element.footage_es);
+      }
+      if (this.$refs.ref_brochure.dropzone.files[0]) {
+        fd.append("brochure", this.$refs.ref_brochure.dropzone.files[0]);
+      }
+      if (this.element.text_place_en) {
+        fd.append("text_place_en", this.element.text_place_en);
+      }
+      if (this.element.text_place_es) {
+        fd.append("text_place_es", this.element.text_place_es);
+      }
+      if (this.element.url_google_maps) {
+        fd.append("url_google_maps", this.element.url_google_maps);
+      }
+      if (this.element.url_waze) {
+        fd.append("url_waze", this.element.url_waze);
+      }
+      if (this.element.map_indication_en) {
+        fd.append("map_indication_en", this.element.map_indication_en);
+      }
+      if (this.element.map_indication_es) {
+        fd.append("map_indication_es", this.element.map_indication_es);
+      }
+      if (this.element.sales_room_en) {
+        fd.append("sales_room_en", this.element.sales_room_en);
+      }
+      if (this.element.sales_room_es) {
+        fd.append("sales_room_es", this.element.sales_room_es);
+      }
+      if (this.element.schedule_attention_en) {
+        fd.append("schedule_attention_en", this.element.schedule_attention_en);
+      }
+      if (this.element.schedule_attention_es) {
+        fd.append("schedule_attention_es", this.element.schedule_attention_es);
+      }
+      if (this.element.map_indications_en) {
+        fd.append("map_indications_en", this.element.map_indications_en);
+      }
+      if (this.element.map_indications_es) {
+        fd.append("map_indications_es", this.element.map_indications_es);
+      }
+      if (this.element.price_total) {
+        fd.append("price_total", this.element.price_total);
+      }
+      if (this.element.price_total_foreign) {
+        fd.append("price_total_foreign", this.element.price_total_foreign);
+      }
+      if (this.element.price) {
+        fd.append("price", this.element.price);
+      }
+      if (this.element.latitude) {
+        fd.append("latitude", this.element.latitude);
+      }
+      if (this.element.longitude) {
+        fd.append("longitude", this.element.longitude);
+      }
+      if (this.element.district) {
+        fd.append("district", this.element.district);
+      }
+      if (this.element.department) {
+        fd.append("department", this.element.department);
+      }
+      if (this.element.province) {
+        fd.append("province", this.element.province);
+      }
+      if (this.element.advisors) {
+        fd.append("advisors", JSON.stringify(this.element.advisors));
+      }
+      if (this.element.features) {
+        fd.append("features", JSON.stringify(this.element.features));
+      }
+      if (this.element.financial_entities) {
+        fd.append("financial_entities", JSON.stringify(this.element.financial_entities));
+      }
       axios
         .post(this.routeStore, fd)
         .then((response) => {

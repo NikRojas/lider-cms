@@ -34,7 +34,7 @@ class SliderController extends Controller
         $storeImageResponsiveEn = Storage::disk('public')->putFileAs('img/slider/',$request->file('image_responsive_en'),$imageNameResponsiveEn);
 
         if(!$storeImageEn || !$storeImageResponsiveEn || !$storeImageResponsiveEs || !$storeImageEs){
-            $request->session()->flash('error', trans('custom.message.delete.error', ['name' => trans('custom.attribute.slide')]));
+            $request->session()->flash('error', trans('custom.message.create.error', ['name' => trans('custom.attribute.slide')]));
             return response()->json(["route" => route('cms.slider.index')],500);
         }
         $index = $this->getMaxIndex(Slider::selectRaw('MAX(id),MAX(`index`) as "index"')->get());
@@ -109,7 +109,7 @@ class SliderController extends Controller
             $imageNameEs = $this->setFileName('se-',$request->file('image_es'));
             $storeImageEs = Storage::disk('public')->putFileAs('img/slider/',$request->file('image_es'),$imageNameEs);
             if(!$storeImageEs){
-                $request->session()->flash('error', trans('custom.message.delete.error', ['name' => trans('custom.attribute.slide')]));
+                $request->session()->flash('error', trans('custom.message.update.error', ['name' => trans('custom.attribute.slide')]));
                 return response()->json(["route" => route('cms.slider.index')],500);    
             }
             $request_element = array_merge($request_element,["image_es" => $imageNameEs]);   
@@ -121,7 +121,7 @@ class SliderController extends Controller
             $imageResponsiveEs = $this->setFileName('sre-',$request->file('image_responsive_es'));
             $storeImageResponsiveEs = Storage::disk('public')->putFileAs('img/slider/',$request->file('image_responsive_es'),$imageResponsiveEs);
             if(!$storeImageResponsiveEs){
-                $request->session()->flash('error', trans('custom.message.delete.error', ['name' => trans('custom.attribute.slide')]));
+                $request->session()->flash('error', trans('custom.message.update.error', ['name' => trans('custom.attribute.slide')]));
                 return response()->json(["route" => route('cms.slider.index')],500);   
             }
             $request_element = array_merge($request_element,["image_responsive_es" => $imageResponsiveEs]);   

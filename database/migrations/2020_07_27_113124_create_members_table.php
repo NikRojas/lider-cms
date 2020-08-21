@@ -17,7 +17,7 @@ class CreateMembersTable extends Migration
             $table->bigIncrements('id');
             $table->string('name');
             $table->string('image',100);
-            $table->integer('index');  
+            $table->bigInteger('index');  
             $table->timestamps();
         });
     }

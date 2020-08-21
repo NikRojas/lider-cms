@@ -17,7 +17,7 @@ class CreateProjectsProjectFeaturesTable extends Migration
             $table->bigIncrements('id');
 
             $table->bigInteger('feature_id')->unsigned();
-            $table->string('project_id');
+            $table->bigInteger('project_id')->unsigned();
             $table->foreign('feature_id')->references('id')->on('project_features');
             $table->foreign('project_id')->references('id')->on('projects');
 

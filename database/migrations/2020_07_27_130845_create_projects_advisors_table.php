@@ -17,7 +17,7 @@ class CreateProjectsAdvisorsTable extends Migration
             $table->bigIncrements('id');
 
             $table->bigInteger('advisor_id')->unsigned();
-            $table->string('project_id');
+            $table->bigInteger('project_id')->unsigned();
             $table->foreign('advisor_id')->references('id')->on('advisors');
             $table->foreign('project_id')->references('id')->on('projects');
 

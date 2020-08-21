@@ -17,13 +17,13 @@ class CreateProjectTypeDepartmentsTable extends Migration
             $table->bigIncrements('id');
             $table->string('name');
             $table->string('image',100);
-            $table->integer('index'); 
+            $table->bigInteger('index'); 
             $table->text('url')->nullable();
             $table->boolean('url_360')->default(1);
             $table->float('area')->nullable();
             $table->integer('rooms')->nullable();
             
-            $table->string('project_id');
+            $table->bigInteger('project_id')->unsigned();
             $table->foreign('project_id')->references('id')->on('projects');
             $table->timestamps();
         });

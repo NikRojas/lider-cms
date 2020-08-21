@@ -31,4 +31,19 @@ trait CmsTrait {
         return $data;
     }
 
+    public function getProvinces($department)
+    {
+        $data = Ubigeo::select('code_province','province')->distinct()->where('code_department',$department)
+        ->where('code_province','!=','00')->orderBy('province')->get();
+        return $data;
+    }
+
+    public function getDistricts($department,$province)
+    {
+        $data = Ubigeo::select('code_district','district')->distinct()->where('code_department',$department)
+        ->where('code_province',$province)
+        ->where('code_district','!=','00')->orderBy('district')->get();
+        return $data;
+    }
+
 }

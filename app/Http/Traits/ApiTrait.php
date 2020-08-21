@@ -48,7 +48,6 @@ trait ApiTrait {
         return $content;
     }
 
-
     public function getPaginateSuccessStories($request){
         if(!$request->department){
             return $this->sendError("Not found");

@@ -35,8 +35,10 @@ class CreateProjectsTable extends Migration
             $table->text('url_waze')->nullable();
             $table->text('map_indications_es');
             $table->text('map_indications_en');
-            $table->text('sales_room');
-            $table->text('schedule_attention');
+            $table->text('sales_room_es');
+            $table->text('sales_room_en');
+            $table->text('schedule_attention_en');
+            $table->text('schedule_attention_es');
             $table->float('price_total');
             $table->float('price_total_foreign');
             $table->float('price');

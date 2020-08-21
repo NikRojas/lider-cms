@@ -333,7 +333,7 @@ export default {
         autoProcessQueue: false,
         thumbnailWidth: 150,
         addRemoveLinks: true,
-        dictRemoveFile: "Remover Imagen"
+        dictRemoveFile: "Remover"
       }
     };
   },

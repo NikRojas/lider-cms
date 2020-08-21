@@ -174,12 +174,6 @@ export default {
       if(this.element.image_responsive_es){
         fd.append("image_responsive_es", this.element.image_responsive_es);
       }
-      /*if (this.$refs.ref_image_responsive_en.dropzone.files[0]) {
-        fd.append("image_responsive_en", this.$refs.ref_image_responsive_en.dropzone.files[0]);
-      }
-      if (this.$refs.ref_image_responsive_es.dropzone.files[0]) {
-        fd.append("image_responsive_es", this.$refs.ref_image_responsive_es.dropzone.files[0]);
-      }*/
       axios
         .post(this.routeStore, fd)
         .then((response) => {

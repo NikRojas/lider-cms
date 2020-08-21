@@ -95,7 +95,13 @@ Route::middleware(['auth'])->namespace('Cms')->name('cms.')->group(function() {
 
     #Projects
     Route::namespace('Projects')->prefix('proyectos')->name('projects.')->group(function() {
-        Route::get('/', 'ProjectController@index')->name('index');
+        Route::get('/', 'ProjectsController@index')->name('index');
+        Route::get('/nuevo', 'ProjectsController@create')->name('create');
+        Route::get('/editar/{element}', 'ProjectsController@edit')->name('edit');
+        Route::post('/', 'ProjectsController@store')->name('store');
+        Route::put('/order', 'ProjectsController@order')->name('order');
+        Route::get('/json/get-all', 'ProjectsController@getAll')->name('get-all');
+        Route::get('/json/get/{element}', 'ProjectsController@get')->name('get');
     });
 
     Route::namespace('Content')->prefix('contenido')->name('content.')->group(function() {
@@ -188,5 +194,8 @@ Route::middleware(['auth'])->namespace('Cms')->name('cms.')->group(function() {
 
     #Misc
     Route::get('files/{folder}/{subfolder}/{file}','CmsController@getFile')->name('get-file');
-    Route::get('json/select/categories', 'CmsController@getCategories')->name('json.get-categories');
+    Route::get('json/get-departments', 'CmsController@getDepartmentsParent')->name('json.get-departments');
+    Route::get('json/get-provinces', 'CmsController@getProvincesParent')->name('json.get-provinces');
+    Route::get('json/get-districts', 'CmsController@getDistrictsParent')->name('json.get-districts');
+    //Route::get('json/select/categories', 'CmsController@getCategories')->name('json.get-categories');
 });

@@ -376,7 +376,7 @@ __webpack_require__.r(__webpack_exports__);
         autoProcessQueue: false,
         thumbnailWidth: 150,
         addRemoveLinks: true,
-        dictRemoveFile: "Remover Imagen"
+        dictRemoveFile: "Remover"
       }
     };
   },

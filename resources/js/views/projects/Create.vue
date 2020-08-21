@@ -1,0 +1,557 @@
+<template>
+  <div>
+    <form @submit.prevent="submit">
+      <div class="header pb-6">
+        <div class="container-fluid">
+          <div class="header-body">
+            <div class="row align-items-center pt-0 pt-md-2 pb-4">
+              <div class="col-6 col-md-7">
+                <BreadCrumb title="Crear Proyecto" parent active="Proyectos"></BreadCrumb>
+              </div>
+              <div class="col-6 col-md text-right">
+                <Button
+                  :text="'Guardar'"
+                  :classes="['btn-inverse-primary','mr-2']"
+                  :request-server="requestServer"
+                ></Button>
+                <a type="button" class="btn btn-secondary" :href="routeReturn">Cancelar</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="container-fluid mt--6">
+        <div class="row mb-4">
+          <div class="col-12 col-lg-2">
+            <h2>Brief</h2>
+            <p>Indica los datos principales del Proyecto</p>
+          </div>
+          <div class="col-12 col-lg-10">
+            <div class="card">
+              <div class="card-body">
+                <div class="row">
+                  <div class="col-12 col-lg-6">
+                    <div class="form-group">
+                      <label class="font-weight-bold" for="image">Logo:</label>
+                      <vue-dropzone
+                        ref="ref_logo"
+                        @vdropzone-file-added="$validateImageDropzone($event,$refs.ref_logo.dropzone,1,512000,'500kb')"
+                        id="image"
+                        class="text-center"
+                        :options="dropzoneOptions"
+                        :duplicateCheck="true"
+                        :useCustomSlot="true"
+                      >
+                        <div class="dropzone-custom-content">
+                          <h5
+                            class="dropzone-custom-title text-primary"
+                          >Suelte los archivos aquí o haga click para cargarlos.</h5>
+                        </div>
+                      </vue-dropzone>
+
+                      <label
+                        v-if="errors && errors.logo"
+                        class="text-danger text-sm d-block mt-2"
+                        for="logo"
+                      >{{ errors.logo[0] }}</label>
+                    </div>
+                  </div>
+                  <div class="col-12 col-lg-6">
+                    <div class="form-group">
+                      <label class="font-weight-bold" for="images">Imágenes:</label>
+                      <vue-dropzone
+                        ref="ref_images"
+                        @vdropzone-file-added="$validateImageDropzone($event,$refs.ref_images.dropzone,4,512000,'500kb')"
+                        id="images"
+                        class="text-center"
+                        :options="dropzoneOptionsMultiple"
+                        :duplicateCheck="true"
+                        :useCustomSlot="true"
+                      >
+                        <div class="dropzone-custom-content">
+                          <h5
+                            class="dropzone-custom-title text-primary"
+                          >Suelte los archivos aquí o haga click para cargarlos.</h5>
+                        </div>
+                      </vue-dropzone>
+
+                      <label
+                        v-if="errors && errors.images"
+                        class="text-danger text-sm d-block mt-2"
+                        for="images"
+                      >{{ errors.images[0] }}</label>
+                    </div>
+                  </div>
+                  <div class="col-12">
+                    <Statuses
+                      :selected.sync="element.statuses"
+                      :errors="errors"
+                      :route-create="routeStatusesCreate"
+                      :route-get-all="routeStatusesGetAll"
+                    />
+                  </div>
+                  <div class="col-12">
+                    <Editor
+                      size="sm"
+                      label="Descripción"
+                      variable="description"
+                      :errors="errors"
+                      :valueEn.sync="element.description_en"
+                      :valueEs.sync="element.description_es"
+                      :valueEnParent="element.description_en"
+                      :valueEsParent="element.description_es"
+                    />
+                  </div>
+                  <div class="col-12 col-lg-6">
+                    <Input
+                      label="Habitaciones"
+                      variable="rooms"
+                      :errors="errors"
+                      :valueEn.sync="element.rooms_en"
+                      :valueEs.sync="element.rooms_es"
+                      :valueEnParent="element.rooms_en"
+                      :valueEsParent="element.rooms_es"
+                    />
+                  </div>
+                  <div class="col-12 col-lg-6">
+                    <Input
+                      label="Metraje"
+                      variable="footage"
+                      :errors="errors"
+                      :valueEn.sync="element.footage_en"
+                      :valueEs.sync="element.footage_es"
+                      :valueEnParent="element.footage_en"
+                      :valueEsParent="element.footage_es"
+                    />
+                  </div>
+                  <div class="col-12">
+                    <div class="form-group">
+                      <label class="font-weight-bold" for="brochure">Brochure:</label>
+                      <vue-dropzone
+                        ref="ref_brochure"
+                        @vdropzone-file-added="$validatePDFDropzone($event,$refs.ref_brochure.dropzone,1,512000,'500kb')"
+                        id="brochure"
+                        class="text-center"
+                        :options="dropzoneOptionsBrochure"
+                        :duplicateCheck="true"
+                        :useCustomSlot="true"
+                      >
+                        <div class="dropzone-custom-content">
+                          <h5
+                            class="dropzone-custom-title text-primary"
+                          >Suelte los archivos aquí o haga click para cargarlos.</h5>
+                        </div>
+                      </vue-dropzone>
+
+                      <label
+                        v-if="errors && errors.brochure"
+                        class="text-danger text-sm d-block mt-2"
+                        for="brochure"
+                      >{{ errors.brochure[0] }}</label>
+                    </div>
+                  </div>
+                  <div class="col-12">
+                    <Advisors
+                      :errors="errors"
+                      :selected.sync="element.advisors"
+                      :images-url="imagesUrl"
+                      :route-create="routeAdvisorsCreate"
+                      :route-get-all="routeAdvisorsGetAll"
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row mb-4">
+          <div class="col-12 col-lg-2">
+            <h2>Importes</h2>
+            <p>Indica los montos que tendrá el Proyecto</p>
+          </div>
+          <div class="col-12 col-lg-10">
+            <div class="card">
+              <div class="card-body">
+                <div class="row">
+                  <div class="col-12 col-lg-6">
+                    <div class="form-group">
+                      <label class="font-weight-bold" for="price_total">Precio Total Soles:</label>
+                      <money
+                        class="form-control"
+                        v-model="element.price_total"
+                        v-bind="moneyLocal"
+                      ></money>
+                      <label
+                        v-if="errors && errors.price_total"
+                        class="text-danger text-sm d-block mt-2"
+                        for="price_total"
+                      >{{ errors.price_total[0] }}</label>
+                    </div>
+                  </div>
+                  <div class="col-12 col-lg-6">
+                    <div class="form-group">
+                      <label
+                        class="font-weight-bold"
+                        for="price_total_foreign"
+                      >Precio Total Dolares:</label>
+                      <money
+                        class="form-control"
+                        v-model="element.price_total_foreign"
+                        v-bind="moneyForeign"
+                      ></money>
+                      <label
+                        v-if="errors && errors.price_total_foreign"
+                        class="text-danger text-sm d-block mt-2"
+                        for="price_total_foreign"
+                      >{{ errors.price_total_foreign[0] }}</label>
+                    </div>
+                  </div>
+                  <div class="col-12">
+                    <div class="form-group">
+                      <label class="font-weight-bold" for="price_total">Precio Reserva:</label>
+                      <money
+                        class="form-control form-control-lg"
+                        v-model="element.price_reserve"
+                        v-bind="moneyLocal"
+                      ></money>
+                      <label
+                        v-if="errors && errors.price_reserve"
+                        class="text-danger text-sm d-block mt-2"
+                        for="price_reserve"
+                      >{{ errors.price_reserve[0] }}</label>
+                    </div>
+                    </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row mb-4">
+          <div class="col-12 col-lg-2">
+            <h2>Atributos</h2>
+            <p>Indica los atributos con los que cuenta el Proyecto</p>
+          </div>
+          <div class="col-12 col-lg-10">
+            <div class="card">
+              <div class="card-body">
+                <div class="row">
+                  <div class="col-12">
+                    <ImageForm
+                      label="Banner"
+                      variable="banner"
+                      :errors="errors"
+                      :valueEn.sync="element.banner_en"
+                      :valueEs.sync="element.banner_es"
+                    ></ImageForm>
+                  </div>
+                  <div class="col-12">
+                    <Features
+                      :errors="errors"
+                      :selected.sync="element.features"
+                      :images-url="imagesUrl"
+                      :route-create="routeFeaturesCreate"
+                      :route-get-all="routeFeaturesGetAll"
+                    />
+                  </div>
+                  <div class="col-12">
+                    <FinancialEntities
+                      :errors="errors"
+                      :selected.sync="element.financial_entities"
+                      :images-url="imagesUrl"
+                      :route-create="routeFinancialCreate"
+                      :route-get-all="routeFinancialGetAll"
+                    />
+                  </div>
+                  <div class="col-12">
+                    <Input
+                      label="Speech Galeria"
+                      variable="text_place"
+                      :errors="errors"
+                      :valueEn.sync="element.text_place_en"
+                      :valueEs.sync="element.text_place_es"
+                      :valueEnParent="element.text_place_en"
+                      :valueEsParent="element.text_place_es"
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-12 col-lg-2">
+            <h2>Ubicación</h2>
+            <p>Indica los datos de ubicación del Proyecto</p>
+          </div>
+          <div class="col-12 col-lg-10">
+            <div class="card">
+              <div class="card-body">
+                <div class="row">
+                  <div class="col-12">
+                    <div class="form-group">
+                      <label class="font-weight-bold" for="location">Dirección</label>
+                      <input
+                        type="text"
+                        class="form-control"
+                        v-model="element.location"
+                        id="location"
+                      />
+                      <label
+                        v-if="errors && errors.location"
+                        class="mt-2 text-danger text-sm"
+                        for="location"
+                      >{{ errors.location[0] }}</label>
+                    </div>
+                  </div>
+                  <div class="col-12">
+                    <Editor
+                      size="sm"
+                      label="Indicaciones de Dirección"
+                      variable="map_indications"
+                      :errors="errors"
+                      :valueEn.sync="element.map_indications_en"
+                      :valueEs.sync="element.map_indications_es"
+                      :valueEnParent="element.map_indications_en"
+                      :valueEsParent="element.map_indications_es"
+                    />
+                  </div>
+                  <div class="col-12">
+                    <Ubigeo
+                      :errors="errors"
+                      :route-department="routeDepartmentsGet"
+                      :route-district="routeDistrictsGet"
+                      :route-province="routeProvincesGet"
+                      :codeDepartment.sync="element.department"
+                      :codeProvince.sync="element.province"
+                      :codeDistrict.sync="element.district"
+                    />
+                  </div>
+                  <div class="col-12 col-lg-6">
+                    <Editor
+                      size="sm"
+                      label="Sala de Ventas"
+                      variable="sales_room"
+                      :errors="errors"
+                      :valueEn.sync="element.sales_room_en"
+                      :valueEs.sync="element.sales_room_es"
+                      :valueEnParent="element.sales_room_en"
+                      :valueEsParent="element.sales_room_es"
+                    />
+                  </div>
+                  <div class="col-12 col-lg-6">
+                    <Editor
+                      size="sm"
+                      label="Horario de Atención"
+                      variable="schedule_attention"
+                      :errors="errors"
+                      :valueEn.sync="element.schedule_attention_en"
+                      :valueEs.sync="element.schedule_attention_es"
+                      :valueEnParent="element.schedule_attention_en"
+                      :valueEsParent="element.schedule_attention_es"
+                    />
+                  </div>
+
+                  <div class="col-12 col-lg-6">
+                    <div class="form-group">
+                      <label class="font-weight-bold" for="url_waze">URL Waze</label>
+                      <input
+                        type="text"
+                        class="form-control"
+                        v-model="element.url_waze"
+                        id="url_waze"
+                      />
+                      <label
+                        v-if="errors && errors.url_waze"
+                        class="mt-2 text-danger text-sm"
+                        for="url_waze"
+                      >{{ errors.url_waze[0] }}</label>
+                    </div>
+                  </div>
+                  <div class="col-12 col-lg-6">
+                    <div class="form-group">
+                      <label class="font-weight-bold" for="url_google_maps">URL Google Maps</label>
+                      <input
+                        type="text"
+                        class="form-control"
+                        v-model="element.url_google_maps"
+                        id="url_google_maps"
+                      />
+                      <label
+                        v-if="errors && errors.url_google_maps"
+                        class="mt-2 text-danger text-sm"
+                        for="url_google_maps"
+                      >{{ errors.url_google_maps[0] }}</label>
+                    </div>
+                  </div>
+                  <div class="col-12 col-lg-6">
+                    <div class="form-group">
+                      <label class="font-weight-bold" for="latitude">Latitud</label>
+                      <input
+                        type="text"
+                        class="form-control"
+                        v-model="element.latitude"
+                        id="latitude"
+                      />
+                      <label
+                        v-if="errors && errors.latitude"
+                        class="mt-2 text-danger text-sm"
+                        for="latitude"
+                      >{{ errors.latitude[0] }}</label>
+                    </div>
+                  </div>
+                  <div class="col-12 col-lg-6">
+                    <div class="form-group">
+                      <label class="font-weight-bold" for="longitude">Longitud</label>
+                      <input
+                        type="text"
+                        class="form-control"
+                        v-model="element.longitude"
+                        id="longitude"
+                      />
+                      <label
+                        v-if="errors && errors.longitude"
+                        class="mt-2 text-danger text-sm"
+                        for="longitude"
+                      >{{ errors.longitude[0] }}</label>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+</template>
+<script>
+import vue2Dropzone from "vue2-dropzone";
+import BreadCrumb from "../../components/BreadCrumb";
+import ImageForm from "../../components/form/Image";
+import FinancialEntities from "../../components/form/FinancialEntities";
+import Advisors from "../../components/form/Advisors";
+import Statuses from "../../components/form/Statuses";
+import Features from "../../components/form/Features";
+import Ubigeo from "../../components/form/Ubigeo";
+import Input from "../../components/form/Input";
+import Button from "../../components/Button";
+import Editor from "../../components/form/Editor";
+import { Money } from "v-money";
+export default {
+  components: {
+    BreadCrumb,
+    Money,
+    Editor,
+    Statuses,
+    Ubigeo,
+    vueDropzone: vue2Dropzone,
+    ImageForm,
+    Input,
+    Button,
+    FinancialEntities,
+    Advisors,
+    Features,
+  },
+  props: {
+    imagesUrl: String,
+    routeStore: String,
+    routeReturn: String,
+    routeAdvisorsGetAll: String,
+    routeFeaturesGetAll: String,
+    routeFinancialGetAll: String,
+    routeStatusesGetAll: String,
+    routeFinancialCreate: String,
+    routeStatusesCreate: String,
+    routeFeaturesCreate: String,
+    routeAdvisorsCreate: String,
+    routeDepartmentsGet: String,
+    routeDistrictsGet: String,
+    routeProvincesGet: String,
+  },
+  data() {
+    return {
+      element: {},
+      moneyLocal: {
+        decimal: ",",
+        thousands: ".",
+        prefix: "S/ ",
+        //suffix: ' #',
+        precision: 2,
+        masked: false,
+      },
+      moneyForeign: {
+        decimal: ",",
+        thousands: ".",
+        prefix: "$ ",
+        //suffix: ' #',
+        precision: 2,
+        masked: false,
+      },
+      requestServer: false,
+      dropzoneOptions: {
+        url: "/",
+        maxFiles: 1,
+        acceptedFiles: "image/png,image/jpeg,image/jpg,image/svg+xml",
+        autoProcessQueue: false,
+        thumbnailWidth: 150,
+        addRemoveLinks: true,
+        dictRemoveFile: "Remover",
+      },
+      dropzoneOptionsBrochure: {
+        url: "/",
+        maxFiles: 1,
+        acceptedFiles: "application/pdf",
+        autoProcessQueue: false,
+        thumbnailWidth: 150,
+        addRemoveLinks: true,
+        dictRemoveFile: "Remover",
+      },
+      dropzoneOptionsMultiple: {
+        url: "/",
+        maxFiles: 4,
+        acceptedFiles: "image/png,image/jpeg,image/jpg,image/svg+xml",
+        autoProcessQueue: false,
+        thumbnailWidth: 150,
+        addRemoveLinks: true,
+        dictRemoveFile: "Remover",
+      },
+      errors: {},
+    };
+  },
+  methods: {
+    submit() {
+      this.requestServer = true;
+      const fd = new FormData();
+      if (this.element.banner_en) {
+        fd.append("banner_en", this.element.banner_en);
+      }
+      if (this.element.banner_es) {
+        fd.append("banner_es", this.element.banner_es);
+      }
+      if (this.$refs.ref_logo.dropzone.files[0]) {
+        fd.append("logo", this.$refs.ref_logo.dropzone.files[0]);
+      }
+      /*if(this.element.logo_en){
+        fd.append("logo_en", this.element.logo_en);
+      }
+      if(this.element.image_responsive_es){
+        fd.append("image_responsive_es", this.element.image_responsive_es);
+      }*/
+      axios
+        .post(this.routeStore, fd)
+        .then((response) => {
+          this.requestServer = false;
+          document.location.href = response.data.route;
+        })
+        .catch((error) => {
+          this.requestServer = false;
+          if (error.response.status === 422) {
+            this.errors = error.response.data.errors || {};
+            return;
+          }
+          document.location.href = error.response.data.route;
+        });
+    },
+  },
+};
+</script>

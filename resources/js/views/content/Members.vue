@@ -37,138 +37,6 @@
       </div>
     </div>
 
-    <!--<b-modal centered ref="modal-create">
-      <template slot="modal-title">
-        <h2 class="mb-0 text-uppercase text-primary">Crear Socio</h2>
-      </template>
-      <form @keydown.enter.prevent="createElement">
-        <div class="row">
-          <div class="col-12">
-            <div class="form-group">
-              <label class="form-control-label d-block" for="name">Nombre</label>
-              <input
-                type="text"
-                class="form-control form-control-alternative"
-                v-model="element.name"
-                id="name"
-              />
-              <label
-                v-if="errors && errors.name"
-                class="mt-2 text-danger text-sm"
-                for="name"
-              >{{ errors.name[0] }}</label>
-            </div>
-          </div>
-
-          <div class="col-12">
-            <div class="form-group">
-              <label class="font-weight-bold mb-0" for="id_image">Imagen:</label>
-              <vue-dropzone
-                ref="ref_image"
-                @vdropzone-file-added="$validateImageDropzone($event,$refs.ref_image.dropzone,1,512000,'500kb')"
-                id="id_image"
-                class="text-center"
-                :options="dropzoneOptions"
-                :duplicateCheck="true"
-                :useCustomSlot="true"
-              >
-                <div class="dropzone-custom-content">
-                  <h5
-                    class="dropzone-custom-title text-primary"
-                  >Suelte los archivos aquí o haga click para cargarlos.</h5>
-                </div>
-              </vue-dropzone>
-              <label
-                v-if="errors && errors.image"
-                class="text-danger text-sm d-block mt-2"
-                for="id_image"
-              >{{ errors.image[0] }}</label>
-            </div>
-          </div>
-        </div>
-      </form>
-      <template slot="modal-footer" slot-scope="{ ok, cancel }">
-        <Button
-          :classes="['btn-primary']"
-          :text="'Registrar'"
-          @click="createElement()"
-          :request-server="requestSubmit"
-        ></Button>
-        <button type="button" class="btn btn-danger" @click="restoreEl()">Cancelar</button>
-      </template>
-    </b-modal>-->
-    <!--<b-modal centered ref="modal-edit">
-      <template slot="modal-title">
-        <h2 class="mb-0 text-uppercase text-primary">Actualizar Socio</h2>
-      </template>
-      <form @keydown.enter.prevent="updateElement">
-        <div class="row">
-          <div class="col-12">
-            <div class="form-group">
-              <label class="form-control-label d-block" for="name">Nombre</label>
-              <input
-                type="text"
-                class="form-control form-control-alternative"
-                v-model="element.name"
-                id="name"
-              />
-              <label
-                v-if="errors && errors.name"
-                class="mt-2 text-danger text-sm"
-                for="name"
-              >{{ errors.name[0] }}</label>
-            </div>
-          </div>
-
-          <div class="col-12">
-            <div class="form-group">
-              <label class="font-weight-bold mb-0" for="id_image">Imagen</label>
-              <div class="row">
-                <div class="col-3">
-                  <img
-                    class="img-fluid"
-                    v-if="element.image"
-                    :src="'https://storage.googleapis.com/playgroup-web/img/partners/'+element.image"
-                    :alt="element.image"
-                  />
-                </div>
-                <div class="col-9">
-                  <vue-dropzone
-                    ref="ref_image"
-                    @vdropzone-file-added="$validateImageDropzone($event,$refs.ref_image.dropzone,1,512000,'500kb')"
-                    id="id_image"
-                    :options="dropzoneOptions"
-                    :duplicateCheck="true"
-                    :useCustomSlot="true"
-                  >
-                    <div class="dropzone-custom-content">
-                      <h5
-                        class="dropzone-custom-title text-primary"
-                      >Suelte los archivos aquí o haga click para cargarlos.</h5>
-                    </div>
-                  </vue-dropzone>
-                </div>
-              </div>
-              <label
-                v-if="errors && errors.image"
-                class="text-danger text-sm d-block mt-2"
-                for="id_image"
-              >{{ errors.image[0] }}</label>
-            </div>
-          </div>
-        </div>
-      </form>
-      <template slot="modal-footer" slot-scope="{ ok, cancel }">
-        <Button
-          :classes="['btn-primary']"
-          :text="'Actualizar'"
-          @click="updateElement()"
-          :request-server="requestSubmit"
-        ></Button>
-        <button type="button" class="btn btn-danger" @click="restoreEl()">Cancelar</button>
-      </template>
-    </b-modal>-->
-
     <b-modal
       v-model="modalCreateUpdate"
       @close="restoreEl"
@@ -309,7 +177,7 @@ export default {
         autoProcessQueue: false,
         thumbnailWidth: 150,
         addRemoveLinks: true,
-        dictRemoveFile: "Remover Imagen",
+        dictRemoveFile: "Remover",
       },
       errors: {},
       startBlock: true,

@@ -1,7 +1,8 @@
 <template>
   <div class="row">
-    <div class="col-12 text-center mt-4">
+    <div  :class="classes ? classes : 'mt-4'" class="col-12 text-center">
       <svg
+        v-if="showSvg"
         id="be3e1a43-0c7b-454d-900a-5620992e061d"
         data-name="Main Layer"
         xmlns="http://www.w3.org/2000/svg"
@@ -233,13 +234,25 @@
         <rect x="546.45191" y="370.05209" width="132.56808" height="4.27639" fill="#3f3d56" />
       </svg>
       <h3 class="h2 font-weight-500 mb-0" v-if="showTitle">No Data</h3>
-      <p>No hay datos disponibles en estos momentos</p>
+      <p :class="showButton ? 'mb-1' : ''">No hay datos disponibles en estos momentos</p>
+      <a :href="routeButton" class="btn btn-inverse-info" v-if="showButton">Crea {{ elementTextButton }}</a>
     </div>
   </div>
 </template>
 <script>
 export default {
   props:{
+    showSvg:{
+      default: true,
+      type: Boolean
+    },
+    showButton:{
+      default: false,
+      type: Boolean
+    },
+    routeButton: String,
+    elementTextButton: String,
+    classes: Array,
     showTitle: {
       default: true,
       type: Boolean

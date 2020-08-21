@@ -35,6 +35,7 @@
         "@growthbunker/vueflags": "^0.1.2",
         "chart.js": "^2.9.3",
         "simplebar-vue": "^1.5.1",
+        "v-money": "^0.8.1",
         "vue-chartjs": "^3.5.0",
         "vue-jam-icons": "^1.0.1",
         "vue-loading-skeleton": "^1.1.9"

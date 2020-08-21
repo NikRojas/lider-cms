@@ -55,6 +55,61 @@ Validation.install = function (Vue, options) {
         } 
     }
 
+    Vue.prototype.$validatePDFDropzone = function (file,ref,maxFile,maxFileSize,maxFileSizeText) {
+      if (!/\.(pdf)$/i.test(file.name)) {
+          Swal.fire({
+              title: "Error",
+              text: 'Debe seleccionar un pdf',
+              type: "error",
+              confirmButtonText: "OK",
+              buttonsStyling: false,
+              customClass: {
+                confirmButton: "btn btn-inverse-primary"
+              }
+            });
+          ref.files.pop();
+          if(file.previewElement.parentNode.classList.contains("dz-started") && ref.files < 1){
+              file.previewElement.parentNode.classList.remove("dz-started");
+          }
+          if(file.previewElement)
+          file.previewElement.parentNode.removeChild(file.previewElement);
+      }
+      if (file.size > maxFileSize) {
+          Swal.fire({
+              title: "Error",
+              text: 'Debe seleccionar un pdf menor a '+maxFileSizeText,
+              type: "error",
+              confirmButtonText: "OK",
+              buttonsStyling: false,
+              customClass: {
+                confirmButton: "btn btn-inverse-primary"
+              }
+            });
+          if(ref.files.length){
+              ref.files.pop();
+          }
+          if(file.previewElement.parentNode.classList.contains("dz-started") && ref.files < 1){
+              file.previewElement.parentNode.classList.remove("dz-started");
+          }
+          file.previewElement.parentNode.removeChild(file.previewElement);
+      }  
+      if(ref.files.length > maxFile){
+          Swal.fire({
+              title: "Error",
+              text: 'Solo puede subir '+maxFile+' archivo',
+              type: "error",
+              confirmButtonText: "OK",
+              buttonsStyling: false,
+              customClass: {
+                confirmButton: "btn btn-inverse-primary"
+              }
+            });
+          ref.files.pop();
+          if(ref.files.length)
+          file.previewElement.parentNode.removeChild(file.previewElement);    
+      } 
+  }
+
     Vue.prototype.$validateVideoDropzone = function (file,ref,maxFile,maxFileSize,maxFileSizeText) {
       if (!/\.(mp4)$/i.test(file.name)) {
           Swal.fire({

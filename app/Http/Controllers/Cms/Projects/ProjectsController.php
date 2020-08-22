@@ -27,8 +27,17 @@ class ProjectsController extends Controller
     }
 
     public function getAll(){
-        $elements = Project::with('statusRel')->orderBy('index','asc')->get();
+        $elements = Project::with('statusRel','ubigeoRel')->orderBy('index','asc')->get();
         return response()->json($elements);
+    }
+
+    public function edit($element){
+        $element = Project::where('slug_es',$element)->firstOrFail();
+        $element = $element->load('advisorsRel','banksRel','featuresRel');
+        $element["financial_entities"] = $element->banksRel->pluck('pivot.bank_id');
+        $element["advisors"] = $element->advisorsRel->pluck('pivot.advisor_id');
+        $element["features"] = $element->featuresRel->pluck('pivot.feature_id');
+        return view("pages.projects.edit", compact('element')); 
     }
 
     public function get(Project $element){

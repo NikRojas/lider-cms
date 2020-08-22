@@ -33,26 +33,56 @@
           <div class="col-12 col-lg-4 mb-4" v-for="el in elements" :key="el.id">
             <div class="card position-relative">
               <div class="text-center position-absolute pl-2 pt-2">
-                  <img :src="imagesUrl+'/projects/'+el.logo" height="50" :alt="el.name_es" />
-                </div>
-              <img class="object-fit--cover" height="300" :src="imagesUrl + '/projects/'+ el.images_format[0]" alt="">
+                <img :src="imagesUrl+'/projects/'+el.logo" height="50" :alt="el.name_es" />
+              </div>
+              <img
+                class="object-fit--cover"
+                height="300"
+                :src="imagesUrl + '/projects/'+ el.images_format[0]"
+                alt
+              />
               <div class="card-body">
-                
                 <div>
+                  <div class="text-right">
+                    <a
+                      style="text-decoration: underline;"
+                      :href="appUrl+'/proyectos/'+el.slug_es"
+                    >{{ appUrl }}/proyectos/{{ el.slug_es }}</a>
+                    <br />
+                    <a
+                      style="text-decoration: underline;"
+                      :href="appUrl+'/projects/'+el.slug_en"
+                    >{{ appUrl }}/projects/{{ el.slug_en }}</a>
+                  </div>
                   <span class="badge badge-info badge-md">{{ el.status_rel.name_es}}</span>
                   <h2 class="mt-1">{{ el.name_es }}</h2>
-                  <div class="mb-2">
-                    <div><h4 class="d-inline-block font-weight-normal">Ubicación:</h4> <h4 class="d-inline-block">{{ el.location}}</h4></div>
-                  <div><h4 class="d-inline-block font-weight-normal">Habitaciones:</h4> <h4 class="d-inline-block">{{ el.rooms_es}}</h4></div>
-                  <div><h4 class="d-inline-block font-weight-normal">Metraje:</h4> <h4 class="d-inline-block">{{ el.footage_es}}</h4></div>
-                  </div>
-                  
-                  <div class="text-right">
+                  <div class="mb-3">
                     <div>
-                  <div><h4 class="d-inline-block font-weight-normal">Precio Total Soles:</h4> <h4 class="d-inline-block">S/{{ el.price_total}}</h4></div>
-                  <div><h4 class="d-inline-block font-weight-normal">Precio Total Dolares:</h4> <h4 class="d-inline-block">${{ el.price_total_foreign}}</h4></div>
-                  </div><h4 class="d-inline-block font-weight-normal">Precio de Reserva:</h4> <h2 class="d-inline-block">S/. {{ el.price}}</h2></div>
-
+                      <h4 class="d-inline-block font-weight-normal">Ubicación:</h4>
+                      <h4 class="d-inline-block">{{ el.location}}, {{ el.ubigeo_rel.district}} - {{ el.ubigeo_rel.department}}</h4>
+                    </div>
+                    <div>
+                      <div>
+                        <h4 class="d-inline-block font-weight-normal">Precio Total Soles:</h4>
+                        <h4 class="d-inline-block">S/{{ el.price_total}}</h4>
+                      </div>
+                      <div>
+                        <h4 class="d-inline-block font-weight-normal">Precio Total Dolares:</h4>
+                        <h4 class="d-inline-block">${{ el.price_total_foreign}}</h4>
+                      </div>
+                    </div>
+                    <h4 class="d-inline-block font-weight-normal">Precio de Reserva:</h4>
+                    <h2 class="d-inline-block">S/. {{ el.price}}</h2>
+                  </div>
+                  <div class="d-flex">
+                    <div class="mr-auto d-inline">
+                    <a href="" class="btn btn-sm btn-inverse-primary">Ir a los Planos</a>
+                    <a href="" class="btn  btn-sm btn-inverse-primary">Ir a Galería</a>
+                    </div>
+                    <div class="ml-auto  d-inline">
+                    <a :href="route+'/editar/'+el.slug_es" class="btn  btn-sm btn-inverse-warning">Editar</a>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -76,6 +106,7 @@ export default {
   props: {
     routeCreate: String,
     route: String,
+    appUrl: String,
     routeGetAll: String,
     routeOrder: String,
     messageOrder: String,
@@ -84,8 +115,7 @@ export default {
   data() {
     return {
       loadingEls: false,
-      elements: [
-      ],
+      elements: [],
       element: {},
       modalDestroy: false,
       loadingGet: false,

@@ -35,4 +35,9 @@ class Project extends Model
     {
         return $this->belongsTo('App\ProjectStatus','project_status_id', 'id');
     }
+
+    public function ubigeoRel()
+    {
+        return $this->hasOne('App\Ubigeo', 'code_ubigeo', 'code_ubigeo');
+    }
 }

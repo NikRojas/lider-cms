@@ -77,6 +77,36 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -89,6 +119,7 @@ __webpack_require__.r(__webpack_exports__);
   props: {
     routeCreate: String,
     route: String,
+    appUrl: String,
     routeGetAll: String,
     routeOrder: String,
     messageOrder: String,
@@ -257,6 +288,54 @@ var render = function() {
                                 _vm._v(" "),
                                 _c("div", { staticClass: "card-body" }, [
                                   _c("div", [
+                                    _c("div", { staticClass: "text-right" }, [
+                                      _c(
+                                        "a",
+                                        {
+                                          staticStyle: {
+                                            "text-decoration": "underline"
+                                          },
+                                          attrs: {
+                                            href:
+                                              _vm.appUrl +
+                                              "/proyectos/" +
+                                              el.slug_es
+                                          }
+                                        },
+                                        [
+                                          _vm._v(
+                                            _vm._s(_vm.appUrl) +
+                                              "/proyectos/" +
+                                              _vm._s(el.slug_es)
+                                          )
+                                        ]
+                                      ),
+                                      _vm._v(" "),
+                                      _c("br"),
+                                      _vm._v(" "),
+                                      _c(
+                                        "a",
+                                        {
+                                          staticStyle: {
+                                            "text-decoration": "underline"
+                                          },
+                                          attrs: {
+                                            href:
+                                              _vm.appUrl +
+                                              "/projects/" +
+                                              el.slug_en
+                                          }
+                                        },
+                                        [
+                                          _vm._v(
+                                            _vm._s(_vm.appUrl) +
+                                              "/projects/" +
+                                              _vm._s(el.slug_en)
+                                          )
+                                        ]
+                                      )
+                                    ]),
+                                    _vm._v(" "),
                                     _c(
                                       "span",
                                       {
@@ -269,7 +348,7 @@ var render = function() {
                                       _vm._v(_vm._s(el.name_es))
                                     ]),
                                     _vm._v(" "),
-                                    _c("div", { staticClass: "mb-2" }, [
+                                    _c("div", { staticClass: "mb-3" }, [
                                       _c("div", [
                                         _c(
                                           "h4",
@@ -283,46 +362,18 @@ var render = function() {
                                         _c(
                                           "h4",
                                           { staticClass: "d-inline-block" },
-                                          [_vm._v(_vm._s(el.location))]
+                                          [
+                                            _vm._v(
+                                              _vm._s(el.location) +
+                                                ", " +
+                                                _vm._s(el.ubigeo_rel.district) +
+                                                " - " +
+                                                _vm._s(el.ubigeo_rel.department)
+                                            )
+                                          ]
                                         )
                                       ]),
                                       _vm._v(" "),
-                                      _c("div", [
-                                        _c(
-                                          "h4",
-                                          {
-                                            staticClass:
-                                              "d-inline-block font-weight-normal"
-                                          },
-                                          [_vm._v("Habitaciones:")]
-                                        ),
-                                        _vm._v(" "),
-                                        _c(
-                                          "h4",
-                                          { staticClass: "d-inline-block" },
-                                          [_vm._v(_vm._s(el.rooms_es))]
-                                        )
-                                      ]),
-                                      _vm._v(" "),
-                                      _c("div", [
-                                        _c(
-                                          "h4",
-                                          {
-                                            staticClass:
-                                              "d-inline-block font-weight-normal"
-                                          },
-                                          [_vm._v("Metraje:")]
-                                        ),
-                                        _vm._v(" "),
-                                        _c(
-                                          "h4",
-                                          { staticClass: "d-inline-block" },
-                                          [_vm._v(_vm._s(el.footage_es))]
-                                        )
-                                      ])
-                                    ]),
-                                    _vm._v(" "),
-                                    _c("div", { staticClass: "text-right" }, [
                                       _c("div", [
                                         _c("div", [
                                           _c(
@@ -367,6 +418,7 @@ var render = function() {
                                           )
                                         ])
                                       ]),
+                                      _vm._v(" "),
                                       _c(
                                         "h4",
                                         {
@@ -380,6 +432,31 @@ var render = function() {
                                         "h2",
                                         { staticClass: "d-inline-block" },
                                         [_vm._v("S/. " + _vm._s(el.price))]
+                                      )
+                                    ]),
+                                    _vm._v(" "),
+                                    _c("div", { staticClass: "d-flex" }, [
+                                      _vm._m(0, true),
+                                      _vm._v(" "),
+                                      _c(
+                                        "div",
+                                        { staticClass: "ml-auto  d-inline" },
+                                        [
+                                          _c(
+                                            "a",
+                                            {
+                                              staticClass:
+                                                "btn  btn-sm btn-inverse-warning",
+                                              attrs: {
+                                                href:
+                                                  _vm.route +
+                                                  "/editar/" +
+                                                  el.slug_es
+                                              }
+                                            },
+                                            [_vm._v("Editar")]
+                                          )
+                                        ]
                                       )
                                     ])
                                   ])
@@ -399,7 +476,26 @@ var render = function() {
     ])
   ])
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "mr-auto d-inline" }, [
+      _c(
+        "a",
+        { staticClass: "btn btn-sm btn-inverse-primary", attrs: { href: "" } },
+        [_vm._v("Ir a los Planos")]
+      ),
+      _vm._v(" "),
+      _c(
+        "a",
+        { staticClass: "btn  btn-sm btn-inverse-primary", attrs: { href: "" } },
+        [_vm._v("Ir a Galería")]
+      )
+    ])
+  }
+]
 render._withStripped = true
 
 

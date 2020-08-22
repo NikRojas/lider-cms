@@ -88,8 +88,11 @@ export default {
    this.getAll();
   },
   watch: {
-    selectedParent: function(newValue, oldValue) {
-      this.selected = newValue;
+    selectedParent: {
+      immediate: true,
+      handler: function (newValue) {
+        this.selected = newValue;
+      },
     },
     selected: function(newValue, oldValue) {
       this.$emit("update:selected", newValue);

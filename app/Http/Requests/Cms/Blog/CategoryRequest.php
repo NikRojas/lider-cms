@@ -25,7 +25,8 @@ class CategoryRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => ['required',Rule::unique('categories')->ignore($this->id),'max:100'],
+            'name_en' => ['required',Rule::unique('categories')->ignore($this->id),'max:100'],
+            'name_es' => ['required',Rule::unique('categories')->ignore($this->id),'max:100'],
         ];
     }
 }

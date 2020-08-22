@@ -33,9 +33,9 @@ const app = new Vue({
         'content-social-networks': () => import('./views/content/SocialNetworks.vue' /* webpackChunkName: "js/pages/content/social-networks" */),
         'content-seo': () => import('./views/content/Seo.vue' /* webpackChunkName: "js/pages/content/seo" */),
 
-        //'category': () => import('./views/blog/Category.vue' /* webpackChunkName: "js/category" */),
-        //'posts': () => import('./views/blog/Post.vue' /* webpackChunkName: "js/posts" */),
-        
+        'category': () => import('./views/blog/Category.vue' /* webpackChunkName: "js/pages/blog/category" */),
+        //'posts': () => import('./views/blog/Post.vue' /* webpackChunkName: "js/pages/blog/posts" */),
+
         'profile': () => import('./views/Profile.vue' /* webpackChunkName: "js/pages/profile" */),
 
         //'dashboard': () => import('./views/Dashboard.vue' /* webpackChunkName: "js/dashboard" */),
@@ -59,4 +59,4 @@ const app = new Vue({
     }
 });
 import Validation from './functions/validation.js'
-Vue.use(Validation,{ app });
+Vue.use(Validation, { app });

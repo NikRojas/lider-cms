@@ -17,49 +17,50 @@ class StatusesProyectController extends Controller
         return view('pages.administration.statuses-project');
     }
 
-    public function update(StatusRequest $request, ProjectStatus $element){
+    public function update(StatusRequest $request, ProjectStatus $element)
+    {
         $request_element = request(['name_es','name_en','slug_en','slug_es']);
-        try{
+        try {
             $element = ProjectStatus::UpdateOrCreate(['id' => $element->id], $request_element);
             return response()->json(['title'=> trans('custom.title.success'), 'message'=> trans('custom.message.update.success', ['name' => trans('custom.attribute.status')])]);
-        }
-        catch(\Exception $e){
-            return response()->json(['title'=> trans('custom.title.error'), 'message'=> trans('custom.message.update.error', ['name' => trans('custom.attribute.status')]) ],500);    
+        } catch (\Exception $e) {
+            return response()->json(['title'=> trans('custom.title.error'), 'message'=> trans('custom.message.update.error', ['name' => trans('custom.attribute.status')]) ], 500);
         }
     }
 
-    public function store(StatusRequest $request){
+    public function store(StatusRequest $request)
+    {
         $element = request(['name_es','name_en','slug_en','slug_es']);
-        try{
+        try {
             $element = ProjectStatus::UpdateOrCreate($element);
             return response()->json(['title'=> trans('custom.title.success'), 'message'=> trans('custom.message.create.success', ['name' => trans('custom.attribute.status')])]);
-        }
-        catch(\Exception $e){
-            return response()->json(['title'=> trans('custom.title.error'), 'message'=> trans('custom.message.create.error', ['name' => trans('custom.attribute.status')]) ],500);    
+        } catch (\Exception $e) {
+            return response()->json(['title'=> trans('custom.title.error'), 'message'=> trans('custom.message.create.error', ['name' => trans('custom.attribute.status')]) ], 500);
         }
     }
 
-    public function destroy(ProjectStatus $element){
-        try{
+    public function destroy(ProjectStatus $element)
+    {
+        try {
             $element->delete();
             return response()->json(['title'=> trans('custom.title.success'), 'message'=> trans('custom.message.delete.success', ['name' => trans('custom.attribute.status')])]);
-        }   
-        catch(\Exception $e){
-            return response()->json(['title'=> trans('custom.title.error'), 'message'=> trans('custom.message.delete.error', ['name' => trans('custom.attribute.status')]) ],500);    
-        } 
+        } catch (\Exception $e) {
+            return response()->json(['title'=> trans('custom.title.error'), 'message'=> trans('custom.message.delete.error', ['name' => trans('custom.attribute.status')]) ], 500);
+        }
     }
 
-    public function get(ProjectStatus $element){
-        return response()->json($element);    
+    public function get(ProjectStatus $element)
+    {
+        return response()->json($element);
     }
 
-    public function getAll(Request $request,StatusProjectRepository $repo){
+    public function getAll(Request $request, StatusProjectRepository $repo)
+    {
         $q = $request->q;
         $headers = ["Id", "Nombre ES", "Etiqueta ES", "Nombre EN", "Etiqueta EN"];
-        if($q){
-            $elements = $repo->datatable($request->itemsPerPage,$q);
-        }
-        else{
+        if ($q) {
+            $elements = $repo->datatable($request->itemsPerPage, $q);
+        } else {
             $elements = $repo->datatable($request->itemsPerPage);
         }
         $elements["headers"] = $headers;

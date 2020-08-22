@@ -1,24 +1,24 @@
 <?php
 
-Route::get('/','Cms\Auth\LoginController@showLoginForm')->name('login');
-Route::post('login','Cms\Auth\LoginController@login')->name('login.post');
-Route::post('logout','Cms\Auth\LoginController@logout')->name('logout');
+Route::get('/', 'Cms\Auth\LoginController@showLoginForm')->name('login');
+Route::post('login', 'Cms\Auth\LoginController@login')->name('login.post');
+Route::post('logout', 'Cms\Auth\LoginController@logout')->name('logout');
 Route::post('login/email', 'Cms\Auth\ForgotPasswordController@sendResetLinkEmail')->name('password.email');
 Route::get('login/restablecer/{token}', 'Cms\Auth\ResetPasswordController@showResetForm')->name('password.reset');
 Route::post('login/reset', 'Cms\Auth\ResetPasswordController@reset')->name('password.update');
 
-Route::middleware(['auth'])->namespace('Cms')->name('cms.')->group(function() { 
-    Route::get('/dashboard', 'DashboardController@index')->name('dashboard');  
+Route::middleware(['auth'])->namespace('Cms')->name('cms.')->group(function () {
+    Route::get('/dashboard', 'DashboardController@index')->name('dashboard');
     Route::get('json/dashboard', 'DashboardController@getStatistics')->name('dashboard.get-statistics');
 
     Route::get('perfil', 'ProfileController@index')->name('profile');
     Route::get('json/profile', 'ProfileController@getProfile')->name('profile.json.get-profile');
-    Route::put('profile', 'ProfileController@updateProfile')->name('profile.update-profile'); 
+    Route::put('profile', 'ProfileController@updateProfile')->name('profile.update-profile');
     Route::put('change-password', 'ProfileController@updatePassword')->name('profile.update-contrasena');
 
     #Users
-    Route::namespace('Configuration')->prefix('configuracion')->name('configuration.')->group(function() {
-        Route::name('users.')->prefix('usuarios')->group(function() {
+    Route::namespace('Configuration')->prefix('configuracion')->name('configuration.')->group(function () {
+        Route::name('users.')->prefix('usuarios')->group(function () {
             Route::get('/', 'UsersController@index')->name('index');
             Route::post('/', 'UsersController@store')->name('store');
             Route::put('/{user}', 'UsersController@update')->name('update');
@@ -26,7 +26,7 @@ Route::middleware(['auth'])->namespace('Cms')->name('cms.')->group(function() {
             //Route::put('/disable/{usuario}', 'UsersController@disable')->name('update');
             Route::get('/json/get-all', 'UsersController@getAll')->name('get-all');
             Route::get('/json/get/{user}', 'UsersController@get')->name('get');
-        });  
+        });
     });
     #Roles
     /*Route::get('configuracion/roles', 'Configuration\RolesController@index')->name('roles');
@@ -38,8 +38,8 @@ Route::middleware(['auth'])->namespace('Cms')->name('cms.')->group(function() {
     Route::get('configuracion/json/modulos', 'Configuration\RolesController@obtenerModulos')->name('json.roles.get-modulos')*/
 
     #Administration
-    Route::namespace('Administration')->prefix('administracion')->name('administration.')->group(function() {
-        Route::name('statuses-project.')->prefix('estados-proyecto')->group(function() {
+    Route::namespace('Administration')->prefix('administracion')->name('administration.')->group(function () {
+        Route::name('statuses-project.')->prefix('estados-proyecto')->group(function () {
             Route::get('/', 'StatusesProyectController@index')->name('index');
             Route::post('/', 'StatusesProyectController@store')->name('store');
             Route::put('/{element}', 'StatusesProyectController@update')->name('update');
@@ -47,7 +47,7 @@ Route::middleware(['auth'])->namespace('Cms')->name('cms.')->group(function() {
             Route::get('/json/get-all', 'StatusesProyectController@getAll')->name('get-all');
             Route::get('/json/get/{element}', 'StatusesProyectController@get')->name('get');
         });
-        Route::name('financial-entities.')->prefix('entidades-financieras')->group(function() {
+        Route::name('financial-entities.')->prefix('entidades-financieras')->group(function () {
             Route::get('/', 'FinancialEntitiesController@index')->name('index');
             Route::post('/', 'FinancialEntitiesController@store')->name('store');
             Route::put('/{element}', 'FinancialEntitiesController@update')->name('update');
@@ -55,15 +55,15 @@ Route::middleware(['auth'])->namespace('Cms')->name('cms.')->group(function() {
             Route::get('/json/get-all', 'FinancialEntitiesController@getAll')->name('get-all');
             Route::get('/json/get/{element}', 'FinancialEntitiesController@get')->name('get');
         });
-        Route::name('features-project.')->prefix('caracteristicas-proyectos')->group(function() {
-            Route::get('/', 'FeaturesProyectController@index')->name('index');
+        Route::name('features-project.')->prefix('caracteristicas-proyectos')->group(function () {
+            Route::get('/', 'AdvisorsController@index')->name('index');
             Route::post('/', 'FeaturesProyectController@store')->name('store');
             Route::put('/{element}', 'FeaturesProyectController@update')->name('update');
             Route::delete('/{element}', 'FeaturesProyectController@destroy')->name('destroy');
             Route::get('/json/get-all', 'FeaturesProyectController@getAll')->name('get-all');
             Route::get('/json/get/{element}', 'FeaturesProyectController@get')->name('get');
         });
-        Route::name('advisors.')->prefix('asesores')->group(function() {
+        Route::name('advisors.')->prefix('asesores')->group(function () {
             Route::get('/', 'AdvisorsController@index')->name('index');
             Route::post('/', 'AdvisorsController@store')->name('store');
             Route::put('/{element}', 'AdvisorsController@update')->name('update');
@@ -72,7 +72,7 @@ Route::middleware(['auth'])->namespace('Cms')->name('cms.')->group(function() {
             Route::get('/json/get/{element}', 'AdvisorsController@get')->name('get');
         });
 
-        Route::name('exchange.')->prefix('tipo-cambio')->group(function() {
+        Route::name('exchange.')->prefix('tipo-cambio')->group(function () {
             Route::get('/', 'ExchangeController@index')->name('index');
             Route::post('/', 'ExchangeController@store')->name('store');
             Route::put('/{element}', 'ExchangeController@update')->name('update');
@@ -81,7 +81,7 @@ Route::middleware(['auth'])->namespace('Cms')->name('cms.')->group(function() {
     });
 
     #Slider
-    Route::prefix('slider')->name('slider.')->group(function() {
+    Route::prefix('slider')->name('slider.')->group(function () {
         Route::get('/', 'SliderController@index')->name('index');
         Route::get('/nuevo', 'SliderController@create')->name('create');
         Route::get('/editar/{element}', 'SliderController@edit')->name('edit');
@@ -104,9 +104,9 @@ Route::middleware(['auth'])->namespace('Cms')->name('cms.')->group(function() {
         Route::get('/json/get/{element}', 'ProjectsController@get')->name('get');
     });
 
-    Route::namespace('Content')->prefix('contenido')->name('content.')->group(function() {
+    Route::namespace('Content')->prefix('contenido')->name('content.')->group(function () {
         #Social Networks
-        Route::name('social-networks.')->prefix('redes-sociales')->group(function() {
+        Route::name('social-networks.')->prefix('redes-sociales')->group(function () {
             Route::get('/', 'SocialController@index')->name('index');
             Route::post('/', 'SocialController@store')->name('store');
             Route::put('/order', 'SocialController@order')->name('order');
@@ -116,7 +116,7 @@ Route::middleware(['auth'])->namespace('Cms')->name('cms.')->group(function() {
             Route::get('/json/get/{element}', 'SocialController@get')->name('get');
         });
 
-        Route::name('general-information.')->prefix('informacion-general')->group(function() {
+        Route::name('general-information.')->prefix('informacion-general')->group(function () {
             #General Information
             Route::get('/', 'GeneralInformationController@index')->name('index');
             Route::post('/', 'GeneralInformationController@store')->name('store');
@@ -131,12 +131,24 @@ Route::middleware(['auth'])->namespace('Cms')->name('cms.')->group(function() {
         });
 
         #SEO
-        Route::name('seo.')->prefix('seo')->group(function() {
+        Route::name('seo.')->prefix('seo')->group(function () {
             Route::get('/', 'SeoController@index')->name('index');
             Route::get('/json/get-all', 'SeoController@getAll')->name('get-all');
             Route::put('/{page}', 'SeoController@update')->name('update');
         });
     });
+ 
+    Route::namespace('Blog')->prefix('blog')->name('blog.')->group(function () {
+            Route::name('category.')->prefix('categorias')->group(function () {
+                Route::get('/', 'CategoriesController@index')->name('index');
+                Route::post('/', 'CategoriesController@store')->name('store');
+                Route::put('/{element}', 'CategoriesController@update')->name('update');
+                Route::delete('/{element}', 'CategoriesController@destroy')->name('destroy');
+                Route::get('/json/get-all', 'CategoriesController@getAll')->name('get-all');
+                Route::get('/json/get/{element}', 'CategoriesController@get')->name('get');
+            });
+    });
+
 
     #Pages
     /*Route::get('informacion/paginas', 'Information\PagesController@index')->name('pages');
@@ -145,17 +157,7 @@ Route::middleware(['auth'])->namespace('Cms')->name('cms.')->group(function() {
     Route::get('informacion/json/pages/section/{section}', 'Information\PagesController@getPageSectionFields')->name('pages.json.get-page-sections-fields');
     Route::post('informacion/pages', 'Information\PagesController@updateSection')->name('pages.update-section');
     Route::post('informacion/pages/image', 'Information\PagesController@storeImage')->name('pages.store-image');*/
-    
-    #Blog
-    #Category
-    Route::get('blog/categorias', 'Blog\CategoriesController@index')->name('blog.categories');
-    Route::post('blog/categories', 'Blog\CategoriesController@create')->name('blog.categories.create');
-    Route::delete('blog/categories/{category}', 'Blog\CategoriesController@delete')->name('blog.categories.delete');
-    Route::put('blog/categories/{category}', 'Blog\CategoriesController@update')->name('blog.categories.update');
-    Route::get('blog/json/categories', 'Blog\CategoriesController@getCategories')->name('blog.categories.get-categories');
-    Route::get('blog/json/categories/autocomplete', 'Blog\CategoriesController@autocomplete')->name('blog.categories.get-category-autocomplete'); 
-    Route::get('blog/json/categories/{category}', 'Blog\CategoriesController@getCategory')->name('blog.categories.get-category');
-
+     
     #Posts
     Route::get('blog/posts', 'Blog\PostsController@index')->name('blog.posts');
     Route::post('blog/posts', 'Blog\PostsController@create')->name('blog.posts.create');
@@ -189,7 +191,7 @@ Route::middleware(['auth'])->namespace('Cms')->name('cms.')->group(function() {
     Route::get('json/applicants/{applicant}', 'ApplicantsController@getApplicant')->name('applicants.json.get-applicant');
     Route::delete('applicants/{applicant}', 'ApplicantsController@delete')->name('applicants.delete');
 
-    Route::put('applicants', 'ApplicantsController@update')->name('applicants.update'); 
+    Route::put('applicants', 'ApplicantsController@update')->name('applicants.update');
     Route::get('applicants/json/contact-email-destination', 'ApplicantsController@getEmailDestination')->name('applicants.json.contact-email-destination');*/
 
     #Misc
@@ -197,5 +199,5 @@ Route::middleware(['auth'])->namespace('Cms')->name('cms.')->group(function() {
     Route::get('json/get-departments', 'CmsController@getDepartmentsParent')->name('json.get-departments');
     Route::get('json/get-provinces', 'CmsController@getProvincesParent')->name('json.get-provinces');
     Route::get('json/get-districts', 'CmsController@getDistrictsParent')->name('json.get-districts');
-    //Route::get('json/select/categories', 'CmsController@getCategories')->name('json.get-categories');
+    Route::get('json/select/categories', 'CmsController@getCategories')->name('json.get-categories');
 });

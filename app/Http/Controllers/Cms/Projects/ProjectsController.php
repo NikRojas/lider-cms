@@ -9,7 +9,6 @@ use Illuminate\Support\Facades\Storage;
 
 use App\Http\Traits\CmsTrait;
 use App\Project;
-use Illuminate\Support\Facades\File;
 
 class ProjectsController extends Controller
 {

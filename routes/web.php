@@ -103,6 +103,16 @@ Route::middleware(['auth'])->namespace('Cms')->name('cms.')->group(function () {
         Route::put('/order', 'ProjectsController@order')->name('order');
         Route::get('/json/get-all', 'ProjectsController@getAll')->name('get-all');
         Route::get('/json/get/{element}', 'ProjectsController@get')->name('get');
+
+        Route::prefix('galeria')->name('gallery.')->group(function() {
+            Route::get('/{element}', 'GalleryController@index')->name('index');
+            Route::post('/', 'GalleryController@store')->name('store');
+            Route::get('/json/get-all', 'GalleryController@getAll')->name('get-all');
+        });
+
+        /*Route::get('/galeria/{element}', 'ProjectsController@edit')->name('edit');
+        Route::get('/documentos/{element}', 'ProjectsController@edit')->name('edit');
+        Route::get('/tipologia/{element}', 'ProjectsController@edit')->name('edit');*/
     });
 
     Route::namespace('Content')->prefix('contenido')->name('content.')->group(function () {

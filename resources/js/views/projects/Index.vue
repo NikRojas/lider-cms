@@ -76,8 +76,9 @@
                   </div>
                   <div class="d-flex">
                     <div class="mr-auto d-inline">
-                    <a href="" class="btn btn-sm btn-inverse-primary">Ir a Documentos</a>
-                    <a href="" class="btn  btn-sm btn-inverse-primary">Ir a Tipologias</a>
+                    <a :href="'proyectos/galeria/'+el.slug_es" class="btn  btn-sm btn-inverse-primary">Ir a Tipologias</a>
+                    <a :href="'proyectos/galeria/'+el.slug_es" class="btn btn-sm btn-inverse-primary">Ir a Documentos</a>
+                    <a :href="'proyectos/galeria/'+el.slug_es" class="btn btn-sm btn-inverse-primary">Ir a Galeria</a>
                     </div>
                     <div class="ml-auto  d-inline">
                     <a :href="route+'/editar/'+el.slug_es" class="btn  btn-sm btn-inverse-info">Editar</a>

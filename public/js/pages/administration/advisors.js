@@ -399,7 +399,6 @@ __webpack_require__.r(__webpack_exports__);
       modalDestroy: false,
       loadingGet: false,
       loadingEls: false,
-      loadingSubmit: false,
       //showLoading: false,
       elements: {},
       title: "",

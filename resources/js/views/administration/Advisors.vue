@@ -221,7 +221,6 @@ export default {
       modalDestroy: false,
       loadingGet: false,
       loadingEls: false,
-      loadingSubmit: false,
       //showLoading: false,
       elements: {},
       title: "",

@@ -107,6 +107,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 
 
@@ -444,7 +445,53 @@ var render = function() {
                                     ]),
                                     _vm._v(" "),
                                     _c("div", { staticClass: "d-flex" }, [
-                                      _vm._m(0, true),
+                                      _c(
+                                        "div",
+                                        { staticClass: "mr-auto d-inline" },
+                                        [
+                                          _c(
+                                            "a",
+                                            {
+                                              staticClass:
+                                                "btn  btn-sm btn-inverse-primary",
+                                              attrs: {
+                                                href:
+                                                  "proyectos/galeria/" +
+                                                  el.slug_es
+                                              }
+                                            },
+                                            [_vm._v("Ir a Tipologias")]
+                                          ),
+                                          _vm._v(" "),
+                                          _c(
+                                            "a",
+                                            {
+                                              staticClass:
+                                                "btn btn-sm btn-inverse-primary",
+                                              attrs: {
+                                                href:
+                                                  "proyectos/galeria/" +
+                                                  el.slug_es
+                                              }
+                                            },
+                                            [_vm._v("Ir a Documentos")]
+                                          ),
+                                          _vm._v(" "),
+                                          _c(
+                                            "a",
+                                            {
+                                              staticClass:
+                                                "btn btn-sm btn-inverse-primary",
+                                              attrs: {
+                                                href:
+                                                  "proyectos/galeria/" +
+                                                  el.slug_es
+                                              }
+                                            },
+                                            [_vm._v("Ir a Galeria")]
+                                          )
+                                        ]
+                                      ),
                                       _vm._v(" "),
                                       _c(
                                         "div",
@@ -484,26 +531,7 @@ var render = function() {
     ])
   ])
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "mr-auto d-inline" }, [
-      _c(
-        "a",
-        { staticClass: "btn btn-sm btn-inverse-primary", attrs: { href: "" } },
-        [_vm._v("Ir a Documentos")]
-      ),
-      _vm._v(" "),
-      _c(
-        "a",
-        { staticClass: "btn  btn-sm btn-inverse-primary", attrs: { href: "" } },
-        [_vm._v("Ir a Tipologias")]
-      )
-    ])
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 
 

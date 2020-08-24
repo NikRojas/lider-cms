@@ -12,6 +12,11 @@ class Project extends Model
     ];
     protected $appends = ['images_format','price_total_format','price_total_foreign_format','price_format'];
 
+    public function category()
+    {
+        return $this->hasOne('App\Category','id','category_id');
+    }
+
     public function getImagesFormatAttribute(){
         return json_decode($this->images);
     }

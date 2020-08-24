@@ -167,7 +167,7 @@ return [
         'job' => 'cargo',
         'image_hover' => 'imagen hover',
         'master_social_network_id' => 'red social',
-        'name' => 'nombre'
+        'name' => 'nombre',
     ],
 
 ];

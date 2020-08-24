@@ -21,7 +21,7 @@
     </div>
     <div class="container-fluid mt--6">
       <div class="row" v-if="loadingEls">
-        <div class="col-12 col-lg-4 mb-4" v-for="i in 4" :key="i">
+        <div class="col-12 col-lg-4 mb-4" v-for="i in 6" :key="i">
           <Skeleton height="400px" />
         </div>
       </div>
@@ -32,7 +32,7 @@
           </div>
           <div class="col-12 col-lg-4 mb-4" v-for="el in elements" :key="el.id">
             <div class="card position-relative">
-              <div class="text-center position-absolute pl-2 pt-2">
+              <div class="text-center position-absolute pl-3 pt-3">
                 <img :src="imagesUrl+'/projects/'+el.logo" height="50" :alt="el.name_es" />
               </div>
               <img
@@ -64,20 +64,20 @@
                     <div>
                       <div>
                         <h4 class="d-inline-block font-weight-normal">Precio Total Soles:</h4>
-                        <h4 class="d-inline-block">S/{{ el.price_total}}</h4>
+                        <h4 class="d-inline-block">S/{{ el.price_total_format}}</h4>
                       </div>
                       <div>
                         <h4 class="d-inline-block font-weight-normal">Precio Total Dolares:</h4>
-                        <h4 class="d-inline-block">${{ el.price_total_foreign}}</h4>
+                        <h4 class="d-inline-block">${{ el.price_total_foreign_format}}</h4>
                       </div>
                     </div>
                     <h4 class="d-inline-block font-weight-normal">Precio de Reserva:</h4>
-                    <h2 class="d-inline-block">S/. {{ el.price}}</h2>
+                    <h2 class="d-inline-block">S/. {{ el.price_format}}</h2>
                   </div>
                   <div class="d-flex">
                     <div class="mr-auto d-inline">
-                    <a href="" class="btn btn-sm btn-inverse-primary">Ir a los Planos</a>
-                    <a href="" class="btn  btn-sm btn-inverse-primary">Ir a Galería</a>
+                    <a href="" class="btn btn-sm btn-inverse-primary">Ir a Documentos</a>
+                    <a href="" class="btn  btn-sm btn-inverse-primary">Ir a Tipologias</a>
                     </div>
                     <div class="ml-auto  d-inline">
                     <a :href="route+'/editar/'+el.slug_es" class="btn  btn-sm btn-inverse-info">Editar</a>

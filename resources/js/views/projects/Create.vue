@@ -73,30 +73,7 @@
                     </div>
                   </div>
                   <div class="col-12 col-lg-6">
-                    <div class="form-group">
-                      <label class="font-weight-bold" for="images">Imágenes:</label>
-                      <vue-dropzone
-                        ref="ref_images"
-                        @vdropzone-file-added="$validateImageDropzone($event,$refs.ref_images.dropzone,4,512000,'500kb')"
-                        id="images"
-                        class="text-center"
-                        :options="dropzoneOptionsMultiple"
-                        :duplicateCheck="true"
-                        :useCustomSlot="true"
-                      >
-                        <div class="dropzone-custom-content">
-                          <h5
-                            class="dropzone-custom-title text-primary"
-                          >Suelte los archivos aquí o haga click para cargarlos.</h5>
-                        </div>
-                      </vue-dropzone>
-
-                      <label
-                        v-if="errors && errors.images"
-                        class="text-danger text-sm d-block mt-2"
-                        for="images"
-                      >{{ errors.images[0] }}</label>
-                    </div>
+                    <MultipleFiles fieldName="images" :errors="errors" :messageOrder="messageOrder" :files.sync="element.files" :imagesUrl="imagesUrl" folder="projects"/>
                   </div>
                   <div class="col-12">
                     <Statuses
@@ -453,10 +430,12 @@ import Input from "../../components/form/Input";
 import Button from "../../components/Button";
 import Editor from "../../components/form/Editor";
 import InputSlug from "../../components/form/InputSlug";
+import MultipleFiles from "../../components/form/MultipleFiles";
 import { Money } from "v-money";
 export default {
   components: {
     BreadCrumb,
+    MultipleFiles,
     Money,
     Editor,
     Statuses,
@@ -474,6 +453,7 @@ export default {
     imagesUrl: String,
     routeStore: String,
     routeReturn: String,
+    messageOrder: String,
     routeAdvisorsGetAll: String,
     routeFeaturesGetAll: String,
     routeFinancialGetAll: String,
@@ -540,11 +520,17 @@ export default {
     submit() {
       this.requestServer = true;
       const fd = new FormData();
-      if(this.$refs.ref_images.dropzone.files.length){
+      /*if(this.$refs.ref_images.dropzone.files.length){
         this.$refs.ref_images.dropzone.files.forEach( (el, i) => {
           fd.append("images"+i,el);
         });
         fd.append('images_count',this.$refs.ref_images.dropzone.files.length);
+      }*/
+      if(this.element.files && this.element.files.length){
+        this.element.files.forEach( (el, i) => {
+          fd.append("images"+i,el);
+        });
+        fd.append('images_count',this.element.files.length);
       }
       if (this.element.name_en) {
         fd.append("name_en", this.element.name_en);

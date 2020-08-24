@@ -49,8 +49,8 @@ class CreateProjectsTable extends Migration
             $table->string('slug_es');
             $table->string('slug_en');
 
-            $table->float('latitude');
-            $table->float('longitude');
+            $table->decimal('latitude', 10, 8);
+            $table->decimal('longitude', 11, 8);
 
             $table->bigInteger('project_status_id')->unsigned();
             $table->foreign('project_status_id')->references('id')->on('project_statuses');

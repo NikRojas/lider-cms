@@ -22,8 +22,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_Button__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../../components/Button */ "./resources/js/components/Button.vue");
 /* harmony import */ var _components_form_Editor__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../../components/form/Editor */ "./resources/js/components/form/Editor.vue");
 /* harmony import */ var _components_form_InputSlug__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../../components/form/InputSlug */ "./resources/js/components/form/InputSlug.vue");
-/* harmony import */ var v_money__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! v-money */ "./node_modules/v-money/dist/v-money.js");
-/* harmony import */ var v_money__WEBPACK_IMPORTED_MODULE_12___default = /*#__PURE__*/__webpack_require__.n(v_money__WEBPACK_IMPORTED_MODULE_12__);
+/* harmony import */ var _components_form_MultipleFiles__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ../../components/form/MultipleFiles */ "./resources/js/components/form/MultipleFiles.vue");
+/* harmony import */ var v_money__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! v-money */ "./node_modules/v-money/dist/v-money.js");
+/* harmony import */ var v_money__WEBPACK_IMPORTED_MODULE_13___default = /*#__PURE__*/__webpack_require__.n(v_money__WEBPACK_IMPORTED_MODULE_13__);
 //
 //
 //
@@ -443,29 +444,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
+
 
 
 
@@ -482,7 +461,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {
     BreadCrumb: _components_BreadCrumb__WEBPACK_IMPORTED_MODULE_1__["default"],
-    Money: v_money__WEBPACK_IMPORTED_MODULE_12__["Money"],
+    MultipleFiles: _components_form_MultipleFiles__WEBPACK_IMPORTED_MODULE_12__["default"],
+    Money: v_money__WEBPACK_IMPORTED_MODULE_13__["Money"],
     Editor: _components_form_Editor__WEBPACK_IMPORTED_MODULE_10__["default"],
     Statuses: _components_form_Statuses__WEBPACK_IMPORTED_MODULE_5__["default"],
     Ubigeo: _components_form_Ubigeo__WEBPACK_IMPORTED_MODULE_7__["default"],
@@ -499,6 +479,7 @@ __webpack_require__.r(__webpack_exports__);
     imagesUrl: String,
     routeStore: String,
     routeReturn: String,
+    messageOrder: String,
     routeAdvisorsGetAll: String,
     routeFeaturesGetAll: String,
     routeFinancialGetAll: String,
@@ -567,12 +548,18 @@ __webpack_require__.r(__webpack_exports__);
 
       this.requestServer = true;
       var fd = new FormData();
+      /*if(this.$refs.ref_images.dropzone.files.length){
+        this.$refs.ref_images.dropzone.files.forEach( (el, i) => {
+          fd.append("images"+i,el);
+        });
+        fd.append('images_count',this.$refs.ref_images.dropzone.files.length);
+      }*/
 
-      if (this.$refs.ref_images.dropzone.files.length) {
-        this.$refs.ref_images.dropzone.files.forEach(function (el, i) {
+      if (this.element.files && this.element.files.length) {
+        this.element.files.forEach(function (el, i) {
           fd.append("images" + i, el);
         });
-        fd.append('images_count', this.$refs.ref_images.dropzone.files.length);
+        fd.append('images_count', this.element.files.length);
       }
 
       if (this.element.name_en) {
@@ -961,80 +948,28 @@ var render = function() {
                       )
                     ]),
                     _vm._v(" "),
-                    _c("div", { staticClass: "col-12 col-lg-6" }, [
-                      _c(
-                        "div",
-                        { staticClass: "form-group" },
-                        [
-                          _c(
-                            "label",
-                            {
-                              staticClass: "font-weight-bold",
-                              attrs: { for: "images" }
-                            },
-                            [_vm._v("Imágenes:")]
-                          ),
-                          _vm._v(" "),
-                          _c(
-                            "vue-dropzone",
-                            {
-                              ref: "ref_images",
-                              staticClass: "text-center",
-                              attrs: {
-                                id: "images",
-                                options: _vm.dropzoneOptionsMultiple,
-                                duplicateCheck: true,
-                                useCustomSlot: true
-                              },
-                              on: {
-                                "vdropzone-file-added": function($event) {
-                                  return _vm.$validateImageDropzone(
-                                    $event,
-                                    _vm.$refs.ref_images.dropzone,
-                                    4,
-                                    512000,
-                                    "500kb"
-                                  )
-                                }
-                              }
-                            },
-                            [
-                              _c(
-                                "div",
-                                { staticClass: "dropzone-custom-content" },
-                                [
-                                  _c(
-                                    "h5",
-                                    {
-                                      staticClass:
-                                        "dropzone-custom-title text-primary"
-                                    },
-                                    [
-                                      _vm._v(
-                                        "Suelte los archivos aquí o haga click para cargarlos."
-                                      )
-                                    ]
-                                  )
-                                ]
-                              )
-                            ]
-                          ),
-                          _vm._v(" "),
-                          _vm.errors && _vm.errors.images
-                            ? _c(
-                                "label",
-                                {
-                                  staticClass:
-                                    "text-danger text-sm d-block mt-2",
-                                  attrs: { for: "images" }
-                                },
-                                [_vm._v(_vm._s(_vm.errors.images[0]))]
-                              )
-                            : _vm._e()
-                        ],
-                        1
-                      )
-                    ]),
+                    _c(
+                      "div",
+                      { staticClass: "col-12 col-lg-6" },
+                      [
+                        _c("MultipleFiles", {
+                          attrs: {
+                            fieldName: "images",
+                            errors: _vm.errors,
+                            messageOrder: _vm.messageOrder,
+                            files: _vm.element.files,
+                            imagesUrl: _vm.imagesUrl,
+                            folder: "projects"
+                          },
+                          on: {
+                            "update:files": function($event) {
+                              return _vm.$set(_vm.element, "files", $event)
+                            }
+                          }
+                        })
+                      ],
+                      1
+                    ),
                     _vm._v(" "),
                     _c(
                       "div",

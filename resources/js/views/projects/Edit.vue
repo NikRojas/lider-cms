@@ -6,7 +6,7 @@
           <div class="header-body">
             <div class="row align-items-center pt-0 pt-md-2 pb-4">
               <div class="col-6 col-md-7">
-                <BreadCrumb title="Crear Proyecto" parent active="Proyectos"></BreadCrumb>
+                <BreadCrumb title="Actualizar Proyecto" parent active="Proyectos"></BreadCrumb>
               </div>
               <div class="col-6 col-md text-right">
                 <Button
@@ -51,7 +51,7 @@
                       <label class="font-weight-bold" for="image">Logo:</label>
                       <div class="row">
                         <div class="col-lg-4 mb-3 mb-lg-0">
-                          <img :src="imagesUrl+'/projects/'+element.logo" alt />
+                          <img class="img-fluid" :src="imagesUrl+'/projects/'+element.logo" alt />
                         </div>
                         <div class="col-lg-8">
                           <vue-dropzone
@@ -83,38 +83,9 @@
                     <div class="form-group">
                       <label class="font-weight-bold" for="images">Imágenes:</label>
                       <div class="row">
-                        <!--<div class="col-lg-4 mb-3 mb-lg-0 d-flex justify-content-center align-items-center">
-                          <div class="text-center">
-                            <a v-for="(el,i) in element.images_format" :key="i" :href="imagesUrl+'/projects/'+el" 
-                            class="btn btn-inverse-info btn-sm mr-0 mb-2 d-block" target="_blank">Ver Imagen {{ i + 1 }}</a>
-                          </div>
-                        </div>-->
                         <div class="col-12 mb-3">
-                          <MultipleFiles :messageOrder="messageOrder" :imagesUrl="imagesUrl" folder="projects" :filesParent="element.images_format"/>
+                          <MultipleFiles fieldName="images" :errors="errors" :messageOrder="messageOrder" :files.sync="element.files" :imagesUrl="imagesUrl" folder="projects" :filesParent="element.images_format"/>
                         </div>
-                        <!--<div class="col-12">
-                          <vue-dropzone
-                            ref="ref_images"
-                            @vdropzone-file-added="$validateImageDropzone($event,$refs.ref_images.dropzone,4,512000,'500kb')"
-                            id="images"
-                            class="text-center"
-                            :options="dropzoneOptionsMultiple"
-                            :duplicateCheck="true"
-                            :useCustomSlot="true"
-                          >
-                            <div class="dropzone-custom-content">
-                              <h5
-                                class="dropzone-custom-title text-primary"
-                              >Suelte los archivos aquí o haga click para cargarlos.</h5>
-                            </div>
-                          </vue-dropzone>
-
-                          <label
-                            v-if="errors && errors.images"
-                            class="text-danger text-sm d-block mt-2"
-                            for="images"
-                          >{{ errors.images[0] }}</label>
-                        </div>-->
                       </div>
                     </div>
                   </div>
@@ -517,7 +488,7 @@ export default {
     imagesUrl: String,
     filesUrl: String,
     messageOrder: String,
-    routeStore: String,
+    routeUpdate: String,
     routeReturn: String,
     routeAdvisorsGetAll: String,
     routeFeaturesGetAll: String,
@@ -569,15 +540,6 @@ export default {
         addRemoveLinks: true,
         dictRemoveFile: "Remover",
       },
-      dropzoneOptionsMultiple: {
-        url: "/",
-        maxFiles: 4,
-        acceptedFiles: "image/png,image/jpeg,image/jpg,image/svg+xml",
-        autoProcessQueue: false,
-        thumbnailWidth: 150,
-        addRemoveLinks: true,
-        dictRemoveFile: "Remover",
-      },
       errors: {},
     };
   },
@@ -585,11 +547,12 @@ export default {
     submit() {
       this.requestServer = true;
       const fd = new FormData();
-      if (this.$refs.ref_images.dropzone.files.length) {
-        this.$refs.ref_images.dropzone.files.forEach((el, i) => {
-          fd.append("images" + i, el);
+      fd.append("id", this.element.id);
+      if(this.element.files && this.element.files.length){
+        this.element.files.forEach( (el, i) => {
+          fd.append("images"+i,el);
         });
-        fd.append("images_count", this.$refs.ref_images.dropzone.files.length);
+        fd.append('images_count',this.element.files.length);
       }
       if (this.element.name_en) {
         fd.append("name_en", this.element.name_en);
@@ -711,8 +674,9 @@ export default {
           JSON.stringify(this.element.financial_entities)
         );
       }
+      fd.append("_method","put");
       axios
-        .post(this.routeStore, fd)
+        .post(this.routeUpdate + '/' + this.element.id, fd)
         .then((response) => {
           this.requestServer = false;
           document.location.href = response.data.route;

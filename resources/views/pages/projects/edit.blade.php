@@ -1,6 +1,6 @@
 @extends('layouts.dashboard')
 @section('content')
-    <projects-edit :element-parent="{{ $element }}" route-store="{{ route('cms.projects.store') }}" route-return="{{ route('cms.projects.index') }}"
+    <projects-edit :element-parent="{{ $element }}" route-update="{{ route('cms.projects.store') }}" route-return="{{ route('cms.projects.index') }}"
     images-url="{{ config('services.images_url') }}"
     files-url="{{ config('services.files_url') }}"
     route-advisors-get-all="{{ route('cms.administration.advisors.get-all') }}"

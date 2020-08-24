@@ -69,7 +69,7 @@ class ProjectsController extends Controller
             if(!${$correlative.'Name'}){
                 $request->session()->flash('error', trans('custom.message.create.error', ['name' => trans('custom.attribute.project')]));
                 Storage::disk('public')->delete('img/projects/'.${$correlative.'Name'});
-                return response()->json(["route" => route('cms.project.index')],500);
+                return response()->json(["route" => route('cms.projects.index')],500);
             }
             $images[] = ${$correlative.'Name'};
         }
@@ -79,7 +79,7 @@ class ProjectsController extends Controller
             Storage::disk('public')->delete('img/projects/'.$imageBannerEs);
             Storage::disk('public')->delete('img/projects/'.$imageBannerEn);
             Storage::disk('public')->delete('files/projects/'.$brochureName);
-            return response()->json(["route" => route('cms.project.index')],500);
+            return response()->json(["route" => route('cms.projects.index')],500);
         }
 
         $project = array_merge($project,["code_ubigeo" => $request->department.$request->province.$request->district]);
@@ -125,6 +125,141 @@ class ProjectsController extends Controller
                 Storage::disk('public')->delete('img/projects/'.$value);
             }
             $request->session()->flash('error', trans('custom.message.create.error', ['name' => trans('custom.attribute.project')]));
+            return response()->json(["route" => route('cms.projects.index')],500);
+        }
+    }
+
+    public function update(ProjectRequest $request,Project $element){
+        $request_project = request(['name_es',"description_en","description_es",'name_en','slug_en','slug_es',"rooms_es","rooms_en","footage_en","footage_es","url_google_maps","url_waze","text_place_es",
+        "text_place_en","project_status_id","location","price_total","price","price_total_foreign","latitude","longitude","map_indications_es","map_indications_en",
+        "sales_room_es","sales_room_en","schedule_attention_es","schedule_attention_en"]);
+        
+        if($request->hasFile('logo')){
+            $logoName = $this->setFileName('l-',$request->file('logo'));
+            $storeLogo = Storage::disk('public')->putFileAs('img/projects/',$request->file('logo'),$logoName);
+            if(!$storeLogo){
+                Storage::disk('public')->delete('img/projects/'.$logoName);
+                $request->session()->flash('error', trans('custom.message.update.error', ['name' => trans('custom.attribute.project')]));
+                return response()->json(["route" => route('cms.projects.index')],500);    
+            }
+            $request_project = array_merge($request_project,["logo" => $logoName]);   
+        }  
+        else{
+            $request_project = array_merge($request_project,["logo" => $element->logo]);   
+        }
+
+        if($request->hasFile('banner_es')){
+            $imageBannerEs = $this->setFileName('bes-',$request->file('banner_es'));
+            $storeBannerEs = Storage::disk('public')->putFileAs('img/projects/',$request->file('banner_es'),$imageBannerEs);
+            if(!$storeBannerEs){
+                Storage::disk('public')->delete('img/projects/'.$imageBannerEs);
+                $request->session()->flash('error', trans('custom.message.update.error', ['name' => trans('custom.attribute.project')]));
+                return response()->json(["route" => route('cms.projects.index')],500);    
+            }
+            $request_project = array_merge($request_project,["banner_es" => $imageBannerEs]);   
+        }  
+        else{
+            $request_project = array_merge($request_project,["banner_es" => $element->banner_es]);   
+        }
+
+        if($request->hasFile('banner_en')){
+            $imageBannerEn = $this->setFileName('ben-',$request->file('banner_en'));
+            $storeBannerEn = Storage::disk('public')->putFileAs('img/projects/',$request->file('banner_en'),$imageBannerEn);
+            if(!$storeBannerEn){
+                Storage::disk('public')->delete('img/projects/'.$imageBannerEn);
+                $request->session()->flash('error', trans('custom.message.update.error', ['name' => trans('custom.attribute.project')]));
+                return response()->json(["route" => route('cms.projects.index')],500);    
+            }
+            $request_project = array_merge($request_project,["banner_en" => $imageBannerEn]);   
+        }  
+        else{
+            $request_project = array_merge($request_project,["banner_en" => $element->banner_en]);   
+        }
+
+        if($request->hasFile('brochure')){
+            $brochureName = $this->setFileName('ben-',$request->file('brochure'));
+            $storeBrochure = Storage::disk('public')->putFileAs('img/projects/',$request->file('brochure'),$brochureName);
+            if(!$storeBrochure){
+                Storage::disk('public')->delete('img/projects/'.$brochureName);
+                $request->session()->flash('error', trans('custom.message.update.error', ['name' => trans('custom.attribute.project')]));
+                return response()->json(["route" => route('cms.projects.index')],500);    
+            }
+            $request_project = array_merge($request_project,["brochure" => $brochureName]);   
+        }  
+        else{
+            $request_project = array_merge($request_project,["brochure" => $element->brochure]);   
+        }
+        $images = [];
+        $imagesToRemove = [];
+        $imagesNotUpdated = [];
+        for ($i=0; $i < $request->images_count; $i++) { 
+            $name = 'images'.$i;
+            $imagesNotUpdated[] = $request->$name; 
+        }
+        $imagesToRemove = array_diff($element->images_format,$imagesNotUpdated);
+        foreach ($imagesToRemove as $key => $value) {
+            Storage::disk('public')->delete('img/projects/'.$value);
+        }
+        for ($i=0; $i < $request->images_count; $i++) { 
+            $correlative = $i + 1;
+            $name = 'images'.$i;
+            if($request->hasFile('images'.$i)){
+                ${$correlative.'Name'} = $this->setFileName('is-'.$correlative,$request->file('images'.$i));
+                $storeLogo = Storage::disk('public')->putFileAs('img/projects/',$request->file('images'.$i),${$correlative.'Name'});
+                if(!${$correlative.'Name'}){
+                    $request->session()->flash('error', trans('custom.message.create.error', ['name' => trans('custom.attribute.project')]));
+                    Storage::disk('public')->delete('img/projects/'.${$correlative.'Name'});
+                    return response()->json(["route" => route('cms.projects.index')],500);
+                }
+                $images[] = ${$correlative.'Name'};
+            }
+            else{
+                $images[] = $request->$name;
+            }
+        }
+        $request_project = array_merge($request_project,["images" => json_encode($images)]);
+        
+        if($request->hasFile('banner_es') && $element->banner_es){
+            Storage::disk('public')->delete('img/projects/'.$element->banner_es);
+        } 
+        if($request->hasFile('banner_es') && $element->banner_es){
+            Storage::disk('public')->delete('img/projects/'.$element->banner_es);
+        } 
+        if($request->hasFile('brochure') && $element->brochure){
+            Storage::disk('public')->delete('files/projects/'.$element->brochure);
+        } 
+        if($request->hasFile('logo') && $element->logo){
+            Storage::disk('public')->delete('img/projects/'.$element->logo);
+        } 
+        $request_project = array_merge($request_project,["code_ubigeo" => $request->department.$request->province.$request->district]);
+        try{
+            $project = Project::UpdateOrCreate(["id"=>$element->id],$request_project); 
+        }
+        catch(\Exception $e){
+            $request->session()->flash('error', trans('custom.message.update.error', ['name' => trans('custom.attribute.project')]));
+            return response()->json(["route" => route('cms.projects.index')],500);
+        }
+        $advisors = json_decode($request->advisors);
+        $features = json_decode($request->features);
+        $financial_entities = json_decode($request->financial_entities);
+        try{
+            $project->advisorsRel()->sync([]);
+            foreach ($advisors as $key => $value) {
+                $project->advisorsRel()->attach($value);
+            }
+            $project->featuresRel()->sync([]);
+            foreach ($features as $key => $value) {
+                $project->featuresRel()->attach($value);
+            }
+            $project->banksRel()->sync([]);
+            foreach ($financial_entities as $key => $value) {
+                $project->banksRel()->attach($value);
+            }
+            $request->session()->flash('success', trans('custom.message.update.success', ['name' => trans('custom.attribute.project')]));
+            return response()->json(["route" => route('cms.projects.index')]);
+        }
+        catch(\Exception $e){
+            $request->session()->flash('error', trans('custom.message.update.error', ['name' => trans('custom.attribute.project')]));
             return response()->json(["route" => route('cms.projects.index')],500);
         }
     }

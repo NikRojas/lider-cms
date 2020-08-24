@@ -223,7 +223,7 @@ var render = function() {
         ? _c(
             "div",
             { staticClass: "row" },
-            _vm._l(4, function(i) {
+            _vm._l(6, function(i) {
               return _c(
                 "div",
                 { key: i, staticClass: "col-12 col-lg-4 mb-4" },
@@ -258,7 +258,7 @@ var render = function() {
                                   "div",
                                   {
                                     staticClass:
-                                      "text-center position-absolute pl-2 pt-2"
+                                      "text-center position-absolute pl-3 pt-3"
                                   },
                                   [
                                     _c("img", {
@@ -391,7 +391,8 @@ var render = function() {
                                             { staticClass: "d-inline-block" },
                                             [
                                               _vm._v(
-                                                "S/" + _vm._s(el.price_total)
+                                                "S/" +
+                                                  _vm._s(el.price_total_format)
                                               )
                                             ]
                                           )
@@ -413,7 +414,9 @@ var render = function() {
                                             [
                                               _vm._v(
                                                 "$" +
-                                                  _vm._s(el.price_total_foreign)
+                                                  _vm._s(
+                                                    el.price_total_foreign_format
+                                                  )
                                               )
                                             ]
                                           )
@@ -432,7 +435,11 @@ var render = function() {
                                       _c(
                                         "h2",
                                         { staticClass: "d-inline-block" },
-                                        [_vm._v("S/. " + _vm._s(el.price))]
+                                        [
+                                          _vm._v(
+                                            "S/. " + _vm._s(el.price_format)
+                                          )
+                                        ]
                                       )
                                     ]),
                                     _vm._v(" "),
@@ -486,13 +493,13 @@ var staticRenderFns = [
       _c(
         "a",
         { staticClass: "btn btn-sm btn-inverse-primary", attrs: { href: "" } },
-        [_vm._v("Ir a los Planos")]
+        [_vm._v("Ir a Documentos")]
       ),
       _vm._v(" "),
       _c(
         "a",
         { staticClass: "btn  btn-sm btn-inverse-primary", attrs: { href: "" } },
-        [_vm._v("Ir a Galería")]
+        [_vm._v("Ir a Tipologias")]
       )
     ])
   }

@@ -135,7 +135,7 @@ class SliderController extends Controller
             $imageNameEn = $this->setFileName('sen-',$request->file('image_en'));
             $storeImageEn = Storage::disk('public')->putFileAs('img/slider/',$request->file('image_en'),$imageNameEn);
             if(!$storeImageEn){
-                $request->session()->flash('error', trans('custom.message.delete.error', ['name' => trans('custom.attribute.slide')]));
+                $request->session()->flash('error', trans('custom.message.update.error', ['name' => trans('custom.attribute.slide')]));
                 return response()->json(["route" => route('cms.slider.index')],500);    
             }
             $request_element = array_merge($request_element,["image_en" => $imageNameEn]);   
@@ -147,7 +147,7 @@ class SliderController extends Controller
             $imageResponsiveEn = $this->setFileName('sren-',$request->file('image_responsive_en'));
             $storeImageResponsiveEn = Storage::disk('public')->putFileAs('img/slider/',$request->file('image_responsive_en'),$imageResponsiveEn);
             if(!$storeImageResponsiveEn){
-                $request->session()->flash('error', trans('custom.message.delete.error', ['name' => trans('custom.attribute.slide')]));
+                $request->session()->flash('error', trans('custom.message.update.error', ['name' => trans('custom.attribute.slide')]));
                 return response()->json(["route" => route('cms.slider.index')],500);   
             }
             $request_element = array_merge($request_element,["image_responsive_en" => $imageResponsiveEn]);   
@@ -160,13 +160,13 @@ class SliderController extends Controller
             Storage::disk('public')->delete('img/slider/'.$element->image_es);
         } 
         if($request->hasFile('image_responsive_es') && $element->image_responsive_es){
-            Storage::disk('public')->delete('img/slider/'.$element->imagen_responsive_es);
+            Storage::disk('public')->delete('img/slider/'.$element->image_responsive_es);
         } 
         if($request->hasFile('image_en') && $element->image_en){
             Storage::disk('public')->delete('img/slider/'.$element->image_en);
         } 
         if($request->hasFile('image_responsive_en') && $element->image_responsive_en){
-            Storage::disk('public')->delete('img/slider/'.$element->imagen_responsive_en);
+            Storage::disk('public')->delete('img/slider/'.$element->image_responsive_en);
         } 
         if($request->from){
             $request_element = array_merge($request_element,["from" => date("Y-m-d H:i:s", strtotime($request->from))]);

@@ -65,7 +65,7 @@ export default {
   },
   methods: {
     add(id) {
-      if (this.selected.includes(id)) {
+      if (this.selected.length && this.selected.includes(id)) {
         const index = this.selected.indexOf(id);
         this.selected.splice(index, 1);
       } else {
@@ -90,7 +90,9 @@ export default {
     selectedParent: {
       immediate: true,
       handler: function (newValue) {
-        this.selected = newValue;
+        if(newValue){
+          this.selected = newValue;
+        }
       },
     },
     selected: function(newValue, oldValue) {

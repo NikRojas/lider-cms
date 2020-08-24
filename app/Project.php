@@ -10,10 +10,22 @@ class Project extends Model
     protected $casts = [
         'images' => 'array',
     ];
-    protected $appends = ['images_format'];
+    protected $appends = ['images_format','price_total_format','price_total_foreign_format','price_format'];
 
     public function getImagesFormatAttribute(){
         return json_decode($this->images);
+    }
+
+    public function getPriceTotalFormatAttribute(){
+        return number_format($this->price_total, 2, '.', ',');
+    }
+
+    public function getPriceFormatAttribute(){
+        return number_format($this->price, 2, '.', ',');
+    }
+
+    public function getPriceTotalForeignFormatAttribute(){
+        return number_format($this->price_total_foreign, 2, '.', ',');
     }
 
     public function featuresRel()

@@ -91,7 +91,10 @@ export default {
     selectedParent: {
       immediate: true,
       handler: function (newValue) {
-        this.selected = newValue;
+        //this.selected = newValue;
+        if(newValue){
+          this.selected = newValue;
+        }
       },
     },
     selected: function(newValue, oldValue) {

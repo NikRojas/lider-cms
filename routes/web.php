@@ -56,7 +56,7 @@ Route::middleware(['auth'])->namespace('Cms')->name('cms.')->group(function () {
             Route::get('/json/get/{element}', 'FinancialEntitiesController@get')->name('get');
         });
         Route::name('features-project.')->prefix('caracteristicas-proyectos')->group(function () {
-            Route::get('/', 'AdvisorsController@index')->name('index');
+            Route::get('/', 'FeaturesProyectController@index')->name('index');
             Route::post('/', 'FeaturesProyectController@store')->name('store');
             Route::put('/{element}', 'FeaturesProyectController@update')->name('update');
             Route::delete('/{element}', 'FeaturesProyectController@destroy')->name('destroy');
@@ -97,6 +97,7 @@ Route::middleware(['auth'])->namespace('Cms')->name('cms.')->group(function () {
     Route::namespace('Projects')->prefix('proyectos')->name('projects.')->group(function() {
         Route::get('/', 'ProjectsController@index')->name('index');
         Route::get('/nuevo', 'ProjectsController@create')->name('create');
+        Route::put('/{element}', 'ProjectsController@update')->name('update');
         Route::get('/editar/{element}', 'ProjectsController@edit')->name('edit');
         Route::post('/', 'ProjectsController@store')->name('store');
         Route::put('/order', 'ProjectsController@order')->name('order');

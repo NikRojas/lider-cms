@@ -17,6 +17,12 @@ class ProjectRequest extends FormRequest
         return true;
     }
 
+    public function messages(){
+        return [
+            'images0.required' => 'Debe ingresar al menos una imagen'
+        ];
+      }
+
     /**
      * Get the validation rules that apply to the request.
      *
@@ -41,6 +47,7 @@ class ProjectRequest extends FormRequest
             'text_place_en' => 'required|max:80',
             'project_status_id' => 'required',
             'location' => 'required',
+            'images0' => 'required',
             //'statuses' => 'required',
             'financial_entities' => 'required',
             'features' => 'required',

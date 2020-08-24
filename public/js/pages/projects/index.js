@@ -339,7 +339,8 @@ var render = function() {
                                     _c(
                                       "span",
                                       {
-                                        staticClass: "badge badge-info badge-md"
+                                        staticClass:
+                                          "badge badge-warning badge-md"
                                       },
                                       [_vm._v(_vm._s(el.status_rel.name_es))]
                                     ),
@@ -446,7 +447,7 @@ var render = function() {
                                             "a",
                                             {
                                               staticClass:
-                                                "btn  btn-sm btn-inverse-warning",
+                                                "btn  btn-sm btn-inverse-info",
                                               attrs: {
                                                 href:
                                                   _vm.route +

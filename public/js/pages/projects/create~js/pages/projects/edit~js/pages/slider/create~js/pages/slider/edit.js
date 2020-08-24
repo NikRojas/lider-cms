@@ -151,6 +151,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
     label: String,
+    folder: String,
     variable: String,
     errors: Object,
     valueEnParent: null,
@@ -496,7 +497,8 @@ var render = function() {
                   _c("img", {
                     staticClass: "img-fluid",
                     attrs: {
-                      src: _vm.imagesUrl + "/slider/" + _vm.value.es,
+                      src:
+                        _vm.imagesUrl + "/" + _vm.folder + "/" + _vm.value.es,
                       alt: ""
                     }
                   })
@@ -572,7 +574,8 @@ var render = function() {
                   _c("img", {
                     staticClass: "img-fluid",
                     attrs: {
-                      src: _vm.imagesUrl + "/slider/" + _vm.value.en,
+                      src:
+                        _vm.imagesUrl + "/" + _vm.folder + "/" + _vm.value.en,
                       alt: ""
                     }
                   })

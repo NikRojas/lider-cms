@@ -22,6 +22,7 @@
                   <div class="col-12 col-md-6">
                     <ImageForm label="Imagen"
                     variable="image"
+                    folder="slider"
                     :errors="errors"
                     :valueEn.sync="element.image_en"
                     :valueEs.sync="element.image_es"
@@ -34,6 +35,7 @@
                     <ImageForm label="Imagen Responsive"
                     variable="image_responsive"
                     :errors="errors"
+                    folder="slider"
                     :valueEn.sync="element.image_responsive_en"
                     :valueEs.sync="element.image_responsive_es"
                     :valueEnParent="element.image_responsive_en"

@@ -2,6 +2,7 @@
 @section('content')
     <projects-edit :element-parent="{{ $element }}" route-store="{{ route('cms.projects.store') }}" route-return="{{ route('cms.projects.index') }}"
     images-url="{{ config('services.images_url') }}"
+    files-url="{{ config('services.files_url') }}"
     route-advisors-get-all="{{ route('cms.administration.advisors.get-all') }}"
     route-features-get-all="{{ route('cms.administration.features-project.get-all') }}"
     route-financial-get-all="{{ route('cms.administration.financial-entities.get-all') }}"
@@ -12,5 +13,6 @@
     route-advisors-create="{{ route('cms.administration.advisors.index') }}"
     route-departments-get="{{ route('cms.json.get-departments')}}"
     route-provinces-get="{{ route('cms.json.get-provinces')}}"
-    route-districts-get="{{ route('cms.json.get-districts')}}"></projects-edit>
+    route-districts-get="{{ route('cms.json.get-districts')}}"
+    message-order="@lang('custom.message.order')"></projects-edit>
 @endsection

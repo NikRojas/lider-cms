@@ -54,7 +54,7 @@
                       :href="appUrl+'/projects/'+el.slug_en"
                     >{{ appUrl }}/projects/{{ el.slug_en }}</a>
                   </div>
-                  <span class="badge badge-info badge-md">{{ el.status_rel.name_es}}</span>
+                  <span class="badge badge-warning badge-md">{{ el.status_rel.name_es}}</span>
                   <h2 class="mt-1">{{ el.name_es }}</h2>
                   <div class="mb-3">
                     <div>
@@ -80,7 +80,7 @@
                     <a href="" class="btn  btn-sm btn-inverse-primary">Ir a Galería</a>
                     </div>
                     <div class="ml-auto  d-inline">
-                    <a :href="route+'/editar/'+el.slug_es" class="btn  btn-sm btn-inverse-warning">Editar</a>
+                    <a :href="route+'/editar/'+el.slug_es" class="btn  btn-sm btn-inverse-info">Editar</a>
                     </div>
                   </div>
                 </div>

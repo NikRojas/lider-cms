@@ -85,7 +85,7 @@ class ProjectsController extends Controller
         $project = array_merge($project,["code_ubigeo" => $request->department.$request->province.$request->district]);
         $index = $this->getMaxIndex(Project::selectRaw('MAX(id),MAX(`index`) as "index"')->get());
 
-        $project = array_merge($project,["images" => json_encode($images), "logo"=>$logoName,"brochure"=>$brochureName,"index" => $index,"banner_en"=>$storeBannerEn,"banner_es"=>$storeBannerEs]);
+        $project = array_merge($project,["images" => json_encode($images), "logo"=>$logoName,"brochure"=>$brochureName,"index" => $index,"banner_en"=>$imageBannerEn,"banner_es"=>$imageBannerEs]);
         try{
             $project = Project::UpdateOrCreate($project); 
         }

@@ -34,7 +34,7 @@
     <div v-show="active == 'es'">
       <div class="row">
         <div class="col" v-if="valueEsParent">
-          <img :src="imagesUrl + '/slider/'+ value.es" alt="" class="img-fluid">
+          <img :src="imagesUrl + '/'+folder+'/'+ value.es" alt="" class="img-fluid">
         </div>
         <div class="col">
           <vue-dropzone
@@ -59,7 +59,7 @@
     <div v-show="active == 'en'">
       <div class="row">
         <div class="col" v-if="valueEnParent">
-          <img :src="imagesUrl + '/slider/'+ value.en" alt="" class="img-fluid">
+          <img :src="imagesUrl + '/'+folder+'/'+ value.en" alt="" class="img-fluid">
         </div>
         <div class="col">
           <vue-dropzone
@@ -91,6 +91,7 @@ import vue2Dropzone from "vue2-dropzone";
 export default {
   props: {
     label: String,
+    folder: String,
     variable: String,
     errors: Object,
     valueEnParent: null,

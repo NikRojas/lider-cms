@@ -195,6 +195,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 
 
 
@@ -474,6 +476,7 @@ var render = function() {
                           attrs: {
                             label: "Imagen",
                             variable: "image",
+                            folder: "slider",
                             errors: _vm.errors,
                             valueEn: _vm.element.image_en,
                             valueEs: _vm.element.image_es,
@@ -509,6 +512,7 @@ var render = function() {
                             label: "Imagen Responsive",
                             variable: "image_responsive",
                             errors: _vm.errors,
+                            folder: "slider",
                             valueEn: _vm.element.image_responsive_en,
                             valueEs: _vm.element.image_responsive_es,
                             valueEnParent: _vm.element.image_responsive_en,

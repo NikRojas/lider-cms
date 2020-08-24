@@ -543,6 +543,12 @@ h6,
     }
 }
 
+.multiple-files .dz-preview .dz-image img{
+    height: 200px;
+    width: 150px;
+    object-fit: cover;
+  }
+
 .ql-container.ql-snow,
 .ql-toolbar.ql-snow,
 .ui.selection.dropdown {

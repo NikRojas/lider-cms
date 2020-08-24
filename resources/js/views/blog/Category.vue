@@ -88,7 +88,7 @@
     </b-modal>
     <destroy
       element="categoría"
-      @cancel="restoreEl"
+      @cancel="restoreEl" 
       :open="modalDestroy"
       @submit="destroyConfirm"
       :loading-get="loadingGet"
@@ -233,6 +233,10 @@ export default {
           this.restoreEl();
         });
     },
+    deleteEl(id) {
+      this.modalDestroy = true;
+      this.getEl(id);
+    },
     restoreEl() {
       this.errors = {};
       this.element = {
@@ -241,6 +245,7 @@ export default {
         name_en: "",
         name_es: ""
       };
+      this.modalDestroy = false;
       this.modalCreateUpdate = false;
     },
     deleteEl(id) {

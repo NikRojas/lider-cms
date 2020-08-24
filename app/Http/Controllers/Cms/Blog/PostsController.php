@@ -21,7 +21,11 @@ class PostsController extends Controller
     use CmsTrait;
 
     public function index(){
-        return view ("pages.blog.posts");    
+        return view ("pages.blog.posts.index");    
+    }
+
+    public function create(){
+        return view("pages.blog.posts.create"); 
     }
 
     public function storeImage(Request $request){
@@ -54,6 +58,7 @@ class PostsController extends Controller
         return response()->json($posts); 
     }
     
+    /*
     public function create(PostRequest $request){
         $post = request(["title","content","excerpt","slug","published","category_id"]);
         $image_name = $this->setFileName('b-',$request->file('image'));
@@ -93,6 +98,7 @@ class PostsController extends Controller
             return response()->json(['title'=> trans('custom.title.error'), 'message'=> trans('custom.message.create.error', ['name' => trans('custom.attribute.post')]) ],500);    
         }
     }
+    */
 
     public function delete(Post $post){
         $image = $post->image;

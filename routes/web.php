@@ -56,7 +56,7 @@ Route::middleware(['auth'])->namespace('Cms')->name('cms.')->group(function () {
             Route::get('/json/get/{element}', 'FinancialEntitiesController@get')->name('get');
         });
         Route::name('features-project.')->prefix('caracteristicas-proyectos')->group(function () {
-            Route::get('/', 'AdvisorsController@index')->name('index');
+            Route::get('/', 'FeaturesProyectController@index')->name('index');
             Route::post('/', 'FeaturesProyectController@store')->name('store');
             Route::put('/{element}', 'FeaturesProyectController@update')->name('update');
             Route::delete('/{element}', 'FeaturesProyectController@destroy')->name('destroy');
@@ -147,6 +147,17 @@ Route::middleware(['auth'])->namespace('Cms')->name('cms.')->group(function () {
                 Route::get('/json/get-all', 'CategoriesController@getAll')->name('get-all');
                 Route::get('/json/get/{element}', 'CategoriesController@get')->name('get');
             });
+
+            Route::name('posts.')->prefix('posts')->group(function () {
+                Route::get('/', 'PostsController@index')->name('index');
+                Route::get('/nuevo', 'PostsController@create')->name('create');
+                Route::get('/editar/{element}', 'PostsController@edit')->name('edit');
+                Route::post('/', 'PostsController@store')->name('store');
+                Route::put('/{element}', 'PostsController@update')->name('update');
+                Route::delete('/{element}', 'PostsController@destroy')->name('destroy');
+                Route::get('/json/get-all', 'PostsController@getAll')->name('get-all');
+                Route::get('/json/get/{element}', 'PostsController@get')->name('get');
+            });
     });
 
 
@@ -159,6 +170,7 @@ Route::middleware(['auth'])->namespace('Cms')->name('cms.')->group(function () {
     Route::post('informacion/pages/image', 'Information\PagesController@storeImage')->name('pages.store-image');*/
      
     #Posts
+    /*
     Route::get('blog/posts', 'Blog\PostsController@index')->name('blog.posts');
     Route::post('blog/posts', 'Blog\PostsController@create')->name('blog.posts.create');
     Route::get('blog/json/posts', 'Blog\PostsController@getPosts')->name('blog.posts.get-posts');
@@ -166,6 +178,7 @@ Route::middleware(['auth'])->namespace('Cms')->name('cms.')->group(function () {
     Route::delete('blog/posts/{post}', 'Blog\PostsController@delete')->name('blog.posts.delete');
     Route::put('blog/posts/{post}', 'Blog\PostsController@update')->name('blog.posts.update');
     Route::post('blog/posts/image', 'Blog\PostsController@storeImage')->name('blog.posts.store-image');
+    */
 
     #Customers
     /*Route::get('clientes', 'CustomerController@index')->name('clientes');

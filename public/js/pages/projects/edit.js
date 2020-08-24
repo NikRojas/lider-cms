@@ -114,6 +114,8 @@ __webpack_require__.r(__webpack_exports__);
     handleEnd: function handleEnd(added, removed, moved) {
       var _this = this;
 
+      //a veces se borra la imagen
+      console.log(added);
       setTimeout(function () {
         if (_this.files[added.moved.newIndex] instanceof File) {
           _this.$refs['ref_file_' + added.moved.newIndex][0].manuallyAddFile(_this.files[added.moved.newIndex], "/");

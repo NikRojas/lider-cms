@@ -8,9 +8,4 @@ class MasterTypeGallery extends Model
 {
     protected $table = 'master_type_gallery';
     protected $guarded = [];
-
-    public function project()
-    {
-        return $this->belongsTo('App\Project');
-    }
 }

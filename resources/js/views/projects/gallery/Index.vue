@@ -300,7 +300,11 @@ export default {
     getEls() {
       this.loadingEls = true;
       axios
-        .get(this.routeGetAll)
+        .get(this.routeGetAll, {
+          params: {
+            project_id: this.project.id
+          }
+        })
         .then((response) => {
           this.elements = response.data;
           this.loadingEls = false;

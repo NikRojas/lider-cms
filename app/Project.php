@@ -12,9 +12,9 @@ class Project extends Model
     ];
     protected $appends = ['images_format','price_total_format','price_total_foreign_format','price_format'];
 
-    public function category()
+    public function galleryRel()
     {
-        return $this->hasOne('App\Category','id','category_id');
+        return $this->hasMany('App\ProjectGallery','id','project_id');
     }
 
     public function getImagesFormatAttribute(){

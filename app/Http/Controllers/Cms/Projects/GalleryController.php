@@ -23,8 +23,14 @@ class GalleryController extends Controller
     return view("pages.projects.gallery.index", compact('element', 'types'));
   }
 
-  public function getAll(){
-    $elements = ProjectGallery::orderBy('index','asc')->get();
+  public function getAll(Request $request){
+    //$elements = ProjectGallery::where('project_id', $request->project_id)->orderBy('index','asc')->get();
+    //$project = $request->project_id;
+    $elements = ProjectGallery::where('project_id', $request->project_id)->with('typeGalleryRel')->orderBy('index','asc')->get()->groupBy('type_gallery_rel.name');
+    //->groupBy('type_gallery_rel.name');
+    /*${$value['variable']} = $lead_actividad->orderBy('created_at','desc')->get()->groupBy(function(LeadActividad $actividad) {
+      return $actividad->created_at->isoFormat('MMMM YYYY');
+    });*/
     return response()->json($elements);
   }
 

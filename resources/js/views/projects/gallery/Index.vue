@@ -247,6 +247,7 @@ export default {
   methods: {
     handleChange(event){
       let els = event.relatedContext.list;
+      console.log(event)
       axios
         .put(this.routeOrder, els)
         .then(response => {

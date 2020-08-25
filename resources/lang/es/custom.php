@@ -34,6 +34,7 @@ return [
     ],
     'errors' => [
         'image' => 'Ocurrió un error al momento de subir la imagen. Por favor, inténtelo nuevamente.',
+        'file' => 'Ocurrió un error al momento de subir el archivo. Por favor, inténtelo nuevamente.',
         'video' => 'Ocurrió un error al momento de subir el video. Por favor, inténtelo nuevamente.'
     ],
     'message' => [

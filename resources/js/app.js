@@ -57,6 +57,7 @@ const app = new Vue({
         'projects-create': () => import('./views/projects/Create.vue' /* webpackChunkName: "js/pages/projects/create" */),
         'projects-edit': () => import('./views/projects/Edit.vue' /* webpackChunkName: "js/pages/projects/edit" */),
         'projects-gallery-index': () => import('./views/projects/gallery/Index.vue' /* webpackChunkName: "js/pages/projects/gallery/index" */),
+        'projects-files-index': () => import('./views/projects/files/Index.vue' /* webpackChunkName: "js/pages/projects/files/index" */),
     }
 });
 import Validation from './functions/validation.js'

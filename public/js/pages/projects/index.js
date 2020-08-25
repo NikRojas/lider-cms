@@ -470,7 +470,7 @@ var render = function() {
                                                 "btn btn-sm btn-inverse-primary",
                                               attrs: {
                                                 href:
-                                                  "proyectos/galeria/" +
+                                                  "proyectos/documentos/" +
                                                   el.slug_es
                                               }
                                             },

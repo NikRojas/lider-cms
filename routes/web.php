@@ -113,8 +113,17 @@ Route::middleware(['auth'])->namespace('Cms')->name('cms.')->group(function () {
             Route::put('/order', 'GalleryController@order')->name('order');
             Route::put('/{element}', 'GalleryController@update')->name('update');
         });
-        /*Route::get('/documentos/{element}', 'ProjectsController@edit')->name('edit');
-        Route::get('/tipologia/{element}', 'ProjectsController@edit')->name('edit');*/
+
+        Route::prefix('documentos')->name('files.')->group(function() {
+            Route::get('/{element}', 'FilesController@index')->name('index');
+            Route::post('/', 'FilesController@store')->name('store');
+            Route::get('/json/get-all', 'FilesController@getAll')->name('get-all');
+            Route::get('/json/get/{element}', 'FilesController@get')->name('get');
+            Route::delete('/{element}', 'FilesController@destroy')->name('destroy');
+            Route::put('/order', 'FilesController@order')->name('order');
+            Route::put('/{element}', 'FilesController@update')->name('update');
+        });
+        //Route::get('/tipologia/{element}', 'ProjectsController@edit')->name('edit');*/
     });
 
     Route::namespace('Content')->prefix('contenido')->name('content.')->group(function () {

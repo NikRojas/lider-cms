@@ -7,6 +7,14 @@
             <div class="col-6 col-md-7">
               <BreadCrumb :title="'Galeria Proyecto '+project.name_es" parent active="Proyectos"></BreadCrumb>
             </div>
+            <div class="col-6 col-md text-right">
+              <a href="#" class="btn btn-icon btn-inverse-primary" @click.prevent="newEl">
+                <span class="btn-inner--icon">
+                  <jam-picture class="current-color" />
+                </span>
+                <span class="btn-inner--text">Nuevo Elemento</span>
+              </a>
+            </div>
           </div>
           <div class="row mb-3">
             <div class="col-6 col-md-5">
@@ -17,14 +25,7 @@
                 <span class="btn-inner--text">Regresar</span>
               </a>
             </div>
-            <div class="col-6 col-md text-right">
-              <a href="#" class="btn btn-icon btn-inverse-primary" @click.prevent="newEl">
-                <span class="btn-inner--icon">
-                  <jam-picture class="current-color" />
-                </span>
-                <span class="btn-inner--text">Nuevo Elemento</span>
-              </a>
-            </div>
+            
           </div>
         </div>
       </div>

@@ -60,7 +60,6 @@ class SocialController extends Controller
             return response()->json(['title'=> trans('custom.title.success'), 'message'=> trans('custom.message.update.success', ['name' => trans('custom.attribute.network')])],200);
         } 
         catch (\Exception $e){
-            dd($e);
             return response()->json(['title'=> trans('custom.title.error'), 'message'=> trans('custom.message.update.error', ['name' => trans('custom.attribute.network')])],500);
         }
     }

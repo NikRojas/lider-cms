@@ -108,10 +108,12 @@ Route::middleware(['auth'])->namespace('Cms')->name('cms.')->group(function () {
             Route::get('/{element}', 'GalleryController@index')->name('index');
             Route::post('/', 'GalleryController@store')->name('store');
             Route::get('/json/get-all', 'GalleryController@getAll')->name('get-all');
+            Route::get('/json/get/{element}', 'GalleryController@get')->name('get');
+            Route::delete('/{element}', 'GalleryController@destroy')->name('destroy');
+            Route::put('/order', 'GalleryController@order')->name('order');
+            Route::put('/{element}', 'GalleryController@update')->name('update');
         });
-
-        /*Route::get('/galeria/{element}', 'ProjectsController@edit')->name('edit');
-        Route::get('/documentos/{element}', 'ProjectsController@edit')->name('edit');
+        /*Route::get('/documentos/{element}', 'ProjectsController@edit')->name('edit');
         Route::get('/tipologia/{element}', 'ProjectsController@edit')->name('edit');*/
     });
 

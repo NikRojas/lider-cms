@@ -10,7 +10,7 @@
             <div class="col-6 col-md text-right">
               <a href="#" class="btn btn-icon btn-inverse-primary" @click.prevent="newEl">
                 <span class="btn-inner--icon">
-                  <jam-file class="current-color" />
+                  <jam-files class="current-color" />
                 </span>
                 <span class="btn-inner--text">Nuevo Documento</span>
               </a>

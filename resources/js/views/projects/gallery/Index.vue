@@ -49,7 +49,7 @@
             </div>
             <div class="col-12">
               <p>{{ messageOrder }}</p>
-              <draggable class="row" :list="el" :move="handleChange">
+              <draggable class="row" v-model="elements[i]" @change="handleChange">
                 <div class="col-12 col-lg-3 mb-4 text-center" v-for="el2 in el" :key="el2.id">
                   <div class="card">
                     <div class="card-body">
@@ -246,11 +246,10 @@ export default {
   },
   methods: {
     handleChange(event){
-      let els = event.relatedContext.list;
-      console.log(event)
-      axios
-        .put(this.routeOrder, els)
+        axios
+        .put(this.routeOrder, this.elements[event.moved.element.type_gallery_rel.name])
         .then(response => {
+          this.restore();
           Swal.fire({
             title: response.data.title,
             text: response.data.message,
@@ -274,6 +273,7 @@ export default {
             }
           });
         });
+      
     },
     submit() {
       this.requestSubmit = true;

@@ -25,6 +25,7 @@ return [
         'advisor' => 'El asesor',
         'status' => 'El estado',
         'project' => 'El projecto',
+        'tipology' => 'La tipología',
         'currency' => 'El tipo de moneda'
     ],
     'title' => [

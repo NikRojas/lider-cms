@@ -17,12 +17,6 @@
           <p
             v-if="!loadingEls"
           >En este apartado usted puede modificar el cambio de las moneda, tomar en consideración que el cambio se redondea a Entero Superior.</p>
-          <!--<p
-            v-if="!loadingEls"
-          >Secciones donde se toma en consideración este tipo de cambio:</p>
-          <ul v-if="!loadingEls" class="mb-4 d-block">
-            <li>Precio del Proyecto</li>
-          </ul>-->
           <h4 class="text-uppercase" v-if="!loadingEls">Moneda Predeterminada</h4>
           <div class="card" v-if="!loadingEls">
             <div class="card-body">

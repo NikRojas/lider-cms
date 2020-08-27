@@ -104,7 +104,6 @@ Route::middleware(['auth'])->namespace('Cms')->name('cms.')->group(function () {
         Route::put('/order', 'ProjectsController@order')->name('order');
         Route::get('/json/get-all', 'ProjectsController@getAll')->name('get-all');
         Route::get('/json/get/{element}', 'ProjectsController@get')->name('get');
-
         Route::prefix('galeria')->name('gallery.')->group(function() {
             Route::get('/{element}', 'GalleryController@index')->name('index');
             Route::post('/', 'GalleryController@store')->name('store');
@@ -113,6 +112,16 @@ Route::middleware(['auth'])->namespace('Cms')->name('cms.')->group(function () {
             Route::delete('/{element}', 'GalleryController@destroy')->name('destroy');
             Route::put('/order', 'GalleryController@order')->name('order');
             Route::put('/{element}', 'GalleryController@update')->name('update');
+        });
+
+        Route::prefix('tipologias')->name('tipologies.')->group(function() {
+            Route::get('/{element}', 'TipologiesController@index')->name('index');
+            Route::post('/', 'TipologiesController@store')->name('store');
+            Route::get('/json/get-all', 'TipologiesController@getAll')->name('get-all');
+            Route::get('/json/get/{element}', 'TipologiesController@get')->name('get');
+            Route::put('/order', 'TipologiesController@order')->name('order');
+            Route::put('/{element}', 'TipologiesController@update')->name('update');
+            Route::delete('/{element}', 'TipologiesController@destroy')->name('destroy');
         });
 
         Route::prefix('documentos')->name('files.')->group(function() {
@@ -124,7 +133,6 @@ Route::middleware(['auth'])->namespace('Cms')->name('cms.')->group(function () {
             Route::put('/order', 'FilesController@order')->name('order');
             Route::put('/{element}', 'FilesController@update')->name('update');
         });
-        //Route::get('/tipologia/{element}', 'ProjectsController@edit')->name('edit');*/
     });
 
     Route::namespace('Content')->prefix('contenido')->name('content.')->group(function () {

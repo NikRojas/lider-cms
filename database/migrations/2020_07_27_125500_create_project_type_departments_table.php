@@ -22,8 +22,8 @@ class CreateProjectTypeDepartmentsTable extends Migration
             $table->bigInteger('index'); 
             $table->text('url')->nullable();
             $table->boolean('url_360')->default(1);
-            $table->float('area')->nullable();
-            $table->integer('rooms')->nullable();
+            //$table->float('area')->nullable();
+            $table->text('description')->nullable();
             
             $table->bigInteger('project_id')->unsigned();
             $table->foreign('project_id')->references('id')->on('projects');

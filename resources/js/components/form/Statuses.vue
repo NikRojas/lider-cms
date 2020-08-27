@@ -61,11 +61,6 @@ export default {
     return {
       selected: 0,
       elements: {},
-      options: [
-        { text: "First radio", value: "first" },
-        { text: "Second radio", value: "second" },
-        { text: "Third radio", value: "third" },
-      ],
       loading: false,
     };
   },

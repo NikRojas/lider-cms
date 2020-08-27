@@ -237,8 +237,14 @@
                         :key="el.id"
                       >
                         <img :src="imagesUrl+'/features/'+el.image" height="50" :alt="el.name_es" />
-                        <small class="text-uppercase d-block">{{ el.name_es }}</small>
-                        <small class="text-uppercase d-block">{{ el.name_en }}</small>
+                        <h3 class="mb-1 font-weight-normal">
+                          <span class=" font-weight-bold">Nombre ES:</span>
+                          {{ el.name_es }}
+                        </h3>
+                        <h3 class="font-weight-normal">
+                          <span class=" font-weight-bold">Nombre EN:</span>
+                          {{ el.name_en }}
+                        </h3>
                       </div>
                     </div>
                   </div>

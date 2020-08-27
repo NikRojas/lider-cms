@@ -48,7 +48,7 @@
                     <div class="col-12 text-right">
                       <div class="ml-auto d-inline">
                         <a
-                          :href="'proyectos/galeria/'+el.slug_es"
+                          :href="'proyectos/tipologias/'+el.slug_es"
                           class="btn btn-sm mb-2 btn-inverse-primary"
                         >Ir a Tipologias</a>
                         <a

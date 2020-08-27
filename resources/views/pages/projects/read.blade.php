@@ -4,6 +4,9 @@
     p{
         margin-bottom: 5px;
     }
+    .VueCarousel-dot-container, .VueCarousel-dot{
+        margin-top: 5px !important;
+    }
 </style>
 @endsection
 @section('content')

@@ -32,21 +32,21 @@
                 <div class="row">
                   <div class="col-12 col-lg-6 mb-3">
                     <h3 class="mb-1 font-weight-normal">
-                      <span class="d-block font-weight-bold">Nombre ES:</span>
+                      <span class="d-block font-weight-bold">Nombre del Proyecto ES:</span>
                       {{ element.name_es }}
                     </h3>
                     <h3 class="font-weight-normal">
-                      <span class="d-block font-weight-bold">Nombre EN:</span>
+                      <span class="d-block font-weight-bold">Nombre del Proyecto EN:</span>
                       {{ element.name_en }}
                     </h3>
                   </div>
                   <div class="col-12 col-lg-6 mb-3">
                     <h3 class="mb-1 font-weight-normal">
-                      <span class="d-block font-weight-bold">URL ES:</span>
+                      <span class="d-block font-weight-bold">URL del Proyecto ES:</span>
                       <a target="_blank" style="text-decoration: underline;" :href="appUrl+'/proyectos/'+element.slug_es">{{ appUrl }}/proyectos/{{ element.slug_es }}</a>
                     </h3>
                     <h3 class="font-weight-normal">
-                      <span class="d-block font-weight-bold">URL EN:</span>
+                      <span class="d-block font-weight-bold">URL del Proyecto EN:</span>
                       <a target="_blank" style="text-decoration: underline;" :href="appUrl+'/projects/'+element.slug_en">{{ appUrl }}/projects/{{ element.slug_en }}</a>
                     </h3>
                   </div>
@@ -56,23 +56,28 @@
                     </h3>
                     <img class="img-fluid" :src="imagesUrl+'/projects/'+element.logo" alt />
                   </div>
-                  <div class="col-12">
+                  <div class="col-12 col-lg-6 mb-3">
                     <h3 class="font-weight-normal">
                       <span class="d-block font-weight-bold">Imágenes:</span>
                     </h3>
-                    <img
-                      class="img-fluid"
-                      v-for="el in element.images_format"
-                      :key="el"
-                      :src="imagesUrl+'/projects/'+el"
-                      alt
-                    />
+                    <carousel :perPage="1">
+                        <slide v-for="el in element.images_format" :key="el">
+                          <img
+                            class="img-fluid"
+                            :src="imagesUrl+'/projects/'+el"
+                            alt
+                          />
+                        </slide>
+                    </carousel>
+                    
                   </div>
                   <div class="col-12 col-lg-6 mb-3">
                     <h3 class="font-weight-normal">
                       <span class="d-block font-weight-bold">Estado del Proyecto ES:</span>
                       {{ element.status_rel.name_es }}
                     </h3>
+                  </div>
+                  <div class="col-12 col-lg-6 mb-3">
                     <h3 class="font-weight-normal">
                       <span class="d-block font-weight-bold">Estado del Proyecto EN:</span>
                       {{ element.status_rel.name_en }}
@@ -83,6 +88,8 @@
                       <span class="d-block font-weight-bold">Descripción ES:</span>
                     </h3>
                     <div v-html="element.description_es"></div>
+                  </div>
+                  <div class="col-12 col-lg-6 mb-3">
                     <h3 class="font-weight-normal">
                       <span class="d-block font-weight-bold">Descripción EN:</span>
                     </h3>
@@ -126,6 +133,9 @@
                     <h3 class="font-weight-normal">
                       <span class="d-block font-weight-bold">Brochure:</span>
                     </h3>
+                    <div class="mb-3 text-info">
+                            <PdfIcon/>
+                            </div>
                     <a
                       :href="filesUrl+'/projects/'+element.brochure"
                       class="btn btn-inverse-info btn-sm d-inline"
@@ -153,141 +163,6 @@
                       </div>
                     </div>
                   </div>
-
-                  <!--<div class="col-12 col-lg-6 mb-3">
-                    <div class="form-group">
-                      <label class="font-weight-bold" for="image">Logo:</label>
-                      <div class="row">
-                        <div class="col-lg-4 mb-3 mb-lg-0">
-                          <img class="img-fluid" :src="imagesUrl+'/projects/'+element.logo" alt />
-                        </div>
-                        <div class="col-lg-8">
-                          <vue-dropzone
-                            ref="ref_logo"
-                            @vdropzone-file-added="$validateImageDropzone($event,$refs.ref_logo.dropzone,1,512000,'500kb')"
-                            id="image"
-                            class="text-center"
-                            :options="dropzoneOptions"
-                            :duplicateCheck="true"
-                            :useCustomSlot="true"
-                          >
-                            <div class="dropzone-custom-content">
-                              <h5
-                                class="dropzone-custom-title text-primary"
-                              >Suelte los archivos aquí o haga click para cargarlos.</h5>
-                            </div>
-                          </vue-dropzone>
-
-                          <label
-                            v-if="errors && errors.logo"
-                            class="text-danger text-sm d-block mt-2"
-                            for="logo"
-                          >{{ errors.logo[0] }}</label>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="col-12 col-lg-6 mb-3">
-                    <div class="form-group">
-                      <label class="font-weight-bold" for="images">Imágenes:</label>
-                      <div class="row">
-                        <div class="col-12 mb-3">
-                          <MultipleFiles fieldName="images" :errors="errors" :messageOrder="messageOrder" :files.sync="element.files" :imagesUrl="imagesUrl" folder="projects" :filesParent="element.images_format"/>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="col-12 col-lg-6 mb-3">
-                    <Statuses
-                      :selected.sync="element.project_status_id"
-                      :errors="errors"
-                      :selectedParent="element.project_status_id"
-                      :route-create="routeStatusesCreate"
-                      :route-get-all="routeStatusesGetAll"
-                    />
-                  </div>
-                  <div class="col-12 col-lg-6 mb-3">
-                    <Editor
-                      size="sm"
-                      label="Descripción"
-                      variable="description"
-                      :errors="errors"
-                      :valueEn.sync="element.description_en"
-                      :valueEs.sync="element.description_es"
-                      :valueEnParent="element.description_en"
-                      :valueEsParent="element.description_es"
-                    />
-                  </div>
-                  <div class="col-12 col-lg-6 mb-3">
-                    <Input
-                      label="Habitaciones"
-                      variable="rooms"
-                      :errors="errors"
-                      :valueEn.sync="element.rooms_en"
-                      :valueEs.sync="element.rooms_es"
-                      :valueEnParent="element.rooms_en"
-                      :valueEsParent="element.rooms_es"
-                    />
-                  </div>
-                  <div class="col-12 col-lg-6 mb-3">
-                    <Input
-                      label="Metraje"
-                      variable="footage"
-                      :errors="errors"
-                      :valueEn.sync="element.footage_en"
-                      :valueEs.sync="element.footage_es"
-                      :valueEnParent="element.footage_en"
-                      :valueEsParent="element.footage_es"
-                    />
-                  </div>
-                  <div class="col-12 col-lg-6 mb-3">
-                    <div class="form-group">
-                      <label class="font-weight-bold" for="brochure">Brochure:</label>
-                      <div class="row">
-                        <div class="col-lg-2 mb-3 mb-lg-0 d-flex align-items-center justify-content-center">
-                          <div>
-                            <div class="text-center mb-3 text-info">
-                            <PdfIcon/>
-                            </div>
-                          <a :href="filesUrl+'/projects/'+element.brochure" class="btn btn-inverse-info btn-sm d-inline" target="_blank">Ver Brochure</a>
-                          </div>
-                        </div>
-                        <div class="col-lg-10">
-                          <vue-dropzone
-                            ref="ref_brochure"
-                            @vdropzone-file-added="$validatePDFDropzone($event,$refs.ref_brochure.dropzone,1,512000,'500kb')"
-                            id="brochure"
-                            class="text-center"
-                            :options="dropzoneOptionsBrochure"
-                            :duplicateCheck="true"
-                            :useCustomSlot="true"
-                          >
-                            <div class="dropzone-custom-content">
-                              <h5
-                                class="dropzone-custom-title text-primary"
-                              >Suelte los archivos aquí o haga click para cargarlos.</h5>
-                            </div>
-                          </vue-dropzone>
-
-                          <label
-                            v-if="errors && errors.brochure"
-                            class="text-danger text-sm d-block mt-2"
-                            for="brochure"
-                          >{{ errors.brochure[0] }}</label>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="col-12 col-lg-6 mb-3">
-                    <Advisors
-                      :selectedParent="element.advisors"
-                      :errors="errors"
-                      :selected.sync="element.advisors"
-                      :images-url="imagesUrl"
-                      :route-create="routeAdvisorsCreate"
-                      :route-get-all="routeAdvisorsGetAll"
-                    />
-                  </div>-->
                 </div>
               </div>
             </div>
@@ -302,19 +177,23 @@
             <div class="card">
               <div class="card-body">
                 <div class="row">
-                  <div class="col-12 col-lg-6 mb-3">
-                    <h3 class="font-weight-normal">
-                      <span class="d-block font-weight-bold">Precio Total Soles:</span>
-                      {{ element.price_total_format }}
-                    </h3>
-                    <h3 class="font-weight-normal">
-                      <span class="d-block font-weight-bold">Precio Total Dolares:</span>
-                      {{ element.price_total_foreign_format }}
-                    </h3>
-                    <h3 class="font-weight-normal">
-                      <span class="d-block font-weight-bold">Precio:</span>
-                      {{ element.price_format }}
-                    </h3>
+                  <div class="col-12 col-lg-6 mb-3 text-center">
+                    <h2 class="font-weight-normal">
+                      <span class="d-block h3 font-weight-bold">Precio Total Soles:</span>
+                      S/ {{ element.price_total_format }}
+                    </h2>
+                  </div>
+                  <div class="col-12 col-lg-6 mb-3 text-center">
+                    <h2 class="font-weight-normal">
+                      <span class="d-block h3 font-weight-bold">Precio Total Dolares:</span>
+                      $ {{ element.price_total_foreign_format }}
+                    </h2>
+                  </div>
+                  <div class="col-12 text-center">
+                    <h1 class="font-weight-normal">
+                      <span class="d-block h3 font-weight-bold">Precio:</span>
+                      S/ {{ element.price_format }}
+                    </h1>
                   </div>
                 </div>
               </div>
@@ -397,7 +276,7 @@
             <div class="card">
               <div class="card-body">
                 <div class="row">
-                  <div class="col-12 col-lg-6 mb-3">
+                  <div class="col-12 mb-3">
                     <h3 class="font-weight-normal">
                       <span class="d-block font-weight-bold">Dirección:</span>
                       {{ element.location }}
@@ -405,15 +284,19 @@
                   </div>
                   
 
-                  <div class="col-12 col-lg-6 mb-3">
+                  <div class="col-12 col-lg-4 mb-3">
                     <h3 class="font-weight-normal">
                       <span class="d-block font-weight-bold">Departamento:</span>
                       {{ element.ubigeo_rel.department }}
                     </h3>
+                  </div>
+                  <div class="col-12 col-lg-4 mb-3">
                     <h3 class="font-weight-normal">
                       <span class="d-block font-weight-bold">Provincia:</span>
                       {{ element.ubigeo_rel.province }}
                     </h3>
+                  </div>
+                  <div class="col-12 col-lg-4 mb-3">
                     <h3 class="font-weight-normal">
                       <span class="d-block font-weight-bold">Distrito:</span>
                       {{ element.ubigeo_rel.district }}
@@ -423,14 +306,16 @@
                   <div class="col-12 col-lg-6 mb-3">
                     <h3 class="font-weight-normal">
                       <span class="d-block font-weight-bold">Indicaciones de Dirección ES:</span>
-                      <div v-html="element.map_indications_es"></div>
+                      <div v-html="element.map_indications_es" v-if="element.map_indications_es"></div>
+                      <p v-else>No hay indicaciones registradas.</p>
                     </h3>
                   </div>
 
                   <div class="col-12 col-lg-6 mb-3">
                     <h3 class="font-weight-normal">
                       <span class="d-block font-weight-bold">Indicaciones de Dirección EN:</span>
-                      <div v-html="element.map_indications_en"></div>
+                      <div v-html="element.map_indications_en" v-if="element.map_indications_en"></div>
+                      <p v-else>No hay indicaciones registradas.</p>
                     </h3>
                   </div>
 
@@ -464,13 +349,13 @@
                   <div class="col-12 col-lg-6 mb-3">
                     <h3 class="font-weight-normal">
                       <span class="d-block font-weight-bold">URL Waze:</span>
-                      <a :href="element.url_waze" target="_blank">{{ element.url_waze }}</a>
+                      <a style="text-decoration: underline;" :href="element.url_waze" target="_blank">{{ element.url_waze }}</a>
                     </h3>
                   </div>
                   <div class="col-12 col-lg-6 mb-3">
                     <h3 class="font-weight-normal">
                       <span class="d-block font-weight-bold">URL Google Maps:</span>
-                      <a :href="element.url_google_maps" target="_blank">{{ element.url_google_maps }}</a>
+                      <a style="text-decoration: underline;" :href="element.url_google_maps" target="_blank">{{ element.url_google_maps }}</a>
                     </h3>
                   </div>
                   <div class="col-12 col-lg-6 mb-3">
@@ -497,10 +382,13 @@
 <script>
 import BreadCrumb from "../../components/BreadCrumb";
 import PdfIcon from "../../components/icons/Pdf";
+import { Carousel, Slide } from 'vue-carousel';
 export default {
   components: {
     BreadCrumb,
     PdfIcon,
+    Carousel,
+    Slide
   },
   props: {
     appUrl: String,

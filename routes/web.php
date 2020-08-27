@@ -96,6 +96,7 @@ Route::middleware(['auth'])->namespace('Cms')->name('cms.')->group(function () {
     #Projects
     Route::namespace('Projects')->prefix('proyectos')->name('projects.')->group(function() {
         Route::get('/', 'ProjectsController@index')->name('index');
+        Route::get('/{element}', 'ProjectsController@read')->name('read');
         Route::get('/nuevo', 'ProjectsController@create')->name('create');
         Route::put('/{element}', 'ProjectsController@update')->name('update');
         Route::get('/editar/{element}', 'ProjectsController@edit')->name('edit');

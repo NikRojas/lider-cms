@@ -39,8 +39,10 @@ class ProjectsController extends Controller
         return view("pages.projects.edit", compact('element')); 
     }
 
-    public function get(Project $element){
-        //return response()->json($element);
+    public function read($element){
+        $element = Project::where('slug_es',$element)->firstOrFail();
+        $element = $element->load('advisorsRel','banksRel','featuresRel','ubigeoRel','statusRel');
+        return view("pages.projects.read", compact('element')); 
     }
 
     public function store(ProjectRequest $request){

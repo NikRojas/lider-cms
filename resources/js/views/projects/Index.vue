@@ -43,23 +43,48 @@
               />
               <div class="card-body">
                 <div>
-                  <div class="text-right">
-                    <a
-                      style="text-decoration: underline;"
-                      :href="appUrl+'/proyectos/'+el.slug_es"
-                    >{{ appUrl }}/proyectos/{{ el.slug_es }}</a>
-                    <br />
-                    <a
-                      style="text-decoration: underline;"
-                      :href="appUrl+'/projects/'+el.slug_en"
-                    >{{ appUrl }}/projects/{{ el.slug_en }}</a>
+                  <div class="row">
+                    
+                    <div class="col-12 text-right">
+                      <div class="ml-auto d-inline">
+                        <a
+                          :href="'proyectos/galeria/'+el.slug_es"
+                          class="btn btn-sm mb-2 btn-inverse-primary"
+                        >Ir a Tipologias</a>
+                        <a
+                          :href="'proyectos/documentos/'+el.slug_es"
+                          class="btn btn-sm mb-2 btn-inverse-primary"
+                        >Ir a Documentos</a>
+                        <a
+                          :href="'proyectos/galeria/'+el.slug_es"
+                          class="btn btn-sm mb-2 btn-inverse-primary"
+                        >Ir a Galeria</a>
+                      </div>
+                    </div>
+                    <div class="col-12 mb-2">
+                      <div class>
+                        <a
+                          style="text-decoration: underline;"
+                          :href="appUrl+'/proyectos/'+el.slug_es"
+                        >{{ appUrl }}/proyectos/{{ el.slug_es }}</a>
+                        <br />
+                        <a
+                          style="text-decoration: underline;"
+                          :href="appUrl+'/projects/'+el.slug_en"
+                        >{{ appUrl }}/projects/{{ el.slug_en }}</a>
+                      </div>
+                    </div>
                   </div>
+
                   <span class="badge badge-warning badge-md">{{ el.status_rel.name_es}}</span>
                   <h2 class="mt-1">{{ el.name_es }}</h2>
+
                   <div class="mb-3">
                     <div>
                       <h4 class="d-inline-block font-weight-normal">Ubicación:</h4>
-                      <h4 class="d-inline-block">{{ el.location}}, {{ el.ubigeo_rel.district}} - {{ el.ubigeo_rel.department}}</h4>
+                      <h4
+                        class="d-inline-block"
+                      >{{ el.location}}, {{ el.ubigeo_rel.district}} - {{ el.ubigeo_rel.department}}</h4>
                     </div>
                     <div>
                       <div>
@@ -75,13 +100,15 @@
                     <h2 class="d-inline-block">S/. {{ el.price_format}}</h2>
                   </div>
                   <div class="d-flex">
-                    <div class="mr-auto d-inline">
-                    <a :href="'proyectos/galeria/'+el.slug_es" class="btn  btn-sm btn-inverse-primary">Ir a Tipologias</a>
-                    <a :href="'proyectos/documentos/'+el.slug_es" class="btn btn-sm btn-inverse-primary">Ir a Documentos</a>
-                    <a :href="'proyectos/galeria/'+el.slug_es" class="btn btn-sm btn-inverse-primary">Ir a Galeria</a>
-                    </div>
-                    <div class="ml-auto  d-inline">
-                    <a :href="route+'/editar/'+el.slug_es" class="btn  btn-sm btn-inverse-info">Editar</a>
+                    <div class="ml-auto d-inline">
+                      <a
+                        :href="route+'/'+el.slug_es"
+                        class="btn btn-sm btn-inverse-primary"
+                      >Ver Proyecto</a>
+                      <a
+                        :href="route+'/editar/'+el.slug_es"
+                        class="btn btn-sm btn-inverse-info"
+                      >Editar</a>
                     </div>
                   </div>
                 </div>

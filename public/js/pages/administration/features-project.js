@@ -328,7 +328,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
 
 
 
@@ -846,8 +845,6 @@ var render = function() {
                                       "\n              "
                                   )
                                 ]),
-                                _vm._v(" "),
-                                _c("span"),
                                 _vm._v(" "),
                                 _c("h3", {}, [
                                   _c(

@@ -108,6 +108,33 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -289,50 +316,112 @@ var render = function() {
                                 _vm._v(" "),
                                 _c("div", { staticClass: "card-body" }, [
                                   _c("div", [
-                                    _c("div", { staticClass: "text-right" }, [
+                                    _c("div", { staticClass: "row" }, [
                                       _c(
-                                        "a",
-                                        {
-                                          staticStyle: {
-                                            "text-decoration": "underline"
-                                          },
-                                          attrs: {
-                                            href:
-                                              _vm.appUrl +
-                                              "/proyectos/" +
-                                              el.slug_es
-                                          }
-                                        },
+                                        "div",
+                                        { staticClass: "col-12 text-right" },
                                         [
-                                          _vm._v(
-                                            _vm._s(_vm.appUrl) +
-                                              "/proyectos/" +
-                                              _vm._s(el.slug_es)
+                                          _c(
+                                            "div",
+                                            { staticClass: "ml-auto d-inline" },
+                                            [
+                                              _c(
+                                                "a",
+                                                {
+                                                  staticClass:
+                                                    "btn btn-sm mb-2 btn-inverse-primary",
+                                                  attrs: {
+                                                    href:
+                                                      "proyectos/galeria/" +
+                                                      el.slug_es
+                                                  }
+                                                },
+                                                [_vm._v("Ir a Tipologias")]
+                                              ),
+                                              _vm._v(" "),
+                                              _c(
+                                                "a",
+                                                {
+                                                  staticClass:
+                                                    "btn btn-sm mb-2 btn-inverse-primary",
+                                                  attrs: {
+                                                    href:
+                                                      "proyectos/documentos/" +
+                                                      el.slug_es
+                                                  }
+                                                },
+                                                [_vm._v("Ir a Documentos")]
+                                              ),
+                                              _vm._v(" "),
+                                              _c(
+                                                "a",
+                                                {
+                                                  staticClass:
+                                                    "btn btn-sm mb-2 btn-inverse-primary",
+                                                  attrs: {
+                                                    href:
+                                                      "proyectos/galeria/" +
+                                                      el.slug_es
+                                                  }
+                                                },
+                                                [_vm._v("Ir a Galeria")]
+                                              )
+                                            ]
                                           )
                                         ]
                                       ),
                                       _vm._v(" "),
-                                      _c("br"),
-                                      _vm._v(" "),
                                       _c(
-                                        "a",
-                                        {
-                                          staticStyle: {
-                                            "text-decoration": "underline"
-                                          },
-                                          attrs: {
-                                            href:
-                                              _vm.appUrl +
-                                              "/projects/" +
-                                              el.slug_en
-                                          }
-                                        },
+                                        "div",
+                                        { staticClass: "col-12 mb-2" },
                                         [
-                                          _vm._v(
-                                            _vm._s(_vm.appUrl) +
-                                              "/projects/" +
-                                              _vm._s(el.slug_en)
-                                          )
+                                          _c("div", {}, [
+                                            _c(
+                                              "a",
+                                              {
+                                                staticStyle: {
+                                                  "text-decoration": "underline"
+                                                },
+                                                attrs: {
+                                                  href:
+                                                    _vm.appUrl +
+                                                    "/proyectos/" +
+                                                    el.slug_es
+                                                }
+                                              },
+                                              [
+                                                _vm._v(
+                                                  _vm._s(_vm.appUrl) +
+                                                    "/proyectos/" +
+                                                    _vm._s(el.slug_es)
+                                                )
+                                              ]
+                                            ),
+                                            _vm._v(" "),
+                                            _c("br"),
+                                            _vm._v(" "),
+                                            _c(
+                                              "a",
+                                              {
+                                                staticStyle: {
+                                                  "text-decoration": "underline"
+                                                },
+                                                attrs: {
+                                                  href:
+                                                    _vm.appUrl +
+                                                    "/projects/" +
+                                                    el.slug_en
+                                                }
+                                              },
+                                              [
+                                                _vm._v(
+                                                  _vm._s(_vm.appUrl) +
+                                                    "/projects/" +
+                                                    _vm._s(el.slug_en)
+                                                )
+                                              ]
+                                            )
+                                          ])
                                         ]
                                       )
                                     ]),
@@ -447,22 +536,8 @@ var render = function() {
                                     _c("div", { staticClass: "d-flex" }, [
                                       _c(
                                         "div",
-                                        { staticClass: "mr-auto d-inline" },
+                                        { staticClass: "ml-auto d-inline" },
                                         [
-                                          _c(
-                                            "a",
-                                            {
-                                              staticClass:
-                                                "btn  btn-sm btn-inverse-primary",
-                                              attrs: {
-                                                href:
-                                                  "proyectos/galeria/" +
-                                                  el.slug_es
-                                              }
-                                            },
-                                            [_vm._v("Ir a Tipologias")]
-                                          ),
-                                          _vm._v(" "),
                                           _c(
                                             "a",
                                             {
@@ -470,38 +545,17 @@ var render = function() {
                                                 "btn btn-sm btn-inverse-primary",
                                               attrs: {
                                                 href:
-                                                  "proyectos/documentos/" +
-                                                  el.slug_es
+                                                  _vm.route + "/" + el.slug_es
                                               }
                                             },
-                                            [_vm._v("Ir a Documentos")]
+                                            [_vm._v("Ver Proyecto")]
                                           ),
                                           _vm._v(" "),
                                           _c(
                                             "a",
                                             {
                                               staticClass:
-                                                "btn btn-sm btn-inverse-primary",
-                                              attrs: {
-                                                href:
-                                                  "proyectos/galeria/" +
-                                                  el.slug_es
-                                              }
-                                            },
-                                            [_vm._v("Ir a Galeria")]
-                                          )
-                                        ]
-                                      ),
-                                      _vm._v(" "),
-                                      _c(
-                                        "div",
-                                        { staticClass: "ml-auto  d-inline" },
-                                        [
-                                          _c(
-                                            "a",
-                                            {
-                                              staticClass:
-                                                "btn  btn-sm btn-inverse-info",
+                                                "btn btn-sm btn-inverse-info",
                                               attrs: {
                                                 href:
                                                   _vm.route +

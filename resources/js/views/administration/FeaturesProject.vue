@@ -41,7 +41,6 @@
                   <span class="font-weight-normal">Nombre ES:</span>
                   {{ el.name_es }}
                 </h3>
-                <span></span>
                 <h3 class>
                   <span class="font-weight-normal">Nombre EN:</span>
                   {{ el.name_en }}

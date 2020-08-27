@@ -54,10 +54,10 @@ class ProjectRequest extends FormRequest
             'price_total' => 'required',
             'description_en' => 'required',
             'description_es' => 'required',
+            'url_video' => 'sometimes|required|url',
             'price_total_foreign' => 'required',
             'price' => 'required',
-            'latitude' => 'required',
-            'longitude' => 'required',
+            'iframe_map' => 'required',
             'sales_room_es' => 'required',
             'sales_room_en' => 'required',
             'schedule_attention_es' => 'required',
@@ -67,13 +67,13 @@ class ProjectRequest extends FormRequest
             case 'POST':   
                 $rules = array_merge(
                     $rules,
-                    ['logo' => 'required','brochure' => 'required','banner_es' => 'required','banner_en' => 'required']
+                    ['logo' => 'required','brochure' => 'required','banner' => 'required']
                 );
             break;
             case 'PUT':   
                 $rules = array_merge(
                     $rules,
-                    ['logo' => 'sometimes|required','brochure' => 'sometimes|required', 'banner_es' => 'sometimes|required','banner_en' => 'sometimes|required']
+                    ['logo' => 'sometimes|required','brochure' => 'sometimes|required', 'banner' => 'sometimes|required']
                 );
             break;
         }

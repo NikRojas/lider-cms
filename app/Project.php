@@ -10,11 +10,18 @@ class Project extends Model
     protected $casts = [
         'images' => 'array',
     ];
-    protected $appends = ['images_format','price_total_format','price_total_foreign_format','price_format'];
+    protected $appends = ['images_format','price_total_format','price_total_foreign_format','price_format','id_video'];
 
     public function galleryRel()
     {
         return $this->hasMany('App\ProjectGallery','id','project_id');
+    }
+
+    public function getIdVideoAttribute(){
+        if($this->url_video){
+            $id = explode("?v=", $this->url_video);
+            return $id[1];
+        }
     }
 
     public function getImagesFormatAttribute(){

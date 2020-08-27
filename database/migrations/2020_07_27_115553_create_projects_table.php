@@ -29,11 +29,11 @@ class CreateProjectsTable extends Migration
             $table->string('footage_es',100);
             $table->string('footage_en',100);
             $table->string('brochure',150)->nullable();
-            $table->string('banner_es',100);
-            $table->string('banner_en',100);
+            $table->string('banner',100);
             $table->string('text_place_es',100)->nullable();
             $table->string('text_place_en',100)->nullable();
             $table->text('url_google_maps')->nullable();
+            $table->text('url_video')->nullable();
             $table->text('url_waze')->nullable();
             $table->text('map_indications_es')->nullable();
             $table->text('map_indications_en')->nullable();
@@ -49,8 +49,10 @@ class CreateProjectsTable extends Migration
             $table->string('slug_es');
             $table->string('slug_en');
 
-            $table->decimal('latitude', 10, 8);
-            $table->decimal('longitude', 11, 8);
+            /*$table->decimal('latitude', 10, 8);
+            $table->decimal('longitude', 11, 8);*/
+
+            $table->text('iframe_map');
 
             $table->bigInteger('project_status_id')->unsigned();
             $table->foreign('project_status_id')->references('id')->on('project_statuses');

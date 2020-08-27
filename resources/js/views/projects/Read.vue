@@ -211,15 +211,20 @@
                 <div class="row">
                   <div class="col-12 col-lg-6 mb-3">
                     <h3 class="font-weight-normal">
-                      <span class="d-block font-weight-bold">Banner ES:</span>
+                      <span class="d-block font-weight-bold">Banner:</span>
                     </h3>
-                    <img class="img-fluid" :src="imagesUrl+'/projects/'+element.banner_es" alt />
+                    <img class="img-fluid" :src="imagesUrl+'/projects/'+element.banner" alt />
                   </div>
                   <div class="col-12 col-lg-6 mb-3">
                     <h3 class="font-weight-normal">
-                      <span class="d-block font-weight-bold">Banner EN:</span>
+                      <span class="d-block font-weight-bold">Video:</span>
                     </h3>
-                    <img class="img-fluid" :src="imagesUrl+'/projects/'+element.banner_en" alt />
+                    <iframe id="player" type="text/html" width="640" height="360" v-if="element.url_video"
+                    :src="'http://www.youtube.com/embed/'+element.id_video"
+                    frameborder="0"></iframe>
+                    <p v-else>
+                      No se ha registrado un video.
+                    </p>
                   </div>
                   <div class="col-12 mb-3">
                     <h3 class="font-weight-normal">
@@ -358,16 +363,10 @@
                       <a style="text-decoration: underline;" :href="element.url_google_maps" target="_blank">{{ element.url_google_maps }}</a>
                     </h3>
                   </div>
-                  <div class="col-12 col-lg-6 mb-3">
+                  <div class="col-12">
                     <h3 class="font-weight-normal">
-                      <span class="d-block font-weight-bold">Latitud:</span>
-                      {{ element.latitude }}
-                    </h3>
-                  </div>
-                  <div class="col-12 col-lg-6 mb-3">
-                    <h3 class="font-weight-normal">
-                      <span class="d-block font-weight-bold">Longitud:</span>
-                      {{ element.longitude }}
+                      <span class="d-block font-weight-bold d-block mb-2">Iframe Mapa:</span>
+                      <div v-html="element.iframe_map"></div>
                     </h3>
                   </div>
                 </div>

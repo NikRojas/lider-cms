@@ -7,6 +7,9 @@
     .VueCarousel-dot-container, .VueCarousel-dot{
         margin-top: 5px !important;
     }
+    iframe{
+        width: 100%;
+    }
 </style>
 @endsection
 @section('content')

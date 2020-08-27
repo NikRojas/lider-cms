@@ -16,6 +16,8 @@ class CreateProjectTypeDepartmentsTable extends Migration
         Schema::create('project_type_departments', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('name');
+            $table->string('slug');
+
             $table->string('image',100);
             $table->bigInteger('index'); 
             $table->text('url')->nullable();

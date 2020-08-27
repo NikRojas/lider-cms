@@ -444,6 +444,19 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -622,8 +635,16 @@ __webpack_require__.r(__webpack_exports__);
         fd.append("footage_es", this.element.footage_es);
       }
 
+      if (this.element.url_video) {
+        fd.append("url_video", this.element.url_video);
+      }
+
       if (this.$refs.ref_brochure.dropzone.files[0]) {
         fd.append("brochure", this.$refs.ref_brochure.dropzone.files[0]);
+      }
+
+      if (this.$refs.ref_banner.dropzone.files[0]) {
+        fd.append("banner", this.$refs.ref_banner.dropzone.files[0]);
       }
 
       if (this.element.text_place_en) {
@@ -704,6 +725,10 @@ __webpack_require__.r(__webpack_exports__);
 
       if (this.element.province) {
         fd.append("province", this.element.province);
+      }
+
+      if (this.element.iframe_map) {
+        fd.append("iframe_map", this.element.iframe_map);
       }
 
       if (this.element.advisors) {
@@ -1388,36 +1413,144 @@ var render = function() {
               _c("div", { staticClass: "card" }, [
                 _c("div", { staticClass: "card-body" }, [
                   _c("div", { staticClass: "row" }, [
-                    _c(
-                      "div",
-                      { staticClass: "col-12" },
-                      [
-                        _c("ImageForm", {
-                          attrs: {
-                            label: "Banner",
-                            variable: "banner",
-                            errors: _vm.errors,
-                            valueEn: _vm.element.banner_en,
-                            valueEs: _vm.element.banner_es
+                    _c("div", { staticClass: "col-12" }, [
+                      _c(
+                        "div",
+                        { staticClass: "form-group" },
+                        [
+                          _c(
+                            "label",
+                            {
+                              staticClass: "font-weight-bold",
+                              attrs: { for: "banner" }
+                            },
+                            [_vm._v("Banner")]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "vue-dropzone",
+                            {
+                              ref: "ref_banner",
+                              staticClass: "text-center",
+                              attrs: {
+                                id: "image",
+                                options: _vm.dropzoneOptions,
+                                duplicateCheck: true,
+                                useCustomSlot: true
+                              },
+                              on: {
+                                "vdropzone-file-added": function($event) {
+                                  return _vm.$validateImageDropzone(
+                                    $event,
+                                    _vm.$refs.ref_banner.dropzone,
+                                    1,
+                                    512000,
+                                    "500kb"
+                                  )
+                                }
+                              }
+                            },
+                            [
+                              _c(
+                                "div",
+                                { staticClass: "dropzone-custom-content" },
+                                [
+                                  _c(
+                                    "h5",
+                                    {
+                                      staticClass:
+                                        "dropzone-custom-title text-primary"
+                                    },
+                                    [
+                                      _vm._v(
+                                        "Suelte los archivos aquí o haga click para cargarlos."
+                                      )
+                                    ]
+                                  )
+                                ]
+                              )
+                            ]
+                          ),
+                          _vm._v(" "),
+                          _vm.errors && _vm.errors.banner
+                            ? _c(
+                                "label",
+                                {
+                                  staticClass:
+                                    "text-danger text-sm d-block mt-2",
+                                  attrs: { for: "banner" }
+                                },
+                                [_vm._v(_vm._s(_vm.errors.banner[0]))]
+                              )
+                            : _vm._e()
+                        ],
+                        1
+                      )
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "col-12" }, [
+                      _c("div", { staticClass: "form-group" }, [
+                        _c(
+                          "label",
+                          {
+                            staticClass: "font-weight-bold",
+                            attrs: { for: "url_video" }
                           },
+                          [_vm._v("URL Video")]
+                        ),
+                        _vm._v(" "),
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.element.url_video,
+                              expression: "element.url_video"
+                            }
+                          ],
+                          staticClass: "form-control",
+                          attrs: { type: "text", id: "url_video" },
+                          domProps: { value: _vm.element.url_video },
                           on: {
-                            "update:valueEn": function($event) {
-                              return _vm.$set(_vm.element, "banner_en", $event)
-                            },
-                            "update:value-en": function($event) {
-                              return _vm.$set(_vm.element, "banner_en", $event)
-                            },
-                            "update:valueEs": function($event) {
-                              return _vm.$set(_vm.element, "banner_es", $event)
-                            },
-                            "update:value-es": function($event) {
-                              return _vm.$set(_vm.element, "banner_es", $event)
+                            input: function($event) {
+                              if ($event.target.composing) {
+                                return
+                              }
+                              _vm.$set(
+                                _vm.element,
+                                "url_video",
+                                $event.target.value
+                              )
                             }
                           }
-                        })
-                      ],
-                      1
-                    ),
+                        }),
+                        _vm._v(" "),
+                        _c(
+                          "small",
+                          {
+                            staticClass: "form-text",
+                            staticStyle: { opacity: "0.7" },
+                            attrs: { id: "url_video" }
+                          },
+                          [
+                            _vm._v(
+                              'El formato de la URL debe ser "https://www.youtube.com/watch?v=N1bWwEfIDP0".'
+                            )
+                          ]
+                        ),
+                        _vm._v(" "),
+                        _vm.errors && _vm.errors.url_video
+                          ? _c(
+                              "label",
+                              {
+                                staticClass: "mt-2 text-danger text-sm",
+                                attrs: { for: "url_video" }
+                              },
+                              [_vm._v(_vm._s(_vm.errors.url_video[0]))]
+                            )
+                          : _vm._e()
+                      ])
+                    ]),
                     _vm._v(" "),
                     _c(
                       "div",
@@ -1867,29 +2000,29 @@ var render = function() {
                       ])
                     ]),
                     _vm._v(" "),
-                    _c("div", { staticClass: "col-12 col-lg-6" }, [
+                    _c("div", { staticClass: "col-12" }, [
                       _c("div", { staticClass: "form-group" }, [
                         _c(
                           "label",
                           {
                             staticClass: "font-weight-bold",
-                            attrs: { for: "latitude" }
+                            attrs: { for: "iframe_map" }
                           },
-                          [_vm._v("Latitud")]
+                          [_vm._v("Iframe Mapa")]
                         ),
                         _vm._v(" "),
-                        _c("input", {
+                        _c("textarea", {
                           directives: [
                             {
                               name: "model",
                               rawName: "v-model",
-                              value: _vm.element.latitude,
-                              expression: "element.latitude"
+                              value: _vm.element.iframe_map,
+                              expression: "element.iframe_map"
                             }
                           ],
                           staticClass: "form-control",
-                          attrs: { type: "text", id: "latitude" },
-                          domProps: { value: _vm.element.latitude },
+                          attrs: { id: "iframe_map", cols: "30", rows: "5" },
+                          domProps: { value: _vm.element.iframe_map },
                           on: {
                             input: function($event) {
                               if ($event.target.composing) {
@@ -1897,71 +2030,21 @@ var render = function() {
                               }
                               _vm.$set(
                                 _vm.element,
-                                "latitude",
+                                "iframe_map",
                                 $event.target.value
                               )
                             }
                           }
                         }),
                         _vm._v(" "),
-                        _vm.errors && _vm.errors.latitude
+                        _vm.errors && _vm.errors.iframe_map
                           ? _c(
                               "label",
                               {
                                 staticClass: "mt-2 text-danger text-sm",
-                                attrs: { for: "latitude" }
+                                attrs: { for: "iframe_map" }
                               },
-                              [_vm._v(_vm._s(_vm.errors.latitude[0]))]
-                            )
-                          : _vm._e()
-                      ])
-                    ]),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "col-12 col-lg-6" }, [
-                      _c("div", { staticClass: "form-group" }, [
-                        _c(
-                          "label",
-                          {
-                            staticClass: "font-weight-bold",
-                            attrs: { for: "longitude" }
-                          },
-                          [_vm._v("Longitud")]
-                        ),
-                        _vm._v(" "),
-                        _c("input", {
-                          directives: [
-                            {
-                              name: "model",
-                              rawName: "v-model",
-                              value: _vm.element.longitude,
-                              expression: "element.longitude"
-                            }
-                          ],
-                          staticClass: "form-control",
-                          attrs: { type: "text", id: "longitude" },
-                          domProps: { value: _vm.element.longitude },
-                          on: {
-                            input: function($event) {
-                              if ($event.target.composing) {
-                                return
-                              }
-                              _vm.$set(
-                                _vm.element,
-                                "longitude",
-                                $event.target.value
-                              )
-                            }
-                          }
-                        }),
-                        _vm._v(" "),
-                        _vm.errors && _vm.errors.longitude
-                          ? _c(
-                              "label",
-                              {
-                                staticClass: "mt-2 text-danger text-sm",
-                                attrs: { for: "longitude" }
-                              },
-                              [_vm._v(_vm._s(_vm.errors.longitude[0]))]
+                              [_vm._v(_vm._s(_vm.errors.iframe_map[0]))]
                             )
                           : _vm._e()
                       ])

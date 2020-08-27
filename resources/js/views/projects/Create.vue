@@ -229,13 +229,47 @@
               <div class="card-body">
                 <div class="row">
                   <div class="col-12">
-                    <ImageForm
-                      label="Banner"
-                      variable="banner"
-                      :errors="errors"
-                      :valueEn.sync="element.banner_en"
-                      :valueEs.sync="element.banner_es"
-                    ></ImageForm>
+                     <div class="form-group">
+                    <label class="font-weight-bold" for="banner">Banner</label>
+                    <vue-dropzone
+                        ref="ref_banner"
+                        @vdropzone-file-added="$validateImageDropzone($event,$refs.ref_banner.dropzone,1,512000,'500kb')"
+                        id="image"
+                        class="text-center"
+                        :options="dropzoneOptions"
+                        :duplicateCheck="true"
+                        :useCustomSlot="true"
+                      >
+                        <div class="dropzone-custom-content">
+                          <h5
+                            class="dropzone-custom-title text-primary"
+                          >Suelte los archivos aquí o haga click para cargarlos.</h5>
+                        </div>
+                      </vue-dropzone>
+
+                      <label
+                        v-if="errors && errors.banner"
+                        class="text-danger text-sm d-block mt-2"
+                        for="banner"
+                      >{{ errors.banner[0] }}</label>
+                     </div>
+                  </div>
+                  <div class="col-12">
+                    <div class="form-group">
+                      <label class="font-weight-bold" for="url_video">URL Video</label>
+                      <input
+                        type="text"
+                        class="form-control"
+                        v-model="element.url_video"
+                        id="url_video"
+                      />
+                      <small id="url_video" class="form-text" style="opacity: 0.7;">El formato de la URL debe ser "https://www.youtube.com/watch?v=N1bWwEfIDP0".</small>
+                      <label
+                        v-if="errors && errors.url_video"
+                        class="mt-2 text-danger text-sm"
+                        for="url_video"
+                      >{{ errors.url_video[0] }}</label>
+                    </div>
                   </div>
                   <div class="col-12">
                     <Features
@@ -376,36 +410,15 @@
                       >{{ errors.url_google_maps[0] }}</label>
                     </div>
                   </div>
-                  <div class="col-12 col-lg-6">
+                  <div class="col-12">
                     <div class="form-group">
-                      <label class="font-weight-bold" for="latitude">Latitud</label>
-                      <input
-                        type="text"
-                        class="form-control"
-                        v-model="element.latitude"
-                        id="latitude"
-                      />
+                      <label class="font-weight-bold" for="iframe_map">Iframe Mapa</label>
+                      <textarea class="form-control" v-model="element.iframe_map" id="iframe_map" cols="30" rows="5"></textarea>
                       <label
-                        v-if="errors && errors.latitude"
+                        v-if="errors && errors.iframe_map"
                         class="mt-2 text-danger text-sm"
-                        for="latitude"
-                      >{{ errors.latitude[0] }}</label>
-                    </div>
-                  </div>
-                  <div class="col-12 col-lg-6">
-                    <div class="form-group">
-                      <label class="font-weight-bold" for="longitude">Longitud</label>
-                      <input
-                        type="text"
-                        class="form-control"
-                        v-model="element.longitude"
-                        id="longitude"
-                      />
-                      <label
-                        v-if="errors && errors.longitude"
-                        class="mt-2 text-danger text-sm"
-                        for="longitude"
-                      >{{ errors.longitude[0] }}</label>
+                        for="iframe_map"
+                      >{{ errors.iframe_map[0] }}</label>
                     </div>
                   </div>
                 </div>
@@ -577,8 +590,14 @@ export default {
       if (this.element.footage_es) {
         fd.append("footage_es", this.element.footage_es);
       }
+      if (this.element.url_video) {
+        fd.append("url_video", this.element.url_video);
+      }
       if (this.$refs.ref_brochure.dropzone.files[0]) {
         fd.append("brochure", this.$refs.ref_brochure.dropzone.files[0]);
+      }
+      if (this.$refs.ref_banner.dropzone.files[0]) {
+        fd.append("banner", this.$refs.ref_banner.dropzone.files[0]);
       }
       if (this.element.text_place_en) {
         fd.append("text_place_en", this.element.text_place_en);
@@ -639,6 +658,9 @@ export default {
       }
       if (this.element.province) {
         fd.append("province", this.element.province);
+      }
+      if (this.element.iframe_map) {
+        fd.append("iframe_map", this.element.iframe_map);
       }
       if (this.element.advisors) {
         fd.append("advisors", JSON.stringify(this.element.advisors));

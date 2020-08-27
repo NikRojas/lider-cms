@@ -46,18 +46,15 @@ class ProjectsController extends Controller
     }
 
     public function store(ProjectRequest $request){
-        $project = request(['name_es',"description_en","description_es",'name_en','slug_en','slug_es',"rooms_es","rooms_en","footage_en","footage_es","url_google_maps","url_waze","text_place_es",
-        "text_place_en","project_status_id","location","price_total","price","price_total_foreign","latitude","longitude","map_indications_es","map_indications_en",
+        $project = request(['name_es',"description_en","description_es",'url_video','name_en','slug_en','slug_es',"rooms_es","rooms_en","footage_en","footage_es","url_google_maps","url_waze","text_place_es",
+        "text_place_en","project_status_id","location","price_total","price","price_total_foreign","iframe_map","map_indications_es","map_indications_en",
         "sales_room_es","sales_room_en","schedule_attention_es","schedule_attention_en"]);
         
         $logoName = $this->setFileName('l-',$request->file('logo'));
         $storeLogo = Storage::disk('public')->putFileAs('img/projects/',$request->file('logo'),$logoName);
 
-        $imageBannerEs = $this->setFileName('bes-',$request->file('banner_es'));
-        $storeBannerEs = Storage::disk('public')->putFileAs('img/projects/',$request->file('banner_es'),$imageBannerEs);
-
-        $imageBannerEn = $this->setFileName('ben-',$request->file('banner_en'));
-        $storeBannerEn = Storage::disk('public')->putFileAs('img/projects/',$request->file('banner_en'),$imageBannerEn);
+        $imageBanner = $this->setFileName('bes-',$request->file('banner'));
+        $storeBanner = Storage::disk('public')->putFileAs('img/projects/',$request->file('banner'),$imageBanner);
 
         $brochureName = $this->setFileName('bro-',$request->file('brochure'));
         $storeBrochure = Storage::disk('public')->putFileAs('files/projects/',$request->file('brochure'),$brochureName);
@@ -74,11 +71,10 @@ class ProjectsController extends Controller
             }
             $images[] = ${$correlative.'Name'};
         }
-        if(!$storeLogo || !$storeBannerEs || !$storeBannerEn || !$storeBrochure){
+        if(!$storeLogo || !$storeBanner || !$storeBrochure){
             $request->session()->flash('error', trans('custom.message.create.error', ['name' => trans('custom.attribute.project')]));
             Storage::disk('public')->delete('img/projects/'.$logoName);
-            Storage::disk('public')->delete('img/projects/'.$imageBannerEs);
-            Storage::disk('public')->delete('img/projects/'.$imageBannerEn);
+            Storage::disk('public')->delete('img/projects/'.$imageBanner);
             Storage::disk('public')->delete('files/projects/'.$brochureName);
             return response()->json(["route" => route('cms.projects.index')],500);
         }
@@ -86,14 +82,13 @@ class ProjectsController extends Controller
         $project = array_merge($project,["code_ubigeo" => $request->department.$request->province.$request->district]);
         $index = $this->getMaxIndex(Project::selectRaw('MAX(id),MAX(`index`) as "index"')->get());
 
-        $project = array_merge($project,["images" => json_encode($images), "logo"=>$logoName,"brochure"=>$brochureName,"index" => $index,"banner_en"=>$imageBannerEn,"banner_es"=>$imageBannerEs]);
+        $project = array_merge($project,["images" => json_encode($images), "logo"=>$logoName,"brochure"=>$brochureName,"index" => $index,"banner"=>$imageBanner]);
         try{
             $project = Project::UpdateOrCreate($project); 
         }
         catch(\Exception $e){
             Storage::disk('public')->delete('img/projects/'.$logoName);
-            Storage::disk('public')->delete('img/projects/'.$imageBannerEs);
-            Storage::disk('public')->delete('img/projects/'.$imageBannerEn);
+            Storage::disk('public')->delete('img/projects/'.$imageBanner);
             Storage::disk('public')->delete('files/projects/'.$brochureName);
             foreach ($images as $key => $value) {
                 Storage::disk('public')->delete('img/projects/'.$value);
@@ -119,8 +114,7 @@ class ProjectsController extends Controller
         }
         catch(\Exception $e){
             Storage::disk('public')->delete('img/projects/'.$logoName);
-            Storage::disk('public')->delete('img/projects/'.$imageBannerEs);
-            Storage::disk('public')->delete('img/projects/'.$imageBannerEn);
+            Storage::disk('public')->delete('img/projects/'.$imageBanner);
             Storage::disk('public')->delete('files/projects/'.$brochureName);
             foreach ($images as $key => $value) {
                 Storage::disk('public')->delete('img/projects/'.$value);
@@ -131,8 +125,8 @@ class ProjectsController extends Controller
     }
 
     public function update(ProjectRequest $request,Project $element){
-        $request_project = request(['name_es',"description_en","description_es",'name_en','slug_en','slug_es',"rooms_es","rooms_en","footage_en","footage_es","url_google_maps","url_waze","text_place_es",
-        "text_place_en","project_status_id","location","price_total","price","price_total_foreign","latitude","longitude","map_indications_es","map_indications_en",
+        $request_project = request(['name_es',"description_en","url_video","description_es",'name_en','slug_en','slug_es',"rooms_es","rooms_en","footage_en","footage_es","url_google_maps","url_waze","text_place_es",
+        "text_place_en","project_status_id","location","price_total","price","price_total_foreign","iframe_map","map_indications_es","map_indications_en",
         "sales_room_es","sales_room_en","schedule_attention_es","schedule_attention_en"]);
         
         if($request->hasFile('logo')){
@@ -149,32 +143,18 @@ class ProjectsController extends Controller
             $request_project = array_merge($request_project,["logo" => $element->logo]);   
         }
 
-        if($request->hasFile('banner_es')){
-            $imageBannerEs = $this->setFileName('bes-',$request->file('banner_es'));
-            $storeBannerEs = Storage::disk('public')->putFileAs('img/projects/',$request->file('banner_es'),$imageBannerEs);
-            if(!$storeBannerEs){
-                Storage::disk('public')->delete('img/projects/'.$imageBannerEs);
+        if($request->hasFile('banner')){
+            $imageBanner = $this->setFileName('bes-',$request->file('banner'));
+            $storeBanner = Storage::disk('public')->putFileAs('img/projects/',$request->file('banner'),$imageBanner);
+            if(!$storeBanner){
+                Storage::disk('public')->delete('img/projects/'.$imageBanner);
                 $request->session()->flash('error', trans('custom.message.update.error', ['name' => trans('custom.attribute.project')]));
                 return response()->json(["route" => route('cms.projects.index')],500);    
             }
-            $request_project = array_merge($request_project,["banner_es" => $imageBannerEs]);   
+            $request_project = array_merge($request_project,["banner" => $imageBanner]);   
         }  
         else{
-            $request_project = array_merge($request_project,["banner_es" => $element->banner_es]);   
-        }
-
-        if($request->hasFile('banner_en')){
-            $imageBannerEn = $this->setFileName('ben-',$request->file('banner_en'));
-            $storeBannerEn = Storage::disk('public')->putFileAs('img/projects/',$request->file('banner_en'),$imageBannerEn);
-            if(!$storeBannerEn){
-                Storage::disk('public')->delete('img/projects/'.$imageBannerEn);
-                $request->session()->flash('error', trans('custom.message.update.error', ['name' => trans('custom.attribute.project')]));
-                return response()->json(["route" => route('cms.projects.index')],500);    
-            }
-            $request_project = array_merge($request_project,["banner_en" => $imageBannerEn]);   
-        }  
-        else{
-            $request_project = array_merge($request_project,["banner_en" => $element->banner_en]);   
+            $request_project = array_merge($request_project,["banner" => $element->banner]);   
         }
 
         if($request->hasFile('brochure')){
@@ -220,11 +200,8 @@ class ProjectsController extends Controller
         }
         $request_project = array_merge($request_project,["images" => json_encode($images)]);
         
-        if($request->hasFile('banner_es') && $element->banner_es){
-            Storage::disk('public')->delete('img/projects/'.$element->banner_es);
-        } 
-        if($request->hasFile('banner_es') && $element->banner_es){
-            Storage::disk('public')->delete('img/projects/'.$element->banner_es);
+        if($request->hasFile('banner') && $element->banner){
+            Storage::disk('public')->delete('img/projects/'.$element->banner);
         } 
         if($request->hasFile('brochure') && $element->brochure){
             Storage::disk('public')->delete('files/projects/'.$element->brochure);

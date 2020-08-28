@@ -14,7 +14,17 @@ class Project extends Model
 
     public function galleryRel()
     {
-        return $this->hasMany('App\ProjectGallery','id','project_id');
+        return $this->hasMany('App\ProjectGallery','project_id','id');
+    }
+
+    public function filesRel()
+    {
+        return $this->hasMany('App\ProjectFile','project_id','id');
+    }
+
+    public function tipologiesRel()
+    {
+        return $this->hasMany('App\ProjectTypeDepartment','project_id','id');
     }
 
     public function getIdVideoAttribute(){

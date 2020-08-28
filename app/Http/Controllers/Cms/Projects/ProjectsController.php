@@ -26,7 +26,7 @@ class ProjectsController extends Controller
     }
 
     public function getAll(){
-        $elements = Project::with('statusRel','ubigeoRel')->orderBy('index','asc')->get();
+        $elements = Project::with('statusRel','ubigeoRel')->withCount('galleryRel','filesRel','tipologiesRel')->orderBy('index','asc')->get();
         return response()->json($elements);
     }
 

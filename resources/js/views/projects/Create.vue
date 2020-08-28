@@ -256,7 +256,7 @@
                   </div>
                   <div class="col-12">
                     <div class="form-group">
-                      <label class="font-weight-bold" for="url_video">URL Video</label>
+                      <label class="font-weight-bold" for="url_video">URL Video Youtube</label>
                       <input
                         type="text"
                         class="form-control"
@@ -412,8 +412,16 @@
                   </div>
                   <div class="col-12">
                     <div class="form-group">
-                      <label class="font-weight-bold" for="iframe_map">Iframe Mapa</label>
+                      <label class="font-weight-bold" for="iframe_map">Iframe Google Maps</label>
                       <textarea class="form-control" v-model="element.iframe_map" id="iframe_map" cols="30" rows="5"></textarea>
+                      <div class="mt-2" style="opacity:.75;">
+                        <a style="cursor:pointer;" @click.prevent="info = !info"><jam-info height="14px" class="current-color" width="14px"></jam-info> Más Información
+                        </a>
+                      </div>
+                      <div class="mt-2" v-show="info">
+                        <div class="mb-2">Ir a Google Maps, buscar el proyecto que desee, seleccionar "Compartir -> Insertar Mapa" y darle click a "Copiar HTML"</div>
+                        <img src="/files/img/info/iframe.jpg" alt="">
+                      </div>
                       <label
                         v-if="errors && errors.iframe_map"
                         class="mt-2 text-danger text-sm"
@@ -490,6 +498,7 @@ export default {
         precision: 2,
         masked: false,
       },
+      info: false,
       moneyForeign: {
         decimal: ",",
         thousands: ".",

@@ -44,7 +44,6 @@
               <div class="card-body">
                 <div>
                   <div class="row">
-                    
                     <div class="col-12 text-right">
                       <div class="ml-auto d-inline">
                         <a
@@ -80,24 +79,42 @@
                   <h2 class="mt-1">{{ el.name_es }}</h2>
 
                   <div class="mb-3">
-                    <div>
-                      <h4 class="d-inline-block font-weight-normal">Ubicación:</h4>
-                      <h4
-                        class="d-inline-block"
-                      >{{ el.location}}, {{ el.ubigeo_rel.district}} - {{ el.ubigeo_rel.department}}</h4>
-                    </div>
-                    <div>
-                      <div>
-                        <h4 class="d-inline-block font-weight-normal">Precio Total Soles:</h4>
-                        <h4 class="d-inline-block">S/{{ el.price_total_format}}</h4>
+                    <div class="row">
+                      <div class="col-lg">
+                        <div>
+                          <h4 class="d-inline-block font-weight-normal">Ubicación:</h4>
+                          <h4
+                            class="d-inline-block"
+                          >{{ el.location}}, {{ el.ubigeo_rel.district}} - {{ el.ubigeo_rel.department}}</h4>
+                        </div>
+                        <div>
+                          <div>
+                            <h4 class="d-inline-block font-weight-normal">Precio Departamento Soles:</h4>
+                            <h4 class="d-inline-block">S/{{ el.price_total_format}}</h4>
+                          </div>
+                          <div>
+                            <h4 class="d-inline-block font-weight-normal">Precio Departamento Dolares:</h4>
+                            <h4 class="d-inline-block">${{ el.price_total_foreign_format}}</h4>
+                          </div>
+                          <h4 class="d-inline-block font-weight-normal">Precio Reserva de Departamento:</h4>
+                          <h2 class="d-inline-block">S/. {{ el.price_format}}</h2>
+                        </div>
                       </div>
-                      <div>
-                        <h4 class="d-inline-block font-weight-normal">Precio Total Dolares:</h4>
-                        <h4 class="d-inline-block">${{ el.price_total_foreign_format}}</h4>
+                      <div class="col-lg">
+                        <div>
+                          <h4 class="d-inline-block font-weight-normal">N° Documentos:</h4>
+                          <h4 class="d-inline-block">{{ el.files_rel_count}}</h4>
+                        </div>
+                        <div>
+                          <h4 class="d-inline-block font-weight-normal">N° Tipologias:</h4>
+                          <h4 class="d-inline-block">{{ el.tipologies_rel_count}}</h4>
+                        </div>
+                        <div>
+                          <h4 class="d-inline-block font-weight-normal">N° Imágenes en la Galeria:</h4>
+                          <h4 class="d-inline-block">{{ el.gallery_rel_count}}</h4>
+                        </div>
                       </div>
                     </div>
-                    <h4 class="d-inline-block font-weight-normal">Precio de Reserva:</h4>
-                    <h2 class="d-inline-block">S/. {{ el.price_format}}</h2>
                   </div>
                   <div class="d-flex">
                     <div class="ml-auto d-inline">

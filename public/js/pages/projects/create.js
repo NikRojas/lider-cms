@@ -457,6 +457,14 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -516,6 +524,7 @@ __webpack_require__.r(__webpack_exports__);
         precision: 2,
         masked: false
       },
+      info: false,
       moneyForeign: {
         decimal: ",",
         thousands: ".",
@@ -1496,7 +1505,7 @@ var render = function() {
                             staticClass: "font-weight-bold",
                             attrs: { for: "url_video" }
                           },
-                          [_vm._v("URL Video")]
+                          [_vm._v("URL Video Youtube")]
                         ),
                         _vm._v(" "),
                         _c("input", {
@@ -2008,7 +2017,7 @@ var render = function() {
                             staticClass: "font-weight-bold",
                             attrs: { for: "iframe_map" }
                           },
-                          [_vm._v("Iframe Mapa")]
+                          [_vm._v("Iframe Google Maps")]
                         ),
                         _vm._v(" "),
                         _c("textarea", {
@@ -2036,6 +2045,67 @@ var render = function() {
                             }
                           }
                         }),
+                        _vm._v(" "),
+                        _c(
+                          "div",
+                          {
+                            staticClass: "mt-2",
+                            staticStyle: { opacity: ".75" }
+                          },
+                          [
+                            _c(
+                              "a",
+                              {
+                                staticStyle: { cursor: "pointer" },
+                                on: {
+                                  click: function($event) {
+                                    $event.preventDefault()
+                                    _vm.info = !_vm.info
+                                  }
+                                }
+                              },
+                              [
+                                _c("jam-info", {
+                                  staticClass: "current-color",
+                                  attrs: { height: "14px", width: "14px" }
+                                }),
+                                _vm._v(
+                                  " Más Información\n                      "
+                                )
+                              ],
+                              1
+                            )
+                          ]
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "div",
+                          {
+                            directives: [
+                              {
+                                name: "show",
+                                rawName: "v-show",
+                                value: _vm.info,
+                                expression: "info"
+                              }
+                            ],
+                            staticClass: "mt-2"
+                          },
+                          [
+                            _c("div", { staticClass: "mb-2" }, [
+                              _vm._v(
+                                'Ir a Google Maps, buscar el proyecto que desee, seleccionar "Compartir -> Insertar Mapa" y darle click a "Copiar HTML"'
+                              )
+                            ]),
+                            _vm._v(" "),
+                            _c("img", {
+                              attrs: {
+                                src: "/files/img/info/iframe.jpg",
+                                alt: ""
+                              }
+                            })
+                          ]
+                        ),
                         _vm._v(" "),
                         _vm.errors && _vm.errors.iframe_map
                           ? _c(

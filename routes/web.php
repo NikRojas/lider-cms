@@ -122,6 +122,15 @@ Route::middleware(['auth'])->namespace('Cms')->name('cms.')->group(function () {
             Route::put('/order', 'TipologiesController@order')->name('order');
             Route::put('/{element}', 'TipologiesController@update')->name('update');
             Route::delete('/{element}', 'TipologiesController@destroy')->name('destroy');
+            Route::put('/{element}', 'TipologiesController@update')->name('update');
+
+            Route::prefix('planos')->name('blueprints.')->group(function() {
+                Route::get('/{element}/{subelement}', 'BlueprintsController@index')->name('index');
+                Route::post('/', 'BlueprintsController@store')->name('store');
+                Route::get('/json/get-all', 'BlueprintsController@getAll')->name('get-all');
+                Route::get('/json/get/{element}', 'BlueprintsController@get')->name('get');
+                Route::put('/order', 'BlueprintsController@order')->name('order');
+            });
         });
 
         Route::prefix('documentos')->name('files.')->group(function() {

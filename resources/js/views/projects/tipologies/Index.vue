@@ -43,16 +43,14 @@
               <div class="card">
                 <div class="card-body">
                   <img :src="imagesUrl + '/projects/tipologies/' + el.image" alt class="img-fluid" />
-                  <h3 class="mb-1 mt-3">{{ el.name }}</h3>
-                  
+                  <h3 class="mb-2 mt-3">
+                    {{ el.name }}</h3>
+
+                    <span class="d-block">{{el.url_360 ? 'URL 360' : 'URL Video Youtube'}} </span> 
                   <a :href="el.url" target="_blank" style="text-decoration: underline;">{{ el.url }}</a>
 
-                  <div class="mb-2">
-                  <div v-if="el.description" v-html="el.description"></div>
-                  <div v-else>No hay descripción registrada.</div>
-                  </div>
-
                   <div class="mt-4 text-center">
+                    <a :href="'planos/'+project.slug_es+'/'+el.slug" class="btn btn-inverse-primary btn-sm">Ir a Planos</a>
                     <button @click="editEl(el.id)" class="btn btn-inverse-info btn-sm">Editar</button>
                     <button @click="deleteEl(el.id)" class="btn btn-inverse-danger btn-sm">Eliminar</button>
                   </div>
@@ -161,24 +159,6 @@
                 >{{ errors.url[0] }}</label>
               </div>
             </div>
-
-            <div class="col-12">
-              <div class="form-group">
-                <label class="font-weight-bold" for="description">Descripción:</label>
-                <quill-Editor
-                  @keydown.enter.prevent
-                  v-model="element.description"
-                  :options="editorOptions"
-                  class="ql-height-5"
-                  ref="ref_content"
-                ></quill-Editor>
-                <label
-                  v-if="errors && errors.description"
-                  class="mt-2 text-danger text-sm"
-                  for="description"
-                >{{ errors.description[0] }}</label>
-              </div>
-            </div>
           </div>
         </form>
       </div>
@@ -204,7 +184,6 @@
   </div>
 </template>
 <script>
-import { quillEditor } from "vue-quill-editor";
 import SkeletonForm from "../../../components/skeleton/form";
 import vue2Dropzone from "vue2-dropzone";
 import BreadCrumb from "../../../components/BreadCrumb";
@@ -226,7 +205,6 @@ export default {
     types: Array,
   },
   components: {
-    quillEditor,
     SkeletonForm,
     vueDropzone: vue2Dropzone,
     Button,
@@ -336,6 +314,7 @@ export default {
         url = this.route + "/" + this.element.id;
         method = "post";
         fd.append("_method", "put");
+        fd.append("id",this.element.id);
       }
       if (this.element.name) {
         fd.append("name", this.element.name);
@@ -347,9 +326,6 @@ export default {
       }
       if (this.element.url) {
         fd.append("url", this.element.url);
-      }
-      if (this.element.description) {
-        fd.append("description", this.element.description);
       }
       if (this.$refs.ref_image.dropzone.files[0]) {
         fd.append("image", this.$refs.ref_image.dropzone.files[0]);

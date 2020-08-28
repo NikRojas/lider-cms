@@ -60,7 +60,7 @@ class TipologiesController extends Controller
 
   public function store(TipologyRequest $request)
   {
-    $element = request(["name", "description", "project_id","url","url_360"]);
+    $element = request(["name", "project_id","url","url_360"]);
     if ($request->hasFile('image')) {
       $imageName = $this->setFileName('i-', $request->file('image'));
       $storeImage = Storage::disk('public')->putFileAs('img/projects/tipologies', $request->file('image'), $imageName);
@@ -80,22 +80,22 @@ class TipologiesController extends Controller
     }
   }
 
-  /*public function update(ProjectGallery $element,GalleryRequest $request){
-    $request_element = request(["title_es", "title_en", "master_type_gallery_id", "project_id"]);;
+  public function update(ProjectTypeDepartment $element,TipologyRequest $request){
+    $request_element = request(["name", "project_id","url","url_360"]);;
     if($request->hasFile('image')){
         $fileName = $this->setFileName('i-',$request->file('image'));
-        Storage::disk('public')->putFileAs('img/projects/gallery',$request->file('image'),$fileName);
+        Storage::disk('public')->putFileAs('img/projects/tipologies',$request->file('image'),$fileName);
         $request_element = array_merge($request_element,["image" => $fileName]);
     }
     if($request->hasFile('image') && $element->image){
-        Storage::disk('public')->delete('img/projects/gallery'.$element->image);
+        Storage::disk('public')->delete('img/projects/tipologies'.$element->image);
     }
     try{
-        $element = ProjectGallery::UpdateOrCreate(["id"=>$element->id],$request_element); 
-        return response()->json(['title'=> trans('custom.title.success'), 'message'=> trans('custom.message.update.success', ['name' => trans('custom.attribute.element')]) ],200);
+        $element = ProjectTypeDepartment::UpdateOrCreate(["id"=>$element->id],$request_element); 
+        return response()->json(['title'=> trans('custom.title.success'), 'message'=> trans('custom.message.update.success', ['name' => trans('custom.attribute.tipology')]) ],200);
     }
     catch(\Exception $e){
-        return response()->json(['title'=> trans('custom.title.error'), 'message'=> trans('custom.message.update.error', ['name' => trans('custom.attribute.element')]) ],500);
+        return response()->json(['title'=> trans('custom.title.error'), 'message'=> trans('custom.message.update.error', ['name' => trans('custom.attribute.tipology')]) ],500);
     }
-  }*/
+  }
 }

@@ -9,6 +9,7 @@ class Project extends Model
     protected $guarded = ['id'];
     protected $casts = [
         'images' => 'array',
+        'active' => 'boolean'
     ];
     protected $appends = ['images_format','price_total_format','price_total_foreign_format','price_format','id_video'];
 

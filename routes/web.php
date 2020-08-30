@@ -97,21 +97,28 @@ Route::middleware(['auth'])->namespace('Cms')->name('cms.')->group(function () {
     Route::namespace('Projects')->prefix('proyectos')->name('projects.')->group(function() {
         Route::get('/', 'ProjectsController@index')->name('index');
         Route::get('/nuevo', 'ProjectsController@create')->name('create');
-        Route::get('/{element}', 'ProjectsController@read')->name('read');
-        Route::put('/{element}', 'ProjectsController@update')->name('update');
+        Route::put('/order', 'ProjectsController@order')->name('order');
         Route::get('/editar/{element}', 'ProjectsController@edit')->name('edit');
         Route::post('/', 'ProjectsController@store')->name('store');
-        Route::put('/order', 'ProjectsController@order')->name('order');
         Route::get('/json/get-all', 'ProjectsController@getAll')->name('get-all');
         Route::get('/json/get/{element}', 'ProjectsController@get')->name('get');
+        Route::get('/{element}', 'ProjectsController@read')->name('read');
+        Route::put('/{element}', 'ProjectsController@update')->name('update');
         Route::prefix('galeria')->name('gallery.')->group(function() {
             Route::get('/{element}', 'GalleryController@index')->name('index');
             Route::post('/', 'GalleryController@store')->name('store');
             Route::get('/json/get-all', 'GalleryController@getAll')->name('get-all');
             Route::get('/json/get/{element}', 'GalleryController@get')->name('get');
-            Route::delete('/{element}', 'GalleryController@destroy')->name('destroy');
             Route::put('/order', 'GalleryController@order')->name('order');
+            Route::delete('/{element}', 'GalleryController@destroy')->name('destroy');
             Route::put('/{element}', 'GalleryController@update')->name('update');
+        });
+
+        Route::prefix('cotizaciones')->name('quotations.')->group(function() {
+            Route::get('/{element}', 'QuotationsController@index')->name('index');
+            Route::get('/json/get-all', 'QuotationsController@getAll')->name('get-all');
+            Route::get('/json/get/{element}', 'QuotationsController@get')->name('get');
+            Route::delete('/{element}', 'QuotationsController@destroy')->name('destroy');
         });
 
         Route::prefix('tipologias')->name('tipologies.')->group(function() {

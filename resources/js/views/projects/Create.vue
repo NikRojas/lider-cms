@@ -21,6 +21,13 @@
         </div>
       </div>
       <div class="container-fluid mt--6">
+        <div class="row mb-3">
+          <div class="col-12 text-right">
+            <b-form-checkbox size="lg" v-model="element.active" name="check-button" switch>
+              Mostrar Proyecto en la Web
+            </b-form-checkbox>
+          </div>
+        </div>
         <div class="row mb-4">
           <div class="col-12 col-lg-2">
             <h2>Brief</h2>
@@ -256,7 +263,7 @@
                   </div>
                   <div class="col-12">
                     <div class="form-group">
-                      <label class="font-weight-bold" for="url_video">URL Video Youtube</label>
+                      <label class="font-weight-bold" for="url_video">URL Video Youtube (Opcional)</label>
                       <input
                         type="text"
                         class="form-control"
@@ -489,7 +496,9 @@ export default {
   },
   data() {
     return {
-      element: {},
+      element: {
+        active:true
+      },
       moneyLocal: {
         decimal: ",",
         thousands: ".",
@@ -634,6 +643,12 @@ export default {
       }
       if (this.element.schedule_attention_en) {
         fd.append("schedule_attention_en", this.element.schedule_attention_en);
+      }
+      if(this.element.active == true){
+        fd.append("active",1);
+      }
+      else{
+        fd.append("active",0);
       }
       if (this.element.schedule_attention_es) {
         fd.append("schedule_attention_es", this.element.schedule_attention_es);

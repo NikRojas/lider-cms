@@ -21,5 +21,6 @@ class DatabaseSeeder extends Seeder
         $this->call(MasterUbigeoTableSeeder::class);
         $this->call(MasterPagesTableSeeder::class);
         $this->call(MasterTypeGalleryTableSeeder::class);
+        /*$this->call(ProjectQuotationsTableSeeder::class);*/
     }
 }

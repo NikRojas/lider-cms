@@ -17,9 +17,9 @@ class CreateProjectQuotationTable extends Migration
             $table->bigIncrements('id');
             $table->string('name');
             $table->string('email');
-            $table->string('document_number',8);
+            $table->string('document_number',15);
             $table->string('mobile',15);
-            $table->text('message');
+            $table->text('message')->nullable();
             $table->bigInteger('project_id')->unsigned();
             $table->foreign('project_id')->references('id')->on('projects');
             $table->bigInteger('project_type_department_id')->unsigned();

@@ -509,6 +509,13 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -774,6 +781,12 @@ __webpack_require__.r(__webpack_exports__);
         fd.append("iframe_map", this.element.iframe_map);
       }
 
+      if (this.element.active == true) {
+        fd.append("active", 1);
+      } else {
+        fd.append("active", 0);
+      }
+
       if (this.element.financial_entities) {
         fd.append("financial_entities", JSON.stringify(this.element.financial_entities));
       }
@@ -1014,6 +1027,34 @@ var render = function() {
         ]),
         _vm._v(" "),
         _c("div", { staticClass: "container-fluid mt--6" }, [
+          _c("div", { staticClass: "row mb-3" }, [
+            _c(
+              "div",
+              { staticClass: "col-12 text-right" },
+              [
+                _c(
+                  "b-form-checkbox",
+                  {
+                    attrs: { size: "lg", name: "check-button", switch: "" },
+                    model: {
+                      value: _vm.element.active,
+                      callback: function($$v) {
+                        _vm.$set(_vm.element, "active", $$v)
+                      },
+                      expression: "element.active"
+                    }
+                  },
+                  [
+                    _vm._v(
+                      "\n            Mostrar Proyecto en la Web\n          "
+                    )
+                  ]
+                )
+              ],
+              1
+            )
+          ]),
+          _vm._v(" "),
           _c("div", { staticClass: "row mb-4" }, [
             _vm._m(0),
             _vm._v(" "),
@@ -1763,7 +1804,7 @@ var render = function() {
                             staticClass: "font-weight-bold",
                             attrs: { for: "url_video" }
                           },
-                          [_vm._v("URL Video Youtube")]
+                          [_vm._v("URL Video Youtube (Opcional)")]
                         ),
                         _vm._v(" "),
                         _c("div", { staticClass: "row" }, [

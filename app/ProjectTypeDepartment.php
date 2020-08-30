@@ -11,4 +11,18 @@ class ProjectTypeDepartment extends Model
     protected $casts = [
         'url_360' => 'boolean',
     ];
+    protected $appends = ['can_delete'];
+
+    public function getCanDeleteAttribute(){
+        $value = true;
+        if(count($this->projectQuotationsRel) > 0){
+            $value = false;
+        }
+        return $value;
+    }
+
+    public function projectQuotationsRel()
+    {
+        return $this->hasMany('App\ProjectQuotation','project_type_department_id','id');
+    }
 }

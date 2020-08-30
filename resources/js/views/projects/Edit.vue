@@ -21,6 +21,13 @@
         </div>
       </div>
       <div class="container-fluid mt--6">
+        <div class="row mb-3">
+          <div class="col-12 text-right">
+            <b-form-checkbox size="lg" v-model="element.active" name="check-button" switch>
+              Mostrar Proyecto en la Web
+            </b-form-checkbox>
+          </div>
+        </div>
         <div class="row mb-4">
           <div class="col-12 col-lg-2">
             <h2>Brief</h2>
@@ -288,7 +295,7 @@
                   </div>
                   <div class="col-12">
                     <div class="form-group">
-                      <label class="font-weight-bold" for="url_video">URL Video Youtube</label>
+                      <label class="font-weight-bold" for="url_video">URL Video Youtube (Opcional)</label>
                       <div class="row">
                         <div class="col-lg-4 mb-3 mb-lg-0"  v-if="element.url_video">
                           <iframe id="player" type="text/html" width="100%" height="360"
@@ -703,6 +710,12 @@ export default {
       }
       if (this.element.iframe_map) {
         fd.append("iframe_map", this.element.iframe_map);
+      }
+      if(this.element.active == true){
+        fd.append("active",1);
+      }
+      else{
+        fd.append("active",0);
       }
       if (this.element.financial_entities) {
         fd.append(

@@ -22,7 +22,17 @@ class ProjectsController extends Controller
         return view("pages.projects.create"); 
     }
 
-    public function order(){
+    public function order(Request $request){
+        $elements = $request->all();
+        try{
+            for ($i=0; $i < count($elements); $i++) { 
+                $element = Project::UpdateOrCreate(["id"=>$elements[$i]["id"]],["index"=>$i + 1]);
+            }
+            return response()->json(['title'=> trans('custom.title.success'), 'message'=> trans('custom.message.update.success', ['name' => trans('custom.attribute.project')])],200);
+        } 
+        catch (\Exception $e){
+            return response()->json(['title'=> trans('custom.title.error'), 'message'=> trans('custom.message.update.error', ['name' => trans('custom.attribute.project')])],500);
+        }
     }
 
     public function getAll(){
@@ -48,7 +58,7 @@ class ProjectsController extends Controller
     public function store(ProjectRequest $request){
         $project = request(['name_es',"description_en","description_es",'url_video','name_en','slug_en','slug_es',"rooms_es","rooms_en","footage_en","footage_es","url_google_maps","url_waze","text_place_es",
         "text_place_en","project_status_id","location","price_total","price","price_total_foreign","iframe_map","map_indications_es","map_indications_en",
-        "sales_room_es","sales_room_en","schedule_attention_es","schedule_attention_en"]);
+        "sales_room_es","sales_room_en","schedule_attention_es","schedule_attention_en",'active']);
         
         $logoName = $this->setFileName('l-',$request->file('logo'));
         $storeLogo = Storage::disk('public')->putFileAs('img/projects/',$request->file('logo'),$logoName);
@@ -127,7 +137,7 @@ class ProjectsController extends Controller
     public function update(ProjectRequest $request,Project $element){
         $request_project = request(['name_es',"description_en","url_video","description_es",'name_en','slug_en','slug_es',"rooms_es","rooms_en","footage_en","footage_es","url_google_maps","url_waze","text_place_es",
         "text_place_en","project_status_id","location","price_total","price","price_total_foreign","iframe_map","map_indications_es","map_indications_en",
-        "sales_room_es","sales_room_en","schedule_attention_es","schedule_attention_en"]);
+        "sales_room_es","sales_room_en","schedule_attention_es","schedule_attention_en",'active']);
         
         if($request->hasFile('logo')){
             $logoName = $this->setFileName('l-',$request->file('logo'));

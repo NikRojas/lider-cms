@@ -26,7 +26,8 @@ return [
         'status' => 'El estado',
         'project' => 'El projecto',
         'tipology' => 'La tipología',
-        'currency' => 'El tipo de moneda'
+        'currency' => 'El tipo de moneda',
+        'complaint' => 'El reclamo'
     ],
     'title' => [
         'error' => 'Error',

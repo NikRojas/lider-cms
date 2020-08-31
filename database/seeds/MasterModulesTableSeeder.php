@@ -15,7 +15,7 @@ class MasterModulesTableSeeder extends Seeder
         $pAdmin = 6;
         $pContenido = 13;
         $pLeads = 18;
-        $pConfiguracion = 28;
+        $pConfiguracion = 29;
         $pBlog = 24;
         $position = 1;
         DB::table('master_modules')->insert([
@@ -221,6 +221,14 @@ class MasterModulesTableSeeder extends Seeder
 				'slug' 		=> 'postulantes',
 				'parent' 	=> NULL,
 				'icon' 		=> 'book',
+                'index'    => $position++
+            ],
+
+            [
+                'name' 	=> 'Libro de Reclamaciones',
+				'slug' 		=> 'libro-reclamaciones',
+				'parent' 	=> NULL,
+				'icon' 		=> 'clipboard',
                 'index'    => $position++
             ],
 

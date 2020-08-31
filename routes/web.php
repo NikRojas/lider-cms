@@ -80,6 +80,14 @@ Route::middleware(['auth'])->namespace('Cms')->name('cms.')->group(function () {
         });
     });
 
+    #Complaints Book
+    Route::prefix('libro-reclamaciones')->name('complaints-book.')->group(function () {
+        Route::get('/', 'ComplaintsBookController@index')->name('index');
+        Route::get('/json/get-all', 'ComplaintsBookController@getAll')->name('get-all');
+        Route::get('/json/get/{element}', 'ComplaintsBookController@get')->name('get');
+        Route::delete('/{element}', 'ComplaintsBookController@destroy')->name('destroy');
+    });
+
     #Slider
     Route::prefix('slider')->name('slider.')->group(function () {
         Route::get('/', 'SliderController@index')->name('index');

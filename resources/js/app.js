@@ -62,6 +62,8 @@ const app = new Vue({
         'projects-tipologies-index': () => import('./views/projects/tipologies/Index.vue' /* webpackChunkName: "js/pages/projects/tipologies/index" */),
         'projects-blueprints-index': () => import('./views/projects/blueprints/Index.vue' /* webpackChunkName: "js/pages/projects/blueprints/index" */),
         'projects-quotations-index': () => import('./views/projects/quotations/Index.vue' /* webpackChunkName: "js/pages/projects/quotations/index" */),
+
+        'complaints-book': () => import('./views/ComplaintsBook.vue' /* webpackChunkName: "js/pages/complaints-book" */),
     }
 });
 import Validation from './functions/validation.js'

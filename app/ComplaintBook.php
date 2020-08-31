@@ -9,6 +9,7 @@ class ComplaintBook extends Model
 {
     protected $table = 'complaints_book';
     protected $guarded = [];
+    protected $appends = ['mobile_formatted','created_at_format'];
 
     public function documentTypeRel()
     {
@@ -28,6 +29,19 @@ class ComplaintBook extends Model
     public function ubigeoRel()
     {
         return $this->hasOne('App\Ubigeo', 'code_ubigeo', 'code_ubigeo');
+    }
+
+    public function getCreatedAtFormatAttribute() {
+        return (new Carbon($this->created_at))->format('g:iA d-m-Y');
+    }
+
+    public function getMobileFormattedAttribute(){
+        if($this->mobile && strlen($this->mobile) == 9){
+            return substr($this->mobile,0,3).'-'.substr($this->mobile,3,3).'-'.substr($this->mobile,6,3);
+        }
+        else{
+            return $this->mobile;
+        }
     }
 }
 

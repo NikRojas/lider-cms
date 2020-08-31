@@ -22953,7 +22953,11 @@ body.swal2-toast-column .swal2-toast .swal2-validation-message {
   overflow: hidden;
 }
 
-.dropdown-menu.show {
+.navbar-top .dropdown-toggle {
+  padding: 0 !important;
+}
+
+.navbar-top .dropdown-menu.show {
   top: 100% !important;
   left: auto !important;
   right: 0 !important;
@@ -22964,7 +22968,7 @@ body.swal2-toast-column .swal2-toast .swal2-validation-message {
 }
 
 @media (min-width: 768px) {
-  .dropdown-menu.show {
+  .navbar-top .dropdown-menu.show {
     top: initial !important;
     -webkit-transform: initial !important;
             transform: initial !important;
@@ -22972,7 +22976,7 @@ body.swal2-toast-column .swal2-toast .swal2-validation-message {
 }
 
 @media (min-width: 992px) {
-  .dropdown-menu.show {
+  .navbar-top .dropdown-menu.show {
     left: initial !important;
     right: 0 !important;
   }
@@ -23040,10 +23044,6 @@ input[type=search]::-webkit-search-cancel-button {
 
 button:focus {
   outline: none !important;
-}
-
-.dropdown-toggle {
-  padding: 0 !important;
 }
 
 /*.navbar-brand {

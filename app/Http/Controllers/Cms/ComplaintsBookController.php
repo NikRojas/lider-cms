@@ -19,12 +19,12 @@ class ComplaintsBookController extends Controller
 
     public function getAll(Request $request,ComplaintBookRepository $repo){
       $q = $request->q;
-      $headers = ["Id", "Nombre", "Email", "Documento", "Tipo"];
+      $headers = ["Id", "Código", "Nombre", "Email", "Documento", "Tipo","Registrado el"];
       if($q){
-          $elements = $repo->datatable($request->itemsPerPage,$q);
+          $elements = $repo->datatable($request->date,$request->itemsPerPage,$q);
       }
       else{
-          $elements = $repo->datatable($request->itemsPerPage);
+          $elements = $repo->datatable($request->date,$request->itemsPerPage);
       }
       $elements["headers"] = $headers;
       return response()->json($elements);

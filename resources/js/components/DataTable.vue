@@ -2,7 +2,7 @@
   <div class="row">
     <div class="col-12 mb-4">
       <slot name="filters"></slot>
-      <div class="row d-flex align-items-center" v-if="elements && elements.length">
+      <div class="row d-flex align-items-center">
         <div class="col-12 col-md-6 mb-3 mb-md-0">
           <label for="show" class="mb-0">
             <small>Mostrar</small>

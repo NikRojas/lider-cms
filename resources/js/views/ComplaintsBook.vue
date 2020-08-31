@@ -3,31 +3,42 @@
     <div class="header pb-6">
       <div class="container-fluid">
         <div class="header-body">
-          <div class="row align-items-center pt-0 pt-md-2 pb-2">
+          <div class="row align-items-center pt-0 pt-md-2 pb-4">
             <div class="col-12 col-lg-7">
-              <BreadCrumb
-                title="Libro de Reclamaciones"
-                parent
-                active="Libro de Reclamaciones"
-              ></BreadCrumb>
+              <BreadCrumb title="Libro de Reclamaciones" parent active="Libro de Reclamaciones"></BreadCrumb>
             </div>
           </div>
         </div>
       </div>
     </div>
+
     <div class="container-fluid mt--6">
       <DataTable
         :object="elements"
-        placeholder="Nombre, Nùmero Documento"
+        placeholder="Nombre, Apellido, Número Documento, Código de Reclamo"
         :button-update="false"
         :button-read="true"
         :button-delete="true"
         :button-disable="false"
+        :loading-prop="loadingGetAll"
         @get="getEls"
         @read="showEl"
         @delete="deleteEl"
         :entries-prop.sync="elementsPerPage"
-      ></DataTable>
+      >
+        <template slot="filters">
+          <div class="mb-2">
+            <b-dropdown left id="dropdown-text" :menu-class="['border','shadow-none']" ref="dropdown" :variant="activeFilter.value == 'all' ? 'inverse-light' : 'inverse-primary'" :toggle-class="['btn-sm','py-2']">
+              <template v-slot:button-content>
+                <jam-calendar height="14px" width="14px" class="current-color"></jam-calendar><span class="">{{ activeFilter.text }}</span>
+              </template>
+              <b-dropdown-text tag="div" class="px-2">
+                <button :class="activeFilter.value == i.value ? 'btn-primary' : 'btn-inverse-primary'" class="btn mb-1 btn-sm btn-block" v-for="i in filters" :key="i.value" @click.prevent="handleFilter(i)">{{ i.text }}</button>
+              </b-dropdown-text>
+            </b-dropdown>
+          </div>
+        </template>
+      </DataTable>
     </div>
     <destroy
       element="Lead"
@@ -49,7 +60,7 @@
       body-class="pt-0"
     >
       <template slot="modal-title">
-        <div class="text-primary h2">Detalle Lead</div>
+        <div class="text-primary h2">Detalle del Reclamo</div>
       </template>
       <template slot="modal-header-close">
         <button type="button" class="btn p-0 bg-transparent" @click="restoreEl">
@@ -78,6 +89,13 @@
       </div>
       <div v-else>
         <div class="row">
+          <div class="col-12 text-center mb-1">
+            <h2 class="mb-0">Código de Registro</h2>
+            <h3 class="font-weight-normal">{{ element.code }}</h3>
+          </div>
+          <div class="col-12 text-right">
+            <p><span class="font-weight-bold">Registrado el: </span>{{ element.created_at_format}}</p>
+          </div>
           <div class="col-12">
             <h2 class="mb-3">Identificación del consumidor reclamante</h2>
           </div>
@@ -102,7 +120,7 @@
           <div class="col-lg-6">
             <div class="form-group">
               <label class="font-weight-bold">Móvil:</label>
-              <p>{{ }}</p>
+              <p>{{ element.mobile_formatted }}</p>
             </div>
           </div>
 
@@ -135,22 +153,61 @@
           </div>
 
           <div class="col-12">
-          <h2 class="mb-3">Identificación del bien contratado</h2>
-            
+            <h2 class="mb-3 mt-2">Identificación del bien contratado</h2>
+          </div>
+          <div class="col-lg-6">
+            <div class="form-group">
+              <label class="font-weight-bold">Monto del bien objeto de Reclamo:</label>
+              <p>{{ element.good_contracted_amount}}</p>
+            </div>
+          </div>
+          <div class="col-lg-6">
+            <div class="form-group">
+              <label class="font-weight-bold">Identificación del Bien contratado:</label>
+              <p>{{ element.good_contracted_rel.name}}</p>
+            </div>
+          </div>
+          <div class="col-lg-6">
+            <div class="form-group">
+              <label class="font-weight-bold">Descripción:</label>
+              <p>{{ element.good_contracted_description}}</p>
+            </div>
           </div>
 
           <div class="col-12">
-          <h2 class="mb-3">Detalle de la reclamación</h2>
-            
+            <h2 class="mb-3 mt-2">Detalle de la reclamación</h2>
+          </div>
+          <div class="col-lg-6">
+            <div class="form-group">
+              <label class="font-weight-bold">Tipo de reclamación:</label>
+              <p>{{ element.claim_type_rel.name}}</p>
+            </div>
           </div>
 
-          <div class="col-12">
-          <h2 class="mb-3">Acciones adoptadas por el proveedor</h2>
-            
+          <div class="col-lg-6">
+            <div class="form-group">
+              <label class="font-weight-bold">Detalle:</label>
+              <p>{{ element.claim_detail}}</p>
+            </div>
           </div>
 
+          <div class="col-lg-6">
+            <div class="form-group">
+              <label class="font-weight-bold">Pedido:</label>
+              <p>{{ element.claim_order}}</p>
+            </div>
+          </div>
 
-
+          <div class="col-12 mt-2">
+            <h2 class="mb-3">Acciones adoptadas por el proveedor</h2>
+          </div>
+          <div class="col-lg-6">
+            <div class="form-group">
+              <label class="font-weight-bold">Detalle:</label>
+              <p v-if="element.provider_detail">{{ element.provider_detail}}</p>
+              <p v-else>No regitrado</p>
+            </div>
+          </div>
         </div>
       </div>
       <template v-slot:modal-footer="{ ok }">
@@ -176,15 +233,25 @@ export default {
     return {
       project: {},
       elements: {},
+      filters: [
+        {'text': 'Cualquier Fecha', 'value': 'all'},
+        {'text': 'Hoy', 'value': 'today'},
+        {'text': 'Ayer', 'value': 'yesterday'},
+        {'text': 'Este Mes', 'value': 'this_month'},
+        {'text': 'El Mes Pasado', 'value': 'past_month'},
+        {'text': 'Este Año', 'value': 'this_year'}
+      ],
+      activeFilter: {'text': 'Cualquier Fecha', 'value': 'all'},
       element: {
         document_type_rel: {},
         claim_type_rel: {},
         good_contracted_rel: {},
-        ubigeo_rel: {}
+        ubigeo_rel: {},
       },
       elementsPerPage: 10,
       modalShow: false,
       modalDestroy: false,
+      loadingGetAll: false,
       loadingGet: false,
       requestSubmit: false,
     };
@@ -196,10 +263,15 @@ export default {
     Destroy,
   },
   methods: {
+    handleFilter(i){
+      this.activeFilter = i;
+      this.$refs.dropdown.hide(true);
+      this.getEls(1, this.elementsPerPage);
+    },
     destroyConfirm() {
       this.requestSubmit = true;
       axios
-        .delete(this.route + this.element.id)
+        .delete(this.route + "/" + this.element.id)
         .then((response) => {
           this.requestSubmit = false;
           this.restore();
@@ -229,10 +301,13 @@ export default {
         });
     },
     restoreEl() {
-      (this.element = {document_type_rel: {},
+      (this.element = {
+        document_type_rel: {},
         claim_type_rel: {},
         ubigeo_rel: {},
-        good_contracted_rel: {}}), (this.modalDestroy = this.modalShow = false);
+        good_contracted_rel: {},
+      }),
+        (this.modalDestroy = this.modalShow = false);
     },
     showEl(id) {
       this.modalShow = true;
@@ -243,6 +318,7 @@ export default {
       this.getEl(id);
     },
     getEls(page, itemsPerPage, q = null) {
+       this.loadingGetAll = true;
       let url =
         this.routeGetAll + "?page=" + page + "&itemsPerPage=" + itemsPerPage;
       if (q) {
@@ -251,20 +327,23 @@ export default {
       axios
         .get(url, {
           params: {
-            project_id: this.project.id,
+            date: this.activeFilter.value,
           },
         })
         .then((response) => {
           this.elements = response.data;
+           this.loadingGetAll = false;
         })
         .catch((error) => {});
     },
     restore() {
       this.elements = {};
-      this.element = {document_type_rel: {},
+      this.element = {
+        document_type_rel: {},
         claim_type_rel: {},
         good_contracted_rel: {},
-        ubigeo_rel: {}};
+        ubigeo_rel: {},
+      };
       this.modalDestroy = this.modalShow = false;
       this.getEls(1, this.elementsPerPage);
     },
@@ -274,7 +353,7 @@ export default {
         .get(this.route + "/json/get/" + id)
         .then((response) => {
           this.element = response.data;
-            this.loadingGet = false;
+          this.loadingGet = false;
         })
         .catch((error) => {});
     },

@@ -26,30 +26,6 @@ $factory->define(ComplaintBook::class, function (Faker $faker) {
         'claim_type_id' => $faker->randomElement(MasterClaimType::pluck('id')->toArray()),
         'good_contracted_id' => $faker->randomElement(MasterGoodContractedType::pluck('id')->toArray()),
         'code_ubigeo' => $faker->randomElement(Ubigeo::pluck('code_ubigeo')->toArray()),
-        'code' => $faker->randomNumber(9, false).date('Y')
+        'code' => $faker->randomNumber(9, false).'-'.date('Y')
     ];
-
-            /*$table->string('code');
-            $table->string('name');
-            $table->string('lastname');
-            $table->string('mobile');
-            $table->string('email');
-            $table->string('address');
-            $table->string('document_number');
-            $table->bigInteger('document_type_id')->unsigned();
-            $table->foreign('document_type_id')->references('id')->on('master_documents_type');
-            $table->string('code_ubigeo');
-            $table->foreign('code_ubigeo')->references('code_ubigeo')->on('master_ubigeo');
-            $table->string('good_contracted_amount');
-            $table->text('good_contracted_description');
-
-            $table->text('claim_detail');
-            $table->text('claim_order');
-
-            $table->text('provider_detail');
-
-            $table->bigInteger('claim_type_id')->unsigned();
-            $table->foreign('claim_type_id')->references('id')->on('master_documents_type');
-            $table->bigInteger('good_contracted_id')->unsigned();
-            $table->foreign('good_contracted_id')->references('id')->on('master_good_contracted_type');*/
 });

@@ -94,7 +94,7 @@ Route::middleware(['auth'])->namespace('Cms')->name('cms.')->group(function () {
     });
 
     #Projects
-    Route::namespace('Projects')->prefix('proyectos')->name('projects.')->group(function() {
+    Route::namespace('Projects')->prefix('proyectos')->name('projects.')->group(function () {
         Route::get('/', 'ProjectsController@index')->name('index');
         Route::get('/nuevo', 'ProjectsController@create')->name('create');
         Route::get('/editar/{element}', 'ProjectsController@edit')->name('edit');
@@ -139,25 +139,54 @@ Route::middleware(['auth'])->namespace('Cms')->name('cms.')->group(function () {
     });
  
     Route::namespace('Blog')->prefix('blog')->name('blog.')->group(function () {
-            Route::name('category.')->prefix('categorias')->group(function () {
-                Route::get('/', 'CategoriesController@index')->name('index');
-                Route::post('/', 'CategoriesController@store')->name('store');
-                Route::put('/{element}', 'CategoriesController@update')->name('update');
-                Route::delete('/{element}', 'CategoriesController@destroy')->name('destroy');
-                Route::get('/json/get-all', 'CategoriesController@getAll')->name('get-all');
-                Route::get('/json/get/{element}', 'CategoriesController@get')->name('get');
-            });
+        Route::name('category.')->prefix('categorias')->group(function () {
+            Route::get('/', 'CategoriesController@index')->name('index');
+            Route::post('/', 'CategoriesController@store')->name('store');
+            Route::put('/{element}', 'CategoriesController@update')->name('update');
+            Route::delete('/{element}', 'CategoriesController@destroy')->name('destroy');
+            Route::get('/json/get-all', 'CategoriesController@getAll')->name('get-all');
+            Route::get('/json/get/{element}', 'CategoriesController@get')->name('get');
+        });
 
-            Route::name('posts.')->prefix('posts')->group(function () {
-                Route::get('/', 'PostsController@index')->name('index');
-                Route::get('/nuevo', 'PostsController@create')->name('create');
-                Route::get('/editar/{element}', 'PostsController@edit')->name('edit');
-                Route::post('/', 'PostsController@store')->name('store');
-                Route::put('/{element}', 'PostsController@update')->name('update');
-                Route::delete('/{element}', 'PostsController@destroy')->name('destroy');
-                Route::get('/json/get-all', 'PostsController@getAll')->name('get-all');
-                Route::get('/json/get/{element}', 'PostsController@get')->name('get');
-            });
+        Route::name('posts.')->prefix('posts')->group(function () {
+            Route::get('/', 'PostsController@index')->name('index');
+            Route::get('/nuevo', 'PostsController@create')->name('create');
+            Route::get('/editar/{element}', 'PostsController@edit')->name('edit');
+            Route::post('/', 'PostsController@store')->name('store');
+            Route::put('/{element}', 'PostsController@update')->name('update');
+            Route::delete('/{element}', 'PostsController@destroy')->name('destroy');
+            Route::get('/json/get-all', 'PostsController@getAll')->name('get-all');
+            Route::get('/json/get/{element}', 'PostsController@get')->name('get');
+        });
+    });
+
+    Route::namespace('Leads')->prefix('leads')->name('leads.')->group(function () {
+        Route::name('traditional.')->prefix('tradicionales')->group(function () {
+            Route::get('/', 'LeadTraditionalController@index')->name('index');
+            Route::get('/json/get-all', 'LeadTraditionalController@getAll')->name('get-all');
+            Route::delete('/{element}', 'LeadTraditionalController@destroy')->name('destroy');
+            Route::get('/json/get/{element}', 'LeadTraditionalController@get')->name('get');
+            /*
+            */
+        });
+
+        Route::name('online-appointment.')->prefix('cita-online')->group(function () {
+            Route::get('/', 'LeadOnlineController@index')->name('index');
+            Route::get('/json/get-all', 'LeadOnlineController@getAll')->name('get-all');
+            Route::delete('/{element}', 'LeadOnlineController@destroy')->name('destroy');
+            Route::get('/json/get/{element}', 'LeadOnlineController@get')->name('get');
+            /*
+            */
+        });
+
+        Route::name('land-sale.')->prefix('venta-terreno')->group(function () {
+            Route::get('/', 'LeadLandSaleController@index')->name('index');
+            Route::get('/json/get-all', 'LeadLandSaleController@getAll')->name('get-all');
+            Route::delete('/{element}', 'LeadLandSaleController@destroy')->name('destroy');
+            Route::get('/json/get/{element}', 'LeadLandSaleController@get')->name('get');
+            /*
+            */
+        });
     });
 
 
@@ -208,7 +237,7 @@ Route::middleware(['auth'])->namespace('Cms')->name('cms.')->group(function () {
     Route::get('applicants/json/contact-email-destination', 'ApplicantsController@getEmailDestination')->name('applicants.json.contact-email-destination');*/
 
     #Misc
-    Route::get('files/{folder}/{subfolder}/{file}','CmsController@getFile')->name('get-file');
+    Route::get('files/{folder}/{subfolder}/{file}', 'CmsController@getFile')->name('get-file');
     Route::get('json/get-departments', 'CmsController@getDepartmentsParent')->name('json.get-departments');
     Route::get('json/get-provinces', 'CmsController@getProvincesParent')->name('json.get-provinces');
     Route::get('json/get-districts', 'CmsController@getDistrictsParent')->name('json.get-districts');

@@ -177,7 +177,7 @@ __webpack_require__.r(__webpack_exports__);
       var _this = this;
 
       this.requestSubmit = true;
-      axios["delete"](this.route + '/' + this.element.id).then(function (response) {
+      axios["delete"](this.route + "/" + this.element.id).then(function (response) {
         _this.requestSubmit = false;
 
         _this.restore();
@@ -224,7 +224,7 @@ __webpack_require__.r(__webpack_exports__);
       var _this3 = this;
 
       this.loadingGet = true;
-      axios.get(this.route + '/json/get/' + id).then(function (response) {
+      axios.get(this.route + "/json/get/" + id).then(function (response) {
         _this3.element = response.data;
         _this3.loadingGet = false;
       })["catch"](function (error) {});

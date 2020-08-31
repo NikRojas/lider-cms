@@ -34,12 +34,20 @@ const app = new Vue({
         'content-seo': () => import('./views/content/Seo.vue' /* webpackChunkName: "js/pages/content/seo" */),
 
         'category': () => import('./views/blog/Category.vue' /* webpackChunkName: "js/pages/blog/category" */),
-        'posts': () => import('./views/blog/post/Index.vue' /* webpackChunkName: "js/pages/blog/posts" */),
+
+        'posts': () => import('./views/blog/post/Index.vue' /* webpackChunkName: "js/pages/blog/post" */),
+        'posts-create': () => import('./views/blog/post/Create.vue' /* webpackChunkName: "js/pages/blog/post/create" */),
+        'posts-edit': () => import('./views/blog/post/Edit.vue' /* webpackChunkName: "js/pages/blog/post/create" */),
 
         'profile': () => import('./views/Profile.vue' /* webpackChunkName: "js/pages/profile" */),
 
         //'dashboard': () => import('./views/Dashboard.vue' /* webpackChunkName: "js/dashboard" */),
         //'applicants': () => import('./views/Applicants.vue' /* webpackChunkName: "js/applicants" */),
+
+        //lead
+        'online': () => import('./views/lead/online.vue' /* webpackChunkName: "js/pages/blog/category" */),
+        'traditional': () => import('./views/lead/traditional.vue' /* webpackChunkName: "js/pages/blog/category" */),
+        'landsale': () => import('./views/lead/landsale.vue' /* webpackChunkName: "js/pages/blog/category" */),
 
         //'testimonials': () => import('./views/Testimonials.vue' /* webpackChunkName: "js/testimonials" */),
 

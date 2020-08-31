@@ -20,158 +20,199 @@ class PostsController extends Controller
 {
     use CmsTrait;
 
-    public function index(){
-        return view ("pages.blog.posts.index");    
+    public function index()
+    {
+        return view("pages.blog.posts.index");
     }
 
-    public function create(){
-        return view("pages.blog.posts.create"); 
+    public function create()
+    {
+        return view("pages.blog.posts.create");
     }
 
-    public function storeImage(Request $request){
-        $file_name = $this->setFileName('pi-',$request->file('image'));
-        try{
-            $store_image = Storage::disk('gcs')->putFileAs('img/posts/',$request->file('image'),$file_name);
-            return response()->json(['image'=>Storage::disk('gcs')->url('img/posts/'.$file_name)]);
-        }
-        catch(\Exception $e){
-            return response()->json(['title'=> trans('custom.title.error'), 'message'=> trans('custom.errors.image') ],500);    
-        }
+    public function edit(Post $element)
+    {
+        $element = $element->load('category', 'tags:post_id,name_es as tag_es,name_en as tag_en');
+        return view("pages.blog.posts.edit", compact('element'));
     }
 
-    public function getPost(Post $post){
-        $post = $post->load('category','tags:post_id,name as text');
-        $tags = $post->tags;
-        $post = $post->unsetRelation('tags');
-        return response()->json(["post" => $post, "tags" => $tags]);        
+    public function getAll(Request $request, PostRepository $repo)
+    {
+        $q = $request->q;
+         
+        $headers = ["Id", "Título ES", "Título EN","Url","Categoría Es", "Categoría En", "Publicado","Registrado el"];
+        if ($q) {
+            $elements = $repo->datatable($request->itemsPerPage, $q);
+        } else {
+            $elements = $repo->datatable($request->itemsPerPage);
+        }
+        $elements["headers"] = $headers;
+        return response()->json($elements);
     }
 
-    public function getPosts(Request $request,PostRepository $post_repository){
-        $search = $request->search;
-        if($search){
-            $posts = $post_repository->datatable($request->desde,$search);
-        }
-        else{
-            $posts = $post_repository->datatable($request->desde);
-        }   
-        $posts["headers"] = ["Id","Título","URL","Categoría","Publicado","Registrado el"];
-        return response()->json($posts); 
-    }
-    
-    /*
-    public function create(PostRequest $request){
-        $post = request(["title","content","excerpt","slug","published","category_id"]);
-        $image_name = $this->setFileName('b-',$request->file('image'));
-        $store_image = Storage::disk('gcs')->putFileAs('img/posts/',$request->file('image'),$image_name);
-        if(!$store_image){
-            return response()->json(['title'=> trans('custom.title.error'), 'message'=> trans('custom.errors.image') ],500);    
-        }
-        $post = array_merge($post,["image"=>$image_name,"user_id"=>Auth::user()->id]);
+    public function store(PostRequest $request)
+    {
+        $post = request([
+            "title_es",
+            "title_en",
+            "content_es",
+            "content_en",
+            "excerpt_es",
+            "excerpt_en",
+            "slug_es",
+            "slug_en",
+            "published",
+            "category_id"
+        ]);
+        $imageName = $this->setFileName('b-', $request->file('image'));
+        $storeImage = Storage::disk('public')->putFileAs('img/posts/', $request->file('image'), $imageName);
 
-        $thumbnail_name = $this->setFileName('bt-',$request->file('thumbnail'));
-        $store_thumbnail = Storage::disk('gcs')->putFileAs('img/posts/',$request->file('thumbnail'),$thumbnail_name);
-        if(!$store_thumbnail){
-            return response()->json(['title'=> trans('custom.title.error'), 'message'=> trans('custom.errors.image') ],500);    
-        }
-        $post = array_merge($post,["thumbnail"=>$thumbnail_name]);
+        $thumbnailName = $this->setFileName('bt-', $request->file('thumbnail'));
+        $storeThumbnail = Storage::disk('public')->putFileAs('img/posts/', $request->file('thumbnail'), $thumbnailName);
 
 
-        try{
-            $post = Post::UpdateOrCreate($post); 
-            //return response()->json(['title'=> trans('custom.title.success'), 'message'=> trans('custom.message.create.success', ['name' => trans('custom.attribute.post')])],200);
+        if (!$storeImage || !$storeThumbnail) {
+            $request->session()->flash('error', trans('custom.message.create.error', ['name' => trans('custom.attribute.post')]));
+            return response()->json(["route" => route('cms.blog.posts.index')], 500);
         }
-        catch(\Exception $e){
-            return response()->json(['title'=> trans('custom.title.error'), 'message'=> trans('custom.message.create.error', ['name' => trans('custom.attribute.post')]) ],500);    
-        }
-        $tags = json_decode($request->tags);
-        try{
-            foreach ($tags as $key => $value) {
-                $exist = $tag = NULL;
-                $exist = Tag::where('post_id',$post->id)->where('name',$value->text)->get();
-                if(count($exist) < 1){
-                    $tag = Tag::UpdateOrCreate(["post_id" => $post->id, "name" => $value->text]);
-                }
-            }
-            return response()->json(['title'=> trans('custom.title.success'), 'message'=> trans('custom.message.create.success', ['name' => trans('custom.attribute.post')])],200);
-        }
-        catch(\Exception $e){
-            return response()->json(['title'=> trans('custom.title.error'), 'message'=> trans('custom.message.create.error', ['name' => trans('custom.attribute.post')]) ],500);    
-        }
-    }
-    */
-
-    public function delete(Post $post){
-        $image = $post->image;
-        $thumbnail = $post->thumbnail;
+         
+        $post = array_merge($post, ["image"=>$imageName,"thumbnail"=>$thumbnailName,"user_id"=>Auth::user()->id]);
+        
         try {
-            $post_delete = $post->delete();
-            if($post_delete){
-                Storage::disk('gcs')->delete('img/posts/'.$image);   
-                Storage::disk('gcs')->delete('img/posts/'.$thumbnail);    
+            $post = Post::UpdateOrCreate($post);
+            //$request->session()->flash('success', trans('custom.message.create.success', ['name' => trans('custom.attribute.post')]));
+            //return response()->json(["route" => route('cms.blog.posts.index')]);
+        } catch (\Exception $e) {
+            $request->session()->flash('error', trans('custom.message.create.error', ['name' => trans('custom.attribute.post')]));
+            return response()->json(["route" => route('cms.blog.posts.index')], 500);
+        }
+
+        
+        $tags = $request->tags;
+        try {
+            foreach ($tags as $key => $value) {
+                /*$exist_es = $tag_es = null;
+                $exist_es = Tag::where('post_id', $post->id)->where('name_es', $value['tag_es'])->get();
+                if (count($exist_es) < 1) {
+                    $tag_es = Tag::UpdateOrCreate(["post_id" => $post->id, "name_es" => $value['tag_es']]);
+                }
+
+                $tag_en = $tag_en = null;
+                $tag_en = Tag::where('post_id', $post->id)->where('name_en', $value['tag_en'])->get();
+                if (count($tag_en) < 1) {
+                }*/
+                $tag = Tag::UpdateOrCreate(["post_id" => $post->id, "name_es" => $value['tag_es'],"name_en" => $value['tag_en']]);
             }
-            return response()->json(['title'=> trans('custom.title.success'), 'message'=> trans('custom.message.delete.success', ['name' => trans('custom.attribute.post')])],200);
-        } 
-        catch (\Exception $e){
-            return response()->json(['title'=> trans('custom.title.error'), 'message'=> trans('custom.message.delete.error', ['name' => trans('custom.attribute.post')])],500);
+ 
+            $request->session()->flash('success', trans('custom.message.create.success', ['name' => trans('custom.attribute.post')]));
+            return response()->json(["route" => route('cms.blog.posts.index')]);
+        } catch (\Exception $e) {
+            $request->session()->flash('error', trans('custom.message.create.error', ['name' => trans('custom.attribute.post')]));
+            return response()->json(["route" => route('cms.blog.posts.index')], 500);
         }
     }
 
-    public function update(PostRequest $request,Post $post){
-        $request_post = request(["title","content","excerpt","slug","published","category_id"]);
-        if($request->hasFile('image')){
-            $image_name = $this->setFileName('p-',$request->file('image'));
-            $store_image = Storage::disk('gcs')->putFileAs('img/posts/',$request->file('image'),$image_name);
-            if(!$store_image){
-                return response()->json(['title'=> trans('custom.title.error'), 'message'=> trans('custom.errors.image') ],500);    
+    public function get(Post $element)
+    {
+        $element = $element->load('category', 'tags:post_id,name_es,name_en');
+        return response()->json($element);
+    }
+   
+    public function destroy(Post $element)
+    {
+        $image = $element->image;
+        $thumbnail = $element->thumbnail;
+        try {
+            $element_delete = $element->delete();
+            if ($element_delete) {
+                Storage::disk('public')->delete('img/posts/'.$image);
+                Storage::disk('public')->delete('img/posts/'.$thumbnail);
             }
-            $request_post = array_merge($request_post,["image" => $image_name]);   
-        }  
-        else{
-            $request_post = array_merge($request_post,["image" => $post->image]);   
+            return response()->json(['title'=> trans('custom.title.success'), 'message'=> trans('custom.message.delete.success', ['name' => trans('custom.attribute.post')])], 200);
+        } catch (\Exception $e) {
+            return response()->json(['title'=> trans('custom.title.error'), 'message'=> trans('custom.message.delete.error', ['name' => trans('custom.attribute.post')])], 500);
         }
+    }
+ 
+    public function getPosts(Request $request, PostRepository $post_repository)
+    {
+        $search = $request->q;
+        if ($search) {
+            $posts = $post_repository->datatable($request->itemsPerPage, $search);
+        } else {
+            $posts = $post_repository->datatable($request->itemsPerPage);
+        }
+        $posts["headers"] = ["Id","Título","URL","Categoría","Publicado","Registrado el"];
+        return response()->json($posts);
+    }
 
-        if($request->hasFile('thumbnail')){
-            $thumbnail_name = $this->setFileName('bt-',$request->file('thumbnail'));
-            $store_thumbnail = Storage::disk('gcs')->putFileAs('img/posts/',$request->file('thumbnail'),$thumbnail_name);
-            if(!$store_thumbnail){
-                return response()->json(['title'=> trans('custom.title.error'), 'message'=> trans('custom.errors.image') ],500);    
+    public function update(PostRequest $request, Post $element)
+    {
+        $request_post = request([
+            "title_es",
+            "title_en",
+            "content_es",
+            "content_en",
+            "excerpt_es",
+            "excerpt_en",
+            "slug_es",
+            "slug_en",
+            "published",
+            "category_id"
+        ]);
+        
+        if ($request->hasFile('image')) {
+            $image_name = $this->setFileName('b-', $request->file('image'));
+            $store_image = Storage::disk('public')->putFileAs('img/posts/', $request->file('image'), $image_name);
+            if (!$store_image) {
+                $request->session()->flash('error', trans('custom.message.update.error', ['name' => trans('custom.attribute.post')]));
+                return response()->json(["route" => route('cms.slider.index')], 500);
             }
-            $request_post = array_merge($request_post,["thumbnail" => $thumbnail_name]);   
-        }  
-        else{
-            $request_post = array_merge($request_post,["thumbnail" => $post->thumbnail]);   
+            $request_post = array_merge($request_post, ["image" => $image_name]);
+        } else {
+            $request_post = array_merge($request_post, ["image" => $element->image]);
         }
 
-
-
-        if($request->hasFile('image') && $post->image){
-            Storage::disk('gcs')->delete('img/posts/'.$post->image);
-        } 
-        if($request->hasFile('thumbnail') && $post->thumbnail){
-            Storage::disk('gcs')->delete('img/posts/'.$post->thumbnail);
-        } 
-        try{
-            $post = Post::UpdateOrCreate(["id"=>$post->id],$request_post); 
-            //return response()->json(['title'=> trans('custom.title.success'), 'message'=> trans('custom.message.update.success', ['name' => trans('custom.attribute.post')])],200);
-        }
-        catch(\Exception $e){
-            return response()->json(['title'=> trans('custom.title.error'), 'message'=> trans('custom.message.update.error', ['name' => trans('custom.attribute.post')]) ],500);
+        if ($request->hasFile('thumbnail')) {
+            $thumbnail_name = $this->setFileName('bt-', $request->file('thumbnail'));
+            $store_thumbnail = Storage::disk('public')->putFileAs('img/posts/', $request->file('thumbnail'), $thumbnail_name);
+            if (!$store_thumbnail) {
+                $request->session()->flash('error', trans('custom.message.update.error', ['name' => trans('custom.attribute.post')]));
+                return response()->json(["route" => route('cms.slider.index')], 500);
+            }
+            $request_post = array_merge($request_post, ["thumbnail" => $thumbnail_name]);
+        } else {
+            $request_post = array_merge($request_post, ["thumbnail" => $element->thumbnail]);
         }
 
-        $tags = json_decode($request->tags);
-        try{
-            $tag = Tag::where('post_id',$post->id)->delete();
+        if ($request->hasFile('image') && $element->image) {
+            Storage::disk('public')->delete('img/posts/'.$element->image);
+        }
+        if ($request->hasFile('thumbnail') && $element->thumbnail) {
+            Storage::disk('public')->delete('img/posts/'.$element->thumbnail);
+        }
+        
+        try {
+            $element = Post::UpdateOrCreate(["id"=>$element->id], $request_post);
+            //$request->session()->flash('success', trans('custom.message.update.success', ['name' => trans('custom.attribute.post')]));
+            //return response()->json(["route" => route('cms.blog.posts.index')]);
+        } catch (\Exception $e) {
+            $request->session()->flash('error', trans('custom.message.update.error', ['name' => trans('custom.attribute.post')]));
+            return response()->json(["route" => route('cms.blog.posts.index')], 500);
+        }
+
+        
+        $tags = $request->tags;
+        try {
+            $tag = Tag::where('post_id', $element->id)->delete();
             foreach ($tags as $key => $value) {
-                $exist = $tag = NULL;
-                $exist = Tag::where('post_id',$post->id)->where('name',$value->text)->get();
-                if(count($exist) < 1){
-                    $tag = Tag::UpdateOrCreate(["post_id" => $post->id, "name" => $value->text]);
-                }
+                $tag = Tag::UpdateOrCreate(["post_id" => $element->id, "name_es" => $value['tag_es'],"name_en" => $value['tag_en']]);
             }
-            return response()->json(['title'=> trans('custom.title.success'), 'message'=> trans('custom.message.update.success', ['name' => trans('custom.attribute.post')])],200);
-        }
-        catch(\Exception $e){
-            return response()->json(['title'=> trans('custom.title.error'), 'message'=> trans('custom.message.create.error', ['name' => trans('custom.attribute.post')]) ],500);    
+            $request->session()->flash('success', trans('custom.message.update.success', ['name' => trans('custom.attribute.post')]));
+            return response()->json(["route" => route('cms.blog.posts.index')]);
+        } catch (\Exception $e) {
+            $request->session()->flash('error', trans('custom.message.update.error', ['name' => trans('custom.attribute.post')]));
+            return response()->json(["route" => route('cms.blog.posts.index')], 500);
         }
     }
 }

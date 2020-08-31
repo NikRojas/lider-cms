@@ -572,7 +572,7 @@ __webpack_require__.r(__webpack_exports__);
         this.$refs.ref_images.dropzone.files.forEach(function (el, i) {
           fd.append("images" + i, el);
         });
-        fd.append('images_count', this.$refs.ref_images.dropzone.files.length);
+        fd.append("images_count", this.$refs.ref_images.dropzone.files.length);
       }
 
       if (this.element.name_en) {

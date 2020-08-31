@@ -5,7 +5,7 @@
         <div class="header-body">
           <div class="row align-items-center pt-0 pt-md-2 pb-4">
             <div class="col-6 col-md-7">
-              <BreadCrumb title="Blog" parent active="Posts"></BreadCrumb>
+              <BreadCrumb title="Posts" parent active="Blog"></BreadCrumb>
             </div>
             <div class="col-6 col-md-5 text-right">
               <a :href="routeCreate" class="btn btn-icon btn-inverse-primary">
@@ -19,432 +19,24 @@
         </div>
       </div>
     </div>
-    <!--
+    
     <div class="container-fluid mt--6">
       <DataTable
-        v-if="startBlock"
-        placeholder="Titulo"
-        :object.sync="posts"
-        :buttonRead="true"
-        :buttonUpdate="true"
-        :buttonDelete="true"
-        @update="editPost"
-        @delete="deletePost"
-        @read="detailPost"
-        @get="getPosts"
+        :object="elements"
+        placeholder="Título ES, Título EN"
+        :button-update="true"
+        :button-read="true"
+        :button-delete="true"
+        :button-disable="false"
+        @get="getEls"
+        @read="showElement"
+        @delete="deleteElement"
+        @update="editElement" 
+        :entries-prop.sync="elementsPerPage"
       ></DataTable>
-      <div class="row" v-if="newBlock">
-        <div class="col-12 col-xl-8 mb-4 mb-xl-0">
-          <div class="card">
-            <div class="card-body">
-              <div>
-                <form @submit.prevent="createPost">
-                  <div class="row">
-                    <div class="col-12">
-                      <div class="form-group">
-                        <InputSlug
-                          :url="appUrl+'/blog/categoria/'"
-                          :slug.sync="post.slug"
-                          :name.sync="post.title"
-                          :category-slug.sync="post.category.slug"
-                        />
-                        <label
-                          v-if="errors && errors.title"
-                          class="mt-2 text-danger text-sm"
-                          for="id_title"
-                        >{{ errors.title[0] }}</label>
-                        <label
-                          v-if="errors && errors.slug"
-                          class="mt-2 text-danger text-sm"
-                          for="id_name"
-                        >{{ errors.slug[0] }}</label>
-                      </div>
-                    </div>
-                    
-                    <div class="col-12 ">
-                      <div class="form-group">
-                        <b-form-checkbox
-                          id="id_checkbox_published"
-                          v-model="post.published"
-                          name="id_checkbox_published"
-                        >Publicar</b-form-checkbox>
-                      </div>
-                    </div>
-
-                    <div class="col-12 ">
-                       <div class="form-group">
-                         <label class="font-weight-bold" for="id_tags">Tags</label>
-                        <vue-tags-input
-                          v-model="post.tags"
-                          :tags="tags"
-                          @tags-changed="newTags => tags = newTags"
-                          placeholder="Ingresa Tag"
-                        />
-                        <label
-                          v-if="errors && errors.tags"
-                          class="mt-2 text-danger text-sm"
-                          for="id_tags"
-                        >{{ errors.tags[0] }}</label>
-                       </div>
-                    </div>
-                    <div class="col-12">
-                      <div class="form-group">
-                        <label class="font-weight-bold" for="id_category">Categoría</label>
-
-                        <model-list-select
-                          :list="categories"
-                          id="id_category"
-                          class="form-control"
-                          v-model="post.category"
-                          option-value="id"
-                          option-text="name"
-                          placeholder="Seleccion la Categoría"
-                        ></model-list-select>
-
-                        <label
-                          v-if="errors && errors.category_id"
-                          class="mt-2 text-danger text-sm"
-                          for="id_category"
-                        >{{ errors.category_id[0] }}</label>
-                      </div>
-                    </div>
-                    <div class="col-12">
-                      <div class="form-group">
-                        <label class="font-weight-bold" for="id_excerpt">Breve Descripción</label>
-                        <textarea
-                          v-model="post.excerpt"
-                          rows="2"
-                          class="form-control "
-                          id="id_excerpt"
-                          placeholder="Breve Descripción"
-                        ></textarea>
-                        <label
-                          v-if="errors && errors.excerpt"
-                          class="mt-2 text-danger text-sm"
-                          for="id_excerpt"
-                        >{{ errors.excerpt[0] }}</label>
-                      </div>
-                    </div>
-
-                    <div class="col-12">
-                      <div class="form-group mb-0">
-                        <label class="font-weight-bold" for="id_content">Contenido</label>
-                        <quill-Editor
-                          class="ql-height-25"
-                          @keydown.enter.prevent
-                          v-model="post.content"
-                          placeholder="Contenido"
-                          :options="editorOptions"
-                          ref="ref_content"
-                        ></quill-Editor>
-                        <label
-                          v-if="errors && errors.content"
-                          class="mt-2 text-danger text-sm"
-                          for="id_content"
-                        >{{ errors.content[0] }}</label>
-                      </div>
-                    </div>
-                  </div>
-                </form>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="col-12 col-xl-4">
-          <div class="card">
-            <div class="card-body">
-              <div class="form-group">
-                <label for="image" class="d-block">
-                  <label class="font-weight-bold">Miniatura</label>
-                  
-                </label>
-                
-
-                <vue-dropzone
-                  ref="ref_thumbnail"
-                  @vdropzone-file-added="$validateImageDropzone($event,$refs.ref_thumbnail.dropzone,1,100000,'100kb')"
-                  id="id_thumbnail"
-                  :options="dropzoneOptions"
-                  :duplicateCheck="true"
-                  :useCustomSlot="true"
-                >
-                  <div class="dropzone-custom-content">
-                    <h5
-                      class="dropzone-custom-title text-primary"
-                    >Suelte el archivo aquí o haga click para cargarlo.</h5>
-                  </div>
-                </vue-dropzone>
-                <label
-                  v-if="errors && errors.thumbnail"
-                  class="text-danger text-sm d-block mt-2"
-                  for="file"
-                >{{ errors.thumbnail[0] }}</label>
-              </div>
-
-        <file-upload
-                                                extensions="jpg,jpeg,png"
-                                                accept="image/png,image/jpeg,image/jpg"
-                                                class="d-none"
-                                                :drop="false"
-                                                :multiple="true"
-                                                v-model="post.images"
-                                                @input-filter="$uploadImageUploadComponent($event,$refs.ref_content,100000,'100kb','posts')"
-                                                ref="ref_content_images"
-                                                input-id="id_content_images">
-                                            </file-upload>
-
-              <div class="form-group mb-0">
-                <label for="image" class="d-block">
-                  <label class="font-weight-bold">Imagen</label>
-                  
-                </label>
-                
-
-                <vue-dropzone
-                  ref="ref_image"
-                  @vdropzone-file-added="$validateImageDropzone($event,$refs.ref_image.dropzone,1,100000,'100kb')"
-                  id="id_image"
-                  :options="dropzoneOptions"
-                  :duplicateCheck="true"
-                  :useCustomSlot="true"
-                >
-                  <div class="dropzone-custom-content">
-                    <h5
-                      class="dropzone-custom-title text-primary"
-                    >Suelte el archivo aquí o haga click para cargarlo.</h5>
-                  </div>
-                </vue-dropzone>
-                <label
-                  v-if="errors && errors.image"
-                  class="text-danger text-sm d-block mt-2"
-                  for="file"
-                >{{ errors.image[0] }}</label>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="row" v-if="editBlock">
-        <div class="col-12 col-xl-8 mb-4 mb-xl-0">
-          <div class="card">
-            <div class="card-body">
-              <div>
-                <form @submit.prevent="createPost">
-                  <div class="row">
-                    <div class="col-12">
-                      <div class="form-group">
-                        <InputSlug
-                          :url="appUrl+'/blog/categoria/'"
-                          :slug.sync="post.slug"
-                          :name.sync="post.title"
-                          :name-prop="post.title"
-                          :slug-prop="post.slug"
-                          :category-slug.sync="post.category.slug"
-                        />
-                        <label
-                          v-if="errors && errors.title"
-                          class="mt-2 text-danger text-sm"
-                          for="id_title"
-                        >{{ errors.title[0] }}</label>
-                        <label
-                          v-if="errors && errors.slug"
-                          class="mt-2 text-danger text-sm"
-                          for="id_name"
-                        >{{ errors.slug[0] }}</label>
-                      </div>
-                    </div>
-                    <div class="col-12">
-                      <div class="form-group">
-                        <b-form-checkbox
-                          id="id_checkbox_published"
-                          v-model="post.published"
-                          name="id_checkbox_published"
-                        >Publicar</b-form-checkbox>
-                      </div>
-                    </div>
-
-
-                    <div class="col-12 ">
-                       <div class="form-group">
-                         <label class="font-weight-bold" for="id_tags">Tags</label>
-                        <vue-tags-input
-                          v-model="post.tags"
-                          :tags="tags"
-                          @tags-changed="newTags => tags = newTags"
-                          placeholder="Ingresa Tag"
-                        />
-                        <label
-                          v-if="errors && errors.tags"
-                          class="mt-2 text-danger text-sm"
-                          for="id_tags"
-                        >{{ errors.tags[0] }}</label>
-                       </div>
-                    </div>
-
-                    <div class="col-12">
-                      <div class="form-group">
-                        <label class="font-weight-bold" for="id_category">Categoría</label>
-
-                        <model-list-select
-                          :list="categories"
-                          id="id_category"
-                          class="form-control"
-                          v-model="post.category"
-                          option-value="id"
-                          option-text="name"
-                          placeholder="Seleccion la Categoría"
-                        ></model-list-select>
-
-                        <label
-                          v-if="errors && errors.category_id"
-                          class="mt-2 text-danger text-sm"
-                          for="id_category"
-                        >{{ errors.category_id[0] }}</label>
-                      </div>
-                    </div>
-                    <div class="col-12">
-                      <div class="form-group">
-                        <label class="font-weight-bold" for="id_excerpt">Breve Descripción</label>
-                        <textarea
-                          v-model="post.excerpt"
-                          rows="2"
-                          class="form-control "
-                          id="id_excerpt"
-                          placeholder="Breve Descripción"
-                        ></textarea>
-                        <label
-                          v-if="errors && errors.excerpt"
-                          class="mt-2 text-danger text-sm"
-                          for="id_excerpt"
-                        >{{ errors.excerpt[0] }}</label>
-                      </div>
-                    </div>
-
-                    <div class="col-12">
-                      <div class="form-group mb-0">
-                        <label class="font-weight-bold" for="id_content">Contenido</label>
-
-                        <file-upload
-                                                extensions="jpg,jpeg,png"
-                                                accept="image/png,image/jpeg,image/jpg"
-                                                class="d-none"
-                                                :drop="false"
-                                                :multiple="true"
-                                                v-model="post.images"
-                                                @input-filter="$uploadImageUploadComponent($event,$refs.ref_content,100000,'100kb','posts')"
-                                                ref="ref_content_images"
-                                                input-id="id_content_images">
-                                            </file-upload>
-
-                        <quill-Editor
-                          class="ql-height-25"
-                          @keydown.enter.prevent
-                          v-model="post.content"
-                          placeholder="Contenido"
-                          :options="editorOptions"
-                          ref="ref_content"
-                        ></quill-Editor>
-                        <label
-                          v-if="errors && errors.content"
-                          class="mt-2 text-danger text-sm"
-                          for="id_content"
-                        >{{ errors.content[0] }}</label>
-                      </div>
-                    </div>
-                  </div>
-                </form>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="col-12 col-xl">
-          <div class="card">
-            <div class="card-body">
-
-              <div class="form-group"> 
-                  <label class="font-weight-bold d-block"  for="thumbnail">Miniatura</label>
-
-                  <img
-                    class="img-fluid mb-2"
-                    v-if="post.thumbnail"
-                    :src="'https://storage.googleapis.com/playgroup-web/img/posts/'+post.thumbnail"
-                    alt="Post"
-                  />
-
-                 <vue-dropzone
-                  ref="ref_thumbnail"
-                  @vdropzone-file-added="$validatethumbnailDropzone($event,$refs.ref_thumbnail.dropzone,1,100000,'100kb')"
-                  id="id_thumbnail"
-                  :options="dropzoneOptions"
-                  :duplicateCheck="true"
-                  :useCustomSlot="true"
-                >
-                  <div class="dropzone-custom-content">
-                    <h5
-                      class="dropzone-custom-title text-primary"
-                    >Suelte el archivo aquí o haga click para cargarlo.</h5>
-                  </div>
-                </vue-dropzone>
-                
-                <label
-                  v-if="errors && errors.thumbnail"
-                  class="text-danger text-sm d-block mt-2"
-                  for="file"
-                >{{ errors.thumbnail[0] }}</label>
-              </div>
-
-
-              <div class="form-group mb-0"> 
-                  <label class="font-weight-bold d-block"  for="image">Imagen</label>
-
-                  <img
-                    class="img-fluid mb-2"
-                    v-if="!image.length && post.image"
-                    :src="'https://storage.googleapis.com/playgroup-web/img/posts/'+post.image"
-                    alt="Post"
-                  />
-
-                 <vue-dropzone
-                  ref="ref_image"
-                  @vdropzone-file-added="$validateImageDropzone($event,$refs.ref_image.dropzone,1,100000,'100kb')"
-                  id="id_image"
-                  :options="dropzoneOptions"
-                  :duplicateCheck="true"
-                  :useCustomSlot="true"
-                >
-                  <div class="dropzone-custom-content">
-                    <h5
-                      class="dropzone-custom-title text-primary"
-                    >Suelte el archivo aquí o haga click para cargarlo.</h5>
-                  </div>
-                </vue-dropzone>
-                
-                <label
-                  v-if="errors && errors.image"
-                  class="text-danger text-sm d-block mt-2"
-                  for="file"
-                >{{ errors.image[0] }}</label>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <b-modal centered ref="modal-delete">
-        <template slot="modal-title">
-          <h2 class="mb-0 text-uppercase text-primary">Eliminar Post</h2>
-        </template>
-        <p class="my-3">Esta seguro que desea eliminar el post?</p>
-        <template slot="modal-footer" slot-scope="{ ok, cancel }">
-          <Button
-            :classes="['btn-primary']"
-            :text="'Eliminar'"
-            @click="deletePostConfirm()"
-            :request-server="requestServer"
-          ></Button>
-          <button type="button" class="btn btn-secondary" @click="cancel()">Cancelar</button>
-        </template>
-      </b-modal>
+    </div>
+      <!--
+       
       <b-modal size="lg" centered ref="modal-detail">
         <template slot="modal-title">
           <h2 class="mb-0 text-uppercase text-primary">Detalle Post</h2>
@@ -548,51 +140,140 @@
             @click="() => { restoreEl();cancel(); }"
           >Cancelar</button>
         </template>
-      </b-modal>
-    </div>
+      </b-modal> 
     -->
+    <destroy
+      element="post"
+      @cancel="restoreEl"
+      :open="modalDestroy"
+      @submit="destroyConfirm"
+      :loading-get="loadingGet"
+      :loading-submit="requestSubmit"
+    ></destroy>
   </div>
 </template>
 
-<script>import BreadCrumb from "../../../components/BreadCrumb";
+<script>
+import BreadCrumb from "../../../components/BreadCrumb";
 import { Skeleton } from "vue-loading-skeleton";
+import Destroy from "../../../components/modals/Destroy";
+import DataTable from "../../../components/DataTable";
 import NoData from "../../../components/NoData";
 export default {
   components: {
     BreadCrumb,
+    Destroy,
+    DataTable,
     NoData,
-    Skeleton,
+    Skeleton
   },
   props: {
     routeCreate: String,
+    routeGetAll: String,
     route: String,
-    appUrl: String,   
-    imagesUrl: String,
+    appUrl: String,
+    imagesUrl: String
   },
   data() {
     return {
       loadingEls: false,
-      elements: [],
+      elements: {},
       element: {},
       modalDestroy: false,
       loadingGet: false,
       requestSubmit: false,
+      elementsPerPage: 10
     };
   },
   methods: {
+    /*
     getEls() {
       this.loadingEls = true;
       axios
         .get(this.routeGetAll)
-        .then((response) => {
+        .then(response => {
           this.elements = response.data;
           this.loadingEls = false;
         })
-        .catch((error) => {});
+        .catch(error => {});
     },
+    */
+    getEls(page, itemsPerPage, q = null) {
+      let url =
+        this.routeGetAll + "?page=" + page + "&itemsPerPage=" + itemsPerPage;
+      if (q) {
+        url = url + "&q=" + q;
+      }
+      axios
+        .get(url)
+        .then(response => {
+          this.elements = response.data;
+        })
+        .catch(error => {});
+    },
+    restoreEl() {
+      this.element = {};
+      this.modalDestroy = false;
+    },
+    restore() {
+      this.modalDestroy = false;
+      this.getEls(1, this.elementsPerPage);
+    },
+    showElement(id) {
+      console.log("log");
+    },
+    editElement(id) {
+      document.location.href = this.route + "/editar/" + id;
+    },
+    deleteElement(id) {
+      this.modalDestroy = true;
+      this.getEl(id);
+    },
+    getEl(id) {
+      this.loadingGet = true;
+      axios
+        .get(this.route + "/json/get/" + id)
+        .then(response => {
+          this.element = response.data;
+          this.loadingGet = false;
+        })
+        .catch(error => {});
+    },
+    destroyConfirm() {
+      this.requestSubmit = true;
+      axios
+        .delete(this.route + "/" + this.element.id)
+        .then(response => {
+          this.requestSubmit = false;
+          this.restore();
+          Swal.fire({
+            title: response.data.title,
+            text: response.data.message,
+            type: "success",
+            confirmButtonText: "OK",
+            buttonsStyling: false,
+            customClass: {
+              confirmButton: "btn btn-inverse-primary"
+            }
+          });
+        })
+        .catch(error => {
+          Swal.fire({
+            title: error.response.data.title,
+            text: error.response.data.message,
+            type: "error",
+            confirmButtonText: "OK",
+            buttonsStyling: false,
+            customClass: {
+              confirmButton: "btn btn-inverse-primary"
+            }
+          });
+          this.restoreEl();
+        });
+    }
   },
   created() {
-    this.getEls();
-  },
+    this.getEls(1, this.elementsPerPage);
+  }
 };
 </script>

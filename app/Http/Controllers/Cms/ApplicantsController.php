@@ -22,11 +22,11 @@ class ApplicantsController extends Controller
         return view ("pages.applicants");    
     }
 
-    public function getApplicant(Applicant $applicant){
+    public function get(Applicant $applicant){
         return response()->json($applicant);
     }
 
-    public function getApplicants(Request $request,ApplicantRepository $applicant_repository){
+    public function getAll(Request $request,ApplicantRepository $applicant_repository){
         $search = $request->search;
         if($search){
             $applicants = $applicant_repository->datatable($request->desde,$search);
@@ -34,16 +34,16 @@ class ApplicantsController extends Controller
         else{
             $applicants = $applicant_repository->datatable($request->desde);
         }   
-        $applicants["headers"] = ["Id","Nombre Completo","Email","Puesto","PDF"];
+        $applicants["headers"] = ["Id","Nombre Completo","Email","Celular","Puesto","URL","PDF"];
         return response()->json($applicants); 
     }
     
-    public function delete(Applicant $applicant){
+    public function destroy(Applicant $applicant){
         $pdf = $applicant->pdf;
         try {
             $applicant_delete = $applicant->delete();
             if($applicant_delete){
-                Storage::disk('gcs')->delete('files/applicants-16720/'.$pdf);    
+                Storage::disk('public')->delete('files/applicants-16720/'.$pdf);    
             }
             return response()->json(['title'=> trans('custom.title.success'), 'message'=> trans('custom.message.delete.success', ['name' => trans('custom.attribute.applicant')])],200);
         } 

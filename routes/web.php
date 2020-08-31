@@ -178,7 +178,7 @@ Route::middleware(['auth'])->namespace('Cms')->name('cms.')->group(function () {
             /*
             */
         });
-
+        
         Route::name('land-sale.')->prefix('venta-terreno')->group(function () {
             Route::get('/', 'LeadLandSaleController@index')->name('index');
             Route::get('/json/get-all', 'LeadLandSaleController@getAll')->name('get-all');
@@ -189,6 +189,12 @@ Route::middleware(['auth'])->namespace('Cms')->name('cms.')->group(function () {
         });
     });
 
+    Route::prefix('postulantes')->name('applicants.')->group(function () {
+        Route::get('/', 'ApplicantsController@index')->name('index');
+        Route::delete('/{element}', 'ApplicantsController@destroy')->name('destroy');
+        Route::get('/json/get-all', 'ApplicantsController@getAll')->name('get-all');
+        Route::get('/json/get/{element}', 'ApplicantsController@get')->name('get');
+    });
 
     #Pages
     /*Route::get('informacion/paginas', 'Information\PagesController@index')->name('pages');

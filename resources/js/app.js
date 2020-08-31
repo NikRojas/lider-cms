@@ -42,7 +42,7 @@ const app = new Vue({
         'profile': () => import('./views/Profile.vue' /* webpackChunkName: "js/pages/profile" */),
 
         //'dashboard': () => import('./views/Dashboard.vue' /* webpackChunkName: "js/dashboard" */),
-        //'applicants': () => import('./views/Applicants.vue' /* webpackChunkName: "js/applicants" */),
+        'applicants': () => import('./views/Applicants.vue' /* webpackChunkName: "js/applicants" */),
 
         //lead
         'online': () => import('./views/lead/online.vue' /* webpackChunkName: "js/pages/blog/category" */),

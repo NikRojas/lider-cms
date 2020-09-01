@@ -24,19 +24,19 @@ class TestimonialRequest extends FormRequest
     public function rules()
     {
         $rules = [
-            'full_name' => 'required|max:100',
-            'company' => 'required|max:100',
-            'message' => 'required',
-            'job' => 'required|max:100',
+            'title_es' => 'required|max:100',
+            'title_en' => 'required|max:100',
+            'description_es' => 'required',
+            'description_en' => 'required|max:100',
         ];
         switch ($this->method()) {
-            case 'POST':   
+            case 'POST':
                 $rules = array_merge(
                     $rules,
                     ['image' => 'required']
                 );
             break;
-            case 'PUT':   
+            case 'PUT':
                 $rules = array_merge(
                     $rules,
                     ['image' => 'sometimes|required']

@@ -16,11 +16,12 @@ class ApplicantDestinationRequest extends FormRequest
         return true;
     }
 
-    public function messages(){
+    public function messages()
+    {
         return [
-            'email_destination_job.*.email' => 'Los campos correo(s) electrónico(s) destino deben ser una dirección de correo válida.',
-            'email_destination_job.*.required' => 'Los campos correo(s) electrónico(s) destino es obligatorio.',
-            'email_destination_job.required' => 'Los campos correo(s) electrónico(s) destino es obligatorio.'
+            'email_destination.*.email' => 'Los campos correo(s) electrónico(s) destino deben ser una dirección de correo válida.',
+            'email_destination.*.required' => 'Los campos correo(s) electrónico(s) destino es obligatorio.',
+            'email_destination.required' => 'Los campos correo(s) electrónico(s) destino es obligatorio.'
         ];
     }
 
@@ -32,8 +33,8 @@ class ApplicantDestinationRequest extends FormRequest
     public function rules()
     {
         return [
-            'email_destination_job' => 'required',
-            'email_destination_job.*' => 'required|email|max:100'
+            'email_destination' => 'required',
+            'email_destination.*' => 'required|email|max:100'
         ];
     }
 }

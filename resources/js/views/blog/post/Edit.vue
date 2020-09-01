@@ -1,190 +1,200 @@
 <template>
-    <div>
-        <form @submit.prevent="submit">
-            <div class="header pb-6">
-                <div class="container-fluid">
-                <div class="header-body">
-                    <div class="row align-items-center pt-0 pt-md-2 pb-4">
-                    <div class="col-6 col-md-7">
-                        <BreadCrumb title="Editar Post" parent active="Post"></BreadCrumb>
-                    </div>
-                    <div class="col-6 col-md text-right">
-                        <Button
-                        :text="'Guardar'"
-                        :classes="['btn-inverse-primary','mr-2']"
-                        :request-server="requestServer"
-                        ></Button>
-                        <a type="button" class="btn btn-secondary" :href="routeReturn">Cancelar</a>
-                    </div>
-                    </div>
-                </div>
-                </div>
+  <div>
+    <form @submit.prevent="submit">
+      <div class="header pb-6">
+        <div class="container-fluid">
+          <div class="header-body">
+            <div class="row align-items-center pt-0 pt-md-2 pb-4">
+              <div class="col-6 col-md-7">
+                <BreadCrumb title="Editar Post" parent active="Post"></BreadCrumb>
+              </div>
+              <div class="col-6 col-md text-right">
+                <Button
+                  :text="'Guardar'"
+                  :classes="['btn-inverse-primary','mr-2']"
+                  :request-server="requestServer"
+                ></Button>
+                <a type="button" class="btn btn-secondary" :href="routeReturn">Cancelar</a>
+              </div>
             </div>
-            <div class="container-fluid mt--6">
+          </div>
+        </div>
+      </div>
+      <div class="container-fluid mt--6">
+        <div class="row">
+          <div class="col-12 col-xl-8 mb-4 mb-xl-0">
+            <div class="card">
+              <div class="card-body">
                 <div class="row">
-                    <div class="col-12 col-xl-8 mb-4 mb-xl-0">
-                        <div class="card">
-                            <div class="card-body"> 
-                                <div class="row">
-                                    <div class="col-12">
-                                      <InputSlug
-                                        label="Titulo"
-                                        variable="title"
-                                        type="Ruta"
-                                        :errors="errors"
-                                        :valueEn.sync="element.title_en"
-                                        :valueEs.sync="element.title_es"
-                                        :slugEn.sync="element.slug_en"
-                                        :slugEs.sync="element.slug_es"
-                                        :valueEnParent="element.title_en"
-                                        :valueEsParent="element.title_es"
-                                        :slugEnParent="element.slug_en"
-                                        :slugEsParent="element.slug_es"
-                                      />
-                                    </div>
-                                    <div class="col-12">
-                                      <div class="form-group">
-                                          <b-form-checkbox
-                                          id="id_checkbox_published"
-                                          v-model="element.published"
-                                          name="id_checkbox_published"
-                                          >Publicar</b-form-checkbox>
-                                      </div>
-                                    </div> 
-
-                                    <div class="col-12 "> 
-                                      <InputArray fieldName="tags"
-                                      :errorsProp.sync="errors"
-                                      :headers="[{variable: 'tag_es', label : 'Tags Español'},{ variable: 'tag_en', label: 'Tag Inglés'}]"
-                                      :array.sync="element.tags"
-                                      :array-prop="element.tags"/>  
-                                    </div>
-
-                                    <div class="col-12">
-                                    <div class="form-group">
-                                        <label class="font-weight-bold" for="id_category">Categoría</label>
-
-                                        <model-list-select
-                                        :list="categories"
-                                        id="id_category_id"
-                                        class="form-control"
-                                        v-model="element.category"
-                                        option-value="id"
-                                        option-text="name_es"
-                                        placeholder="Seleccion la Categoría"
-                                        ></model-list-select>
-
-                                        <label
-                                        v-if="errors && errors.category_id"
-                                        class="mt-2 text-danger text-sm"
-                                        for="id_category_id"
-                                        >{{ errors.category_id[0] }}</label>
-                                    </div>
-                                    </div>
-                                    <div class="col-12">
-                                      <Textarea
-                                        label="Descripción"
-                                        variable="excerpt"
-                                        :errors="errors"
-                                        :valueEn.sync="element.excerpt_en"
-                                        :valueEs.sync="element.excerpt_es"
-                                        :valueEnParent="element.excerpt_en"
-                                        :valueEsParent="element.excerpt_es"
-                                        />
-                                    </div>
-
-                                    <div class="col-12">
-                                     <Editor
-                                        size="sm"
-                                        label="Contenido"
-                                        variable="content"
-                                        :errors="errors"
-                                        :valueEn.sync="element.content_en"
-                                        :valueEs.sync="element.content_es"
-                                        :valueEnParent="element.content_en"
-                                        :valueEsParent="element.content_es"
-                                      />
-                                    </div>
-                                </div>  
-                            </div>
-                        </div>
+                  <div class="col-12">
+                    <InputSlug
+                      label="Titulo"
+                      variable="title"
+                      type="Ruta"
+                      :errors="errors"
+                      :valueEn.sync="element.title_en"
+                      :valueEs.sync="element.title_es"
+                      :slugEn.sync="element.slug_en"
+                      :slugEs.sync="element.slug_es"
+                      :valueEnParent="element.title_en"
+                      :valueEsParent="element.title_es"
+                      :slugEnParent="element.slug_en"
+                      :slugEsParent="element.slug_es"
+                    />
+                  </div>
+                  <div class="col-12">
+                    <div class="form-group">
+                      <b-form-checkbox
+                        id="id_checkbox_published"
+                        v-model="element.published"
+                        name="id_checkbox_published"
+                      >Publicar</b-form-checkbox>
                     </div>
-                    <div class="col-12 col-xl">
-                        <div class="card">
-                            <div class="card-body"> 
-
-                              <div class="form-group"> 
-                                  <label class="font-weight-bold d-block"  for="thumbnail">Miniatura</label>
-                                    <div class="row">
-                                        <div class="col-lg-4 mb-3 mb-lg-0">
-                                        <img :src="imagesUrl+'/posts/'+element.thumbnail" alt class="img-fluid"/>
-                                        </div>
-                                        <div class="col-lg-8">
-                                        <vue-dropzone
-                                            ref="ref_thumbnail"
-                                            @vdropzone-file-added="$validateImageDropzone($event,$refs.ref_thumbnail.dropzone,1,100000,'100kb')"
-                                            id="id_thumbnail"
-                                            :options="dropzoneOptions"
-                                            :duplicateCheck="true"
-                                            :useCustomSlot="true"
-                                            >
-                                            <div class="dropzone-custom-content">
-                                                <h5
-                                                class="dropzone-custom-title text-primary"
-                                                >Suelte el archivo aquí o haga click para cargarlo.</h5>
-                                            </div>
-                                            </vue-dropzone>
-                                            
-                                            <label
-                                            v-if="errors && errors.thumbnail"
-                                            class="text-danger text-sm d-block mt-2"
-                                            for="file"
-                                            >{{ errors.thumbnail[0] }}</label>
-                                        </div>
-                                    </div>                  
-                                  
-                              </div>
-
-
-                                <div class="form-group mb-0"> 
-                                    <label class="font-weight-bold d-block"  for="image">Imagen</label>
-                                    
-                                    <div class="row">
-                                        <div class="col-lg-4 mb-3 mb-lg-0">
-                                            <img :src="imagesUrl+'/posts/'+element.image" alt class="img-fluid"/>
-                                        </div>
-                                        <div class="col-lg-8">
-                                            <vue-dropzone
-                                            ref="ref_image"
-                                            @vdropzone-file-added="$validateImageDropzone($event,$refs.ref_image.dropzone,1,100000,'100kb')"
-                                            id="id_image"
-                                            :options="dropzoneOptions"
-                                            :duplicateCheck="true"
-                                            :useCustomSlot="true"
-                                            >
-                                            <div class="dropzone-custom-content">
-                                                <h5
-                                                class="dropzone-custom-title text-primary"
-                                                >Suelte el archivo aquí o haga click para cargarlo.</h5>
-                                            </div>
-                                            </vue-dropzone>
-                                            
-                                            <label
-                                            v-if="errors && errors.image"
-                                            class="text-danger text-sm d-block mt-2"
-                                            for="file"
-                                            >{{ errors.image[0] }}</label>
-                                        </div>
-                                    </div>     
-                                    
-                                </div>
-                            </div>
-                        </div>
+                  </div>
+                  <div class="col-12">
+                    <div class="form-group">
+                      <Input
+                        label="Seo Keywords"
+                        variable="seo_keywords"
+                        :errors="errors"
+                        :valueEn.sync="element.seo_keywords_en"
+                        :valueEs.sync="element.seo_keywords_es"
+                        :valueEnParent="element.seo_keywords_en"
+                        :valueEsParent="element.seo_keywords_es"
+                      />
                     </div>
+                  </div>
+                  <div class="col-12">
+                    <InputArray
+                      fieldName="tags"
+                      :errorsProp.sync="errors"
+                      :headers="[{variable: 'tag_es', label : 'Tags Español'},{ variable: 'tag_en', label: 'Tag Inglés'}]"
+                      :array.sync="element.tags"
+                      :array-prop="element.tags"
+                    />
+                  </div>
+
+                  <div class="col-12">
+                    <div class="form-group">
+                      <label class="font-weight-bold" for="id_category">Categoría</label>
+
+                      <model-list-select
+                        :list="categories"
+                        id="id_category_id"
+                        class="form-control"
+                        v-model="element.category"
+                        option-value="id"
+                        option-text="name_es"
+                        placeholder="Seleccion la Categoría"
+                      ></model-list-select>
+
+                      <label
+                        v-if="errors && errors.category_id"
+                        class="mt-2 text-danger text-sm"
+                        for="id_category_id"
+                      >{{ errors.category_id[0] }}</label>
+                    </div>
+                  </div>
+                  <div class="col-12">
+                    <Textarea
+                      label="Descripción"
+                      variable="excerpt"
+                      :errors="errors"
+                      :valueEn.sync="element.excerpt_en"
+                      :valueEs.sync="element.excerpt_es"
+                      :valueEnParent="element.excerpt_en"
+                      :valueEsParent="element.excerpt_es"
+                    />
+                  </div>
+
+                  <div class="col-12">
+                    <Editor
+                      size="sm"
+                      label="Contenido"
+                      variable="content"
+                      :errors="errors"
+                      :valueEn.sync="element.content_en"
+                      :valueEs.sync="element.content_es"
+                      :valueEnParent="element.content_en"
+                      :valueEsParent="element.content_es"
+                    />
+                  </div>
                 </div>
+              </div>
             </div>
-        </form>
-    </div>
+          </div>
+          <div class="col-12 col-xl">
+            <div class="card">
+              <div class="card-body">
+                <div class="form-group">
+                  <label class="font-weight-bold d-block" for="thumbnail">Miniatura</label>
+                  <div class="row">
+                    <div class="col-lg-4 mb-3 mb-lg-0">
+                      <img :src="imagesUrl+'/posts/'+element.thumbnail" alt class="img-fluid" />
+                    </div>
+                    <div class="col-lg-8">
+                      <vue-dropzone
+                        ref="ref_thumbnail"
+                        @vdropzone-file-added="$validateImageDropzone($event,$refs.ref_thumbnail.dropzone,1,100000,'100kb')"
+                        id="id_thumbnail"
+                        :options="dropzoneOptions"
+                        :duplicateCheck="true"
+                        :useCustomSlot="true"
+                      >
+                        <div class="dropzone-custom-content">
+                          <h5
+                            class="dropzone-custom-title text-primary"
+                          >Suelte el archivo aquí o haga click para cargarlo.</h5>
+                        </div>
+                      </vue-dropzone>
+
+                      <label
+                        v-if="errors && errors.thumbnail"
+                        class="text-danger text-sm d-block mt-2"
+                        for="file"
+                      >{{ errors.thumbnail[0] }}</label>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="form-group mb-0">
+                  <label class="font-weight-bold d-block" for="image">Imagen</label>
+
+                  <div class="row">
+                    <div class="col-lg-4 mb-3 mb-lg-0">
+                      <img :src="imagesUrl+'/posts/'+element.image" alt class="img-fluid" />
+                    </div>
+                    <div class="col-lg-8">
+                      <vue-dropzone
+                        ref="ref_image"
+                        @vdropzone-file-added="$validateImageDropzone($event,$refs.ref_image.dropzone,1,100000,'100kb')"
+                        id="id_image"
+                        :options="dropzoneOptions"
+                        :duplicateCheck="true"
+                        :useCustomSlot="true"
+                      >
+                        <div class="dropzone-custom-content">
+                          <h5
+                            class="dropzone-custom-title text-primary"
+                          >Suelte el archivo aquí o haga click para cargarlo.</h5>
+                        </div>
+                      </vue-dropzone>
+
+                      <label
+                        v-if="errors && errors.image"
+                        class="text-danger text-sm d-block mt-2"
+                        for="file"
+                      >{{ errors.image[0] }}</label>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
 </template>
 
 <script>
@@ -209,13 +219,13 @@ export default {
     Features,
     InputSlug,
     InputArray,
-    ModelListSelect
+    ModelListSelect,
   },
   props: {
     imagesUrl: String,
     routeUpdate: String,
     routeReturn: String,
-    elementParent: Object
+    elementParent: Object,
   },
   data() {
     return {
@@ -230,19 +240,19 @@ export default {
         autoProcessQueue: false,
         thumbnailWidth: 150,
         addRemoveLinks: true,
-        dictRemoveFile: "Remover"
+        dictRemoveFile: "Remover",
       },
-      errors: {}
+      errors: {},
     };
   },
   methods: {
     getCategories() {
       axios
         .get("/json/select/categories")
-        .then(response => {
+        .then((response) => {
           this.categories = response.data;
         })
-        .catch(err => {});
+        .catch((err) => {});
     },
     submit() {
       this.requestServer = true;
@@ -261,6 +271,14 @@ export default {
       if (this.element.title_es) {
         fd.append("title_es", this.element.title_es);
       }
+
+      if (this.element.seo_keywords_en) {
+        fd.append("seo_keywords_en", this.element.seo_keywords_en);
+      }
+      if (this.element.seo_keywords_es) {
+        fd.append("seo_keywords_es", this.element.seo_keywords_es);
+      }
+
       if (this.element.slug_en) {
         fd.append("slug_en", this.element.slug_en);
       }
@@ -304,11 +322,11 @@ export default {
       fd.append("_method", "put");
       axios
         .post(this.routeUpdate + "/" + this.element.id, fd)
-        .then(response => {
+        .then((response) => {
           this.requestServer = false;
           document.location.href = response.data.route;
         })
-        .catch(error => {
+        .catch((error) => {
           this.requestServer = false;
           if (error.response.status === 422) {
             this.errors = error.response.data.errors || {};
@@ -316,18 +334,18 @@ export default {
           }
           document.location.href = error.response.data.route;
         });
-    }
+    },
   },
   watch: {
     elementParent: {
       immediate: true,
-      handler: function(newValue) {
+      handler: function (newValue) {
         this.element = newValue;
-      }
-    }
+      },
+    },
   },
   created() {
     this.getCategories();
-  }
+  },
 };
 </script>

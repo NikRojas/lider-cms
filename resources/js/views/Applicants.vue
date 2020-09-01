@@ -5,32 +5,101 @@
         <div class="header-body">
           <div class="row align-items-center pt-0 pt-md-2 pb-4">
             <div class="col-6 col-md-7">
-              <BreadCrumb title="Postulantes" parent="" active="Postulantes"></BreadCrumb>
+              <BreadCrumb title="Postulantes" parent active="Postulantes"></BreadCrumb>
             </div>
-            <div class="col-6 col-md-5 text-right">
-               
-            </div>
+            <div class="col-6 col-md-5 text-right"></div>
           </div>
         </div>
       </div>
     </div>
     <div class="container-fluid mt--6">
-      <DataTable
-        :object="elements"
-        placeholder="Nombre, Puesto"
-        :button-update="false"
-        :button-read="false"
-        :button-delete="true"
-        @get="getElements"
-        @delete="deleteEl" 
-        :entries-prop.sync="elementsPerPage"
-        :messageCantDelete="messageCantDelete"
-      ></DataTable>
+      <div class="row">
+        <div class="col-12 col-lg-8">
+          <DataTable
+            :object="elements"
+            placeholder="Nombre, Puesto"
+            :button-update="false"
+            :button-read="false"
+            :button-delete="true"
+            @get="getElements"
+            @delete="deleteEl"
+            :entries-prop.sync="elementsPerPage"
+            :messageCantDelete="messageCantDelete"
+          ></DataTable>
+        </div>
+        <div class="col-12 col-lg-4">
+          <div class="row">
+            <div class="col-12">
+              <div class="card">
+                <div class="card-header border-0">
+                  <h2 class="mb-0 text-uppercase text-primary">Correos Destino</h2>
+                </div>
+                <div class="card-body">
+                  <form @submit.prevent="updateEmail">
+                    <div class="row">
+                      <div class="col-12">
+                        <div class="form-group">
+                          <label class="font-weight-bold">Correos</label>
+                          <div v-show="editEmailBlock">
+                            <InputArray
+                              :arreglo.sync="information.email_destination"
+                              :arreglo-editar="information.email_destination_job_formatted"
+                            ></InputArray>
+                            <label
+                              for="id_email_destination_job"
+                              v-if="errors && Object.keys(errors).length"
+                              class="mt-2 mb-0 text-danger text-sm"
+                            >Los campos correo(s) electrónico(s) destino deben ser una dirección de correo válida.</label>
+                          </div>
+                          <div v-if="!editEmailBlock">
+                            <div
+                              v-if="information.email_destination && information.email_destination.length > 0"
+                            >
+                              <p
+                                class="d-block mb-1"
+                                v-for="(element,index) in information.email_destination_job_formatted"
+                                :key="index"
+                              >{{ element }}</p>
+                            </div>
+                            <p v-else>No registrado</p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="text-right">
+                      <button
+                        type="button"
+                        class="btn btn-primary"
+                        v-if="!editEmailBlock"
+                        @click.prevent="editEmailDestination"
+                      >Editar</button>
+
+                      <Button
+                        v-if="editEmailBlock"
+                        :text="'Actualizar'"
+                        :classes="['btn-primary','mr-2']"
+                        :request-server="requestServer"
+                        º
+                      ></Button>
+                      <button
+                        v-if="editEmailBlock"
+                        type="button"
+                        class="btn btn-danger"
+                        @click.prevent="restoreEmail"
+                      >Cancelar</button>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
- 
+
     <destroy
       element="postulante"
-      @cancel="restoreEl" 
+      @cancel="restoreEl"
       :open="modalDestroy"
       @submit="destroyConfirm"
       :loading-get="loadingGet"
@@ -45,19 +114,23 @@ import Button from "../components/Button";
 import InputSlug from "../components/form/InputSlug";
 import SkeletonForm from "../components/skeleton/form";
 import Destroy from "../components/modals/Destroy";
+import InputArray from "../components/form/InputArray";
 export default {
   components: {
     DataTable,
     Button,
     BreadCrumb,
     InputSlug,
+    InputArray,
     SkeletonForm,
-    Destroy
+    Destroy,
   },
   props: {
     routeGetAll: String,
     route: String,
-    messageCantDelete: String
+    messageCantDelete: String,
+    routeUpdate: String,
+    getEmailDestination: String,
   },
   data() {
     return {
@@ -66,17 +139,84 @@ export default {
       loadingGet: false,
       title: "",
       elementsPerPage: 10,
-      errors: {}, 
+      errors: {},
       modalDestroy: false,
-      requestSubmit: false
+      requestSubmit: false,
+
+      information: {
+        email_destination: [],
+        email_destination_job_formatted: [""],
+      },
+      requestServer: false,
+      editEmailBlock: false,
     };
   },
   methods: {
+    getContactEmailDestination() {
+      axios
+        .get(this.getEmailDestination)
+        .then((response) => {
+          if (response.data.id) {
+            this.information = response.data;
+          }
+        })
+        .catch((error) => {});
+    },
+    editEmailDestination() {
+      this.editEmailBlock = true;
+    },
+
+    restoreEmail() {
+      this.requestServer = this.editEmailBlock = false;
+      this.errors = {};
+      this.information = {
+        email_destination: [],
+        email_destination_job_formatted: [""],
+      };
+      this.getContactEmailDestination();
+    },
+    updateEmail() {
+      this.requestServer = true;
+      axios
+        .put(this.routeUpdate, this.information)
+        .then((response) => {
+          this.requestServer = false;
+          this.restoreEmail();
+          Swal.fire({
+            title: response.data.title,
+            text: response.data.message,
+            type: "success",
+            confirmButtonText: "OK",
+            buttonsStyling: false,
+            customClass: {
+              confirmButton: "btn btn-inverse-primary",
+            },
+          });
+        })
+        .catch((error) => {
+          this.requestServer = false;
+          if (error.response.status === 422) {
+            this.errors = error.response.data.errors || {};
+            return;
+          }
+          this.restorePage();
+          Swal.fire({
+            title: error.response.data.title,
+            text: error.response.data.message,
+            type: "error",
+            confirmButtonText: "OK",
+            buttonsStyling: false,
+            customClass: {
+              confirmButton: "btn btn-inverse-primary",
+            },
+          });
+        });
+    },
     destroyConfirm() {
       this.requestSubmit = true;
       axios
         .delete(this.route + "/" + this.element.id)
-        .then(response => {
+        .then((response) => {
           this.requestSubmit = false;
           this.restore();
           Swal.fire({
@@ -86,11 +226,11 @@ export default {
             confirmButtonText: "OK",
             buttonsStyling: false,
             customClass: {
-              confirmButton: "btn btn-inverse-primary"
-            }
+              confirmButton: "btn btn-inverse-primary",
+            },
           });
         })
-        .catch(error => {
+        .catch((error) => {
           Swal.fire({
             title: error.response.data.title,
             text: error.response.data.message,
@@ -98,8 +238,8 @@ export default {
             confirmButtonText: "OK",
             buttonsStyling: false,
             customClass: {
-              confirmButton: "btn btn-inverse-primary"
-            }
+              confirmButton: "btn btn-inverse-primary",
+            },
           });
           this.restoreEl();
         });
@@ -109,7 +249,7 @@ export default {
       this.element = {};
       this.modalDestroy = false;
       this.getElements(1, this.elementsPerPage);
-    }, 
+    },
     deleteEl(id) {
       this.modalDestroy = true;
       this.getEl(id);
@@ -117,7 +257,7 @@ export default {
     restoreEl() {
       this.errors = {};
       this.element = {};
-      this.modalDestroy = false; 
+      this.modalDestroy = false;
     },
     deleteEl(id) {
       this.modalDestroy = true;
@@ -131,24 +271,25 @@ export default {
       }
       axios
         .get(url)
-        .then(response => {
+        .then((response) => {
           this.elements = response.data;
         })
-        .catch(error => {});
+        .catch((error) => {});
     },
     getEl(id) {
       this.loadingGet = true;
       axios
         .get(this.route + "/json/get/" + id)
-        .then(response => {
+        .then((response) => {
           this.element = response.data;
           this.loadingGet = false;
         })
-        .catch(error => {});
-    }
+        .catch((error) => {});
+    },
   },
   created() {
     this.getElements(1, this.elementsPerPage);
-  }
+    this.getContactEmailDestination();
+  },
 };
 </script>

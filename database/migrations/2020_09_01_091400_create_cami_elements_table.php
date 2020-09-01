@@ -15,7 +15,8 @@ class CreateCamiElementsTable extends Migration
     {
         Schema::create('cami_elements', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->text('name');
+            $table->text('name_es');
+            $table->text('name_en');
             $table->string('icon',100);
             $table->text('description_es');
             $table->text('description_en');

@@ -579,12 +579,6 @@ __webpack_require__.r(__webpack_exports__);
 
       this.requestServer = true;
       var fd = new FormData();
-      /*if(this.$refs.ref_images.dropzone.files.length){
-        this.$refs.ref_images.dropzone.files.forEach( (el, i) => {
-          fd.append("images"+i,el);
-        });
-        fd.append('images_count',this.$refs.ref_images.dropzone.files.length);
-      }*/
 
       if (this.element.files && this.element.files.length) {
         this.element.files.forEach(function (el, i) {

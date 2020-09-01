@@ -492,7 +492,7 @@ export default {
     routeAdvisorsCreate: String,
     routeDepartmentsGet: String,
     routeDistrictsGet: String,
-    routeProvincesGet: String,
+    routeProvincesGet: String
   },
   data() {
     return {
@@ -505,7 +505,7 @@ export default {
         prefix: "S/ ",
         //suffix: ' #',
         precision: 2,
-        masked: false,
+        masked: false
       },
       info: false,
       moneyForeign: {
@@ -514,7 +514,7 @@ export default {
         prefix: "$ ",
         //suffix: ' #',
         precision: 2,
-        masked: false,
+        masked: false
       },
       requestServer: false,
       dropzoneOptions: {
@@ -524,7 +524,7 @@ export default {
         autoProcessQueue: false,
         thumbnailWidth: 150,
         addRemoveLinks: true,
-        dictRemoveFile: "Remover",
+        dictRemoveFile: "Remover"
       },
       dropzoneOptionsBrochure: {
         url: "/",
@@ -533,7 +533,7 @@ export default {
         autoProcessQueue: false,
         thumbnailWidth: 150,
         addRemoveLinks: true,
-        dictRemoveFile: "Remover",
+        dictRemoveFile: "Remover"
       },
       dropzoneOptionsMultiple: {
         url: "/",
@@ -542,21 +542,15 @@ export default {
         autoProcessQueue: false,
         thumbnailWidth: 150,
         addRemoveLinks: true,
-        dictRemoveFile: "Remover",
+        dictRemoveFile: "Remover"
       },
-      errors: {},
+      errors: {}
     };
   },
   methods: {
     submit() {
       this.requestServer = true;
       const fd = new FormData();
-      /*if(this.$refs.ref_images.dropzone.files.length){
-        this.$refs.ref_images.dropzone.files.forEach( (el, i) => {
-          fd.append("images"+i,el);
-        });
-        fd.append('images_count',this.$refs.ref_images.dropzone.files.length);
-      }*/
       if(this.element.files && this.element.files.length){
         this.element.files.forEach( (el, i) => {
           fd.append("images"+i,el);
@@ -584,7 +578,7 @@ export default {
       if (this.$refs.ref_logo.dropzone.files[0]) {
         fd.append("logo", this.$refs.ref_logo.dropzone.files[0]);
       }
-      if(this.element.project_status_id){
+      if (this.element.project_status_id) {
         fd.append("project_status_id", this.element.project_status_id);
       }
       if (this.element.description_en) {
@@ -593,7 +587,7 @@ export default {
       if (this.element.description_es) {
         fd.append("description_es", this.element.description_es);
       }
-       if (this.element.location) {
+      if (this.element.location) {
         fd.append("location", this.element.location);
       }
       if (this.element.rooms_en) {
@@ -693,15 +687,18 @@ export default {
         fd.append("features", JSON.stringify(this.element.features));
       }
       if (this.element.financial_entities) {
-        fd.append("financial_entities", JSON.stringify(this.element.financial_entities));
+        fd.append(
+          "financial_entities",
+          JSON.stringify(this.element.financial_entities)
+        );
       }
       axios
         .post(this.routeStore, fd)
-        .then((response) => {
+        .then(response => {
           this.requestServer = false;
           document.location.href = response.data.route;
         })
-        .catch((error) => {
+        .catch(error => {
           this.requestServer = false;
           if (error.response.status === 422) {
             this.errors = error.response.data.errors || {};
@@ -709,7 +706,7 @@ export default {
           }
           document.location.href = error.response.data.route;
         });
-    },
-  },
+    }
+  }
 };
 </script>

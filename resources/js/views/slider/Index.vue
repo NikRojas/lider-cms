@@ -144,7 +144,7 @@ export default {
     routeGetAll: String,
     routeOrder: String,
     messageOrder: String,
-    imagesUrl: String,
+    imagesUrl: String
   },
   data() {
     return {
@@ -153,15 +153,15 @@ export default {
       element: {},
       modalDestroy: false,
       loadingGet: false,
-      requestSubmit: false,
+      requestSubmit: false
     };
   },
   methods: {
     destroyConfirm() {
       this.requestSubmit = true;
       axios
-        .delete(this.route + '/' + this.element.id)
-        .then((response) => {
+        .delete(this.route + "/" + this.element.id)
+        .then(response => {
           this.requestSubmit = false;
           this.restore();
           Swal.fire({
@@ -171,11 +171,11 @@ export default {
             confirmButtonText: "OK",
             buttonsStyling: false,
             customClass: {
-              confirmButton: "btn btn-inverse-primary",
-            },
+              confirmButton: "btn btn-inverse-primary"
+            }
           });
         })
-        .catch((error) => {
+        .catch(error => {
           Swal.fire({
             title: error.response.data.title,
             text: error.response.data.message,
@@ -183,8 +183,8 @@ export default {
             confirmButtonText: "OK",
             buttonsStyling: false,
             customClass: {
-              confirmButton: "btn btn-inverse-primary",
-            },
+              confirmButton: "btn btn-inverse-primary"
+            }
           });
           this.restoreEl();
         });
@@ -193,25 +193,25 @@ export default {
       this.loadingEls = true;
       axios
         .get(this.routeGetAll)
-        .then((response) => {
+        .then(response => {
           this.elements = response.data;
           this.loadingEls = false;
         })
-        .catch((error) => {});
+        .catch(error => {});
     },
-    deleteEl(id){
+    deleteEl(id) {
       this.modalDestroy = true;
       this.getEl(id);
     },
-    getEl(id){
+    getEl(id) {
       this.loadingGet = true;
       axios
-        .get(this.route + '/json/get/' + id)
-        .then((response) => {
+        .get(this.route + "/json/get/" + id)
+        .then(response => {
           this.element = response.data;
           this.loadingGet = false;
         })
-        .catch((error) => {});
+        .catch(error => {});
     },
     handleChange() {
       axios
@@ -242,17 +242,17 @@ export default {
           });
         });
     },
-    restoreEl(){
+    restoreEl() {
       this.element = {};
       this.modalDestroy = false;
     },
-    restore(){
+    restore() {
       this.modalDestroy = false;
       this.getEls();
     }
   },
   created() {
     this.getEls();
-  },
+  }
 };
 </script>

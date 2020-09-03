@@ -34,12 +34,14 @@ class PostRepository
             } else {
                 $status = "No";
             }
+            $url = config('services.web_url');
             $data[] = array(
                 "id" => $post["post_id"],
                 "title_es" => $post["title_es"],
-                "title_en" => '<span class="badge badge-pill badge-info badge-lg">'.$post["title_en"].'</span>',
-                "url" => "<a href=".url('blog/categoria/'.$post["category_slug_es"] .'/'.$post["slug_es"])." target='_blank'>".url('blog/categoria/'.$post["category_slug_es"] .'/'.$post["slug_es"])."</a>",
-                "category_es" => $post["category_name_es"],
+                "title_en" => $post["title_en"],
+                "url" => "<a style='text-decoration: underline;' href=".$url."/blog/categoria/".$post["category_slug_es"] .'/'.$post["slug_es"]." target='_blank'>".$url.'/blog/categoria/'.$post["category_slug_es"] .'/'.$post["slug_es"]."</a>
+                <br><a style='text-decoration: underline;' href=".$url."/blog/categorie/".$post["category_slug_en"] .'/'.$post["slug_en"]." target='_blank'>".$url.'/blog/categorie/'.$post["category_slug_en"] .'/'.$post["slug_en"]."</a>",
+                "category_es" => '<span class="badge badge-pill badge-info badge-lg">'.$post["category_name_es"].'</span>',
                 "category_en" => '<span class="badge badge-pill badge-info badge-lg">'.$post["category_name_en"].'</span>',
                 "status" => $status,
                 //"published_at" => (new Carbon($post["published_at"]))->format('g:iA d-m-Y'),

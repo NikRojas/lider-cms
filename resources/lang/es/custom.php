@@ -61,6 +61,7 @@ return [
             'error' => "Lo sentimos, :name no se pudo eliminar debido a un error.",
         ],
         'order'  => 'Arrastre los elementos en el orden que desee mostrarlos',
-        'cant_delete'  => 'No se puede eliminar debido a que está anidado en al menos un proyecto'
+        'cant_delete'  => 'No se puede eliminar debido a que está anidado en al menos un proyecto',
+        'cant_delete_post'  => 'No se puede eliminar debido a que está anidado en al menos un Post'
     ]
 ];

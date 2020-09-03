@@ -8,9 +8,19 @@ class Category extends Model
 {
     protected $table = 'categories';
     protected $guarded = [];
+    protected $appends = ['can_delete'];
 
     public function post()
     {
-        return $this->belongsTo('App\Post');
+        //return $this->belongsTo('App\Post');
+        return $this->hasMany('App\Post', 'category_id', 'id');
+    }
+
+    public function getCanDeleteAttribute(){
+        $value = true;
+        if(count($this->post)){
+            $value = false;
+        }
+        return $value;
     }
 }

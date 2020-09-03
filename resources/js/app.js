@@ -41,15 +41,15 @@ const app = new Vue({
 
         'profile': () => import('./views/Profile.vue' /* webpackChunkName: "js/pages/profile" */),
 
-        //'dashboard': () => import('./views/Dashboard.vue' /* webpackChunkName: "js/pages/dashboard" */),
-        //'applicants': () => import('./views/Applicants.vue' /* webpackChunkName: "js/pages/applicants" */),
+        //'dashboard': () => import('./views/Dashboard.vue' /* webpackChunkName: "js/dashboard" */),
+        'applicants': () => import('./views/Applicants.vue' /* webpackChunkName: "js/pages/applicants" */),
 
         //lead
         'online': () => import('./views/lead/online.vue' /* webpackChunkName: "js/pages/lead/online" */),
-        'traditional': () => import('./views/lead/traditional.vue' /* webpackChunkName: "js/lead/traditional" */),
+        'traditional': () => import('./views/lead/traditional.vue' /* webpackChunkName: "js/pages/lead/traditional" */),
         'landsale': () => import('./views/lead/landsale.vue' /* webpackChunkName: "js/pages/lead/landsale" */),
 
-        //'testimonials': () => import('./views/Testimonials.vue' /* webpackChunkName: "js/testimonials" */),
+        'testimonials': () => import('./views/Testimonials.vue' /* webpackChunkName: "js/pages/testimonials" */),
 
         'reset': () => import('./views/auth/Reset.vue' /* webpackChunkName: "js/pages/reset" */),
         'administration-status-project': () => import('./views/administration/StatusProject.vue' /* webpackChunkName: "js/pages/administration/status-project" */),

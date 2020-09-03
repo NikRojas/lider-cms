@@ -10,7 +10,7 @@
             <div class="col-6 col-md-5 text-right">
               <a href="#" class="btn btn-icon btn-inverse-primary" @click.prevent="newEl">
                 <span class="btn-inner--icon">
-                  <jam-magic class="current-color" />
+                  <jam-newspaper class="current-color" />
                 </span>
                 <span class="btn-inner--text">Nueva Categoría</span>
               </a>

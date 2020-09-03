@@ -562,16 +562,29 @@ h6,
     &:focus {
         border: 1px solid $input-focus-border-color;
     }
+    
+}
+.ui.selection.dropdown{
+    border-radius: $border-radius !important;
+    line-height: initial !important;
+    padding: 0.75rem 1rem !important;
+}
+
+.ui.selection.dropdown>.delete.icon, .ui.selection.dropdown>.dropdown.icon, .ui.selection.dropdown>.search.icon{
+    line-height: 2;
 }
 
 .ui.selection.active.dropdown,
 .ui.selection.active.dropdown .menu {
-    box-shadow: $input-alternative-box-shadow;
-    border: 0;
-    transition: box-shadow .15s ease;
-
+    //box-shadow: $input-alternative-box-shadow;
+    border: 1px solid $border-color;
     &:focus {
-        box-shadow: $input-focus-alternative-box-shadow;
+        border: 1px solid $input-focus-border-color;
+    }
+    transition: box-shadow .15s ease;
+    &:focus {
+        border: 1px solid $input-focus-border-color;
+        //box-shadow: $input-focus-alternative-box-shadow;
     }
 }
 

@@ -6,9 +6,14 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Repositories\LeadRepository;
 use App\LeadSaleLand;
+use App\Http\Requests\Cms\ApplicantDestinationRequest;
+use App\EmailDestination;
+use App\Http\Traits\CmsTrait;
 
 class LeadLandSaleController extends Controller
 {
+    use CmsTrait;
+    
     public function index()
     {
         return view("pages.lead.landsale");
@@ -42,5 +47,29 @@ class LeadLandSaleController extends Controller
         } catch (\Exception $e) {
             return response()->json(['title'=> trans('custom.title.error'), 'message'=> trans('custom.message.delete.error', ['name' => trans('custom.attribute.lead')]) ], 500);
         }
+    }
+
+    public function update(ApplicantDestinationRequest $request)
+    {
+        $email_destination = $this->getArrayColumn($request->email_destination);
+        $information = ["leads_sale_land" => $email_destination,"type" => "sale_land"];
+        //dd($information);
+        $information_registered = EmailDestination::where('type', 'sale_land')->first();
+        try {
+            if ($information_registered) {
+                $information = EmailDestination::UpdateOrCreate(["id"=>$information_registered->id], $information);
+            } else {
+                $information = EmailDestination::UpdateOrCreate($information);
+            }
+            return response()->json(['title'=> trans('custom.title.success'), 'message'=> trans('custom.message.update.plural.success', ['name' => trans('custom.attribute.emails')]) ], 200);
+        } catch (\Exception $e) {
+            return response()->json(['title'=> trans('custom.title.error'), 'message'=> trans('custom.message.update.plural.error', ['name' => trans('custom.attribute.emails')]) ], 500);
+        }
+    }
+
+    public function getEmailDestination()
+    {
+        $data = EmailDestination::where('type', 'sale_land')->first();
+        return response()->json($data);
     }
 }

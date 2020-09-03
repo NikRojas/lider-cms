@@ -59,6 +59,8 @@ class PostsController extends Controller
             "content_en",
             "excerpt_es",
             "excerpt_en",
+            "seo_keywords_es",
+            "seo_keywords_en",
             "slug_es",
             "slug_en",
             "published",
@@ -80,8 +82,6 @@ class PostsController extends Controller
         
         try {
             $post = Post::UpdateOrCreate($post);
-            //$request->session()->flash('success', trans('custom.message.create.success', ['name' => trans('custom.attribute.post')]));
-            //return response()->json(["route" => route('cms.blog.posts.index')]);
         } catch (\Exception $e) {
             $request->session()->flash('error', trans('custom.message.create.error', ['name' => trans('custom.attribute.post')]));
             return response()->json(["route" => route('cms.blog.posts.index')], 500);
@@ -91,16 +91,6 @@ class PostsController extends Controller
         $tags = $request->tags;
         try {
             foreach ($tags as $key => $value) {
-                /*$exist_es = $tag_es = null;
-                $exist_es = Tag::where('post_id', $post->id)->where('name_es', $value['tag_es'])->get();
-                if (count($exist_es) < 1) {
-                    $tag_es = Tag::UpdateOrCreate(["post_id" => $post->id, "name_es" => $value['tag_es']]);
-                }
-
-                $tag_en = $tag_en = null;
-                $tag_en = Tag::where('post_id', $post->id)->where('name_en', $value['tag_en'])->get();
-                if (count($tag_en) < 1) {
-                }*/
                 $tag = Tag::UpdateOrCreate(["post_id" => $post->id, "name_es" => $value['tag_es'],"name_en" => $value['tag_en']]);
             }
  
@@ -155,6 +145,8 @@ class PostsController extends Controller
             "content_en",
             "excerpt_es",
             "excerpt_en",
+            "seo_keywords_es",
+            "seo_keywords_en",
             "slug_es",
             "slug_en",
             "published",
@@ -194,8 +186,6 @@ class PostsController extends Controller
         
         try {
             $element = Post::UpdateOrCreate(["id"=>$element->id], $request_post);
-            //$request->session()->flash('success', trans('custom.message.update.success', ['name' => trans('custom.attribute.post')]));
-            //return response()->json(["route" => route('cms.blog.posts.index')]);
         } catch (\Exception $e) {
             $request->session()->flash('error', trans('custom.message.update.error', ['name' => trans('custom.attribute.post')]));
             return response()->json(["route" => route('cms.blog.posts.index')], 500);

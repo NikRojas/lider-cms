@@ -1,11 +1,18 @@
 <template>
   <div>
+     <div class="row">
+       <div class="col-12">
+         <label
+          class="font-weight-bold"
+        >{{ label }}</label>
+       </div>
+     </div>
     <div class="row mb-2" v-for="(el, i) in array.length" :key="'tr'+i">
       <div v-for="(el, j) in headers" class="col-lg-5" :key="'td'+j">
         <label
-          class="font-weight-bold"
+          class="text-xs font-weight-bold"
           :for="el.variable"
-        >{{ el.label.charAt(0).toUpperCase() + el.label.slice(1) }}</label>
+        >{{ el.label.charAt(0).toUpperCase() + el.label.slice(1) }} {{ i + 1 }}</label>
         <input
           type="text"
           v-if="el.variable == 'tag_es' || el.variable == 'text'"
@@ -52,6 +59,7 @@ export default {
       default: false,
       type: Boolean
     },
+    label: String,
     fieldName: String,
     headers: Array,
     arrayProp: Array,

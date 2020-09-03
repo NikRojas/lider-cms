@@ -10,7 +10,7 @@
             <div class="col-6 col-md-5 text-right">
               <a :href="routeCreate" class="btn btn-icon btn-inverse-primary">
                 <span class="btn-inner--icon">
-                  <jam-building class="current-color" />
+                  <jam-newspaper class="current-color" />
                 </span>
                 <span class="btn-inner--text">Nuevo Post</span>
               </a>
@@ -19,7 +19,7 @@
         </div>
       </div>
     </div>
-    
+
     <div class="container-fluid mt--6">
       <DataTable
         :object="elements"
@@ -31,117 +31,165 @@
         @get="getEls"
         @read="showElement"
         @delete="deleteElement"
-        @update="editElement" 
+        @update="editElement"
         :entries-prop.sync="elementsPerPage"
       ></DataTable>
     </div>
-      <!--
-       
-      <b-modal size="lg" centered ref="modal-detail">
-        <template slot="modal-title">
-          <h2 class="mb-0 text-uppercase text-primary">Detalle Post</h2>
-        </template>
-        <div v-if="requestLoading">
-          <Loader
-            text="Cargando..."
-            :iconHeight="20"
-            :iconWidth="20"
-            :styles="{ height: '300px' }"
-          />
-        </div>
-        <div class="row" v-else>
-          <div class="col-12 col-lg-8">
+
+    <b-modal
+      v-model="modalView"
+      @close="restoreEl"
+      no-close-on-esc
+      no-close-on-backdrop
+      centered
+      size="lg"
+      footer-class="border-0 pt-0"
+      body-class="pt-0"
+    >
+      <template slot="modal-title">
+        <div class="text-primary h2">Post</div>
+      </template>
+      <template slot="modal-header-close">
+        <button type="button" class="btn p-0 bg-transparent" @click="restoreEl">
+          <jam-close></jam-close>
+        </button>
+      </template>
+      <div v-if="loadingGet">
+        <SkeletonForm></SkeletonForm>
+      </div>
+      <div v-else>
+        <div class="row">
+          <div class="col-12 col-lg-8 col-md-8">
             <div class="row">
-              <div class="col-12 col-lg-6">
+              <div class="col-12 col-md-6">
                 <div class="form-group">
-                  <label class="font-weight-bold font-weight-bold">Título</label>
-                  <p>{{ post.title }}</p>
+                  <label class="font-weight-bold">Título ES:</label>
+                  <p>{{ element.title_es }}</p>
                 </div>
               </div>
-              <div class="col-12 col-lg-6">
+              <div class="col-12 col-md-6">
                 <div class="form-group">
-                  <label class="font-weight-bold font-weight-bold">Categoría</label>
-                  <p v-if="post.category">{{ post.category.name }}</p>
+                  <label class="font-weight-bold">Título EN:</label>
+                  <p>{{ element.title_en }}</p>
                 </div>
               </div>
-            </div>
-
-            <div class="form-group">
-              <label class="font-weight-bold font-weight-bold">URL</label>
-              <p>
-                <a
-                  target="_blank"
-                  :href="appUrl+'/blog/categoria/'+post.slug"
-                >{{appUrl}}/blog/{{ post.category.slug }}/{{ post.slug }}</a>
-              </p>
-            </div>
-
-            <div class="row">
-              <div class="col-6">
+              <div class="col-12">
                 <div class="form-group">
-                  <label class="font-weight-bold font-weight-bold">Registrado el</label>
-                  <p>{{ post.created_at }}</p>
+                  <label class="font-weight-bold">Publicado:</label>
+                  <p>{{ element.published ? 'Sí' : 'No' }}</p>
                 </div>
               </div>
-              <div class="col-6">
+              <div class="col-12 col-md-6">
                 <div class="form-group">
-                  <label class="font-weight-bold font-weight-bold">Estado</label>
-                  <p v-html="post.published_format"></p>
+                  <label class="font-weight-bold">Seo Keywords ES:</label>
+                  <p v-if="element.seo_keywords_es">{{ element.seo_keywords_es }}</p>
+                  <p v-else>No registrado Seo Keywords ES</p>
                 </div>
               </div>
-            </div>
+              <div class="col-12 col-md-6">
+                <div class="form-group">
+                  <label class="font-weight-bold">Seo Keywords EN:</label>
+                  <p v-if="element.seo_keywords_en">{{ element.seo_keywords_en }}</p>
+                  <p v-else>No registrado Seo Keywords EN</p>
+                </div>
+              </div>
+              <div class="col-12 col-md-6">
+                <div class="form-group">
+                  <label class="font-weight-bold">Tags ES:</label>
+                  <p>
+                    <template v-for="(tag,i) in element.tags">
+                      <template v-if="i==element.tags.length-1">{{ tag.name_es }}</template>
+                      <template v-else>{{ tag.name_es }},</template>
+                    </template>
+                  </p>
+                </div>
+              </div>
+              <div class="col-12 col-md-6">
+                <div class="form-group">
+                  <label class="font-weight-bold">Tags EN:</label>
+                  <p>
+                    <template v-for="(tag,i) in element.tags">
+                      <template v-if="i==element.tags.length-1">{{ tag.name_en }}</template>
+                      <template v-else>{{ tag.name_en }},</template>
+                    </template>
+                  </p>
+                </div>
+              </div>
 
-            <div class="form-group">
-              <label class="font-weight-bold font-weight-bold">Tags</label>
-              <div>
-                <span class="badge badge-pill badge-info mr-1" v-for="tag in tags" :key="tag.id">
-                  {{ tag.text }}
-                </span>
-              </div> 
-            </div>
+              <div class="col-12 col-md-6">
+                <div class="form-group">
+                  <label class="font-weight-bold">Categoría ES:</label>
+                  <template v-if="element.category">
+                    <p>{{ element.category.name_es }}</p>
+                  </template>
+                </div>
+              </div>
+              <div class="col-12 col-md-6">
+                <div class="form-group">
+                  <label class="font-weight-bold">Categoría EN:</label>
+                  <template v-if="element.category">
+                    <p>{{ element.category.name_en }}</p>
+                  </template>
+                </div>
+              </div>
+              <div class="col-12 col-md-6">
+                <div class="form-group">
+                  <label class="font-weight-bold">Descripción ES:</label>
+                  <p>{{ element.excerpt_es }}</p>
+                </div>
+              </div>
+              <div class="col-12 col-md-6">
+                <div class="form-group">
+                  <label class="font-weight-bold">Descripción EN:</label>
+                  <p>{{ element.excerpt_en }}</p>
+                </div>
+              </div>
 
-            <div class="form-group">
-              <label class="font-weight-bold font-weight-bold">Breve Descripción</label>
-              <p v-if="post.excerpt">{{ post.excerpt }}</p>
-              <p v-else>No registrado</p>
-            </div>
-            <div class="form-group">
-              <label class="font-weight-bold font-weight-bold">Contenido</label>
-              <p v-html="post.content"></p>
+              <div class="col-12 col-md-6">
+                <div class="form-group">
+                  <label class="font-weight-bold">Contenido ES:</label>
+                  <p v-html="element.content_es"></p>
+                </div>
+              </div>
+              <div class="col-12 col-md-6">
+                <div class="form-group">
+                  <label class="font-weight-bold">Contenido EN:</label>
+                  <p v-html="element.content_en"></p>
+                </div>
+              </div>
             </div>
           </div>
-          <div class="col-12 col-lg">
-            <div class="form-group">
-              <label class="font-weight-bold font-weight-bold">Miniatura</label>
-              <img
-                :src="'https://storage.googleapis.com/playgroup-web/img/posts/' + post.thumbnail"
-                alt="Miniatura"
-                class="img-fluid"
-                v-if="post.thumbnail"
-              />
-            </div>
-
-            <div class="form-group">
-              <label class="font-weight-bold font-weight-bold">Imagen</label>
-              <img
-                :src="'https://storage.googleapis.com/playgroup-web/img/posts/' + post.image"
-                alt="Imagen"
-                class="img-fluid"
-                v-if="post.image"
-              />
+          <div class="col-12 col-lg-4 col-md-4">
+            <div class="row">
+              <div class="col-12">
+                <div class="form-group">
+                  <label class="font-weight-bold d-block">Imagen:</label>
+                  <img
+                    :src="imagesUrl+'/posts/'+element.image"
+                    :alt="element.name"
+                    class="img-fluid"
+                  />
+                </div>
+              </div>
+              <div class="col-12">
+                <div class="form-group">
+                  <label class="font-weight-bold d-block">Miniatura:</label>
+                  <img
+                    :src="imagesUrl+'/posts/'+element.thumbnail"
+                    :alt="element.name"
+                    class="img-fluid"
+                  />
+                </div>
+              </div>
             </div>
           </div>
         </div>
-        <template slot="modal-footer" slot-scope="{ ok, cancel }">
-          <button type="button" class="btn btn-primary" @click="ok()">Continuar</button>
-          <button
-            type="button"
-            class="btn btn-danger"
-            @click="() => { restoreEl();cancel(); }"
-          >Cancelar</button>
-        </template>
-      </b-modal> 
-    -->
+      </div>
+      <template v-slot:modal-footer="{ ok }">
+        <button type="button" class="btn btn-primary" @click="restoreEl">Cerrar</button>
+      </template>
+    </b-modal>
+
     <destroy
       element="post"
       @cancel="restoreEl"
@@ -155,7 +203,7 @@
 
 <script>
 import BreadCrumb from "../../../components/BreadCrumb";
-import { Skeleton } from "vue-loading-skeleton";
+import SkeletonForm from "../../../components/skeleton/form";
 import Destroy from "../../../components/modals/Destroy";
 import DataTable from "../../../components/DataTable";
 import NoData from "../../../components/NoData";
@@ -165,14 +213,14 @@ export default {
     Destroy,
     DataTable,
     NoData,
-    Skeleton
+    SkeletonForm,
   },
   props: {
     routeCreate: String,
     routeGetAll: String,
     route: String,
     appUrl: String,
-    imagesUrl: String
+    imagesUrl: String,
   },
   data() {
     return {
@@ -182,22 +230,12 @@ export default {
       modalDestroy: false,
       loadingGet: false,
       requestSubmit: false,
-      elementsPerPage: 10
+      elementsPerPage: 10,
+
+      modalView: false,
     };
   },
   methods: {
-    /*
-    getEls() {
-      this.loadingEls = true;
-      axios
-        .get(this.routeGetAll)
-        .then(response => {
-          this.elements = response.data;
-          this.loadingEls = false;
-        })
-        .catch(error => {});
-    },
-    */
     getEls(page, itemsPerPage, q = null) {
       let url =
         this.routeGetAll + "?page=" + page + "&itemsPerPage=" + itemsPerPage;
@@ -206,21 +244,22 @@ export default {
       }
       axios
         .get(url)
-        .then(response => {
+        .then((response) => {
           this.elements = response.data;
         })
-        .catch(error => {});
+        .catch((error) => {});
     },
     restoreEl() {
       this.element = {};
-      this.modalDestroy = false;
+      this.modalDestroy = this.modalView = false;
     },
     restore() {
       this.modalDestroy = false;
       this.getEls(1, this.elementsPerPage);
     },
     showElement(id) {
-      console.log("log");
+      this.modalView = true;
+      this.getEl(id);
     },
     editElement(id) {
       document.location.href = this.route + "/editar/" + id;
@@ -233,17 +272,17 @@ export default {
       this.loadingGet = true;
       axios
         .get(this.route + "/json/get/" + id)
-        .then(response => {
+        .then((response) => {
           this.element = response.data;
           this.loadingGet = false;
         })
-        .catch(error => {});
+        .catch((error) => {});
     },
     destroyConfirm() {
       this.requestSubmit = true;
       axios
         .delete(this.route + "/" + this.element.id)
-        .then(response => {
+        .then((response) => {
           this.requestSubmit = false;
           this.restore();
           Swal.fire({
@@ -253,11 +292,11 @@ export default {
             confirmButtonText: "OK",
             buttonsStyling: false,
             customClass: {
-              confirmButton: "btn btn-inverse-primary"
-            }
+              confirmButton: "btn btn-inverse-primary",
+            },
           });
         })
-        .catch(error => {
+        .catch((error) => {
           Swal.fire({
             title: error.response.data.title,
             text: error.response.data.message,
@@ -265,15 +304,15 @@ export default {
             confirmButtonText: "OK",
             buttonsStyling: false,
             customClass: {
-              confirmButton: "btn btn-inverse-primary"
-            }
+              confirmButton: "btn btn-inverse-primary",
+            },
           });
           this.restoreEl();
         });
-    }
+    },
   },
   created() {
     this.getEls(1, this.elementsPerPage);
-  }
+  },
 };
 </script>

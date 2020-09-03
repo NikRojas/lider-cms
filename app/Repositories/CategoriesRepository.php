@@ -23,6 +23,7 @@ class CategoriesRepository
                 "slug_es" => '<span class="badge badge-pill badge-info badge-lg">'.$element["slug_es"].'</span>',
                 "name_en" => $element["name_en"],
                 "slug_en" => '<span class="badge badge-pill badge-info badge-lg">'.$element["slug_en"].'</span>',
+                "can_delete" => $element["can_delete"]
             );
         }
         $elements = $elements->toArray();

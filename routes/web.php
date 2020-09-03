@@ -221,8 +221,9 @@ Route::middleware(['auth'])->namespace('Cms')->name('cms.')->group(function () {
             Route::get('/json/get-all', 'LeadTraditionalController@getAll')->name('get-all');
             Route::delete('/{element}', 'LeadTraditionalController@destroy')->name('destroy');
             Route::get('/json/get/{element}', 'LeadTraditionalController@get')->name('get');
-            /*
-            */
+            
+            Route::put('/', 'LeadTraditionalController@update')->name('update');
+            Route::get('/get-email-destination', 'LeadTraditionalController@getEmailDestination')->name('get-email-destination');
         });
 
         Route::name('online-appointment.')->prefix('cita-online')->group(function () {
@@ -230,21 +231,41 @@ Route::middleware(['auth'])->namespace('Cms')->name('cms.')->group(function () {
             Route::get('/json/get-all', 'LeadOnlineController@getAll')->name('get-all');
             Route::delete('/{element}', 'LeadOnlineController@destroy')->name('destroy');
             Route::get('/json/get/{element}', 'LeadOnlineController@get')->name('get');
-            /*
-            */
+            
+            Route::put('/', 'LeadOnlineController@update')->name('update');
+            Route::get('/get-email-destination', 'LeadOnlineController@getEmailDestination')->name('get-email-destination');
         });
-
+        
         Route::name('land-sale.')->prefix('venta-terreno')->group(function () {
             Route::get('/', 'LeadLandSaleController@index')->name('index');
             Route::get('/json/get-all', 'LeadLandSaleController@getAll')->name('get-all');
             Route::delete('/{element}', 'LeadLandSaleController@destroy')->name('destroy');
             Route::get('/json/get/{element}', 'LeadLandSaleController@get')->name('get');
-            /*
-            */
+            
+            Route::put('/', 'LeadLandSaleController@update')->name('update');
+            Route::get('/get-email-destination', 'LeadLandSaleController@getEmailDestination')->name('get-email-destination');
         });
     });
 
+    Route::prefix('postulantes')->name('applicants.')->group(function () {
+        Route::get('/', 'ApplicantsController@index')->name('index');
+        Route::delete('/{element}', 'ApplicantsController@destroy')->name('destroy');
+        Route::get('/json/get-all', 'ApplicantsController@getAll')->name('get-all');
+        Route::get('/json/get/{element}', 'ApplicantsController@get')->name('get');
 
+        Route::put('/', 'ApplicantsController@update')->name('update');
+        Route::get('/get-email-destination', 'ApplicantsController@getEmailDestination')->name('get-email-destination');
+    });
+
+    Route::prefix('testimoniales')->name('testimonials.')->group(function () {
+        Route::get('/', 'TestimonialsController@index')->name('index');
+        Route::post('/', 'TestimonialsController@store')->name('store');
+        Route::put('/order', 'TestimonialsController@order')->name('order');
+        Route::put('/{element}', 'TestimonialsController@update')->name('update');
+        Route::delete('/{element}', 'TestimonialsController@destroy')->name('destroy');
+        Route::get('/json/get-all', 'TestimonialsController@getAll')->name('get-all');
+        Route::get('/json/get/{element}', 'TestimonialsController@get')->name('get');
+    });
     #Pages
     /*Route::get('informacion/paginas', 'Information\PagesController@index')->name('pages');
     Route::get('informacion/json/pages', 'Information\PagesController@getPages')->name('pages.json.get-pages');

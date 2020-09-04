@@ -33,16 +33,18 @@
           width="100%"
           range
         >
-          <slot name="icon-calendar">
-            <jam-users></jam-users>
-          </slot>
+          <jam-calendar height="18" width="18" slot="calendar-icon" class="current-color mt-2"></jam-calendar>
         </date-picker>
       </b-dropdown-text>
     </b-dropdown>
   </div>
 </template>
 <script>
+import DatePicker from "vue2-datepicker";
 export default {
+  components:{
+    DatePicker
+  },
   data() {
     return {
       range: null,

@@ -28,14 +28,7 @@
       >
         <template slot="filters">
           <div class="mb-2">
-            <b-dropdown left id="dropdown-text" :menu-class="['border','shadow-none']" ref="dropdown" :variant="activeFilter.value == 'all' ? 'inverse-light' : 'inverse-primary'" :toggle-class="['btn-sm','py-2']">
-              <template v-slot:button-content>
-                <jam-calendar height="14px" width="14px" class="current-color"></jam-calendar><span class="">{{ activeFilter.text }}</span>
-              </template>
-              <b-dropdown-text tag="div" class="px-2">
-                <button :class="activeFilter.value == i.value ? 'btn-primary' : 'btn-inverse-primary'" class="btn mb-1 btn-sm btn-block" v-for="i in filters" :key="i.value" @click.prevent="handleFilter(i)">{{ i.text }}</button>
-              </b-dropdown-text>
-            </b-dropdown>
+          <FilterDateRange  :active.sync="filterDate.active"  :range.sync="filterDate.range" @get="getEls(1, elementsPerPage)"/>
           </div>
         </template>
       </DataTable>
@@ -217,6 +210,7 @@
   </div>
 </template>
 <script>
+import FilterDateRange from "../components/filters/DateRange"
 import DataTable from "../components/DataTable";
 import BreadCrumb from "../components/BreadCrumb";
 import Destroy from "../components/modals/Destroy";
@@ -233,15 +227,10 @@ export default {
     return {
       project: {},
       elements: {},
-      filters: [
-        {'text': 'Cualquier Fecha', 'value': 'all'},
-        {'text': 'Hoy', 'value': 'today'},
-        {'text': 'Ayer', 'value': 'yesterday'},
-        {'text': 'Este Mes', 'value': 'this_month'},
-        {'text': 'El Mes Pasado', 'value': 'past_month'},
-        {'text': 'Este Año', 'value': 'this_year'}
-      ],
-      activeFilter: {'text': 'Cualquier Fecha', 'value': 'all'},
+      filterDate: {
+        active: {},
+        range: null
+      },
       element: {
         document_type_rel: {},
         claim_type_rel: {},
@@ -261,13 +250,9 @@ export default {
     BreadCrumb,
     DataTable,
     Destroy,
+    FilterDateRange,
   },
   methods: {
-    handleFilter(i){
-      this.activeFilter = i;
-      this.$refs.dropdown.hide(true);
-      this.getEls(1, this.elementsPerPage);
-    },
     destroyConfirm() {
       this.requestSubmit = true;
       axios
@@ -327,7 +312,8 @@ export default {
       axios
         .get(url, {
           params: {
-            date: this.activeFilter.value,
+            date: this.filterDate.active.value,
+            ...(this.filterDate.range ? { range: this.filterDate.range } : {}),
           },
         })
         .then((response) => {

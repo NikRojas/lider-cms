@@ -26,6 +26,7 @@ $factory->define(ComplaintBook::class, function (Faker $faker) {
         'claim_type_id' => $faker->randomElement(MasterClaimType::pluck('id')->toArray()),
         'good_contracted_id' => $faker->randomElement(MasterGoodContractedType::pluck('id')->toArray()),
         'code_ubigeo' => $faker->randomElement(Ubigeo::pluck('code_ubigeo')->toArray()),
-        'code' => $faker->randomNumber(9, false).'-'.date('Y')
+        'code' => $faker->randomNumber(9, false).'-'.date('Y'),
+        'created_at' => $faker->dateTimeThisDecade($max = 'now', $timezone = null)
     ];
 });

@@ -7,7 +7,7 @@ use Carbon\Carbon;
 
 class ComplaintBookRepository
 {
-    public function datatable($date, $items_per_page, $q = false)
+    public function datatable($date, $range = false, $items_per_page, $q = false)
     {
         if ($q) {
             $leads = ComplaintBook::select("id", "code", "name", "lastname", "email", "document_number", "document_type_id", 'created_at',"claim_type_id")
@@ -24,20 +24,24 @@ class ComplaintBookRepository
             case 'all':
                 # code...
                 break;
-            case 'today':
-                $leads->whereDay('created_at', '=', date('d'));
-                break;
-            case 'yesterday':
-                $leads->whereDay('created_at', '=',  Carbon::now()->subDay());
-                break;
+                case 'today':
+                    $leads->whereDate('created_at', '=', Carbon::today());
+                    break;
+                case 'range':
+                    $leads->whereBetween('created_at', [$range[0], $range[1]]);
+                    break;
 
-            case 'this_month':
-                $leads->whereMonth('created_at', date('m'))
-                    ->whereYear('created_at', date('Y'));
-                break;
-            case 'past_month':
-                $leads->whereMonth('created_at', Carbon::now()->subMonth()->month);
-                break;
+                case '7':
+                    $leads->whereDate('created_at', '>=',  Carbon::today()->subDay($date));
+                    break;
+    
+                case '30':
+                    $leads->whereDate('created_at', '>=',  Carbon::today()->subDay($date));
+                    break;
+    
+                case '90':
+                    $leads->whereDate('created_at', '>=',  Carbon::today()->subDay($date));
+                    break;
 
             case 'this_year':
                 $leads->whereYear('created_at', '=', date('Y'));

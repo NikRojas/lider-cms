@@ -24,8 +24,8 @@ class DatabaseSeeder extends Seeder
         $this->call(MasterDocumentsTypeSeeder::class);
         $this->call(MasterClaimsSeeder::class);
         $this->call(MasterGoodContractedSeeder::class);*/
-        /*$this->call(ComplaintsBookSeeder::class);*/
+        $this->call(ComplaintsBookSeeder::class);
         /*$this->call(ProjectQuotationsTableSeeder::class);*/
-        $this->call(SuscribersTableSeeder::class);
+        //$this->call(SuscribersTableSeeder::class);
     }
 }

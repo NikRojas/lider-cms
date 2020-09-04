@@ -212,6 +212,7 @@ Route::middleware(['auth'])->namespace('Cms')->name('cms.')->group(function () {
             Route::delete('/{element}', 'PostsController@destroy')->name('destroy');
             Route::get('/json/get-all', 'PostsController@getAll')->name('get-all');
             Route::get('/json/get/{element}', 'PostsController@get')->name('get');
+            Route::post('/posts/image', 'PostsController@storeImage')->name('store-image');
         });
     });
 

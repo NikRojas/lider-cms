@@ -38,6 +38,17 @@
       :class="size == 'sm' ? 'ql-height-5' : 'ql-height-25'"
       ref="ref_content"
     ></quill-Editor>
+
+    <file-upload
+      extensions="jpg,jpeg,png"
+      accept="image/png, image/jpeg, image/jpg"
+      class="d-none"
+      :drop="false"
+      :multiple="true"
+      @input-filter="$uploadImageUploadComponent($event,$refs.ref_content,250000,'250kb',url)"
+      ref="ref_content_f"
+      input-id="id_content_images"
+    ></file-upload>
     <!--<input type="text" class="form-control" v-model="value[ active ]" />-->
     <div class="mt-2" v-for="(el,i) in errors" :key="i">
       <label class="text-danger text-sm d-block" v-if="i == variable+'_'+active">{{ el[0] }}</label>
@@ -46,9 +57,11 @@
 </template>
 <script>
 import { quillEditor } from "vue-quill-editor";
+import FileUpload from "vue-upload-component";
 export default {
   components: {
     quillEditor,
+    FileUpload,
   },
   props: {
     size: String,
@@ -57,6 +70,15 @@ export default {
     errors: Object,
     valueEnParent: String,
     valueEsParent: String,
+
+    url: {
+      type: String,
+      required: false,
+    },
+    textImage: {
+      type: String,
+      required: false,
+    },
   },
   data() {
     return {
@@ -64,6 +86,11 @@ export default {
         placeholder: "",
         modules: {
           toolbar: {
+            handlers: {
+              image: function (value) {
+                document.getElementById("id_content_images").click();
+              },
+            },
             container: [
               ["bold", "italic", "underline", "strike"],
               ["blockquote"],
@@ -76,7 +103,7 @@ export default {
               [{ color: [] }, { background: [] }],
               [{ align: [] }],
               //['clean'],
-              ["link", "video"],
+              ["link", "video", this.textImage],
             ],
           },
         },

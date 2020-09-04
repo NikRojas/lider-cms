@@ -49,9 +49,13 @@
                         v-model="element.published"
                         name="id_checkbox_published"
                       >Publicar</b-form-checkbox>-->
-                      <b-form-checkbox size="lg" id="id_checkbox_published" v-model="element.published" name="check-button" switch>
-                        Publicar
-                      </b-form-checkbox>
+                      <b-form-checkbox
+                        size="lg"
+                        id="id_checkbox_published"
+                        v-model="element.published"
+                        name="check-button"
+                        switch
+                      >Publicar</b-form-checkbox>
                     </div>
                   </div>
                   <div class="col-12">
@@ -79,26 +83,33 @@
                   </div>
 
                   <div class="col-12">
-                    <div class="form-group" >
+                    <div class="form-group">
                       <label class="font-weight-bold" for="id_category">Categoría</label>
                       <div v-if="categories && categories.length">
-                      <model-list-select
-                        :list="categories"
-                        id="id_category_id"
-                        class="form-control shadow-none"
-                        v-model="element.category_id"
-                        option-value="id"
-                        option-text="name_es"
-                        placeholder="Seleccione la Categoría"
-                      >
-                      </model-list-select>
-                      <label
-                        v-if="errors && errors.category_id"
-                        class="mt-2 text-danger text-sm"
-                        for="id_category_id"
-                      >{{ errors.category_id[0] }}</label>
+                        <model-list-select
+                          :list="categories"
+                          id="id_category_id"
+                          class="form-control shadow-none"
+                          v-model="element.category_id"
+                          option-value="id"
+                          option-text="name_es"
+                          placeholder="Seleccione la Categoría"
+                        ></model-list-select>
+                        <label
+                          v-if="errors && errors.category_id"
+                          class="mt-2 text-danger text-sm"
+                          for="id_category_id"
+                        >{{ errors.category_id[0] }}</label>
                       </div>
-                      <NoData :showSvg="false" :showButton="true" elementTextButton="una Categoría" :route-button="routeCreate" :classes="['mt-2']" :show-title="false" v-else/>
+                      <NoData
+                        :showSvg="false"
+                        :showButton="true"
+                        elementTextButton="una Categoría"
+                        :route-button="routeCreate"
+                        :classes="['mt-2']"
+                        :show-title="false"
+                        v-else
+                      />
                     </div>
                   </div>
                   <div class="col-12">
@@ -123,6 +134,8 @@
                       :valueEs.sync="element.content_es"
                       :valueEnParent="element.content_en"
                       :valueEsParent="element.content_es"
+                      :url="'posts'"
+                      :text-image="'image'"
                     />
                   </div>
                 </div>
@@ -215,7 +228,7 @@ export default {
     InputSlug,
     InputArray,
     ModelListSelect,
-    NoData
+    NoData,
   },
   props: {
     imagesUrl: String,
@@ -225,7 +238,7 @@ export default {
   },
   data() {
     return {
-      element: {published:true},
+      element: { published: true },
       requestServer: false,
       categories: [],
       tags: [],

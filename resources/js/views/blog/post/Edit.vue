@@ -118,6 +118,8 @@
                       :valueEs.sync="element.content_es"
                       :valueEnParent="element.content_en"
                       :valueEsParent="element.content_es"
+                      :url="'posts'"
+                      :text-image="'image'"
                     />
                   </div>
                 </div>

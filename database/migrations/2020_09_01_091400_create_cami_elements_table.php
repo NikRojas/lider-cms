@@ -17,10 +17,10 @@ class CreateCamiElementsTable extends Migration
             $table->bigIncrements('id');
             $table->text('name_es');
             $table->text('name_en');
-            $table->string('icon',100);
+            $table->string('icon', 100);
             $table->text('description_es');
             $table->text('description_en');
-            $table->string('image',100);
+            $table->string('image', 100);
             $table->integer('index');
             //Title, Icon, Short description
             $table->json('elements_es');

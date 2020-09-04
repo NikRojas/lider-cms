@@ -16,8 +16,9 @@ class GeneralInformationRequest extends FormRequest
         return true;
     }
 
-    public function attributes(){
-            return [
+    public function attributes()
+    {
+        return [
                 'phone_numbers.*.number' => 'teléfono',
                 'whatsapp_numbers.*.number' => 'whatsapp',
                 'phone_numbers.*.department' => 'departamento',

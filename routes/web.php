@@ -112,7 +112,7 @@ Route::middleware(['auth'])->namespace('Cms')->name('cms.')->group(function () {
         Route::get('/json/get/{element}', 'ProjectsController@get')->name('get');
         Route::get('/{element}', 'ProjectsController@read')->name('read');
         Route::put('/{element}', 'ProjectsController@update')->name('update');
-        Route::prefix('galeria')->name('gallery.')->group(function() {
+        Route::prefix('galeria')->name('gallery.')->group(function () {
             Route::get('/{element}', 'GalleryController@index')->name('index');
             Route::post('/', 'GalleryController@store')->name('store');
             Route::get('/json/get-all', 'GalleryController@getAll')->name('get-all');
@@ -122,14 +122,14 @@ Route::middleware(['auth'])->namespace('Cms')->name('cms.')->group(function () {
             Route::put('/{element}', 'GalleryController@update')->name('update');
         });
 
-        Route::prefix('cotizaciones')->name('quotations.')->group(function() {
+        Route::prefix('cotizaciones')->name('quotations.')->group(function () {
             Route::get('/{element}', 'QuotationsController@index')->name('index');
             Route::get('/json/get-all', 'QuotationsController@getAll')->name('get-all');
             Route::get('/json/get/{element}', 'QuotationsController@get')->name('get');
             Route::delete('/{element}', 'QuotationsController@destroy')->name('destroy');
         });
 
-        Route::prefix('tipologias')->name('tipologies.')->group(function() {
+        Route::prefix('tipologias')->name('tipologies.')->group(function () {
             Route::get('/{element}', 'TipologiesController@index')->name('index');
             Route::post('/', 'TipologiesController@store')->name('store');
             Route::get('/json/get-all', 'TipologiesController@getAll')->name('get-all');
@@ -139,7 +139,7 @@ Route::middleware(['auth'])->namespace('Cms')->name('cms.')->group(function () {
             Route::delete('/{element}', 'TipologiesController@destroy')->name('destroy');
             Route::put('/{element}', 'TipologiesController@update')->name('update');
 
-            Route::prefix('planos')->name('blueprints.')->group(function() {
+            Route::prefix('planos')->name('blueprints.')->group(function () {
                 Route::get('/{element}/{subelement}', 'BlueprintsController@index')->name('index');
                 Route::post('/', 'BlueprintsController@store')->name('store');
                 Route::get('/json/get-all', 'BlueprintsController@getAll')->name('get-all');
@@ -148,7 +148,7 @@ Route::middleware(['auth'])->namespace('Cms')->name('cms.')->group(function () {
             });
         });
 
-        Route::prefix('documentos')->name('files.')->group(function() {
+        Route::prefix('documentos')->name('files.')->group(function () {
             Route::get('/{element}', 'FilesController@index')->name('index');
             Route::post('/', 'FilesController@store')->name('store');
             Route::get('/json/get-all', 'FilesController@getAll')->name('get-all');
@@ -255,6 +255,20 @@ Route::middleware(['auth'])->namespace('Cms')->name('cms.')->group(function () {
 
         Route::put('/', 'ApplicantsController@update')->name('update');
         Route::get('/get-email-destination', 'ApplicantsController@getEmailDestination')->name('get-email-destination');
+    });
+
+    Route::prefix('cami')->name('cami.')->group(function () {
+        #Cami
+        Route::get('/', 'CamiController@index')->name('index');
+        Route::post('/', 'CamiController@store')->name('store');
+        Route::get('/json/get', 'CamiController@get')->name('get');
+        #Camii Elements
+        Route::get('/projects/json/get-all', 'CamiController@elementsGetAll')->name('projects.get-all');
+        Route::post('/projects', 'CamiController@elementsStore')->name('projects.store');
+        Route::put('/projects/order', 'CamiController@elementsOrder')->name('projects.order');
+        Route::get('/projects/json/get/{element}', 'CamiController@elementsGet')->name('projects.get');
+        Route::delete('/projects/{element}', 'CamiController@elementsDestroy')->name('projects.destroy');
+        Route::put('/projects/{element}', 'CamiController@elementsUpdate')->name('projects.update');
     });
 
     Route::prefix('testimoniales')->name('testimonials.')->group(function () {

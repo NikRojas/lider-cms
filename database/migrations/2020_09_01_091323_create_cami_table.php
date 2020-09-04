@@ -15,7 +15,7 @@ class CreateCamiTable extends Migration
     {
         Schema::create('cami', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('logo',100);
+            $table->string('logo', 100);
             $table->string('title_es');
             $table->string('title_en');
             $table->text('description_es');

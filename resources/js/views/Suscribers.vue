@@ -28,52 +28,7 @@
         <template slot="filters">
           <div class="row mb-3">
             <div class="col-6">
-              <div class>
-                <b-dropdown
-                  left
-                  id="dropdown-text"
-                  :menu-class="['border','shadow-none']"
-                  ref="dropdown"
-                  :variant="activeFilter.value == 'all' ? 'inverse-light' : 'inverse-primary'"
-                  :toggle-class="[]"
-                >
-                  <template v-slot:button-content>
-                    <jam-calendar
-                      height="18px"
-                      width="18px"
-                      style="margin-top: -4px;"
-                      class="current-color"
-                    ></jam-calendar>
-                    <span class>{{ activeFilter.text }}</span>
-                  </template>
-                  <b-dropdown-text tag="div" class="px-2" style="width: 16rem;">
-                    <button
-                      :class="activeFilter.value == i.value ? 'btn-primary' : 'btn-inverse-primary'"
-                      class="btn mb-1 btn-sm btn-block"
-                      v-for="i in filters"
-                      :key="i.value"
-                      @click.prevent="handleFilter(i)"
-                    >{{ i.text }}</button>
-                    <date-picker
-                      ref="datepicker"
-                      @change="handleFilterRange"
-                      placeholder="Personalizado"
-                      :shortcuts="[]"
-                      v-model="rangeDate"
-                      lang="es"
-                      input-class="form-control mt-1"
-                      format="D MMM YYYY"
-                      range-separator="-"
-                      width="100%"
-                      range
-                    >
-                      <slot name="icon-calendar">
-                        <jam-users></jam-users>
-                      </slot>
-                    </date-picker>
-                  </b-dropdown-text>
-                </b-dropdown>
-              </div>
+              <FilterDateRange  :active.sync="filterDate.active"  :range.sync="filterDate.range" @get="getEls(1, elementsPerPage)"/>
             </div>
             <div class="col-6 text-right">
               <button class="btn btn-icon btn-inverse-primary" @click="exportData()">
@@ -171,6 +126,7 @@ import BreadCrumb from "../components/BreadCrumb";
 import Destroy from "../components/modals/Destroy";
 import { Skeleton } from "vue-loading-skeleton";
 import Button from "../components/Button";
+import FilterDateRange from "../components/filters/DateRange"
 export default {
   props: {
     elementParent: Object,
@@ -187,21 +143,16 @@ export default {
       errors: {},
       project: {},
       elements: {},
-      rangeDate: null,
+      
       modalExport: false,
       requestSubmit: false,
-      filters: [
-        { text: "Cualquier Fecha", value: "all" },
-        { text: "Hoy", value: "today" },
-        /*{ text: "Ayer", value: "yesterday" },
-        { text: "Este Mes", value: "this_month" },
-        { text: "El Mes Pasado", value: "past_month" },*/
-        { text: "Últimos 7 días", value: "7" },
-        { text: "Últimos 30 días", value: "30" },
-        { text: "Últimos 90 días", value: "90" },
-        { text: "Este Año", value: "this_year" },
-      ],
-      activeFilter: { text: "Cualquier Fecha", value: "all" },
+
+      filterDate: {
+        active: {},
+        range: null
+      },
+
+
       options: [
         { text: "Total", value: true },
         { text: "Rango Personalizado", value: false },
@@ -226,6 +177,7 @@ export default {
     DataTable,
     Destroy,
     Button,
+    FilterDateRange
   },
   methods: {
     exportConfirm() {
@@ -274,28 +226,6 @@ export default {
     },
     exportData() {
       this.modalExport = true;
-    },
-    handleFilterRange() {
-      if (!this.rangeDate[0]) {
-        this.activeFilter = { text: "Cualquier Fecha", value: "all" };
-        this.handleFilter(this.activeFilter);
-        return false;
-      }
-      setTimeout(() => {
-        //this.activeFilter = { text: this.$refs.datepicker.text, value: this.rangeDate};
-        this.activeFilter = {
-          text: this.$refs.datepicker.text,
-          value: "range",
-        };
-        this.getEls(1, this.elementsPerPage);
-      }, 50);
-      this.$refs.dropdown.hide(true);
-    },
-    handleFilter(i) {
-      this.rangeDate = [];
-      this.activeFilter = i;
-      this.$refs.dropdown.hide(true);
-      this.getEls(1, this.elementsPerPage);
     },
     destroyConfirm() {
       this.requestSubmit = true;
@@ -348,8 +278,8 @@ export default {
       axios
         .get(url, {
           params: {
-            date: this.activeFilter.value,
-            ...(this.rangeDate ? { range: this.rangeDate } : {}),
+            date: this.filterDate.active.value,
+            ...(this.filterDate.range ? { range: this.filterDate.range } : {}),
           },
         })
         .then((response) => {

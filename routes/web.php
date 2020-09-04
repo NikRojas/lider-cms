@@ -88,6 +88,17 @@ Route::middleware(['auth'])->namespace('Cms')->name('cms.')->group(function () {
         Route::delete('/{element}', 'ComplaintsBookController@destroy')->name('destroy');
     });
 
+    #Suscribers
+    Route::prefix('suscriptores')->name('suscribers.')->group(function () {
+        Route::get('/', 'SuscribersController@index')->name('index');
+        Route::get('/json/get-all', 'SuscribersController@getAll')->name('get-all');
+        Route::get('/json/get/{element}', 'SuscribersController@get')->name('get');
+        Route::delete('/{element}', 'SuscribersController@destroy')->name('destroy');
+        Route::post('export', 'SuscribersController@export')->name('export'); 
+        Route::post('export/total', 'SuscribersController@exportTotal')->name('export-total'); 
+        Route::get('export/{from?}/{to?}', 'SuscribersController@exportFile')->name('export-file'); 
+    });
+
     #Slider
     Route::prefix('slider')->name('slider.')->group(function () {
         Route::get('/', 'SliderController@index')->name('index');

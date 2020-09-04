@@ -14,8 +14,8 @@ class MasterModulesTableSeeder extends Seeder
         $pVentas = 3;
         $pAdmin = 6;
         $pContenido = 13;
-        $pLeads = 18;
-        $pConfiguracion = 29;
+        $pLeads = 23;
+        $pConfiguracion = 30;
         $pBlog = 24;
         $position = 1;
         DB::table('master_modules')->insert([
@@ -147,36 +147,7 @@ class MasterModulesTableSeeder extends Seeder
                     'index'    => 4
                 ],
 
-            [
-                'name' 	=> 'Leads',
-                'slug' 		=> NULL,
-                'parent' 	=> NULL,
-                'icon' 		=> 'database',
-                'index'    => $position++
-            ],
-                [
-                    'name' 	=> 'Tradicionales',
-                    'slug' 		=> 'leads/tradicionales',
-                    'parent' 	=> $pLeads,
-                    'icon' 		=> NULL,
-                    'index'    => 1
-                ],
-
-                [
-                    'name' 	=> 'Cita Online',
-                    'slug' 		=> 'leads/cita-online',
-                    'parent' 	=> $pLeads,
-                    'icon' 		=> NULL,
-                    'index'    => 2
-                ],
-
-                [
-                    'name' 	=> 'Venta Terreno',
-                    'slug' 		=> 'leads/venta-terreno',
-                    'parent' 	=> $pLeads,
-                    'icon' 		=> NULL,
-                    'index'    => 3
-                ],
+            
 
             [
                 'name' 	=> 'Cami',
@@ -216,19 +187,58 @@ class MasterModulesTableSeeder extends Seeder
                     'index'    => 2
                 ],
 
-            [
-                'name' 	=> 'Postulantes',
-				'slug' 		=> 'postulantes',
-				'parent' 	=> NULL,
-				'icon' 		=> 'book',
-                'index'    => $position++
-            ],
+                [
+                    'name' 	=> 'Leads',
+                    'slug' 		=> NULL,
+                    'parent' 	=> NULL,
+                    'icon' 		=> 'database',
+                    'index'    => $position++
+                ],
+                    [
+                        'name' 	=> 'Tradicionales',
+                        'slug' 		=> 'leads/tradicionales',
+                        'parent' 	=> $pLeads,
+                        'icon' 		=> NULL,
+                        'index'    => 1
+                    ],
+    
+                    [
+                        'name' 	=> 'Cita Online',
+                        'slug' 		=> 'leads/cita-online',
+                        'parent' 	=> $pLeads,
+                        'icon' 		=> NULL,
+                        'index'    => 2
+                    ],
+    
+                    [
+                        'name' 	=> 'Venta Terreno',
+                        'slug' 		=> 'leads/venta-terreno',
+                        'parent' 	=> $pLeads,
+                        'icon' 		=> NULL,
+                        'index'    => 3
+                    ],
+            
+                    [
+                        'name' 	=> 'Suscripciones',
+                        'slug' 		=> 'suscripciones',
+                        'parent' 	=> NULL,
+                        'icon' 		=> 'users',
+                        'index'    => $position++
+                    ],
 
             [
                 'name' 	=> 'Libro de Reclamaciones',
 				'slug' 		=> 'libro-reclamaciones',
 				'parent' 	=> NULL,
 				'icon' 		=> 'clipboard',
+                'index'    => $position++
+            ],
+
+            [
+                'name' 	=> 'Postulantes',
+				'slug' 		=> 'postulantes',
+				'parent' 	=> NULL,
+				'icon' 		=> 'book',
                 'index'    => $position++
             ],
 

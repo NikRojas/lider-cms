@@ -7,7 +7,6 @@ use App\Http\Traits\CmsTrait;
 use App\ComplaintBook;
 use App\Repositories\ComplaintBookRepository;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
 
 class ComplaintsBookController extends Controller
 {

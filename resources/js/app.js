@@ -73,6 +73,9 @@ const app = new Vue({
 
         'complaints-book': () => import('./views/ComplaintsBook.vue' /* webpackChunkName: "js/pages/complaints-book" */),
         'suscribers': () => import('./views/Suscribers.vue' /* webpackChunkName: "js/pages/suscribers" */),
+
+        'customers-index': () => import('./views/Customers/Index.vue' /* webpackChunkName: "js/pages/custoners/index" */),
+        'customers-read': () => import('./views/Customers/Read.vue' /* webpackChunkName: "js/pages/custoners/read" */),
     }
 });
 import Validation from './functions/validation.js'

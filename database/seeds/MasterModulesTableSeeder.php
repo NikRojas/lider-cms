@@ -11,12 +11,12 @@ class MasterModulesTableSeeder extends Seeder
      */
     public function run()
     {
-        $pVentas = 3;
-        $pAdmin = 6;
-        $pContenido = 13;
-        $pLeads = 23;
-        $pConfiguracion = 30;
-        $pBlog = 24;
+        $pVentas = 4;
+        $pAdmin = 7;
+        $pContenido = 14;
+        $pLeads = 24;
+        $pConfiguracion = 31;
+        $pBlog = 21;
         $position = 1;
         DB::table('master_modules')->insert([
             [
@@ -35,10 +35,18 @@ class MasterModulesTableSeeder extends Seeder
             ],
 
             [
+                'name' 	=> 'Clientes',
+				'slug' 		=> 'clientes',
+				'parent' 	=> NULL,
+				'icon' 		=> 'id-card',
+                'index'    => $position++
+            ],
+
+            [
                 'name' 	=> 'Ventas y Estad.',
 				'slug' 		=> null,
 				'parent' 	=> NULL,
-				'icon' 		=> 'shopping-cart',
+				'icon' 		=> 'store',
                 'index'    => $position++
             ],  
 
@@ -161,7 +169,7 @@ class MasterModulesTableSeeder extends Seeder
                 'name' 	=> 'Testimoniales',
                 'slug' 		=> 'testimoniales',
                 'parent' 	=> NULL,
-                'icon' 		=> 'id-card',
+                'icon' 		=> 'camera',
                 'index'    => $position++
             ],
 
@@ -222,13 +230,13 @@ class MasterModulesTableSeeder extends Seeder
                         'name' 	=> 'Suscripciones',
                         'slug' 		=> 'suscripciones',
                         'parent' 	=> NULL,
-                        'icon' 		=> 'users',
+                        'icon' 		=> 'envelope',
                         'index'    => $position++
                     ],
 
             [
                 'name' 	=> 'Libro de Reclamaciones',
-				'slug' 		=> 'libro-reclamaciones',
+				'slug' 		=> 'libro-de-reclamaciones',
 				'parent' 	=> NULL,
 				'icon' 		=> 'clipboard',
                 'index'    => $position++

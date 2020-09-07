@@ -80,8 +80,18 @@ Route::middleware(['auth'])->namespace('Cms')->name('cms.')->group(function () {
         });
     });
 
+    #Customers
+    Route::namespace('Customers')->prefix('clientes')->name('customers.')->group(function () {
+        Route::get('/', 'CustomersController@index')->name('index');
+        Route::get('/json/get-all', 'CustomersController@getAll')->name('get-all');
+        Route::post('export', 'CustomersController@export')->name('export'); 
+        Route::post('export/total', 'CustomersController@exportTotal')->name('export-total'); 
+        Route::get('export/{from?}/{to?}', 'CustomersController@exportFile')->name('export-file'); 
+        Route::get('/{element}', 'CustomersController@read')->name('read');
+    });
+ 
     #Complaints Book
-    Route::prefix('libro-reclamaciones')->name('complaints-book.')->group(function () {
+    Route::prefix('libro-de-reclamaciones')->name('complaints-book.')->group(function () {
         Route::get('/', 'ComplaintsBookController@index')->name('index');
         Route::get('/json/get-all', 'ComplaintsBookController@getAll')->name('get-all');
         Route::get('/json/get/{element}', 'ComplaintsBookController@get')->name('get');
@@ -277,51 +287,6 @@ Route::middleware(['auth'])->namespace('Cms')->name('cms.')->group(function () {
         Route::get('/json/get-all', 'TestimonialsController@getAll')->name('get-all');
         Route::get('/json/get/{element}', 'TestimonialsController@get')->name('get');
     });
-    #Pages
-    /*Route::get('informacion/paginas', 'Information\PagesController@index')->name('pages');
-    Route::get('informacion/json/pages', 'Information\PagesController@getPages')->name('pages.json.get-pages');
-    Route::get('informacion/json/pages/{page}', 'Information\PagesController@getPageSections')->name('pages.json.get-page-sections');
-    Route::get('informacion/json/pages/section/{section}', 'Information\PagesController@getPageSectionFields')->name('pages.json.get-page-sections-fields');
-    Route::post('informacion/pages', 'Information\PagesController@updateSection')->name('pages.update-section');
-    Route::post('informacion/pages/image', 'Information\PagesController@storeImage')->name('pages.store-image');*/
-     
-    #Posts
-    /*
-    Route::get('blog/posts', 'Blog\PostsController@index')->name('blog.posts');
-    Route::post('blog/posts', 'Blog\PostsController@create')->name('blog.posts.create');
-    Route::get('blog/json/posts', 'Blog\PostsController@getPosts')->name('blog.posts.get-posts');
-    Route::get('blog/json/posts/{post}', 'Blog\PostsController@getPost')->name('blog.posts.json.get-post');
-    Route::delete('blog/posts/{post}', 'Blog\PostsController@delete')->name('blog.posts.delete');
-    Route::put('blog/posts/{post}', 'Blog\PostsController@update')->name('blog.posts.update');
-    Route::post('blog/posts/image', 'Blog\PostsController@storeImage')->name('blog.posts.store-image');
-    */
-
-    #Customers
-    /*Route::get('clientes', 'CustomerController@index')->name('clientes');
-    Route::post('customers', 'CustomerController@create')->name('customers.create');
-    Route::put('customers/order', 'CustomerController@order')->name('customers.order');
-    Route::put('customers/{customer}', 'CustomerController@update')->name('customers.update');
-    Route::get('json/customers', 'CustomerController@getCustomers')->name('customers.json.get-customers');
-    Route::get('json/customers/{customer}', 'CustomerController@getCustomer')->name('customers.json.get-customer');
-    Route::delete('customers/{customer}', 'CustomerController@delete')->name('customers.delete');*/
-
-    #Testimonials
-    /*Route::get('testimonios', 'TestimonialsController@index')->name('clientes');
-    Route::post('testimonials', 'TestimonialsController@create')->name('testimonials.create');
-    Route::put('testimonials/order', 'TestimonialsController@order')->name('testimonials.order');
-    Route::put('testimonials/{testimonial}', 'TestimonialsController@update')->name('testimonials.update');
-    Route::get('json/testimonials', 'TestimonialsController@getTestimonials')->name('testimonials.json.get-testimonials');
-    Route::get('json/testimonials/{testimonial}', 'TestimonialsController@getTestimonial')->name('testimonials.json.get-testimonial');
-    Route::delete('testimonials/{testimonial}', 'TestimonialsController@delete')->name('testimonials.delete');*/
-
-    #Applicants
-    /*Route::get('postulantes', 'ApplicantsController@index')->name('applicants');
-    Route::get('json/applicants', 'ApplicantsController@getApplicants')->name('applicants.get-applicants');
-    Route::get('json/applicants/{applicant}', 'ApplicantsController@getApplicant')->name('applicants.json.get-applicant');
-    Route::delete('applicants/{applicant}', 'ApplicantsController@delete')->name('applicants.delete');
-
-    Route::put('applicants', 'ApplicantsController@update')->name('applicants.update');
-    Route::get('applicants/json/contact-email-destination', 'ApplicantsController@getEmailDestination')->name('applicants.json.contact-email-destination');*/
 
     #Misc
     Route::get('files/{folder}/{subfolder}/{file}', 'CmsController@getFile')->name('get-file');

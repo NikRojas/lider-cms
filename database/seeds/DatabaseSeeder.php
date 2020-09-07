@@ -11,7 +11,7 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        /*$this->call(MasterModulesTableSeeder::class);
+        $this->call(MasterModulesTableSeeder::class);
         $this->call(UsersTableSeeder::class);
         $this->call(MasterSocialNetworksTableSeeder::class);
         $this->call(MasterLeadsMediumTableSeeder::class);
@@ -23,9 +23,10 @@ class DatabaseSeeder extends Seeder
         $this->call(MasterTypeGalleryTableSeeder::class);
         $this->call(MasterDocumentsTypeSeeder::class);
         $this->call(MasterClaimsSeeder::class);
-        $this->call(MasterGoodContractedSeeder::class);*/
-        $this->call(ComplaintsBookSeeder::class);
+        $this->call(MasterGoodContractedSeeder::class);
+        /*$this->call(ComplaintsBookSeeder::class);*/
         /*$this->call(ProjectQuotationsTableSeeder::class);*/
         //$this->call(SuscribersTableSeeder::class);
+        $this->call(CustomersTableSeeder::class);
     }
 }

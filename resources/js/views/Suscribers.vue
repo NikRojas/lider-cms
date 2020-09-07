@@ -120,6 +120,7 @@
   </div>
 </template>
 <script>
+import DatePicker from "vue2-datepicker";
 import DataTable from "../components/DataTable";
 import BreadCrumb from "../components/BreadCrumb";
 import Destroy from "../components/modals/Destroy";

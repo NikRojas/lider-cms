@@ -146,11 +146,37 @@
             </div>
             <div class="col-12">
               <div class="form-group">
-                <label class="font-weight-bold" for="icon">Icono</label>
-                <input type="text" class="form-control" v-model="element.icon" id="icon" />
+                <label class="font-weight-bold" for="icon">Ícono:</label>
+                <div class="row">
+                  <div class="col text-center" v-if="element.icon">
+                    <img
+                      :src="imagesUrl+'/elements/'+element.icon"
+                      :alt="element.name"
+                      style="height: 140px; width: 250px;"
+                    />
+                  </div>
+                  <div class="col">
+                    <vue-dropzone
+                      ref="ref_icon"
+                      class="text-center"
+                      @vdropzone-file-added="$validateImageDropzone($event,$refs.ref_icon.dropzone,1,512000,'500kb')"
+                      id="image"
+                      :options="dropzoneOptions"
+                      :duplicateCheck="true"
+                      :useCustomSlot="true"
+                    >
+                      <div class="dropzone-custom-content">
+                        <h5
+                          class="dropzone-custom-title text-primary"
+                        >Suelte los archivos aquí o haga click para cargarlos.</h5>
+                      </div>
+                    </vue-dropzone>
+                  </div>
+                </div>
+
                 <label
                   v-if="errors && errors.icon"
-                  class="mt-2 text-danger text-sm"
+                  class="text-danger text-sm d-block mt-2"
                   for="icon"
                 >{{ errors.icon[0] }}</label>
               </div>
@@ -171,7 +197,7 @@
             </div>
             <div class="col-12">
               <MultipleElements
-                fieldName="files"
+                fieldName="images"
                 :errors="errors"
                 :messageOrder="messageOrder"
                 :files.sync="element.files"
@@ -353,10 +379,7 @@ export default {
       }
       if (this.element.name_en) {
         fd.append("name_en", this.element.name_en);
-      }
-      if (this.element.icon) {
-        fd.append("icon", this.element.icon);
-      }
+      } 
       if (this.element.description_es) {
         fd.append("description_es", this.element.description_es);
       }
@@ -365,6 +388,9 @@ export default {
       }
       if (this.$refs.ref_image.dropzone.files[0]) {
         fd.append("image", this.$refs.ref_image.dropzone.files[0]);
+      }
+      if (this.$refs.ref_icon.dropzone.files[0]) {
+        fd.append("icon", this.$refs.ref_icon.dropzone.files[0]);
       }
 
       if (this.element.files && this.element.files.length) {

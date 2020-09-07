@@ -81,6 +81,12 @@
                       </h5>
                     </div>
                   </vue-dropzone>
+
+                  <label
+                    v-if="errors && errors['files.'+i+'.file']"
+                    class="text-danger text-sm d-block mt-2"
+                    for="image"
+                  >{{ errors['files.'+i+'.file'][0] }}</label>
                 </div>
               </div>
             </div>
@@ -114,8 +120,8 @@
         <span class="btn-inner--text">Agregar</span>
       </button>
     </div>
-    <div v-if="errors && errors[fieldName]">
-      <label class="mt-3 text-danger text-sm" :for="fieldName">{{ errors[fieldName][0] }}</label>
+    <div v-if="errors && errors[fieldName+'0']">
+      <label class="mt-3 text-danger text-sm" :for="fieldName+'0'">{{ errors[fieldName+'0'][0] }}</label>
     </div>
   </div>
 </template>

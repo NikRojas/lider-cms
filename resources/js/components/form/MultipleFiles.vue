@@ -69,8 +69,6 @@
             </draggable>
           </table>
         </simplebar>
-
-        
       </div>
     </div>
     <div class="mt-3">
@@ -82,11 +80,8 @@
       </button>
     </div>
     <div v-if="errors && errors[fieldName+'0']">
-          <label
-          class="mt-3 text-danger text-sm"
-          :for="fieldName+'0'"
-        >{{ errors[fieldName+'0'][0] }}</label>
-        </div>
+      <label class="mt-3 text-danger text-sm" :for="fieldName+'0'">{{ errors[fieldName+'0'][0] }}</label>
+    </div>
   </div>
 </template>
 <script>

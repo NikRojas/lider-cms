@@ -12,6 +12,7 @@ return [
         'category' => 'La categoría',
         'post' => 'El post',
         'profile' => 'El perfil',
+        'cami' => 'Cami',
         'customer' => 'El cliente',
         'emails' => 'Los correos',
         'applicant' => 'El postulante',
@@ -54,7 +55,7 @@ return [
             'error' => "Lo sentimos. :name no se pudo actualizar debido a un error.",
             'plural' => [
                 'success' => ':name se han actualizado.',
-                'error' => "Lo sentimos. :name no se pudieron actualizar debido a un error.",   
+                'error' => "Lo sentimos. :name no se pudieron actualizar debido a un error.",
             ]
         ],
         'delete' => [

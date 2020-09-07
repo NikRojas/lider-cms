@@ -48,15 +48,16 @@ class CustomerRepository
         }
         //pedidos
         $elements = $elements
+            ->with('ordersRel')
+            ->withCount('ordersRel')
             ->orderBy('created_at', 'desc')
             ->paginate($items_per_page);
-
         foreach ($elements as $element) {
             $data[] = array(
                 "id" => $element["slug"],
                 "name" => $element["name"] .' ' .$element["lastname"],
                 "document_number" => $element["document_number"],
-                "sales" => "1 Pedido",
+                "sales" => $element["orders_rel_count"].' Reservas',
                 "created_at" => $element["created_at_format"],
             );
         }

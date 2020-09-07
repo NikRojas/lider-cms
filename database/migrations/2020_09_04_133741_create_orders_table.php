@@ -18,9 +18,11 @@ class CreateOrdersTable extends Migration
             $table->bigInteger('customer_id')->unsigned();
             $table->foreign('customer_id')->references('id')->on('customers');
             $table->timestamp('order_date');
-            $table->string('proforma_number');
+            $table->float('total');
+            $table->string('proforma_number')->nullable();
             $table->timestamps();
         });
+        DB::update("ALTER TABLE orders AUTO_INCREMENT = 1000;");
     }
 
     /**

@@ -22,7 +22,7 @@ class CreateOrderDetailsTable extends Migration
             $table->bigInteger('order_id')->unsigned();
             $table->integer('quantity');
             $table->float('price');
-            $table->float('discount');
+            $table->float('discount')->nullable();
             $table->float('total');
             $table->foreign('order_id')->references('id')->on('orders');
             $table->timestamps();

@@ -49,6 +49,9 @@ const app = new Vue({
         'traditional': () => import('./views/lead/traditional.vue' /* webpackChunkName: "js/pages/lead/traditional" */),
         'landsale': () => import('./views/lead/landsale.vue' /* webpackChunkName: "js/pages/lead/landsale" */),
 
+        'cami': () => import('./views/Cami.vue' /* webpackChunkName: "js/pages/cami" */),
+        'cami-projects': () => import('./views/CamiProjects.vue' /* webpackChunkName: "js/pages/cami-projects" */),
+
         'testimonials': () => import('./views/Testimonials.vue' /* webpackChunkName: "js/pages/testimonials" */),
 
         'reset': () => import('./views/auth/Reset.vue' /* webpackChunkName: "js/pages/reset" */),
@@ -74,8 +77,8 @@ const app = new Vue({
         'complaints-book': () => import('./views/ComplaintsBook.vue' /* webpackChunkName: "js/pages/complaints-book" */),
         'suscribers': () => import('./views/Suscribers.vue' /* webpackChunkName: "js/pages/suscribers" */),
 
-        'customers-index': () => import('./views/Customers/Index.vue' /* webpackChunkName: "js/pages/custoners/index" */),
-        'customers-read': () => import('./views/Customers/Read.vue' /* webpackChunkName: "js/pages/custoners/read" */),
+        'customers-index': () => import('./views/Customers/Index.vue' /* webpackChunkName: "js/pages/customers/index" */),
+        'customers-read': () => import('./views/Customers/Read.vue' /* webpackChunkName: "js/pages/customers/read" */),
     }
 });
 import Validation from './functions/validation.js'

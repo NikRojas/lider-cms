@@ -25,6 +25,17 @@ class PostsController extends Controller
         return view("pages.blog.posts.index");
     }
 
+    public function storeImage(Request $request)
+    {
+        $file_name = $this->setFileName('pi-', $request->file('image'));
+        try {
+            $store_image = Storage::disk('public')->putFileAs('img/posts/', $request->file('image'), $file_name);
+            return response()->json(['image'=>Storage::disk('public')->url('img/posts/'.$file_name)]);
+        } catch (\Exception $e) {
+            return response()->json(['title'=> trans('custom.title.error'), 'message'=> trans('custom.errors.image') ], 500);
+        }
+    }
+
     public function create()
     {
         return view("pages.blog.posts.create");

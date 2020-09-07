@@ -28,4 +28,9 @@ class Customer extends Model
     public function getAvatarInitialsAttribute(){
         return substr($this->name,0,1).substr($this->lastname,0,1);
     }
+
+    public function ordersRel()
+    {
+        return $this->hasMany('App\Order', 'customer_id', 'id');
+    }
 }

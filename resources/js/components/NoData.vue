@@ -247,7 +247,6 @@ export default {
       type: Boolean
     },
     customText:{
-      default: false,
       type: String
     },
     showButton:{

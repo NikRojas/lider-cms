@@ -5,12 +5,12 @@
         <div class="header-body">
           <div class="row align-items-center pt-0 pt-md-2 pb-4">
             <div class="col-6 col-md-7">
-              <BreadCrumb title="Proyectos" parent active="Proyectos"></BreadCrumb>
+              <BreadCrumb :show-bread-crumb="false" title="Proyectos en los que interviene CAMI"></BreadCrumb>
             </div>
             <div class="col-6 col-md-5 text-right">
               <a href="#" class="btn btn-icon btn-inverse-primary" @click.prevent="newEl">
                 <span class="btn-inner--icon">
-                  <jam-user-square class="current-color" />
+                  <jam-heart class="current-color" />
                 </span>
                 <span class="btn-inner--text">Nuevo Proyecto</span>
               </a>
@@ -35,11 +35,11 @@
           <div class="col-12 col-md-6 col-lg-3 mb-4" v-for="(el,i) in elements" :key="el.id">
             <div class="card">
               <div class="card-body">
-                <div class="text-center mb-2">
+                <div class="text-center mb-3">
                   <img
                     :src="imagesUrl+'/elements/'+el.image"
                     :alt="el.name"
-                    style="height: 140px; width: 250px;"
+                    class="img-fluid"
                   />
                 </div>
                 <h3 class="mb-1">
@@ -102,7 +102,7 @@
                     <img
                       :src="imagesUrl+'/elements/'+element.image"
                       :alt="element.name"
-                      style="height: 140px; width: 250px;"
+                      class="img-fluid"
                     />
                   </div>
                   <div class="col">
@@ -146,11 +146,37 @@
             </div>
             <div class="col-12">
               <div class="form-group">
-                <label class="font-weight-bold" for="icon">Icono</label>
-                <input type="text" class="form-control" v-model="element.icon" id="icon" />
+                <label class="font-weight-bold" for="icon">Ícono:</label>
+                <div class="row">
+                  <div class="col text-center" v-if="element.icon">
+                    <img
+                      :src="imagesUrl+'/elements/'+element.icon"
+                      :alt="element.name"
+                      class="img-fluid"
+                    />
+                  </div>
+                  <div class="col">
+                    <vue-dropzone
+                      ref="ref_icon"
+                      class="text-center"
+                      @vdropzone-file-added="$validateImageDropzone($event,$refs.ref_icon.dropzone,1,512000,'500kb')"
+                      id="image"
+                      :options="dropzoneOptions"
+                      :duplicateCheck="true"
+                      :useCustomSlot="true"
+                    >
+                      <div class="dropzone-custom-content">
+                        <h5
+                          class="dropzone-custom-title text-primary"
+                        >Suelte los archivos aquí o haga click para cargarlos.</h5>
+                      </div>
+                    </vue-dropzone>
+                  </div>
+                </div>
+
                 <label
                   v-if="errors && errors.icon"
-                  class="mt-2 text-danger text-sm"
+                  class="text-danger text-sm d-block mt-2"
                   for="icon"
                 >{{ errors.icon[0] }}</label>
               </div>
@@ -171,7 +197,7 @@
             </div>
             <div class="col-12">
               <MultipleElements
-                fieldName="files"
+                fieldName="images"
                 :errors="errors"
                 :messageOrder="messageOrder"
                 :files.sync="element.files"
@@ -353,10 +379,7 @@ export default {
       }
       if (this.element.name_en) {
         fd.append("name_en", this.element.name_en);
-      }
-      if (this.element.icon) {
-        fd.append("icon", this.element.icon);
-      }
+      } 
       if (this.element.description_es) {
         fd.append("description_es", this.element.description_es);
       }
@@ -365,6 +388,9 @@ export default {
       }
       if (this.$refs.ref_image.dropzone.files[0]) {
         fd.append("image", this.$refs.ref_image.dropzone.files[0]);
+      }
+      if (this.$refs.ref_icon.dropzone.files[0]) {
+        fd.append("icon", this.$refs.ref_icon.dropzone.files[0]);
       }
 
       if (this.element.files && this.element.files.length) {

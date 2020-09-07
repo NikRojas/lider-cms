@@ -31,7 +31,7 @@ class CamiElementRequest extends FormRequest
         ]);
         return $this->all();
     }
-
+ 
     public function attributes()
     {
         return [
@@ -39,7 +39,14 @@ class CamiElementRequest extends FormRequest
                 'files.*.description_es' => 'descripción español',
                 'files.*.title_en' => 'título inglés',
                 'files.*.description_en' => 'descripción inglés',
+                'files.*.file' => 'imagen'
             ];
+    }
+
+    public function messages(){
+        return [
+            'images0.required' => 'Debe ingresar al menos un elemento'
+        ];
     }
     /**
      * Get the validation rules that apply to the request.
@@ -50,29 +57,28 @@ class CamiElementRequest extends FormRequest
     {
         $rules = [
             'name_es' => 'required',
-            'name_en' => 'required',
-            'icon' => 'required',
+            'name_en' => 'required', 
             'description_es' => 'required',
             'description_en' => 'required',
             'image' => 'required',
-            //'files_es' => 'required',
-            //'files_en' => 'required'
             'files.*.title_es' => 'required',
+            'files.*.file' => 'required',
             'files.*.description_es' => 'required',
             'files.*.title_en' => 'required',
             'files.*.description_en' => 'required',
+            'images0' => 'required'
         ];
         switch ($this->method()) {
             case 'POST':
                 $rules = array_merge(
                     $rules,
-                    ['image' => 'sometimes|required']
+                    ['image' => 'required','icon' => 'required']
                 );
             break;
             case 'PUT':
                 $rules = array_merge(
                     $rules,
-                    ['image' => 'sometimes|required']
+                    ['image' => 'sometimes|required','icon' => 'sometimes|required']
                 );
             break;
         }

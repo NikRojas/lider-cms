@@ -1,6 +1,6 @@
 <template>
   <div>
-    <nav aria-label="breadcrumb" class="d-lg-inline-block">
+    <nav aria-label="breadcrumb" class="d-lg-inline-block" v-if="showBreadCrumb">
       <ol class="breadcrumb p-0 m-0 breadcrumb-links bg-transparent">
         <li class="breadcrumb-item">
           <a href="/dashboard">
@@ -33,6 +33,10 @@
 <script>
 export default {
   props: {
+    showBreadCrumb:{
+      default: true,
+      type:Boolean
+    },
     title: String,
     parent: String,
     active: String,

@@ -24,29 +24,34 @@ class CamiElement extends Model
     public function getFilesAttribute()
     {
         $array = array();
-        foreach ($this->elements_en_format as $key => $value) {
-            foreach ($this->elements_es_format as $key_2 => $value_2) {
-                if ($key==$key_2) {
-                    $data = [
-                        'title_es' => $value_2->title_es,
-                        'title_en' => $value->title_en,
-                        'description_es' => $value_2->description_es,
-                        'description_en' => $value->description_en,
-                        'file' => $value->file
-                    ];
-                    array_push($array, $data);
+        if($this->elements_en){
+            foreach ($this->elements_en_format as $key => $value) {
+                foreach ($this->elements_es_format as $key_2 => $value_2) {
+                    if ($key==$key_2) {
+                        $data = [
+                            'title_es' => $value_2->title_es,
+                            'title_en' => $value->title_en,
+                            'description_es' => $value_2->description_es,
+                            'description_en' => $value->description_en,
+                            'file' => $value->file
+                        ];
+                        array_push($array, $data);
+                    }
                 }
             }
         }
+        
         return $array;
     }
 
     public function getImagesFormatAttribute()
     {
         $array = array();
-        foreach ($this->elements_en_format as $key => $value) {
-            array_push($array, $value->file);
-        }
+        if($this->elements_en){
+            foreach ($this->elements_en_format as $key => $value) {
+                array_push($array, $value->file);
+            }
+        } 
         return  $array;
     }
 }

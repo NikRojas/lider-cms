@@ -36,13 +36,19 @@ class CamiRequest extends FormRequest
 
         ];
         switch ($this->method()) {
-            case 'POST':
+            case 'POST':   
+                $rules = array_merge(
+                    $rules,
+                    ['logo' => 'required']
+                );
+            break;
+            case 'PUT':   
                 $rules = array_merge(
                     $rules,
                     ['logo' => 'sometimes|required']
                 );
-                break;
-        }
+            break;
+          }
         return $rules;
     }
 }

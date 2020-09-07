@@ -11,12 +11,12 @@ class MasterModulesTableSeeder extends Seeder
      */
     public function run()
     {
-        $pVentas = 3;
-        $pAdmin = 6;
-        $pContenido = 13;
-        $pLeads = 18;
-        $pConfiguracion = 29;
-        $pBlog = 24;
+        $pVentas = 4;
+        $pAdmin = 7;
+        $pContenido = 14;
+        $pLeads = 24;
+        $pConfiguracion = 31;
+        $pBlog = 21;
         $position = 1;
         DB::table('master_modules')->insert([
             [
@@ -35,10 +35,18 @@ class MasterModulesTableSeeder extends Seeder
             ],
 
             [
+                'name' 	=> 'Clientes',
+				'slug' 		=> 'clientes',
+				'parent' 	=> NULL,
+				'icon' 		=> 'id-card',
+                'index'    => $position++
+            ],
+
+            [
                 'name' 	=> 'Ventas y Estad.',
 				'slug' 		=> null,
 				'parent' 	=> NULL,
-				'icon' 		=> 'shopping-cart',
+				'icon' 		=> 'store',
                 'index'    => $position++
             ],  
 
@@ -147,36 +155,7 @@ class MasterModulesTableSeeder extends Seeder
                     'index'    => 4
                 ],
 
-            [
-                'name' 	=> 'Leads',
-                'slug' 		=> NULL,
-                'parent' 	=> NULL,
-                'icon' 		=> 'database',
-                'index'    => $position++
-            ],
-                [
-                    'name' 	=> 'Tradicionales',
-                    'slug' 		=> 'leads/tradicionales',
-                    'parent' 	=> $pLeads,
-                    'icon' 		=> NULL,
-                    'index'    => 1
-                ],
-
-                [
-                    'name' 	=> 'Cita Online',
-                    'slug' 		=> 'leads/cita-online',
-                    'parent' 	=> $pLeads,
-                    'icon' 		=> NULL,
-                    'index'    => 2
-                ],
-
-                [
-                    'name' 	=> 'Venta Terreno',
-                    'slug' 		=> 'leads/venta-terreno',
-                    'parent' 	=> $pLeads,
-                    'icon' 		=> NULL,
-                    'index'    => 3
-                ],
+            
 
             [
                 'name' 	=> 'Cami',
@@ -190,7 +169,7 @@ class MasterModulesTableSeeder extends Seeder
                 'name' 	=> 'Testimoniales',
                 'slug' 		=> 'testimoniales',
                 'parent' 	=> NULL,
-                'icon' 		=> 'id-card',
+                'icon' 		=> 'camera',
                 'index'    => $position++
             ],
 
@@ -216,19 +195,58 @@ class MasterModulesTableSeeder extends Seeder
                     'index'    => 2
                 ],
 
+                [
+                    'name' 	=> 'Leads',
+                    'slug' 		=> NULL,
+                    'parent' 	=> NULL,
+                    'icon' 		=> 'database',
+                    'index'    => $position++
+                ],
+                    [
+                        'name' 	=> 'Tradicionales',
+                        'slug' 		=> 'leads/tradicionales',
+                        'parent' 	=> $pLeads,
+                        'icon' 		=> NULL,
+                        'index'    => 1
+                    ],
+    
+                    [
+                        'name' 	=> 'Cita Online',
+                        'slug' 		=> 'leads/cita-online',
+                        'parent' 	=> $pLeads,
+                        'icon' 		=> NULL,
+                        'index'    => 2
+                    ],
+    
+                    [
+                        'name' 	=> 'Venta Terreno',
+                        'slug' 		=> 'leads/venta-terreno',
+                        'parent' 	=> $pLeads,
+                        'icon' 		=> NULL,
+                        'index'    => 3
+                    ],
+            
+                    [
+                        'name' 	=> 'Suscripciones',
+                        'slug' 		=> 'suscripciones',
+                        'parent' 	=> NULL,
+                        'icon' 		=> 'envelope',
+                        'index'    => $position++
+                    ],
+
+            [
+                'name' 	=> 'Libro de Reclamaciones',
+				'slug' 		=> 'libro-de-reclamaciones',
+				'parent' 	=> NULL,
+				'icon' 		=> 'clipboard',
+                'index'    => $position++
+            ],
+
             [
                 'name' 	=> 'Postulantes',
 				'slug' 		=> 'postulantes',
 				'parent' 	=> NULL,
 				'icon' 		=> 'book',
-                'index'    => $position++
-            ],
-
-            [
-                'name' 	=> 'Libro de Reclamaciones',
-				'slug' 		=> 'libro-reclamaciones',
-				'parent' 	=> NULL,
-				'icon' 		=> 'clipboard',
                 'index'    => $position++
             ],
 

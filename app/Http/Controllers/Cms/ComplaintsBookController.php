@@ -7,7 +7,6 @@ use App\Http\Traits\CmsTrait;
 use App\ComplaintBook;
 use App\Repositories\ComplaintBookRepository;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
 
 class ComplaintsBookController extends Controller
 {
@@ -21,10 +20,10 @@ class ComplaintsBookController extends Controller
       $q = $request->q;
       $headers = ["Id", "Código", "Nombre", "Email", "Documento", "Tipo","Registrado el"];
       if($q){
-          $elements = $repo->datatable($request->date,$request->itemsPerPage,$q);
+          $elements = $repo->datatable($request->date,$request->range,$request->itemsPerPage,$q);
       }
       else{
-          $elements = $repo->datatable($request->date,$request->itemsPerPage);
+          $elements = $repo->datatable($request->date,$request->range,$request->itemsPerPage);
       }
       $elements["headers"] = $headers;
       return response()->json($elements);

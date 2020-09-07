@@ -28,7 +28,8 @@ return [
         'project' => 'El projecto',
         'tipology' => 'La tipología',
         'currency' => 'El tipo de moneda',
-        'complaint' => 'El reclamo'
+        'complaint' => 'El reclamo',
+        'suscriber' => 'El suscriptor'
     ],
     'title' => [
         'error' => 'Error',
@@ -60,6 +61,13 @@ return [
         'delete' => [
             'success' => ':name se ha eliminado.',
             'error' => "Lo sentimos, :name no se pudo eliminar debido a un error.",
+        ],
+        'export' => [
+            'success' => 'El archivo se ha exportado.',
+            'no_data' => [
+                'range' => 'No se encontraron resultados en la fecha especificada',
+                'total' => 'No se encontraron resultados'
+            ]
         ],
         'order'  => 'Arrastre los elementos en el orden que desee mostrarlos',
         'cant_delete'  => 'No se puede eliminar debido a que está anidado en al menos un proyecto',

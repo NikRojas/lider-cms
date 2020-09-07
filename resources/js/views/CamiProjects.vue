@@ -5,12 +5,12 @@
         <div class="header-body">
           <div class="row align-items-center pt-0 pt-md-2 pb-4">
             <div class="col-6 col-md-7">
-              <BreadCrumb title="Proyectos" parent active="Proyectos"></BreadCrumb>
+              <BreadCrumb :show-bread-crumb="false" title="Proyectos en los que interviene CAMI"></BreadCrumb>
             </div>
             <div class="col-6 col-md-5 text-right">
               <a href="#" class="btn btn-icon btn-inverse-primary" @click.prevent="newEl">
                 <span class="btn-inner--icon">
-                  <jam-user-square class="current-color" />
+                  <jam-heart class="current-color" />
                 </span>
                 <span class="btn-inner--text">Nuevo Proyecto</span>
               </a>
@@ -35,11 +35,11 @@
           <div class="col-12 col-md-6 col-lg-3 mb-4" v-for="(el,i) in elements" :key="el.id">
             <div class="card">
               <div class="card-body">
-                <div class="text-center mb-2">
+                <div class="text-center mb-3">
                   <img
                     :src="imagesUrl+'/elements/'+el.image"
                     :alt="el.name"
-                    style="height: 140px; width: 250px;"
+                    class="img-fluid"
                   />
                 </div>
                 <h3 class="mb-1">
@@ -103,7 +103,7 @@
                     <img
                       :src="imagesUrl+'/elements/'+element.image"
                       :alt="element.name"
-                      style="height: 140px; width: 250px;"
+                      class="img-fluid"
                     />
                   </div>
                   <div class="col">
@@ -153,7 +153,7 @@
                     <img
                       :src="imagesUrl+'/elements/'+element.icon"
                       :alt="element.name"
-                      style="height: 140px; width: 250px;"
+                      class="img-fluid"
                     />
                   </div>
                   <div class="col">

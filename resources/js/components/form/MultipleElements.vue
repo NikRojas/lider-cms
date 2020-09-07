@@ -7,7 +7,7 @@
         style="position: absolute;
               height: calc(100% - 41px);
               width: 100%;
-              z-index: 1;
+              z-index: 99;
               top: 38px;"
       >
         <Skeleton height="100%" />
@@ -59,6 +59,15 @@
                     :href="imagesUrl+'/'+ folder +'/'+el.file"
                     target="_blank"
                   >{{ el.file }}</a>
+                  <a
+                    v-if="typeof el.file == 'string' && el.file !== ''"
+                    target="_blank"
+                    style="top: 50%;"
+                    :href="imagesUrl+'/'+ folder +'/'+el.file"
+                    class="btn btn-sm btn-icon-only rounded-circle btn-inverse-info"
+                  >
+                    <jam-eye class="current-color" height="18" width="18" />
+                  </a>
                   <vue-dropzone
                     v-else
                     :ref="`ref_file_${i}`"
@@ -87,15 +96,7 @@
               </div>
             </div>
             <div class="col-2">
-              <a
-                v-if="typeof el.file == 'string' && el.file !== ''"
-                target="_blank"
-                style="top: 50%;"
-                :href="imagesUrl+'/'+ folder +'/'+el.file"
-                class="btn btn-sm btn-icon-only rounded-circle btn-inverse-info"
-              >
-                <jam-eye class="current-color" height="18" width="18" />
-              </a>
+              
               <button
                 class="btn btn-sm btn-icon-only rounded-circle btn-inverse-danger"
                 @click.prevent="remove(i)"
@@ -105,6 +106,7 @@
               </button>
             </div>
           </div>
+          <hr class="mt-1 mb-4">
         </div>
       </draggable>
     </div>

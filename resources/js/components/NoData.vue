@@ -234,7 +234,7 @@
         <rect x="546.45191" y="370.05209" width="132.56808" height="4.27639" fill="#3f3d56" />
       </svg>
       <h3 class="h2 font-weight-500 mb-0" v-if="showTitle">No Data</h3>
-      <p :class="showButton ? 'mb-1' : ''">No hay datos disponibles en estos momentos</p>
+      <p :class="showButton ? 'mb-1' : ''">{{ customText ? customText : 'No hay datos disponibles en estos momentos' }}</p>
       <a :href="routeButton" class="btn btn-inverse-info" v-if="showButton">Crea {{ elementTextButton }}</a>
     </div>
   </div>
@@ -245,6 +245,9 @@ export default {
     showSvg:{
       default: true,
       type: Boolean
+    },
+    customText:{
+      type: String
     },
     showButton:{
       default: false,

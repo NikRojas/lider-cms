@@ -23571,6 +23571,19 @@ h6,
   font-family: "Jost", sans-serif !important;
 }
 
+.mx-calendar-content .cell.inrange {
+  background-color: rgba(23, 98, 230, 0.2) !important;
+}
+
+.mx-calendar-content .cell.actived {
+  background-color: #1762e6 !important;
+}
+
+.mx-calendar-content .cell.disabled {
+  background-color: #dcdcdc !important;
+  color: #9c9c9c !important;
+}
+
 .element--selected {
   border: 2px solid #1762e6;
 }

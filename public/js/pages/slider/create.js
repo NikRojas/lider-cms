@@ -43,6 +43,10 @@ __webpack_require__.r(__webpack_exports__);
 //
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
+    showBreadCrumb: {
+      "default": true,
+      type: Boolean
+    },
     title: String,
     parent: String,
     active: String
@@ -335,46 +339,55 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", [
-    _c(
-      "nav",
-      {
-        staticClass: "d-lg-inline-block",
-        attrs: { "aria-label": "breadcrumb" }
-      },
-      [
-        _c(
-          "ol",
-          { staticClass: "breadcrumb p-0 m-0 breadcrumb-links bg-transparent" },
+    _vm.showBreadCrumb
+      ? _c(
+          "nav",
+          {
+            staticClass: "d-lg-inline-block",
+            attrs: { "aria-label": "breadcrumb" }
+          },
           [
-            _c("li", { staticClass: "breadcrumb-item" }, [
-              _c(
-                "a",
-                { attrs: { href: "/dashboard" } },
-                [_c("jam-pie-chart", { attrs: { height: "16", width: "16" } })],
-                1
-              )
-            ]),
-            _vm._v(" "),
-            _vm.parent
-              ? _c("li", { staticClass: "breadcrumb-item" }, [
-                  _c("a", [_vm._v(_vm._s(_vm.parent))])
-                ])
-              : _vm._e(),
-            _vm._v(" "),
-            _vm.active
-              ? _c(
-                  "li",
-                  {
-                    staticClass: "breadcrumb-item text-primary",
-                    attrs: { "aria-current": "page" }
-                  },
-                  [_vm._v(_vm._s(_vm.active))]
-                )
-              : _vm._e()
+            _c(
+              "ol",
+              {
+                staticClass:
+                  "breadcrumb p-0 m-0 breadcrumb-links bg-transparent"
+              },
+              [
+                _c("li", { staticClass: "breadcrumb-item" }, [
+                  _c(
+                    "a",
+                    { attrs: { href: "/dashboard" } },
+                    [
+                      _c("jam-pie-chart", {
+                        attrs: { height: "16", width: "16" }
+                      })
+                    ],
+                    1
+                  )
+                ]),
+                _vm._v(" "),
+                _vm.parent
+                  ? _c("li", { staticClass: "breadcrumb-item" }, [
+                      _c("a", [_vm._v(_vm._s(_vm.parent))])
+                    ])
+                  : _vm._e(),
+                _vm._v(" "),
+                _vm.active
+                  ? _c(
+                      "li",
+                      {
+                        staticClass: "breadcrumb-item text-primary",
+                        attrs: { "aria-current": "page" }
+                      },
+                      [_vm._v(_vm._s(_vm.active))]
+                    )
+                  : _vm._e()
+              ]
+            )
           ]
         )
-      ]
-    ),
+      : _vm._e(),
     _vm._v(" "),
     _c("h1", { staticClass: "h1 font-weight-bold mb-0" }, [
       _vm._v(_vm._s(_vm.title))

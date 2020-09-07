@@ -138,7 +138,7 @@
                         <jam-info class="current-color" height="18" width="18" />
                       </a>-->
                     </template>
-                    <template v-else>
+                    <!--<template v-else>
                       <a
                         href="#"
                         @click.prevent="clickDelete(element.id)"
@@ -146,7 +146,7 @@
                       >
                         <jam-trash class="current-color" height="18" width="18" />
                       </a>
-                    </template>
+                    </template>-->
                   </td>
                 </tr>
               </tbody>

@@ -2,7 +2,8 @@ window.Vue = require('vue');
 require('./bootstrap-vue');
 require('./axios');
 
-
+import { Timeline } from 'ant-design-vue';
+Vue.use(Timeline);
 
 import Sweetalert2 from 'sweetalert2/src/sweetalert2.js';
 window.Swal = Sweetalert2;
@@ -79,6 +80,9 @@ const app = new Vue({
 
         'customers-index': () => import('./views/Customers/Index.vue' /* webpackChunkName: "js/pages/customers/index" */),
         'customers-read': () => import('./views/Customers/Read.vue' /* webpackChunkName: "js/pages/customers/read" */),
+
+        'orders-index': () => import('./views/Orders/Index.vue' /* webpackChunkName: "js/pages/orders/index" */),
+        'orders-read': () => import('./views/Orders/Read.vue' /* webpackChunkName: "js/pages/orders/read" */),
     }
 });
 import Validation from './functions/validation.js'

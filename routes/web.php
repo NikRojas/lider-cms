@@ -81,6 +81,18 @@ Route::middleware(['auth'])->namespace('Cms')->name('cms.')->group(function () {
     });
 
     #Customers
+    Route::namespace('SalesStatistics')->name('sales-statistics.')->group(function () {
+        Route::name('orders.')->prefix('ventas')->group(function () {
+            Route::get('/', 'SalesController@index')->name('index');
+            Route::get('/json/get-all', 'SalesController@getAll')->name('get-all');
+            Route::post('export', 'SalesController@export')->name('export'); 
+            Route::post('export/total', 'SalesController@exportTotal')->name('export-total'); 
+            Route::get('export/{from?}/{to?}', 'SalesController@exportFile')->name('export-file'); 
+            Route::get('/{element}', 'SalesController@read')->name('read');
+        });
+    });
+
+    #Customers
     Route::namespace('Customers')->prefix('clientes')->name('customers.')->group(function () {
         Route::get('/', 'CustomersController@index')->name('index');
         Route::get('/json/get-all', 'CustomersController@getAll')->name('get-all');
@@ -99,7 +111,7 @@ Route::middleware(['auth'])->namespace('Cms')->name('cms.')->group(function () {
     });
 
     #Suscribers
-    Route::prefix('suscriptores')->name('suscribers.')->group(function () {
+    Route::prefix('suscripciones')->name('suscribers.')->group(function () {
         Route::get('/', 'SuscribersController@index')->name('index');
         Route::get('/json/get-all', 'SuscribersController@getAll')->name('get-all');
         Route::get('/json/get/{element}', 'SuscribersController@get')->name('get');

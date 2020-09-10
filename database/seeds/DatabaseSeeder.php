@@ -23,7 +23,8 @@ class DatabaseSeeder extends Seeder
         $this->call(MasterTypeGalleryTableSeeder::class);
         $this->call(MasterDocumentsTypeSeeder::class);
         $this->call(MasterClaimsSeeder::class);
-        $this->call(MasterGoodContractedSeeder::class);*/
+        $this->call(MasterGoodContractedSeeder::class);
+        $this->call(MasterTransactionStatusTableSeeder::class);*/
         /*$this->call(ComplaintsBookSeeder::class);*/
         /*$this->call(ProjectQuotationsTableSeeder::class);*/
         //$this->call(SuscribersTableSeeder::class);
@@ -31,5 +32,6 @@ class DatabaseSeeder extends Seeder
         $this->call(CustomersTableSeeder::class);
         $this->call(OrdersTableSeeder::class);
         $this->call(OrderDetailsTableSeeder::class);
+        $this->call(TransactionsTableSeeder::class);
     }
 }

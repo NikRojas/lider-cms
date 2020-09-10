@@ -215,7 +215,7 @@ export default {
     exportData() {
       this.modalExport = true;
     },
-   showEl(id) {      
+    showEl(id) {      
      window.location.href = this.route + '/' + id;
     },
     getEls(page, itemsPerPage, q = null) {

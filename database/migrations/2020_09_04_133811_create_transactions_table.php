@@ -19,7 +19,9 @@ class CreateTransactionsTable extends Migration
             $table->foreign('order_id')->references('id')->on('orders');
             $table->timestamp('transaction_date');
             $table->float('amount');
-            $table->json('response');
+            $table->bigInteger('transaction_status_id')->unsigned();
+            $table->foreign('transaction_status_id')->references('id')->on('master_transaction_status');
+            $table->json('response')->nullable();
             $table->timestamps();
         });
     }

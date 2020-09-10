@@ -33,11 +33,14 @@
     },
     "dependencies": {
         "@growthbunker/vueflags": "^0.1.2",
+        "@growthbunker/vuetimeline": "^0.1.17",
+        "ant-design-vue": "^1.6.5",
         "chart.js": "^2.9.3",
         "simplebar-vue": "^1.5.1",
         "v-money": "^0.8.1",
         "vue-carousel": "^0.18.0",
         "vue-chartjs": "^3.5.0",
+        "vue-cute-timeline": "^1.2.8",
         "vue-jam-icons": "^1.0.1",
         "vue-loading-skeleton": "^1.1.9"
     }

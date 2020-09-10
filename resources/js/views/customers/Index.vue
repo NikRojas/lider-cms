@@ -148,7 +148,6 @@ export default {
       ],
       errors:{},
       elementsPerPage: 10,
-      modalShow: false,
       modalDestroy: false,
       loadingGetAll: false,
       loadingGet: false,

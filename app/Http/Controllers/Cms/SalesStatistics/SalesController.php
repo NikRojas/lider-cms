@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Cms\SalesStatistics;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Cms\SalesStatistics\OrderExportRequest;
 use App\Http\Traits\CmsTrait;
 use App\Order;
 use App\Http\Requests\Cms\SalesStatistics\SalesExportRequest;
@@ -41,29 +42,27 @@ class SalesController extends Controller
         return view ("pages.orders.read", compact('element'));   
     }
 
-
-    /*public function export(CustomerExportRequest $request){
+    public function export(OrderExportRequest $request){
         $from = date("Y-m-d 23:59:59", strtotime($request->range[0]));
         $to = date("Y-m-d 23:59:59", strtotime($request->range[1]));
-        //dd($from.$to);
         if($from == $to){
-            $customers = Customer::whereDate('created_at', '=', date("Y-m-d", strtotime($request->range[0])) )->count();
+            $orders = Order::whereDate('created_at', '=', date("Y-m-d", strtotime($request->range[0])) )->count();
         }
         else{
-            $customers = Customer::whereBetween('created_at', [$from, $to])->count();
+            $orders = Order::whereBetween('created_at', [$from, $to])->count();
         }
-        if(!$customers){
+        if(!$orders){
             return response()->json(['title'=> trans('custom.title.error'), 'message'=> trans('custom.message.export.no_data.range')],500);
         }
-        return response()->json(['title'=> trans('custom.title.success'), 'message'=> trans('custom.message.export.success'), 'route'=> route('cms.customers.export-file', ["from" => $from ,"to" => $to])]);
+        return response()->json(['title'=> trans('custom.title.success'), 'message'=> trans('custom.message.export.success'), 'route'=> route('cms.sales-statistics.orders.export-file', ["from" => $from ,"to" => $to])]);
     }
 
     public function exportTotal(){
-        $customers = Customer::first(); 
-        if(!$customers){
+        $orders = Order::first(); 
+        if(!$orders){
             return response()->json(['title'=> trans('custom.title.error'), 'message'=> trans('custom.message.export.no_data.total')],500);    
         }
-        return response()->json(['title'=> trans('custom.title.success'), 'message'=> trans('custom.message.export.success'), 'route'=> route('cms.customers.export-file')]);
+        return response()->json(['title'=> trans('custom.title.success'), 'message'=> trans('custom.message.export.success'), 'route'=> route('cms.sales-statistics.orders.export-file')]);
     }
 
     public function exportFile($from = null,$to = null){
@@ -71,18 +70,22 @@ class SalesController extends Controller
         $sheet = $spreadsheet->getActiveSheet();
         if($from && $to){
             if($from == $to){
-                $customers = Customer::whereDate('created_at', '=', date("Y-m-d", strtotime($from)) )->orderBy('created_at','desc')->get();
+                $orders = Order::whereDate('created_at', '=', date("Y-m-d", strtotime($from)) )
+                ->with('customerRel:id,name,lastname')->with('orderDetailsRel.tipologyRel:id,name')->with('orderDetailsRel.projectRel:id,name_es')
+                ->with('transactionLatestRel.statusRel')->orderBy('created_at','desc')->get();
             }
             else{
-                $customers = Customer::whereBetween('created_at', [ date("Y-m-d", strtotime($from)), date("Y-m-d", strtotime($to))])->orderBy('created_at','desc')->get();
+                $orders = Order::whereBetween('created_at', [ date("Y-m-d", strtotime($from)), date("Y-m-d", strtotime($to))])
+                ->with('customerRel:id,name,lastname')->with('orderDetailsRel.tipologyRel:id,name')->with('orderDetailsRel.projectRel:id,name_es')
+                ->with('transactionLatestRel.statusRel')->orderBy('created_at','desc')->get();
             }
-            $sheet->setTitle(''.(new Carbon($from))->format('d-m-Y'). ' desde '.(new Carbon($to))->format('d-m-Y'));
-            $fileName = 'Clientes '.(new Carbon($from))->format('d-m-Y'). ' hasta '.(new Carbon($to))->format('d-m-Y').'.xls';
+            $sheet->setTitle(''.(new Carbon($from))->format('d-m-Y'). ' hasta '.(new Carbon($to))->format('d-m-Y'));
+            $fileName = 'Ventas '.(new Carbon($from))->format('d-m-Y'). ' hasta '.(new Carbon($to))->format('d-m-Y').'.xls';
         }
         else{
-            $customers = Customer::orderBy('created_at','desc')->get(); 
+            $orders = Order::orderBy('created_at','desc')->get(); 
             $sheet->setTitle('Total');
-            $fileName = 'Clientes Totales.xls';
+            $fileName = 'Ventas Totales.xls';
         }
         $style = [
             'font' => [
@@ -96,44 +99,37 @@ class SalesController extends Controller
             ]
         ];
         $sheet->getStyle('A1:F1')->applyFromArray($style);
-        $sheet->setCellValue('A1','NOMBRES');
-        $sheet->setCellValue('B1','APELLIDOS');
-        $sheet->setCellValue('C1','DNI');
-        $sheet->setCellValue('D1','MOVIL');
-        $sheet->setCellValue('E1','EMAIL');
-        $sheet->setCellValue('F1','REGISTRADO EL');
-        $sheet->setAutoFilter('A1:F1');
-        foreach($customers as $key => $el){
-            $sheet->setCellValue('A'.($key+2), $el->name);
-            $sheet->setCellValue('B'.($key+2), $el->lastname);
-            $sheet->setCellValue('C'.($key+2), $el->document_number);
-            if($el->mobile){
-                $mobile = $el->mobile_formatted;
-            }
-            else{
-                $mobile = "No Registrado";
-            }
-            $sheet->setCellValue('D'.($key+2), $mobile);
-            if($el->email){
-                $email = $el->email;
-            }
-            else{
-                $email = "No Registrado";
-            }
-            $sheet->setCellValue('E'.($key+2), $email);
-            $sheet->setCellValue('F'.($key+2), $el->created_at_format);
+        $sheet->setCellValue('A1','CODIGO');
+        $sheet->setCellValue('B1','FECHA');
+        $sheet->setCellValue('C1','CLIENTE NOMBRES');
+        $sheet->setCellValue('D1','CLIENTE APELLIDOS');
+        $sheet->setCellValue('E1','RESERVA PROYECTO');
+        $sheet->setCellValue('F1','RESERVA TIPOLOGIA');
+        $sheet->setCellValue('G1','TOTAL');
+        $sheet->setCellValue('H1','ESTADO DE PAGO');
+        $sheet->setAutoFilter('A1:H1');
+        foreach($orders as $key => $el){
+            $sheet->setCellValue('A'.($key+2), '#'.$el->id);
+            $sheet->setCellValue('B'.($key+2), $el->order_date_format_table);
+            $sheet->setCellValue('C'.($key+2), $el->customerRel["name"]);
+            $sheet->setCellValue('D'.($key+2), $el->customerRel["lastname"]);
+            $sheet->setCellValue('E'.($key+2), $el->orderDetailsRel[0]["projectRel"]["name_es"]);
+            $sheet->setCellValue('F'.($key+2), $el->orderDetailsRel[0]["tipologyRel"]["name"]);
+            $sheet->setCellValue('G'.($key+2), $el->total_format);
+            $sheet->setCellValue('H'.($key+2), $el->transactionLatestRel["statusRel"]["name"]);
         }
-        $sheet->getStyle('A1:F1')->applyFromArray($style);
+        $sheet->getStyle('A1:H1')->applyFromArray($style);
         $sheet->getColumnDimension('A')->setAutoSize(true);
         $sheet->getColumnDimension('B')->setAutoSize(true);
         $sheet->getColumnDimension('C')->setAutoSize(true);
         $sheet->getColumnDimension('D')->setAutoSize(true);
         $sheet->getColumnDimension('E')->setAutoSize(true);
         $sheet->getColumnDimension('F')->setAutoSize(true);
+        $sheet->getColumnDimension('G')->setAutoSize(true);
         $writer = new Xls($spreadsheet);
         header('Content-Type: application/vnd.ms-excel');
         header('Content-Disposition: attachment; filename="'.$fileName.'"');
         header('Cache-Control: max-age=0');
         return $writer->save("php://output");
-    }*/
+    }
 }

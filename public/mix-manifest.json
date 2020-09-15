@@ -31,7 +31,6 @@
     "/js/pages/content/social-networks.js": "/js/pages/content/social-networks.js",
     "/js/pages/customers/index.js": "/js/pages/customers/index.js",
     "/js/pages/customers/read.js": "/js/pages/customers/read.js",
-    "/js/pages/customers/read~js/pages/orders/read.js": "/js/pages/customers/read~js/pages/orders/read.js",
     "/js/pages/lead/landsale.js": "/js/pages/lead/landsale.js",
     "/js/pages/lead/online.js": "/js/pages/lead/online.js",
     "/js/pages/lead/traditional.js": "/js/pages/lead/traditional.js",
@@ -65,6 +64,6 @@
     "/vendors~js/pages/blog/post/create~js/pages/cami~js/pages/cami-projects~js/pages/projects/create~js/p~b4e33b4b.js": "/vendors~js/pages/blog/post/create~js/pages/cami~js/pages/cami-projects~js/pages/projects/create~js/p~b4e33b4b.js",
     "/vendors~js/pages/cami-projects~js/pages/content/members~js/pages/content/social-networks~js/pages/pr~7c2a68c7.js": "/vendors~js/pages/cami-projects~js/pages/content/members~js/pages/content/social-networks~js/pages/pr~7c2a68c7.js",
     "/vendors~js/pages/complaints-book~js/pages/customers/index~js/pages/orders/index~js/pages/slider/crea~7d661cec.js": "/vendors~js/pages/complaints-book~js/pages/customers/index~js/pages/orders/index~js/pages/slider/crea~7d661cec.js",
-    "/vendors~js/pages/projects/read.js": "/vendors~js/pages/projects/read.js",
-    "/vendors~js/pages/orders/read.js": "/vendors~js/pages/orders/read.js"
+    "/vendors~js/pages/orders/read.js": "/vendors~js/pages/orders/read.js",
+    "/vendors~js/pages/projects/read.js": "/vendors~js/pages/projects/read.js"
 }

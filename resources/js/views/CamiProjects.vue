@@ -59,6 +59,7 @@
                   <div v-html="el.description_en"></div>
                 </h3>
                 <div class="mt-4 text-center">
+                  <button @click="detailEl(el.id)" class="btn btn-inverse-success btn-sm">Ver</button>
                   <button @click="editEl(el.id)" class="btn btn-inverse-info btn-sm">Editar</button>
                   <button @click="deleteEl(el.id)" class="btn btn-inverse-danger btn-sm">Eliminar</button>
                 </div>
@@ -219,6 +220,162 @@
         <button type="button" class="btn btn-secondary" @click="restoreEl">Cancelar</button>
       </template>
     </b-modal>
+
+    <b-modal
+      v-model="modalDetail"
+      @close="restoreEl"
+      no-close-on-esc
+      no-close-on-backdrop
+      centered
+      size="lg"
+      footer-class="border-0 pt-0"
+      body-class="pt-0"
+    >
+      <template slot="modal-title">
+        <div class="text-primary h2">{{ title }} Proyecto</div>
+      </template>
+      <template slot="modal-header-close">
+        <button type="button" class="btn p-0 bg-transparent" @click="restoreEl">
+          <jam-close></jam-close>
+        </button>
+      </template>
+      <div v-if="loadingGet">
+        <SkeletonForm></SkeletonForm>
+      </div>
+      <div v-else> 
+          <div class="row">
+            <div class="col-12">
+              <div class="form-group">
+                <label class="font-weight-bold" for="image">Imagen:</label>
+                <div class="row">
+                  <div class="col text-center" v-if="element.image">
+                    <img
+                      :src="imagesUrl+'/elements/'+element.image"
+                      :alt="element.name"
+                      style="height: 140px; width: 250px;"
+                    />
+                  </div> 
+                </div> 
+              </div>
+            </div>
+            <div class="col-12 col-md-6">
+              <div class="form-group">
+                <label class="font-weight-bold">Nombre Español:</label>
+                <template v-if="element.name_es">
+                  <p>{{ element.name_es }}</p>
+                </template>
+              </div>
+            </div>
+            <div class="col-12 col-md-6">
+              <div class="form-group">
+                <label class="font-weight-bold">Nombre Inglés:</label>
+                <template v-if="element.name_en">
+                  <p>{{ element.name_en }}</p>
+                </template>
+              </div>
+            </div>
+            <div class="col-12">
+              <div class="form-group">
+                <label class="font-weight-bold" for="icon">Ícono:</label>
+                <div class="row">
+                  <div class="col text-center" v-if="element.icon">
+                    <img
+                      :src="imagesUrl+'/elements/'+element.icon"
+                      :alt="element.name"
+                      style="height: 140px; width: 250px;"
+                    />
+                  </div> 
+                </div> 
+              </div>
+            </div> 
+            <div class="col-12 col-md-6">
+              <div class="form-group">
+                <label class="font-weight-bold">Descripción Español:</label>
+                <template v-if="element.description_es">
+                  <div v-html="element.description_es"></div>
+                </template>
+              </div>
+            </div>
+
+            <div class="col-12 col-md-6">
+              <div class="form-group">
+                <label class="font-weight-bold">Descripción Inglés:</label>
+                <template v-if="element.description_en">
+                  <div v-html="element.description_en"></div>
+                </template>
+              </div>
+            </div>
+
+
+            <table class="table align-items-center mb-3">
+              <thead class="thead-light">
+                <tr>
+                  <th>Elementos</th>
+                  <th></th>
+                </tr>
+              </thead>
+            </table>
+ 
+            <template v-for="(el,index) in element.files">
+              <div class="col-12 col-md-4" :key="index">
+                <div class="row">
+                  <div class="col-12">
+                    <div class="form-group">
+                      <label class="font-weight-bold" for="image">Imagen:</label>
+                      <div class="row">
+                        <div class="col text-center" v-if="el.file">
+                          <img
+                            :src="imagesUrl+'/elements/'+el.file"
+                            :alt="el.name"
+                            style="height: 140px; width: 250px;"
+                          />
+                        </div> 
+                      </div> 
+                    </div>
+                  </div>
+                  <div class="col-12">
+                    <div class="form-group">
+                      <label class="font-weight-bold">Título Español:</label>
+                      <template v-if="el.title_es">
+                        <p>{{ el.title_es }}</p>
+                      </template>
+                    </div>
+                  </div>
+                  <div class="col-12">
+                    <div class="form-group">
+                      <label class="font-weight-bold">Título Inglés:</label>
+                      <template v-if="el.title_en">
+                        <p>{{ el.title_en }}</p>
+                      </template>
+                    </div>
+                  </div>
+                  <div class="col-12">
+                    <div class="form-group">
+                      <label class="font-weight-bold">Descripción Español:</label>
+                      <template v-if="el.description_es">
+                        <div v-html="el.description_es"></div>
+                      </template>
+                    </div>
+                  </div>
+                  <div class="col-12">
+                    <div class="form-group">
+                      <label class="font-weight-bold">Descripción Inglés:</label>
+                      <template v-if="el.description_en">
+                        <div v-html="el.description_en"></div>
+                      </template>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </template>
+             
+          </div> 
+      </div>
+      <template v-slot:modal-footer="{ ok }"> 
+        <button type="button" class="btn btn-secondary" @click="restoreEl">Aceptar</button>
+      </template>
+    </b-modal>
+
     <destroy
       element="elemento"
       @cancel="restoreEl"
@@ -269,6 +426,7 @@ export default {
       errors: {},
       requestSubmit: false,
       modalCreateUpdate: false,
+      modalDetail: false,
       modalDestroy: false,
       loadingGet: false,
       loadingEls: false,
@@ -359,6 +517,11 @@ export default {
     editEl(id) {
       this.title = "Actualizar";
       this.modalCreateUpdate = true;
+      this.getEl(id);
+    },
+    detailEl(id) {
+      this.title = "Detalle de ";
+      this.modalDetail = true;
       this.getEl(id);
     },
     submit() {
@@ -461,7 +624,7 @@ export default {
       (this.element = {
         image: "",
       }),
-        (this.modalCreateUpdate = this.modalDestroy = false);
+        (this.modalCreateUpdate = this.modalDestroy = this.modalDetail = false);
       this.errors = {};
     },
     getEls() {

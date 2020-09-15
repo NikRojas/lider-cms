@@ -24,8 +24,7 @@
         <div class="col-12" v-for="(el,i) in files" :key="i">
           <div class="row">
             <div class="col-10">
-              <div class="col-12">
-                <div class="form-group">
+              <div class="col-12"> 
                   <Input
                     label="Título"
                     :variable="'files.'+i+'.title'"
@@ -34,13 +33,11 @@
                     :valueEs.sync="el.title_es"
                     :valueEnParent="el.title_en"
                     :valueEsParent="el.title_es"
-                  />
-                </div>
+                  /> 
               </div>
               <div class="col-12">
                 <div class="row">
-                  <div class="col-12">
-                    <div class="form-group">
+                  <div class="col-12"> 
                       <Editor
                         size="sm"
                         label="Descripción"
@@ -50,8 +47,7 @@
                         :valueEs.sync="el.description_es"
                         :valueEnParent="el.description_en"
                         :valueEsParent="el.description_es"
-                      />
-                    </div>
+                      /> 
                   </div>
                 </div>
               </div>
@@ -172,7 +168,7 @@ export default {
   methods: {
     updateImages() {
       this.files.forEach((element, i) => {
-        if (element.file instanceof File) {
+        if (element.file instanceof File) { 
           this.$refs["ref_file_" + i][0].dropzone.files.pop();
           document
             .querySelectorAll("#images" + i + ">.dz-preview")
@@ -194,7 +190,7 @@ export default {
         }
       });
     },
-    handleEnd(added, removed, moved) {
+    handleEnd(added, removed, moved) { 
       //this.updateImages();
       this.showLoading = true;
       setTimeout(() => {
@@ -211,6 +207,10 @@ export default {
       }
       this.files.push({
         file: "",
+        title_es: "",
+        title_en: "",
+        description_es: "",
+        description_en: ""
       });
     },
     remove(index) {

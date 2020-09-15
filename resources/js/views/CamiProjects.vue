@@ -36,11 +36,7 @@
             <div class="card">
               <div class="card-body">
                 <div class="text-center mb-3">
-                  <img
-                    :src="imagesUrl+'/elements/'+el.image"
-                    :alt="el.name"
-                    class="img-fluid"
-                  />
+                  <img :src="imagesUrl+'/elements/'+el.image" :alt="el.name" class="img-fluid" />
                 </div>
                 <h3 class="mb-1">
                   <span class="font-weight-normal">Nombre ES:</span>
@@ -59,7 +55,7 @@
                   <div v-html="el.description_en"></div>
                 </h3>
                 <div class="mt-4 text-center">
-                  <button @click="detailEl(el.id)" class="btn btn-inverse-success btn-sm">Ver</button>
+                  <button @click="detailEl(el.id)" class="btn btn-inverse-primary btn-sm">Ver</button>
                   <button @click="editEl(el.id)" class="btn btn-inverse-info btn-sm">Editar</button>
                   <button @click="deleteEl(el.id)" class="btn btn-inverse-danger btn-sm">Eliminar</button>
                 </div>
@@ -242,136 +238,127 @@
       <div v-if="loadingGet">
         <SkeletonForm></SkeletonForm>
       </div>
-      <div v-else> 
-          <div class="row">
-            <div class="col-12">
-              <div class="form-group">
-                <label class="font-weight-bold" for="image">Imagen:</label>
-                <div class="row">
-                  <div class="col text-center" v-if="element.image">
-                    <img
-                      :src="imagesUrl+'/elements/'+element.image"
-                      :alt="element.name"
-                      style="height: 140px; width: 250px;"
-                    />
-                  </div> 
-                </div> 
-              </div>
-            </div>
-            <div class="col-12 col-md-6">
-              <div class="form-group">
-                <label class="font-weight-bold">Nombre Español:</label>
-                <template v-if="element.name_es">
-                  <p>{{ element.name_es }}</p>
-                </template>
-              </div>
-            </div>
-            <div class="col-12 col-md-6">
-              <div class="form-group">
-                <label class="font-weight-bold">Nombre Inglés:</label>
-                <template v-if="element.name_en">
-                  <p>{{ element.name_en }}</p>
-                </template>
-              </div>
-            </div>
-            <div class="col-12">
-              <div class="form-group">
-                <label class="font-weight-bold" for="icon">Ícono:</label>
-                <div class="row">
-                  <div class="col text-center" v-if="element.icon">
-                    <img
-                      :src="imagesUrl+'/elements/'+element.icon"
-                      :alt="element.name"
-                      style="height: 140px; width: 250px;"
-                    />
-                  </div> 
-                </div> 
-              </div>
-            </div> 
-            <div class="col-12 col-md-6">
-              <div class="form-group">
-                <label class="font-weight-bold">Descripción Español:</label>
-                <template v-if="element.description_es">
-                  <div v-html="element.description_es"></div>
-                </template>
-              </div>
-            </div>
-
-            <div class="col-12 col-md-6">
-              <div class="form-group">
-                <label class="font-weight-bold">Descripción Inglés:</label>
-                <template v-if="element.description_en">
-                  <div v-html="element.description_en"></div>
-                </template>
-              </div>
-            </div>
-
-
-            <table class="table align-items-center mb-3">
-              <thead class="thead-light">
-                <tr>
-                  <th>Elementos</th>
-                  <th></th>
-                </tr>
-              </thead>
-            </table>
- 
-            <template v-for="(el,index) in element.files">
-              <div class="col-12 col-md-4" :key="index">
-                <div class="row">
-                  <div class="col-12">
-                    <div class="form-group">
-                      <label class="font-weight-bold" for="image">Imagen:</label>
-                      <div class="row">
-                        <div class="col text-center" v-if="el.file">
-                          <img
-                            :src="imagesUrl+'/elements/'+el.file"
-                            :alt="el.name"
-                            style="height: 140px; width: 250px;"
-                          />
-                        </div> 
-                      </div> 
-                    </div>
-                  </div>
-                  <div class="col-12">
-                    <div class="form-group">
-                      <label class="font-weight-bold">Título Español:</label>
-                      <template v-if="el.title_es">
-                        <p>{{ el.title_es }}</p>
-                      </template>
-                    </div>
-                  </div>
-                  <div class="col-12">
-                    <div class="form-group">
-                      <label class="font-weight-bold">Título Inglés:</label>
-                      <template v-if="el.title_en">
-                        <p>{{ el.title_en }}</p>
-                      </template>
-                    </div>
-                  </div>
-                  <div class="col-12">
-                    <div class="form-group">
-                      <label class="font-weight-bold">Descripción Español:</label>
-                      <template v-if="el.description_es">
-                        <div v-html="el.description_es"></div>
-                      </template>
-                    </div>
-                  </div>
-                  <div class="col-12">
-                    <div class="form-group">
-                      <label class="font-weight-bold">Descripción Inglés:</label>
-                      <template v-if="el.description_en">
-                        <div v-html="el.description_en"></div>
-                      </template>
-                    </div>
-                  </div>
+      <div v-else>
+        <div class="row">
+          <div class="col-12">
+            <div class="form-group">
+              <label class="font-weight-bold" for="image">Imagen:</label>
+              <div class="row">
+                <div class="col text-center" v-if="element.image">
+                  <img :src="imagesUrl+'/elements/'+element.image" :alt="element.name" />
                 </div>
               </div>
-            </template>
-             
-          </div> 
+            </div>
+          </div>
+          <div class="col-12 col-md-6">
+            <div class="form-group">
+              <label class="font-weight-bold">Nombre Español:</label>
+              <template v-if="element.name_es">
+                <p>{{ element.name_es }}</p>
+              </template>
+            </div>
+          </div>
+          <div class="col-12 col-md-6">
+            <div class="form-group">
+              <label class="font-weight-bold">Nombre Inglés:</label>
+              <template v-if="element.name_en">
+                <p>{{ element.name_en }}</p>
+              </template>
+            </div>
+          </div>
+          <div class="col-12">
+            <div class="form-group">
+              <label class="font-weight-bold" for="icon">Ícono:</label>
+              <div class="row">
+                <div class="col text-center" v-if="element.icon">
+                  <img :src="imagesUrl+'/elements/'+element.icon" :alt="element.name" />
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-12 col-md-6">
+            <div class="form-group">
+              <label class="font-weight-bold">Descripción Español:</label>
+              <template v-if="element.description_es">
+                <div v-html="element.description_es"></div>
+              </template>
+            </div>
+          </div>
+
+          <div class="col-12 col-md-6">
+            <div class="form-group">
+              <label class="font-weight-bold">Descripción Inglés:</label>
+              <template v-if="element.description_en">
+                <div v-html="element.description_en"></div>
+              </template>
+            </div>
+          </div>
+          <div class="col-12">
+            <div class="card">
+              <div class="table-responsive">
+                <table class="table align-items-center mb-3">
+                  <thead class="thead-light">
+                    <tr>
+                      <th>Elementos</th>
+                      <th></th>
+                    </tr>
+                  </thead>
+                </table>
+
+                <template class="row" v-for="(el,index) in element.files">
+                  <div class="col-12" :key="index">
+                    <div class="row">
+                      <div class="col-12">
+                        <div class="form-group">
+                          <label class="font-weight-bold" for="image">Imagen:</label>
+                          <div class="row">
+                            <div class="col text-center" v-if="el.file">
+                              <img :src="imagesUrl+'/elements/'+el.file" :alt="el.name" />
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-12 col-lg-6">
+                        <div class="form-group">
+                          <label class="font-weight-bold">Título Español:</label>
+                          <template v-if="el.title_es">
+                            <p>{{ el.title_es }}</p>
+                          </template>
+                        </div>
+                      </div>
+                      <div class="col-12 col-lg-6">
+                        <div class="form-group">
+                          <label class="font-weight-bold">Título Inglés:</label>
+                          <template v-if="el.title_en">
+                            <p>{{ el.title_en }}</p>
+                          </template>
+                        </div>
+                      </div>
+                      <div class="col-12 col-lg-6">
+                        <div class="form-group">
+                          <label class="font-weight-bold">Descripción Español:</label>
+                          <template v-if="el.description_es">
+                            <div v-html="el.description_es"></div>
+                          </template>
+                        </div>
+                      </div>
+                      <div class="col-12 col-lg-6">
+                        <div class="form-group">
+                          <label class="font-weight-bold">Descripción Inglés:</label>
+                          <template v-if="el.description_en">
+                            <div v-html="el.description_en"></div>
+                          </template>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </template>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
-      <template v-slot:modal-footer="{ ok }"> 
+      <template v-slot:modal-footer="{ ok }">
         <button type="button" class="btn btn-secondary" @click="restoreEl">Aceptar</button>
       </template>
     </b-modal>
@@ -542,7 +529,7 @@ export default {
       }
       if (this.element.name_en) {
         fd.append("name_en", this.element.name_en);
-      } 
+      }
       if (this.element.description_es) {
         fd.append("description_es", this.element.description_es);
       }

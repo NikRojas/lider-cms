@@ -24,7 +24,8 @@ class Order extends Model
 
     public function orderDetailsRel()
     {
-        return $this->hasMany('App\OrderDetail', 'order_id', 'id');
+        //return $this->hasOne('App\OrderDetail', 'order_id', 'id');
+        return $this->hasOne('App\OrderDetail', 'order_id', 'id');
     }
 
     public function customerRel()

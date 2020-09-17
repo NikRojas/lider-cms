@@ -7,8 +7,10 @@
 @endsection
 @section('content')
     <orders-read route-return="{{ route('cms.sales-statistics.orders.index') }}"
+    route-resend="{{ route('cms.sales-statistics.orders.index') }}"
     :element-parent="{{ $element }}"
+    :timeline-parent="{{ json_encode($timeline) }}"
     images-url="{{ config('services.images_url') }}"
     route-project="{{ route('cms.projects.index') }}"
-route-customer="{{ route('cms.customers.index')}}"></orders-read>
+    route-customer="{{ route('cms.customers.index')}}"></orders-read>
 @endsection

@@ -88,6 +88,7 @@ Route::middleware(['auth'])->namespace('Cms')->name('cms.')->group(function () {
             Route::post('export', 'SalesController@export')->name('export'); 
             Route::post('export/total', 'SalesController@exportTotal')->name('export-total'); 
             Route::get('export/{from?}/{to?}', 'SalesController@exportFile')->name('export-file'); 
+            Route::post('resend/{element}', 'SalesController@resendEmail')->name('resend'); 
             Route::get('/{element}', 'SalesController@read')->name('read');
         });
     });

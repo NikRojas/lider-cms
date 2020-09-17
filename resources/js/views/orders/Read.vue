@@ -41,34 +41,34 @@
                       <h2 class>Detalle de Reserva</h2>
                     </div>
                   </div>
-                  <div class="card mb-4" v-for="el in element.order_details_rel" :key="el.id">
-                    <div class="row p-md-3">
+                  <div class="card mb-4">
+                    <div class="row p-2 p-md-3">
                       <div class="col-10 d-flex align-items-center">
                         <div class="row w-100">
                           <div class="col-6">
                             <img
                               height="50"
-                              class="d-block d-md-inline"
-                              :src="imagesUrl + '/projects/tipologies/'+el.tipology_rel.image"
+                              class="ml-md-0 ml-3 d-block d-md-inline"
+                              :src="imagesUrl + '/projects/tipologies/'+element.order_details_rel.tipology_rel.image"
                               alt
                             />
                             <div class="ml-md-0 ml-3 mt-1">
                               <a
                                 style="text-decoration: underline;"
-                                :href="routeProject+'/'+el.project_rel.slug_es"
+                                :href="routeProject+'/'+element.order_details_rel.project_rel.slug_es"
                                 class="h3 text-primary"
-                              >Projecto {{ el.project_rel.name_es}}</a>
+                              >Projecto {{ element.order_details_rel.project_rel.name_es}}</a>
                               <div class="mt-2">
                                 <h3 class="font-weight-normal">
                                   Tipología:
-                                  <span class="font-weight-bold">{{ el.tipology_rel.name}}</span>
+                                  <span class="font-weight-bold">{{ element.order_details_rel.tipology_rel.name}}</span>
                                 </h3>DETALLES ADICIONALES
                               </div>
                             </div>
                           </div>
                           <div
                             class="col-6 d-flex align-items-center justify-content-center"
-                          >{{el.project_rel.price_format}} x 1 --- Desc</div>
+                          >{{element.order_details_rel.project_rel.price_format}} x 1 --- Desc</div>
                         </div>
                       </div>
                       <div
@@ -86,25 +86,30 @@
 
               <div class="card">
                 <div class="card-body">
-                  <h4 class="mb-4 text-dark" style="opacity: .6">15 de Diciembre</h4>
-                  <div>
-                    <a-timeline>
-                      <a-timeline-item color="#1762e6">
-                        <div class="px-2">
-                          <div class="row">
-                            <div
-                              class="col-12 mb-2"
-                            >Lorem ipsum dolor sit amet consectetur adipisicing elit. Placeat porro excepturi nisi cupiditate provident nobis necessitatibus maiores voluptatibus, assumenda velit qui veniam consequatur cum quisquam eum exercitationem libero, aut ex.</div>
-                            <div class="col-12 text-dark" style="opacity: .6">13:08 p.m</div>
-                          </div>
-                        </div>
-                      </a-timeline-item>
-                      <a-timeline-item color="#1762e6">step3 2015-09-01</a-timeline-item>
-                      <a-timeline-item color="#1762e6">step4 2015-09-01</a-timeline-item>
-                    </a-timeline>
-                  </div>
 
-                  
+                  <div v-for="(el,i) in timelineParent" :key="i">
+                    <h3 class="text-primary">{{i}}</h3>
+                    <div v-for="(el2,j) in el" :key="j">
+                      <h4 class="mb-4 text-dark" style="opacity: .6">{{j}}</h4>
+                      <a-timeline>
+                        <a-timeline-item color="#1762e6" v-for="(el3,k) in el2" :key="k">
+                          <div class="px-2">
+                            <div class="row">
+                              <div
+                                class="col-12 mb-2"
+                              >
+                              {{ el3.message}}
+                              </div>
+                              <div class="col-12 mb-2" v-if="el3.type != 'Reserve Created'">
+                                <button class="btn btn-sm btn-outline-primary" @click.prevent="resend(el3)">Reenviar email</button>
+                              </div>
+                              <div class="col-12 text-dark" style="opacity: .6">{{el3.time_format}}</div>
+                            </div>
+                          </div>
+                        </a-timeline-item>
+                      </a-timeline>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -166,19 +171,56 @@
         </div>
       </div>
     </div>
+
+    <b-modal
+    v-model="modalResend"
+    @close="restoreResend"
+    no-close-on-esc
+    no-close-on-backdrop
+    centered
+    footer-class="border-0 pt-0"
+    body-class="pt-0"
+  >
+    <template slot="modal-title">
+      <div class="text-primary h2">Reenviar Email</div>
+    </template>
+    <template slot="modal-header-close">
+      <button type="button" class="btn p-0 bg-transparent" @click="restoreResend">
+        <jam-close></jam-close>
+      </button>
+    </template>
+    <div class="row">
+      <div class="col-12">
+        <p>Esta seguro que desea reenviar el correo?</p>
+      </div>
+    </div>
+    <template v-slot:modal-footer="{ ok }">
+      <Button
+        :classes="['btn-primary']"
+        text="Enviar"
+        @click="resendConfirm"
+        :request-server="requestSubmit"
+      ></Button>
+      <button type="button" class="btn btn-secondary" @click="restoreResend">Cancelar</button>
+    </template>
+  </b-modal>
   </div>
 </template>
 <script>
 import "ant-design-vue/lib/timeline/style/css";
 import NoData from "../../components/NoData";
 import BreadCrumb from "../../components/BreadCrumb";
+import Button from "../../components/Button";
 export default {
   components: {
     BreadCrumb,
     NoData,
+    Button
   },
   props: {
     routeCustomer: String,
+    routeResend: String,
+    timelineParent: Object,
     imagesUrl: String,
     elementParent: Object,
     routeProject: String,
@@ -187,15 +229,34 @@ export default {
   data() {
     return {
       element: {
-        /*orders_rel: {
-          order_details_rel: {
-            project_rel: {
-              images_format: [],
-            },
-          },
-        },*/
       },
+      modalResend: false,
+      resendElement: {},
+      requestSubmit: false
     };
+  },
+  methods:{
+    resendConfirm(){
+      this.requestSubmit = true;
+      axios
+        .post(this.routeResend + '/resend/' + this.resendElement.data.order_id, this.resendElement)
+        .then((response) => {
+          this.requestServer = false;
+          document.location.href = response.data.route;
+        })
+        .catch((error) => {
+          this.requestServer = false;
+          document.location.href = error.response.data.route;
+        });
+    },
+    resend(value){
+      this.resendElement = value;
+      this.modalResend = true;
+    },
+    restoreResend(){
+      this.resendElement = {};
+      this.modalResend = false;
+    }
   },
   watch: {
     elementParent: {

@@ -18,7 +18,10 @@ use Illuminate\Http\Request;
 });*/
 
 Route::namespace('Api')->group(function() { 
-    Route::get('layout', 'ApiController@layout');
+    Route::get('notify','Orders\OrdersController@test'); 
+    Route::get('notify2','Orders\OrdersController@test2'); 
+    Route::get('notify3','Orders\OrdersController@test3'); 
+    /*Route::get('layout', 'ApiController@layout');
     Route::get('paginate/blog', 'ApiController@paginateBlog');
     Route::get('paginate/success-stories', 'ApiController@paginateSuccessStories');
     Route::prefix('lead')->group(function() { 
@@ -40,7 +43,7 @@ Route::namespace('Api')->group(function() {
         Route::get('privacity-policy', 'PageController@privacityPolicy');
         Route::get('work-with-us', 'PageController@workWithUs');
         Route::get('contact-us', 'PageController@contactUs');
-    });
+    });*/
 });
 
 

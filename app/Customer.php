@@ -4,9 +4,11 @@ namespace App;
 
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Notifications\Notifiable;
 
 class Customer extends Model
 {
+    use Notifiable;
     protected $appends = ['mobile_formatted','created_at_format','avatar_initials'];
     public function getCreatedAtFormatAttribute() {
         return (new Carbon($this->created_at))->format('g:iA d-m-Y');

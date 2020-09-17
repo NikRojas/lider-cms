@@ -15,7 +15,7 @@ class Transaction extends Model
     }
 
     public function getTransactionDateFormatAttribute() {
-        return (new Carbon($this->transaction_date))->isoFormat('DD MMMM YYYY [a las] h:mm a');
+        return (new Carbon($this->transaction_date))->isoFormat('DD [de] MMMM YYYY [a las] h:mm a');
     }
 
     public function getAmountFormatAttribute()

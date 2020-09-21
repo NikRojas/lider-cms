@@ -42,6 +42,10 @@
 <script>
 import DatePicker from "vue2-datepicker";
 export default {
+  props:{
+    activeParent: Object,
+    removeParent: String
+  },
   components:{
     DatePicker
   },
@@ -62,7 +66,12 @@ export default {
   methods: {
     handleFilterRange() {
       if (!this.range[0]) {
-        this.active = { text: "Cualquier Fecha", value: "all" };
+        if(this.removeParent){
+          this.active = { text: "Hoy", value: "today" };
+        }
+        else{
+          this.active = { text: "Cualquier Fecha", value: "all" };
+        }
         this.handleFilter(this.active);
         return false;
       }
@@ -81,6 +90,24 @@ export default {
     },
   },
   watch: {
+    activeParent: {
+      immediate: true,
+      handler: function (newValue) {
+        if(newValue){
+          this.active = newValue;
+        }
+      },
+    },
+    removeParent: {
+      immediate: true,
+      handler: function (newValue) {
+        if(newValue){
+          this.filters = this.filters.filter(function (el) {
+            return el.value != newValue;
+          });
+        }
+      }
+    },
     active: function (newValue, oldValue) {
       this.$emit("update:active", newValue);
       this.$emit("get");

@@ -67,7 +67,6 @@
                     @isset($module["menu_secondary"])
                         <a class="nav-link position-relative d-inline-block w-100 py-3 {{ Request::segment(1) ==  $module["variable"] ? 'active' : ''   }}"
                             v-b-toggle.{{$module["variable"]}}>
-                            
                             <span class="current-color mr-3" data-jam="{{$module["icon"]}}" data-with="20" data-height="20"></span>
                             <!--<span class="current-color" data-jam="box-f" data-with="20" data-height="20"></span>-->
                             <span class="nav-link__text">{{ $module["name"] }}</span>

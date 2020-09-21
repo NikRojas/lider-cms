@@ -52,7 +52,7 @@ class MasterModulesTableSeeder extends Seeder
 
                 [
                     'name' 	=> 'Ventas',
-                    'slug' 		=> 'ventas',
+                    'slug' 		=> 'ventas-estadisticas/ventas',
                     'parent' 	=> $pVentas,
                     'icon' 		=> NULL,
                     'index'    => $position++
@@ -60,7 +60,7 @@ class MasterModulesTableSeeder extends Seeder
 
                 [
                     'name' 	=> 'Estadísticas',
-                    'slug' 		=> 'estadisticas',
+                    'slug' 		=> 'ventas-estadisticas/estadisticas',
                     'parent' 	=> $pVentas,
                     'icon' 		=> NULL,
                     'index'    => $position++

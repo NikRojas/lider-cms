@@ -81,15 +81,19 @@ Route::middleware(['auth'])->namespace('Cms')->name('cms.')->group(function () {
     });
 
     #Customers
-    Route::namespace('SalesStatistics')->name('sales-statistics.')->group(function () {
+    Route::namespace('OrdersStatistics')->prefix('ventas-estadisticas')->name('sales-statistics.')->group(function () {
         Route::name('orders.')->prefix('ventas')->group(function () {
-            Route::get('/', 'SalesController@index')->name('index');
-            Route::get('/json/get-all', 'SalesController@getAll')->name('get-all');
-            Route::post('export', 'SalesController@export')->name('export'); 
-            Route::post('export/total', 'SalesController@exportTotal')->name('export-total'); 
-            Route::get('export/{from?}/{to?}', 'SalesController@exportFile')->name('export-file'); 
-            Route::post('resend/{element}', 'SalesController@resendEmail')->name('resend'); 
-            Route::get('/{element}', 'SalesController@read')->name('read');
+            Route::get('/', 'OrdersController@index')->name('index');
+            Route::get('/json/get-all', 'OrdersController@getAll')->name('get-all');
+            Route::post('export', 'OrdersController@export')->name('export'); 
+            Route::post('export/total', 'OrdersController@exportTotal')->name('export-total'); 
+            Route::get('export/{from?}/{to?}', 'OrdersController@exportFile')->name('export-file'); 
+            Route::post('resend/{element}', 'OrdersController@resendEmail')->name('resend'); 
+            Route::get('/{element}', 'OrdersController@read')->name('read');
+        });
+        Route::name('statistics.')->prefix('estadisticas')->group(function () {
+            Route::get('/', 'StatisticsController@index')->name('index');
+            Route::get('/json/get-all', 'StatisticsController@getAll')->name('get-all');
         });
     });
 

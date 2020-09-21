@@ -22,4 +22,9 @@ class Transaction extends Model
     {
         return 'S/. '.number_format($this->amount, 2, '.', ',');
     }
+
+    /*public function ordersRel()
+    {
+        return $this->belongsTo('App\Order', 'id', 'order_id');
+    }*/
 }

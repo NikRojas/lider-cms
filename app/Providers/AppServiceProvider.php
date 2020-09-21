@@ -40,7 +40,12 @@ class AppServiceProvider extends ServiceProvider
                 if(!$module->parent){  
                     $menu[$i]["id"] = $module->id;
                     $menu[$i]["name"] = $module->name;
-                    $menu[$i]["variable"] = Str::slug($module->name, '-');
+                    if($module->name == 'Ventas y Estad.'){
+                        $menu[$i]["variable"] = 'ventas-estadisticas';
+                    }
+                    else{
+                        $menu[$i]["variable"] = Str::slug($module->name, '-');
+                    }
                     $menu[$i]["icon"] = $module->icon;
                     $menu[$i]["slug"] = $module->slug;
                 }

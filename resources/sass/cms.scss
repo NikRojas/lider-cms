@@ -592,6 +592,12 @@ h6,
     box-shadow: $input-focus-alternative-box-shadow;
 }
 
+.stretch-card {
+    display: flex;
+    align-items: stretch;
+    justify-content: stretch;
+}
+
 .vue-tags-input {
     max-width: 100% !important;
     box-shadow: $input-focus-alternative-box-shadow;

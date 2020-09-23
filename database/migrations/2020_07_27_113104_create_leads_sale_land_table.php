@@ -18,7 +18,7 @@ class CreateLeadsSaleLandTable extends Migration
             $table->string('name');
             $table->string('email');
             $table->string('mobile',15);
-            $table->text('message');
+            $table->text('message')->nullable();
             $table->float('area');
             $table->timestamps();
         });

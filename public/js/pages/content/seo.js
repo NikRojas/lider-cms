@@ -1043,7 +1043,7 @@ var render = function() {
                                         "background-image":
                                           "url(" +
                                           _vm.assetUrl +
-                                          "/img/pages/" +
+                                          "/storage/img/pages/" +
                                           page.seo_image +
                                           ")"
                                       }
@@ -1057,7 +1057,7 @@ var render = function() {
                                           attrs: {
                                             href:
                                               _vm.assetUrl +
-                                              "/img/pages/" +
+                                              "/storage/img/pages/" +
                                               page.seo_image,
                                             target: "_blank",
                                             rel: "noopener noreferrer"

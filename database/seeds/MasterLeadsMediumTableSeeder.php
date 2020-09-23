@@ -19,7 +19,7 @@ class MasterLeadsMediumTableSeeder extends Seeder
             ],
             [
                 'id'    => uniqid(),
-                'name' 	=> 'Correo Electrónico',
+                'name' 	=> 'Email',
                 'videocall' => false,
             ],
             [

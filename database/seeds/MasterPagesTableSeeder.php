@@ -44,8 +44,8 @@ class MasterPagesTableSeeder extends Seeder
                 'name' 		=> 'Cita Online',
                 'slug_es'     => 'cita-online',
                 'title_es'     => 'Cita Online',
-                'slug_en'     => 'appointment',
-                'title_en'     => 'Appointment',
+                'slug_en'     => 'online-appointment',
+                'title_en'     => 'Online Appointment',
                 'index' => $position++
             ],
 

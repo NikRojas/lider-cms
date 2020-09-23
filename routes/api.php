@@ -18,32 +18,37 @@ use Illuminate\Http\Request;
 });*/
 
 Route::namespace('Api')->group(function() { 
-    Route::get('notify','Orders\OrdersController@test'); 
+    /*Route::get('notify','Orders\OrdersController@test'); 
     Route::get('notify2','Orders\OrdersController@test2'); 
-    Route::get('notify3','Orders\OrdersController@test3'); 
-    /*Route::get('layout', 'ApiController@layout');
-    Route::get('paginate/blog', 'ApiController@paginateBlog');
-    Route::get('paginate/success-stories', 'ApiController@paginateSuccessStories');
-    Route::prefix('lead')->group(function() { 
-        Route::post('save', 'LeadController@save');
-        Route::post('save-landing', 'LeadController@saveLanding');
-        Route::post('save-cliengo', 'LeadController@saveCliengo');
-        Route::post('save-facebook-chatbot', 'LeadController@saveFacebookChatbot');
+    Route::get('notify3','Orders\OrdersController@test3'); */
+    Route::get('layout', 'BaseController@layout');
+    Route::get('departments', 'BaseController@getDepartments');
+    Route::get('districts', 'BaseController@getDistricts');
+    Route::prefix('paginate')->group(function() { 
+        Route::get('projects', 'BaseController@paginateProjects');
     });
-    Route::prefix('applicant')->group(function() { 
-        Route::post('save', 'ApplicantController@save');
+    Route::prefix('post')->group(function() { 
+        Route::post('suscribe', 'PostController@suscribe');
+        Route::prefix('lead')->group(function() { 
+            Route::post('online-appointment', 'PostController@onlineAppointment');
+            Route::post('traditional', 'PostController@traditional');
+            Route::post('sell-land', 'PostController@sellLand');
+        });
     });
     Route::prefix('page')->group(function() { 
         Route::get('home', 'PageController@home');
-        Route::get('department/{department}', 'PageController@department');
         Route::get('blog', 'PageController@blog');
-        Route::get('blog/category/{category}', 'PageController@blogCategory');
-        Route::get('blog/category/{category}/{post}', 'PageController@blogCategoryPost');
-        Route::get('know-us', 'PageController@knowUs');
-        Route::get('privacity-policy', 'PageController@privacityPolicy');
-        Route::get('work-with-us', 'PageController@workWithUs');
+        Route::get('blog/category/{slug}', 'PageController@blogCategory');
+        Route::get('blog/category/{slug}/{post}', 'PageController@blogCategoryPost');
+        Route::get('online-appointment', 'PageController@onlineAppointment');
         Route::get('contact-us', 'PageController@contactUs');
-    });*/
+        Route::get('sell-your-land', 'PageController@sellLand');
+        Route::get('projects', 'PageController@projects');
+        Route::get('projects/{slug}', 'PageController@projectsRead');
+        /*Route::get('know-us', 'PageController@knowUs');
+        Route::get('privacity-policy', 'PageController@privacityPolicy');
+        Route::get('work-with-us', 'PageController@workWithUs');*/
+    });
 });
 
 

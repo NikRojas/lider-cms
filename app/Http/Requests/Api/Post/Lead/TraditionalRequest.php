@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests\Api;
+namespace App\Http\Requests\Api\Post\Lead;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class LeadRequest extends FormRequest
+class TraditionalRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -20,12 +20,10 @@ class LeadRequest extends FormRequest
       return [
           'accepted.accepted' => 'Debe aceptar nuestros términos y condiciones.',
           'digits_between' => 'Debe ingresar un número de teléfono o celular entre :min y :max dígitos.',
-          'email.unique' => 'El correo electrónico ya se encuentra registrado.',
           'email.email' => 'Por favor ingrese un :attribute válido.',
-          'full_name.required' => 'Por favor ingrese su :attribute.',
+          'name.required' => 'Por favor ingrese su :attribute.',
           'required' => 'Por favor ingrese su :attribute.',
           'phone.required' => 'Por favor ingrese su teléfono o celular.',
-          'email.regex' => 'Por favor ingrese un dominio de correo válido.',
           'lead_medium_id.required' => 'Por favor ingrese el medio por el que desee ser contactado.',
       ];  
   }
@@ -38,12 +36,9 @@ class LeadRequest extends FormRequest
     public function rules()
     {
         return [
-          'full_name' => 'required|max:100',
-          'company' => 'required|max:100',
-          //'email' => 'required|email',
-          'email' => ['required','email','regex:/@(?!' . implode('|', array_map(function ($item){return str_replace('.', '\.', $item);}, config('mail.banned_servers'))) . ')/'],
-          'phone' => 'required|digits_between:7,9',
-          'message' => 'required',
+          'name' => 'required|max:100',
+          'email' =>  'required|max:100|email',
+          'mobile' => 'required|digits_between:7,9',
           'lead_medium_id' => 'required',
           'accepted' => 'accepted'
         ];

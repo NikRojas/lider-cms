@@ -18,10 +18,10 @@
                   <div
                     class="img-holder bg-seo card-img-top position-relative"
                     v-if="page.seo_image"
-                    :style="{ 'background-image': 'url('+ assetUrl + '/img/pages/' + page.seo_image +')' }"
+                    :style="{ 'background-image': 'url('+ assetUrl + '/storage/img/pages/' + page.seo_image +')' }"
                   >
                     <a
-                      :href="assetUrl + '/img/pages/'+page.seo_image"
+                      :href="assetUrl + '/storage/img/pages/'+page.seo_image"
                       target="_blank"
                       rel="noopener noreferrer"
                       class="btn btn-primary btn-sm right position-absolute m-2"

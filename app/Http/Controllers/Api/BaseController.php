@@ -107,6 +107,11 @@ class BaseController extends Controller
         return $projects;
     }
 
+    public function setFileName($name,$file) {
+        $nameFile = $name.time().uniqid().'.'.$file->getClientOriginalExtension();
+        return $nameFile;
+    }
+
     /*public function paginateBlog(Request $request){
         $posts = Post::select('title','slug','thumbnail','excerpt','category_id','image','created_at')->where('published',1)->with('category:id,name,slug')->orderBy('created_at','desc')->paginate(6);
         $data = array(

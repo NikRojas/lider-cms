@@ -2,16 +2,22 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Applicant;
 use App\Http\Requests\Api\Post\SuscribeRequest;
 use App\Suscriber;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Api\BaseController;
+use App\Http\Requests\Api\Post\ApplicantRequest;
 use App\Http\Requests\Api\Post\Lead\OnlineAppointmentRequest;
 use App\Http\Requests\Api\Post\Lead\SellLandRequest;
 use App\Http\Requests\Api\Post\Lead\TraditionalRequest;
+use App\Http\Requests\Api\Post\QuotationRequest;
 use App\Lead;
 use App\LeadSaleLand;
 use App\LeadVideocall;
+use App\Project;
+use App\ProjectQuotation;
+use Illuminate\Support\Facades\Storage;
 
 class PostController extends BaseController
 {
@@ -53,6 +59,38 @@ class PostController extends BaseController
             return $this->sendResponse([], trans('custom.title.success'), 200);;
         } catch (\Exception $e) {
             return $this->sendError(trans('custom.title.error'), [], 500);
+        }
+    }
+
+    public function quotation(QuotationRequest $request){
+        $project = Project::where('slug_'.$request->locale,$request->slug)->first();
+        if(!$project){
+            return $this->sendError("");
+        }
+        $el = request(['name','email','mobile','project_type_department_id','document_number','message']);
+		try {
+            $el = ProjectQuotation::UpdateOrCreate(array_merge($el,["project_id" => $project->id]));
+            return $this->sendResponse([], trans('custom.title.success'), 200);;
+        } catch (\Exception $e) {
+            return $this->sendError(trans('custom.title.error'), [], 500);
+        }
+    }
+
+    public function applicant(ApplicantRequest $request)
+    {
+        $applicant = request(['name','mobile', 'email', 'job','url']);
+        $name = $this->setFileName('a-',$request->file('pdf'));
+        $store = Storage::disk('public')->putFileAs('files/applicants-12920/',$request->file('pdf'),$name);
+        if(!$store){
+            return response()->json(['title'=> trans('custom.title.error'), 'message'=> "Ocurrió un error al subir el archivo. Por favor inténtelo en unos minutos." ],500);    
+        }
+        $applicant = array_merge($applicant,["pdf"=>$name]);
+		    try {
+            $applicant = Applicant::UpdateOrCreate($applicant);
+            return response()->json(['title'=> trans('custom.title.success')],200); 
+        } catch (\Exception $e) {
+            dd($e);
+            return response()->json(['title'=> trans('custom.title.error')],500); 
         }
     }
 }

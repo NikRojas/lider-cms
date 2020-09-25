@@ -14,7 +14,7 @@ class Applicant extends Model
 
     public function getPdfFormattedAttribute(){
         //$pdf = route('cms.get-file',["folder"=>'files','subfolder'=>'applicants','file'=>$this->pdf]);
-        $pdf = Storage::disk('public')->url('files/applicants-16720/'.$this->pdf);
+        $pdf = Storage::disk('public')->url('files/applicants-12920/'.$this->pdf);
         return "<a target='_blank' href=".$pdf.">Ver PDF</a>";
     }
 

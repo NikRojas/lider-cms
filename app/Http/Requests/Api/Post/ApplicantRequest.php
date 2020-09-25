@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Requests\Api;
+namespace App\Http\Requests\Api\Post;
 
 use Illuminate\Foundation\Http\FormRequest;
 
@@ -21,9 +21,9 @@ class ApplicantRequest extends FormRequest
           'digits_between' => 'Debe ingresar un número de teléfono o celular entre :min y :max dígitos.',
           'email.unique' => 'El correo electrónico ya se encuentra registrado.',
           'email.email' => 'Por favor ingrese un :attribute válido.',
-          'full_name.required' => 'Por favor ingrese su :attribute.',
+          'name.required' => 'Por favor ingrese su :attribute.',
           'required' => 'Por favor ingrese su :attribute.',
-          'phone.required' => 'Por favor ingrese su teléfono o celular.',
+          'mobile.required' => 'Por favor ingrese su teléfono o celular.',
           'pdf.required' => 'Por favor ingrese su CV.',
           'url.url' => 'Por favor ingrese una URL válida.'
       ];  
@@ -37,14 +37,12 @@ class ApplicantRequest extends FormRequest
     public function rules()
     {
         return [
-          'full_name' => 'required|max:100',
+          'name' => 'required|max:100',
           'email' => 'required|email|unique:applicants',
-          'phone' => 'required|digits_between:7,9',
+          'mobile' => 'required|digits_between:7,9',
           'job' => 'required|max:100',
           'pdf' => 'required',
           'url' => 'nullable|sometimes|url'
-          /*'lead_medium_id' => 'required',
-          'accepted' => 'accepted'*/
         ];
     }
 }

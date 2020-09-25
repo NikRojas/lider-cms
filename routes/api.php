@@ -29,6 +29,8 @@ Route::namespace('Api')->group(function() {
     });
     Route::prefix('post')->group(function() { 
         Route::post('suscribe', 'PostController@suscribe');
+        Route::post('quotation', 'PostController@quotation');
+        Route::post('applicant', 'PostController@applicant');
         Route::prefix('lead')->group(function() { 
             Route::post('online-appointment', 'PostController@onlineAppointment');
             Route::post('traditional', 'PostController@traditional');
@@ -46,8 +48,9 @@ Route::namespace('Api')->group(function() {
         Route::get('projects', 'PageController@projects');
         Route::get('projects/{slug}', 'PageController@projectsRead');
         /*Route::get('know-us', 'PageController@knowUs');
-        Route::get('privacity-policy', 'PageController@privacityPolicy');
-        Route::get('work-with-us', 'PageController@workWithUs');*/
+        Route::get('privacity-policy', 'PageController@privacityPolicy');*/
+        Route::get('work-with-us', 'PageController@workWithUs');
+        Route::get('testimonials', 'PageController@testimonials');
     });
 });
 

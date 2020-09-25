@@ -23,14 +23,15 @@ class ApplicantRepository
         foreach ($applicants as $applicant) {
             $pdf = null;
             //$pdf = route('cms.get-file',["folder"=>'files','subfolder'=>'applicants','file'=>$applicant["pdf"]]);
-            $pdf = Storage::disk('public')->url('files/applicants-16720/'.$applicant["pdf"]);
+            //$pdf = Storage::disk('public')->url('files/applicants-12920/'.$applicant["pdf"]);
+            $pdf = config('services.files_url').'/applicants-12920/'.$applicant["pdf"];
             $data[] = array(
                 "id" => $applicant["id"],
                 "name" => $applicant["name"],
                 "email" => $applicant["email"],
                 "mobile" => $applicant["mobile"],
                 "job" => $applicant["job"],
-                "pdf" => "<a target='_blank' href=".$pdf.">Ver PDF</a>"
+                "pdf" => "<a style='text-decoration:underline;' target='_blank' href=".$pdf.">Ver PDF</a>"
             );
         }
         $applicants = $applicants->toArray();

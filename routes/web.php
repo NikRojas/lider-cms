@@ -221,6 +221,13 @@ Route::middleware(['auth'])->namespace('Cms')->name('cms.')->group(function () {
             Route::get('/members/json/get/{element}', 'GeneralInformationController@membersGet')->name('members.get');
             Route::delete('/members/{element}', 'GeneralInformationController@membersDestroy')->name('members.destroy');
             Route::put('/members/{element}', 'GeneralInformationController@membersUpdate')->name('members.update');
+            #Certifications
+            Route::get('/certifications/json/get-all', 'GeneralInformationController@certificationsGetAll')->name('certifications.get-all');
+            Route::post('/certifications', 'GeneralInformationController@certificationsStore')->name('certifications.store');
+            Route::put('/certifications/order', 'GeneralInformationController@certificationsOrder')->name('certifications.order');
+            Route::get('/certifications/json/get/{element}', 'GeneralInformationController@certificationsGet')->name('certifications.get');
+            Route::delete('/certifications/{element}', 'GeneralInformationController@certificationsDestroy')->name('certifications.destroy');
+            Route::put('/certifications/{element}', 'GeneralInformationController@certificationsUpdate')->name('certifications.update');
         });
 
         #SEO

@@ -176,6 +176,8 @@ return [
         'image_hover' => 'imagen hover',
         'master_social_network_id' => 'red social',
         'name' => 'nombre',
+        'central_phone' => 'central de ventas',
+        'main_office' => 'oficina central',
     ],
 
 ];

@@ -35,7 +35,8 @@ class GeneralInformationRequest extends FormRequest
     {
         return [
             'location' => 'required',
-            'phone' => 'required|digits:7',
+            'central_phone' => 'nullable|sometimes|digits:7',
+            'main_office' => 'nullable|sometimes|digits:7',
             'email' => 'required|email|max:100',
             'billing_url' => 'nullable|sometimes|url',
             //'whatsapp_numbers' => 'required',

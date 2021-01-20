@@ -41,8 +41,15 @@
             </div>
             <div class="col-12 col-md-6 col-lg-4">
               <div class="form-group">
-                <label class="font-weight-bold">Teléfono</label>
-                <p v-if="el.phone">{{ el.phone_formatted }}</p>
+                <label class="font-weight-bold">Central de Ventas</label>
+                <p v-if="el.central_phone">{{ el.central_phone_formatted }}</p>
+                <p v-else>No registrado</p>
+              </div>
+            </div>
+            <div class="col-12 col-md-6 col-lg-4">
+              <div class="form-group">
+                <label class="font-weight-bold">Oficina Principal</label>
+                <p v-if="el.main_office">{{ el.main_office_formatted }}</p>
                 <p v-else>No registrado</p>
               </div>
             </div>
@@ -55,7 +62,7 @@
             </div>
             <div class="col-12 col-md-6 col-lg-4">
               <div class="form-group">
-                <label class="font-weight-bold">Link de Facturación</label>
+                <label class="font-weight-bold">Link de Comprobantes Electrónicos</label>
                 <p v-if="el.billing_url"><a style="text-decoration: underline;" :href="el.billing_url" target="_blank">{{ el.billing_url }}</a></p>
                 <p v-else>No registrado</p>
               </div>
@@ -115,13 +122,26 @@
               </div>
               <div class="col-12 col-md-6 col-lg-4">
                 <div class="form-group">
-                  <label class="font-weight-bold" for="phone">Teléfono</label>
-                  <input type="text" class="form-control" v-model="el.phone" id="phone" />
+                  <label class="font-weight-bold" for="phone">Central de Ventas</label>
+                  <input type="text" class="form-control" v-model="el.central_phone" id="central_phone" />
+                  <small class="text-muted d-block">Ingrese un número de 7 dígitos</small>
                   <label
-                    v-if="errors && errors.phone"
+                    v-if="errors && errors.central_phone"
                     class="mt-2 text-danger text-sm"
-                    for="phone"
-                  >{{ errors.phone[0] }}</label>
+                    for="central_phone"
+                  >{{ errors.central_phone[0] }}</label>
+                </div>
+              </div>
+              <div class="col-12 col-md-6 col-lg-4">
+                <div class="form-group">
+                  <label class="font-weight-bold" for="phone">Oficina Principal</label>
+                  <input type="text" class="form-control" v-model="el.main_office" id="main_office" />
+                  <small class="text-muted d-block">Ingrese un número de 7 dígitos</small>
+                  <label
+                    v-if="errors && errors.main_office"
+                    class="mt-2 text-danger text-sm"
+                    for="main_office"
+                  >{{ errors.main_office[0] }}</label>
                 </div>
               </div>
               <div class="col-12 col-md-6 col-lg-4">
@@ -200,7 +220,8 @@ export default {
     return {
       el: {
         location: "",
-        phone: "",
+        main_office: "",
+         central_phone: "",
         email: "",
         //billing_url: "",
       },

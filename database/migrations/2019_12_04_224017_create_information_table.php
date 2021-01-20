@@ -17,7 +17,9 @@ class CreateInformationTable extends Migration
             $table->bigIncrements('id');
 
             $table->string('location');
-            $table->string('phone',15)->nullable();
+            //$table->string('phone',15)->nullable();
+            $table->string('central_phone',15)->nullable();
+            $table->string('main_office',15)->nullable();
             $table->string('email')->nullable();
 
             $table->string('billing_url')->nullable();

@@ -674,8 +674,8 @@ var render = function() {
                                           $event,
                                           _vm.$refs.ref_image.dropzone,
                                           1,
-                                          512000,
-                                          "500kb"
+                                          51200,
+                                          "50kb"
                                         )
                                       }
                                     }

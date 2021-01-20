@@ -14,17 +14,29 @@ class Information extends Model
         'phone_numbers' => 'array'
     ];
 
-    protected $appends = ['phone_formatted', 'phone_value','whatsapp_formatted','phone_numbers_formatted'];
+    protected $appends = ['central_phone_formatted','main_office_formatted','whatsapp_formatted','phone_numbers_formatted'];
 
-    public function getPhoneFormattedAttribute(){
-        if($this->phone){
-            return '(511) '.substr($this->phone,0,3).'-'.substr($this->phone,3,4);
+    public function getCentralPhoneFormattedAttribute(){
+        if($this->central_phone){
+            return '(511) '.substr($this->central_phone,0,3).'-'.substr($this->central_phone,3,4);
         }
     }
 
-    public function getPhoneValueAttribute(){
-        if($this->phone){
-            return '(511)'.$this->phone;
+    public function getCentralPhoneValueAttribute(){
+        if($this->central_phone){
+            return '(511)'.$this->central_phone;
+        }
+    }
+
+    public function getMainOfficeFormattedAttribute(){
+        if($this->main_office){
+            return '(511) '.substr($this->main_office,0,3).'-'.substr($this->main_office,3,4);
+        }
+    }
+
+    public function getMainOfficeValueAttribute(){
+        if($this->main_office){
+            return '(511)'.$this->main_office;
         }
     }
 

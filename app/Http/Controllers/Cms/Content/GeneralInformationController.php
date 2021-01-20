@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers\Cms\Content;
 
+use App\Certification;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
 use App\Information;
-use App\element;
-
+use App\Http\Requests\Cms\Content\CertificationRequest;
 use App\Http\Requests\Cms\Content\GeneralInformationRequest;
 use App\Http\Requests\Cms\Content\MemberRequest;
 use Illuminate\Support\Facades\Storage;
@@ -26,7 +26,7 @@ class GeneralInformationController extends Controller
 
     public function store(GeneralInformationRequest $request)
     {
-        $request_information = request(["location","phone","email","billing_url","whatsapp_numbers","phone_numbers"]);
+        $request_information = request(["location","central_phone","main_office","email","billing_url","whatsapp_numbers","phone_numbers"]);
         $information_registered = Information::first();
         try {
             if ($information_registered) {
@@ -60,7 +60,7 @@ class GeneralInformationController extends Controller
             $data[] = array(
                 "id" => $element["id"],
                 "name" => $element["name"],
-                "image" => "<img src=".$image." class='mr-3' height='50' width='auto' alt='Partnter ".$element["index"]."'/><a class='btn btn-outline-info btn-sm' href=".$image." target='_blank'>Ver Imagen</a>",
+                "image" => "<img src=".$image." class='mr-3 p-2' style='background-color:black;' height='50' width='auto' alt='Partner ".$element["index"]."'/><a class='btn btn-outline-info btn-sm' href=".$image." target='_blank'>Ver Imagen</a>",
             );
         }
         if (isset($data)) {
@@ -135,6 +135,100 @@ class GeneralInformationController extends Controller
         }
         try {
             $element = Member::UpdateOrCreate(["id"=>$element->id], $request_element);
+            return response()->json(['title'=> trans('custom.title.success'), 'message'=> trans('custom.message.update.success', ['name' => trans('custom.attribute.element')])], 200);
+        } catch (\Exception $e) {
+            return response()->json(['title'=> trans('custom.title.error'), 'message'=> trans('custom.message.update.error', ['name' => trans('custom.attribute.element')])], 500);
+        }
+    }
+
+    public function certificationsGet(Certification $element)
+    {
+        return response()->json($element);
+    }
+
+    public function certificationsGetAll(Request $request)
+    {
+        $elements = Certification::orderBy('index', 'asc')->get();
+        foreach ($elements as $element) {
+            $image = config('services.images_url')."/certifications/".$element["image"];
+            $data[] = array(
+                "id" => $element["id"],
+                "name" => $element["name"],
+                "image" => "<img src=".$image." class='mr-3 p-2' style='background-color:black;' height='50' width='auto' alt='Certification ".$element["index"]."'/><a class='btn btn-outline-info btn-sm' href=".$image." target='_blank'>Ver Imagen</a>",
+            );
+        }
+        if (isset($data)) {
+            $elements["data"] = '';
+            $elements["data"] = $data;
+        }
+        $elements["headers"] = ["Id","Nombre","Imagen"];
+        return response()->json($elements);
+    }
+   
+    public function certificationsStore(CertificationRequest $request)
+    {
+        $element = request(["name"]);
+        $index = $this->getMaxIndex(Certification::selectRaw('MAX(id),MAX(`index`) as "index"')->get());
+        $imageName = $this->setFileName('p-', $request->file('image'));
+        $storeImage = Storage::disk('public')->putFileAs('img/certifications/', $request->file('image'), $imageName);
+        if (!$storeImage) {
+            return response()->json(['title'=> trans('custom.title.error'), 'message'=> trans('custom.errors.image') ], 500);
+        }
+        $element = array_merge($element, ["image"=>$imageName,"index" => $index]);
+        try {
+            $element = Certification::UpdateOrCreate($element);
+            return response()->json(['title'=> trans('custom.title.success'), 'message'=> trans('custom.message.create.success', ['name' => trans('custom.attribute.element')])], 200);
+        } catch (\Exception $e) {
+            dd($e);
+            return response()->json(['title'=> trans('custom.title.error'), 'message'=> trans('custom.message.create.error', ['name' => trans('custom.attribute.element')])], 500);
+        }
+    }
+
+    public function certificationsDestroy(Certification $element)
+    {
+        $image = $element->image;
+        try {
+            $destroy = $element->delete();
+            if ($destroy) {
+                Storage::disk('public')->delete('img/certifications/'.$image);
+            }
+            return response()->json(['title'=> trans('custom.title.success'), 'message'=> trans('custom.message.delete.success', ['name' => trans('custom.attribute.element')])], 200);
+        } catch (\Exception $e) {
+            return response()->json(['title'=> trans('custom.title.error'), 'message'=> trans('custom.message.delete.error', ['name' => trans('custom.attribute.element')])], 500);
+        }
+    }
+
+    public function certificationsOrder(Request $request)
+    {
+        $elements = $request->all();
+        try {
+            for ($i=0; $i < count($elements); $i++) {
+                $element = Certification::UpdateOrCreate(["id"=>$elements[$i]["id"]], ["index"=>$i + 1]);
+            }
+            return response()->json(['title'=> trans('custom.title.success'), 'message'=> trans('custom.message.update.success', ['name' => trans('custom.attribute.element')])], 200);
+        } catch (\Exception $e) {
+            return response()->json(['title'=> trans('custom.title.error'), 'message'=> trans('custom.message.update.error', ['name' => trans('custom.attribute.element')])], 500);
+        }
+    }
+
+    public function certificationsUpdate(CertificationRequest $request, Certification $element)
+    {
+        $request_element = request(["name"]);
+        if ($request->hasFile('image')) {
+            $imageName = $this->setFileName('p-', $request->file('image'));
+            $storeImage = Storage::disk('public')->putFileAs('img/certifications/', $request->file('image'), $imageName);
+            if (!$storeImage) {
+                return response()->json(['title'=> trans('custom.title.error'), 'message'=> trans('custom.errors.image') ], 500);
+            }
+            $request_element = array_merge($request_element, ["image" => $imageName]);
+        } else {
+            $request_element = array_merge($request_element, ["image" => $element->image]);
+        }
+        if ($request->hasFile('image') && $element->image) {
+            Storage::disk('public')->delete('img/certifications/'.$element->image);
+        }
+        try {
+            $element = Certification::UpdateOrCreate(["id"=>$element->id], $request_element);
             return response()->json(['title'=> trans('custom.title.success'), 'message'=> trans('custom.message.update.success', ['name' => trans('custom.attribute.element')])], 200);
         } catch (\Exception $e) {
             return response()->json(['title'=> trans('custom.title.error'), 'message'=> trans('custom.message.update.error', ['name' => trans('custom.attribute.element')])], 500);

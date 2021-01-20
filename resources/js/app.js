@@ -33,6 +33,7 @@ const app = new Vue({
         'content-members': () => import('./views/content/Members.vue' /* webpackChunkName: "js/pages/content/members" */),
         'content-social-networks': () => import('./views/content/SocialNetworks.vue' /* webpackChunkName: "js/pages/content/social-networks" */),
         'content-seo': () => import('./views/content/Seo.vue' /* webpackChunkName: "js/pages/content/seo" */),
+        'content-certifications': () => import('./views/content/Certifications.vue' /* webpackChunkName: "js/pages/content/certifications" */),
 
         'category': () => import('./views/blog/Category.vue' /* webpackChunkName: "js/pages/blog/category" */),
 

@@ -194,6 +194,26 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -214,7 +234,8 @@ __webpack_require__.r(__webpack_exports__);
     return {
       el: {
         location: "",
-        phone: "",
+        main_office: "",
+        central_phone: "",
         email: "" //billing_url: "",
 
       },
@@ -403,11 +424,27 @@ var render = function() {
                     _c("div", { staticClass: "col-12 col-md-6 col-lg-4" }, [
                       _c("div", { staticClass: "form-group" }, [
                         _c("label", { staticClass: "font-weight-bold" }, [
-                          _vm._v("Teléfono")
+                          _vm._v("Central de Ventas")
                         ]),
                         _vm._v(" "),
-                        _vm.el.phone
-                          ? _c("p", [_vm._v(_vm._s(_vm.el.phone_formatted))])
+                        _vm.el.central_phone
+                          ? _c("p", [
+                              _vm._v(_vm._s(_vm.el.central_phone_formatted))
+                            ])
+                          : _c("p", [_vm._v("No registrado")])
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "col-12 col-md-6 col-lg-4" }, [
+                      _c("div", { staticClass: "form-group" }, [
+                        _c("label", { staticClass: "font-weight-bold" }, [
+                          _vm._v("Oficina Principal")
+                        ]),
+                        _vm._v(" "),
+                        _vm.el.main_office
+                          ? _c("p", [
+                              _vm._v(_vm._s(_vm.el.main_office_formatted))
+                            ])
                           : _c("p", [_vm._v("No registrado")])
                       ])
                     ]),
@@ -427,7 +464,7 @@ var render = function() {
                     _c("div", { staticClass: "col-12 col-md-6 col-lg-4" }, [
                       _c("div", { staticClass: "form-group" }, [
                         _c("label", { staticClass: "font-weight-bold" }, [
-                          _vm._v("Link de Facturación")
+                          _vm._v("Link de Comprobantes Electrónicos")
                         ]),
                         _vm._v(" "),
                         _vm.el.billing_url
@@ -613,7 +650,7 @@ var render = function() {
                             staticClass: "font-weight-bold",
                             attrs: { for: "phone" }
                           },
-                          [_vm._v("Teléfono")]
+                          [_vm._v("Central de Ventas")]
                         ),
                         _vm._v(" "),
                         _c("input", {
@@ -621,31 +658,93 @@ var render = function() {
                             {
                               name: "model",
                               rawName: "v-model",
-                              value: _vm.el.phone,
-                              expression: "el.phone"
+                              value: _vm.el.central_phone,
+                              expression: "el.central_phone"
                             }
                           ],
                           staticClass: "form-control",
-                          attrs: { type: "text", id: "phone" },
-                          domProps: { value: _vm.el.phone },
+                          attrs: { type: "text", id: "central_phone" },
+                          domProps: { value: _vm.el.central_phone },
                           on: {
                             input: function($event) {
                               if ($event.target.composing) {
                                 return
                               }
-                              _vm.$set(_vm.el, "phone", $event.target.value)
+                              _vm.$set(
+                                _vm.el,
+                                "central_phone",
+                                $event.target.value
+                              )
                             }
                           }
                         }),
                         _vm._v(" "),
-                        _vm.errors && _vm.errors.phone
+                        _c("small", { staticClass: "text-muted d-block" }, [
+                          _vm._v("Ingrese un número de 7 dígitos")
+                        ]),
+                        _vm._v(" "),
+                        _vm.errors && _vm.errors.central_phone
                           ? _c(
                               "label",
                               {
                                 staticClass: "mt-2 text-danger text-sm",
-                                attrs: { for: "phone" }
+                                attrs: { for: "central_phone" }
                               },
-                              [_vm._v(_vm._s(_vm.errors.phone[0]))]
+                              [_vm._v(_vm._s(_vm.errors.central_phone[0]))]
+                            )
+                          : _vm._e()
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "col-12 col-md-6 col-lg-4" }, [
+                      _c("div", { staticClass: "form-group" }, [
+                        _c(
+                          "label",
+                          {
+                            staticClass: "font-weight-bold",
+                            attrs: { for: "phone" }
+                          },
+                          [_vm._v("Oficina Principal")]
+                        ),
+                        _vm._v(" "),
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.el.main_office,
+                              expression: "el.main_office"
+                            }
+                          ],
+                          staticClass: "form-control",
+                          attrs: { type: "text", id: "main_office" },
+                          domProps: { value: _vm.el.main_office },
+                          on: {
+                            input: function($event) {
+                              if ($event.target.composing) {
+                                return
+                              }
+                              _vm.$set(
+                                _vm.el,
+                                "main_office",
+                                $event.target.value
+                              )
+                            }
+                          }
+                        }),
+                        _vm._v(" "),
+                        _c("small", { staticClass: "text-muted d-block" }, [
+                          _vm._v("Ingrese un número de 7 dígitos")
+                        ]),
+                        _vm._v(" "),
+                        _vm.errors && _vm.errors.main_office
+                          ? _c(
+                              "label",
+                              {
+                                staticClass: "mt-2 text-danger text-sm",
+                                attrs: { for: "main_office" }
+                              },
+                              [_vm._v(_vm._s(_vm.errors.main_office[0]))]
                             )
                           : _vm._e()
                       ])

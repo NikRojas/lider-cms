@@ -132,7 +132,7 @@ class MasterModulesTableSeeder extends Seeder
                 ],
 
                 [
-                    'name' 	=> 'Inf. General & Miembros',
+                    'name' 	=> 'Inf. General, Miembros & Certificados',
                     'slug' 		=> 'contenido/informacion-general',
                     'parent' 	=> $pContenido,
                     'icon' 		=> NULL,

@@ -89,7 +89,7 @@
                   <div class="col">
                     <vue-dropzone
                       ref="ref_image"
-                      @vdropzone-file-added="$validateImageDropzone($event,$refs.ref_image.dropzone,1,512000,'500kb')"
+                      @vdropzone-file-added="$validateImageDropzone($event,$refs.ref_image.dropzone,1,51200,'50kb')"
                       id="image"
                       class="text-center"
                       :options="dropzoneOptions"

@@ -4,6 +4,7 @@
     <cami
     route-update="{{ route('cms.cami.store') }}" 
     images-url="{{ config('services.images_url') }}" 
+    message-order="@lang('custom.message.order')"
     route-get="{{ route('cms.cami.get') }}"></cami>
  
     <cami-projects route-order="{{ route('cms.cami.projects.order') }}"

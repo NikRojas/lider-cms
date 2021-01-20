@@ -16,6 +16,12 @@ class CamiRequest extends FormRequest
         return true;
     }
 
+    public function messages(){
+        return [
+            'images0.required' => 'Debe ingresar al menos una imagen'
+        ];
+      }
+
     /**
      * Get the validation rules that apply to the request.
      *
@@ -28,14 +34,15 @@ class CamiRequest extends FormRequest
             'title_en' => 'required',
             'description_es' => 'required',
             'description_en' => 'required',
-            'title_team_es' => 'required',
+            'images0' => 'required',
+            /*'title_team_es' => 'required',
             'title_team_en' => 'required',
-            'description_team_es' => 'required',
+            'description_team_es' => 'required',*/
             'title_projects_es' => 'required',
             'title_projects_en' => 'required'
 
         ];
-        switch ($this->method()) {
+        /*switch ($this->method()) {
             case 'POST':   
                 $rules = array_merge(
                     $rules,
@@ -48,7 +55,11 @@ class CamiRequest extends FormRequest
                     ['logo' => 'sometimes|required']
                 );
             break;
-          }
+          }*/
+        $rules = array_merge(
+            $rules,
+            ['logo' => 'sometimes|required']
+        );
         return $rules;
     }
 }

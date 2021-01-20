@@ -20,10 +20,8 @@ class CreateCamiTable extends Migration
             $table->string('title_en');
             $table->text('description_es');
             $table->text('description_en');
-            $table->string('title_team_es');
-            $table->string('title_team_en');
-            $table->text('description_team_es');
-            $table->text('description_team_en');
+            $table->text('url_video')->nullable();
+            $table->json('images');
             $table->string('title_projects_es');
             $table->string('title_projects_en');
             $table->timestamps();

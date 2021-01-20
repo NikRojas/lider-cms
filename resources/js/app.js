@@ -51,7 +51,7 @@ const app = new Vue({
         'traditional': () => import('./views/lead/traditional.vue' /* webpackChunkName: "js/pages/lead/traditional" */),
         'landsale': () => import('./views/lead/landsale.vue' /* webpackChunkName: "js/pages/lead/landsale" */),
 
-        'cami': () => import('./views/cami.vue' /* webpackChunkName: "js/pages/cami" */),
+        'cami': () => import('./views/Cami.vue' /* webpackChunkName: "js/pages/cami" */),
         'cami-projects': () => import('./views/CamiProjects.vue' /* webpackChunkName: "js/pages/cami-projects" */),
 
         'testimonials': () => import('./views/Testimonials.vue' /* webpackChunkName: "js/pages/testimonials" */),

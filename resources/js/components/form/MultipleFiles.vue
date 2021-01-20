@@ -1,6 +1,7 @@
 <template>
   <div>
-    <p>{{ messageOrder }}</p>
+    <p :class="desc ? 'mb-0' : ''">{{ messageOrder }}</p>
+    <small class="text-muted mb-2 d-block" v-if="desc">{{ desc }}</small>
     <div class="card">
       <div class="table-responsive">
         <div
@@ -98,6 +99,7 @@ export default {
     folder: String,
     filesParent: Array,
     messageOrder: String,
+    desc: String
   },
   components: {
     vueDropzone: vue2Dropzone,

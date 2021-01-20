@@ -44,14 +44,14 @@
             </div>
             <div class="col-12 col-md-6 col-lg-6">
               <div class="form-group">
-                <label class="font-weight-bold">Título ES</label>
+                <label class="font-weight-bold">Título Banner ES</label>
                 <p v-if="el.title_es">{{ el.title_es }}</p>
                 <p v-else>No registrado</p>
               </div>
             </div>
             <div class="col-12 col-md-6 col-lg-6">
               <div class="form-group">
-                <label class="font-weight-bold">Título EN</label>
+                <label class="font-weight-bold">Título Banner EN</label>
                 <p v-if="el.title_en">{{ el.title_en }}</p>
                 <p v-else>No registrado</p>
               </div>
@@ -74,47 +74,48 @@
 
             <div class="col-12 col-md-6 col-lg-6">
               <div class="form-group">
-                <label class="font-weight-bold">Título Team ES</label>
-                <p v-if="el.title_team_es">{{ el.title_team_es }}</p>
-                <p v-else>No registrado</p>
-              </div>
-            </div>
-            <div class="col-12 col-md-6 col-lg-6">
-              <div class="form-group">
-                <label class="font-weight-bold">Título Team EN</label>
-                <p v-if="el.title_team_en">{{ el.title_team_en }}</p>
-                <p v-else>No registrado</p>
-              </div>
-            </div>
-
-            <div class="col-12 col-md-6 col-lg-6">
-              <div class="form-group">
-                <label class="font-weight-bold">Descripción Team ES</label>
-                <div v-if="el.description_team_es" v-html="el.description_team_es"></div>
-                <p v-else>No registrado</p>
-              </div>
-            </div>
-            <div class="col-12 col-md-6 col-lg-6">
-              <div class="form-group">
-                <label class="font-weight-bold">Descripción Team EN</label>
-                <div v-if="el.description_team_en" v-html="el.description_team_en"></div>
-                <p v-else>No registrado</p>
-              </div>
-            </div>
-
-            <div class="col-12 col-md-6 col-lg-6">
-              <div class="form-group">
-                <label class="font-weight-bold">Título de Proyecto ES</label>
+                <label class="font-weight-bold">Título Cami interviene a través de proyectos ES</label>
                 <p v-if="el.title_projects_es">{{ el.title_projects_es }}</p>
                 <p v-else>No registrado</p>
               </div>
             </div>
             <div class="col-12 col-md-6 col-lg-6">
               <div class="form-group">
-                <label class="font-weight-bold">Título de Proyecto EN</label>
+                <label class="font-weight-bold">Título Cami interviene a través de proyectos EN</label>
                 <p v-if="el.title_projects_en">{{ el.title_projects_en }}</p>
                 <p v-else>No registrado</p>
               </div>
+            </div>
+            <div class="col-12 col-lg-6">
+               <div class="form-group">
+                    <h3 class="font-weight-normal">
+                      <span class="d-block font-weight-bold">Video:</span>
+                    </h3>
+                    <iframe id="player" type="text/html" width="640" height="360" v-if="el.url_video"
+                    :src="'http://www.youtube.com/embed/'+el.id_video"
+                    frameborder="0"></iframe>
+                    <p v-else>
+                      No se ha registrado un video.
+                    </p>
+               </div>
+                  </div>
+
+            <div class="col-12 col-lg-6">
+               <div class="form-group">
+                    <h3 class="font-weight-normal">
+                      <span class="d-block font-weight-bold">Imágenes:</span>
+                    </h3>
+                    <carousel :perPage="1">
+                        <slide v-for="el in el.images_format" :key="el">
+                          <img
+                            class="img-fluid"
+                            :src="imagesUrl+'/cami/'+el"
+                            alt
+                          />
+                        </slide>
+                    </carousel>
+                    
+                  </div>
             </div>
           </div>
         </div>
@@ -131,7 +132,7 @@
           </div>
         </div>
       </div>
-      <div class="card mb-4" v-if="editBlock">
+      <div class="card mb-4" v-show="editBlock">
         <div class="card-body">
           <form @submit.prevent="update">
             <div class="row">
@@ -142,7 +143,7 @@
                     <div v-bind:class="[ el.logo ? 'col-lg-4 mb-3 mb-lg-0' : '']">
                       <img v-if="el.logo" :src="imagesUrl+'/cami/'+el.logo" alt class="img-fluid" />
                     </div>
-                    <div v-bind:class="[ el.logo ? 'col-lg-8' : 'col-lg-12']">
+                    <div v-bind:class="[ el.logo ? 'col-lg-8' : 'col-lg-12']" v-if="editBlock">
                       <vue-dropzone
                         ref="ref_logo"
                         @vdropzone-file-added="$validateImageDropzone($event,$refs.ref_logo.dropzone,1,100000,'100kb')"
@@ -170,7 +171,7 @@
               <div class="col-12 col-md-12 col-lg-12">
                 <div class="form-group">
                   <Input
-                    label="Título"
+                    label="Título Banner"
                     variable="title"
                     :errors="errors"
                     :valueEn.sync="el.title_en"
@@ -194,39 +195,11 @@
                   />
                 </div>
               </div>
-              <div class="col-12 col-md-12 col-lg-12">
-                <div class="form-group">
-                  <Input
-                    label="Título Team"
-                    variable="title_team"
-                    :errors="errors"
-                    :valueEn.sync="el.title_team_en"
-                    :valueEs.sync="el.title_team_es"
-                    :valueEnParent="el.title_team_en"
-                    :valueEsParent="el.title_team_es"
-                  />
-                </div>
-              </div>
-
-              <div class="col-12 col-md-12 col-lg-12">
-                <div class="form-group">
-                  <Editor
-                    size="sm"
-                    label="Descripción Team"
-                    variable="description_team"
-                    :errors="errors"
-                    :valueEn.sync="el.description_team_en"
-                    :valueEs.sync="el.description_team_es"
-                    :valueEnParent="el.description_team_en"
-                    :valueEsParent="el.description_team_es"
-                  />
-                </div>
-              </div>
 
               <div class="col-12 col-md-12 col-lg-12">
                 <div class="form-group">
                   <Input
-                    label="Título de Proyecto"
+                    label="Título Cami interviene en proyectos"
                     variable="title_projects"
                     :errors="errors"
                     :valueEn.sync="el.title_projects_en"
@@ -234,6 +207,27 @@
                     :valueEnParent="el.title_projects_en"
                     :valueEsParent="el.title_projects_es"
                   />
+                </div>
+              </div>
+
+              <div class="col-12 col-lg-6">
+                <div class="form-group">
+                <label
+                  class="font-weight-bold"
+                  for="url"
+                >URL Video Youtube</label>
+                <input type="text" class="form-control" v-model="el.url_video" id="url_video" />
+                <small id="url_video" class="form-text" style="opacity: 0.7;">El formato de la URL debe ser "https://www.youtube.com/watch?v=N1bWwEfIDP0".</small>
+                </div>
+              </div>
+
+              <div class="col-12 col-lg-6">
+                <div class="form-group">
+                <label
+                  class="font-weight-bold"
+                  for="images"
+                >Imágenes</label>
+                    <MultipleFiles desc="La primera imagen se utilizará para el cover del video" fieldName="images" :errors="errors" :messageOrder="messageOrder" :files.sync="el.files" :imagesUrl="imagesUrl" folder="cami" :filesParent="el.images_format"/>
                 </div>
               </div>
 
@@ -260,8 +254,11 @@ import Input from "../components/form/Input";
 import BreadCrumb from "../components/BreadCrumb";
 import Editor from "../components/form/Editor";
 import InputSelectArray from "../components/form/InputSelectArray";
+import MultipleFiles from "../components/form/MultipleFiles";
+import { Carousel, Slide } from 'vue-carousel';
 export default {
   props: {
+     messageOrder: String,
     routeGet: String,
     routeUpdate: String,
     imagesUrl: String,
@@ -274,6 +271,9 @@ export default {
     Input,
     Skeleton,
     InputSelectArray,
+    MultipleFiles,
+    Carousel,
+    Slide
   },
   data() {
     return {
@@ -317,18 +317,15 @@ export default {
         fd.append("description_en", this.el.description_en);
       }
 
-      if (this.el.title_team_es) {
-        fd.append("title_team_es", this.el.title_team_es);
-      }
-      if (this.el.title_team_en) {
-        fd.append("title_team_en", this.el.title_team_en);
+      if(this.el.files && this.el.files.length){
+        this.el.files.forEach( (el, i) => {
+          fd.append("images"+i,el);
+        });
+        fd.append('images_count',this.el.files.length);
       }
 
-      if (this.el.description_team_es) {
-        fd.append("description_team_es", this.el.description_team_es);
-      }
-      if (this.el.description_team_en) {
-        fd.append("description_team_en", this.el.description_team_en);
+      if (this.el.url_video) {
+        fd.append("url_video", this.el.url_video);
       }
 
       if (this.el.title_projects_es) {
@@ -392,7 +389,9 @@ export default {
       axios
         .get(this.routeGet)
         .then((response) => {
-          this.el = response.data;
+          if(response.data){
+            this.el = response.data;
+          }
           this.loadingGet = false;
         })
         .catch((error) => {});

@@ -22,11 +22,11 @@ class CamiController extends Controller
 
     public function store(CamiRequest $request)
     {
-        $request_cami = request(["title_es","title_en","description_es","description_en","title_team_es","title_team_en","description_team_es","description_team_en","title_projects_es","title_projects_en"]);
+        $request_cami = request(["title_es","title_en","description_es","description_en","url_video","title_projects_es","title_projects_en"]);
         $cami_registered = Cami::first();
 
         if ($request->hasFile('logo')) {
-            $logo_name = $this->setFileName('b-', $request->file('logo'));
+            $logo_name = $this->setFileName('c-', $request->file('logo'));
             $store_logo = Storage::disk('public')->putFileAs('img/cami/', $request->file('logo'), $logo_name);
             if (!$store_logo) {
                 return response()->json(['title'=> trans('custom.title.error'), 'message'=> trans('custom.message.update.error', ['name' => trans('custom.attribute.cami')]) ], 500);
@@ -36,7 +36,7 @@ class CamiController extends Controller
             if ($cami_registered) {
                 $request_cami = array_merge($request_cami, ["logo" => $cami_registered->logo]);
             } else {
-                $request_cami = array_merge($request_cami, ["logo" => ""]);
+                //$request_cami = array_merge($request_cami, ["logo" => ""]);
             }
         }
         if ($cami_registered) {
@@ -44,6 +44,55 @@ class CamiController extends Controller
                 Storage::disk('public')->delete('img/cami/'.$cami_registered->logo);
             }
         }
+
+        if($cami_registered){
+            $images = [];
+            $imagesToRemove = [];
+            $imagesNotUpdated = [];
+            for ($i=0; $i < $request->images_count; $i++) { 
+                $name = 'images'.$i;
+                $imagesNotUpdated[] = $request->$name; 
+            }
+            $imagesToRemove = array_diff($cami_registered->images_format,$imagesNotUpdated);
+            foreach ($imagesToRemove as $key => $value) {
+                Storage::disk('public')->delete('img/projects/'.$value);
+            }
+            for ($i=0; $i < $request->images_count; $i++) { 
+                $correlative = $i + 1;
+                $name = 'images'.$i;
+                if($request->hasFile('images'.$i)){
+                    ${$correlative.'Name'} = $this->setFileName('is-'.$correlative,$request->file('images'.$i));
+                    $storeLogo = Storage::disk('public')->putFileAs('img/cami/',$request->file('images'.$i),${$correlative.'Name'});
+                    if(!${$correlative.'Name'}){
+                        $request->session()->flash('error', trans('custom.message.create.error', ['name' => trans('custom.attribute.cami')]));
+                        Storage::disk('public')->delete('img/cami/'.${$correlative.'Name'});
+                        return response()->json(["route" => route('cms.cami.index')],500);
+                    }
+                    $images[] = ${$correlative.'Name'};
+                }
+                else{
+                    $images[] = $request->$name;
+                }
+            }
+            $request_cami = array_merge($request_cami, ["images" => json_encode($images)]);
+        }
+        else{
+            $images = [];
+            for ($i=0; $i < $request->images_count; $i++) { 
+                $correlative = $i + 1;
+                ${$correlative.'Name'} = $this->setFileName('cd-'.$correlative,$request->file('images'.$i));
+                $storeLogo = Storage::disk('public')->putFileAs('img/cami/',$request->file('images'.$i),${$correlative.'Name'});
+                if(!${$correlative.'Name'}){
+                    $request->session()->flash('error', trans('custom.message.create.error', ['name' => trans('custom.attribute.cami')]));
+                    Storage::disk('public')->delete('img/cami/'.${$correlative.'Name'});
+                    return response()->json(["route" => route('cms.cami.index')],500);
+                }
+                $images[] = ${$correlative.'Name'};
+            }
+            $request_cami = array_merge($request_cami, ["images" => json_encode($images)]);
+        }
+
+        
 
         try {
             if ($cami_registered) {
@@ -53,6 +102,7 @@ class CamiController extends Controller
             }
             return response()->json(['title'=> trans('custom.title.success'), 'message'=> trans('custom.message.update.success', ['name' => trans('custom.attribute.cami')]) ], 200);
         } catch (\Exception $e) {
+            dd($e);
             return response()->json(['title'=> trans('custom.title.error'), 'message'=> trans('custom.message.update.error', ['name' => trans('custom.attribute.cami')]) ], 500);
         }
     }

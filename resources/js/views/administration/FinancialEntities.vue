@@ -41,6 +41,14 @@
                   <span class="font-weight-normal">Nombre:</span>
                   {{ el.name }}
                 </h3>
+                <h3 class="mb-1 font-weight-bold">
+                  <span class="font-weight-normal">Número de Cuenta:</span>
+                  {{ el.number_account ? el.number_account : 'No registrado' }}
+                </h3>
+                <h3 class="mb-1 font-weight-bold">
+                  <span class="font-weight-normal">Número CCI:</span>
+                  {{ el.cci ? el.cci : 'No registrado' }}
+                </h3>
                 <div class="mt-4 text-right">
                   <button @click="editEl(el.id)" class="btn btn-inverse-info btn-sm">Editar</button>
                   <button
@@ -137,6 +145,46 @@
                   class="mt-2 text-danger text-sm"
                   for="name"
                 >{{ errors.name[0] }}</label>
+              </div>
+            </div>
+
+            <div class="col-12">
+              <div class="form-group">
+                <label class="font-weight-bold" for="number_account">Número de Cuenta</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  v-model="element.number_account"
+                  id="number_account"
+                />
+                 <small id="url_video" class="form-text" style="opacity: 0.7"
+                    >El formato debe ser "XXXX-XXX-XXXXXXXXXX".</small
+                  >
+                <label
+                  v-if="errors && errors.number_account"
+                  class="mt-2 text-danger text-sm"
+                  for="number_account"
+                >{{ errors.number_account[0] }}</label>
+              </div>
+            </div>
+
+            <div class="col-12">
+              <div class="form-group">
+                <label class="font-weight-bold" for="cci">CCI</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  v-model="element.cci"
+                  id="cci"
+                />
+                <small id="url_video" class="form-text" style="opacity: 0.7"
+                    >El formato debe ser "XXX-XXXXXXXXXXXXXXX-XX".</small
+                  >
+                <label
+                  v-if="errors && errors.cci"
+                  class="mt-2 text-danger text-sm"
+                  for="cci"
+                >{{ errors.cci[0] }}</label>
               </div>
             </div>
           </div>
@@ -271,6 +319,12 @@ export default {
       }
       if (this.element.name) {
         fd.append("name", this.element.name);
+      }
+      if (this.element.cci) {
+        fd.append("cci", this.element.cci);
+      }
+      if (this.element.number_account) {
+        fd.append("number_account", this.element.number_account);
       }
       if (this.$refs.ref_image.dropzone.files[0]) {
         fd.append("logo", this.$refs.ref_image.dropzone.files[0]);

@@ -341,6 +341,54 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -455,6 +503,14 @@ __webpack_require__.r(__webpack_exports__);
 
       if (this.element.name) {
         fd.append("name", this.element.name);
+      }
+
+      if (this.element.cci) {
+        fd.append("cci", this.element.cci);
+      }
+
+      if (this.element.number_account) {
+        fd.append("number_account", this.element.number_account);
       }
 
       if (this.$refs.ref_image.dropzone.files[0]) {
@@ -858,6 +914,46 @@ var render = function() {
                                   ]
                                 ),
                                 _vm._v(" "),
+                                _c(
+                                  "h3",
+                                  { staticClass: "mb-1 font-weight-bold" },
+                                  [
+                                    _c(
+                                      "span",
+                                      { staticClass: "font-weight-normal" },
+                                      [_vm._v("Número de Cuenta:")]
+                                    ),
+                                    _vm._v(
+                                      "\n                " +
+                                        _vm._s(
+                                          el.number_account
+                                            ? el.number_account
+                                            : "No registrado"
+                                        ) +
+                                        "\n              "
+                                    )
+                                  ]
+                                ),
+                                _vm._v(" "),
+                                _c(
+                                  "h3",
+                                  { staticClass: "mb-1 font-weight-bold" },
+                                  [
+                                    _c(
+                                      "span",
+                                      { staticClass: "font-weight-normal" },
+                                      [_vm._v("Número CCI:")]
+                                    ),
+                                    _vm._v(
+                                      "\n                " +
+                                        _vm._s(
+                                          el.cci ? el.cci : "No registrado"
+                                        ) +
+                                        "\n              "
+                                    )
+                                  ]
+                                ),
+                                _vm._v(" "),
                                 _c("div", { staticClass: "mt-4 text-right" }, [
                                   _c(
                                     "button",
@@ -1142,6 +1238,134 @@ var render = function() {
                                   attrs: { for: "name" }
                                 },
                                 [_vm._v(_vm._s(_vm.errors.name[0]))]
+                              )
+                            : _vm._e()
+                        ])
+                      ]),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "col-12" }, [
+                        _c("div", { staticClass: "form-group" }, [
+                          _c(
+                            "label",
+                            {
+                              staticClass: "font-weight-bold",
+                              attrs: { for: "number_account" }
+                            },
+                            [_vm._v("Número de Cuenta")]
+                          ),
+                          _vm._v(" "),
+                          _c("input", {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.element.number_account,
+                                expression: "element.number_account"
+                              }
+                            ],
+                            staticClass: "form-control",
+                            attrs: { type: "text", id: "number_account" },
+                            domProps: { value: _vm.element.number_account },
+                            on: {
+                              input: function($event) {
+                                if ($event.target.composing) {
+                                  return
+                                }
+                                _vm.$set(
+                                  _vm.element,
+                                  "number_account",
+                                  $event.target.value
+                                )
+                              }
+                            }
+                          }),
+                          _vm._v(" "),
+                          _c(
+                            "small",
+                            {
+                              staticClass: "form-text",
+                              staticStyle: { opacity: "0.7" },
+                              attrs: { id: "url_video" }
+                            },
+                            [
+                              _vm._v(
+                                'El formato debe ser "XXXX-XXX-XXXXXXXXXX".'
+                              )
+                            ]
+                          ),
+                          _vm._v(" "),
+                          _vm.errors && _vm.errors.number_account
+                            ? _c(
+                                "label",
+                                {
+                                  staticClass: "mt-2 text-danger text-sm",
+                                  attrs: { for: "number_account" }
+                                },
+                                [_vm._v(_vm._s(_vm.errors.number_account[0]))]
+                              )
+                            : _vm._e()
+                        ])
+                      ]),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "col-12" }, [
+                        _c("div", { staticClass: "form-group" }, [
+                          _c(
+                            "label",
+                            {
+                              staticClass: "font-weight-bold",
+                              attrs: { for: "cci" }
+                            },
+                            [_vm._v("CCI")]
+                          ),
+                          _vm._v(" "),
+                          _c("input", {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.element.cci,
+                                expression: "element.cci"
+                              }
+                            ],
+                            staticClass: "form-control",
+                            attrs: { type: "text", id: "cci" },
+                            domProps: { value: _vm.element.cci },
+                            on: {
+                              input: function($event) {
+                                if ($event.target.composing) {
+                                  return
+                                }
+                                _vm.$set(
+                                  _vm.element,
+                                  "cci",
+                                  $event.target.value
+                                )
+                              }
+                            }
+                          }),
+                          _vm._v(" "),
+                          _c(
+                            "small",
+                            {
+                              staticClass: "form-text",
+                              staticStyle: { opacity: "0.7" },
+                              attrs: { id: "url_video" }
+                            },
+                            [
+                              _vm._v(
+                                'El formato debe ser "XXX-XXXXXXXXXXXXXXX-XX".'
+                              )
+                            ]
+                          ),
+                          _vm._v(" "),
+                          _vm.errors && _vm.errors.cci
+                            ? _c(
+                                "label",
+                                {
+                                  staticClass: "mt-2 text-danger text-sm",
+                                  attrs: { for: "cci" }
+                                },
+                                [_vm._v(_vm._s(_vm.errors.cci[0]))]
                               )
                             : _vm._e()
                         ])

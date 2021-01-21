@@ -17,6 +17,8 @@ class CreateBanksTable extends Migration
             $table->bigIncrements('id');
             $table->string('name');
             $table->string('logo');
+            $table->string('number_account')->nullable();
+            $table->string('cci')->nullable();
             $table->timestamps();
         });
     }

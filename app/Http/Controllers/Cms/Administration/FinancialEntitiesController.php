@@ -19,7 +19,7 @@ class FinancialEntitiesController extends Controller
     }
 
     public function store(BankRequest $request){
-        $element = request(["name"]);
+        $element = request(["name","cci","number_account"]);
         $imageName = $this->setFileName('b-',$request->file('logo'));
         $storeImage = Storage::disk('public')->putFileAs('img/banks/',$request->file('logo'),$imageName);
         if(!$storeImage){
@@ -45,7 +45,7 @@ class FinancialEntitiesController extends Controller
     }
 
     public function update(Bank $element,BankRequest $request){
-        $request_element = request(["name"]);;
+        $request_element = request(["name","cci","number_account"]);;
         if($request->hasFile('logo')){
             $fileName = $this->setFileName('b-',$request->file('logo'));
             Storage::disk('public')->putFileAs('img/banks',$request->file('logo'),$fileName);

@@ -20,16 +20,18 @@ class TestimonialsController extends Controller
 
     public function store(TestimonialRequest $request)
     {
-        $testimonial = request(["title_es","title_en","description_es","description_en"]);
-        $image_name = $this->setFileName('t-', $request->file('image'));
-        $store_image = Storage::disk('public')->putFileAs('img/testimonials/', $request->file('image'), $image_name);
-        if (!$store_image) {
-            return response()->json(['title'=> trans('custom.title.error'), 'message'=> trans('custom.errors.image') ], 500);
+        $testimonial = request(["title_es","title_en","description_es","description_en","type_video","url_video","project"]);
+        if($request->type_video){
+            $image_name = $this->setFileName('t-', $request->file('image'));
+            $store_image = Storage::disk('public')->putFileAs('img/testimonials/', $request->file('image'), $image_name);
+            if (!$store_image) {
+                return response()->json(['title'=> trans('custom.title.error'), 'message'=> trans('custom.errors.image') ], 500);
+            }
+            $testimonial = array_merge($testimonial, ["image"=>$image_name]);
         }
-        $testimonial = array_merge($testimonial, ["image"=>$image_name]);
-        $cliente = $this->getMaxIndex(Testimonial::selectRaw('MAX(id),MAX(`index`) as "index"')->get());
+        $testimonialIndex = $this->getMaxIndex(Testimonial::selectRaw('MAX(id),MAX(`index`) as "index"')->get());
         
-        $testimonial = array_merge($testimonial, ["index"=>$cliente]);
+        $testimonial = array_merge($testimonial, ["index"=>$testimonialIndex]);
         try {
             $testimonial = Testimonial::UpdateOrCreate($testimonial);
             return response()->json(['title'=> trans('custom.title.success'), 'message'=> trans('custom.message.create.success', ['name' => trans('custom.attribute.testimonial')])], 200);
@@ -55,7 +57,9 @@ class TestimonialsController extends Controller
         try {
             $delete_element = $element->delete();
             if ($delete_element) {
-                Storage::disk('public')->delete('img/testimonials/'.$image);
+                if($image){
+                    Storage::disk('public')->delete('img/testimonials/'.$image);
+                }
             }
             return response()->json(['title'=> trans('custom.title.success'), 'message'=> trans('custom.message.delete.success', ['name' => trans('custom.attribute.testimonial')])], 200);
         } catch (\Exception $e) {
@@ -78,19 +82,21 @@ class TestimonialsController extends Controller
 
     public function update(TestimonialRequest $request, Testimonial $element)
     {
-        $request_testimonial = request(["title_es","title_en","description_es","description_en"]);
-        if ($request->hasFile('image')) {
-            $image_name = $this->setFileName('t-', $request->file('image'));
-            $store_image = Storage::disk('public')->putFileAs('img/testimonials/', $request->file('image'), $image_name);
-            if (!$store_image) {
-                return response()->json(['title'=> trans('custom.title.error'), 'message'=> trans('custom.errors.image') ], 500);
+        $request_testimonial = request(["title_es","title_en","description_es","description_en","type_video","url_video","project"]);
+        if($request->type_video){
+            if ($request->hasFile('image')) {
+                $image_name = $this->setFileName('t-', $request->file('image'));
+                $store_image = Storage::disk('public')->putFileAs('img/testimonials/', $request->file('image'), $image_name);
+                if (!$store_image) {
+                    return response()->json(['title'=> trans('custom.title.error'), 'message'=> trans('custom.errors.image') ], 500);
+                }
+                $request_testimonial = array_merge($request_testimonial, ["image" => $image_name]);
+            } else {
+                $request_testimonial = array_merge($request_testimonial, ["image" => $element->image]);
             }
-            $request_testimonial = array_merge($request_testimonial, ["image" => $image_name]);
-        } else {
-            $request_testimonial = array_merge($request_testimonial, ["image" => $element->image]);
-        }
-        if ($request->hasFile('image') && $element->image) {
-            Storage::disk('public')->delete('img/testimonials/'.$element->image);
+            if ($request->hasFile('image') && $element->image) {
+                Storage::disk('public')->delete('img/testimonials/'.$element->image);
+            }
         }
         try {
             $element = Testimonial::UpdateOrCreate(["id"=>$element->id], $request_testimonial);

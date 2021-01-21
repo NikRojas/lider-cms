@@ -16,11 +16,16 @@ class CreateTestimonialsTable extends Migration
         Schema::create('testimonials', function (Blueprint $table) {
             $table->bigIncrements('id');
 
-            $table->string('image');
+            $table->text('description_es')->nullable();
+            $table->text('description_en')->nullable();
+
             $table->string('title_es');
             $table->string('title_en');
-            $table->text('description_es');
-            $table->text('description_en');
+            $table->string('project');
+            $table->string('image')->nullable();
+            $table->text('url_video')->nullable();
+
+            $table->boolean('type_video');
             $table->bigInteger('index');    
             
             $table->timestamps();

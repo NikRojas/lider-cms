@@ -309,6 +309,11 @@
                     >El formato de la URL debe ser
                     "https://www.youtube.com/watch?v=N1bWwEfIDP0".</small
                   >
+                  <label
+                        v-if="errors && errors.url_video"
+                        class="mt-2 text-danger text-sm"
+                        for="url_video"
+                      >{{ errors.url_video[0] }}</label>
                 </div>
               </div>
 

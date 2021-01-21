@@ -211,6 +211,11 @@
                 >URL Video Youtube</label>
                 <input type="text" class="form-control" v-model="element.url_video" id="url_video" />
                 <small id="url_video" class="form-text" style="opacity: 0.7;">El formato de la URL debe ser "https://www.youtube.com/watch?v=N1bWwEfIDP0".</small>
+                <label
+                        v-if="errors && errors.url_video"
+                        class="mt-2 text-danger text-sm"
+                        for="url_video"
+                      >{{ errors.url_video[0] }}</label>
                 </div>
               </div>
 

@@ -1,4 +1,13 @@
 @extends('layouts.dashboard')
+@section('head')
+<style>
+.form-check{
+    padding-left: 0px !important;
+    background: transparent !important;
+    border: 0 !important;
+}
+</style>
+@endsection
 @section('content')
     <testimonials
     message-order="@lang('custom.message.order')"

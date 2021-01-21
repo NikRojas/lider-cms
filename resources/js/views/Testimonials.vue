@@ -5,10 +5,18 @@
         <div class="header-body">
           <div class="row align-items-center pt-0 pt-md-2 pb-4">
             <div class="col-6 col-md-7">
-              <BreadCrumb title="Testimoniales" parent active="Testimoniales"></BreadCrumb>
+              <BreadCrumb
+                title="Testimoniales"
+                parent
+                active="Testimoniales"
+              ></BreadCrumb>
             </div>
             <div class="col-6 col-md-5 text-right">
-              <a href="#" class="btn btn-icon btn-inverse-primary" @click.prevent="newEl">
+              <a
+                href="#"
+                class="btn btn-icon btn-inverse-primary"
+                @click.prevent="newEl"
+              >
                 <span class="btn-inner--icon">
                   <jam-user-square class="current-color" />
                 </span>
@@ -28,19 +36,29 @@
       <div v-else>
         <div class="row" v-if="elements.length">
           <div class="col-12">
-            <p>{{ messageOrder}}</p>
+            <p>{{ messageOrder }}</p>
           </div>
         </div>
-        <draggable class="row" v-if="elements.length" v-model="elements" @change="handleChange">
-          <div class="col-12 col-md-6 col-lg-3 mb-4" v-for="(el,i) in elements" :key="el.id">
+        <draggable
+          class="row"
+          v-if="elements.length"
+          v-model="elements"
+          @change="handleChange"
+        >
+          <div
+            class="col-12 col-md-6 col-lg-3 mb-4"
+            v-for="(el, i) in elements"
+            :key="el.id"
+          >
             <div class="card">
               <div class="card-body">
-                <div class="text-center mb-2">
+                <div class="text-center mb-2" v-if="el.type_video">
                   <img
-                    :src="imagesUrl+'/testimonials/'+el.image"
+                    :src="imagesUrl + '/testimonials/' + el.image"
                     :alt="el.name"
-                    style="height: 140px; width: 250px;"
+                    class="img-fluid d-block mb-2"
                   />
+                  <a :href="el.url_video" v-if="el.url_video" target="_blank" style="text-decoration: underline;">{{ el.url_video }}</a>
                 </div>
                 <h3 class="mb-1">
                   <span class="font-weight-normal">Título ES:</span>
@@ -51,16 +69,30 @@
                   {{ el.title_en }}
                 </h3>
                 <h3 class="mb-1">
+                  <span class="font-weight-normal">Proyecto:</span>
+                  {{ el.project }}
+                </h3>
+                <h3 class="mb-1" v-if="!el.type_video">
                   <span class="font-weight-normal">Descripción ES:</span>
                   <div v-html="el.description_es"></div>
                 </h3>
-                <h3 class="mb-1">
+                <h3 class="mb-1" v-if="!el.type_video">
                   <span class="font-weight-normal">Descripción EN:</span>
                   <div v-html="el.description_en"></div>
                 </h3>
                 <div class="mt-4 text-center">
-                  <button @click="editEl(el.id)" class="btn btn-inverse-info btn-sm">Editar</button>
-                  <button @click="deleteEl(el.id)" class="btn btn-inverse-danger btn-sm">Eliminar</button>
+                  <button
+                    @click="editEl(el.id)"
+                    class="btn btn-inverse-info btn-sm"
+                  >
+                    Editar
+                  </button>
+                  <button
+                    @click="deleteEl(el.id)"
+                    class="btn btn-inverse-danger btn-sm"
+                  >
+                    Eliminar
+                  </button>
                 </div>
               </div>
             </div>
@@ -96,45 +128,8 @@
           <div class="row">
             <div class="col-12">
               <div class="form-group">
-                <label class="font-weight-bold" for="image">Image:</label>
-                <div class="row">
-                  <div class="col text-center" v-if="element.image">
-                    <img
-                      :src="imagesUrl+'/testimonials/'+element.image"
-                      :alt="element.name"
-                      style="height: 140px; width: 250px;"
-                    />
-                  </div>
-                  <div class="col">
-                    <vue-dropzone
-                      ref="ref_image"
-                      class="text-center"
-                      @vdropzone-file-added="$validateImageDropzone($event,$refs.ref_image.dropzone,1,512000,'500kb')"
-                      id="image"
-                      :options="dropzoneOptions"
-                      :duplicateCheck="true"
-                      :useCustomSlot="true"
-                    >
-                      <div class="dropzone-custom-content">
-                        <h5
-                          class="dropzone-custom-title text-primary"
-                        >Suelte los archivos aquí o haga click para cargarlos.</h5>
-                      </div>
-                    </vue-dropzone>
-                  </div>
-                </div>
-
-                <label
-                  v-if="errors && errors.image"
-                  class="text-danger text-sm d-block mt-2"
-                  for="image"
-                >{{ errors.image[0] }}</label>
-              </div>
-            </div>
-            <div class="col-12">
-              <div class="form-group">
                 <Input
-                  label="Título"
+                  label="Titulo"
                   variable="title"
                   :errors="errors"
                   :valueEn.sync="element.title_en"
@@ -146,19 +141,124 @@
             </div>
             <div class="col-12">
               <div class="form-group">
-                <label class="font-weight-bold" for="email">Descripción</label>
-                <Editor
-                  size="sm"
-                  label="Descripción"
-                  variable="description"
-                  :errors="errors"
-                  :valueEn.sync="element.description_en"
-                  :valueEs.sync="element.description_es"
-                  :valueEnParent="element.description_en"
-                  :valueEsParent="element.description_es"
+                <label class="font-weight-bold" for="project"
+                  >Nombre del Proyecto</label
+                >
+                <input
+                  type="text"
+                  class="form-control"
+                  v-model="element.project"
+                  id="project"
                 />
+                <label
+                  v-if="errors && errors.project"
+                  class="mt-2 text-danger text-sm"
+                  for="project"
+                  >{{ errors.project[0] }}</label
+                >
               </div>
             </div>
+            <div class="col-12">
+              <div class="form-group">
+                <p class="font-weight-bold mb-0">Elige un tipo de testimonio</p>
+                <b-form-radio-group
+                  id="radio-group-1"
+                  v-model="element.type_video"
+                  name="radios"
+                  plain
+                  :options="options"
+                ></b-form-radio-group>
+              </div>
+            </div>
+            <template v-if="element.type_video">
+              <div class="col-12 col-md-12 col-lg-12">
+                <div class="form-group">
+                  <label class="font-weight-bold" for="image">Imagen:</label>
+                  <div class="row">
+                    <div class="col text-center" v-if="element.image">
+                      <img
+                        :src="imagesUrl + '/testimonials/' + element.image"
+                        :alt="element.name"
+                        style="height: 140px; width: 250px"
+                      />
+                    </div>
+                    <div class="col">
+                      <vue-dropzone
+                        ref="ref_image"
+                        class="text-center"
+                        @vdropzone-file-added="
+                          $validateImageDropzone(
+                            $event,
+                            $refs.ref_image.dropzone,
+                            1,
+                            512000,
+                            '500kb'
+                          )
+                        "
+                        id="image"
+                        :options="dropzoneOptions"
+                        :duplicateCheck="true"
+                        :useCustomSlot="true"
+                      >
+                        <div class="dropzone-custom-content">
+                          <h5 class="dropzone-custom-title text-primary">
+                            Suelte los archivos aquí o haga click para
+                            cargarlos.
+                          </h5>
+                        </div>
+                      </vue-dropzone>
+                    </div>
+                  </div>
+
+                  <label
+                    v-if="errors && errors.image"
+                    class="text-danger text-sm d-block mt-2"
+                    for="image"
+                    >{{ errors.image[0] }}</label
+                  >
+                </div>
+              </div>
+
+              <div class="col-12">
+                <div class="form-group">
+                  <label class="font-weight-bold" for="url"
+                    >URL Video Youtube</label
+                  >
+                  <input
+                    type="text"
+                    class="form-control"
+                    v-model="element.url_video"
+                    id="url_video"
+                  />
+                  <small id="url_video" class="form-text" style="opacity: 0.7"
+                    >El formato de la URL debe ser
+                    "https://www.youtube.com/watch?v=N1bWwEfIDP0".</small
+                  >
+                  <label
+                    v-if="errors && errors.url_video"
+                    class="mt-2 text-danger text-sm"
+                    for="url_video"
+                    >{{ errors.url_video[0] }}</label
+                  >
+                </div>
+              </div>
+            </template>
+            <template v-else>
+              <div class="col-12">
+                <div class="form-group">
+                  <Editor
+                    size="sm"
+                    label="Descripción"
+                    variable="description"
+                    :errors="errors"
+                    :valueEn.sync="element.description_en"
+                    :valueEs.sync="element.description_es"
+                    :valueEnParent="element.description_en"
+                    :valueEsParent="element.description_es"
+                  />
+                </div>
+              </div>
+            </template>
           </div>
         </form>
       </div>
@@ -169,7 +269,9 @@
           @click="submit"
           :request-server="requestSubmit"
         ></Button>
-        <button type="button" class="btn btn-secondary" @click="restoreEl">Cancelar</button>
+        <button type="button" class="btn btn-secondary" @click="restoreEl">
+          Cancelar
+        </button>
       </template>
     </b-modal>
     <destroy
@@ -229,7 +331,12 @@ export default {
       title: "",
       element: {
         image: "",
+        type_video: true,
       },
+      options: [
+        { text: "Video", value: true },
+        { text: "Texto", value: false },
+      ],
       dropzoneOptions: {
         url: "/",
         maxFiles: 1,
@@ -331,14 +438,25 @@ export default {
       if (this.element.title_en) {
         fd.append("title_en", this.element.title_en);
       }
-      if (this.element.description_es) {
-        fd.append("description_es", this.element.description_es);
+      if (this.element.project) {
+        fd.append("project", this.element.project);
       }
-      if (this.element.description_en) {
-        fd.append("description_en", this.element.description_en);
-      }
-      if (this.$refs.ref_image.dropzone.files[0]) {
-        fd.append("image", this.$refs.ref_image.dropzone.files[0]);
+
+      fd.append("type_video", this.element.type_video ? 1 : 0);
+      if (this.element.type_video == true) {
+        if (this.$refs.ref_image.dropzone.files[0]) {
+          fd.append("image", this.$refs.ref_image.dropzone.files[0]);
+        }
+        if (this.element.url_video) {
+          fd.append("url_video", this.element.url_video);
+        }
+      } else {
+        if (this.element.description_es) {
+          fd.append("description_es", this.element.description_es);
+        }
+        if (this.element.description_en) {
+          fd.append("description_en", this.element.description_en);
+        }
       }
       axios({
         method: method,
@@ -381,6 +499,7 @@ export default {
     restore() {
       (this.element = {
         image: "",
+        type_video: true,
       }),
         (this.modalCreateUpdate = this.modalDestroy = false);
       this.getEls();
@@ -393,6 +512,7 @@ export default {
     restoreEl() {
       (this.element = {
         image: "",
+        type_video: true,
       }),
         (this.modalCreateUpdate = this.modalDestroy = false);
       this.errors = {};

@@ -26,23 +26,39 @@ class TestimonialRequest extends FormRequest
         $rules = [
             'title_es' => 'required|max:100',
             'title_en' => 'required|max:100',
-            'description_es' => 'required',
-            'description_en' => 'required|max:100',
+            'project' => 'required|max:100',
+            /*'description_es' => 'required',
+            'description_en' => 'required|max:100',*/
         ];
-        switch ($this->method()) {
-            case 'POST':
-                $rules = array_merge(
-                    $rules,
-                    ['image' => 'required']
-                );
-            break;
-            case 'PUT':
-                $rules = array_merge(
-                    $rules,
-                    ['image' => 'sometimes|required']
-                );
-            break;
+        if($this->type_video == true){
+            switch ($this->method()) {
+                case 'POST':
+                    $rules = array_merge(
+                        $rules,
+                        ['image' => 'required']
+                    );
+                break;
+                case 'PUT':
+                    $rules = array_merge(
+                        $rules,
+                        ['image' => 'sometimes|required']
+                    );
+                break;
+            }
+            
+            $rules = array_merge(
+                $rules,
+                ['url_video' => 'sometimes|nullable|url']
+            );
         }
+        else{
+            $rules = array_merge(
+                $rules,
+                ['description_es' => 'required',
+                'description_en' => 'required']
+            );
+        }
+        
         return $rules;
     }
 }

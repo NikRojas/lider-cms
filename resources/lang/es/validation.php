@@ -178,6 +178,8 @@ return [
         'name' => 'nombre',
         'central_phone' => 'central de ventas',
         'main_office' => 'oficina central',
+        'title' => 'titulo',
+        'project' => 'proyecto',
     ],
 
 ];

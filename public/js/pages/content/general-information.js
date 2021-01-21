@@ -679,9 +679,14 @@ var render = function() {
                           }
                         }),
                         _vm._v(" "),
-                        _c("small", { staticClass: "text-muted d-block" }, [
-                          _vm._v("Ingrese un número de 7 dígitos")
-                        ]),
+                        _c(
+                          "small",
+                          {
+                            staticClass: "form-text d-block",
+                            staticStyle: { opacity: "0.7" }
+                          },
+                          [_vm._v("Ingrese un número de 7 dígitos")]
+                        ),
                         _vm._v(" "),
                         _vm.errors && _vm.errors.central_phone
                           ? _c(
@@ -733,9 +738,14 @@ var render = function() {
                           }
                         }),
                         _vm._v(" "),
-                        _c("small", { staticClass: "text-muted d-block" }, [
-                          _vm._v("Ingrese un número de 7 dígitos")
-                        ]),
+                        _c(
+                          "small",
+                          {
+                            staticClass: "form-text d-block",
+                            staticStyle: { opacity: "0.7" }
+                          },
+                          [_vm._v("Ingrese un número de 7 dígitos")]
+                        ),
                         _vm._v(" "),
                         _vm.errors && _vm.errors.main_office
                           ? _c(

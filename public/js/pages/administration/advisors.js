@@ -365,6 +365,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 
 
@@ -1134,8 +1135,8 @@ var render = function() {
                                           $event,
                                           _vm.$refs.ref_image.dropzone,
                                           1,
-                                          512000,
-                                          "500kb"
+                                          100000,
+                                          "100kb"
                                         )
                                       }
                                     }
@@ -1318,6 +1319,15 @@ var render = function() {
                               }
                             }
                           }),
+                          _vm._v(" "),
+                          _c(
+                            "small",
+                            {
+                              staticClass: "form-text d-block",
+                              staticStyle: { opacity: "0.7" }
+                            },
+                            [_vm._v("Ingrese un número de 9 dígitos")]
+                          ),
                           _vm._v(" "),
                           _vm.errors && _vm.errors.mobile
                             ? _c(

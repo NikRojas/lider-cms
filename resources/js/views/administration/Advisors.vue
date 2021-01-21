@@ -108,7 +108,7 @@
                     <vue-dropzone
                       ref="ref_image"
                       class="text-center"
-                      @vdropzone-file-added="$validateImageDropzone($event,$refs.ref_image.dropzone,1,512000,'500kb')"
+                      @vdropzone-file-added="$validateImageDropzone($event,$refs.ref_image.dropzone,1,100000,'100kb')"
                       id="image"
                       :options="dropzoneOptions"
                       :duplicateCheck="true"
@@ -156,6 +156,7 @@
               <div class="form-group">
                 <label class="font-weight-bold" for="mobile">Móvil</label>
                 <input type="text" class="form-control" v-model="element.mobile" id="mobile" />
+                <small class="form-text d-block" style="opacity: 0.7;">Ingrese un número de 9 dígitos</small>
                 <label
                   v-if="errors && errors.mobile"
                   class="mt-2 text-danger text-sm"

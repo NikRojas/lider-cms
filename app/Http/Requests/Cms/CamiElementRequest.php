@@ -39,7 +39,8 @@ class CamiElementRequest extends FormRequest
                 'files.*.description_es' => 'descripción español',
                 'files.*.title_en' => 'título inglés',
                 'files.*.description_en' => 'descripción inglés',
-                'files.*.file' => 'imagen'
+                'files.*.file' => 'imagen',
+                'files.*.icon' => 'icono'
             ];
     }
 
@@ -61,24 +62,32 @@ class CamiElementRequest extends FormRequest
             'description_es' => 'required',
             'description_en' => 'required',
             'image' => 'required',
+            'url_video' => 'sometimes|url',
+            'description_video_en' => 'required',
+            'description_video_es' => 'required',
+            //'title_elements_en' => 'required',
+            //'title_elements_es' => 'required',
             'files.*.title_es' => 'required',
             'files.*.file' => 'required',
             'files.*.description_es' => 'required',
             'files.*.title_en' => 'required',
             'files.*.description_en' => 'required',
+            'files.*.icon' => 'required',
             'images0' => 'required'
         ];
         switch ($this->method()) {
             case 'POST':
                 $rules = array_merge(
                     $rules,
-                    ['image' => 'required','icon' => 'required']
+                    //['image' => 'required','icon' => 'required']
+                    ['image' => 'required']
                 );
             break;
             case 'PUT':
                 $rules = array_merge(
                     $rules,
-                    ['image' => 'sometimes|required','icon' => 'sometimes|required']
+                    //['image' => 'sometimes|required','icon' => 'sometimes|required']
+                    ['image' => 'sometimes|required']
                 );
             break;
         }

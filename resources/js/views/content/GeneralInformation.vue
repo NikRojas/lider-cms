@@ -124,7 +124,7 @@
                 <div class="form-group">
                   <label class="font-weight-bold" for="phone">Central de Ventas</label>
                   <input type="text" class="form-control" v-model="el.central_phone" id="central_phone" />
-                  <small class="text-muted d-block">Ingrese un número de 7 dígitos</small>
+                  <small class="form-text d-block" style="opacity: 0.7;">Ingrese un número de 7 dígitos</small>
                   <label
                     v-if="errors && errors.central_phone"
                     class="mt-2 text-danger text-sm"
@@ -136,7 +136,7 @@
                 <div class="form-group">
                   <label class="font-weight-bold" for="phone">Oficina Principal</label>
                   <input type="text" class="form-control" v-model="el.main_office" id="main_office" />
-                  <small class="text-muted d-block">Ingrese un número de 7 dígitos</small>
+                  <small class="form-text d-block" style="opacity: 0.7;">Ingrese un número de 7 dígitos</small>
                   <label
                     v-if="errors && errors.main_office"
                     class="mt-2 text-danger text-sm"

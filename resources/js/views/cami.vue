@@ -5,9 +5,64 @@
         <div class="header-body">
           <div class="row align-items-center pt-0 pt-md-2 pb-4">
             <div class="col-6 col-md-7">
-              <BreadCrumb :title="startBlock ? 'Cami' : 'Actualizar Cami'" parent active="Cami"></BreadCrumb>
+              <BreadCrumb
+                :title="startBlock ? 'Cami' : 'Actualizar Cami'"
+                parent
+                active="Cami"
+              ></BreadCrumb>
             </div>
             <div class="col-6 col-md-5 text-right">
+              <div class="d-inline-block mr-3 mb-3 mb-lg-0" style="opacity: 0.75">
+                <a style="cursor: pointer" @click.prevent="info = !info"
+                  ><jam-info
+                    height="14px"
+                    class="current-color"
+                    width="14px"
+                  ></jam-info>
+                  Ver Página Cami - 1ra Sección
+                </a>
+              </div>
+
+              <b-modal
+                v-model="info"
+                @close="info = false"
+                no-close-on-esc
+                no-close-on-backdrop
+                centered
+                size="lg"
+                footer-class="border-0 pt-0"
+                body-class="pt-0"
+              >
+                <template slot="modal-title">
+                  <div class="text-primary h2">Página Cami - 1ra Sección</div>
+                </template>
+                <template slot="modal-header-close">
+                  <button
+                    type="button"
+                    class="btn p-0 bg-transparent"
+                    @click="info = false"
+                  >
+                    <jam-close></jam-close>
+                  </button>
+                </template>
+                <div class="my-2">
+                  <img
+                    src="/files/img/info/cami-1.jpg"
+                    class="img-fluid"
+                    alt=""
+                  />
+                </div>
+                <template v-slot:modal-footer="{ ok }">
+                  <button
+                    type="button"
+                    class="btn btn-primary"
+                    @click="info = false"
+                  >
+                    Aceptar
+                  </button>
+                </template>
+              </b-modal>
+
               <a
                 href="#"
                 class="btn btn-icon btn-inverse-primary"
@@ -34,7 +89,7 @@
                   <label class="font-weight-bold d-block">Logo:</label>
                   <img
                     v-if="el.logo"
-                    :src="imagesUrl+'/cami/'+el.logo"
+                    :src="imagesUrl + '/cami/' + el.logo"
                     :alt="el.title_es"
                     class="img-fluid"
                   />
@@ -74,48 +129,56 @@
 
             <div class="col-12 col-md-6 col-lg-6">
               <div class="form-group">
-                <label class="font-weight-bold">Título Cami interviene a través de proyectos ES</label>
+                <label class="font-weight-bold"
+                  >Título Cami interviene a través de proyectos ES</label
+                >
                 <p v-if="el.title_projects_es">{{ el.title_projects_es }}</p>
                 <p v-else>No registrado</p>
               </div>
             </div>
             <div class="col-12 col-md-6 col-lg-6">
               <div class="form-group">
-                <label class="font-weight-bold">Título Cami interviene a través de proyectos EN</label>
+                <label class="font-weight-bold"
+                  >Título Cami interviene a través de proyectos EN</label
+                >
                 <p v-if="el.title_projects_en">{{ el.title_projects_en }}</p>
                 <p v-else>No registrado</p>
               </div>
             </div>
             <div class="col-12 col-lg-6">
-               <div class="form-group">
-                    <h3 class="font-weight-normal">
-                      <span class="d-block font-weight-bold">Video:</span>
-                    </h3>
-                    <iframe id="player" type="text/html" width="640" height="360" v-if="el.url_video"
-                    :src="'http://www.youtube.com/embed/'+el.id_video"
-                    frameborder="0"></iframe>
-                    <p v-else>
-                      No se ha registrado un video.
-                    </p>
-               </div>
-                  </div>
+              <div class="form-group">
+                <h3 class="font-weight-normal">
+                  <span class="d-block font-weight-bold">Video:</span>
+                </h3>
+                <iframe
+                  id="player"
+                  type="text/html"
+                  width="100%"
+                  height="360"
+                  v-if="el.url_video"
+                  :src="'http://www.youtube.com/embed/' + el.id_video"
+                  frameborder="0"
+                ></iframe>
+                <p v-else>No se ha registrado un video.</p>
+              </div>
+            </div>
 
             <div class="col-12 col-lg-6">
-               <div class="form-group">
-                    <h3 class="font-weight-normal">
-                      <span class="d-block font-weight-bold">Imágenes:</span>
-                    </h3>
-                    <carousel :perPage="1">
-                        <slide v-for="el in el.images_format" :key="el">
-                          <img
-                            class="img-fluid"
-                            :src="imagesUrl+'/cami/'+el"
-                            alt
-                          />
-                        </slide>
-                    </carousel>
-                    
-                  </div>
+              <div class="form-group">
+                <h3 class="font-weight-normal">
+                  <span class="d-block font-weight-bold">Imágenes:</span>
+                </h3>
+                <carousel :perPage="1" v-if="el.images_format">
+                  <slide v-for="el in el.images_format" :key="el">
+                    <img
+                      class="img-fluid"
+                      :src="imagesUrl + '/cami/' + el"
+                      alt
+                    />
+                  </slide>
+                </carousel>
+                <p v-else>No se han registrado un imágenes.</p>
+              </div>
             </div>
           </div>
         </div>
@@ -138,24 +201,44 @@
             <div class="row">
               <div class="col-12 col-md-12 col-lg-12">
                 <div class="form-group">
-                  <label class="font-weight-bold d-block" for="logo">Logo</label>
+                  <label class="font-weight-bold d-block" for="logo"
+                    >Logo</label
+                  >
                   <div class="row">
-                    <div v-bind:class="[ el.logo ? 'col-lg-4 mb-3 mb-lg-0' : '']">
-                      <img v-if="el.logo" :src="imagesUrl+'/cami/'+el.logo" alt class="img-fluid" />
+                    <div
+                      v-bind:class="[el.logo ? 'col-lg-4 mb-3 mb-lg-0' : '']"
+                    >
+                      <img
+                        v-if="el.logo"
+                        :src="imagesUrl + '/cami/' + el.logo"
+                        alt
+                        class="img-fluid"
+                      />
                     </div>
-                    <div v-bind:class="[ el.logo ? 'col-lg-8' : 'col-lg-12']" v-if="editBlock">
+                    <div
+                      v-bind:class="[el.logo ? 'col-lg-8' : 'col-lg-12']"
+                      v-if="editBlock"
+                    >
                       <vue-dropzone
                         ref="ref_logo"
-                        @vdropzone-file-added="$validateImageDropzone($event,$refs.ref_logo.dropzone,1,100000,'100kb')"
+                        @vdropzone-file-added="
+                          $validateImageDropzone(
+                            $event,
+                            $refs.ref_logo.dropzone,
+                            1,
+                            100000,
+                            '100kb'
+                          )
+                        "
                         id="id_logo"
                         :options="dropzoneOptions"
                         :duplicateCheck="true"
                         :useCustomSlot="true"
                       >
                         <div class="dropzone-custom-content">
-                          <h5
-                            class="dropzone-custom-title text-primary"
-                          >Suelte el archivo aquí o haga click para cargarlo.</h5>
+                          <h5 class="dropzone-custom-title text-primary">
+                            Suelte el archivo aquí o haga click para cargarlo.
+                          </h5>
                         </div>
                       </vue-dropzone>
 
@@ -163,7 +246,8 @@
                         v-if="errors && errors.logo"
                         class="text-danger text-sm d-block mt-2"
                         for="file"
-                      >{{ errors.logo[0] }}</label>
+                        >{{ errors.logo[0] }}</label
+                      >
                     </div>
                   </div>
                 </div>
@@ -212,22 +296,35 @@
 
               <div class="col-12 col-lg-6">
                 <div class="form-group">
-                <label
-                  class="font-weight-bold"
-                  for="url"
-                >URL Video Youtube</label>
-                <input type="text" class="form-control" v-model="el.url_video" id="url_video" />
-                <small id="url_video" class="form-text" style="opacity: 0.7;">El formato de la URL debe ser "https://www.youtube.com/watch?v=N1bWwEfIDP0".</small>
+                  <label class="font-weight-bold" for="url"
+                    >URL Video Youtube</label
+                  >
+                  <input
+                    type="text"
+                    class="form-control"
+                    v-model="el.url_video"
+                    id="url_video"
+                  />
+                  <small id="url_video" class="form-text" style="opacity: 0.7"
+                    >El formato de la URL debe ser
+                    "https://www.youtube.com/watch?v=N1bWwEfIDP0".</small
+                  >
                 </div>
               </div>
 
               <div class="col-12 col-lg-6">
                 <div class="form-group">
-                <label
-                  class="font-weight-bold"
-                  for="images"
-                >Imágenes</label>
-                    <MultipleFiles desc="La primera imagen se utilizará para el cover del video" fieldName="images" :errors="errors" :messageOrder="messageOrder" :files.sync="el.files" :imagesUrl="imagesUrl" folder="cami" :filesParent="el.images_format"/>
+                  <label class="font-weight-bold" for="images">Imágenes</label>
+                  <MultipleFiles
+                    desc="La primera imagen se utilizará para el cover del video"
+                    fieldName="images"
+                    :errors="errors"
+                    :messageOrder="messageOrder"
+                    :files.sync="el.files"
+                    :imagesUrl="imagesUrl"
+                    folder="cami"
+                    :filesParent="el.images_format"
+                  />
                 </div>
               </div>
 
@@ -237,7 +334,13 @@
                   :classes="['btn-inverse-primary']"
                   :request-server="requestSubmit"
                 ></Button>
-                <button type="button" class="btn btn-secondary" @click.prevent="restore">Cancelar</button>
+                <button
+                  type="button"
+                  class="btn btn-secondary"
+                  @click.prevent="restore"
+                >
+                  Cancelar
+                </button>
               </div>
             </div>
           </form>
@@ -255,10 +358,10 @@ import BreadCrumb from "../components/BreadCrumb";
 import Editor from "../components/form/Editor";
 import InputSelectArray from "../components/form/InputSelectArray";
 import MultipleFiles from "../components/form/MultipleFiles";
-import { Carousel, Slide } from 'vue-carousel';
+import { Carousel, Slide } from "vue-carousel";
 export default {
   props: {
-     messageOrder: String,
+    messageOrder: String,
     routeGet: String,
     routeUpdate: String,
     imagesUrl: String,
@@ -273,10 +376,11 @@ export default {
     InputSelectArray,
     MultipleFiles,
     Carousel,
-    Slide
+    Slide,
   },
   data() {
     return {
+      info: false,
       el: {},
       dropzoneOptions: {
         url: "/",
@@ -317,11 +421,11 @@ export default {
         fd.append("description_en", this.el.description_en);
       }
 
-      if(this.el.files && this.el.files.length){
-        this.el.files.forEach( (el, i) => {
-          fd.append("images"+i,el);
+      if (this.el.files && this.el.files.length) {
+        this.el.files.forEach((el, i) => {
+          fd.append("images" + i, el);
         });
-        fd.append('images_count',this.el.files.length);
+        fd.append("images_count", this.el.files.length);
       }
 
       if (this.el.url_video) {
@@ -389,7 +493,7 @@ export default {
       axios
         .get(this.routeGet)
         .then((response) => {
-          if(response.data){
+          if (response.data) {
             this.el = response.data;
           }
           this.loadingGet = false;

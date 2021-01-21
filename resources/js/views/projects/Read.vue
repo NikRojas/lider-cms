@@ -219,7 +219,7 @@
                     <h3 class="font-weight-normal">
                       <span class="d-block font-weight-bold">Video:</span>
                     </h3>
-                    <iframe id="player" type="text/html" width="640" height="360" v-if="element.url_video"
+                    <iframe id="player" type="text/html" width="100%" height="360" v-if="element.url_video"
                     :src="'http://www.youtube.com/embed/'+element.id_video"
                     frameborder="0"></iframe>
                     <p v-else>

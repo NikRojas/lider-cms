@@ -53,6 +53,7 @@
               </div>
               <div class="col-12">
                 <div class="form-group">
+                  <label class="font-weight-bold d-block">Imagen</label>
                   <a
                     style="text-decoration:underline;"
                     v-if="typeof el.file == 'string' && el.file !== ''"
@@ -92,6 +93,50 @@
                     class="text-danger text-sm d-block mt-2"
                     for="image"
                   >{{ errors['files.'+i+'.file'][0] }}</label>
+                </div>
+              </div>
+              <div class="col-12" v-if="showIconField">
+                <div class="form-group">
+                  <label class="font-weight-bold d-block">Icono</label>
+                  <a
+                    style="text-decoration:underline;"
+                    v-if="typeof el.icon == 'string' && el.icon !== ''"
+                    :href="imagesUrl+'/'+ folder +'/'+el.icon"
+                    target="_blank"
+                  >{{ el.icon }}</a>
+                  <a
+                    v-if="typeof el.icon == 'string' && el.icon !== ''"
+                    target="_blank"
+                    style="top: 50%;"
+                    :href="imagesUrl+'/'+ folder +'/'+el.icon"
+                    class="btn btn-sm btn-icon-only rounded-circle btn-inverse-info"
+                  >
+                    <jam-eye class="current-color" height="18" width="18" />
+                  </a>
+                  <vue-dropzone
+                    v-else
+                    :ref="`ref_icon_${i}`"
+                    @vdropzone-file-added="$validateImageDropzone($event,$refs['ref_icon_'+i][0].dropzone,1,51200,'50kb')"
+                    :id="'icon'+i"
+                    class="text-center multiple-files"
+                    :options="dropzoneOptions"
+                    @vdropzone-files-added="handleAddedIcons($event,i)"
+                    :duplicateCheck="true"
+                    :useCustomSlot="true"
+                  >
+                    <div class="dropzone-custom-content">
+                      <h5 class="dropzone-custom-title text-primary">
+                        Suelte los archivos aquí
+                        <br />o haga click para cargarlos.
+                      </h5>
+                    </div>
+                  </vue-dropzone>
+
+                  <label
+                    v-if="errors && errors['files.'+i+'.icon']"
+                    class="text-danger text-sm d-block mt-2"
+                    for="image"
+                  >{{ errors['files.'+i+'.icon'][0] }}</label>
                 </div>
               </div>
             </div>
@@ -138,7 +183,12 @@ export default {
     imagesUrl: String,
     folder: String,
     filesParent: Array,
+    iconsParent: Array,
     messageOrder: String,
+    showIconField: {
+      type: Boolean,
+      default: false
+    }
   },
   components: {
     vueDropzone: vue2Dropzone,
@@ -151,6 +201,7 @@ export default {
   data() {
     return {
       files: [],
+      images: [],
       //countImages: 0,
       showLoading: false,
       elements: {},
@@ -173,7 +224,6 @@ export default {
           document
             .querySelectorAll("#images" + i + ">.dz-preview")
             .forEach(function (a) {
-              console.log(a);
               a.remove();
             });
           //Add File
@@ -190,11 +240,37 @@ export default {
         }
       });
     },
+    updateIcons() {
+      this.icons.forEach((element, i) => {
+        if (element.file instanceof File) { 
+          this.$refs["ref_icon_" + i][0].dropzone.icons.pop();
+          document
+            .querySelectorAll("#icon" + i + ">.dz-preview")
+            .forEach(function (a) {
+              a.remove();
+            });
+          //Add File
+          this.$refs["ref_icon_" + i][0].manuallyAddFile(element.file, "/");
+          this.$refs["ref_icon_" + i][0].dropzone.emit(
+            "thumbnail",
+            element.file,
+            element.file.dataURL
+          );
+          this.$refs["ref_icon_" + i][0].dropzone.emit(
+            "complete",
+            element.file
+          );
+        }
+      });
+    },
     handleEnd(added, removed, moved) { 
       //this.updateImages();
       this.showLoading = true;
       setTimeout(() => {
         this.updateImages();
+        if(this.showIconField){
+          this.updateIcons();
+        }
         this.showLoading = false;
       }, 500);
     },
@@ -228,6 +304,13 @@ export default {
         ][0].dropzone.files[0];
       }, 500);
     },
+    handleAddedIcons(e, index) {
+      setTimeout(() => {
+        this.files[index].icon = this.$refs[
+          "ref_icon_" + index
+        ][0].dropzone.files[0];
+      }, 500);
+    },
   },
   watch: {
     filesParent: {
@@ -243,6 +326,13 @@ export default {
       deep: true,
       handler: function (newValue) {
         this.$emit("update:files", newValue);
+      },
+    },
+    icons: {
+      immediate: true,
+      deep: true,
+      handler: function (newValue) {
+        this.$emit("update:icons", newValue);
       },
     },
   },

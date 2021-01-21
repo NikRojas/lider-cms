@@ -1,7 +1,7 @@
 <template>
   <div>
     <p :class="desc ? 'mb-0' : ''">{{ messageOrder }}</p>
-    <small class="text-muted mb-2 d-block" v-if="desc">{{ desc }}</small>
+    <small style="opacity: 0.7;" class="form-text mb-2 mt-0 d-block" v-if="desc">{{ desc }}</small>
     <div class="card">
       <div class="table-responsive">
         <div

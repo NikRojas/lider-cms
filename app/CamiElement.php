@@ -9,7 +9,15 @@ class CamiElement extends Model
     protected $table = 'cami_elements';
     protected $guarded = [];
 
-    protected $appends = ['elements_es_format','elements_en_format', 'files','images_format'];
+    protected $appends = ['elements_es_format','elements_en_format', 'files','images_format','icons_format','id_video'];
+
+    public function getIdVideoAttribute()
+    {
+        if ($this->url_video) {
+            $id = explode("?v=", $this->url_video);
+            return $id[1];
+        }
+    }
 
     public function getElementsEsFormatAttribute()
     {
@@ -33,7 +41,8 @@ class CamiElement extends Model
                             'title_en' => $value->title_en,
                             'description_es' => $value_2->description_es,
                             'description_en' => $value->description_en,
-                            'file' => $value->file
+                            'file' => $value->file,
+                            'icon' => $value->icon
                         ];
                         array_push($array, $data);
                     }
@@ -50,6 +59,17 @@ class CamiElement extends Model
         if($this->elements_en){
             foreach ($this->elements_en_format as $key => $value) {
                 array_push($array, $value->file);
+            }
+        } 
+        return  $array;
+    }
+
+    public function getIconsFormatAttribute()
+    {
+        $array = array();
+        if($this->elements_en){
+            foreach ($this->elements_en_format as $key => $value) {
+                array_push($array, $value->icon);
             }
         } 
         return  $array;

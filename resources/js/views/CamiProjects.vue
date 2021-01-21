@@ -8,6 +8,57 @@
               <BreadCrumb :show-bread-crumb="false" title="Proyectos en los que interviene CAMI"></BreadCrumb>
             </div>
             <div class="col-6 col-md-5 text-right">
+              <div class="d-inline-block mr-3 mb-3 mb-lg-0" style="opacity: 0.75">
+                <a style="cursor: pointer" @click.prevent="info = !info"
+                  ><jam-info
+                    height="14px"
+                    class="current-color"
+                    width="14px"
+                  ></jam-info>
+                  Ver Página Cami - 2da Sección
+                </a>
+              </div>
+
+              <b-modal
+                v-model="info"
+                @close="info = false"
+                no-close-on-esc
+                no-close-on-backdrop
+                centered
+                size="lg"
+                footer-class="border-0 pt-0"
+                body-class="pt-0"
+              >
+                <template slot="modal-title">
+                  <div class="text-primary h2">Página Cami - 2da Sección</div>
+                </template>
+                <template slot="modal-header-close">
+                  <button
+                    type="button"
+                    class="btn p-0 bg-transparent"
+                    @click="info = false"
+                  >
+                    <jam-close></jam-close>
+                  </button>
+                </template>
+                <div class="my-2">
+                  <img
+                    src="/files/img/info/cami-2.jpg"
+                    class="img-fluid"
+                    alt=""
+                  />
+                </div>
+                <template v-slot:modal-footer="{ ok }">
+                  <button
+                    type="button"
+                    class="btn btn-primary"
+                    @click="info = false"
+                  >
+                    Aceptar
+                  </button>
+                </template>
+              </b-modal>
+
               <a href="#" class="btn btn-icon btn-inverse-primary" @click.prevent="newEl">
                 <span class="btn-inner--icon">
                   <jam-heart class="current-color" />
@@ -36,7 +87,7 @@
             <div class="card">
               <div class="card-body">
                 <div class="text-center mb-3">
-                  <img :src="imagesUrl+'/elements/'+el.image" :alt="el.name" class="img-fluid" />
+                  <img :src="imagesUrl+'/cami-elements/'+el.image" :alt="el.name" class="img-fluid" />
                 </div>
                 <h3 class="mb-1">
                   <span class="font-weight-normal">Nombre ES:</span>
@@ -45,14 +96,6 @@
                 <h3 class="mb-1">
                   <span class="font-weight-normal">Nombre EN:</span>
                   {{ el.name_en }}
-                </h3>
-                <h3 class="mb-1">
-                  <span class="font-weight-normal">Descripción ES:</span>
-                  <div v-html="el.description_es"></div>
-                </h3>
-                <h3 class="mb-1">
-                  <span class="font-weight-normal">Descripción EN:</span>
-                  <div v-html="el.description_en"></div>
                 </h3>
                 <div class="mt-4 text-center">
                   <button @click="detailEl(el.id)" class="btn btn-inverse-primary btn-sm">Ver</button>
@@ -73,7 +116,7 @@
       no-close-on-esc
       no-close-on-backdrop
       centered
-      size="lg"
+      size="xl"
       footer-class="border-0 pt-0"
       body-class="pt-0"
     >
@@ -91,13 +134,43 @@
       <div v-else>
         <form @submit.prevent="submit">
           <div class="row">
+            
             <div class="col-12">
               <div class="form-group">
-                <label class="font-weight-bold" for="image">Image:</label>
+                <Input
+                  label="Nombre"
+                  variable="name"
+                  :errors="errors"
+                  :valueEn.sync="element.name_en"
+                  :valueEs.sync="element.name_es"
+                  :valueEnParent="element.name_en"
+                  :valueEsParent="element.name_es"
+                />
+              </div>
+            </div>
+            
+            <div class="col-12">
+              <div class="form-group">
+                <Editor
+                  size="sm"
+                  label="Descripción"
+                  variable="description"
+                  :errors="errors"
+                  :valueEn.sync="element.description_en"
+                  :valueEs.sync="element.description_es"
+                  :valueEnParent="element.description_en"
+                  :valueEsParent="element.description_es"
+                />
+              </div>
+            </div>
+            
+            <div class="col-12 col-lg-6">
+              <div class="form-group">
+                <label class="font-weight-bold" for="image">Imagen Video:</label>
                 <div class="row">
                   <div class="col text-center" v-if="element.image">
                     <img
-                      :src="imagesUrl+'/elements/'+element.image"
+                      :src="imagesUrl+'/cami-elements/'+element.image"
                       :alt="element.name"
                       class="img-fluid"
                     />
@@ -106,7 +179,8 @@
                     <vue-dropzone
                       ref="ref_image"
                       class="text-center"
-                      @vdropzone-file-added="$validateImageDropzone($event,$refs.ref_image.dropzone,1,512000,'500kb')"
+                      @vdropzone-file-added="$validateImageDropzone($event,$refs.ref_image.dropzone,1,100000,
+                            '100kb')"
                       id="image"
                       :options="dropzoneOptions"
                       :duplicateCheck="true"
@@ -128,78 +202,58 @@
                 >{{ errors.image[0] }}</label>
               </div>
             </div>
-            <div class="col-12">
-              <div class="form-group">
-                <Input
-                  label="Nombre"
-                  variable="name"
-                  :errors="errors"
-                  :valueEn.sync="element.name_en"
-                  :valueEs.sync="element.name_es"
-                  :valueEnParent="element.name_en"
-                  :valueEsParent="element.name_es"
-                />
-              </div>
-            </div>
-            <div class="col-12">
-              <div class="form-group">
-                <label class="font-weight-bold" for="icon">Ícono:</label>
-                <div class="row">
-                  <div class="col text-center" v-if="element.icon">
-                    <img
-                      :src="imagesUrl+'/elements/'+element.icon"
-                      :alt="element.name"
-                      class="img-fluid"
-                    />
-                  </div>
-                  <div class="col">
-                    <vue-dropzone
-                      ref="ref_icon"
-                      class="text-center"
-                      @vdropzone-file-added="$validateImageDropzone($event,$refs.ref_icon.dropzone,1,512000,'500kb')"
-                      id="image"
-                      :options="dropzoneOptions"
-                      :duplicateCheck="true"
-                      :useCustomSlot="true"
-                    >
-                      <div class="dropzone-custom-content">
-                        <h5
-                          class="dropzone-custom-title text-primary"
-                        >Suelte los archivos aquí o haga click para cargarlos.</h5>
-                      </div>
-                    </vue-dropzone>
-                  </div>
-                </div>
 
+             <div class="col-12 col-lg-6">
+                <div class="form-group">
                 <label
-                  v-if="errors && errors.icon"
-                  class="text-danger text-sm d-block mt-2"
-                  for="icon"
-                >{{ errors.icon[0] }}</label>
+                  class="font-weight-bold"
+                  for="url"
+                >URL Video Youtube</label>
+                <input type="text" class="form-control" v-model="element.url_video" id="url_video" />
+                <small id="url_video" class="form-text" style="opacity: 0.7;">El formato de la URL debe ser "https://www.youtube.com/watch?v=N1bWwEfIDP0".</small>
+                </div>
               </div>
-            </div>
+
             <div class="col-12">
               <div class="form-group">
                 <Editor
                   size="sm"
-                  label="Descripción"
-                  variable="description"
+                  label="Descripción Video"
+                  variable="description_video"
                   :errors="errors"
-                  :valueEn.sync="element.description_en"
-                  :valueEs.sync="element.description_es"
-                  :valueEnParent="element.description_en"
-                  :valueEsParent="element.description_es"
+                  :valueEn.sync="element.description_video_en"
+                  :valueEs.sync="element.description_video_es"
+                  :valueEnParent="element.description_video_en"
+                  :valueEsParent="element.description_video_es"
                 />
               </div>
             </div>
+
+            <div class="col-12">
+              <div class="form-group">
+                <Input
+                  label="Titulo Elementos"
+                  variable="title_elements"
+                  :errors="errors"
+                  :valueEn.sync="element.title_elements_en"
+                  :valueEs.sync="element.title_elements_es"
+                  :valueEnParent="element.title_elements_en"
+                  :valueEsParent="element.title_elements_es"
+                />
+              </div>
+            </div>
+
             <div class="col-12">
               <MultipleElements
                 fieldName="images"
                 :errors="errors"
+                :showIconField="true"
                 :messageOrder="messageOrder"
                 :files.sync="element.files"
+                :icons.sync="element.icons"
                 :imagesUrl="imagesUrl"
                 :filesParent="element.files"
+                :iconsParent="element.icons"
                 folder="elements"
               />
             </div>
@@ -223,7 +277,7 @@
       no-close-on-esc
       no-close-on-backdrop
       centered
-      size="lg"
+      size="xl"
       footer-class="border-0 pt-0"
       body-class="pt-0"
     >
@@ -240,16 +294,7 @@
       </div>
       <div v-else>
         <div class="row">
-          <div class="col-12">
-            <div class="form-group">
-              <label class="font-weight-bold" for="image">Imagen:</label>
-              <div class="row">
-                <div class="col text-center" v-if="element.image">
-                  <img :src="imagesUrl+'/elements/'+element.image" :alt="element.name" />
-                </div>
-              </div>
-            </div>
-          </div>
+          
           <div class="col-12 col-md-6">
             <div class="form-group">
               <label class="font-weight-bold">Nombre Español:</label>
@@ -264,16 +309,6 @@
               <template v-if="element.name_en">
                 <p>{{ element.name_en }}</p>
               </template>
-            </div>
-          </div>
-          <div class="col-12">
-            <div class="form-group">
-              <label class="font-weight-bold" for="icon">Ícono:</label>
-              <div class="row">
-                <div class="col text-center" v-if="element.icon">
-                  <img :src="imagesUrl+'/elements/'+element.icon" :alt="element.name" />
-                </div>
-              </div>
             </div>
           </div>
           <div class="col-12 col-md-6">
@@ -293,6 +328,81 @@
               </template>
             </div>
           </div>
+
+
+          <div class="col-12 col-lg-6">
+            <div class="form-group">
+              <label class="font-weight-bold" for="image">Imagen Video:</label>
+              <div class="row">
+                <div class="col" v-if="element.image">
+                  <img :src="imagesUrl+'/cami-elements/'+element.image" class="img-fluid" :alt="element.name" />
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-12 col-lg-6">
+              <div class="form-group">
+                <h3 class="font-weight-normal">
+                  <span class="d-block font-weight-bold">Video:</span>
+                </h3>
+                <iframe
+                  id="player"
+                  type="text/html"
+                  width="100%"
+                  height="360"
+                  v-if="element.url_video"
+                  :src="'http://www.youtube.com/embed/' + element.id_video"
+                  frameborder="0"
+                ></iframe>
+                <p v-else>No se ha registrado un video.</p>
+              </div>
+            </div>
+
+          <div class="col-12 col-md-6">
+            <div class="form-group">
+              <label class="font-weight-bold">Descripción Video Español:</label>
+              <template v-if="element.description_video_es">
+                <div v-html="element.description_video_es"></div>
+              </template>
+            </div>
+          </div>
+
+          <div class="col-12 col-md-6">
+            <div class="form-group">
+              <label class="font-weight-bold">Descripción Video Inglés:</label>
+              <template v-if="element.description_video_en">
+                <div v-html="element.description_video_en"></div>
+              </template>
+            </div>
+          </div>
+
+
+          <div class="col-12 col-md-6">
+            <div class="form-group">
+              <label class="font-weight-bold">Titulo Elementos Español:</label>
+              <template v-if="element.title_elements_es">
+                <div v-html="element.title_elements_es"></div>
+              </template>
+              <p v-else>
+                No registrado
+              </p>
+            </div>
+          </div>
+
+          <div class="col-12 col-md-6">
+            <div class="form-group">
+              <label class="font-weight-bold">Titulo Elementos Inglés:</label>
+              <template v-if="element.title_elements_en">
+                <div v-html="element.title_elements_en"></div>
+              </template>
+              <p v-else>
+                No registrado
+              </p>
+            </div>
+          </div>
+
+          
           <div class="col-12">
             <div class="card">
               <div class="table-responsive">
@@ -308,46 +418,59 @@
                 <template class="row" v-for="(el,index) in element.files">
                   <div class="col-12" :key="index">
                     <div class="row">
-                      <div class="col-12">
+                      
+                      <div class="col-12 col-lg-6">
                         <div class="form-group">
                           <label class="font-weight-bold" for="image">Imagen:</label>
                           <div class="row">
                             <div class="col text-center" v-if="el.file">
-                              <img :src="imagesUrl+'/elements/'+el.file" :alt="el.name" />
+                              <img :src="imagesUrl+'/cami-elements/'+el.file" class="img-fluid" :alt="el.name" />
                             </div>
                           </div>
                         </div>
                       </div>
                       <div class="col-12 col-lg-6">
+                        <div class="row">
+                          <div class="col-12">
                         <div class="form-group">
-                          <label class="font-weight-bold">Título Español:</label>
-                          <template v-if="el.title_es">
-                            <p>{{ el.title_es }}</p>
-                          </template>
+                          <label class="font-weight-bold">Icono:</label>
+                          <div class="text-center">
+                            <img :src="imagesUrl+'/cami-elements/'+el.icon" :alt="el.name" />
+                          </div>
                         </div>
                       </div>
-                      <div class="col-12 col-lg-6">
-                        <div class="form-group">
-                          <label class="font-weight-bold">Título Inglés:</label>
-                          <template v-if="el.title_en">
-                            <p>{{ el.title_en }}</p>
-                          </template>
+                        <div class="col-12 col-lg-6">
+                          <div class="form-group">
+                            <label class="font-weight-bold">Título Español:</label>
+                            <template v-if="el.title_es">
+                              <p>{{ el.title_es }}</p>
+                            </template>
+                          </div>
                         </div>
-                      </div>
-                      <div class="col-12 col-lg-6">
-                        <div class="form-group">
-                          <label class="font-weight-bold">Descripción Español:</label>
-                          <template v-if="el.description_es">
-                            <div v-html="el.description_es"></div>
-                          </template>
+                        <div class="col-12 col-lg-6">
+                          <div class="form-group">
+                            <label class="font-weight-bold">Título Inglés:</label>
+                            <template v-if="el.title_en">
+                              <p>{{ el.title_en }}</p>
+                            </template>
+                          </div>
                         </div>
-                      </div>
-                      <div class="col-12 col-lg-6">
-                        <div class="form-group">
-                          <label class="font-weight-bold">Descripción Inglés:</label>
-                          <template v-if="el.description_en">
-                            <div v-html="el.description_en"></div>
-                          </template>
+                        <div class="col-12 col-lg-6">
+                          <div class="form-group">
+                            <label class="font-weight-bold">Descripción Español:</label>
+                            <template v-if="el.description_es">
+                              <div v-html="el.description_es"></div>
+                            </template>
+                          </div>
+                        </div>
+                        <div class="col-12 col-lg-6">
+                          <div class="form-group">
+                            <label class="font-weight-bold">Descripción Inglés:</label>
+                            <template v-if="el.description_en">
+                              <div v-html="el.description_en"></div>
+                            </template>
+                          </div>
+                        </div>
                         </div>
                       </div>
                     </div>
@@ -359,7 +482,7 @@
         </div>
       </div>
       <template v-slot:modal-footer="{ ok }">
-        <button type="button" class="btn btn-secondary" @click="restoreEl">Aceptar</button>
+        <button type="button" class="btn btn-primary" @click="restoreEl">Aceptar</button>
       </template>
     </b-modal>
 
@@ -410,6 +533,7 @@ export default {
   },
   data() {
     return {
+      info: false,
       errors: {},
       requestSubmit: false,
       modalCreateUpdate: false,
@@ -536,21 +660,38 @@ export default {
       if (this.element.description_en) {
         fd.append("description_en", this.element.description_en);
       }
+      if (this.element.url_video) {
+        fd.append("url_video", this.element.url_video);
+      }
+      if (this.element.description_video_es) {
+        fd.append("description_video_es", this.element.description_video_es);
+      }
+      if (this.element.description_video_en) {
+        fd.append("description_video_en", this.element.description_video_en);
+      }
+      if (this.element.title_elements_es) {
+        fd.append("title_elements_es", this.element.title_elements_es);
+      }
+      if (this.element.title_elements_en) {
+        fd.append("title_elements_en", this.element.title_elements_en);
+      }
       if (this.$refs.ref_image.dropzone.files[0]) {
         fd.append("image", this.$refs.ref_image.dropzone.files[0]);
       }
-      if (this.$refs.ref_icon.dropzone.files[0]) {
+      /*if (this.$refs.ref_icon.dropzone.files[0]) {
         fd.append("icon", this.$refs.ref_icon.dropzone.files[0]);
-      }
+      }*/
 
       if (this.element.files && this.element.files.length) {
         fd.append("elements_count", this.element.files.length);
         fd.append("files", JSON.stringify(this.element.files));
+        fd.append("icons", JSON.stringify(this.element.icons));
       }
 
       if (this.element.files && this.element.files.length) {
         this.element.files.forEach((el, i) => {
           fd.append("images" + i, el.file);
+          fd.append("icons" + i, el.icon);
           fd.append("title_es" + i, el.title_es);
           fd.append("title_en" + i, el.title_en);
           fd.append("description_es" + i, el.description_es);

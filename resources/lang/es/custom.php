@@ -29,7 +29,9 @@ return [
         'tipology' => 'La tipología',
         'currency' => 'El tipo de moneda',
         'complaint' => 'El reclamo',
-        'suscriber' => 'El suscriptor'
+        'suscriber' => 'El suscriptor',
+        'schedule' => 'El horario',
+        'financing-option' => 'La opción de financiamiento'
     ],
     'title' => [
         'error' => 'Error',

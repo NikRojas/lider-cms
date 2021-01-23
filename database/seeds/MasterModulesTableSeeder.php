@@ -258,11 +258,18 @@ class MasterModulesTableSeeder extends Seeder
                 'index'    => $position++
             ],
                 [
+                    'name' 	    => 'Configuración General',
+                    'slug' 		=> 'configuracion/general',
+                    'parent' 	=> $pConfiguracion,
+                    'icon' 		=> NULL,
+                    'index'     => 1
+                ],
+                [
                     'name' 	=> 'Usuarios',
                     'slug' 		=> 'configuracion/usuarios',
                     'parent' 	=> $pConfiguracion,
                     'icon' 		=> NULL,
-                    'index'    => 1
+                    'index'    => 2
                 ],
         ]); 
     }

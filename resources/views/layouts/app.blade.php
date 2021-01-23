@@ -29,7 +29,7 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     @yield('head')
 </head>
-<body @isset($class) class="{{ $class }}" @endisset @empty($class) class="sidebar-icon-only" @endempty id="body">
+<body @isset($class) class="{{ $class }}" @endisset @empty($class) class="sidebar-icon-only pr-0" @endempty id="body">
 <!--<body @isset($class) class="{{ $class }}" @endisset id="body">-->
     <div id="app">
         @yield('page')

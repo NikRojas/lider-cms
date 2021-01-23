@@ -86,6 +86,7 @@ const app = new Vue({
         'orders-read': () => import('./views/Orders/Read.vue' /* webpackChunkName: "js/pages/orders/read" */),
 
         'statistics-index': () => import('./views/Statistics/Index.vue' /* webpackChunkName: "js/pages/statistics/index" */),
+        'configuration-general': () => import('./views/configuration/General/Index.vue' /* webpackChunkName: "js/pages/configuration/general" */),
     }
 });
 import Validation from './functions/validation.js'

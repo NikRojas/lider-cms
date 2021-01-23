@@ -16,6 +16,7 @@ class MasterLeadsTimeDayTable extends Migration
         Schema::create('master_leads_time_day', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('name');
+            $table->integer('index');
             $table->timestamps();
         });
     }

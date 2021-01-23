@@ -27,15 +27,32 @@ Route::middleware(['auth'])->namespace('Cms')->name('cms.')->group(function () {
             Route::get('/json/get-all', 'UsersController@getAll')->name('get-all');
             Route::get('/json/get/{user}', 'UsersController@get')->name('get');
         });
+        Route::name('general.')->prefix('general')->group(function () {
+            Route::get('/', 'GeneralController@index')->name('index');
+
+            Route::namespace('General')->name('schedules.')->prefix('schedules')->group(function () {
+                Route::get('/', 'SchedulesController@getAll')->name('getAll');
+
+                Route::post('/', 'SchedulesController@store')->name('store');
+                Route::put('/order', 'SchedulesController@order')->name('order');
+                Route::delete('/{element}', 'SchedulesController@destroy')->name('destroy');
+                Route::put('/{element}', 'SchedulesController@update')->name('update');
+                Route::get('/json/get/{element}', 'SchedulesController@get')->name('get');
+            });
+
+            Route::namespace('General')->name('financing-options.')->prefix('financing-options')->group(function () {
+                Route::get('/', 'FinancingOptionsController@getAll')->name('getAll');
+
+                Route::post('/', 'FinancingOptionsController@store')->name('store');
+                Route::put('/order', 'FinancingOptionsController@order')->name('order');
+                Route::delete('/{element}', 'FinancingOptionsController@destroy')->name('destroy');
+                Route::put('/{element}', 'FinancingOptionsController@update')->name('update');
+                Route::get('/json/get/{element}', 'FinancingOptionsController@get')->name('get');
+            });
+
+            
+        });
     });
-    #Roles
-    /*Route::get('configuracion/roles', 'Configuration\RolesController@index')->name('roles');
-    Route::post('configuracion/roles', 'Configuration\RolesController@registrar')->name('roles.registrar');
-    Route::put('configuracion/roles/{rol}', 'Configuration\RolesController@actualizar')->name('roles.update');
-    Route::delete('configuracion/roles/{rol}', 'Configuration\RolesController@eliminar')->name('roles.delete');
-    Route::get('configuracion/json/roles', 'Configuration\RolesController@obtenerRoles')->name('json.roles.get-roles');
-    Route::get('configuracion/json/roles/{rol}', 'Configuration\RolesController@obtenerRol')->name('json.roles.get-rol');
-    Route::get('configuracion/json/modulos', 'Configuration\RolesController@obtenerModulos')->name('json.roles.get-modulos')*/
 
     #Administration
     Route::namespace('Administration')->prefix('administracion')->name('administration.')->group(function () {

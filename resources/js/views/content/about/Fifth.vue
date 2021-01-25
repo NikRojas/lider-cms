@@ -9,115 +9,163 @@
     <div class="col-12 col-lg-9">
       <div>
         <div class="text-right mb-3">
-        <a
-          href="#"
-          class="btn btn-icon btn-inverse-primary"
-          @click.prevent="editElText"
-          v-if="startBlock"
+          <div class="d-inline-block mr-3 mb-3 mb-lg-0" style="opacity: 0.75">
+          <a style="cursor: pointer" @click.prevent="info = !info"
+            ><jam-info
+              height="14px"
+              class="current-color"
+              width="14px"
+            ></jam-info>
+            Ver Página Nosotros - 5ta Sección
+          </a>
+        </div>
+
+        <b-modal
+          v-model="info"
+          @close="info = false"
+          no-close-on-esc
+          no-close-on-backdrop
+          centered
+          size="xl"
+          footer-class="border-0 pt-0"
+          body-class="pt-0"
         >
-          <span class="btn-inner--icon">
-            <jam-info class="current-color"></jam-info>
-          </span>
-          <span class="btn-inner--text">Editar Sección</span>
-        </a>
-      </div>
-      <div class="card mb-4" v-if="startBlock">
-        <div class="card-body" v-if="!loadingGetText">
-          <div class="row">
-            <div class="col-12 col-md-6 col-lg-6">
-              <div class="form-group">
-                <label class="font-weight-bold">Título ES</label>
-                <p v-if="elText.title_es">{{ elText.title_es }}</p>
-                <p v-else>No registrado</p>
-              </div>
-            </div>
-            <div class="col-12 col-md-6 col-lg-6">
-              <div class="form-group">
-                <label class="font-weight-bold">Título EN</label>
-                <p v-if="elText.title_en">{{ elText.title_en }}</p>
-                <p v-else>No registrado</p>
-              </div>
-            </div>
-
-            <div class="col-12 col-md-6 col-lg-6">
-              <div class="form-group">
-                <label class="font-weight-bold">Descripción ES</label>
-                <div v-if="elText.description_es" v-html="elText.description_es"></div>
-                <p v-else>No registrado</p>
-              </div>
-            </div>
-            <div class="col-12 col-md-6 col-lg-6">
-              <div class="form-group">
-                <label class="font-weight-bold">Descripción EN</label>
-                <div v-if="elText.description_en" v-html="elText.description_en"></div>
-                <p v-else>No registrado</p>
-              </div>
-            </div>
+          <template slot="modal-title">
+            <div class="text-primary h2">Página Nosotros - 5ta Sección</div>
+          </template>
+          <template slot="modal-header-close">
+            <button
+              type="button"
+              class="btn p-0 bg-transparent"
+              @click="info = false"
+            >
+              <jam-close></jam-close>
+            </button>
+          </template>
+          <div class="my-2">
+            <img src="/files/img/info/about-5.jpg" class="img-fluid" alt="" />
           </div>
+          <template v-slot:modal-footer="{ ok }">
+            <button type="button" class="btn btn-primary" @click="info = false">
+              Aceptar
+            </button>
+          </template>
+        </b-modal>
+          <a
+            href="#"
+            class="btn btn-icon btn-inverse-primary"
+            @click.prevent="editElText"
+            v-if="startBlock"
+          >
+            <span class="btn-inner--icon">
+              <jam-info class="current-color"></jam-info>
+            </span>
+            <span class="btn-inner--text">Editar Sección</span>
+          </a>
         </div>
-        <div class="card-body" v-else>
-          <div class="row">
-            <div class="col-12 mb-4" v-for="i in 2" :key="i">
-              <div class="w-25">
-                <Skeleton height="15px" />
-              </div>
-              <div class="w-75">
-                <Skeleton height="50px" />
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="card mb-4" v-if="editBlock">
-        <div class="card-body">
-          <form @submit.prevent="updateText">
+        <div class="card mb-4" v-if="startBlock">
+          <div class="card-body" v-if="!loadingGetText">
             <div class="row">
-              <div class="col-12 col-md-12 col-lg-12">
+              <div class="col-12 col-md-6 col-lg-6">
                 <div class="form-group">
-                  <Input
-                    label="Título"
-                    variable="title"
-                    :errors="errorsText"
-                    :valueEn.sync="elText.title_en"
-                    :valueEs.sync="elText.title_es"
-                    :valueEnParent="elText.title_en"
-                    :valueEsParent="elText.title_es"
-                  />
+                  <label class="font-weight-bold">Título ES</label>
+                  <p v-if="elText.title_es">{{ elText.title_es }}</p>
+                  <p v-else>No registrado</p>
                 </div>
               </div>
-              <div class="col-12 col-md-12 col-lg-12">
+              <div class="col-12 col-md-6 col-lg-6">
                 <div class="form-group">
-                  <Editor
-                    size="sm"
-                    label="Descripción"
-                    variable="description"
-                    :errors="errorsText"
-                    :valueEn.sync="elText.description_en"
-                    :valueEs.sync="elText.description_es"
-                    :valueEnParent="elText.description_en"
-                    :valueEsParent="elText.description_es"
-                  />
+                  <label class="font-weight-bold">Título EN</label>
+                  <p v-if="elText.title_en">{{ elText.title_en }}</p>
+                  <p v-else>No registrado</p>
                 </div>
               </div>
 
-              <div class="col-12 text-right">
-                <Button
-                  :text="'Actualizar'"
-                  :classes="['btn-inverse-primary']"
-                  :request-server="requestSubmit"
-                ></Button>
-                <button
-                  type="button"
-                  class="btn btn-secondary"
-                  @click.prevent="restoreText"
-                >
-                  Cancelar
-                </button>
+              <div class="col-12 col-md-6 col-lg-6">
+                <div class="form-group">
+                  <label class="font-weight-bold">Descripción ES</label>
+                  <div
+                    v-if="elText.description_es"
+                    v-html="elText.description_es"
+                  ></div>
+                  <p v-else>No registrado</p>
+                </div>
+              </div>
+              <div class="col-12 col-md-6 col-lg-6">
+                <div class="form-group">
+                  <label class="font-weight-bold">Descripción EN</label>
+                  <div
+                    v-if="elText.description_en"
+                    v-html="elText.description_en"
+                  ></div>
+                  <p v-else>No registrado</p>
+                </div>
               </div>
             </div>
-          </form>
+          </div>
+          <div class="card-body" v-else>
+            <div class="row">
+              <div class="col-12 mb-4" v-for="i in 2" :key="i">
+                <div class="w-25">
+                  <Skeleton height="15px" />
+                </div>
+                <div class="w-75">
+                  <Skeleton height="50px" />
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
-      </div>
+        <div class="card mb-4" v-if="editBlock">
+          <div class="card-body">
+            <form @submit.prevent="updateText">
+              <div class="row">
+                <div class="col-12 col-md-12 col-lg-12">
+                  <div class="form-group">
+                    <Input
+                      label="Título"
+                      variable="title"
+                      :errors="errorsText"
+                      :valueEn.sync="elText.title_en"
+                      :valueEs.sync="elText.title_es"
+                      :valueEnParent="elText.title_en"
+                      :valueEsParent="elText.title_es"
+                    />
+                  </div>
+                </div>
+                <div class="col-12 col-md-12 col-lg-12">
+                  <div class="form-group">
+                    <Editor
+                      size="sm"
+                      label="Descripción"
+                      variable="description"
+                      :errors="errorsText"
+                      :valueEn.sync="elText.description_en"
+                      :valueEs.sync="elText.description_es"
+                      :valueEnParent="elText.description_en"
+                      :valueEsParent="elText.description_es"
+                    />
+                  </div>
+                </div>
+
+                <div class="col-12 text-right">
+                  <Button
+                    :text="'Actualizar'"
+                    :classes="['btn-inverse-primary']"
+                    :request-server="requestSubmit"
+                  ></Button>
+                  <button
+                    type="button"
+                    class="btn btn-secondary"
+                    @click.prevent="restoreText"
+                  >
+                    Cancelar
+                  </button>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
       </div>
       <div class="text-right mb-4">
         <a
@@ -234,7 +282,7 @@ export default {
     messageOrder: String,
     imagesUrl: String,
     routeGetText: String,
-    routeUpdateText: String
+    routeUpdateText: String,
   },
   components: {
     Skeleton,
@@ -265,11 +313,12 @@ export default {
       errorsText: {},
       requestSubmit: false,
       modalDestroy: false,
+      info: false,
     };
   },
   methods: {
-    restoreText(){
-       this.elText = {};
+    restoreText() {
+      this.elText = {};
       this.errorsText = {};
       (this.startBlock = true), (this.editBlock = false);
       this.getElText();
@@ -278,7 +327,7 @@ export default {
       this.startBlock = false;
       this.editBlock = true;
     },
-    updateText(){
+    updateText() {
       this.requestSubmit = true;
       axios
         .post(this.routeUpdateText, this.elText)

@@ -9,6 +9,49 @@
     </div>
     <div class="col-12 col-lg-9">
       <div class="text-right mb-4">
+        <div class="d-inline-block mr-3 mb-3 mb-lg-0" style="opacity: 0.75">
+          <a style="cursor: pointer" @click.prevent="info = !info"
+            ><jam-info
+              height="14px"
+              class="current-color"
+              width="14px"
+            ></jam-info>
+            Ver Página Nosotros - 2da Sección
+          </a>
+        </div>
+
+        <b-modal
+          v-model="info"
+          @close="info = false"
+          no-close-on-esc
+          no-close-on-backdrop
+          centered
+          size="xl"
+          footer-class="border-0 pt-0"
+          body-class="pt-0"
+        >
+          <template slot="modal-title">
+            <div class="text-primary h2">Página Nosotros - 2da Sección</div>
+          </template>
+          <template slot="modal-header-close">
+            <button
+              type="button"
+              class="btn p-0 bg-transparent"
+              @click="info = false"
+            >
+              <jam-close></jam-close>
+            </button>
+          </template>
+          <div class="my-2">
+            <img src="/files/img/info/about-2.jpg" class="img-fluid" alt="" />
+          </div>
+          <template v-slot:modal-footer="{ ok }">
+            <button type="button" class="btn btn-primary" @click="info = false">
+              Aceptar
+            </button>
+          </template>
+        </b-modal>
+
         <a
           href="#"
           class="btn btn-icon btn-inverse-primary"
@@ -127,15 +170,15 @@ import Editor from "../../../components/form/Editor";
 import Input from "../../../components/form/Input";
 import Button from "../../../components/Button";
 export default {
-  components:{
+  components: {
     Skeleton,
     Editor,
     Input,
-    Button
+    Button,
   },
-  props:{
+  props: {
     routeGet: String,
-    routeUpdate: String
+    routeUpdate: String,
   },
   data() {
     return {
@@ -144,7 +187,8 @@ export default {
       el: {},
       loadingGet: false,
       requestSubmit: false,
-      errors: {}
+      errors: {},
+      info: false,
     };
   },
   methods: {
@@ -170,7 +214,7 @@ export default {
         })
         .catch((error) => {});
     },
-    update(){
+    update() {
       this.requestSubmit = true;
       axios
         .post(this.routeUpdate, this.el)
@@ -206,7 +250,7 @@ export default {
             },
           });
         });
-    }
+    },
   },
   created() {
     this.getEl();

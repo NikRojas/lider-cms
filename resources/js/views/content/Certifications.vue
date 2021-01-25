@@ -332,10 +332,12 @@ export default {
       this.getEl(id);
     },
     getEl(id) {
+      this.loadingGet = true;
       axios
         .get(this.route + "/json/get/" + id)
         .then((response) => {
           this.element = response.data;
+          this.loadingGet = false;
         })
         .catch((error) => {});
     },

@@ -361,8 +361,10 @@ __webpack_require__.r(__webpack_exports__);
     getEl: function getEl(id) {
       var _this4 = this;
 
+      this.loadingGet = true;
       axios.get(this.route + "/json/get/" + id).then(function (response) {
         _this4.element = response.data;
+        _this4.loadingGet = false;
       })["catch"](function (error) {});
     },
     newEl: function newEl() {

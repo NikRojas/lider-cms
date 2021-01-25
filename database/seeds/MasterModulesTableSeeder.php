@@ -13,10 +13,10 @@ class MasterModulesTableSeeder extends Seeder
     {
         $pVentas = 4;
         $pAdmin = 7;
-        $pContenido = 14;
-        $pLeads = 24;
-        $pConfiguracion = 31;
-        $pBlog = 21;
+        $pContenido = 13;
+        $pLeads = 25;
+        $pConfiguracion = 32;
+        $pBlog = 22;
         $position = 1;
         DB::table('master_modules')->insert([
             [
@@ -109,13 +109,7 @@ class MasterModulesTableSeeder extends Seeder
                     'index'    => 5
                 ],
 
-            [
-                'name' 	=> 'Slider',
-                'slug' 		=> 'slider',
-                'parent' 	=> NULL,
-                'icon' 		=> 'pictures',
-                'index'    => $position++
-            ],
+            
             [
                 'name' 	=> 'Contenido',
 				'slug' 		=> NULL,
@@ -155,9 +149,39 @@ class MasterModulesTableSeeder extends Seeder
                     'index'    => 4
                 ],
 
-            
+                [
+                    'name' 	=> 'Slider',
+                    'slug' 		=> 'contenido/slider',
+                    'parent' 	=> $pContenido,
+                    'icon' 		=> NULL,
+                    'index'    => 5
+                ],
 
-            [
+                [
+                    'name' 	=> 'Cami',
+                    'slug' 		=> 'contenido/cami',
+                    'parent' 	=> $pContenido,
+                    'icon' 		=> NULL,
+                    'index'    => 6
+                ], 
+
+                [
+                    'name' 	=> 'Sobre Lider',
+                    'slug' 		=> 'contenido/sobre-lider',
+                    'parent' 	=> $pContenido,
+                    'icon' 		=> NULL,
+                    'index'    => 7
+                ],
+                
+                [
+                    'name' 	=> 'Testimoniales',
+                    'slug' 		=> 'contenido/testimoniales',
+                    'parent' 	=> $pContenido,
+                    'icon' 		=> NULL,
+                    'index'    => 8
+                ],
+
+            /*[
                 'name' 	=> 'Cami',
                 'slug' 		=> 'cami',
                 'parent' 	=> NULL,
@@ -171,7 +195,7 @@ class MasterModulesTableSeeder extends Seeder
                 'parent' 	=> NULL,
                 'icon' 		=> 'camera',
                 'index'    => $position++
-            ],
+            ],*/
 
             [
                 'name' 	=> 'Blog',

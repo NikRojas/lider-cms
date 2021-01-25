@@ -11,9 +11,9 @@
 @section('content')
     <testimonials
     message-order="@lang('custom.message.order')"
-    route="{{ route('cms.testimonials.index') }}" 
-    route-order="{{ route('cms.testimonials.order') }}"
+    route="{{ route('cms.content.testimonials.index') }}" 
+    route-order="{{ route('cms.content.testimonials.order') }}"
     images-url="{{ config('services.images_url') }}"
-    route-get-all="{{ route('cms.testimonials.get-all') }}"
+    route-get-all="{{ route('cms.content.testimonials.get-all') }}"
     ></testimonials>
 @endsection

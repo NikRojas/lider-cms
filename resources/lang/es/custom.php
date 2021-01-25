@@ -31,7 +31,8 @@ return [
         'complaint' => 'El reclamo',
         'suscriber' => 'El suscriptor',
         'schedule' => 'El horario',
-        'financing-option' => 'La opción de financiamiento'
+        'financing-option' => 'La opción de financiamiento',
+        'project_finished' => 'El proyecto entregado'
     ],
     'title' => [
         'error' => 'Error',

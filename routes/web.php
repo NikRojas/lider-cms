@@ -143,18 +143,7 @@ Route::middleware(['auth'])->namespace('Cms')->name('cms.')->group(function () {
         Route::get('export/{from?}/{to?}', 'SuscribersController@exportFile')->name('export-file'); 
     });
 
-    #Slider
-    Route::prefix('slider')->name('slider.')->group(function () {
-        Route::get('/', 'SliderController@index')->name('index');
-        Route::get('/nuevo', 'SliderController@create')->name('create');
-        Route::get('/editar/{element}', 'SliderController@edit')->name('edit');
-        Route::put('/order', 'SliderController@order')->name('order');
-        Route::post('/', 'SliderController@store')->name('store');
-        Route::put('/{element}', 'SliderController@update')->name('update');
-        Route::delete('/{element}', 'SliderController@destroy')->name('destroy');
-        Route::get('/json/get-all', 'SliderController@getAll')->name('get-all');
-        Route::get('/json/get/{element}', 'SliderController@get')->name('get');
-    });
+    
 
     #Projects
     Route::namespace('Projects')->prefix('proyectos')->name('projects.')->group(function () {
@@ -253,6 +242,73 @@ Route::middleware(['auth'])->namespace('Cms')->name('cms.')->group(function () {
             Route::get('/json/get-all', 'SeoController@getAll')->name('get-all');
             Route::put('/{page}', 'SeoController@update')->name('update');
         });
+
+        Route::prefix('cami')->name('cami.')->group(function () {
+            #Cami
+            Route::get('/', 'CamiController@index')->name('index');
+            Route::post('/', 'CamiController@store')->name('store');
+            Route::get('/json/get', 'CamiController@get')->name('get');
+            #Cami Elements
+            Route::get('/projects/json/get-all', 'CamiController@elementsGetAll')->name('projects.get-all');
+            Route::post('/projects', 'CamiController@elementsStore')->name('projects.store');
+            Route::put('/projects/order', 'CamiController@elementsOrder')->name('projects.order');
+            Route::get('/projects/json/get/{element}', 'CamiController@elementsGet')->name('projects.get');
+            Route::delete('/projects/{element}', 'CamiController@elementsDestroy')->name('projects.destroy');
+            Route::put('/projects/{element}', 'CamiController@elementsUpdate')->name('projects.update');
+        });
+    
+        Route::prefix('testimoniales')->name('testimonials.')->group(function () {
+            Route::get('/', 'TestimonialsController@index')->name('index');
+            Route::post('/', 'TestimonialsController@store')->name('store');
+            Route::put('/order', 'TestimonialsController@order')->name('order');
+            Route::put('/{element}', 'TestimonialsController@update')->name('update');
+            Route::delete('/{element}', 'TestimonialsController@destroy')->name('destroy');
+            Route::get('/json/get-all', 'TestimonialsController@getAll')->name('get-all');
+            Route::get('/json/get/{element}', 'TestimonialsController@get')->name('get');
+        });
+
+        #Slider
+        Route::prefix('slider')->name('slider.')->group(function () {
+            Route::get('/', 'SliderController@index')->name('index');
+            Route::get('/nuevo', 'SliderController@create')->name('create');
+            Route::get('/editar/{element}', 'SliderController@edit')->name('edit');
+            Route::put('/order', 'SliderController@order')->name('order');
+            Route::post('/', 'SliderController@store')->name('store');
+            Route::put('/{element}', 'SliderController@update')->name('update');
+            Route::delete('/{element}', 'SliderController@destroy')->name('destroy');
+            Route::get('/json/get-all', 'SliderController@getAll')->name('get-all');
+            Route::get('/json/get/{element}', 'SliderController@get')->name('get');
+        });
+
+        #Sobre Lider
+        Route::prefix('sobre-lider')->name('about.')->group(function () {
+            Route::get('/', 'AboutController@index')->name('index');
+            Route::prefix('third')->name('third.')->namespace('About')->group(function () {
+                Route::post('/', 'ThirdController@store')->name('store');
+                Route::put('/order', 'ThirdController@order')->name('order');
+                Route::put('/{element}', 'ThirdController@update')->name('update');
+                Route::delete('/{element}', 'ThirdController@destroy')->name('destroy');
+                Route::get('/json/get-all', 'ThirdController@getAll')->name('get-all');
+                Route::get('/json/get/{element}', 'ThirdController@get')->name('get');
+            });
+            Route::prefix('fifth')->name('fifth.')->namespace('About')->group(function () {
+                Route::post('/', 'FifthController@store')->name('store');
+                Route::put('/order', 'FifthController@order')->name('order');
+                Route::put('/{element}', 'FifthController@update')->name('update');
+                Route::delete('/{element}', 'FifthController@destroy')->name('destroy');
+                Route::get('/json/get-all', 'FifthController@getAll')->name('get-all');
+                Route::get('/json/get/{element}', 'FifthController@get')->name('get');
+            });
+
+            /*Route::get('/nuevo', 'AboutController@create')->name('create');
+            Route::get('/editar/{element}', 'AboutController@edit')->name('edit');
+            Route::put('/order', 'AboutController@order')->name('order');
+            Route::post('/', 'AboutController@store')->name('store');
+            Route::put('/{element}', 'AboutController@update')->name('update');
+            Route::delete('/{element}', 'AboutController@destroy')->name('destroy');
+            Route::get('/json/get-all', 'AboutController@getAll')->name('get-all');
+            Route::get('/json/get/{element}', 'AboutController@get')->name('get');*/
+        });
     });
  
     Route::namespace('Blog')->prefix('blog')->name('blog.')->group(function () {
@@ -320,29 +376,7 @@ Route::middleware(['auth'])->namespace('Cms')->name('cms.')->group(function () {
         Route::get('/get-email-destination', 'ApplicantsController@getEmailDestination')->name('get-email-destination');
     });
 
-    Route::prefix('cami')->name('cami.')->group(function () {
-        #Cami
-        Route::get('/', 'CamiController@index')->name('index');
-        Route::post('/', 'CamiController@store')->name('store');
-        Route::get('/json/get', 'CamiController@get')->name('get');
-        #Camii Elements
-        Route::get('/projects/json/get-all', 'CamiController@elementsGetAll')->name('projects.get-all');
-        Route::post('/projects', 'CamiController@elementsStore')->name('projects.store');
-        Route::put('/projects/order', 'CamiController@elementsOrder')->name('projects.order');
-        Route::get('/projects/json/get/{element}', 'CamiController@elementsGet')->name('projects.get');
-        Route::delete('/projects/{element}', 'CamiController@elementsDestroy')->name('projects.destroy');
-        Route::put('/projects/{element}', 'CamiController@elementsUpdate')->name('projects.update');
-    });
-
-    Route::prefix('testimoniales')->name('testimonials.')->group(function () {
-        Route::get('/', 'TestimonialsController@index')->name('index');
-        Route::post('/', 'TestimonialsController@store')->name('store');
-        Route::put('/order', 'TestimonialsController@order')->name('order');
-        Route::put('/{element}', 'TestimonialsController@update')->name('update');
-        Route::delete('/{element}', 'TestimonialsController@destroy')->name('destroy');
-        Route::get('/json/get-all', 'TestimonialsController@getAll')->name('get-all');
-        Route::get('/json/get/{element}', 'TestimonialsController@get')->name('get');
-    });
+    
 
     #Misc
     Route::get('files/{folder}/{subfolder}/{file}', 'CmsController@getFile')->name('get-file');

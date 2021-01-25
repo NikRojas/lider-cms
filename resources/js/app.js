@@ -34,6 +34,7 @@ const app = new Vue({
         'content-social-networks': () => import('./views/content/SocialNetworks.vue' /* webpackChunkName: "js/pages/content/social-networks" */),
         'content-seo': () => import('./views/content/Seo.vue' /* webpackChunkName: "js/pages/content/seo" */),
         'content-certifications': () => import('./views/content/Certifications.vue' /* webpackChunkName: "js/pages/content/certifications" */),
+        'content-about': () => import('./views/content/about/Index.vue' /* webpackChunkName: "js/pages/content/about" */),
 
         'category': () => import('./views/blog/Category.vue' /* webpackChunkName: "js/pages/blog/category" */),
 

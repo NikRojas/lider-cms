@@ -13,18 +13,26 @@
     </div>
     <div class="container-fluid mt--6">
       <First/>
-      <Second/>
+      <Second :route-get="compromiseRouteGet" :route-update="compromiseRouteUpdate"/>
       <Third :route-order="projectFinishedRouteOrder"
       :route="projectFinishedRoute" 
       :message-order="messageOrder"
       :images-url="imagesUrl"
-      :route-get-all="projectFinishedRouteGetAll"/>
-      <Fourth/>
+      :route-get-all="projectFinishedRouteGetAll"
+      :route-get-text="projectFinishedTextRouteGet"
+      :route-update-text="projectFinishedTextRouteUpdate"/>
+      <Fourth :route-order="warrantyElementsRouteOrder"
+      :route="warrantyElementsRoute" 
+      :message-order="messageOrder"
+      :images-url="imagesUrl"
+      :route-get-all="warrantyElementsRouteGetAll"/>
       <Fifth :route-order="customerSupportRouteOrder"
       :route="customerSupportRoute" 
       :message-order="messageOrder"
       :images-url="imagesUrl"
-      :route-get-all="customerSupportRouteGetAll"/>
+      :route-get-all="customerSupportRouteGetAll"
+      :route-get-text="customerSupportTextRouteGet"
+      :route-update-text="customerSupportTextRouteUpdate"/>
     </div>
   </div>
 </template>
@@ -43,6 +51,15 @@ export default {
     customerSupportRoute: String,
     customerSupportRouteGetAll: String,
     customerSupportRouteOrder: String,
+    warrantyElementsRoute: String,
+    warrantyElementsRouteGetAll: String,
+    warrantyElementsRouteOrder: String,
+    compromiseRouteGet: String,
+    compromiseRouteUpdate: String,
+    customerSupportTextRouteGet: String,
+    customerSupportTextRouteUpdate: String,
+    projectFinishedTextRouteGet: String,
+    projectFinishedTextRouteUpdate: String,
     messageOrder: String,
     imagesUrl: String,
   },

@@ -3,9 +3,11 @@
 namespace App\Http\Controllers\Cms\Content\About;
 
 use App\AboutProjectFinished;
+use App\AboutText;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Cms\About\AboutProjectFinishRequest;
+use App\Http\Requests\Cms\About\AboutProjectFinishTextRequest;
 use App\Http\Traits\CmsTrait;
 use Illuminate\Support\Facades\Storage;
 
@@ -110,5 +112,28 @@ class ThirdController extends Controller
         } catch (\Exception $e) {
             return response()->json(['title' => trans('custom.title.error'), 'message' => trans('custom.message.update.error', ['name' => trans('custom.attribute.project_finished')])], 500);
         }
+    }
+
+    public function updateText(AboutProjectFinishTextRequest $request)
+    {
+        $request_el = request(["title_es","title_en"]);
+        $el_registered = AboutText::where('type','project-finished')->first();
+        $request_el = array_merge($request_el, ["type" => "project-finished"]);
+        try {
+            if ($el_registered) {
+                $el = AboutText::UpdateOrCreate(["id"=>$el_registered->id], $request_el);
+            } else {
+                $el = AboutText::UpdateOrCreate($request_el);
+            }
+            return response()->json(['title'=> trans('custom.title.success'), 'message'=> trans('custom.message.update.success', ['name' => trans('custom.attribute.section')]) ], 200);
+        } catch (\Exception $e) {
+            return response()->json(['title'=> trans('custom.title.error'), 'message'=> trans('custom.message.update.error', ['name' => trans('custom.attribute.section')]) ], 500);
+        }
+    }
+
+    public function getText()
+    {
+        $el = AboutText::where('type','project-finished')->orderBy('created_at', 'desc')->first();
+        return response()->json($el);
     }
 }

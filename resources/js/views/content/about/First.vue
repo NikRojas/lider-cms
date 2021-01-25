@@ -1,5 +1,5 @@
 <template>
-  <div class="row mb-4">
+  <div class="row mb-5">
     <div class="col-12 col-lg-3">
       <h2>Sobre Nosotros</h2>
       <p>

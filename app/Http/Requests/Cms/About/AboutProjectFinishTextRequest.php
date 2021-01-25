@@ -4,7 +4,7 @@ namespace App\Http\Requests\Cms\About;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class AboutCustomerSupportRequest extends FormRequest
+class AboutProjectFinishTextRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -26,8 +26,6 @@ class AboutCustomerSupportRequest extends FormRequest
         $rules = [
             'title_es' => 'required|max:150',
             'title_en' => 'required|max:150',
-            'description_es' => 'required',
-            'description_en' => 'required',
         ];
         return $rules;
     }

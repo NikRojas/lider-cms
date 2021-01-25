@@ -4,7 +4,7 @@ namespace App\Http\Requests\Cms\About;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class AboutCustomerSupportRequest extends FormRequest
+class AboutCustomerSupportTextRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.

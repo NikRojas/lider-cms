@@ -1,5 +1,5 @@
 <template>
-  <div class="row mb-4">
+  <div class="row mb-5">
     <div class="col-12 col-lg-3">
       <h2>Proyectos Entregados</h2>
       <p>
@@ -8,7 +8,92 @@
       </p>
     </div>
     <div class="col-12 col-lg-9">
-       <div class="text-right">
+      <div>
+        <div class="text-right mb-3">
+        <a
+          href="#"
+          class="btn btn-icon btn-inverse-primary"
+          @click.prevent="editElText"
+          v-if="startBlock"
+        >
+          <span class="btn-inner--icon">
+            <jam-info class="current-color"></jam-info>
+          </span>
+          <span class="btn-inner--text">Editar Sección</span>
+        </a>
+      </div>
+      <div class="card mb-4" v-if="startBlock">
+        <div class="card-body" v-if="!loadingGetText">
+          <div class="row">
+            <div class="col-12 col-md-6 col-lg-6">
+              <div class="form-group">
+                <label class="font-weight-bold">Título ES</label>
+                <p v-if="elText.title_es">{{ elText.title_es }}</p>
+                <p v-else>No registrado</p>
+              </div>
+            </div>
+            <div class="col-12 col-md-6 col-lg-6">
+              <div class="form-group">
+                <label class="font-weight-bold">Título EN</label>
+                <p v-if="elText.title_en">{{ elText.title_en }}</p>
+                <p v-else>No registrado</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="card-body" v-else>
+          <div class="row">
+            <div class="col-12 mb-4" v-for="i in 2" :key="i">
+              <div class="w-25">
+                <Skeleton height="15px" />
+              </div>
+              <div class="w-75">
+                <Skeleton height="50px" />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="card mb-4" v-if="editBlock">
+        <div class="card-body">
+          <form @submit.prevent="updateText">
+            <div class="row">
+              <div class="col-12 col-md-12 col-lg-12">
+                <div class="form-group">
+                  <Input
+                    label="Título"
+                    variable="title"
+                    :errors="errorsText"
+                    :valueEn.sync="elText.title_en"
+                    :valueEs.sync="elText.title_es"
+                    :valueEnParent="elText.title_en"
+                    :valueEsParent="elText.title_es"
+                  />
+                </div>
+              </div>
+
+              <div class="col-12 text-right">
+                <Button
+                  :text="'Actualizar'"
+                  :classes="['btn-inverse-primary']"
+                  :request-server="requestSubmit"
+                ></Button>
+                <button
+                  type="button"
+                  class="btn btn-secondary"
+                  @click.prevent="restoreText"
+                >
+                  Cancelar
+                </button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+      </div>
+
+
+       <div class="text-right mb-3">
                 <a href="#" class="btn btn-icon btn-inverse-primary" @click.prevent="newEl">
                 <span class="btn-inner--icon">
                   <jam-plus class="current-color"></jam-plus>
@@ -159,6 +244,8 @@ import vue2Dropzone from "vue2-dropzone";
 import SkeletonForm from "../../../components/skeleton/form";
 import Destroy from "../../../components/modals/Destroy";
 import Editor from "../../../components/form/Editor";
+import Input from "../../../components/form/Input";
+import { Skeleton } from "vue-loading-skeleton";
 export default {
   props: {
     route: String,
@@ -166,6 +253,8 @@ export default {
     routeOrder: String,
     messageOrder: String,
     imagesUrl: String,
+    routeGetText: String,
+    routeUpdateText: String
   },
   components: {
     Destroy,
@@ -174,10 +263,16 @@ export default {
     Button,
     BreadCrumb,
     SkeletonForm,
-    Editor
+    Editor,
+    Input,
+    Skeleton
   },
   data() {
     return {
+      loadingGetText: false,
+      elText: {},
+      errorsText: {},
+      editBlock: false,
       modalCreateUpdate: false,
       loadingGet: false,
       elements: {},
@@ -203,6 +298,54 @@ export default {
     };
   },
   methods: {
+    restoreText(){
+       this.elText = {};
+      this.errorsText = {};
+      (this.startBlock = true), (this.editBlock = false);
+      this.getElText();
+    },
+    editElText() {
+      this.startBlock = false;
+      this.editBlock = true;
+    },
+    updateText(){
+      this.requestSubmit = true;
+      axios
+        .post(this.routeUpdateText, this.elText)
+        .then((response) => {
+          this.requestSubmit = false;
+          this.restoreText();
+          Swal.fire({
+            title: response.data.title,
+            text: response.data.message,
+            type: "success",
+            confirmButtonText: "Ok",
+            buttonsStyling: false,
+            customClass: {
+              confirmButton: "btn btn-inverse-primary",
+            },
+          });
+        })
+        .catch((error) => {
+          this.requestSubmit = false;
+          if (error.response.status === 422) {
+            this.errorsText = error.response.data.errors || {};
+            return;
+          }
+          this.restoreText();
+          Swal.fire({
+            title: error.response.data.title,
+            text: error.response.data.message,
+            type: "error",
+            confirmButtonText: "Ok",
+            buttonsStyling: false,
+            customClass: {
+              confirmButton: "btn btn-inverse-primary",
+            },
+          });
+        });
+    },
+
     submit() {
       this.requestSubmit = true;
       let url;
@@ -381,9 +524,23 @@ export default {
         })
         .catch((error) => {});
     },
+
+    getElText() {
+      this.loadingGetText = true;
+      axios
+        .get(this.routeGetText)
+        .then((response) => {
+          if (response.data) {
+            this.elText = response.data;
+          }
+          this.loadingGetText = false;
+        })
+        .catch((error) => {});
+    },
   },
   created() {
     this.getEls();
+    this.getElText();
   },
 };
 </script>

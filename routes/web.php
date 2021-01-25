@@ -290,6 +290,9 @@ Route::middleware(['auth'])->namespace('Cms')->name('cms.')->group(function () {
                 Route::delete('/{element}', 'ThirdController@destroy')->name('destroy');
                 Route::get('/json/get-all', 'ThirdController@getAll')->name('get-all');
                 Route::get('/json/get/{element}', 'ThirdController@get')->name('get');
+
+                Route::post('/text', 'ThirdController@updateText')->name('update-text');
+                Route::get('/json/get', 'ThirdController@getText')->name('get-text');
             });
             Route::prefix('fifth')->name('fifth.')->namespace('About')->group(function () {
                 Route::post('/', 'FifthController@store')->name('store');
@@ -298,16 +301,23 @@ Route::middleware(['auth'])->namespace('Cms')->name('cms.')->group(function () {
                 Route::delete('/{element}', 'FifthController@destroy')->name('destroy');
                 Route::get('/json/get-all', 'FifthController@getAll')->name('get-all');
                 Route::get('/json/get/{element}', 'FifthController@get')->name('get');
+
+                Route::post('/text', 'FifthController@updateText')->name('update-text');
+                Route::get('/json/get', 'FifthController@getText')->name('get-text');
+            });
+            Route::prefix('fourth')->name('fourth.')->namespace('About')->group(function () {
+                Route::post('/', 'FourthController@store')->name('store');
+                Route::put('/order', 'FourthController@order')->name('order');
+                Route::put('/{element}', 'FourthController@update')->name('update');
+                Route::delete('/{element}', 'FourthController@destroy')->name('destroy');
+                Route::get('/json/get-all', 'FourthController@getAll')->name('get-all');
+                Route::get('/json/get/{element}', 'FourthController@get')->name('get');
             });
 
-            /*Route::get('/nuevo', 'AboutController@create')->name('create');
-            Route::get('/editar/{element}', 'AboutController@edit')->name('edit');
-            Route::put('/order', 'AboutController@order')->name('order');
-            Route::post('/', 'AboutController@store')->name('store');
-            Route::put('/{element}', 'AboutController@update')->name('update');
-            Route::delete('/{element}', 'AboutController@destroy')->name('destroy');
-            Route::get('/json/get-all', 'AboutController@getAll')->name('get-all');
-            Route::get('/json/get/{element}', 'AboutController@get')->name('get');*/
+            Route::prefix('second')->name('second.')->namespace('About')->group(function () {
+                Route::post('/', 'SecondController@update')->name('update');
+                Route::get('/json/get', 'SecondController@get')->name('get');
+            });
         });
     });
  

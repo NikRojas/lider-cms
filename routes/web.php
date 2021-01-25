@@ -312,6 +312,9 @@ Route::middleware(['auth'])->namespace('Cms')->name('cms.')->group(function () {
                 Route::delete('/{element}', 'FourthController@destroy')->name('destroy');
                 Route::get('/json/get-all', 'FourthController@getAll')->name('get-all');
                 Route::get('/json/get/{element}', 'FourthController@get')->name('get');
+
+                Route::post('/text', 'FourthController@updateText')->name('update-text');
+                Route::get('/json/get', 'FourthController@getText')->name('get-text');
             });
 
             Route::prefix('second')->name('second.')->namespace('About')->group(function () {

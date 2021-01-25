@@ -146,7 +146,6 @@
         </a>
       </div>
       <DataTableDraggable
-        v-show="startBlock"
         :object.sync="elements"
         :buttonUpdate="true"
         :buttonDelete="true"

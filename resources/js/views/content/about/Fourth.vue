@@ -51,6 +51,190 @@
         <a
           href="#"
           class="btn btn-icon btn-inverse-primary"
+          @click.prevent="editElText"
+          v-if="startBlock"
+        >
+          <span class="btn-inner--icon">
+            <jam-info class="current-color"></jam-info>
+          </span>
+          <span class="btn-inner--text">Editar Sección</span>
+        </a>
+      </div>
+
+      <div class="card mb-4" v-if="startBlock">
+        <div class="card-body" v-if="!loadingGetText">
+          <div class="row">
+            <div class="col-12">
+              <div class="form-group">
+                <div class="form-group">
+                  <label class="font-weight-bold d-block">Fondo:</label>
+                  <img
+                    v-if="elText.image"
+                    :src="imagesUrl + '/about/' + elText.image"
+                    class="img-fluid"
+                  />
+                  <p v-else>No registrado</p>
+                </div>
+              </div>
+            </div>
+            <div class="col-12 col-md-6 col-lg-6">
+              <div class="form-group">
+                <label class="font-weight-bold">Título ES</label>
+                <p v-if="elText.title_es">{{ elText.title_es }}</p>
+                <p v-else>No registrado</p>
+              </div>
+            </div>
+            <div class="col-12 col-md-6 col-lg-6">
+              <div class="form-group">
+                <label class="font-weight-bold">Título EN</label>
+                <p v-if="elText.title_en">{{ elText.title_en }}</p>
+                <p v-else>No registrado</p>
+              </div>
+            </div>
+            <div class="col-12 col-md-6 col-lg-6">
+              <div class="form-group">
+                <label class="font-weight-bold">Descripción ES</label>
+                <div
+                  v-if="elText.description_es"
+                  v-html="elText.description_es"
+                ></div>
+                <p v-else>No registrado</p>
+              </div>
+            </div>
+            <div class="col-12 col-md-6 col-lg-6">
+              <div class="form-group">
+                <label class="font-weight-bold">Descripción EN</label>
+                <div
+                  v-if="elText.description_en"
+                  v-html="elText.description_en"
+                ></div>
+                <p v-else>No registrado</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="card-body" v-else>
+          <div class="row">
+            <div class="col-12 mb-4" v-for="i in 2" :key="i">
+              <div class="w-25">
+                <Skeleton height="15px" />
+              </div>
+              <div class="w-75">
+                <Skeleton height="50px" />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="card mb-4" v-if="editBlock">
+        <div class="card-body">
+          <form @submit.prevent="updateText">
+            <div class="row">
+              <div class="col-12 col-md-12 col-lg-12">
+                <div class="form-group">
+                  <label class="font-weight-bold d-block" for="image"
+                    >Fondo</label
+                  >
+                  <div class="row">
+                    <div
+                      v-bind:class="[elText.image ? 'col-lg-4 mb-3 mb-lg-0' : '']"
+                    >
+                      <img
+                        v-if="elText.image"
+                        :src="imagesUrl + '/about/' + elText.image"
+                        alt
+                        class="img-fluid"
+                      />
+                    </div>
+                    <div
+                      v-bind:class="[elText.image ? 'col-lg-8' : 'col-lg-12']"
+                      v-if="editBlock"
+                    >
+                      <vue-dropzone
+                        ref="ref_image"
+                        @vdropzone-file-added="
+                          $validateImageDropzone(
+                            $event,
+                            $refs.ref_image.dropzone,
+                            1,
+                            100000,
+                            '100kb'
+                          )
+                        "
+                        id="id_image"
+                        :options="dropzoneOptions"
+                        :duplicateCheck="true"
+                        :useCustomSlot="true"
+                      >
+                        <div class="dropzone-custom-content">
+                          <h5 class="dropzone-custom-title text-primary">
+                            Suelte el archivo aquí o haga click para cargarlo.
+                          </h5>
+                        </div>
+                      </vue-dropzone>
+
+                      <label
+                        v-if="errors && errors.image"
+                        class="text-danger text-sm d-block mt-2"
+                        for="file"
+                        >{{ errors.image[0] }}</label
+                      >
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-12 col-md-12 col-lg-12">
+                <div class="form-group">
+                  <Input
+                    label="Título"
+                    variable="title"
+                    :errors="errorsText"
+                    :valueEn.sync="elText.title_en"
+                    :valueEs.sync="elText.title_es"
+                    :valueEnParent="elText.title_en"
+                    :valueEsParent="elText.title_es"
+                  />
+                </div>
+              </div>
+
+              <div class="col-12 col-md-12 col-lg-12">
+                <div class="form-group">
+                  <Editor
+                    size="sm"
+                    label="Descripción"
+                    variable="description"
+                    :errors="errorsText"
+                    :valueEn.sync="elText.description_en"
+                    :valueEs.sync="elText.description_es"
+                    :valueEnParent="elText.description_en"
+                    :valueEsParent="elText.description_es"
+                  />
+                </div>
+              </div>
+
+              <div class="col-12 text-right">
+                <Button
+                  :text="'Actualizar'"
+                  :classes="['btn-inverse-primary']"
+                  :request-server="requestSubmit"
+                ></Button>
+                <button
+                  type="button"
+                  class="btn btn-secondary"
+                  @click.prevent="restoreText"
+                >
+                  Cancelar
+                </button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+      <div class="text-right mb-3">
+        <a
+          href="#"
+          class="btn btn-icon btn-inverse-primary"
           @click.prevent="newEl"
         >
           <span class="btn-inner--icon">
@@ -60,7 +244,6 @@
         </a>
       </div>
       <DataTableDraggable
-        v-show="startBlock"
         :object.sync="elements"
         :buttonUpdate="true"
         :buttonDelete="true"
@@ -144,6 +327,8 @@ import SkeletonForm from "../../../components/skeleton/form";
 import Destroy from "../../../components/modals/Destroy";
 import Editor from "../../../components/form/Editor";
 import Input from "../../../components/form/Input";
+import { Skeleton } from "vue-loading-skeleton";
+import vue2Dropzone from "vue2-dropzone";
 export default {
   props: {
     route: String,
@@ -151,6 +336,8 @@ export default {
     routeOrder: String,
     messageOrder: String,
     imagesUrl: String,
+    routeGetText: String,
+    routeUpdateText: String,
   },
   components: {
     Destroy,
@@ -160,9 +347,15 @@ export default {
     SkeletonForm,
     Editor,
     Input,
+    Skeleton,
+    vueDropzone: vue2Dropzone,
   },
   data() {
     return {
+      loadingGetText: false,
+      elText: {},
+      errorsText: {},
+      editBlock: false,
       modalCreateUpdate: false,
       loadingGet: false,
       elements: {},
@@ -171,15 +364,94 @@ export default {
         image: "",
         active: true,
       },
+      dropzoneOptions: {
+        url: "/",
+        maxFiles: 1,
+        acceptedFiles: "image/png,image/jpeg,image/jpg,image/svg+xml",
+        autoProcessQueue: false,
+        thumbnailWidth: 150,
+        addRemoveLinks: true,
+        dictRemoveFile: "Remover",
+      },
       title: "",
       errors: {},
       startBlock: true,
       requestSubmit: false,
       modalDestroy: false,
-      info: false
+      info: false,
     };
   },
   methods: {
+    restoreText() {
+      this.elText = {};
+      this.errorsText = {};
+      (this.startBlock = true), (this.editBlock = false);
+      this.getElText();
+    },
+    editElText() {
+      this.startBlock = false;
+      this.editBlock = true;
+    },
+    updateText() {
+      this.requestSubmit = true;
+      const fd = new FormData();
+      if (this.$refs.ref_image.dropzone.files[0]) {
+        fd.append("image", this.$refs.ref_image.dropzone.files[0]);
+      }
+      if (this.elText.title_en) {
+        fd.append("title_en", this.elText.title_en);
+      }
+      if (this.elText.title_es) {
+        fd.append("title_es", this.elText.title_es);
+      }
+
+      if (this.elText.description_es) {
+        fd.append("description_es", this.elText.description_es);
+      }
+      if (this.elText.description_en) {
+        fd.append("description_en", this.elText.description_en);
+      }
+
+
+      if (this.elText.id) {
+        fd.append("id", this.elText.id);
+      }
+
+      axios
+        .post(this.routeUpdateText, fd)
+        .then((response) => {
+          this.requestSubmit = false;
+          this.restoreText();
+          Swal.fire({
+            title: response.data.title,
+            text: response.data.message,
+            type: "success",
+            confirmButtonText: "Ok",
+            buttonsStyling: false,
+            customClass: {
+              confirmButton: "btn btn-inverse-primary",
+            },
+          });
+        })
+        .catch((error) => {
+          this.requestSubmit = false;
+          if (error.response.status === 422) {
+            this.errorsText = error.response.data.errors || {};
+            return;
+          }
+          this.restoreText();
+          Swal.fire({
+            title: error.response.data.title,
+            text: error.response.data.message,
+            type: "error",
+            confirmButtonText: "Ok",
+            buttonsStyling: false,
+            customClass: {
+              confirmButton: "btn btn-inverse-primary",
+            },
+          });
+        });
+    },
     submit() {
       this.requestSubmit = true;
       let url;
@@ -357,9 +629,22 @@ export default {
         })
         .catch((error) => {});
     },
+    getElText() {
+      this.loadingGetText = true;
+      axios
+        .get(this.routeGetText)
+        .then((response) => {
+          if (response.data) {
+            this.elText = response.data;
+          }
+          this.loadingGetText = false;
+        })
+        .catch((error) => {});
+    },
   },
   created() {
     this.getEls();
+    this.getElText();
   },
 };
 </script>

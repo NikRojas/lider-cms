@@ -25,7 +25,9 @@
       :route="warrantyElementsRoute" 
       :message-order="messageOrder"
       :images-url="imagesUrl"
-      :route-get-all="warrantyElementsRouteGetAll"/>
+      :route-get-all="warrantyElementsRouteGetAll"
+      :route-get-text="warrantyTextRouteGet"
+      :route-update-text="warrantyTextRouteUpdate"/>
       <Fifth :route-order="customerSupportRouteOrder"
       :route="customerSupportRoute" 
       :message-order="messageOrder"
@@ -54,6 +56,8 @@ export default {
     warrantyElementsRoute: String,
     warrantyElementsRouteGetAll: String,
     warrantyElementsRouteOrder: String,
+    warrantyTextRouteGet: String,
+    warrantyTextRouteUpdate: String,
     compromiseRouteGet: String,
     compromiseRouteUpdate: String,
     customerSupportTextRouteGet: String,

@@ -19,6 +19,9 @@
     warranty-elements-route="{{ route('cms.content.about.fourth.store') }}" 
     warranty-elements-route-get-all="{{ route('cms.content.about.fourth.get-all') }}"
 
+    warranty-text-route-get="{{ route('cms.content.about.fourth.get-text') }}" 
+    warranty-text-route-update="{{ route('cms.content.about.fourth.update-text') }}" 
+
     compromise-route-get="{{ route('cms.content.about.second.get') }}" 
     compromise-route-update="{{ route('cms.content.about.second.update') }}" 
     ></content-seo>

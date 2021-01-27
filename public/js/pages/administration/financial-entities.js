@@ -389,6 +389,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 
 
 
@@ -888,13 +890,22 @@ var render = function() {
                             _c("div", { staticClass: "card" }, [
                               _c("div", { staticClass: "card-body" }, [
                                 _c("div", { staticClass: "mb-3" }, [
-                                  _c("img", {
-                                    attrs: {
-                                      src: _vm.imagesUrl + "/banks/" + el.logo,
-                                      height: "75",
-                                      alt: el.name
-                                    }
-                                  })
+                                  _c(
+                                    "div",
+                                    {
+                                      staticClass: "d-inline-block bg-dark p-3"
+                                    },
+                                    [
+                                      _c("img", {
+                                        attrs: {
+                                          src:
+                                            _vm.imagesUrl + "/banks/" + el.logo,
+                                          height: "75",
+                                          alt: el.name
+                                        }
+                                      })
+                                    ]
+                                  )
                                 ]),
                                 _vm._v(" "),
                                 _c(

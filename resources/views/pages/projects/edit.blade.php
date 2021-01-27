@@ -39,8 +39,11 @@
     route-statuses-create="{{ route('cms.administration.statuses-project.index') }}"
     route-features-create="{{ route('cms.administration.features-project.index') }}"
     route-advisors-create="{{ route('cms.administration.advisors.index') }}"
+    route-bonds-create="{{ route('cms.administration.bonds.index') }}"
+    route-bonds-get-all="{{ route('cms.administration.bonds.get-all') }}"
     route-departments-get="{{ route('cms.json.get-departments')}}"
     route-provinces-get="{{ route('cms.json.get-provinces')}}"
     route-districts-get="{{ route('cms.json.get-districts')}}"
+    route-projects-get-all="{{ route('cms.projects.get-all') }}"
     message-order="@lang('custom.message.order')"></projects-edit>
 @endsection

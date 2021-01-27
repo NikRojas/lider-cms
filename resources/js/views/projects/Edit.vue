@@ -339,6 +339,16 @@
                     />
                   </div>
                   <div class="col-12">
+                    <Bonds
+                      :errors="errors"
+                      :selectedParent="element.bonds"
+                      :selected.sync="element.bonds"
+                      :images-url="imagesUrl"
+                      :route-create="routeBondsCreate"
+                      :route-get-all="routeBondsGetAll"
+                    />
+                  </div>
+                  <div class="col-12">
                     <Input
                       label="Speech Galeria"
                       variable="text_place"
@@ -354,7 +364,7 @@
             </div>
           </div>
         </div>
-        <div class="row">
+        <div class="row mb-4">
           <div class="col-12 col-lg-2">
             <h2>Ubicación</h2>
             <p>Indica los datos de ubicación del Proyecto</p>
@@ -484,6 +494,81 @@
             </div>
           </div>
         </div>
+        <div class="row mb-4">
+          <div class="col-12 col-lg-2">
+            <h2>Cotización</h2>
+            <p>Indica la Información de la cotización del Proyecto</p>
+          </div>
+          <div class="col-12 col-lg-10">
+            <div class="card">
+              <div class="card-body">
+                <div class="row">
+                  <div class="col-12">
+                    <div class="form-group">
+                      <label class="font-weight-bold">Cotización:</label>
+                      <p>
+                        Seleccione si el Proyecto cuanto con formulario de
+                        cotización
+                      </p>
+                      <b-form-radio-group
+                        v-model="form_quotation"
+                        :options="elementsQuotation"
+                        text-field="text"
+                        value-field="value"
+                        size="lg"
+                        name="radios"
+                        plain
+                        stacked
+                      />
+                    </div>
+                  </div>
+                  <div class="col-12" v-if="form_quotation">
+                    <div class="form-group">
+                      <label class="font-weight-bold" for="price_parking"
+                        >Precio Estacionamiento</label
+                      >
+                      <textarea
+                        class="form-control"
+                        v-model="element.price_parking"
+                        id="price_parking"
+                        cols="30"
+                        rows="5"
+                      ></textarea>
+                      <label
+                        v-if="errors && errors.price_parking"
+                        class="mt-2 text-danger text-sm"
+                        for="price_parking"
+                        >{{ errors.price_parking[0] }}</label
+                      >
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-12 col-lg-2">
+            <h2>Proyectos Relacionados</h2>
+            <p>
+              Indica los proyectos relacionados que se mostrarán en el
+              <b>Detalle del Proyecto</b>
+            </p>
+          </div>
+          <div class="col-12 col-lg-10">
+            <div class="card">
+              <div class="card-body">
+                <ProjectsRelated
+                  :errors="errors"
+                  :selectedParent="element.projects_related"
+                  :selected.sync="element.projects_related"
+                  :images-url="imagesUrl"
+                  :route-get-all="routeProjectsGetAll"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </form>
   </div>
@@ -503,7 +588,9 @@ import Editor from "../../components/form/Editor";
 import MultipleFiles from "../../components/form/MultipleFiles";
 import PdfIcon from "../../components/icons/Pdf";
 import InputSlug from "../../components/form/InputSlug";
+import Bonds from "../../components/form/Bonds";
 import { Money } from "v-money";
+import ProjectsRelated from "../../components/form/ProjectsRelated";
 export default {
   components: {
     BreadCrumb,
@@ -521,6 +608,8 @@ export default {
     Advisors,
     Features,
     InputSlug,
+    Bonds,
+    ProjectsRelated
   },
   props: {
     elementParent: Object,
@@ -533,7 +622,10 @@ export default {
     routeFeaturesGetAll: String,
     routeFinancialGetAll: String,
     routeStatusesGetAll: String,
+    routeProjectsGetAll: String,
+    routeBondsGetAll: String,
     routeFinancialCreate: String,
+    routeBondsCreate: String,
     routeStatusesCreate: String,
     routeFeaturesCreate: String,
     routeAdvisorsCreate: String,
@@ -544,7 +636,9 @@ export default {
   data() {
     return {
       info: false,
-      element: {},
+      form_quotation: null,
+      element: {
+      },
       moneyLocal: {
         decimal: ",",
         thousands: ".",
@@ -553,6 +647,10 @@ export default {
         precision: 2,
         masked: false,
       },
+      elementsQuotation: [
+        { text: "Sí", value:1 },
+        { text: "No", value:0},
+      ],
       moneyForeign: {
         decimal: ",",
         thousands: ".",
@@ -723,6 +821,12 @@ export default {
           JSON.stringify(this.element.financial_entities)
         );
       }
+      if (this.element.bonds) {
+        fd.append(
+          "bonds",
+          JSON.stringify(this.element.bonds)
+        );
+      }
       fd.append("_method","put");
       axios
         .post(this.routeUpdate + '/' + this.element.id, fd)
@@ -745,6 +849,13 @@ export default {
       immediate: true,
       handler: function (newValue) {
         this.element = newValue;
+        console.log(newValue.form_quotation)
+        if(newValue.form_quotation == true){
+          this.form_quotation = 1;
+        }
+        else{
+this.form_quotation = 0;
+        }
       },
     },
   },

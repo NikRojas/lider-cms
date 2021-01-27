@@ -41,9 +41,9 @@ class CreateProjectsTable extends Migration
             $table->text('sales_room_en');
             $table->text('schedule_attention_en');
             $table->text('schedule_attention_es');
-            $table->float('price_total');
-            $table->float('price_total_foreign');
-            $table->float('price');
+            $table->decimal('price_total',11,2);
+            $table->decimal('price_total_foreign',11,2);
+            $table->decimal('price',11,2);
             $table->bigInteger('index'); 
 
             $table->string('slug_es');
@@ -51,6 +51,10 @@ class CreateProjectsTable extends Migration
 
             /*$table->decimal('latitude', 10, 8);
             $table->decimal('longitude', 11, 8);*/
+
+            $table->boolean('form_quotation')->default(false); 
+            $table->text('price_parking')->nullable();
+            $table->text('projects_related')->nullable();
 
             $table->text('iframe_map');
 

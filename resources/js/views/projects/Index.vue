@@ -99,14 +99,14 @@
                               <div>
                                 <div>
                                   <h4 class="d-inline-block font-weight-normal">Precio Departamento Soles:</h4>
-                                  <h4 class="d-inline-block">S/{{ el.price_total_format}}</h4>
+                                  <h4 class="d-inline-block">{{ el.price_total_format}}</h4>
                                 </div>
                                 <div>
                                   <h4 class="d-inline-block font-weight-normal">Precio Departamento Dolares:</h4>
-                                  <h4 class="d-inline-block">${{ el.price_total_foreign_format}}</h4>
+                                  <h4 class="d-inline-block">{{ el.price_total_foreign_format}}</h4>
                                 </div>
                                 <h4 class="d-inline-block font-weight-normal">Precio Reserva de Departamento:</h4>
-                                <h2 class="d-inline-block">S/. {{ el.price_format}}</h2>
+                                <h2 class="d-inline-block">{{ el.price_format}}</h2>
                               </div>
                             </div>
                             <div class="col-lg">

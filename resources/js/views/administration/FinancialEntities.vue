@@ -35,7 +35,9 @@
             <div class="card">
               <div class="card-body">
                 <div class="mb-3">
+                  <div class="d-inline-block bg-dark p-3">
                   <img :src="imagesUrl+'/banks/'+el.logo" height="75" :alt="el.name" />
+                  </div>
                 </div>
                 <h3 class="mb-1 font-weight-bold">
                   <span class="font-weight-normal">Nombre:</span>

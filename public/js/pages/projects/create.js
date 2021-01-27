@@ -14,17 +14,19 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_BreadCrumb__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../components/BreadCrumb */ "./resources/js/components/BreadCrumb.vue");
 /* harmony import */ var _components_form_Image__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../components/form/Image */ "./resources/js/components/form/Image.vue");
 /* harmony import */ var _components_form_FinancialEntities__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../components/form/FinancialEntities */ "./resources/js/components/form/FinancialEntities.vue");
-/* harmony import */ var _components_form_Advisors__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../components/form/Advisors */ "./resources/js/components/form/Advisors.vue");
-/* harmony import */ var _components_form_Statuses__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../components/form/Statuses */ "./resources/js/components/form/Statuses.vue");
-/* harmony import */ var _components_form_Features__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../components/form/Features */ "./resources/js/components/form/Features.vue");
-/* harmony import */ var _components_form_Ubigeo__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../../components/form/Ubigeo */ "./resources/js/components/form/Ubigeo.vue");
-/* harmony import */ var _components_form_Input__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../../components/form/Input */ "./resources/js/components/form/Input.vue");
-/* harmony import */ var _components_Button__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../../components/Button */ "./resources/js/components/Button.vue");
-/* harmony import */ var _components_form_Editor__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../../components/form/Editor */ "./resources/js/components/form/Editor.vue");
-/* harmony import */ var _components_form_InputSlug__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../../components/form/InputSlug */ "./resources/js/components/form/InputSlug.vue");
-/* harmony import */ var _components_form_MultipleFiles__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ../../components/form/MultipleFiles */ "./resources/js/components/form/MultipleFiles.vue");
-/* harmony import */ var v_money__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! v-money */ "./node_modules/v-money/dist/v-money.js");
-/* harmony import */ var v_money__WEBPACK_IMPORTED_MODULE_13___default = /*#__PURE__*/__webpack_require__.n(v_money__WEBPACK_IMPORTED_MODULE_13__);
+/* harmony import */ var _components_form_ProjectsRelated__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../components/form/ProjectsRelated */ "./resources/js/components/form/ProjectsRelated.vue");
+/* harmony import */ var _components_form_Advisors__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../components/form/Advisors */ "./resources/js/components/form/Advisors.vue");
+/* harmony import */ var _components_form_Statuses__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../components/form/Statuses */ "./resources/js/components/form/Statuses.vue");
+/* harmony import */ var _components_form_Features__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../../components/form/Features */ "./resources/js/components/form/Features.vue");
+/* harmony import */ var _components_form_Bonds__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../../components/form/Bonds */ "./resources/js/components/form/Bonds.vue");
+/* harmony import */ var _components_form_Ubigeo__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../../components/form/Ubigeo */ "./resources/js/components/form/Ubigeo.vue");
+/* harmony import */ var _components_form_Input__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../../components/form/Input */ "./resources/js/components/form/Input.vue");
+/* harmony import */ var _components_Button__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../../components/Button */ "./resources/js/components/Button.vue");
+/* harmony import */ var _components_form_Editor__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ../../components/form/Editor */ "./resources/js/components/form/Editor.vue");
+/* harmony import */ var _components_form_InputSlug__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ../../components/form/InputSlug */ "./resources/js/components/form/InputSlug.vue");
+/* harmony import */ var _components_form_MultipleFiles__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ../../components/form/MultipleFiles */ "./resources/js/components/form/MultipleFiles.vue");
+/* harmony import */ var v_money__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! v-money */ "./node_modules/v-money/dist/v-money.js");
+/* harmony import */ var v_money__WEBPACK_IMPORTED_MODULE_15___default = /*#__PURE__*/__webpack_require__.n(v_money__WEBPACK_IMPORTED_MODULE_15__);
 //
 //
 //
@@ -472,6 +474,195 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
 
 
 
@@ -489,19 +680,21 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {
     BreadCrumb: _components_BreadCrumb__WEBPACK_IMPORTED_MODULE_1__["default"],
-    MultipleFiles: _components_form_MultipleFiles__WEBPACK_IMPORTED_MODULE_12__["default"],
-    Money: v_money__WEBPACK_IMPORTED_MODULE_13__["Money"],
-    Editor: _components_form_Editor__WEBPACK_IMPORTED_MODULE_10__["default"],
-    Statuses: _components_form_Statuses__WEBPACK_IMPORTED_MODULE_5__["default"],
-    Ubigeo: _components_form_Ubigeo__WEBPACK_IMPORTED_MODULE_7__["default"],
+    MultipleFiles: _components_form_MultipleFiles__WEBPACK_IMPORTED_MODULE_14__["default"],
+    Money: v_money__WEBPACK_IMPORTED_MODULE_15__["Money"],
+    Editor: _components_form_Editor__WEBPACK_IMPORTED_MODULE_12__["default"],
+    Statuses: _components_form_Statuses__WEBPACK_IMPORTED_MODULE_6__["default"],
+    Ubigeo: _components_form_Ubigeo__WEBPACK_IMPORTED_MODULE_9__["default"],
     vueDropzone: vue2_dropzone__WEBPACK_IMPORTED_MODULE_0___default.a,
     ImageForm: _components_form_Image__WEBPACK_IMPORTED_MODULE_2__["default"],
-    Input: _components_form_Input__WEBPACK_IMPORTED_MODULE_8__["default"],
-    Button: _components_Button__WEBPACK_IMPORTED_MODULE_9__["default"],
+    Input: _components_form_Input__WEBPACK_IMPORTED_MODULE_10__["default"],
+    Button: _components_Button__WEBPACK_IMPORTED_MODULE_11__["default"],
     FinancialEntities: _components_form_FinancialEntities__WEBPACK_IMPORTED_MODULE_3__["default"],
-    Advisors: _components_form_Advisors__WEBPACK_IMPORTED_MODULE_4__["default"],
-    Features: _components_form_Features__WEBPACK_IMPORTED_MODULE_6__["default"],
-    InputSlug: _components_form_InputSlug__WEBPACK_IMPORTED_MODULE_11__["default"]
+    Advisors: _components_form_Advisors__WEBPACK_IMPORTED_MODULE_5__["default"],
+    Features: _components_form_Features__WEBPACK_IMPORTED_MODULE_7__["default"],
+    InputSlug: _components_form_InputSlug__WEBPACK_IMPORTED_MODULE_13__["default"],
+    Bonds: _components_form_Bonds__WEBPACK_IMPORTED_MODULE_8__["default"],
+    ProjectsRelated: _components_form_ProjectsRelated__WEBPACK_IMPORTED_MODULE_4__["default"]
   },
   props: {
     imagesUrl: String,
@@ -511,9 +704,12 @@ __webpack_require__.r(__webpack_exports__);
     routeAdvisorsGetAll: String,
     routeFeaturesGetAll: String,
     routeFinancialGetAll: String,
+    routeProjectsGetAll: String,
     routeStatusesGetAll: String,
+    routeBondsGetAll: String,
     routeFinancialCreate: String,
     routeStatusesCreate: String,
+    routeBondsCreate: String,
     routeFeaturesCreate: String,
     routeAdvisorsCreate: String,
     routeDepartmentsGet: String,
@@ -523,8 +719,18 @@ __webpack_require__.r(__webpack_exports__);
   data: function data() {
     return {
       element: {
-        active: true
+        active: true,
+        bonds: [],
+        form_quotation: true,
+        projects_related: []
       },
+      elementsQuotation: [{
+        text: "Sí",
+        value: true
+      }, {
+        text: "No",
+        value: false
+      }],
       moneyLocal: {
         decimal: ",",
         thousands: ".",
@@ -584,7 +790,7 @@ __webpack_require__.r(__webpack_exports__);
         this.element.files.forEach(function (el, i) {
           fd.append("images" + i, el);
         });
-        fd.append('images_count', this.element.files.length);
+        fd.append("images_count", this.element.files.length);
       }
 
       if (this.element.name_en) {
@@ -761,18 +967,28 @@ __webpack_require__.r(__webpack_exports__);
         fd.append("financial_entities", JSON.stringify(this.element.financial_entities));
       }
 
+      if (this.element.bonds.length) {
+        fd.append("bonds", JSON.stringify(this.element.bonds));
+      }
+
+      if (this.element.projects_related.length) {
+        fd.append("projects_related", JSON.stringify(this.element.projects_related));
+      }
+
+      if (this.element.price_parking) {
+        fd.append("price_parking", this.element.price_parking);
+      }
+
       axios.post(this.routeStore, fd).then(function (response) {
-        _this.requestServer = false;
-        document.location.href = response.data.route;
+        _this.requestServer = false; //document.location.href = response.data.route;
       })["catch"](function (error) {
         _this.requestServer = false;
 
         if (error.response.status === 422) {
           _this.errors = error.response.data.errors || {};
           return;
-        }
+        } //document.location.href = error.response.data.route;
 
-        document.location.href = error.response.data.route;
       });
     }
   }
@@ -833,6 +1049,15 @@ var render = function() {
                     "div",
                     { staticClass: "col-6 col-md text-right" },
                     [
+                      Object.keys(_vm.errors).length === 0 &&
+                      _vm.errors.constructor === Object
+                        ? _c("span")
+                        : _c(
+                            "span",
+                            { staticClass: "d-block text-danger mb-2" },
+                            [_vm._v("Algunos campos estan incorrectos")]
+                          ),
+                      _vm._v(" "),
                       _c("Button", {
                         attrs: {
                           text: "Guardar",
@@ -994,7 +1219,7 @@ var render = function() {
                                     },
                                     [
                                       _vm._v(
-                                        "Suelte los archivos aquí o haga click para cargarlos."
+                                        "\n                          Suelte los archivos aquí o haga click para\n                          cargarlos.\n                        "
                                       )
                                     ]
                                   )
@@ -1021,7 +1246,7 @@ var render = function() {
                     _vm._v(" "),
                     _c(
                       "div",
-                      { staticClass: "col-12 col-lg-6" },
+                      { staticClass: "col-12 col-lg-6 mb-4 mb-lg-0" },
                       [
                         _c("MultipleFiles", {
                           attrs: {
@@ -1233,7 +1458,7 @@ var render = function() {
                                     },
                                     [
                                       _vm._v(
-                                        "Suelte los archivos aquí o haga click para cargarlos."
+                                        "\n                          Suelte los archivos aquí o haga click para\n                          cargarlos.\n                        "
                                       )
                                     ]
                                   )
@@ -1509,7 +1734,7 @@ var render = function() {
                                     },
                                     [
                                       _vm._v(
-                                        "Suelte los archivos aquí o haga click para cargarlos."
+                                        "\n                          Suelte los archivos aquí o haga click para\n                          cargarlos.\n                        "
                                       )
                                     ]
                                   )
@@ -1580,7 +1805,7 @@ var render = function() {
                           },
                           [
                             _vm._v(
-                              'El formato de la URL debe ser "https://www.youtube.com/watch?v=N1bWwEfIDP0".'
+                              'El formato de la URL debe ser\n                      "https://www.youtube.com/watch?v=N1bWwEfIDP0".'
                             )
                           ]
                         ),
@@ -1650,6 +1875,28 @@ var render = function() {
                       "div",
                       { staticClass: "col-12" },
                       [
+                        _c("Bonds", {
+                          attrs: {
+                            errors: _vm.errors,
+                            selected: _vm.element.bonds,
+                            "images-url": _vm.imagesUrl,
+                            "route-create": _vm.routeBondsCreate,
+                            "route-get-all": _vm.routeBondsGetAll
+                          },
+                          on: {
+                            "update:selected": function($event) {
+                              return _vm.$set(_vm.element, "bonds", $event)
+                            }
+                          }
+                        })
+                      ],
+                      1
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "div",
+                      { staticClass: "col-12" },
+                      [
                         _c("Input", {
                           attrs: {
                             label: "Speech Galeria",
@@ -1700,7 +1947,7 @@ var render = function() {
             ])
           ]),
           _vm._v(" "),
-          _c("div", { staticClass: "row" }, [
+          _c("div", { staticClass: "row mb-4" }, [
             _vm._m(3),
             _vm._v(" "),
             _c("div", { staticClass: "col-12 col-lg-10" }, [
@@ -2087,7 +2334,7 @@ var render = function() {
                           "div",
                           {
                             staticClass: "mt-2",
-                            staticStyle: { opacity: ".75" }
+                            staticStyle: { opacity: "0.75" }
                           },
                           [
                             _c(
@@ -2107,7 +2354,7 @@ var render = function() {
                                   attrs: { height: "14px", width: "14px" }
                                 }),
                                 _vm._v(
-                                  " Más Información\n                      "
+                                  "\n                        Más Información\n                      "
                                 )
                               ],
                               1
@@ -2131,7 +2378,7 @@ var render = function() {
                           [
                             _c("div", { staticClass: "mb-2" }, [
                               _vm._v(
-                                'Ir a Google Maps, buscar el proyecto que desee, seleccionar "Compartir -> Insertar Mapa" y darle click a "Copiar HTML"'
+                                '\n                        Ir a Google Maps, buscar el proyecto que desee,\n                        seleccionar "Compartir -> Insertar Mapa" y darle click\n                        a "Copiar HTML"\n                      '
                               )
                             ]),
                             _vm._v(" "),
@@ -2158,6 +2405,145 @@ var render = function() {
                     ])
                   ])
                 ])
+              ])
+            ])
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "row mb-4" }, [
+            _vm._m(4),
+            _vm._v(" "),
+            _c("div", { staticClass: "col-12 col-lg-10" }, [
+              _c("div", { staticClass: "card" }, [
+                _c("div", { staticClass: "card-body" }, [
+                  _c("div", { staticClass: "row" }, [
+                    _c("div", { staticClass: "col-12" }, [
+                      _c(
+                        "div",
+                        { staticClass: "form-group" },
+                        [
+                          _c("label", { staticClass: "font-weight-bold" }, [
+                            _vm._v("Cotización:")
+                          ]),
+                          _vm._v(" "),
+                          _c("p", [
+                            _vm._v(
+                              "\n                      Seleccione si el Proyecto cuanto con formulario de\n                      cotización\n                    "
+                            )
+                          ]),
+                          _vm._v(" "),
+                          _c("b-form-radio-group", {
+                            attrs: {
+                              options: _vm.elementsQuotation,
+                              "text-field": "text",
+                              "value-field": "value",
+                              size: "lg",
+                              name: "radios",
+                              plain: "",
+                              stacked: ""
+                            },
+                            model: {
+                              value: _vm.element.form_quotation,
+                              callback: function($$v) {
+                                _vm.$set(_vm.element, "form_quotation", $$v)
+                              },
+                              expression: "element.form_quotation"
+                            }
+                          })
+                        ],
+                        1
+                      )
+                    ]),
+                    _vm._v(" "),
+                    _vm.element.form_quotation
+                      ? _c("div", { staticClass: "col-12" }, [
+                          _c("div", { staticClass: "form-group" }, [
+                            _c(
+                              "label",
+                              {
+                                staticClass: "font-weight-bold",
+                                attrs: { for: "price_parking" }
+                              },
+                              [_vm._v("Precio Estacionamiento")]
+                            ),
+                            _vm._v(" "),
+                            _c("textarea", {
+                              directives: [
+                                {
+                                  name: "model",
+                                  rawName: "v-model",
+                                  value: _vm.element.price_parking,
+                                  expression: "element.price_parking"
+                                }
+                              ],
+                              staticClass: "form-control",
+                              attrs: {
+                                id: "price_parking",
+                                cols: "30",
+                                rows: "5"
+                              },
+                              domProps: { value: _vm.element.price_parking },
+                              on: {
+                                input: function($event) {
+                                  if ($event.target.composing) {
+                                    return
+                                  }
+                                  _vm.$set(
+                                    _vm.element,
+                                    "price_parking",
+                                    $event.target.value
+                                  )
+                                }
+                              }
+                            }),
+                            _vm._v(" "),
+                            _vm.errors && _vm.errors.price_parking
+                              ? _c(
+                                  "label",
+                                  {
+                                    staticClass: "mt-2 text-danger text-sm",
+                                    attrs: { for: "price_parking" }
+                                  },
+                                  [_vm._v(_vm._s(_vm.errors.price_parking[0]))]
+                                )
+                              : _vm._e()
+                          ])
+                        ])
+                      : _vm._e()
+                  ])
+                ])
+              ])
+            ])
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "row" }, [
+            _vm._m(5),
+            _vm._v(" "),
+            _c("div", { staticClass: "col-12 col-lg-10" }, [
+              _c("div", { staticClass: "card" }, [
+                _c(
+                  "div",
+                  { staticClass: "card-body" },
+                  [
+                    _c("ProjectsRelated", {
+                      attrs: {
+                        errors: _vm.errors,
+                        selected: _vm.element.projects_related,
+                        "images-url": _vm.imagesUrl,
+                        "route-get-all": _vm.routeProjectsGetAll
+                      },
+                      on: {
+                        "update:selected": function($event) {
+                          return _vm.$set(
+                            _vm.element,
+                            "projects_related",
+                            $event
+                          )
+                        }
+                      }
+                    })
+                  ],
+                  1
+                )
               ])
             ])
           ])
@@ -2205,6 +2591,31 @@ var staticRenderFns = [
       _c("h2", [_vm._v("Ubicación")]),
       _vm._v(" "),
       _c("p", [_vm._v("Indica los datos de ubicación del Proyecto")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "col-12 col-lg-2" }, [
+      _c("h2", [_vm._v("Cotización")]),
+      _vm._v(" "),
+      _c("p", [_vm._v("Indica la Información de la cotización del Proyecto")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "col-12 col-lg-2" }, [
+      _c("h2", [_vm._v("Proyectos Relacionados")]),
+      _vm._v(" "),
+      _c("p", [
+        _vm._v(
+          "\n            Indica los proyectos relacionados que se mostrarán en el\n            "
+        ),
+        _c("b", [_vm._v("Detalle del Proyecto")])
+      ])
     ])
   }
 ]

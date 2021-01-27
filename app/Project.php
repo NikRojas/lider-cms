@@ -9,7 +9,9 @@ class Project extends Model
     protected $guarded = ['id'];
     protected $casts = [
         'images' => 'array',
-        'active' => 'boolean'
+        'active' => 'boolean',
+        'projects_related' => 'array',
+        'form_quotation' => 'boolean'
     ];
     protected $appends = ['images_format','price_total_format','price_total_foreign_format','price_format','id_video'];
 
@@ -69,6 +71,11 @@ class Project extends Model
     public function advisorsRel()
     {
         return $this->belongsToMany('App\Advisor', 'projects_advisors', 'project_id', 'advisor_id');
+    }
+
+    public function bondsRel()
+    {
+        return $this->belongsToMany('App\Bond', 'projects_bonds', 'project_id', 'bond_id');
     }
 
     public function statusRel()

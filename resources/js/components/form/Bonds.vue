@@ -1,6 +1,6 @@
 <template>
   <div class="form-group">
-    <label class="font-weight-bold">Entidades Financieras:</label>
+    <label class="font-weight-bold">Bonos:</label>
     <div v-if="loading">
       <div class="row">
         <div class="col-6 col-sm-3 col-lg-4 mb-3" v-for="i in 4" :key="i">
@@ -9,7 +9,7 @@
       </div>
     </div>
     <div v-else>
-      <p v-if="elements && elements.length > 0">Seleccione las entidades financieras con las que se podra financiar el Proyecto</p>
+      <p v-if="elements && elements.length > 0">Seleccione los bonos con los que cuenta el Proyecto</p>
       <div class="row" v-if="elements && elements.length > 0">
         <div
           class="col-6 col-sm-3 col-lg-4 text-center mb-3"
@@ -22,21 +22,21 @@
               <jam-check class="current-color" />
             </div>
             <img
-                :src="imagesUrl+'/banks/'+element.logo"
-                class="img-fluid p-2 bg-dark"
+                :src="imagesUrl+'/bonds/'+element.logo"
+                class="img-fluid  bg-dark"
                 :alt="element.name"
               />
             <small class="text-uppercase d-block">{{ element.name }}</small>
           </div>
         </div>
-        <div class="col-12" v-if="errors && errors.financial_entities">
+        <div class="col-12" v-if="errors && errors.bonds">
           <label
           class="mt-2 text-danger text-sm"
-          for="financial_entities"
-        >{{ errors.financial_entities[0] }}</label>
+          for="bonds"
+        >{{ errors.bonds[0] }}</label>
         </div>
       </div>
-      <NoData :showSvg="false" :showButton="true" elementTextButton="una Entidad Financiera" :route-button="routeCreate" :classes="['mt-2']" :show-title="false" v-else/>
+      <NoData :showSvg="false" :showButton="true" elementTextButton="un Bono" :route-button="routeCreate" :classes="['mt-2']" :show-title="false" v-else/>
     </div>
   </div>
 </template>

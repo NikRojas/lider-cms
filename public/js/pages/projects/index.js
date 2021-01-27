@@ -638,10 +638,9 @@ var render = function() {
                                                       },
                                                       [
                                                         _vm._v(
-                                                          "S/" +
-                                                            _vm._s(
-                                                              el.price_total_format
-                                                            )
+                                                          _vm._s(
+                                                            el.price_total_format
+                                                          )
                                                         )
                                                       ]
                                                     )
@@ -669,10 +668,9 @@ var render = function() {
                                                       },
                                                       [
                                                         _vm._v(
-                                                          "$" +
-                                                            _vm._s(
-                                                              el.price_total_foreign_format
-                                                            )
+                                                          _vm._s(
+                                                            el.price_total_foreign_format
+                                                          )
                                                         )
                                                       ]
                                                     )
@@ -699,10 +697,7 @@ var render = function() {
                                                     },
                                                     [
                                                       _vm._v(
-                                                        "S/. " +
-                                                          _vm._s(
-                                                            el.price_format
-                                                          )
+                                                        _vm._s(el.price_format)
                                                       )
                                                     ]
                                                   )

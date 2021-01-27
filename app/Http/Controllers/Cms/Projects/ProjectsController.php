@@ -42,23 +42,39 @@ class ProjectsController extends Controller
 
     public function edit($element){
         $element = Project::where('slug_es',$element)->firstOrFail();
-        $element = $element->load('advisorsRel','banksRel','featuresRel');
+        $element = $element->load('advisorsRel','banksRel','featuresRel','bondsRel');
         $element["financial_entities"] = $element->banksRel->pluck('pivot.bank_id');
         $element["advisors"] = $element->advisorsRel->pluck('pivot.advisor_id');
         $element["features"] = $element->featuresRel->pluck('pivot.feature_id');
+        $element["bonds"] = $element->bondsRel->pluck('pivot.bond_id');
+        $projects_related = [];
+        if($element->projects_related){
+            $element["projects_related"] = json_decode($element->projects_related);
+        }
         return view("pages.projects.edit", compact('element')); 
     }
 
     public function read($element){
         $element = Project::where('slug_es',$element)->firstOrFail();
-        $element = $element->load('advisorsRel','banksRel','featuresRel','ubigeoRel','statusRel');
-        return view("pages.projects.read", compact('element')); 
+        $element = $element->load('advisorsRel','banksRel','featuresRel','ubigeoRel','statusRel','bondsRel');
+        
+        $projects_related = null;
+        if($element->projects_related){
+            foreach (json_decode($element->projects_related) as $key => $value) {
+                $projects_related[] = Project::select('id','images','name_es')->where('id',$value)->get()->toArray();
+            }
+        }   
+        return view("pages.projects.read", compact('element','projects_related')); 
     }
 
     public function store(ProjectRequest $request){
         $project = request(['name_es',"description_en","description_es",'url_video','name_en','slug_en','slug_es',"rooms_es","rooms_en","footage_en","footage_es","url_google_maps","url_waze","text_place_es",
         "text_place_en","project_status_id","location","price_total","price","price_total_foreign","iframe_map","map_indications_es","map_indications_en",
-        "sales_room_es","sales_room_en","schedule_attention_es","schedule_attention_en",'active']);
+        "sales_room_es","sales_room_en","schedule_attention_es","schedule_attention_en",'active','form_quotation','price_parking']);
+
+        if($request->projects_related){
+            $project = array_merge($project,["projects_related" => $request->projects_related]);
+        }
         
         $logoName = $this->setFileName('l-',$request->file('logo'));
         $storeLogo = Storage::disk('public')->putFileAs('img/projects/',$request->file('logo'),$logoName);
@@ -109,6 +125,9 @@ class ProjectsController extends Controller
         $advisors = json_decode($request->advisors);
         $features = json_decode($request->features);
         $financial_entities = json_decode($request->financial_entities);
+        if($request->bonds){
+            $bonds = json_decode($request->bonds);
+        }
         try{
             foreach ($advisors as $key => $value) {
                 $project->advisorsRel()->attach($value);
@@ -118,6 +137,11 @@ class ProjectsController extends Controller
             }
             foreach ($financial_entities as $key => $value) {
                 $project->banksRel()->attach($value);
+            }
+            if($request->bonds){
+                foreach ($bonds as $key => $value) {
+                    $project->bondsRel()->attach($value);
+                }
             }
             $request->session()->flash('success', trans('custom.message.create.success', ['name' => trans('custom.attribute.project')]));
             return response()->json(["route" => route('cms.projects.index')]);
@@ -137,7 +161,7 @@ class ProjectsController extends Controller
     public function update(ProjectRequest $request,Project $element){
         $request_project = request(['name_es',"description_en","url_video","description_es",'name_en','slug_en','slug_es',"rooms_es","rooms_en","footage_en","footage_es","url_google_maps","url_waze","text_place_es",
         "text_place_en","project_status_id","location","price_total","price","price_total_foreign","iframe_map","map_indications_es","map_indications_en",
-        "sales_room_es","sales_room_en","schedule_attention_es","schedule_attention_en",'active']);
+        "sales_room_es","sales_room_en","schedule_attention_es","schedule_attention_en",'active','form_quotation','price_parking']);
         
         if($request->hasFile('logo')){
             $logoName = $this->setFileName('l-',$request->file('logo'));
@@ -230,6 +254,9 @@ class ProjectsController extends Controller
         $advisors = json_decode($request->advisors);
         $features = json_decode($request->features);
         $financial_entities = json_decode($request->financial_entities);
+        if($request->bonds){
+            $bonds = json_decode($request->bonds);
+        }
         try{
             $project->advisorsRel()->sync([]);
             foreach ($advisors as $key => $value) {
@@ -242,6 +269,17 @@ class ProjectsController extends Controller
             $project->banksRel()->sync([]);
             foreach ($financial_entities as $key => $value) {
                 $project->banksRel()->attach($value);
+            }
+            if($request->bonds){
+                $project->bondsRel()->sync([]);
+                foreach ($bonds as $key => $value) {
+                    $project->bondsRel()->attach($value);
+                }
+            }
+            else{
+                if($project->bondsRel()){
+                    $project->bondsRel()->sync([]);
+                }
             }
             $request->session()->flash('success', trans('custom.message.update.success', ['name' => trans('custom.attribute.project')]));
             return response()->json(["route" => route('cms.projects.index')]);

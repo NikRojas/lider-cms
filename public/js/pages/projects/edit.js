@@ -24,8 +24,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_form_MultipleFiles__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../../components/form/MultipleFiles */ "./resources/js/components/form/MultipleFiles.vue");
 /* harmony import */ var _components_icons_Pdf__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ../../components/icons/Pdf */ "./resources/js/components/icons/Pdf.vue");
 /* harmony import */ var _components_form_InputSlug__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ../../components/form/InputSlug */ "./resources/js/components/form/InputSlug.vue");
-/* harmony import */ var v_money__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! v-money */ "./node_modules/v-money/dist/v-money.js");
-/* harmony import */ var v_money__WEBPACK_IMPORTED_MODULE_14___default = /*#__PURE__*/__webpack_require__.n(v_money__WEBPACK_IMPORTED_MODULE_14__);
+/* harmony import */ var _components_form_Bonds__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ../../components/form/Bonds */ "./resources/js/components/form/Bonds.vue");
+/* harmony import */ var v_money__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! v-money */ "./node_modules/v-money/dist/v-money.js");
+/* harmony import */ var v_money__WEBPACK_IMPORTED_MODULE_15___default = /*#__PURE__*/__webpack_require__.n(v_money__WEBPACK_IMPORTED_MODULE_15__);
+/* harmony import */ var _components_form_ProjectsRelated__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ../../components/form/ProjectsRelated */ "./resources/js/components/form/ProjectsRelated.vue");
 //
 //
 //
@@ -516,6 +518,93 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
 
 
 
@@ -536,7 +625,7 @@ __webpack_require__.r(__webpack_exports__);
     BreadCrumb: _components_BreadCrumb__WEBPACK_IMPORTED_MODULE_1__["default"],
     PdfIcon: _components_icons_Pdf__WEBPACK_IMPORTED_MODULE_12__["default"],
     MultipleFiles: _components_form_MultipleFiles__WEBPACK_IMPORTED_MODULE_11__["default"],
-    Money: v_money__WEBPACK_IMPORTED_MODULE_14__["Money"],
+    Money: v_money__WEBPACK_IMPORTED_MODULE_15__["Money"],
     Editor: _components_form_Editor__WEBPACK_IMPORTED_MODULE_10__["default"],
     Statuses: _components_form_Statuses__WEBPACK_IMPORTED_MODULE_5__["default"],
     Ubigeo: _components_form_Ubigeo__WEBPACK_IMPORTED_MODULE_7__["default"],
@@ -547,7 +636,9 @@ __webpack_require__.r(__webpack_exports__);
     FinancialEntities: _components_form_FinancialEntities__WEBPACK_IMPORTED_MODULE_3__["default"],
     Advisors: _components_form_Advisors__WEBPACK_IMPORTED_MODULE_4__["default"],
     Features: _components_form_Features__WEBPACK_IMPORTED_MODULE_6__["default"],
-    InputSlug: _components_form_InputSlug__WEBPACK_IMPORTED_MODULE_13__["default"]
+    InputSlug: _components_form_InputSlug__WEBPACK_IMPORTED_MODULE_13__["default"],
+    Bonds: _components_form_Bonds__WEBPACK_IMPORTED_MODULE_14__["default"],
+    ProjectsRelated: _components_form_ProjectsRelated__WEBPACK_IMPORTED_MODULE_16__["default"]
   },
   props: {
     elementParent: Object,
@@ -560,7 +651,10 @@ __webpack_require__.r(__webpack_exports__);
     routeFeaturesGetAll: String,
     routeFinancialGetAll: String,
     routeStatusesGetAll: String,
+    routeProjectsGetAll: String,
+    routeBondsGetAll: String,
     routeFinancialCreate: String,
+    routeBondsCreate: String,
     routeStatusesCreate: String,
     routeFeaturesCreate: String,
     routeAdvisorsCreate: String,
@@ -571,6 +665,7 @@ __webpack_require__.r(__webpack_exports__);
   data: function data() {
     return {
       info: false,
+      form_quotation: null,
       element: {},
       moneyLocal: {
         decimal: ",",
@@ -580,6 +675,13 @@ __webpack_require__.r(__webpack_exports__);
         precision: 2,
         masked: false
       },
+      elementsQuotation: [{
+        text: "Sí",
+        value: 1
+      }, {
+        text: "No",
+        value: 0
+      }],
       moneyForeign: {
         decimal: ",",
         thousands: ".",
@@ -791,6 +893,10 @@ __webpack_require__.r(__webpack_exports__);
         fd.append("financial_entities", JSON.stringify(this.element.financial_entities));
       }
 
+      if (this.element.bonds) {
+        fd.append("bonds", JSON.stringify(this.element.bonds));
+      }
+
       fd.append("_method", "put");
       axios.post(this.routeUpdate + '/' + this.element.id, fd).then(function (response) {
         _this.requestServer = false;
@@ -812,6 +918,13 @@ __webpack_require__.r(__webpack_exports__);
       immediate: true,
       handler: function handler(newValue) {
         this.element = newValue;
+        console.log(newValue.form_quotation);
+
+        if (newValue.form_quotation == true) {
+          this.form_quotation = 1;
+        } else {
+          this.form_quotation = 0;
+        }
       }
     }
   }
@@ -1925,6 +2038,29 @@ var render = function() {
                       "div",
                       { staticClass: "col-12" },
                       [
+                        _c("Bonds", {
+                          attrs: {
+                            errors: _vm.errors,
+                            selectedParent: _vm.element.bonds,
+                            selected: _vm.element.bonds,
+                            "images-url": _vm.imagesUrl,
+                            "route-create": _vm.routeBondsCreate,
+                            "route-get-all": _vm.routeBondsGetAll
+                          },
+                          on: {
+                            "update:selected": function($event) {
+                              return _vm.$set(_vm.element, "bonds", $event)
+                            }
+                          }
+                        })
+                      ],
+                      1
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "div",
+                      { staticClass: "col-12" },
+                      [
                         _c("Input", {
                           attrs: {
                             label: "Speech Galeria",
@@ -1975,7 +2111,7 @@ var render = function() {
             ])
           ]),
           _vm._v(" "),
-          _c("div", { staticClass: "row" }, [
+          _c("div", { staticClass: "row mb-4" }, [
             _vm._m(3),
             _vm._v(" "),
             _c("div", { staticClass: "col-12 col-lg-10" }, [
@@ -2436,6 +2572,146 @@ var render = function() {
                 ])
               ])
             ])
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "row mb-4" }, [
+            _vm._m(4),
+            _vm._v(" "),
+            _c("div", { staticClass: "col-12 col-lg-10" }, [
+              _c("div", { staticClass: "card" }, [
+                _c("div", { staticClass: "card-body" }, [
+                  _c("div", { staticClass: "row" }, [
+                    _c("div", { staticClass: "col-12" }, [
+                      _c(
+                        "div",
+                        { staticClass: "form-group" },
+                        [
+                          _c("label", { staticClass: "font-weight-bold" }, [
+                            _vm._v("Cotización:")
+                          ]),
+                          _vm._v(" "),
+                          _c("p", [
+                            _vm._v(
+                              "\n                      Seleccione si el Proyecto cuanto con formulario de\n                      cotización\n                    "
+                            )
+                          ]),
+                          _vm._v(" "),
+                          _c("b-form-radio-group", {
+                            attrs: {
+                              options: _vm.elementsQuotation,
+                              "text-field": "text",
+                              "value-field": "value",
+                              size: "lg",
+                              name: "radios",
+                              plain: "",
+                              stacked: ""
+                            },
+                            model: {
+                              value: _vm.form_quotation,
+                              callback: function($$v) {
+                                _vm.form_quotation = $$v
+                              },
+                              expression: "form_quotation"
+                            }
+                          })
+                        ],
+                        1
+                      )
+                    ]),
+                    _vm._v(" "),
+                    _vm.form_quotation
+                      ? _c("div", { staticClass: "col-12" }, [
+                          _c("div", { staticClass: "form-group" }, [
+                            _c(
+                              "label",
+                              {
+                                staticClass: "font-weight-bold",
+                                attrs: { for: "price_parking" }
+                              },
+                              [_vm._v("Precio Estacionamiento")]
+                            ),
+                            _vm._v(" "),
+                            _c("textarea", {
+                              directives: [
+                                {
+                                  name: "model",
+                                  rawName: "v-model",
+                                  value: _vm.element.price_parking,
+                                  expression: "element.price_parking"
+                                }
+                              ],
+                              staticClass: "form-control",
+                              attrs: {
+                                id: "price_parking",
+                                cols: "30",
+                                rows: "5"
+                              },
+                              domProps: { value: _vm.element.price_parking },
+                              on: {
+                                input: function($event) {
+                                  if ($event.target.composing) {
+                                    return
+                                  }
+                                  _vm.$set(
+                                    _vm.element,
+                                    "price_parking",
+                                    $event.target.value
+                                  )
+                                }
+                              }
+                            }),
+                            _vm._v(" "),
+                            _vm.errors && _vm.errors.price_parking
+                              ? _c(
+                                  "label",
+                                  {
+                                    staticClass: "mt-2 text-danger text-sm",
+                                    attrs: { for: "price_parking" }
+                                  },
+                                  [_vm._v(_vm._s(_vm.errors.price_parking[0]))]
+                                )
+                              : _vm._e()
+                          ])
+                        ])
+                      : _vm._e()
+                  ])
+                ])
+              ])
+            ])
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "row" }, [
+            _vm._m(5),
+            _vm._v(" "),
+            _c("div", { staticClass: "col-12 col-lg-10" }, [
+              _c("div", { staticClass: "card" }, [
+                _c(
+                  "div",
+                  { staticClass: "card-body" },
+                  [
+                    _c("ProjectsRelated", {
+                      attrs: {
+                        errors: _vm.errors,
+                        selectedParent: _vm.element.projects_related,
+                        selected: _vm.element.projects_related,
+                        "images-url": _vm.imagesUrl,
+                        "route-get-all": _vm.routeProjectsGetAll
+                      },
+                      on: {
+                        "update:selected": function($event) {
+                          return _vm.$set(
+                            _vm.element,
+                            "projects_related",
+                            $event
+                          )
+                        }
+                      }
+                    })
+                  ],
+                  1
+                )
+              ])
+            ])
           ])
         ])
       ]
@@ -2481,6 +2757,31 @@ var staticRenderFns = [
       _c("h2", [_vm._v("Ubicación")]),
       _vm._v(" "),
       _c("p", [_vm._v("Indica los datos de ubicación del Proyecto")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "col-12 col-lg-2" }, [
+      _c("h2", [_vm._v("Cotización")]),
+      _vm._v(" "),
+      _c("p", [_vm._v("Indica la Información de la cotización del Proyecto")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "col-12 col-lg-2" }, [
+      _c("h2", [_vm._v("Proyectos Relacionados")]),
+      _vm._v(" "),
+      _c("p", [
+        _vm._v(
+          "\n            Indica los proyectos relacionados que se mostrarán en el\n            "
+        ),
+        _c("b", [_vm._v("Detalle del Proyecto")])
+      ])
     ])
   }
 ]

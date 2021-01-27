@@ -1,6 +1,6 @@
 <template>
   <div class="form-group">
-    <label class="font-weight-bold">Entidades Financieras:</label>
+    <label class="font-weight-bold">Proyectos Relacionados:</label>
     <div v-if="loading">
       <div class="row">
         <div class="col-6 col-sm-3 col-lg-4 mb-3" v-for="i in 4" :key="i">
@@ -9,10 +9,11 @@
       </div>
     </div>
     <div v-else>
-      <p v-if="elements && elements.length > 0">Seleccione las entidades financieras con las que se podra financiar el Proyecto</p>
+      <p v-if="elements && elements.length > 0">Seleccione los proyectos que aparecerán en el apartado "Otros Proyectos"
+      </p>
       <div class="row" v-if="elements && elements.length > 0">
         <div
-          class="col-6 col-sm-3 col-lg-4 text-center mb-3"
+          class="col-6 col-sm-3 col-lg-3 text-center mb-3"
           v-for="element in elements"
           :key="element.id"
           @click="add(element.id)"
@@ -22,21 +23,23 @@
               <jam-check class="current-color" />
             </div>
             <img
-                :src="imagesUrl+'/banks/'+element.logo"
-                class="img-fluid p-2 bg-dark"
-                :alt="element.name"
+                :src="imagesUrl+'/projects/'+element.images_format[0]"
+                class="img-fluid"
+                :alt="element.name_es"
               />
-            <small class="text-uppercase d-block">{{ element.name }}</small>
+            <small class="text-uppercase d-block">{{ element.name_es }}</small>
           </div>
         </div>
-        <div class="col-12" v-if="errors && errors.financial_entities">
+        <div class="col-12" v-if="errors && errors.projects_related">
           <label
           class="mt-2 text-danger text-sm"
-          for="financial_entities"
-        >{{ errors.financial_entities[0] }}</label>
+          for="projects_related"
+        >{{ errors.projects_related[0] }}</label>
         </div>
       </div>
-      <NoData :showSvg="false" :showButton="true" elementTextButton="una Entidad Financiera" :route-button="routeCreate" :classes="['mt-2']" :show-title="false" v-else/>
+      <div  v-else>
+        <NoData :showSvg="true" customText="Todavia no hay proyectos registrados" :classes="['mt-2']" :show-title="false"/>
+      </div>
     </div>
   </div>
 </template>

@@ -12,7 +12,10 @@
       </div>
     </div>
     <div class="container-fluid mt--6">
-      <First/>
+      <First :message-order="messageOrder"
+      :images-url="imagesUrl"
+      :route-get-text="firstBlockTextRouteGet"
+      :route-update-text="firstBlockTextRouteUpdate"/>
       <Second :route-get="compromiseRouteGet" :route-update="compromiseRouteUpdate"/>
       <Third :route-order="projectFinishedRouteOrder"
       :route="projectFinishedRoute" 
@@ -64,6 +67,8 @@ export default {
     customerSupportTextRouteUpdate: String,
     projectFinishedTextRouteGet: String,
     projectFinishedTextRouteUpdate: String,
+    firstBlockTextRouteGet: String,
+    firstBlockTextRouteUpdate: String,
     messageOrder: String,
     imagesUrl: String,
   },

@@ -20,6 +20,9 @@ class CreateAboutTextsTable extends Migration
             $table->text('description_es')->nullable();
             $table->text('description_en')->nullable();
             $table->string('image', 100)->nullable();
+            $table->string('icon', 100)->nullable();
+            $table->text('url_video')->nullable();
+            $table->string('quantity', 100)->nullable();
             $table->string('type', 20);
             $table->timestamps();
         });

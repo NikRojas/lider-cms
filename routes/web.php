@@ -321,6 +321,11 @@ Route::middleware(['auth'])->namespace('Cms')->name('cms.')->group(function () {
                 Route::post('/', 'SecondController@update')->name('update');
                 Route::get('/json/get', 'SecondController@get')->name('get');
             });
+
+            Route::prefix('first')->name('first.')->namespace('About')->group(function () {
+                Route::post('/', 'FirstController@update')->name('update');
+                Route::get('/json/get', 'FirstController@get')->name('get');
+            });
         });
     });
  

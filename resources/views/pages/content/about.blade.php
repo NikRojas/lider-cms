@@ -24,5 +24,8 @@
 
     compromise-route-get="{{ route('cms.content.about.second.get') }}" 
     compromise-route-update="{{ route('cms.content.about.second.update') }}" 
+
+    first-block-text-route-get="{{ route('cms.content.about.first.get') }}" 
+    first-block-text-route-update="{{ route('cms.content.about.first.update') }}" 
     ></content-seo>
 @endsection

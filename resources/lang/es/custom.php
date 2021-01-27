@@ -32,7 +32,8 @@ return [
         'suscriber' => 'El suscriptor',
         'schedule' => 'El horario',
         'financing-option' => 'La opción de financiamiento',
-        'project_finished' => 'El proyecto entregado'
+        'project_finished' => 'El proyecto entregado',
+        'bond' => 'El bono'
     ],
     'title' => [
         'error' => 'Error',

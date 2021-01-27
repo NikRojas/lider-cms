@@ -95,6 +95,15 @@ Route::middleware(['auth'])->namespace('Cms')->name('cms.')->group(function () {
             Route::put('/{element}', 'ExchangeController@update')->name('update');
             Route::get('/json/get-all', 'ExchangeController@getAll')->name('get-all');
         });
+
+        Route::name('bonds.')->prefix('bonos')->group(function () {
+            Route::get('/', 'BondsController@index')->name('index');
+            Route::post('/', 'BondsController@store')->name('store');
+            Route::put('/{element}', 'BondsController@update')->name('update');
+            Route::delete('/{element}', 'BondsController@destroy')->name('destroy');
+            Route::get('/json/get-all', 'BondsController@getAll')->name('get-all');
+            Route::get('/json/get/{element}', 'BondsController@get')->name('get');
+        });
     });
 
     #Customers

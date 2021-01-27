@@ -73,30 +73,37 @@ class MasterModulesTableSeeder extends Seeder
 				'icon' 		=> 'magic',
                 'index'    => $position++
             ],
-                [
+                /*[
                     'name' 	=> 'Tipo de Cambio',
                     'slug' 		=> 'administracion/tipo-cambio',
                     'parent' 	=> $pAdmin,
                     'icon' 		=> NULL,
                     'index'    => 1
-                ],
+                ],*/
                 [
                     'name' 	=> 'Estados del Proyecto',
                     'slug' 		=> 'administracion/estados-proyecto',
                     'parent' 	=> $pAdmin,
                     'icon' 		=> NULL,
-                    'index'    => 2
+                    'index'    => 1
                 ],
                 [
                     'name' 	=> 'Asesores',
                     'slug' 		=> 'administracion/asesores',
                     'parent' 	=> $pAdmin,
                     'icon' 		=> NULL,
-                    'index'    => 3
+                    'index'    => 2
                 ],
                 [
                     'name' 	=> 'Entidades Financieras',
                     'slug' 		=> 'administracion/entidades-financieras',
+                    'parent' 	=> $pAdmin,
+                    'icon' 		=> NULL,
+                    'index'    => 3
+                ],
+                [
+                    'name' 	=> 'Bonos',
+                    'slug' 		=> 'administracion/bonos',
                     'parent' 	=> $pAdmin,
                     'icon' 		=> NULL,
                     'index'    => 4

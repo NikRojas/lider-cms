@@ -62,7 +62,7 @@ class LeadRepository
                 "name" => $lead['name'],
                 "mobile" => $lead["mobile"],
                 "document_number" => $lead["document_number"],
-                "medium" => $lead["mediumRel"]["name"],
+                //"medium" => $lead["mediumRel"]["name"],
                 "source" => $lead["timeRel"]["name"]
             );
         }

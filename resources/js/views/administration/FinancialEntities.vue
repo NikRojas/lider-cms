@@ -43,14 +43,14 @@
                   <span class="font-weight-normal">Nombre:</span>
                   {{ el.name }}
                 </h3>
-                <h3 class="mb-1 font-weight-bold">
+                <!--<h3 class="mb-1 font-weight-bold">
                   <span class="font-weight-normal">Número de Cuenta:</span>
                   {{ el.number_account ? el.number_account : 'No registrado' }}
                 </h3>
                 <h3 class="mb-1 font-weight-bold">
                   <span class="font-weight-normal">Número CCI:</span>
                   {{ el.cci ? el.cci : 'No registrado' }}
-                </h3>
+                </h3>-->
                 <div class="mt-4 text-right">
                   <button @click="editEl(el.id)" class="btn btn-inverse-info btn-sm">Editar</button>
                   <button
@@ -150,7 +150,7 @@
               </div>
             </div>
 
-            <div class="col-12">
+            <!--<div class="col-12">
               <div class="form-group">
                 <label class="font-weight-bold" for="number_account">Número de Cuenta</label>
                 <input
@@ -188,7 +188,7 @@
                   for="cci"
                 >{{ errors.cci[0] }}</label>
               </div>
-            </div>
+            </div>-->
           </div>
         </form>
       </div>

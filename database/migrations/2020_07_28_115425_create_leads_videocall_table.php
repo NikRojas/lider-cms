@@ -26,6 +26,8 @@ class CreateLeadsVideocallTable extends Migration
             $table->string('schedule',100);
             $table->bigInteger('project_id')->unsigned();
             $table->foreign('project_id')->references('id')->on('projects');
+            $table->bigInteger('advisor_id')->unsigned()->nullable();
+            $table->foreign('advisor_id')->references('id')->on('advisors');
             $table->timestamps();
         });
     }

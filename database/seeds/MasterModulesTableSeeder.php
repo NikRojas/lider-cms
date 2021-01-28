@@ -102,15 +102,16 @@ class MasterModulesTableSeeder extends Seeder
                     'index'    => 3
                 ],
                 [
-                    'name' 	=> 'Bonos',
-                    'slug' 		=> 'administracion/bonos',
+                    'name' 	=> 'Características Proyectos',
+                    'slug' 		=> 'administracion/caracteristicas-proyectos',
                     'parent' 	=> $pAdmin,
                     'icon' 		=> NULL,
                     'index'    => 4
                 ],
+
                 [
-                    'name' 	=> 'Características Proyectos',
-                    'slug' 		=> 'administracion/caracteristicas-proyectos',
+                    'name' 	=> 'Bonos',
+                    'slug' 		=> 'administracion/bonos',
                     'parent' 	=> $pAdmin,
                     'icon' 		=> NULL,
                     'index'    => 5

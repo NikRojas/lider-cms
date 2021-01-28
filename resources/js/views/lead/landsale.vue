@@ -32,14 +32,14 @@
             <div class="col-12">
               <div class="card">
                 <div class="card-header border-0">
-                  <h2 class="mb-0 text-uppercase text-primary">Correos Destino</h2>
+                  <h2 class="mb-0 text-uppercase text-primary">Emails Destino</h2>
                 </div>
                 <div class="card-body">
                   <form @submit.prevent="updateEmail">
                     <div class="row">
                       <div class="col-12">
                         <div class="form-group">
-                          <label class="font-weight-bold">Correos</label>
+                          <label class="font-weight-bold">Emails</label>
                           <div v-show="editEmailBlock">
                             <InputArray
                               :arreglo.sync="information.email_destination"

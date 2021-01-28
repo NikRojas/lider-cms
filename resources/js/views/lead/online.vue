@@ -30,11 +30,19 @@
           <div class="row">
             <div class="col-12">
               <div class="card">
-                <div class="card-header border-0">
-                  <h2 class="mb-0 text-uppercase text-primary">Correos Destino</h2>
+                <div class="card-header border-0 pb-0">
+                  <h2 class="mb-0 text-uppercase text-primary">Emails Destino</h2>
                 </div>
                 <div class="card-body">
-                    <form @submit.prevent="updateEmail">
+                  <div class="row">
+                    <div class="col-12 mb-4">
+                      Los leads se enviarán automáticamente a los asesores respectivos asignados en cada Proyecto, se designará de 1 lead por asesor.
+                    </div>
+                    <div class="col-12 py-3">
+                      <IconContact></IconContact>
+                    </div>
+                  </div>
+                   <!-- <form @submit.prevent="updateEmail">
                       <div class="row">
                         <div class="col-12">
                           <div class="form-group">
@@ -92,7 +100,7 @@
                           @click.prevent="restoreEmail"
                         >Cancelar</button>
                       </div>
-                    </form>
+                    </form>-->
                   <!--<div v-else>
                     <Skeleton height="150px"></Skeleton>
                   </div>-->
@@ -115,6 +123,7 @@
   </div>
 </template>
 <script>
+import IconContact from "../../components/icons/Contact";
 import { Skeleton } from "vue-loading-skeleton";
 import BreadCrumb from "../../components/BreadCrumb";
 import DataTable from "../../components/DataTable";
@@ -133,6 +142,7 @@ export default {
     SkeletonForm,
     InputArray,
     Destroy,
+    IconContact
   },
   props: {
     routeGetAll: String,

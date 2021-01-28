@@ -18,9 +18,9 @@ class CreateLeadsTable extends Migration
             $table->string('name');
             $table->string('email');
             $table->string('mobile',15);
-            $table->string('lead_medium_id')->nullable();
+            //$table->string('lead_medium_id')->nullable();
             $table->bigInteger('lead_source_id')->unsigned();
-            $table->foreign('lead_medium_id')->references('id')->on('master_leads_medium');
+            //$table->foreign('lead_medium_id')->references('id')->on('master_leads_medium');
             $table->foreign('lead_source_id')->references('id')->on('master_leads_source');
             $table->timestamps();
         });

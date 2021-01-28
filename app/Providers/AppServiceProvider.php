@@ -11,8 +11,10 @@ use App\Applicant;
 use App\Observers\ApplicantObserver;
 
 use App\Lead;
+use App\LeadVideocall;
 use App\Observers\LeadObserver;
 use App\Module;
+use App\Observers\LeadVideocallObserver;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -63,5 +65,6 @@ class AppServiceProvider extends ServiceProvider
             $view->with(compact("menu"));
         });
         Applicant::observe(ApplicantObserver::class);
+        LeadVideocall::observe(LeadVideocallObserver::class);
     }
 }

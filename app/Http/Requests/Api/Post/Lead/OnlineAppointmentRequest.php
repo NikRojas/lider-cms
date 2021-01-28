@@ -24,7 +24,8 @@ class OnlineAppointmentRequest extends FormRequest
           'name.required' => 'Por favor ingrese su :attribute.',
           'required' => 'Por favor ingrese su :attribute.',
           'phone.required' => 'Por favor ingrese su teléfono o celular.',
-          'lead_medium_id.required' => 'Por favor ingrese el medio por el que desee ser contactado.',
+          'project_id.required' => 'Por favor ingrese un Proyecto.',
+          'schedule.required' => 'Por favor ingrese el horario que quiere ser contactado.',
       ];  
   }
 
@@ -39,9 +40,9 @@ class OnlineAppointmentRequest extends FormRequest
           'name' => 'required|max:100',
           'email' =>  'required|max:100|email',
           'mobile' => 'required|digits_between:7,9',
-          'document_number' => 'required|digits:7',
-          'lead_medium_id' => 'required',
-          'lead_time_day' => 'required',
+          'document_number' => 'required|digits:8',
+          'project_id' => 'required',
+          'schedule' => 'required',
           'accepted' => 'accepted'
         ];
     }

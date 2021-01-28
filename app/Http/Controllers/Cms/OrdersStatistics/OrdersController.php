@@ -203,7 +203,6 @@ class OrdersController extends Controller
             $request->session()->flash('success', trans('custom.message.resend.success'));
             return response()->json(["route" => route('cms.sales-statistics.orders.read',["element" => $element->id])]);
         } catch (\Exception $e) {
-            dd($e);
             $request->session()->flash('error', trans('custom.message.resend.error'));
             return response()->json(["route" => route('cms.sales-statistics.orders.read',["element" => $element->id])], 500);
         }

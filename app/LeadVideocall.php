@@ -9,9 +9,9 @@ class LeadVideocall extends Model
     protected $table = 'leads_videocall';
     protected $guarded = [];
 
-    public function mediumRel()
+    public function projectRel()
     {
-        return $this->belongsTo('App\MasterLeadMedium', 'lead_medium_id', 'id');
+        return $this->belongsTo('App\Project', 'project_id', 'id');
     }
 
     public function timeRel()

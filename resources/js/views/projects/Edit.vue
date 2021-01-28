@@ -119,14 +119,19 @@
                   </div>
                   <div class="col-12 col-lg-6">
                     <Input
-                      label="Habitaciones"
+                      label="Dormitorios"
                       variable="rooms"
                       :errors="errors"
                       :valueEn.sync="element.rooms_en"
                       :valueEs.sync="element.rooms_es"
                       :valueEnParent="element.rooms_en"
                       :valueEsParent="element.rooms_es"
-                    />
+                    >
+                    <small
+                        class="form-text"
+                        style="opacity: 0.7"
+                        >Ingrese un resumen de los Dormitorios con lo que cuenta el Proyecto, por ejemplo "1 a 3 Dormitorios".</small>
+                    </Input>
                   </div>
                   <div class="col-12 col-lg-6">
                     <Input
@@ -137,7 +142,13 @@
                       :valueEs.sync="element.footage_es"
                       :valueEnParent="element.footage_en"
                       :valueEsParent="element.footage_es"
-                    />
+                    > 
+                      <small
+                        class="form-text"
+                        style="opacity: 0.7"
+                        >Ingrese un resumen del metraje con el que cuenta el Proyecto, por ejemplo "Desde 52 a 137m2".</small
+                      >
+                    </Input>
                   </div>
                   <div class="col-12">
                     <div class="form-group">
@@ -511,18 +522,18 @@
                         cotización
                       </p>
                       <b-form-radio-group
-                        v-model="form_quotation"
+                        v-model="element.form_quotation"
                         :options="elementsQuotation"
                         text-field="text"
                         value-field="value"
                         size="lg"
-                        name="radios"
+                        name="radiosQuotation"
                         plain
                         stacked
                       />
                     </div>
                   </div>
-                  <div class="col-12" v-if="form_quotation">
+                  <div class="col-12" v-if="element.form_quotation">
                     <div class="form-group">
                       <label class="font-weight-bold" for="price_parking"
                         >Precio Estacionamiento</label
@@ -636,7 +647,6 @@ export default {
   data() {
     return {
       info: false,
-      form_quotation: null,
       element: {
       },
       moneyLocal: {
@@ -648,8 +658,8 @@ export default {
         masked: false,
       },
       elementsQuotation: [
-        { text: "Sí", value:1 },
-        { text: "No", value:0},
+        { text: "Sí", value: true },
+        { text: "No", value: false},
       ],
       moneyForeign: {
         decimal: ",",
@@ -827,6 +837,17 @@ export default {
           JSON.stringify(this.element.bonds)
         );
       }
+      if (this.element.projects_related.length) {
+        fd.append("projects_related", JSON.stringify(this.element.projects_related));
+      }
+      if (this.element.price_parking) {
+        fd.append("price_parking", this.element.price_parking);
+      }
+       if (this.element.form_quotation == true) {
+        fd.append("form_quotation", 1);
+      } else {
+        fd.append("form_quotation", 0);
+      }
       fd.append("_method","put");
       axios
         .post(this.routeUpdate + '/' + this.element.id, fd)
@@ -848,14 +869,7 @@ export default {
     elementParent: {
       immediate: true,
       handler: function (newValue) {
-        this.element = newValue;
-        console.log(newValue.form_quotation)
-        if(newValue.form_quotation == true){
-          this.form_quotation = 1;
-        }
-        else{
-this.form_quotation = 0;
-        }
+        this.element = Object.assign({}, newValue);
       },
     },
   },

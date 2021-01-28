@@ -661,6 +661,16 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -977,6 +987,12 @@ __webpack_require__.r(__webpack_exports__);
 
       if (this.element.price_parking) {
         fd.append("price_parking", this.element.price_parking);
+      }
+
+      if (this.element.form_quotation == true) {
+        fd.append("form_quotation", 1);
+      } else {
+        fd.append("form_quotation", 0);
       }
 
       axios.post(this.routeStore, fd).then(function (response) {
@@ -1346,31 +1362,48 @@ var render = function() {
                       "div",
                       { staticClass: "col-12 col-lg-6" },
                       [
-                        _c("Input", {
-                          attrs: {
-                            label: "Habitaciones",
-                            variable: "rooms",
-                            errors: _vm.errors,
-                            valueEn: _vm.element.rooms_en,
-                            valueEs: _vm.element.rooms_es,
-                            valueEnParent: _vm.element.rooms_en,
-                            valueEsParent: _vm.element.rooms_es
-                          },
-                          on: {
-                            "update:valueEn": function($event) {
-                              return _vm.$set(_vm.element, "rooms_en", $event)
+                        _c(
+                          "Input",
+                          {
+                            attrs: {
+                              label: "Dormitorios",
+                              variable: "rooms",
+                              errors: _vm.errors,
+                              valueEn: _vm.element.rooms_en,
+                              valueEs: _vm.element.rooms_es,
+                              valueEnParent: _vm.element.rooms_en,
+                              valueEsParent: _vm.element.rooms_es
                             },
-                            "update:value-en": function($event) {
-                              return _vm.$set(_vm.element, "rooms_en", $event)
-                            },
-                            "update:valueEs": function($event) {
-                              return _vm.$set(_vm.element, "rooms_es", $event)
-                            },
-                            "update:value-es": function($event) {
-                              return _vm.$set(_vm.element, "rooms_es", $event)
+                            on: {
+                              "update:valueEn": function($event) {
+                                return _vm.$set(_vm.element, "rooms_en", $event)
+                              },
+                              "update:value-en": function($event) {
+                                return _vm.$set(_vm.element, "rooms_en", $event)
+                              },
+                              "update:valueEs": function($event) {
+                                return _vm.$set(_vm.element, "rooms_es", $event)
+                              },
+                              "update:value-es": function($event) {
+                                return _vm.$set(_vm.element, "rooms_es", $event)
+                              }
                             }
-                          }
-                        })
+                          },
+                          [
+                            _c(
+                              "small",
+                              {
+                                staticClass: "form-text",
+                                staticStyle: { opacity: "0.7" }
+                              },
+                              [
+                                _vm._v(
+                                  'Ingrese un resumen de los Dormitorios con lo que cuenta el Proyecto, por ejemplo "1 a 3 Dormitorios".'
+                                )
+                              ]
+                            )
+                          ]
+                        )
                       ],
                       1
                     ),
@@ -1379,31 +1412,64 @@ var render = function() {
                       "div",
                       { staticClass: "col-12 col-lg-6" },
                       [
-                        _c("Input", {
-                          attrs: {
-                            label: "Metraje",
-                            variable: "footage",
-                            errors: _vm.errors,
-                            valueEn: _vm.element.footage_en,
-                            valueEs: _vm.element.footage_es,
-                            valueEnParent: _vm.element.footage_en,
-                            valueEsParent: _vm.element.footage_es
-                          },
-                          on: {
-                            "update:valueEn": function($event) {
-                              return _vm.$set(_vm.element, "footage_en", $event)
+                        _c(
+                          "Input",
+                          {
+                            attrs: {
+                              label: "Metraje",
+                              variable: "footage",
+                              errors: _vm.errors,
+                              valueEn: _vm.element.footage_en,
+                              valueEs: _vm.element.footage_es,
+                              valueEnParent: _vm.element.footage_en,
+                              valueEsParent: _vm.element.footage_es
                             },
-                            "update:value-en": function($event) {
-                              return _vm.$set(_vm.element, "footage_en", $event)
-                            },
-                            "update:valueEs": function($event) {
-                              return _vm.$set(_vm.element, "footage_es", $event)
-                            },
-                            "update:value-es": function($event) {
-                              return _vm.$set(_vm.element, "footage_es", $event)
+                            on: {
+                              "update:valueEn": function($event) {
+                                return _vm.$set(
+                                  _vm.element,
+                                  "footage_en",
+                                  $event
+                                )
+                              },
+                              "update:value-en": function($event) {
+                                return _vm.$set(
+                                  _vm.element,
+                                  "footage_en",
+                                  $event
+                                )
+                              },
+                              "update:valueEs": function($event) {
+                                return _vm.$set(
+                                  _vm.element,
+                                  "footage_es",
+                                  $event
+                                )
+                              },
+                              "update:value-es": function($event) {
+                                return _vm.$set(
+                                  _vm.element,
+                                  "footage_es",
+                                  $event
+                                )
+                              }
                             }
-                          }
-                        })
+                          },
+                          [
+                            _c(
+                              "small",
+                              {
+                                staticClass: "form-text",
+                                staticStyle: { opacity: "0.7" }
+                              },
+                              [
+                                _vm._v(
+                                  'Ingrese un resumen del metraje con el que cuenta el Proyecto, por ejemplo "Desde 52 a 137m2".'
+                                )
+                              ]
+                            )
+                          ]
+                        )
                       ],
                       1
                     ),
@@ -2437,7 +2503,7 @@ var render = function() {
                               "text-field": "text",
                               "value-field": "value",
                               size: "lg",
-                              name: "radios",
+                              name: "radiosQuotation",
                               plain: "",
                               stacked: ""
                             },

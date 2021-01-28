@@ -45,6 +45,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
     label: String,
@@ -719,6 +720,8 @@ var render = function() {
           }
         }
       }),
+      _vm._v(" "),
+      _vm._t("default"),
       _vm._v(" "),
       _vm._l(_vm.errors, function(el, i) {
         return _c("div", { key: i }, [

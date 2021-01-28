@@ -49,8 +49,9 @@ class ProjectsController extends Controller
         $element["bonds"] = $element->bondsRel->pluck('pivot.bond_id');
         $projects_related = [];
         if($element->projects_related){
-            $element["projects_related"] = json_decode($element->projects_related);
+            $projects_related = json_decode($element->projects_related);
         }
+        $element["projects_related"] = $projects_related;
         return view("pages.projects.edit", compact('element')); 
     }
 
@@ -162,6 +163,14 @@ class ProjectsController extends Controller
         $request_project = request(['name_es',"description_en","url_video","description_es",'name_en','slug_en','slug_es',"rooms_es","rooms_en","footage_en","footage_es","url_google_maps","url_waze","text_place_es",
         "text_place_en","project_status_id","location","price_total","price","price_total_foreign","iframe_map","map_indications_es","map_indications_en",
         "sales_room_es","sales_room_en","schedule_attention_es","schedule_attention_en",'active','form_quotation','price_parking']);
+
+
+        if($request->projects_related){
+            $request_project = array_merge($request_project,["projects_related" => $request->projects_related]);
+        }
+        else{
+            $request_project = array_merge($request_project,["projects_related" => NULL]);
+        }
         
         if($request->hasFile('logo')){
             $logoName = $this->setFileName('l-',$request->file('logo'));

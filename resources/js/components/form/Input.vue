@@ -29,6 +29,7 @@
       <label class="font-weight-bold" :for="label+random">{{ label }}:</label>
     </div>
     <input type="text" class="form-control" v-model="value[ active ]" />
+    <slot></slot>
     <div v-for="(el,i) in errors" :key="i">
       <label class="text-danger text-sm d-block" v-if="i == variable+'_'+active">{{ el[0] }}</label>
     </div>

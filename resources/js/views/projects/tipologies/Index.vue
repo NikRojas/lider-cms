@@ -5,10 +5,18 @@
         <div class="header-body">
           <div class="row align-items-center pt-0 pt-md-2 pb-3">
             <div class="col-6 col-md-7">
-              <BreadCrumb :title="'Tipologías Proyecto '+project.name_es" parent active="Proyectos"></BreadCrumb>
+              <BreadCrumb
+                :title="'Tipologías Proyecto ' + project.name_es"
+                parent
+                active="Proyectos"
+              ></BreadCrumb>
             </div>
             <div class="col-6 col-md text-right">
-              <a href="#" class="btn btn-icon btn-inverse-primary" @click.prevent="newEl">
+              <a
+                href="#"
+                class="btn btn-icon btn-inverse-primary"
+                @click.prevent="newEl"
+              >
                 <span class="btn-inner--icon">
                   <jam-layout class="current-color" />
                 </span>
@@ -18,7 +26,10 @@
           </div>
           <div class="row mb-3">
             <div class="col-6 col-md-5">
-              <a :href="routeReturn" class="btn btn-icon btn-sm btn-inverse-light">
+              <a
+                :href="routeReturn"
+                class="btn btn-icon btn-sm btn-inverse-light"
+              >
                 <span class="btn-inner--icon">
                   <jam-arrow-left class="current-color" />
                 </span>
@@ -39,22 +50,65 @@
         <div v-if="elements.length">
           <p>{{ messageOrder }}</p>
           <draggable class="row" v-model="elements" @change="handleChange">
-            <div class="col-12 col-lg-3 mb-4 text-center" v-for="(el,i) in elements" :key="i">
+            <div
+              class="col-12 col-lg-3 mb-4 text-center"
+              v-for="(el, i) in elements"
+              :key="i"
+            >
               <div class="card">
                 <div class="card-body">
-                  <img :src="imagesUrl + '/projects/tipologies/' + el.image" alt class="img-fluid" />
+                  <img
+                    :src="imagesUrl + '/projects/tipologies/' + el.image"
+                    alt
+                    class="img-fluid"
+                  />
                   <h3 class="mb-2 mt-3">
-                    {{ el.name }}</h3>
+                    {{ el.name }}
+                  </h3>
+                  <div>
+                    <span class="d-block">Precio: </span>
+                    {{ el.price_format }}
+                  </div>
 
-                    <span class="d-block">{{el.url_360 ? 'URL 360' : 'URL Video Youtube'}} </span> 
-                  <a :href="el.url" target="_blank" style="text-decoration: underline;">{{ el.url }}</a>
+                  <div>
+                    <span class="d-block">Dormitorio: </span>
+                    {{ el.room }}
+                  </div>
+
+                  <div>
+                    <span class="d-block">Metraje: </span>
+                    {{ el.area }}
+                  </div>
+                  <div>
+                    <span class="d-block">Disponibilidad: </span>
+                    <span
+                      :class="el.available ? 'text-success' : 'text-danger'"
+                      >{{ el.available ? "Disponible" : "No Disponible" }}</span
+                    >
+                  </div>
 
                   <div class="mt-4 text-center">
-                    <!--<a :href="'planos/'+project.slug_es+'/'+el.slug" class="btn btn-inverse-primary btn-sm">Ir a Planos</a>-->
-                    <button @click="editEl(el.id)" class="btn btn-inverse-info btn-sm">Editar</button>
-                    <!--<button @click="deleteEl(el.id)" class="btn btn-inverse-danger btn-sm">Eliminar</button>-->
-                    <button @click="deleteEl(el.id)" class="btn btn-inverse-danger btn-sm" v-if="el.can_delete">Eliminar</button>
-                    <button v-else class="btn btn-sm btn-secondary" v-b-tooltip.hover title="No se puede eliminar debido a que está anidado en al menos una cotización de proyecto">Eliminar</button>
+                    <button
+                      @click="editEl(el.id)"
+                      class="btn btn-inverse-info btn-sm"
+                    >
+                      Editar
+                    </button>
+                    <button
+                      @click="deleteEl(el.id)"
+                      class="btn btn-inverse-danger btn-sm"
+                      v-if="el.can_delete"
+                    >
+                      Eliminar
+                    </button>
+                    <button
+                      v-else
+                      class="btn btn-sm btn-secondary"
+                      v-b-tooltip.hover
+                      title="No se puede eliminar debido a que está anidado en al menos una cotización de proyecto"
+                    >
+                      Eliminar
+                    </button>
                   </div>
                 </div>
               </div>
@@ -93,7 +147,7 @@
                 <div class="row">
                   <div class="col text-center" v-if="element.image">
                     <img
-                      :src="imagesUrl + '/projects/tipologies/' +element.image"
+                      :src="imagesUrl + '/projects/tipologies/' + element.image"
                       class="img-fluid"
                       :alt="element.title_es"
                     />
@@ -102,16 +156,24 @@
                     <vue-dropzone
                       ref="ref_image"
                       class="text-center"
-                      @vdropzone-file-added="$validateImageDropzone($event,$refs.ref_image.dropzone,1,512000,'500kb')"
+                      @vdropzone-file-added="
+                        $validateImageDropzone(
+                          $event,
+                          $refs.ref_image.dropzone,
+                          1,
+                          512000,
+                          '500kb'
+                        )
+                      "
                       id="image"
                       :options="dropzoneOptions"
                       :duplicateCheck="true"
                       :useCustomSlot="true"
                     >
                       <div class="dropzone-custom-content">
-                        <h5
-                          class="dropzone-custom-title text-primary"
-                        >Suelte los archivos aquí o haga click para cargarlos.</h5>
+                        <h5 class="dropzone-custom-title text-primary">
+                          Suelte los archivos aquí o haga click para cargarlos.
+                        </h5>
                       </div>
                     </vue-dropzone>
                   </div>
@@ -121,44 +183,100 @@
                   v-if="errors && errors.image"
                   class="text-danger text-sm d-block mt-2"
                   for="image"
-                >{{ errors.image[0] }}</label>
+                  >{{ errors.image[0] }}</label
+                >
               </div>
             </div>
             <div class="col-12">
               <div class="form-group">
                 <label class="font-weight-bold" for="name">Nombre</label>
-                <input type="text" class="form-control" v-model="element.name" id="name" />
+                <input
+                  type="text"
+                  class="form-control"
+                  v-model="element.name"
+                  id="name"
+                />
                 <label
                   v-if="errors && errors.name"
                   class="mt-2 text-danger text-sm"
                   for="name"
-                >{{ errors.name[0] }}</label>
+                  >{{ errors.name[0] }}</label
+                >
+              </div>
+            </div>
+
+            <div class="col-12 col-lg-6">
+              <div class="form-group">
+                <label class="font-weight-bold" for="room">Dormitorios</label>
+                <input
+                  type="number"
+                  class="form-control"
+                  v-model="element.room"
+                  id="room"
+                />
+                <small id="" class="form-text" style="opacity: 0.7"
+                  >Debe ingresar un número entero "3".</small
+                >
+                <label
+                  v-if="errors && errors.room"
+                  class="mt-2 text-danger text-sm"
+                  for="room"
+                  >{{ errors.room[0] }}</label
+                >
+              </div>
+            </div>
+            <div class="col-12 col-lg-6">
+              <div class="form-group">
+                <label class="font-weight-bold" for="area">Área</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  v-model="element.area"
+                  id="area"
+                />
+                <small id="" class="form-text" style="opacity: 0.7"
+                  >Debe ingresar un número entero o decimal "22.55".</small
+                >
+                <label
+                  v-if="errors && errors.area"
+                  class="mt-2 text-danger text-sm"
+                  for="area"
+                  >{{ errors.area[0] }}</label
+                >
+              </div>
+            </div>
+            <div class="col-12" v-if="modalCreateUpdate">
+              <div class="form-group">
+                <label class="font-weight-bold" for="price_total"
+                  >Precio Soles:</label
+                >
+                <money
+                  class="form-control"
+                  v-model="element.price"
+                  v-bind="moneyLocal"
+                ></money>
+                <label
+                  v-if="errors && errors.price"
+                  class="text-danger text-sm d-block mt-2"
+                  for="price"
+                  >{{ errors.price[0] }}</label
+                >
               </div>
             </div>
 
             <div class="col-12">
               <div class="form-group">
-                <div class="mb-2">
-                  <p class="font-weight-bold mb-0">Elige una opción</p>
-                  <b-form-radio-group
-                    id="radio-group-1"
-                    v-model="element.url_360"
-                    name="radios"
-                    plain
-                    :options="options"
-                  ></b-form-radio-group>
-                </div>
-
-                <label
-                  class="font-weight-bold"
-                  for="name"
-                >URL {{ element.url_360 ? '360' : 'Video Youtube'}}</label>
-                <input type="text" class="form-control" v-model="element.url" id="url" />
-                <label
-                  v-if="errors && errors.url"
-                  class="mt-2 text-danger text-sm"
-                  for="url"
-                >{{ errors.url[0] }}</label>
+                <label class="font-weight-bold">Disponibilidad:</label>
+                <b-form-radio-group
+                  v-model="element.available"
+                  :options="elementsQuotation"
+                  text-field="text"
+                  value-field="value"
+                  size="lg"
+                  name="radiosQuotation"
+                  plain
+                  stacked
+                />
               </div>
             </div>
           </div>
@@ -171,7 +289,9 @@
           @click="submit"
           :request-server="requestSubmit"
         ></Button>
-        <button type="button" class="btn btn-secondary" @click="restoreEl">Cancelar</button>
+        <button type="button" class="btn btn-secondary" @click="restoreEl">
+          Cancelar
+        </button>
       </template>
     </b-modal>
 
@@ -195,6 +315,7 @@ import { Skeleton } from "vue-loading-skeleton";
 import NoData from "../../../components/NoData";
 import Destroy from "../../../components/modals/Destroy";
 import draggable from "vuedraggable";
+import { Money } from "v-money";
 export default {
   props: {
     elementParent: Object,
@@ -207,6 +328,7 @@ export default {
     types: Array,
   },
   components: {
+    Money,
     SkeletonForm,
     vueDropzone: vue2Dropzone,
     Button,
@@ -219,39 +341,24 @@ export default {
   },
   data() {
     return {
-      editorOptions: {
-        placeholder: "",
-        modules: {
-          toolbar: {
-            container: [
-              ["bold", "italic", "underline", "strike"],
-              ["blockquote"],
-              [{ header: 1 }, { header: 2 }],
-              [{ list: "ordered" }, { list: "bullet" }],
-              [{ indent: "-1" }, { indent: "+1" }],
-              [{ size: [false] }],
-              [{ header: [1, 2, 3, 4, 5, false] }],
-              [{ font: [false] }],
-              [{ color: [] }, { background: [] }],
-              [{ align: [] }],
-              //['clean'],
-              ["link", "video"],
-            ],
-          },
-        },
+      moneyLocal: {
+        decimal: ",",
+        thousands: ".",
+        prefix: "S/ ",
+        //suffix: ' #',
+        precision: 2,
+        masked: false,
       },
-      options: [
-        { text: "URL 360", value: true },
-        { text: "URL Video Youtube", value: false },
+      elementsQuotation: [
+        { text: "Disponible", value: true },
+        { text: "No Disponible", value: false },
       ],
       errors: {},
       loadingEls: false,
       elements: {},
       project: {},
       element: {
-        url_360: true,
-        url_video: "",
-        url_360: "",
+        available: true,
       },
       loadingGet: false,
       requestSubmit: false,
@@ -274,10 +381,7 @@ export default {
   methods: {
     handleChange(event) {
       axios
-        .put(
-          this.routeOrder,
-          this.elements
-        )
+        .put(this.routeOrder, this.elements)
         .then((response) => {
           this.restore();
           Swal.fire({
@@ -316,23 +420,30 @@ export default {
         url = this.route + "/" + this.element.id;
         method = "post";
         fd.append("_method", "put");
-        fd.append("id",this.element.id);
+        fd.append("id", this.element.id);
       }
       if (this.element.name) {
         fd.append("name", this.element.name);
       }
-      if (this.element.url_360 == true) {
-        fd.append("url_360", 1);
+      if (this.element.available == true) {
+        fd.append("available", 1);
       } else {
-        fd.append("url_360", 0);
+        fd.append("available", 0);
       }
-      if (this.element.url) {
-        fd.append("url", this.element.url);
+      if (this.element.room) {
+        fd.append("room", this.element.room);
+      }
+      if (this.element.price) {
+        fd.append("price", this.element.price);
+      }
+      if (this.element.area) {
+        fd.append("area", this.element.area);
       }
       if (this.$refs.ref_image.dropzone.files[0]) {
         fd.append("image", this.$refs.ref_image.dropzone.files[0]);
       }
       fd.append("project_id", this.project.id);
+      fd.append("slug_es", this.project.slug_es);
       axios({
         method: method,
         url: url,
@@ -340,17 +451,7 @@ export default {
       })
         .then((response) => {
           this.requestSubmit = false;
-          Swal.fire({
-            title: response.data.title,
-            text: response.data.message,
-            type: "success",
-            confirmButtonText: "OK",
-            buttonsStyling: false,
-            customClass: {
-              confirmButton: "btn btn-inverse-primary",
-            },
-          });
-          this.restore();
+          document.location.href = response.data.route;
         })
         .catch((error) => {
           this.requestSubmit = false;
@@ -358,17 +459,7 @@ export default {
             this.errors = error.response.data.errors || {};
             return;
           }
-          Swal.fire({
-            title: error.response.data.title,
-            text: error.response.data.message,
-            type: "error",
-            confirmButtonText: "OK",
-            buttonsStyling: false,
-            customClass: {
-              confirmButton: "btn btn-inverse-primary",
-            },
-          });
-          this.restoreEl();
+          document.location.href = error.response.data.route;
         });
     },
     deleteEl(id) {
@@ -376,24 +467,22 @@ export default {
       this.getEl(id);
     },
     restore() {
-      (this.element = {
+      this.element = {
         image: "",
-        url_video: "",
-        url_360: "",
-        url_360: true,
-      }),
-        (this.modalCreateUpdate = this.requestSubmit = this.modalDestroy = false);
+        available: true,
+        price: 0,
+      };
+      this.modalCreateUpdate = this.requestSubmit = this.modalDestroy = false;
       this.getEls();
       this.errors = {};
     },
     restoreEl() {
-      (this.element = {
+      this.element = {
         image: "",
-        url_video: "",
-        url_360: "",
-        url_360: true,
-      }),
-        (this.modalCreateUpdate = this.modalDestroy = this.requestSubmit = false);
+        available: true,
+        price: 0,
+      };
+      this.modalCreateUpdate = this.modalDestroy = this.requestSubmit = false;
       //this.getEls();
       this.errors = {};
     },

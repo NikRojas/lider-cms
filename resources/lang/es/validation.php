@@ -205,7 +205,8 @@ return [
         'advisors' => 'asesores',
         'mobile' => 'móvil',
         'project_status_id' => 'estado del proyecto',
-        'banner' => 'baner'
+        'banner' => 'baner',
+        'room' => 'dormitorio'
     ],
 
 ];

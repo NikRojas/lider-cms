@@ -8,10 +8,10 @@ class ProjectTypeDepartment extends Model
 {
     protected $table = 'project_type_departments';
     protected $guarded = [];
-    /*protected $casts = [
-        'url_360' => 'boolean',
-    ];*/
-    protected $appends = ['can_delete'];
+    protected $casts = [
+        'available' => 'boolean',
+    ];
+    protected $appends = ['can_delete','price_format'];
 
     public function getCanDeleteAttribute(){
         $value = true;
@@ -19,6 +19,11 @@ class ProjectTypeDepartment extends Model
             $value = false;
         }
         return $value;
+    }
+
+    public function getPriceFormatAttribute()
+    {
+        return 'S/ '.number_format($this->price, 2, '.', ',');
     }
 
     public function projectQuotationsRel()

@@ -210,6 +210,16 @@ Route::middleware(['auth'])->namespace('Cms')->name('cms.')->group(function () {
             Route::put('/order', 'FilesController@order')->name('order');
             Route::put('/{element}', 'FilesController@update')->name('update');
         });
+
+        Route::prefix('tour-virtual')->name('virtual-tour.')->group(function () {
+            Route::get('/{element}', 'VirtualTourController@index')->name('index');
+            Route::post('/', 'VirtualTourController@store')->name('store');
+            Route::get('/json/get-all', 'VirtualTourController@getAll')->name('get-all');
+            Route::get('/json/get/{element}', 'VirtualTourController@get')->name('get');
+            Route::delete('/{element}', 'VirtualTourController@destroy')->name('destroy');
+            Route::put('/order', 'VirtualTourController@order')->name('order');
+            Route::put('/{element}', 'VirtualTourController@update')->name('update');
+        });
     });
 
     Route::namespace('Content')->prefix('contenido')->name('content.')->group(function () {

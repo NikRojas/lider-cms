@@ -215,7 +215,7 @@
                 <div class="row">
                   <div class="col-12 col-lg-6">
                     <div class="form-group">
-                      <label class="font-weight-bold" for="price_total">Precio Total Soles:</label>
+                      <label class="font-weight-bold" for="price_total">Precio Soles Desde:</label>
                       <money class="form-control" v-model="element.price_total" v-bind="moneyLocal"></money>
                       <label
                         v-if="errors && errors.price_total"
@@ -229,7 +229,7 @@
                       <label
                         class="font-weight-bold"
                         for="price_total_foreign"
-                      >Precio Total Dolares:</label>
+                      >Precio Dólares Desde:</label>
                       <money
                         class="form-control"
                         v-model="element.price_total_foreign"
@@ -242,7 +242,7 @@
                       >{{ errors.price_total_foreign[0] }}</label>
                     </div>
                   </div>
-                  <div class="col-12">
+                  <!--<div class="col-12">
                     <div class="form-group">
                       <label class="font-weight-bold" for="price">Precio Reserva:</label>
                       <money
@@ -256,7 +256,7 @@
                         for="price"
                       >{{ errors.price[0] }}</label>
                     </div>
-                  </div>
+                  </div>-->
                 </div>
               </div>
             </div>

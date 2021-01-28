@@ -235,7 +235,7 @@
                   <div class="col-12 col-lg-6">
                     <div class="form-group">
                       <label class="font-weight-bold" for="price_total"
-                        >Precio Total Soles:</label
+                        >Precio Soles Desde:</label
                       >
                       <money
                         class="form-control"
@@ -253,7 +253,7 @@
                   <div class="col-12 col-lg-6">
                     <div class="form-group">
                       <label class="font-weight-bold" for="price_total_foreign"
-                        >Precio Total Dolares:</label
+                        >Precio Dólares Desde:</label
                       >
                       <money
                         class="form-control"
@@ -268,7 +268,7 @@
                       >
                     </div>
                   </div>
-                  <div class="col-12">
+                  <!--<div class="col-12">
                     <div class="form-group">
                       <label class="font-weight-bold" for="price"
                         >Precio Reserva:</label
@@ -285,7 +285,7 @@
                         >{{ errors.price[0] }}</label
                       >
                     </div>
-                  </div>
+                  </div>-->
                 </div>
               </div>
             </div>
@@ -920,7 +920,7 @@ export default {
         .post(this.routeStore, fd)
         .then((response) => {
           this.requestServer = false;
-          //document.location.href = response.data.route;
+          document.location.href = response.data.route;
         })
         .catch((error) => {
           this.requestServer = false;
@@ -928,7 +928,7 @@ export default {
             this.errors = error.response.data.errors || {};
             return;
           }
-          //document.location.href = error.response.data.route;
+          document.location.href = error.response.data.route;
         });
     },
   },

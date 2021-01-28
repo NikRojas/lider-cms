@@ -226,24 +226,18 @@
                   <div class="col-12 col-lg-6 mb-3 text-center">
                     <h2 class="font-weight-normal">
                       <span class="d-block h3 font-weight-bold"
-                        >Precio Total Soles:</span
+                        >Precio Soles Desde:</span
                       >
-                      {{ element.price_total_format }}
+                      {{ element.price_total ? element.price_total_format : 'No registrado' }}
                     </h2>
                   </div>
                   <div class="col-12 col-lg-6 mb-3 text-center">
                     <h2 class="font-weight-normal">
                       <span class="d-block h3 font-weight-bold"
-                        >Precio Total Dolares:</span
+                        >Precio Dólares Desde:</span
                       >
-                      {{ element.price_total_foreign_format }}
+                      {{ element.price_total_foreign ? element.price_total_foreign_format : 'No registrado' }}
                     </h2>
-                  </div>
-                  <div class="col-12 text-center">
-                    <h1 class="font-weight-normal">
-                      <span class="d-block h3 font-weight-bold">Precio:</span>
-                      {{ element.price_format }}
-                    </h1>
                   </div>
                 </div>
               </div>

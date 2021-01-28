@@ -41,9 +41,9 @@ class CreateProjectsTable extends Migration
             $table->text('sales_room_en');
             $table->text('schedule_attention_en');
             $table->text('schedule_attention_es');
-            $table->decimal('price_total',11,2);
-            $table->decimal('price_total_foreign',11,2);
-            $table->decimal('price',11,2);
+            $table->decimal('price_total',11,2)->nullable();
+            $table->decimal('price_total_foreign',11,2)->nullable();
+            //$table->decimal('price',11,2);
             $table->bigInteger('index'); 
 
             $table->string('slug_es');

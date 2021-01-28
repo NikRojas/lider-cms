@@ -1728,7 +1728,7 @@ var render = function() {
                               staticClass: "font-weight-bold",
                               attrs: { for: "price_total" }
                             },
-                            [_vm._v("Precio Total Soles:")]
+                            [_vm._v("Precio Soles Desde:")]
                           ),
                           _vm._v(" "),
                           _c(
@@ -1777,7 +1777,7 @@ var render = function() {
                               staticClass: "font-weight-bold",
                               attrs: { for: "price_total_foreign" }
                             },
-                            [_vm._v("Precio Total Dolares:")]
+                            [_vm._v("Precio Dólares Desde:")]
                           ),
                           _vm._v(" "),
                           _c(
@@ -1816,55 +1816,6 @@ var render = function() {
                                     _vm._s(_vm.errors.price_total_foreign[0])
                                   )
                                 ]
-                              )
-                            : _vm._e()
-                        ],
-                        1
-                      )
-                    ]),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "col-12" }, [
-                      _c(
-                        "div",
-                        { staticClass: "form-group" },
-                        [
-                          _c(
-                            "label",
-                            {
-                              staticClass: "font-weight-bold",
-                              attrs: { for: "price" }
-                            },
-                            [_vm._v("Precio Reserva:")]
-                          ),
-                          _vm._v(" "),
-                          _c(
-                            "money",
-                            _vm._b(
-                              {
-                                staticClass: "form-control form-control-lg",
-                                model: {
-                                  value: _vm.element.price,
-                                  callback: function($$v) {
-                                    _vm.$set(_vm.element, "price", $$v)
-                                  },
-                                  expression: "element.price"
-                                }
-                              },
-                              "money",
-                              _vm.moneyLocal,
-                              false
-                            )
-                          ),
-                          _vm._v(" "),
-                          _vm.errors && _vm.errors.price
-                            ? _c(
-                                "label",
-                                {
-                                  staticClass:
-                                    "text-danger text-sm d-block mt-2",
-                                  attrs: { for: "price" }
-                                },
-                                [_vm._v(_vm._s(_vm.errors.price[0]))]
                               )
                             : _vm._e()
                         ],

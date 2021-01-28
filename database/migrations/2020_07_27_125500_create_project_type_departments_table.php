@@ -20,8 +20,7 @@ class CreateProjectTypeDepartmentsTable extends Migration
 
             $table->string('image',100);
             $table->bigInteger('index'); 
-            $table->text('url')->nullable();
-            $table->boolean('url_360')->default(1);
+            
             //$table->float('area')->nullable();
             //$table->text('description')->nullable();
             

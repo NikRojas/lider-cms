@@ -165,6 +165,63 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -461,6 +518,24 @@ var render = function() {
                                                         "btn btn-sm mb-2 btn-inverse-primary",
                                                       attrs: {
                                                         href:
+                                                          "proyectos/tour-virtual/" +
+                                                          el.slug_es
+                                                      }
+                                                    },
+                                                    [
+                                                      _vm._v(
+                                                        "Ir a Tour Virtual"
+                                                      )
+                                                    ]
+                                                  ),
+                                                  _vm._v(" "),
+                                                  _c(
+                                                    "a",
+                                                    {
+                                                      staticClass:
+                                                        "btn btn-sm mb-2 btn-inverse-primary",
+                                                      attrs: {
+                                                        href:
                                                           "proyectos/cotizaciones/" +
                                                           el.slug_es
                                                       }
@@ -557,7 +632,7 @@ var render = function() {
                                               { staticClass: "col-12 mb-1" },
                                               [
                                                 _vm._v(
-                                                  "\n                              Se muestra en la Web: "
+                                                  "\n                          Se muestra en la Web:\n                          "
                                                 ),
                                                 _c(
                                                   "span",
@@ -588,7 +663,11 @@ var render = function() {
                                                       staticClass:
                                                         "d-inline-block font-weight-normal"
                                                     },
-                                                    [_vm._v("Ubicación:")]
+                                                    [
+                                                      _vm._v(
+                                                        "\n                              Ubicación:\n                            "
+                                                      )
+                                                    ]
                                                   ),
                                                   _vm._v(" "),
                                                   _c(
@@ -599,108 +678,92 @@ var render = function() {
                                                     },
                                                     [
                                                       _vm._v(
-                                                        _vm._s(el.location) +
-                                                          ", " +
+                                                        "\n                              " +
+                                                          _vm._s(el.location) +
+                                                          ",\n                              " +
                                                           _vm._s(
                                                             el.ubigeo_rel
                                                               .district
                                                           ) +
-                                                          " - " +
+                                                          " -\n                              " +
                                                           _vm._s(
                                                             el.ubigeo_rel
                                                               .department
-                                                          )
+                                                          ) +
+                                                          "\n                            "
                                                       )
                                                     ]
                                                   )
                                                 ]),
                                                 _vm._v(" "),
                                                 _c("div", [
-                                                  _c("div", [
-                                                    _c(
-                                                      "h4",
-                                                      {
-                                                        staticClass:
-                                                          "d-inline-block font-weight-normal"
-                                                      },
-                                                      [
-                                                        _vm._v(
-                                                          "Precio Departamento Soles:"
+                                                  el.price_total
+                                                    ? _c("div", [
+                                                        _c(
+                                                          "h4",
+                                                          {
+                                                            staticClass:
+                                                              "d-inline-block font-weight-normal"
+                                                          },
+                                                          [
+                                                            _vm._v(
+                                                              "\n                                Precio Soles Desde:\n                              "
+                                                            )
+                                                          ]
+                                                        ),
+                                                        _vm._v(" "),
+                                                        _c(
+                                                          "h4",
+                                                          {
+                                                            staticClass:
+                                                              "d-inline-block"
+                                                          },
+                                                          [
+                                                            _vm._v(
+                                                              "\n                                " +
+                                                                _vm._s(
+                                                                  el.price_total_format
+                                                                ) +
+                                                                "\n                              "
+                                                            )
+                                                          ]
                                                         )
-                                                      ]
-                                                    ),
-                                                    _vm._v(" "),
-                                                    _c(
-                                                      "h4",
-                                                      {
-                                                        staticClass:
-                                                          "d-inline-block"
-                                                      },
-                                                      [
-                                                        _vm._v(
-                                                          _vm._s(
-                                                            el.price_total_format
-                                                          )
-                                                        )
-                                                      ]
-                                                    )
-                                                  ]),
+                                                      ])
+                                                    : _vm._e(),
                                                   _vm._v(" "),
-                                                  _c("div", [
-                                                    _c(
-                                                      "h4",
-                                                      {
-                                                        staticClass:
-                                                          "d-inline-block font-weight-normal"
-                                                      },
-                                                      [
-                                                        _vm._v(
-                                                          "Precio Departamento Dolares:"
+                                                  el.price_total_foreign
+                                                    ? _c("div", [
+                                                        _c(
+                                                          "h4",
+                                                          {
+                                                            staticClass:
+                                                              "d-inline-block font-weight-normal"
+                                                          },
+                                                          [
+                                                            _vm._v(
+                                                              "\n                                Precio Dólares Desde:\n                              "
+                                                            )
+                                                          ]
+                                                        ),
+                                                        _vm._v(" "),
+                                                        _c(
+                                                          "h4",
+                                                          {
+                                                            staticClass:
+                                                              "d-inline-block"
+                                                          },
+                                                          [
+                                                            _vm._v(
+                                                              "\n                                " +
+                                                                _vm._s(
+                                                                  el.price_total_foreign_format
+                                                                ) +
+                                                                "\n                              "
+                                                            )
+                                                          ]
                                                         )
-                                                      ]
-                                                    ),
-                                                    _vm._v(" "),
-                                                    _c(
-                                                      "h4",
-                                                      {
-                                                        staticClass:
-                                                          "d-inline-block"
-                                                      },
-                                                      [
-                                                        _vm._v(
-                                                          _vm._s(
-                                                            el.price_total_foreign_format
-                                                          )
-                                                        )
-                                                      ]
-                                                    )
-                                                  ]),
-                                                  _vm._v(" "),
-                                                  _c(
-                                                    "h4",
-                                                    {
-                                                      staticClass:
-                                                        "d-inline-block font-weight-normal"
-                                                    },
-                                                    [
-                                                      _vm._v(
-                                                        "Precio Reserva de Departamento:"
-                                                      )
-                                                    ]
-                                                  ),
-                                                  _vm._v(" "),
-                                                  _c(
-                                                    "h2",
-                                                    {
-                                                      staticClass:
-                                                        "d-inline-block"
-                                                    },
-                                                    [
-                                                      _vm._v(
-                                                        _vm._s(el.price_format)
-                                                      )
-                                                    ]
-                                                  )
+                                                      ])
+                                                    : _vm._e()
                                                 ])
                                               ]
                                             ),
@@ -716,33 +779,11 @@ var render = function() {
                                                       staticClass:
                                                         "d-inline-block font-weight-normal"
                                                     },
-                                                    [_vm._v("N° Documentos:")]
-                                                  ),
-                                                  _vm._v(" "),
-                                                  _c(
-                                                    "h4",
-                                                    {
-                                                      staticClass:
-                                                        "d-inline-block"
-                                                    },
                                                     [
                                                       _vm._v(
-                                                        _vm._s(
-                                                          el.files_rel_count
-                                                        )
+                                                        "\n                              N° Documentos:\n                            "
                                                       )
                                                     ]
-                                                  )
-                                                ]),
-                                                _vm._v(" "),
-                                                _c("div", [
-                                                  _c(
-                                                    "h4",
-                                                    {
-                                                      staticClass:
-                                                        "d-inline-block font-weight-normal"
-                                                    },
-                                                    [_vm._v("N° Tipologias:")]
                                                   ),
                                                   _vm._v(" "),
                                                   _c(
@@ -753,9 +794,11 @@ var render = function() {
                                                     },
                                                     [
                                                       _vm._v(
-                                                        _vm._s(
-                                                          el.tipologies_rel_count
-                                                        )
+                                                        "\n                              " +
+                                                          _vm._s(
+                                                            el.files_rel_count
+                                                          ) +
+                                                          "\n                            "
                                                       )
                                                     ]
                                                   )
@@ -770,7 +813,7 @@ var render = function() {
                                                     },
                                                     [
                                                       _vm._v(
-                                                        "N° Imágenes en la Galeria:"
+                                                        "\n                              N° Tipologias:\n                            "
                                                       )
                                                     ]
                                                   ),
@@ -783,9 +826,43 @@ var render = function() {
                                                     },
                                                     [
                                                       _vm._v(
-                                                        _vm._s(
-                                                          el.gallery_rel_count
-                                                        )
+                                                        "\n                              " +
+                                                          _vm._s(
+                                                            el.tipologies_rel_count
+                                                          ) +
+                                                          "\n                            "
+                                                      )
+                                                    ]
+                                                  )
+                                                ]),
+                                                _vm._v(" "),
+                                                _c("div", [
+                                                  _c(
+                                                    "h4",
+                                                    {
+                                                      staticClass:
+                                                        "d-inline-block font-weight-normal"
+                                                    },
+                                                    [
+                                                      _vm._v(
+                                                        "\n                              N° Imágenes en la Galeria:\n                            "
+                                                      )
+                                                    ]
+                                                  ),
+                                                  _vm._v(" "),
+                                                  _c(
+                                                    "h4",
+                                                    {
+                                                      staticClass:
+                                                        "d-inline-block"
+                                                    },
+                                                    [
+                                                      _vm._v(
+                                                        "\n                              " +
+                                                          _vm._s(
+                                                            el.gallery_rel_count
+                                                          ) +
+                                                          "\n                            "
                                                       )
                                                     ]
                                                   )

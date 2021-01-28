@@ -53,7 +53,8 @@ export default {
     routeGetAll: String,
     routeGetAll: String,
     routeCreate: String,
-    selectedParent: Array
+    selectedParent: Array,
+    actualId: Number
   },
   components:{
     Skeleton,
@@ -77,8 +78,12 @@ export default {
     },
     getAll(){
      this.loading = true;
+     let route = this.routeGetAll;
+     if(this.actualId){
+       route = route + '?not=' + this.actualId;
+     }
       axios
-        .get(this.routeGetAll)
+        .get(route)
         .then((response) => {
           this.elements = response.data;
             this.loading = false;
@@ -100,7 +105,7 @@ export default {
     },
     selected: function(newValue, oldValue) {
       this.$emit("update:selected", newValue);
-    }
+    },
   }
 };
 </script>

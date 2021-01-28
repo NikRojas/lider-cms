@@ -614,6 +614,47 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -919,6 +960,14 @@ __webpack_require__.r(__webpack_exports__);
         fd.append("form_quotation", 1);
       } else {
         fd.append("form_quotation", 0);
+      }
+
+      if (this.element.commentary_quotation) {
+        fd.append("commentary_quotation", this.element.commentary_quotation);
+      }
+
+      if (this.element.condition_quotation) {
+        fd.append("condition_quotation", this.element.condition_quotation);
       }
 
       fd.append("_method", "put");
@@ -2384,7 +2433,7 @@ var render = function() {
                             staticClass: "font-weight-bold",
                             attrs: { for: "url_waze" }
                           },
-                          [_vm._v("URL Waze")]
+                          [_vm._v("URL Waze (Opcional)")]
                         ),
                         _vm._v(" "),
                         _c("input", {
@@ -2434,7 +2483,7 @@ var render = function() {
                             staticClass: "font-weight-bold",
                             attrs: { for: "url_google_maps" }
                           },
-                          [_vm._v("URL Google Maps")]
+                          [_vm._v("URL Google Maps (Opcional)")]
                         ),
                         _vm._v(" "),
                         _c("input", {
@@ -2662,7 +2711,7 @@ var render = function() {
                               attrs: {
                                 id: "price_parking",
                                 cols: "30",
-                                rows: "5"
+                                rows: "3"
                               },
                               domProps: { value: _vm.element.price_parking },
                               on: {
@@ -2691,6 +2740,130 @@ var render = function() {
                               : _vm._e()
                           ])
                         ])
+                      : _vm._e(),
+                    _vm._v(" "),
+                    _vm.element.form_quotation
+                      ? _c("div", { staticClass: "col-12" }, [
+                          _c("div", { staticClass: "form-group" }, [
+                            _c(
+                              "label",
+                              {
+                                staticClass: "font-weight-bold",
+                                attrs: { for: "condition_quotation" }
+                              },
+                              [_vm._v("Condiciones de la Proforma")]
+                            ),
+                            _vm._v(" "),
+                            _c("textarea", {
+                              directives: [
+                                {
+                                  name: "model",
+                                  rawName: "v-model",
+                                  value: _vm.element.condition_quotation,
+                                  expression: "element.condition_quotation"
+                                }
+                              ],
+                              staticClass: "form-control",
+                              attrs: {
+                                id: "condition_quotation",
+                                cols: "30",
+                                rows: "3"
+                              },
+                              domProps: {
+                                value: _vm.element.condition_quotation
+                              },
+                              on: {
+                                input: function($event) {
+                                  if ($event.target.composing) {
+                                    return
+                                  }
+                                  _vm.$set(
+                                    _vm.element,
+                                    "condition_quotation",
+                                    $event.target.value
+                                  )
+                                }
+                              }
+                            }),
+                            _vm._v(" "),
+                            _vm.errors && _vm.errors.condition_quotation
+                              ? _c(
+                                  "label",
+                                  {
+                                    staticClass: "mt-2 text-danger text-sm",
+                                    attrs: { for: "condition_quotation" }
+                                  },
+                                  [
+                                    _vm._v(
+                                      _vm._s(_vm.errors.condition_quotation[0])
+                                    )
+                                  ]
+                                )
+                              : _vm._e()
+                          ])
+                        ])
+                      : _vm._e(),
+                    _vm._v(" "),
+                    _vm.element.form_quotation
+                      ? _c("div", { staticClass: "col-12" }, [
+                          _c("div", { staticClass: "form-group" }, [
+                            _c(
+                              "label",
+                              {
+                                staticClass: "font-weight-bold",
+                                attrs: { for: "commentary_quotation" }
+                              },
+                              [_vm._v("Comentario que incluye el inmueble")]
+                            ),
+                            _vm._v(" "),
+                            _c("textarea", {
+                              directives: [
+                                {
+                                  name: "model",
+                                  rawName: "v-model",
+                                  value: _vm.element.commentary_quotation,
+                                  expression: "element.commentary_quotation"
+                                }
+                              ],
+                              staticClass: "form-control",
+                              attrs: {
+                                id: "commentary_quotation",
+                                cols: "30",
+                                rows: "1"
+                              },
+                              domProps: {
+                                value: _vm.element.commentary_quotation
+                              },
+                              on: {
+                                input: function($event) {
+                                  if ($event.target.composing) {
+                                    return
+                                  }
+                                  _vm.$set(
+                                    _vm.element,
+                                    "commentary_quotation",
+                                    $event.target.value
+                                  )
+                                }
+                              }
+                            }),
+                            _vm._v(" "),
+                            _vm.errors && _vm.errors.commentary_quotation
+                              ? _c(
+                                  "label",
+                                  {
+                                    staticClass: "mt-2 text-danger text-sm",
+                                    attrs: { for: "commentary_quotation" }
+                                  },
+                                  [
+                                    _vm._v(
+                                      _vm._s(_vm.errors.commentary_quotation[0])
+                                    )
+                                  ]
+                                )
+                              : _vm._e()
+                          ])
+                        ])
                       : _vm._e()
                   ])
                 ])
@@ -2709,6 +2882,7 @@ var render = function() {
                   [
                     _c("ProjectsRelated", {
                       attrs: {
+                        actualId: _vm.element.id,
                         errors: _vm.errors,
                         selectedParent: _vm.element.projects_related,
                         selected: _vm.element.projects_related,

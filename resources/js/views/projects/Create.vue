@@ -486,7 +486,7 @@
                   <div class="col-12 col-lg-6">
                     <div class="form-group">
                       <label class="font-weight-bold" for="url_waze"
-                        >URL Waze</label
+                        >URL Waze (Opcional)</label
                       >
                       <input
                         type="text"
@@ -505,7 +505,7 @@
                   <div class="col-12 col-lg-6">
                     <div class="form-group">
                       <label class="font-weight-bold" for="url_google_maps"
-                        >URL Google Maps</label
+                        >URL Google Maps (Opcional)</label
                       >
                       <input
                         type="text"
@@ -602,13 +602,53 @@
                         v-model="element.price_parking"
                         id="price_parking"
                         cols="30"
-                        rows="5"
+                        rows="3"
                       ></textarea>
                       <label
                         v-if="errors && errors.price_parking"
                         class="mt-2 text-danger text-sm"
                         for="price_parking"
                         >{{ errors.price_parking[0] }}</label
+                      >
+                    </div>
+                  </div>
+                  <div class="col-12" v-if="element.form_quotation">
+                    <div class="form-group">
+                      <label class="font-weight-bold" for="condition_quotation"
+                        >Condiciones de la Proforma</label
+                      >
+                      <textarea
+                        class="form-control"
+                        v-model="element.condition_quotation"
+                        id="condition_quotation"
+                        cols="30"
+                        rows="3"
+                      ></textarea>
+                      <label
+                        v-if="errors && errors.condition_quotation"
+                        class="mt-2 text-danger text-sm"
+                        for="condition_quotation"
+                        >{{ errors.condition_quotation[0] }}</label
+                      >
+                    </div>
+                  </div>
+                  <div class="col-12" v-if="element.form_quotation">
+                    <div class="form-group">
+                      <label class="font-weight-bold" for="commentary_quotation"
+                        >Comentario que incluye el inmueble</label
+                      >
+                      <textarea
+                        class="form-control"
+                        v-model="element.commentary_quotation"
+                        id="commentary_quotation"
+                        cols="30"
+                        rows="1"
+                      ></textarea>
+                      <label
+                        v-if="errors && errors.commentary_quotation"
+                        class="mt-2 text-danger text-sm"
+                        for="commentary_quotation"
+                        >{{ errors.commentary_quotation[0] }}</label
                       >
                     </div>
                   </div>
@@ -910,6 +950,12 @@ export default {
       }
       if (this.element.price_parking) {
         fd.append("price_parking", this.element.price_parking);
+      }
+      if (this.element.commentary_quotation) {
+        fd.append("commentary_quotation", this.element.commentary_quotation);
+      }
+      if (this.element.condition_quotation) {
+        fd.append("condition_quotation", this.element.condition_quotation);
       }
        if (this.element.form_quotation == true) {
         fd.append("form_quotation", 1);

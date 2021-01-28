@@ -29,15 +29,23 @@
           </div>
         </div>
       </div>
-      <NoData
-        :showSvg="false"
-        :showButton="true"
-        elementTextButton="un Estado del Proyecto"
-        :route-button="routeCreate"
-        :classes="['mt-2']"
-        :show-title="false"
-        v-else
-      />
+      <div v-else>
+        <NoData
+          :showSvg="false"
+          :showButton="true"
+          elementTextButton="un Estado del Proyecto"
+          :route-button="routeCreate"
+          :classes="['mt-2']"
+          :show-title="false"
+        />
+        <div class="row">
+          <div class="col-12" v-if="errors && errors.project_status_id">
+            <label class="mt-2 text-danger text-sm" for="project_status_id">{{
+              errors.project_status_id[0]
+            }}</label>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </template>

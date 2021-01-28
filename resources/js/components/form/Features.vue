@@ -36,7 +36,24 @@
         >{{ errors.features[0] }}</label>
         </div>
       </div>
-      <NoData :showSvg="false" :showButton="true" elementTextButton="una Característica" :route-button="routeCreate" :classes="['mt-2']" :show-title="false" v-else/>
+      
+      <div v-else>
+        <NoData
+          :showSvg="false"
+          :showButton="true"
+          elementTextButton="una Característica"
+          :route-button="routeCreate"
+          :classes="['mt-2']"
+          :show-title="false"
+        />
+        <div class="row">
+          <div class="col-12" v-if="errors && errors.features">
+            <label class="mt-2 text-danger text-sm" for="features">{{
+              errors.features[0]
+            }}</label>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </template>

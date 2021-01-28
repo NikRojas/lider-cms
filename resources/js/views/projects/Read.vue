@@ -553,6 +553,34 @@
                       <p v-else>No registrado.</p>
                     </h3>
                   </div>
+
+                  
+                  <div class="col-12 col-lg-6 mb-3">
+                    <h3 class="font-weight-normal">
+                      <span class="d-block font-weight-bold"
+                        >Condiciones de la Proforma:</span
+                      >
+                      <div
+                        v-html="element.condition_quotation"
+                        v-if="element.condition_quotation"
+                      ></div>
+                      <p v-else>No registrado.</p>
+                    </h3>
+                  </div>
+
+                  
+                  <div class="col-12 col-lg-6 mb-3">
+                    <h3 class="font-weight-normal">
+                      <span class="d-block font-weight-bold"
+                        >Comentario que incluye el inmueble:</span
+                      >
+                      <div
+                        v-html="element.commentary_quotation"
+                        v-if="element.commentary_quotation"
+                      ></div>
+                      <p v-else>No registrado.</p>
+                    </h3>
+                  </div>
                 </div>
               </div>
             </div>

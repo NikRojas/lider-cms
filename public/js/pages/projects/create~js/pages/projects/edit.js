@@ -58,6 +58,34 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -289,6 +317,23 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -363,6 +408,22 @@ var _props;
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -530,7 +591,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     imagesUrl: String,
     errors: Object,
     routeGetAll: String
-  }, _defineProperty(_props, "routeGetAll", String), _defineProperty(_props, "routeCreate", String), _defineProperty(_props, "selectedParent", Array), _props),
+  }, _defineProperty(_props, "routeGetAll", String), _defineProperty(_props, "routeCreate", String), _defineProperty(_props, "selectedParent", Array), _defineProperty(_props, "actualId", Number), _props),
   components: {
     Skeleton: vue_loading_skeleton__WEBPACK_IMPORTED_MODULE_0__["Skeleton"],
     NoData: _NoData__WEBPACK_IMPORTED_MODULE_1__["default"]
@@ -555,7 +616,13 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       var _this = this;
 
       this.loading = true;
-      axios.get(this.routeGetAll).then(function (response) {
+      var route = this.routeGetAll;
+
+      if (this.actualId) {
+        route = route + '?not=' + this.actualId;
+      }
+
+      axios.get(route).then(function (response) {
         _this.elements = response.data;
         _this.loading = false;
       })["catch"](function (error) {});
@@ -596,6 +663,14 @@ var _props;
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -925,90 +1000,119 @@ var render = function() {
             0
           )
         ])
-      : _c(
-          "div",
-          [
-            _vm.elements && _vm.elements.length > 0
-              ? _c("p", [_vm._v("Seleccione los asesores del Proyecto")])
-              : _vm._e(),
-            _vm._v(" "),
-            _vm.elements && _vm.elements.length > 0
-              ? _c(
-                  "div",
-                  { staticClass: "row" },
-                  [
-                    _vm._l(_vm.elements, function(element) {
-                      return _c(
-                        "div",
-                        {
-                          key: element.id,
-                          staticClass:
-                            "col-6 col-sm-3 col-lg-4 text-center mb-3",
-                          on: {
-                            click: function($event) {
-                              return _vm.add(element.id)
-                            }
+      : _c("div", [
+          _vm.elements && _vm.elements.length > 0
+            ? _c("p", [
+                _vm._v("\n      Seleccione los asesores del Proyecto\n    ")
+              ])
+            : _vm._e(),
+          _vm._v(" "),
+          _vm.elements && _vm.elements.length > 0
+            ? _c(
+                "div",
+                { staticClass: "row" },
+                [
+                  _vm._l(_vm.elements, function(element) {
+                    return _c(
+                      "div",
+                      {
+                        key: element.id,
+                        staticClass: "col-6 col-sm-3 col-lg-4 text-center mb-3",
+                        on: {
+                          click: function($event) {
+                            return _vm.add(element.id)
                           }
-                        },
-                        [
-                          _c(
-                            "div",
-                            {
-                              staticClass: "p-2 element",
-                              class: {
-                                "element--selected":
-                                  _vm.selected &&
-                                  _vm.selected.includes(element.id)
-                              }
-                            },
-                            [
-                              _vm.selected && _vm.selected.includes(element.id)
-                                ? _c(
-                                    "div",
-                                    {
-                                      staticClass:
-                                        "element__circle text-white d-flex justify-content-center align-items-center"
-                                    },
-                                    [
-                                      _c("jam-check", {
-                                        staticClass: "current-color"
-                                      })
-                                    ],
-                                    1
-                                  )
-                                : _vm._e(),
-                              _vm._v(" "),
-                              _c(
-                                "span",
-                                {
-                                  staticClass:
-                                    "avatar avatar-lg rounded-circle bg-default object-fit--cover",
-                                  staticStyle: { height: "80px", width: "80px" }
-                                },
-                                [
-                                  _c("img", {
-                                    attrs: {
-                                      src:
-                                        _vm.imagesUrl +
-                                        "/advisors/" +
-                                        element.avatar,
-                                      alt: element.name
-                                    }
-                                  })
-                                ]
-                              ),
-                              _vm._v(" "),
-                              _c(
-                                "small",
-                                { staticClass: "text-uppercase d-block" },
-                                [_vm._v(_vm._s(element.name))]
-                              )
-                            ]
-                          )
-                        ]
-                      )
-                    }),
-                    _vm._v(" "),
+                        }
+                      },
+                      [
+                        _c(
+                          "div",
+                          {
+                            staticClass: "p-2 element",
+                            class: {
+                              "element--selected":
+                                _vm.selected &&
+                                _vm.selected.includes(element.id)
+                            }
+                          },
+                          [
+                            _vm.selected && _vm.selected.includes(element.id)
+                              ? _c(
+                                  "div",
+                                  {
+                                    staticClass:
+                                      "element__circle text-white d-flex justify-content-center align-items-center"
+                                  },
+                                  [
+                                    _c("jam-check", {
+                                      staticClass: "current-color"
+                                    })
+                                  ],
+                                  1
+                                )
+                              : _vm._e(),
+                            _vm._v(" "),
+                            _c(
+                              "span",
+                              {
+                                staticClass:
+                                  "avatar avatar-lg rounded-circle bg-default object-fit--cover",
+                                staticStyle: { height: "80px", width: "80px" }
+                              },
+                              [
+                                _c("img", {
+                                  attrs: {
+                                    src:
+                                      _vm.imagesUrl +
+                                      "/advisors/" +
+                                      element.avatar,
+                                    alt: element.name
+                                  }
+                                })
+                              ]
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "small",
+                              { staticClass: "text-uppercase d-block" },
+                              [_vm._v(_vm._s(element.name))]
+                            )
+                          ]
+                        )
+                      ]
+                    )
+                  }),
+                  _vm._v(" "),
+                  _vm.errors && _vm.errors.advisors
+                    ? _c("div", { staticClass: "col-12" }, [
+                        _c(
+                          "label",
+                          {
+                            staticClass: "mt-2 text-danger text-sm",
+                            attrs: { for: "advisors" }
+                          },
+                          [_vm._v(_vm._s(_vm.errors.advisors[0]))]
+                        )
+                      ])
+                    : _vm._e()
+                ],
+                2
+              )
+            : _c(
+                "div",
+                [
+                  _c("NoData", {
+                    attrs: {
+                      showSvg: false,
+                      showButton: true,
+                      elementTextButton: "un Asesor",
+                      "route-button": _vm.routeCreate,
+                      classes: ["mt-2"],
+                      "show-title": false
+                    }
+                  }),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "row" }, [
                     _vm.errors && _vm.errors.advisors
                       ? _c("div", { staticClass: "col-12" }, [
                           _c(
@@ -1021,22 +1125,11 @@ var render = function() {
                           )
                         ])
                       : _vm._e()
-                  ],
-                  2
-                )
-              : _c("NoData", {
-                  attrs: {
-                    showSvg: false,
-                    showButton: true,
-                    elementTextButton: "un Asesor",
-                    "route-button": _vm.routeCreate,
-                    classes: ["mt-2"],
-                    "show-title": false
-                  }
-                })
-          ],
-          1
-        )
+                  ])
+                ],
+                1
+              )
+        ])
   ])
 }
 var staticRenderFns = []
@@ -1227,85 +1320,108 @@ var render = function() {
             0
           )
         ])
-      : _c(
-          "div",
-          [
-            _vm.elements && _vm.elements.length > 0
-              ? _c("p", [
-                  _vm._v(
-                    "Seleccione las características que tendrá el Proyecto"
-                  )
-                ])
-              : _vm._e(),
-            _vm._v(" "),
-            _vm.elements && _vm.elements.length > 0
-              ? _c(
-                  "div",
-                  { staticClass: "row" },
-                  [
-                    _vm._l(_vm.elements, function(element) {
-                      return _c(
-                        "div",
-                        {
-                          key: element.id,
-                          staticClass:
-                            "col-6 col-sm-3 col-lg-3 text-center mb-3",
-                          on: {
-                            click: function($event) {
-                              return _vm.add(element.id)
-                            }
+      : _c("div", [
+          _vm.elements && _vm.elements.length > 0
+            ? _c("p", [
+                _vm._v("Seleccione las características que tendrá el Proyecto")
+              ])
+            : _vm._e(),
+          _vm._v(" "),
+          _vm.elements && _vm.elements.length > 0
+            ? _c(
+                "div",
+                { staticClass: "row" },
+                [
+                  _vm._l(_vm.elements, function(element) {
+                    return _c(
+                      "div",
+                      {
+                        key: element.id,
+                        staticClass: "col-6 col-sm-3 col-lg-3 text-center mb-3",
+                        on: {
+                          click: function($event) {
+                            return _vm.add(element.id)
                           }
-                        },
-                        [
-                          _c(
-                            "div",
-                            {
-                              staticClass: "p-2  element",
-                              class: {
-                                "element--selected":
-                                  _vm.selected &&
-                                  _vm.selected.includes(element.id)
+                        }
+                      },
+                      [
+                        _c(
+                          "div",
+                          {
+                            staticClass: "p-2  element",
+                            class: {
+                              "element--selected":
+                                _vm.selected &&
+                                _vm.selected.includes(element.id)
+                            }
+                          },
+                          [
+                            _vm.selected && _vm.selected.includes(element.id)
+                              ? _c(
+                                  "div",
+                                  {
+                                    staticClass:
+                                      "element__circle text-white d-flex justify-content-center align-items-center"
+                                  },
+                                  [
+                                    _c("jam-check", {
+                                      staticClass: "current-color"
+                                    })
+                                  ],
+                                  1
+                                )
+                              : _vm._e(),
+                            _vm._v(" "),
+                            _c("img", {
+                              attrs: {
+                                src:
+                                  _vm.imagesUrl + "/features/" + element.image,
+                                height: "50",
+                                alt: element.name_es
                               }
-                            },
-                            [
-                              _vm.selected && _vm.selected.includes(element.id)
-                                ? _c(
-                                    "div",
-                                    {
-                                      staticClass:
-                                        "element__circle text-white d-flex justify-content-center align-items-center"
-                                    },
-                                    [
-                                      _c("jam-check", {
-                                        staticClass: "current-color"
-                                      })
-                                    ],
-                                    1
-                                  )
-                                : _vm._e(),
-                              _vm._v(" "),
-                              _c("img", {
-                                attrs: {
-                                  src:
-                                    _vm.imagesUrl +
-                                    "/features/" +
-                                    element.image,
-                                  height: "50",
-                                  alt: element.name_es
-                                }
-                              }),
-                              _vm._v(" "),
-                              _c(
-                                "small",
-                                { staticClass: "text-uppercase d-block" },
-                                [_vm._v(_vm._s(element.name_es))]
-                              )
-                            ]
-                          )
-                        ]
-                      )
-                    }),
-                    _vm._v(" "),
+                            }),
+                            _vm._v(" "),
+                            _c(
+                              "small",
+                              { staticClass: "text-uppercase d-block" },
+                              [_vm._v(_vm._s(element.name_es))]
+                            )
+                          ]
+                        )
+                      ]
+                    )
+                  }),
+                  _vm._v(" "),
+                  _vm.errors && _vm.errors.features
+                    ? _c("div", { staticClass: "col-12" }, [
+                        _c(
+                          "label",
+                          {
+                            staticClass: "mt-2 text-danger text-sm",
+                            attrs: { for: "features" }
+                          },
+                          [_vm._v(_vm._s(_vm.errors.features[0]))]
+                        )
+                      ])
+                    : _vm._e()
+                ],
+                2
+              )
+            : _c(
+                "div",
+                [
+                  _c("NoData", {
+                    attrs: {
+                      showSvg: false,
+                      showButton: true,
+                      elementTextButton: "una Característica",
+                      "route-button": _vm.routeCreate,
+                      classes: ["mt-2"],
+                      "show-title": false
+                    }
+                  }),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "row" }, [
                     _vm.errors && _vm.errors.features
                       ? _c("div", { staticClass: "col-12" }, [
                           _c(
@@ -1318,22 +1434,11 @@ var render = function() {
                           )
                         ])
                       : _vm._e()
-                  ],
-                  2
-                )
-              : _c("NoData", {
-                  attrs: {
-                    showSvg: false,
-                    showButton: true,
-                    elementTextButton: "una Característica",
-                    "route-button": _vm.routeCreate,
-                    classes: ["mt-2"],
-                    "show-title": false
-                  }
-                })
-          ],
-          1
-        )
+                  ])
+                ],
+                1
+              )
+        ])
   ])
 }
 var staticRenderFns = []
@@ -1379,82 +1484,109 @@ var render = function() {
             0
           )
         ])
-      : _c(
-          "div",
-          [
-            _vm.elements && _vm.elements.length > 0
-              ? _c("p", [
-                  _vm._v(
-                    "Seleccione las entidades financieras con las que se podra financiar el Proyecto"
-                  )
-                ])
-              : _vm._e(),
-            _vm._v(" "),
-            _vm.elements && _vm.elements.length > 0
-              ? _c(
-                  "div",
-                  { staticClass: "row" },
-                  [
-                    _vm._l(_vm.elements, function(element) {
-                      return _c(
-                        "div",
-                        {
-                          key: element.id,
-                          staticClass:
-                            "col-6 col-sm-3 col-lg-4 text-center mb-3",
-                          on: {
-                            click: function($event) {
-                              return _vm.add(element.id)
-                            }
+      : _c("div", [
+          _vm.elements && _vm.elements.length > 0
+            ? _c("p", [
+                _vm._v(
+                  "Seleccione las entidades financieras con las que se podra financiar el Proyecto"
+                )
+              ])
+            : _vm._e(),
+          _vm._v(" "),
+          _vm.elements && _vm.elements.length > 0
+            ? _c(
+                "div",
+                { staticClass: "row" },
+                [
+                  _vm._l(_vm.elements, function(element) {
+                    return _c(
+                      "div",
+                      {
+                        key: element.id,
+                        staticClass: "col-6 col-sm-3 col-lg-4 text-center mb-3",
+                        on: {
+                          click: function($event) {
+                            return _vm.add(element.id)
                           }
-                        },
-                        [
-                          _c(
-                            "div",
-                            {
-                              staticClass: "p-2 element",
-                              class: {
-                                "element--selected":
-                                  _vm.selected &&
-                                  _vm.selected.includes(element.id)
+                        }
+                      },
+                      [
+                        _c(
+                          "div",
+                          {
+                            staticClass: "p-2 element",
+                            class: {
+                              "element--selected":
+                                _vm.selected &&
+                                _vm.selected.includes(element.id)
+                            }
+                          },
+                          [
+                            _vm.selected && _vm.selected.includes(element.id)
+                              ? _c(
+                                  "div",
+                                  {
+                                    staticClass:
+                                      "element__circle text-white d-flex justify-content-center align-items-center"
+                                  },
+                                  [
+                                    _c("jam-check", {
+                                      staticClass: "current-color"
+                                    })
+                                  ],
+                                  1
+                                )
+                              : _vm._e(),
+                            _vm._v(" "),
+                            _c("img", {
+                              staticClass: "img-fluid p-2 bg-dark",
+                              attrs: {
+                                src: _vm.imagesUrl + "/banks/" + element.logo,
+                                alt: element.name
                               }
-                            },
-                            [
-                              _vm.selected && _vm.selected.includes(element.id)
-                                ? _c(
-                                    "div",
-                                    {
-                                      staticClass:
-                                        "element__circle text-white d-flex justify-content-center align-items-center"
-                                    },
-                                    [
-                                      _c("jam-check", {
-                                        staticClass: "current-color"
-                                      })
-                                    ],
-                                    1
-                                  )
-                                : _vm._e(),
-                              _vm._v(" "),
-                              _c("img", {
-                                staticClass: "img-fluid p-2 bg-dark",
-                                attrs: {
-                                  src: _vm.imagesUrl + "/banks/" + element.logo,
-                                  alt: element.name
-                                }
-                              }),
-                              _vm._v(" "),
-                              _c(
-                                "small",
-                                { staticClass: "text-uppercase d-block" },
-                                [_vm._v(_vm._s(element.name))]
-                              )
-                            ]
-                          )
-                        ]
-                      )
-                    }),
-                    _vm._v(" "),
+                            }),
+                            _vm._v(" "),
+                            _c(
+                              "small",
+                              { staticClass: "text-uppercase d-block" },
+                              [_vm._v(_vm._s(element.name))]
+                            )
+                          ]
+                        )
+                      ]
+                    )
+                  }),
+                  _vm._v(" "),
+                  _vm.errors && _vm.errors.financial_entities
+                    ? _c("div", { staticClass: "col-12" }, [
+                        _c(
+                          "label",
+                          {
+                            staticClass: "mt-2 text-danger text-sm",
+                            attrs: { for: "financial_entities" }
+                          },
+                          [_vm._v(_vm._s(_vm.errors.financial_entities[0]))]
+                        )
+                      ])
+                    : _vm._e()
+                ],
+                2
+              )
+            : _c(
+                "div",
+                [
+                  _c("NoData", {
+                    attrs: {
+                      showSvg: false,
+                      showButton: true,
+                      elementTextButton: "una Entidad Financiera",
+                      "route-button": _vm.routeCreate,
+                      classes: ["mt-2"],
+                      "show-title": false
+                    }
+                  }),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "row" }, [
                     _vm.errors && _vm.errors.financial_entities
                       ? _c("div", { staticClass: "col-12" }, [
                           _c(
@@ -1467,22 +1599,11 @@ var render = function() {
                           )
                         ])
                       : _vm._e()
-                  ],
-                  2
-                )
-              : _c("NoData", {
-                  attrs: {
-                    showSvg: false,
-                    showButton: true,
-                    elementTextButton: "una Entidad Financiera",
-                    "route-button": _vm.routeCreate,
-                    classes: ["mt-2"],
-                    "show-title": false
-                  }
-                })
-          ],
-          1
-        )
+                  ])
+                ],
+                1
+              )
+        ])
   ])
 }
 var staticRenderFns = []
@@ -1679,70 +1800,87 @@ var render = function() {
             0
           )
         ])
-      : _c(
-          "div",
-          [
-            _vm.elements && _vm.elements.length > 0
-              ? _c("p", [
-                  _vm._v(
-                    "Seleccione el estado en el que se encuentra el Proyecto"
-                  )
-                ])
-              : _vm._e(),
-            _vm._v(" "),
-            _vm.elements && _vm.elements.length > 0
-              ? _c(
-                  "div",
-                  [
-                    _c("b-form-radio-group", {
-                      attrs: {
-                        options: _vm.elements,
-                        "text-field": "name_es",
-                        "value-field": "id",
-                        size: "lg",
-                        name: "radios",
-                        plain: "",
-                        stacked: ""
+      : _c("div", [
+          _vm.elements && _vm.elements.length > 0
+            ? _c("p", [
+                _vm._v(
+                  "Seleccione el estado en el que se encuentra el Proyecto"
+                )
+              ])
+            : _vm._e(),
+          _vm._v(" "),
+          _vm.elements && _vm.elements.length > 0
+            ? _c(
+                "div",
+                [
+                  _c("b-form-radio-group", {
+                    attrs: {
+                      options: _vm.elements,
+                      "text-field": "name_es",
+                      "value-field": "id",
+                      size: "lg",
+                      name: "radios",
+                      plain: "",
+                      stacked: ""
+                    },
+                    model: {
+                      value: _vm.selected,
+                      callback: function($$v) {
+                        _vm.selected = $$v
                       },
-                      model: {
-                        value: _vm.selected,
-                        callback: function($$v) {
-                          _vm.selected = $$v
-                        },
-                        expression: "selected"
-                      }
-                    }),
-                    _vm._v(" "),
+                      expression: "selected"
+                    }
+                  }),
+                  _vm._v(" "),
+                  _vm.errors && _vm.errors.project_status_id
+                    ? _c("div", { staticClass: "row" }, [
+                        _c("div", { staticClass: "col-12" }, [
+                          _c(
+                            "label",
+                            {
+                              staticClass: "mt-2 text-danger text-sm",
+                              attrs: { for: "project_status_id" }
+                            },
+                            [_vm._v(_vm._s(_vm.errors.project_status_id[0]))]
+                          )
+                        ])
+                      ])
+                    : _vm._e()
+                ],
+                1
+              )
+            : _c(
+                "div",
+                [
+                  _c("NoData", {
+                    attrs: {
+                      showSvg: false,
+                      showButton: true,
+                      elementTextButton: "un Estado del Proyecto",
+                      "route-button": _vm.routeCreate,
+                      classes: ["mt-2"],
+                      "show-title": false
+                    }
+                  }),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "row" }, [
                     _vm.errors && _vm.errors.project_status_id
-                      ? _c("div", { staticClass: "row" }, [
-                          _c("div", { staticClass: "col-12" }, [
-                            _c(
-                              "label",
-                              {
-                                staticClass: "mt-2 text-danger text-sm",
-                                attrs: { for: "project_status_id" }
-                              },
-                              [_vm._v(_vm._s(_vm.errors.project_status_id[0]))]
-                            )
-                          ])
+                      ? _c("div", { staticClass: "col-12" }, [
+                          _c(
+                            "label",
+                            {
+                              staticClass: "mt-2 text-danger text-sm",
+                              attrs: { for: "project_status_id" }
+                            },
+                            [_vm._v(_vm._s(_vm.errors.project_status_id[0]))]
+                          )
                         ])
                       : _vm._e()
-                  ],
-                  1
-                )
-              : _c("NoData", {
-                  attrs: {
-                    showSvg: false,
-                    showButton: true,
-                    elementTextButton: "un Estado del Proyecto",
-                    "route-button": _vm.routeCreate,
-                    classes: ["mt-2"],
-                    "show-title": false
-                  }
-                })
-          ],
-          1
-        )
+                  ])
+                ],
+                1
+              )
+        ])
   ])
 }
 var staticRenderFns = []

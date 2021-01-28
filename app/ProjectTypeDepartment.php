@@ -8,9 +8,9 @@ class ProjectTypeDepartment extends Model
 {
     protected $table = 'project_type_departments';
     protected $guarded = [];
-    protected $casts = [
+    /*protected $casts = [
         'url_360' => 'boolean',
-    ];
+    ];*/
     protected $appends = ['can_delete'];
 
     public function getCanDeleteAttribute(){

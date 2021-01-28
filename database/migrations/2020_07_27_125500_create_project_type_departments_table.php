@@ -20,9 +20,13 @@ class CreateProjectTypeDepartmentsTable extends Migration
 
             $table->string('image',100);
             $table->bigInteger('index'); 
+
+            $table->decimal('price',11,2)->nullable();
+
+            $table->float('area');
+            $table->integer('room');
             
-            //$table->float('area')->nullable();
-            //$table->text('description')->nullable();
+            $table->boolean('available')->default(false);
             
             $table->bigInteger('project_id')->unsigned();
             $table->foreign('project_id')->references('id')->on('projects');

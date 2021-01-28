@@ -56,6 +56,9 @@ class CreateProjectsTable extends Migration
             $table->text('price_parking')->nullable();
             $table->text('projects_related')->nullable();
 
+            $table->text('condition_quotation')->nullable();
+            $table->text('commentary_quotation')->nullable();
+
             $table->text('iframe_map');
 
             $table->bigInteger('project_status_id')->unsigned();

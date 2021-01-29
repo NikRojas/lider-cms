@@ -5,18 +5,65 @@
         <div class="header-body">
           <div class="row align-items-center pt-0 pt-md-2 pb-4">
             <div class="col-6 col-md-7">
-              <BreadCrumb title="Cita Online" parent="Leads" active="Cita Online"></BreadCrumb>
+              <BreadCrumb
+                title="Cita Online"
+                parent="Leads"
+                active="Cita Online"
+              ></BreadCrumb>
             </div>
           </div>
         </div>
       </div>
     </div>
     <div class="container-fluid mt--6">
-      <div class="row">
-        <div class="col-12 col-lg-8">
+      <b-tabs pills vertical  nav-wrapper-class="col-12 col-lg-3 col-xl-2 mb-4 mb-lg-0" nav-class="border bg-white py-2" content-class="col-12 col-lg-9 col-xl-10">
+        <b-tab title="Leads" active title-link-class="border-0 shadow-none bg-white py-3" title-item-class="pr-0 my-0">
+          <div class="row">
+            <div class="col-12">
+            <DataTable
+              :object="elements"
+              placeholder="Nombre, DNI, Teléfono"
+              :button-update="false"
+              :button-read="false"
+              :button-delete="true"
+              @get="getElements"
+              @delete="deleteEl"
+              :entries-prop.sync="elementsPerPage"
+              :messageCantDelete="messageCantDelete"
+            ></DataTable>
+            </div>
+          </div>
+        </b-tab>
+        <b-tab title="Emails Destino" title-link-class="border-0 shadow-none bg-white py-3" title-item-class="my-0"
+          ><div class="row">
+            <div class="col-12">
+              <div class="card">
+                <div class="card-header border-0 pb-0">
+                  <h2 class="mb-0 text-uppercase text-primary">
+                    Emails Destino
+                  </h2>
+                </div>
+                <div class="card-body">
+                  <div class="row">
+                    <div class="col-12 mb-4">
+                      Los leads se enviarán automáticamente a los asesores
+                      respectivos asignados en cada Proyecto, se designará de 1
+                      lead por asesor.
+                    </div>
+                    <div class="col-12 py-3">
+                      <IconContact></IconContact>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div></div
+        ></b-tab>
+      </b-tabs>
+      <!--<div class="row">
+        <div class="col-12">
           <DataTable
             :object="elements"
-            placeholder="Nombre , Telefono"
+            placeholder="Nombre, DNI, Teléfono"
             :button-update="false"
             :button-read="false"
             :button-delete="true"
@@ -42,74 +89,12 @@
                       <IconContact></IconContact>
                     </div>
                   </div>
-                   <!-- <form @submit.prevent="updateEmail">
-                      <div class="row">
-                        <div class="col-12">
-                          <div class="form-group">
-                            <label class="font-weight-bold">Correos</label>
-                            <div v-show="editEmailBlock">
-                              <InputArray
-                                :arreglo.sync="information.email_destination"
-                                :arreglo-editar="information.email_destination_leads_videocall_formatted"
-                              ></InputArray>
-                              <label
-                                for="id_email_destination_leads_videocall"
-                                v-if="errors && Object.keys(errors).length"
-                                class="mt-2 mb-0 text-danger text-sm"
-                              >Los campos correo(s) electrónico(s) destino deben ser una dirección de correo válida.</label>
-                            </div>
-                            <div v-if="!editEmailBlock">
-                              <div v-if="loadingEmails">
-                                <Skeleton height="100px"></Skeleton>
-                              </div>
-                              <div v-else>
-                                <div
-                                  v-if="information.email_destination && information.email_destination.length > 0"
-                                >
-                                  <p
-                                    class="d-block mb-1"
-                                    v-for="(element,index) in information.email_destination_leads_videocall_formatted"
-                                    :key="index"
-                                  >{{ element }}</p>
-                                </div>
-                                <p v-else>No registrado</p>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="text-right" v-if="!loadingEmails">
-                        <button
-                          type="button"
-                          class="btn btn-sm btn-inverse-primary"
-                          v-if="!editEmailBlock"
-                          @click.prevent="editEmailDestination"
-                        >Editar</button>
-
-                        <Button
-                          v-if="editEmailBlock"
-                          :text="'Actualizar'"
-                          :classes="['btn-inverse-primary','mr-2']"
-                          :request-server="requestServer"
-                          º
-                        ></Button>
-                        <button
-                          v-if="editEmailBlock"
-                          type="button"
-                          class="btn btn-secondary"
-                          @click.prevent="restoreEmail"
-                        >Cancelar</button>
-                      </div>
-                    </form>-->
-                  <!--<div v-else>
-                    <Skeleton height="150px"></Skeleton>
-                  </div>-->
                 </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
+      </div>-->
     </div>
 
     <destroy
@@ -122,6 +107,12 @@
     ></destroy>
   </div>
 </template>
+<style>
+.nav-pills .nav-link.active{
+  border-left: 4px solid #1762e6 !important;
+  background-color: #FDFBFA  !important;
+}
+</style>
 <script>
 import IconContact from "../../components/icons/Contact";
 import { Skeleton } from "vue-loading-skeleton";
@@ -142,7 +133,7 @@ export default {
     SkeletonForm,
     InputArray,
     Destroy,
-    IconContact
+    IconContact,
   },
   props: {
     routeGetAll: String,

@@ -52,7 +52,7 @@ class CreateProjectsTable extends Migration
             /*$table->decimal('latitude', 10, 8);
             $table->decimal('longitude', 11, 8);*/
 
-            $table->boolean('form_quotation')->default(false); 
+            $table->boolean('form_videocall')->default(false); 
             $table->text('price_parking')->nullable();
             $table->text('projects_related')->nullable();
 

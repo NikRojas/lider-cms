@@ -75,7 +75,7 @@ class ProjectsController extends Controller
     public function store(ProjectRequest $request){
         $project = request(['name_es',"description_en","description_es",'url_video','name_en','slug_en','slug_es',"rooms_es","rooms_en","footage_en","footage_es","url_google_maps","url_waze","text_place_es",
         "text_place_en","project_status_id","location","price_total","price","price_total_foreign","iframe_map","map_indications_es","map_indications_en",
-        "sales_room_es","sales_room_en","schedule_attention_es","schedule_attention_en",'active','form_quotation','price_parking','commentary_quotation','condition_quotation']);
+        "sales_room_es","sales_room_en","schedule_attention_es","schedule_attention_en",'active','form_videocall','price_parking','commentary_quotation','condition_quotation']);
 
         if($request->projects_related){
             $project = array_merge($project,["projects_related" => $request->projects_related]);
@@ -166,7 +166,7 @@ class ProjectsController extends Controller
     public function update(ProjectRequest $request,Project $element){
         $request_project = request(['name_es',"description_en","url_video","description_es",'name_en','slug_en','slug_es',"rooms_es","rooms_en","footage_en","footage_es","url_google_maps","url_waze","text_place_es",
         "text_place_en","project_status_id","location","price_total","price","price_total_foreign","iframe_map","map_indications_es","map_indications_en",
-        "sales_room_es","sales_room_en","schedule_attention_es","schedule_attention_en",'active','form_quotation','price_parking','commentary_quotation','condition_quotation']);
+        "sales_room_es","sales_room_en","schedule_attention_es","schedule_attention_en",'active','form_videocall','price_parking','commentary_quotation','condition_quotation']);
 
 
         if($request->projects_related){
@@ -261,6 +261,7 @@ class ProjectsController extends Controller
             $project = Project::UpdateOrCreate(["id"=>$element->id],$request_project); 
         }
         catch(\Exception $e){
+            dd($e);
             $request->session()->flash('error', trans('custom.message.update.error', ['name' => trans('custom.attribute.project')]));
             return response()->json(["route" => route('cms.projects.index')],500);
         }

@@ -199,6 +199,25 @@
                       :route-get-all="routeAdvisorsGetAll"
                     />
                   </div>
+                  <div class="col-12">
+                    <div class="form-group">
+                      <label class="font-weight-bold">Formulario Cita Online:</label>
+                      <p>
+                        Seleccione si el Proyecto cuanto con formulario de
+                        Cita Online
+                      </p>
+                      <b-form-radio-group
+                        v-model="element.form_videocall"
+                        :options="elementsQuotation"
+                        text-field="text"
+                        value-field="value"
+                        size="lg"
+                        name="radiosQuotation"
+                        plain
+                        stacked
+                      />
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -516,25 +535,6 @@
                 <div class="row">
                   <div class="col-12">
                     <div class="form-group">
-                      <label class="font-weight-bold">Cotización:</label>
-                      <p>
-                        Seleccione si el Proyecto cuanto con formulario de
-                        cotización
-                      </p>
-                      <b-form-radio-group
-                        v-model="element.form_quotation"
-                        :options="elementsQuotation"
-                        text-field="text"
-                        value-field="value"
-                        size="lg"
-                        name="radiosQuotation"
-                        plain
-                        stacked
-                      />
-                    </div>
-                  </div>
-                  <div class="col-12" v-if="element.form_quotation">
-                    <div class="form-group">
                       <label class="font-weight-bold" for="price_parking"
                         >Precio Estacionamiento</label
                       >
@@ -553,7 +553,7 @@
                       >
                     </div>
                   </div>
-                  <div class="col-12" v-if="element.form_quotation">
+                  <div class="col-12">
                     <div class="form-group">
                       <label class="font-weight-bold" for="condition_quotation"
                         >Condiciones de la Proforma</label
@@ -573,7 +573,7 @@
                       >
                     </div>
                   </div>
-                  <div class="col-12" v-if="element.form_quotation">
+                  <div class="col-12" >
                     <div class="form-group">
                       <label class="font-weight-bold" for="commentary_quotation"
                         >Comentario que incluye el inmueble</label
@@ -884,10 +884,10 @@ export default {
       if (this.element.price_parking) {
         fd.append("price_parking", this.element.price_parking);
       }
-       if (this.element.form_quotation == true) {
-        fd.append("form_quotation", 1);
+       if (this.element.form_videocall == true) {
+        fd.append("form_videocall", 1);
       } else {
-        fd.append("form_quotation", 0);
+        fd.append("form_videocall", 0);
       }
       if (this.element.commentary_quotation) {
         fd.append("commentary_quotation", this.element.commentary_quotation);
@@ -916,7 +916,8 @@ export default {
     elementParent: {
       immediate: true,
       handler: function (newValue) {
-        this.element = Object.assign({}, newValue);
+        //this.element = Object.assign({}, newValue);
+        this.element = newValue;
       },
     },
   },

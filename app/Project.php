@@ -11,7 +11,7 @@ class Project extends Model
         'images' => 'array',
         'active' => 'boolean',
         'projects_related' => 'array',
-        'form_quotation' => 'boolean'
+        'form_videocall' => 'boolean'
     ];
     protected $appends = ['images_format','price_total_format','price_total_foreign_format','price_format','id_video'];
 

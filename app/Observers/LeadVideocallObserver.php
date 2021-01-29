@@ -2,7 +2,10 @@
 
 namespace App\Observers;
 
+use App\Advisor;
 use App\LeadVideocall;
+use App\Notifications\LeadVideocallNotification;
+use Illuminate\Support\Facades\Notification;
 
 class LeadVideocallObserver
 {
@@ -16,16 +19,23 @@ class LeadVideocallObserver
             $advisorId = $advisors->first()->id;
         }
         else{
-            //dd("test");
-            $advisorLast = LeadVideocall::orderBy('created_at','desc')->skip(1)->take(1)->get();
-            dd($advisorLast);
+            $advisorsTotal = $advisors->count() - 1;
+            $lastLeads = LeadVideocall::orderBy('created_at','desc')->skip(1)->take($advisorsTotal)->get();
+            $pluckAdvisors = $advisors->pluck('id');
+            $pluckAdvisorsLastLeads = $lastLeads->pluck('advisor_id');
+
+            $diff = $pluckAdvisors->diff($pluckAdvisorsLastLeads);
+            $diff = $diff->all();
+            if(!$diff){
+                $advisorId = $advisors->first()->id;
+            }
+            else{
+                $advisorId = array_pop($diff);
+            }
         }
         $lead->advisor_id = $advisorId;
         $lead->save();
-        //dd($advisor);
-        /*$email = EmailDestination::where('type','applicant')->first();
-        if($email){
-            Notification::route('mail',$email->email_destination_job_formatted)->notify(new ApplicantNotification($applicant));         
-        }*/
+        $advisor = Advisor::find($advisorId);
+        Notification::route('mail',$advisor->email)->notify(new LeadVideocallNotification($lead));  
     }
 }

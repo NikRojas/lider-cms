@@ -64,7 +64,7 @@ class AppServiceProvider extends ServiceProvider
             }
             $view->with(compact("menu"));
         });
-        Applicant::observe(ApplicantObserver::class);
+        //Applicant::observe(ApplicantObserver::class);
         LeadVideocall::observe(LeadVideocallObserver::class);
     }
 }

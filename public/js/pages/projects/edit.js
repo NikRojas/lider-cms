@@ -956,10 +956,10 @@ __webpack_require__.r(__webpack_exports__);
         fd.append("price_parking", this.element.price_parking);
       }
 
-      if (this.element.form_quotation == true) {
-        fd.append("form_quotation", 1);
+      if (this.element.form_videocall == true) {
+        fd.append("form_videocall", 1);
       } else {
-        fd.append("form_quotation", 0);
+        fd.append("form_videocall", 0);
       }
 
       if (this.element.commentary_quotation) {
@@ -990,7 +990,8 @@ __webpack_require__.r(__webpack_exports__);
     elementParent: {
       immediate: true,
       handler: function handler(newValue) {
-        this.element = Object.assign({}, newValue);
+        //this.element = Object.assign({}, newValue);
+        this.element = newValue;
       }
     }
   }
@@ -1752,7 +1753,45 @@ var render = function() {
                         })
                       ],
                       1
-                    )
+                    ),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "col-12" }, [
+                      _c(
+                        "div",
+                        { staticClass: "form-group" },
+                        [
+                          _c("label", { staticClass: "font-weight-bold" }, [
+                            _vm._v("Formulario Cita Online:")
+                          ]),
+                          _vm._v(" "),
+                          _c("p", [
+                            _vm._v(
+                              "\n                      Seleccione si el Proyecto cuanto con formulario de\n                      Cita Online\n                    "
+                            )
+                          ]),
+                          _vm._v(" "),
+                          _c("b-form-radio-group", {
+                            attrs: {
+                              options: _vm.elementsQuotation,
+                              "text-field": "text",
+                              "value-field": "value",
+                              size: "lg",
+                              name: "radiosQuotation",
+                              plain: "",
+                              stacked: ""
+                            },
+                            model: {
+                              value: _vm.element.form_videocall,
+                              callback: function($$v) {
+                                _vm.$set(_vm.element, "form_videocall", $$v)
+                              },
+                              expression: "element.form_videocall"
+                            }
+                          })
+                        ],
+                        1
+                      )
+                    ])
                   ])
                 ])
               ])
@@ -2649,222 +2688,170 @@ var render = function() {
                 _c("div", { staticClass: "card-body" }, [
                   _c("div", { staticClass: "row" }, [
                     _c("div", { staticClass: "col-12" }, [
-                      _c(
-                        "div",
-                        { staticClass: "form-group" },
-                        [
-                          _c("label", { staticClass: "font-weight-bold" }, [
-                            _vm._v("Cotización:")
-                          ]),
-                          _vm._v(" "),
-                          _c("p", [
-                            _vm._v(
-                              "\n                      Seleccione si el Proyecto cuanto con formulario de\n                      cotización\n                    "
-                            )
-                          ]),
-                          _vm._v(" "),
-                          _c("b-form-radio-group", {
-                            attrs: {
-                              options: _vm.elementsQuotation,
-                              "text-field": "text",
-                              "value-field": "value",
-                              size: "lg",
-                              name: "radiosQuotation",
-                              plain: "",
-                              stacked: ""
-                            },
-                            model: {
-                              value: _vm.element.form_quotation,
-                              callback: function($$v) {
-                                _vm.$set(_vm.element, "form_quotation", $$v)
-                              },
-                              expression: "element.form_quotation"
+                      _c("div", { staticClass: "form-group" }, [
+                        _c(
+                          "label",
+                          {
+                            staticClass: "font-weight-bold",
+                            attrs: { for: "price_parking" }
+                          },
+                          [_vm._v("Precio Estacionamiento")]
+                        ),
+                        _vm._v(" "),
+                        _c("textarea", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.element.price_parking,
+                              expression: "element.price_parking"
                             }
-                          })
-                        ],
-                        1
-                      )
-                    ]),
-                    _vm._v(" "),
-                    _vm.element.form_quotation
-                      ? _c("div", { staticClass: "col-12" }, [
-                          _c("div", { staticClass: "form-group" }, [
-                            _c(
+                          ],
+                          staticClass: "form-control",
+                          attrs: { id: "price_parking", cols: "30", rows: "3" },
+                          domProps: { value: _vm.element.price_parking },
+                          on: {
+                            input: function($event) {
+                              if ($event.target.composing) {
+                                return
+                              }
+                              _vm.$set(
+                                _vm.element,
+                                "price_parking",
+                                $event.target.value
+                              )
+                            }
+                          }
+                        }),
+                        _vm._v(" "),
+                        _vm.errors && _vm.errors.price_parking
+                          ? _c(
                               "label",
                               {
-                                staticClass: "font-weight-bold",
+                                staticClass: "mt-2 text-danger text-sm",
                                 attrs: { for: "price_parking" }
                               },
-                              [_vm._v("Precio Estacionamiento")]
-                            ),
-                            _vm._v(" "),
-                            _c("textarea", {
-                              directives: [
-                                {
-                                  name: "model",
-                                  rawName: "v-model",
-                                  value: _vm.element.price_parking,
-                                  expression: "element.price_parking"
-                                }
-                              ],
-                              staticClass: "form-control",
-                              attrs: {
-                                id: "price_parking",
-                                cols: "30",
-                                rows: "3"
-                              },
-                              domProps: { value: _vm.element.price_parking },
-                              on: {
-                                input: function($event) {
-                                  if ($event.target.composing) {
-                                    return
-                                  }
-                                  _vm.$set(
-                                    _vm.element,
-                                    "price_parking",
-                                    $event.target.value
-                                  )
-                                }
-                              }
-                            }),
-                            _vm._v(" "),
-                            _vm.errors && _vm.errors.price_parking
-                              ? _c(
-                                  "label",
-                                  {
-                                    staticClass: "mt-2 text-danger text-sm",
-                                    attrs: { for: "price_parking" }
-                                  },
-                                  [_vm._v(_vm._s(_vm.errors.price_parking[0]))]
-                                )
-                              : _vm._e()
-                          ])
-                        ])
-                      : _vm._e(),
+                              [_vm._v(_vm._s(_vm.errors.price_parking[0]))]
+                            )
+                          : _vm._e()
+                      ])
+                    ]),
                     _vm._v(" "),
-                    _vm.element.form_quotation
-                      ? _c("div", { staticClass: "col-12" }, [
-                          _c("div", { staticClass: "form-group" }, [
-                            _c(
+                    _c("div", { staticClass: "col-12" }, [
+                      _c("div", { staticClass: "form-group" }, [
+                        _c(
+                          "label",
+                          {
+                            staticClass: "font-weight-bold",
+                            attrs: { for: "condition_quotation" }
+                          },
+                          [_vm._v("Condiciones de la Proforma")]
+                        ),
+                        _vm._v(" "),
+                        _c("textarea", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.element.condition_quotation,
+                              expression: "element.condition_quotation"
+                            }
+                          ],
+                          staticClass: "form-control",
+                          attrs: {
+                            id: "condition_quotation",
+                            cols: "30",
+                            rows: "3"
+                          },
+                          domProps: { value: _vm.element.condition_quotation },
+                          on: {
+                            input: function($event) {
+                              if ($event.target.composing) {
+                                return
+                              }
+                              _vm.$set(
+                                _vm.element,
+                                "condition_quotation",
+                                $event.target.value
+                              )
+                            }
+                          }
+                        }),
+                        _vm._v(" "),
+                        _vm.errors && _vm.errors.condition_quotation
+                          ? _c(
                               "label",
                               {
-                                staticClass: "font-weight-bold",
+                                staticClass: "mt-2 text-danger text-sm",
                                 attrs: { for: "condition_quotation" }
                               },
-                              [_vm._v("Condiciones de la Proforma")]
-                            ),
-                            _vm._v(" "),
-                            _c("textarea", {
-                              directives: [
-                                {
-                                  name: "model",
-                                  rawName: "v-model",
-                                  value: _vm.element.condition_quotation,
-                                  expression: "element.condition_quotation"
-                                }
-                              ],
-                              staticClass: "form-control",
-                              attrs: {
-                                id: "condition_quotation",
-                                cols: "30",
-                                rows: "3"
-                              },
-                              domProps: {
-                                value: _vm.element.condition_quotation
-                              },
-                              on: {
-                                input: function($event) {
-                                  if ($event.target.composing) {
-                                    return
-                                  }
-                                  _vm.$set(
-                                    _vm.element,
-                                    "condition_quotation",
-                                    $event.target.value
-                                  )
-                                }
-                              }
-                            }),
-                            _vm._v(" "),
-                            _vm.errors && _vm.errors.condition_quotation
-                              ? _c(
-                                  "label",
-                                  {
-                                    staticClass: "mt-2 text-danger text-sm",
-                                    attrs: { for: "condition_quotation" }
-                                  },
-                                  [
-                                    _vm._v(
-                                      _vm._s(_vm.errors.condition_quotation[0])
-                                    )
-                                  ]
+                              [
+                                _vm._v(
+                                  _vm._s(_vm.errors.condition_quotation[0])
                                 )
-                              : _vm._e()
-                          ])
-                        ])
-                      : _vm._e(),
+                              ]
+                            )
+                          : _vm._e()
+                      ])
+                    ]),
                     _vm._v(" "),
-                    _vm.element.form_quotation
-                      ? _c("div", { staticClass: "col-12" }, [
-                          _c("div", { staticClass: "form-group" }, [
-                            _c(
+                    _c("div", { staticClass: "col-12" }, [
+                      _c("div", { staticClass: "form-group" }, [
+                        _c(
+                          "label",
+                          {
+                            staticClass: "font-weight-bold",
+                            attrs: { for: "commentary_quotation" }
+                          },
+                          [_vm._v("Comentario que incluye el inmueble")]
+                        ),
+                        _vm._v(" "),
+                        _c("textarea", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.element.commentary_quotation,
+                              expression: "element.commentary_quotation"
+                            }
+                          ],
+                          staticClass: "form-control",
+                          attrs: {
+                            id: "commentary_quotation",
+                            cols: "30",
+                            rows: "1"
+                          },
+                          domProps: { value: _vm.element.commentary_quotation },
+                          on: {
+                            input: function($event) {
+                              if ($event.target.composing) {
+                                return
+                              }
+                              _vm.$set(
+                                _vm.element,
+                                "commentary_quotation",
+                                $event.target.value
+                              )
+                            }
+                          }
+                        }),
+                        _vm._v(" "),
+                        _vm.errors && _vm.errors.commentary_quotation
+                          ? _c(
                               "label",
                               {
-                                staticClass: "font-weight-bold",
+                                staticClass: "mt-2 text-danger text-sm",
                                 attrs: { for: "commentary_quotation" }
                               },
-                              [_vm._v("Comentario que incluye el inmueble")]
-                            ),
-                            _vm._v(" "),
-                            _c("textarea", {
-                              directives: [
-                                {
-                                  name: "model",
-                                  rawName: "v-model",
-                                  value: _vm.element.commentary_quotation,
-                                  expression: "element.commentary_quotation"
-                                }
-                              ],
-                              staticClass: "form-control",
-                              attrs: {
-                                id: "commentary_quotation",
-                                cols: "30",
-                                rows: "1"
-                              },
-                              domProps: {
-                                value: _vm.element.commentary_quotation
-                              },
-                              on: {
-                                input: function($event) {
-                                  if ($event.target.composing) {
-                                    return
-                                  }
-                                  _vm.$set(
-                                    _vm.element,
-                                    "commentary_quotation",
-                                    $event.target.value
-                                  )
-                                }
-                              }
-                            }),
-                            _vm._v(" "),
-                            _vm.errors && _vm.errors.commentary_quotation
-                              ? _c(
-                                  "label",
-                                  {
-                                    staticClass: "mt-2 text-danger text-sm",
-                                    attrs: { for: "commentary_quotation" }
-                                  },
-                                  [
-                                    _vm._v(
-                                      _vm._s(_vm.errors.commentary_quotation[0])
-                                    )
-                                  ]
+                              [
+                                _vm._v(
+                                  _vm._s(_vm.errors.commentary_quotation[0])
                                 )
-                              : _vm._e()
-                          ])
-                        ])
-                      : _vm._e()
+                              ]
+                            )
+                          : _vm._e()
+                      ])
+                    ])
                   ])
                 ])
               ])

@@ -536,6 +536,26 @@
                 <div class="row">
                   <div class="col-12">
                     <div class="form-group">
+                      <label class="font-weight-bold" for="excerpt_quotation"
+                        >Resumen del Proyecto</label
+                      >
+                      <quill-Editor
+                        @keydown.enter.prevent
+                        v-model="element.excerpt_quotation"
+                        :options="editorOptions"
+                        class="ql-height-5"
+                        ref="ref_excerpt_quotation"
+                      ></quill-Editor>
+                      <label
+                        v-if="errors && errors.excerpt_quotation"
+                        class="mt-2 text-danger text-sm"
+                        for="excerpt_quotation"
+                        >{{ errors.excerpt_quotation[0] }}</label
+                      >
+                    </div>
+                  </div>
+                  <div class="col-12">
+                    <div class="form-group">
                       <label class="font-weight-bold" for="price_parking"
                         >Precio Estacionamiento</label
                       >
@@ -559,13 +579,13 @@
                       <label class="font-weight-bold" for="condition_quotation"
                         >Condiciones de la Proforma</label
                       >
-                      <textarea
-                        class="form-control"
+                      <quill-Editor
+                        @keydown.enter.prevent
                         v-model="element.condition_quotation"
-                        id="condition_quotation"
-                        cols="30"
-                        rows="3"
-                      ></textarea>
+                        :options="editorOptions"
+                        class="ql-height-5"
+                        ref="ref_condition_quotation"
+                      ></quill-Editor>
                       <label
                         v-if="errors && errors.condition_quotation"
                         class="mt-2 text-danger text-sm"
@@ -633,6 +653,7 @@
 }
 </style>
 <script>
+import { quillEditor } from "vue-quill-editor";
 import vue2Dropzone from "vue2-dropzone";
 import BreadCrumb from "../../components/BreadCrumb";
 import ImageForm from "../../components/form/Image";
@@ -668,7 +689,8 @@ export default {
     Features,
     InputSlug,
     Bonds,
-    ProjectsRelated
+    ProjectsRelated,
+    quillEditor,
   },
   props: {
     elementParent: Object,
@@ -695,6 +717,32 @@ export default {
   data() {
     return {
       info: false,
+      editorOptions: {
+        placeholder: "",
+        modules: {
+          toolbar: {
+            /*handlers: {
+              image: function (value) {
+                document.getElementById("id_content_images").click();
+              },
+            },*/
+            container: [
+              ["bold", "italic", "underline", "strike"],
+              ["blockquote"],
+              [{ header: 1 }, { header: 2 }],
+              [{ list: "ordered" }, { list: "bullet" }],
+              [{ indent: "-1" }, { indent: "+1" }],
+              //[{ size: [false] }],
+              [{ header: [1, 2, 3, 4, 5, false] }],
+              //[{ font: [false] }],
+              [{ color: [] }, { background: [] }],
+              [{ align: [] }],
+              //['clean'],
+              ["link"],
+            ],
+          },
+        },
+      },
       element: {
       },
       moneyLocal: {
@@ -895,6 +943,9 @@ export default {
         fd.append("form_videocall", 1);
       } else {
         fd.append("form_videocall", 0);
+      }
+      if (this.element.excerpt_quotation) {
+        fd.append("excerpt_quotation", this.element.excerpt_quotation);
       }
       if (this.element.commentary_quotation) {
         fd.append("commentary_quotation", this.element.commentary_quotation);

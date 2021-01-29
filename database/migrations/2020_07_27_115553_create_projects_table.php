@@ -58,6 +58,7 @@ class CreateProjectsTable extends Migration
 
             $table->text('condition_quotation')->nullable();
             $table->text('commentary_quotation')->nullable();
+            $table->text('excerpt_quotation')->nullable();
 
             $table->text('iframe_map');
 

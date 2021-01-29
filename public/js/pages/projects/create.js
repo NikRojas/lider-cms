@@ -9,24 +9,26 @@
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var vue2_dropzone__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue2-dropzone */ "./node_modules/vue2-dropzone/dist/vue2Dropzone.js");
-/* harmony import */ var vue2_dropzone__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vue2_dropzone__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _components_BreadCrumb__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../components/BreadCrumb */ "./resources/js/components/BreadCrumb.vue");
-/* harmony import */ var _components_form_Image__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../components/form/Image */ "./resources/js/components/form/Image.vue");
-/* harmony import */ var _components_form_FinancialEntities__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../components/form/FinancialEntities */ "./resources/js/components/form/FinancialEntities.vue");
-/* harmony import */ var _components_form_ProjectsRelated__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../components/form/ProjectsRelated */ "./resources/js/components/form/ProjectsRelated.vue");
-/* harmony import */ var _components_form_Advisors__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../components/form/Advisors */ "./resources/js/components/form/Advisors.vue");
-/* harmony import */ var _components_form_Statuses__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../components/form/Statuses */ "./resources/js/components/form/Statuses.vue");
-/* harmony import */ var _components_form_Features__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../../components/form/Features */ "./resources/js/components/form/Features.vue");
-/* harmony import */ var _components_form_Bonds__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../../components/form/Bonds */ "./resources/js/components/form/Bonds.vue");
-/* harmony import */ var _components_form_Ubigeo__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../../components/form/Ubigeo */ "./resources/js/components/form/Ubigeo.vue");
-/* harmony import */ var _components_form_Input__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../../components/form/Input */ "./resources/js/components/form/Input.vue");
-/* harmony import */ var _components_Button__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../../components/Button */ "./resources/js/components/Button.vue");
-/* harmony import */ var _components_form_Editor__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ../../components/form/Editor */ "./resources/js/components/form/Editor.vue");
-/* harmony import */ var _components_form_InputSlug__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ../../components/form/InputSlug */ "./resources/js/components/form/InputSlug.vue");
-/* harmony import */ var _components_form_MultipleFiles__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ../../components/form/MultipleFiles */ "./resources/js/components/form/MultipleFiles.vue");
-/* harmony import */ var v_money__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! v-money */ "./node_modules/v-money/dist/v-money.js");
-/* harmony import */ var v_money__WEBPACK_IMPORTED_MODULE_15___default = /*#__PURE__*/__webpack_require__.n(v_money__WEBPACK_IMPORTED_MODULE_15__);
+/* harmony import */ var vue_quill_editor__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue-quill-editor */ "./node_modules/vue-quill-editor/dist/vue-quill-editor.js");
+/* harmony import */ var vue_quill_editor__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vue_quill_editor__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var vue2_dropzone__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vue2-dropzone */ "./node_modules/vue2-dropzone/dist/vue2Dropzone.js");
+/* harmony import */ var vue2_dropzone__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(vue2_dropzone__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _components_BreadCrumb__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../components/BreadCrumb */ "./resources/js/components/BreadCrumb.vue");
+/* harmony import */ var _components_form_Image__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../components/form/Image */ "./resources/js/components/form/Image.vue");
+/* harmony import */ var _components_form_FinancialEntities__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../components/form/FinancialEntities */ "./resources/js/components/form/FinancialEntities.vue");
+/* harmony import */ var _components_form_ProjectsRelated__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../components/form/ProjectsRelated */ "./resources/js/components/form/ProjectsRelated.vue");
+/* harmony import */ var _components_form_Advisors__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../components/form/Advisors */ "./resources/js/components/form/Advisors.vue");
+/* harmony import */ var _components_form_Statuses__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../../components/form/Statuses */ "./resources/js/components/form/Statuses.vue");
+/* harmony import */ var _components_form_Features__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../../components/form/Features */ "./resources/js/components/form/Features.vue");
+/* harmony import */ var _components_form_Bonds__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../../components/form/Bonds */ "./resources/js/components/form/Bonds.vue");
+/* harmony import */ var _components_form_Ubigeo__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../../components/form/Ubigeo */ "./resources/js/components/form/Ubigeo.vue");
+/* harmony import */ var _components_form_Input__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../../components/form/Input */ "./resources/js/components/form/Input.vue");
+/* harmony import */ var _components_Button__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ../../components/Button */ "./resources/js/components/Button.vue");
+/* harmony import */ var _components_form_Editor__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ../../components/form/Editor */ "./resources/js/components/form/Editor.vue");
+/* harmony import */ var _components_form_InputSlug__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ../../components/form/InputSlug */ "./resources/js/components/form/InputSlug.vue");
+/* harmony import */ var _components_form_MultipleFiles__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ../../components/form/MultipleFiles */ "./resources/js/components/form/MultipleFiles.vue");
+/* harmony import */ var v_money__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! v-money */ "./node_modules/v-money/dist/v-money.js");
+/* harmony import */ var v_money__WEBPACK_IMPORTED_MODULE_16___default = /*#__PURE__*/__webpack_require__.n(v_money__WEBPACK_IMPORTED_MODULE_16__);
 //
 //
 //
@@ -713,6 +715,26 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
 
 
 
@@ -731,22 +753,23 @@ __webpack_require__.r(__webpack_exports__);
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {
-    BreadCrumb: _components_BreadCrumb__WEBPACK_IMPORTED_MODULE_1__["default"],
-    MultipleFiles: _components_form_MultipleFiles__WEBPACK_IMPORTED_MODULE_14__["default"],
-    Money: v_money__WEBPACK_IMPORTED_MODULE_15__["Money"],
-    Editor: _components_form_Editor__WEBPACK_IMPORTED_MODULE_12__["default"],
-    Statuses: _components_form_Statuses__WEBPACK_IMPORTED_MODULE_6__["default"],
-    Ubigeo: _components_form_Ubigeo__WEBPACK_IMPORTED_MODULE_9__["default"],
-    vueDropzone: vue2_dropzone__WEBPACK_IMPORTED_MODULE_0___default.a,
-    ImageForm: _components_form_Image__WEBPACK_IMPORTED_MODULE_2__["default"],
-    Input: _components_form_Input__WEBPACK_IMPORTED_MODULE_10__["default"],
-    Button: _components_Button__WEBPACK_IMPORTED_MODULE_11__["default"],
-    FinancialEntities: _components_form_FinancialEntities__WEBPACK_IMPORTED_MODULE_3__["default"],
-    Advisors: _components_form_Advisors__WEBPACK_IMPORTED_MODULE_5__["default"],
-    Features: _components_form_Features__WEBPACK_IMPORTED_MODULE_7__["default"],
-    InputSlug: _components_form_InputSlug__WEBPACK_IMPORTED_MODULE_13__["default"],
-    Bonds: _components_form_Bonds__WEBPACK_IMPORTED_MODULE_8__["default"],
-    ProjectsRelated: _components_form_ProjectsRelated__WEBPACK_IMPORTED_MODULE_4__["default"]
+    BreadCrumb: _components_BreadCrumb__WEBPACK_IMPORTED_MODULE_2__["default"],
+    MultipleFiles: _components_form_MultipleFiles__WEBPACK_IMPORTED_MODULE_15__["default"],
+    Money: v_money__WEBPACK_IMPORTED_MODULE_16__["Money"],
+    Editor: _components_form_Editor__WEBPACK_IMPORTED_MODULE_13__["default"],
+    Statuses: _components_form_Statuses__WEBPACK_IMPORTED_MODULE_7__["default"],
+    Ubigeo: _components_form_Ubigeo__WEBPACK_IMPORTED_MODULE_10__["default"],
+    vueDropzone: vue2_dropzone__WEBPACK_IMPORTED_MODULE_1___default.a,
+    ImageForm: _components_form_Image__WEBPACK_IMPORTED_MODULE_3__["default"],
+    Input: _components_form_Input__WEBPACK_IMPORTED_MODULE_11__["default"],
+    Button: _components_Button__WEBPACK_IMPORTED_MODULE_12__["default"],
+    FinancialEntities: _components_form_FinancialEntities__WEBPACK_IMPORTED_MODULE_4__["default"],
+    Advisors: _components_form_Advisors__WEBPACK_IMPORTED_MODULE_6__["default"],
+    Features: _components_form_Features__WEBPACK_IMPORTED_MODULE_8__["default"],
+    InputSlug: _components_form_InputSlug__WEBPACK_IMPORTED_MODULE_14__["default"],
+    Bonds: _components_form_Bonds__WEBPACK_IMPORTED_MODULE_9__["default"],
+    ProjectsRelated: _components_form_ProjectsRelated__WEBPACK_IMPORTED_MODULE_5__["default"],
+    quillEditor: vue_quill_editor__WEBPACK_IMPORTED_MODULE_0__["quillEditor"]
   },
   props: {
     imagesUrl: String,
@@ -770,6 +793,42 @@ __webpack_require__.r(__webpack_exports__);
   },
   data: function data() {
     return {
+      editorOptions: {
+        placeholder: "",
+        modules: {
+          toolbar: {
+            /*handlers: {
+              image: function (value) {
+                document.getElementById("id_content_images").click();
+              },
+            },*/
+            container: [["bold", "italic", "underline", "strike"], ["blockquote"], [{
+              header: 1
+            }, {
+              header: 2
+            }], [{
+              list: "ordered"
+            }, {
+              list: "bullet"
+            }], [{
+              indent: "-1"
+            }, {
+              indent: "+1"
+            }], //[{ size: [false] }],
+            [{
+              header: [1, 2, 3, 4, 5, false]
+            }], //[{ font: [false] }],
+            [{
+              color: []
+            }, {
+              background: []
+            }], [{
+              align: []
+            }], //['clean'],
+            ["link"]]
+          }
+        }
+      },
       element: {
         active: true,
         bonds: [],
@@ -1037,6 +1096,10 @@ __webpack_require__.r(__webpack_exports__);
 
       if (this.element.condition_quotation) {
         fd.append("condition_quotation", this.element.condition_quotation);
+      }
+
+      if (this.element.excerpt_quotation) {
+        fd.append("excerpt_quotation", this.element.excerpt_quotation);
       }
 
       if (this.element.form_videocall == true) {
@@ -2530,6 +2593,69 @@ var render = function() {
                 _c("div", { staticClass: "card-body" }, [
                   _c("div", { staticClass: "row" }, [
                     _c("div", { staticClass: "col-12" }, [
+                      _c(
+                        "div",
+                        { staticClass: "form-group" },
+                        [
+                          _c(
+                            "label",
+                            {
+                              staticClass: "font-weight-bold",
+                              attrs: { for: "excerpt_quotation" }
+                            },
+                            [_vm._v("Resumen del Proyecto")]
+                          ),
+                          _vm._v(" "),
+                          _c("quill-Editor", {
+                            ref: "ref_excerpt_quotation",
+                            staticClass: "ql-height-5",
+                            attrs: { options: _vm.editorOptions },
+                            on: {
+                              keydown: function($event) {
+                                if (
+                                  !$event.type.indexOf("key") &&
+                                  _vm._k(
+                                    $event.keyCode,
+                                    "enter",
+                                    13,
+                                    $event.key,
+                                    "Enter"
+                                  )
+                                ) {
+                                  return null
+                                }
+                                $event.preventDefault()
+                              }
+                            },
+                            model: {
+                              value: _vm.element.excerpt_quotation,
+                              callback: function($$v) {
+                                _vm.$set(_vm.element, "excerpt_quotation", $$v)
+                              },
+                              expression: "element.excerpt_quotation"
+                            }
+                          }),
+                          _vm._v(" "),
+                          _vm.errors && _vm.errors.excerpt_quotation
+                            ? _c(
+                                "label",
+                                {
+                                  staticClass: "mt-2 text-danger text-sm",
+                                  attrs: { for: "excerpt_quotation" }
+                                },
+                                [
+                                  _vm._v(
+                                    _vm._s(_vm.errors.excerpt_quotation[0])
+                                  )
+                                ]
+                              )
+                            : _vm._e()
+                        ],
+                        1
+                      )
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "col-12" }, [
                       _c("div", { staticClass: "form-group" }, [
                         _c(
                           "label",
@@ -2580,61 +2706,70 @@ var render = function() {
                     ]),
                     _vm._v(" "),
                     _c("div", { staticClass: "col-12" }, [
-                      _c("div", { staticClass: "form-group" }, [
-                        _c(
-                          "label",
-                          {
-                            staticClass: "font-weight-bold",
-                            attrs: { for: "condition_quotation" }
-                          },
-                          [_vm._v("Condiciones de la Proforma")]
-                        ),
-                        _vm._v(" "),
-                        _c("textarea", {
-                          directives: [
+                      _c(
+                        "div",
+                        { staticClass: "form-group" },
+                        [
+                          _c(
+                            "label",
                             {
-                              name: "model",
-                              rawName: "v-model",
+                              staticClass: "font-weight-bold",
+                              attrs: { for: "condition_quotation" }
+                            },
+                            [_vm._v("Condiciones de la Proforma")]
+                          ),
+                          _vm._v(" "),
+                          _c("quill-Editor", {
+                            ref: "ref_condition_quotation",
+                            staticClass: "ql-height-5",
+                            attrs: { options: _vm.editorOptions },
+                            on: {
+                              keydown: function($event) {
+                                if (
+                                  !$event.type.indexOf("key") &&
+                                  _vm._k(
+                                    $event.keyCode,
+                                    "enter",
+                                    13,
+                                    $event.key,
+                                    "Enter"
+                                  )
+                                ) {
+                                  return null
+                                }
+                                $event.preventDefault()
+                              }
+                            },
+                            model: {
                               value: _vm.element.condition_quotation,
+                              callback: function($$v) {
+                                _vm.$set(
+                                  _vm.element,
+                                  "condition_quotation",
+                                  $$v
+                                )
+                              },
                               expression: "element.condition_quotation"
                             }
-                          ],
-                          staticClass: "form-control",
-                          attrs: {
-                            id: "condition_quotation",
-                            cols: "30",
-                            rows: "3"
-                          },
-                          domProps: { value: _vm.element.condition_quotation },
-                          on: {
-                            input: function($event) {
-                              if ($event.target.composing) {
-                                return
-                              }
-                              _vm.$set(
-                                _vm.element,
-                                "condition_quotation",
-                                $event.target.value
+                          }),
+                          _vm._v(" "),
+                          _vm.errors && _vm.errors.condition_quotation
+                            ? _c(
+                                "label",
+                                {
+                                  staticClass: "mt-2 text-danger text-sm",
+                                  attrs: { for: "condition_quotation" }
+                                },
+                                [
+                                  _vm._v(
+                                    _vm._s(_vm.errors.condition_quotation[0])
+                                  )
+                                ]
                               )
-                            }
-                          }
-                        }),
-                        _vm._v(" "),
-                        _vm.errors && _vm.errors.condition_quotation
-                          ? _c(
-                              "label",
-                              {
-                                staticClass: "mt-2 text-danger text-sm",
-                                attrs: { for: "condition_quotation" }
-                              },
-                              [
-                                _vm._v(
-                                  _vm._s(_vm.errors.condition_quotation[0])
-                                )
-                              ]
-                            )
-                          : _vm._e()
-                      ])
+                            : _vm._e()
+                        ],
+                        1
+                      )
                     ]),
                     _vm._v(" "),
                     _c("div", { staticClass: "col-12" }, [

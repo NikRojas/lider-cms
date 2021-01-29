@@ -38,6 +38,17 @@
               <div class="card-body">
                 <div class="row">
                   <div class="col-12 col-lg-6 mb-3">
+                    <h3 class="font-weight-normal">
+                      <span class="d-block font-weight-bold">Logo:</span>
+                    </h3>
+                    <img
+                      class="p-2 bg-dark"
+                      height="90"
+                      :src="imagesUrl + '/projects/' + element.logo"
+                      alt
+                    />
+                  </div>
+                  <div class="col-12 col-lg-6 mb-3">
                     <h3 class="mb-1 font-weight-normal">
                       <span class="d-block font-weight-bold"
                         >Nombre del Proyecto ES:</span
@@ -75,16 +86,7 @@
                       >
                     </h3>
                   </div>
-                  <div class="col-12 col-lg-6 mb-3">
-                    <h3 class="font-weight-normal">
-                      <span class="d-block font-weight-bold">Logo:</span>
-                    </h3>
-                    <img
-                      class="img-fluid p-2 bg-dark"
-                      :src="imagesUrl + '/projects/' + element.logo"
-                      alt
-                    />
-                  </div>
+                  
                   <div class="col-12 col-lg-6 mb-3">
                     <h3 class="font-weight-normal">
                       <span class="d-block font-weight-bold">Imágenes:</span>
@@ -208,6 +210,23 @@
                         }}</small>
                       </div>
                     </div>
+                  </div>
+
+                  <div class="col-12 col-lg-6 mb-3">
+                    <h3 class="font-weight-normal">
+                      <span class="d-block font-weight-bold"
+                        >Formulario Cita Online:</span
+                      >
+                      <p
+                        :class="
+                          element.form_videocall
+                            ? 'text-success'
+                            : 'text-danger'
+                        "
+                      >
+                        {{ element.form_videocall ? "Sí" : "No" }}
+                      </p>
+                    </h3>
                   </div>
                 </div>
               </div>
@@ -524,22 +543,20 @@
             <div class="card">
               <div class="card-body">
                 <div class="row">
+                  
                   <div class="col-12 col-lg-6 mb-3">
                     <h3 class="font-weight-normal">
                       <span class="d-block font-weight-bold"
-                        >Formulario Cotización:</span
+                        >Resumen del Proyecto:</span
                       >
-                      <p
-                        :class="
-                          element.form_quotation
-                            ? 'text-success'
-                            : 'text-danger'
-                        "
-                      >
-                        {{ element.form_quotation ? "Sí" : "No" }}
-                      </p>
+                      <div
+                        v-html="element.excerpt_quotation"
+                        v-if="element.excerpt_quotation"
+                      ></div>
+                      <p v-else>No registrado.</p>
                     </h3>
                   </div>
+
 
                   <div class="col-12 col-lg-6 mb-3">
                     <h3 class="font-weight-normal">

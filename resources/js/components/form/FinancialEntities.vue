@@ -23,7 +23,8 @@
             </div>
             <img
                 :src="imagesUrl+'/banks/'+element.logo"
-                class="img-fluid p-2 bg-dark"
+                class="p-2 bg-dark"
+                height="80"
                 :alt="element.name"
               />
             <small class="text-uppercase d-block">{{ element.name }}</small>

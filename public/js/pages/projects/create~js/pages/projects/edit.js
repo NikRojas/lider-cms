@@ -466,6 +466,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -1539,9 +1540,10 @@ var render = function() {
                               : _vm._e(),
                             _vm._v(" "),
                             _c("img", {
-                              staticClass: "img-fluid p-2 bg-dark",
+                              staticClass: "p-2 bg-dark",
                               attrs: {
                                 src: _vm.imagesUrl + "/banks/" + element.logo,
+                                height: "80",
                                 alt: element.name
                               }
                             }),

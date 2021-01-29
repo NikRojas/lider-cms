@@ -38,7 +38,6 @@ class PostController extends BaseController
             $el = LeadVideocall::UpdateOrCreate($el);
             return $this->sendResponse([], trans('custom.title.success'), 200);;
         } catch (\Exception $e) {
-            dd($e);
             return $this->sendError(trans('custom.title.error'), [], 500);
         }
     }
@@ -66,13 +65,14 @@ class PostController extends BaseController
     public function quotation(QuotationRequest $request){
         $project = Project::where('slug_'.$request->locale,$request->slug)->first();
         if(!$project){
-            return $this->sendError("");
+            return $this->sendError("Not found");
         }
         $el = request(['name','email','mobile','project_type_department_id','document_number','message']);
 		try {
             $el = ProjectQuotation::UpdateOrCreate(array_merge($el,["project_id" => $project->id]));
             return $this->sendResponse([], trans('custom.title.success'), 200);;
         } catch (\Exception $e) {
+            dd($e);
             return $this->sendError(trans('custom.title.error'), [], 500);
         }
     }

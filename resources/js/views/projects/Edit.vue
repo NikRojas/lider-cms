@@ -58,12 +58,13 @@
                       <label class="font-weight-bold" for="image">Logo:</label>
                       <div class="row">
                         <div class="col-lg-4 mb-3 mb-lg-0">
-                          <img class="img-fluid" :src="imagesUrl+'/projects/'+element.logo" alt />
+                          <img class="img-fluid p-2 bg-dark" :src="imagesUrl+'/projects/'+element.logo" alt />
                         </div>
-                        <div class="col-lg-8">
+                        <div class="col-lg-8 vue-dropzone-dark">
                           <vue-dropzone
                             ref="ref_logo"
-                            @vdropzone-file-added="$validateImageDropzone($event,$refs.ref_logo.dropzone,1,512000,'500kb')"
+                            @vdropzone-file-added="$validateImageDropzone($event,$refs.ref_logo.dropzone,1,51200,
+                            '50kb')"
                             id="image"
                             class="text-center"
                             :options="dropzoneOptions"
@@ -91,7 +92,7 @@
                       <label class="font-weight-bold" for="images">Imágenes:</label>
                       <div class="row">
                         <div class="col-12 mb-3">
-                          <MultipleFiles fieldName="images" :errors="errors" :messageOrder="messageOrder" :files.sync="element.files" :imagesUrl="imagesUrl" folder="projects" :filesParent="element.images_format"/>
+                          <MultipleFiles desc="La primera imagen se utilizará como cover del Proyecto" fieldName="images" :errors="errors" :messageOrder="messageOrder" :files.sync="element.files" :imagesUrl="imagesUrl" folder="projects" :filesParent="element.images_format"/>
                         </div>
                       </div>
                     </div>
@@ -625,6 +626,12 @@
     </form>
   </div>
 </template>
+<style>
+.vue-dropzone-dark .dz-image{
+  padding: .5rem;
+  background: black;
+}
+</style>
 <script>
 import vue2Dropzone from "vue2-dropzone";
 import BreadCrumb from "../../components/BreadCrumb";

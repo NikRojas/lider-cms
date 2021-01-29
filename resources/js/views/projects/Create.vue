@@ -73,7 +73,7 @@
                       :slugEsParent="element.slug_es"
                     />
                   </div>
-                  <div class="col-12 col-lg-6">
+                  <div class="col-12 col-lg-6 vue-dropzone-dark">
                     <div class="form-group">
                       <label class="font-weight-bold" for="image">Logo:</label>
                       <vue-dropzone
@@ -83,8 +83,8 @@
                             $event,
                             $refs.ref_logo.dropzone,
                             1,
-                            512000,
-                            '500kb'
+                            51200,
+                            '50kb'
                           )
                         "
                         id="image"
@@ -111,6 +111,7 @@
                   </div>
                   <div class="col-12 col-lg-6 mb-4 mb-lg-0">
                     <MultipleFiles
+                      desc="La primera imagen se utilizará como cover del Proyecto"
                       fieldName="images"
                       :errors="errors"
                       :messageOrder="messageOrder"

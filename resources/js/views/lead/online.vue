@@ -47,8 +47,8 @@
                   <div class="row">
                     <div class="col-12 mb-4">
                       Los leads se enviarán automáticamente a los asesores
-                      respectivos asignados en cada Proyecto, se designará de 1
-                      lead por asesor.
+                      respectivos asignados en cada Proyecto, se designará 1
+                      lead por orden de llegada a cada asesor.
                     </div>
                     <div class="col-12 py-3">
                       <IconContact></IconContact>

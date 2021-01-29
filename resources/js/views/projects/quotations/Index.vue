@@ -26,18 +26,50 @@
       </div>
     </div>
     <div class="container-fluid mt--6">
-      <DataTable
-        :object="elements"
-        placeholder="Nombre, DNI"
-        :button-update="false"
-        :button-read="true"
-        :button-delete="true"
-        :button-disable="false"
-        @get="getEls"
-        @read="showEl"
-        @delete="deleteEl"
-        :entries-prop.sync="elementsPerPage"
-      ></DataTable>
+      <b-tabs pills vertical  nav-wrapper-class="col-12 col-lg-3 col-xl-2 mb-4 mb-lg-0" nav-class="border bg-white py-2" content-class="col-12 col-lg-9 col-xl-10">
+        <b-tab title="Leads" active title-link-class="border-0 shadow-none bg-white py-3" title-item-class="pr-0 my-0">
+          <div class="row">
+            <div class="col-12">
+              <DataTable
+                :object="elements"
+                placeholder="Nombre, DNI"
+                :button-update="false"
+                :button-read="true"
+                :button-delete="true"
+                :button-disable="false"
+                @get="getEls"
+                @read="showEl"
+                @delete="deleteEl"
+                :entries-prop.sync="elementsPerPage"
+              ></DataTable>
+            </div>
+          </div>
+        </b-tab>
+        <b-tab title="Emails Destino" title-link-class="border-0 shadow-none bg-white py-3" title-item-class="my-0"
+          ><div class="row">
+            <div class="col-12">
+              <div class="card">
+                <div class="card-header border-0 pb-0">
+                  <h2 class="mb-0 text-uppercase text-primary">
+                    Emails Destino
+                  </h2>
+                </div>
+                <div class="card-body">
+                  <div class="row">
+                    <div class="col-12 mb-4">
+                      Los leads se enviarán automáticamente a los asesores
+                      asignados al Proyecto <b>{{ project.name_es }}</b>, se designará 1
+                      lead por orden de llegada a cada asesor.
+                    </div>
+                    <div class="col-12 py-3">
+                      <IconContact></IconContact>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div></div
+        ></b-tab>
+      </b-tabs>
     </div>
     <destroy
       element="Lead"
@@ -59,7 +91,7 @@
       body-class="pt-0"
     >
       <template slot="modal-title">
-        <div class="text-primary h2">Detalle Lead</div>
+        <div class="text-primary h2">Detalle Cotización</div>
       </template>
       <template slot="modal-header-close">
         <button type="button" class="btn p-0 bg-transparent" @click="restoreEl">
@@ -112,6 +144,28 @@
               <p>{{ element.mobile_formatted}}</p>
             </div>
           </div>
+          <div class="col-12">
+            <div class="form-group">
+              <label class="font-weight-bold d-block">Asesor:</label>
+              <div class="" v-if="element.advisor_rel">
+                <!--<p class="mb-0">{{ }}</p>
+                <img width="150" height="auto" :src="imagesUrl+'/projects/'+element.project_rel.images_format[0]" alt="">-->
+                <div class="media align-items-center"><span class="avatar avatar-sm mr-3 rounded-circle bg-primary"><img :src="imagesUrl+'/advisors/'+element.advisor_rel.avatar"></span>{{ element.advisor_rel.name }}</div>
+              </div>
+              <div v-else>
+                <p>Asesor no asignado aún.</p>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-6">
+            <div class="form-group">
+              <label class="font-weight-bold d-block">Proyecto:</label>
+              <div class="" v-if="element.project_rel">
+                <p class="mb-0">{{ element.project_rel.name_es}}</p>
+                <img width="150" height="auto" v-if="element.project_rel.images_format" :src="imagesUrl+'/projects/'+element.project_rel.images_format[0]" alt="">
+              </div>
+            </div>
+          </div>
           <div class="col-lg-6">
             <div class="form-group">
               <label class="font-weight-bold d-block">Tipología:</label>
@@ -121,7 +175,7 @@
               </div>
             </div>
           </div>
-          <div class="col-lg-6">
+          <div class="col-12">
             <div class="form-group">
               <label class="font-weight-bold">Mensaje:</label>
               <p v-if="element.message">{{ element.message}}</p>
@@ -137,7 +191,14 @@
     </b-modal>
   </div>
 </template>
+<style>
+.nav-pills .nav-link.active{
+  border-left: 4px solid #1762e6 !important;
+  background-color: #FDFBFA  !important;
+}
+</style>
 <script>
+import IconContact from "../../../components/icons/Contact";
 import DataTable from "../../../components/DataTable";
 import BreadCrumb from "../../../components/BreadCrumb";
 import Destroy from "../../../components/modals/Destroy";
@@ -155,6 +216,8 @@ export default {
       project: {},
       elements: {},
       element: {
+        project_rel: {},
+        advisor_rel: {},
         project_type_department_rel:{}
       },
       elementsPerPage: 10,
@@ -165,6 +228,7 @@ export default {
     };
   },
   components: {
+    IconContact,
     Skeleton,
     BreadCrumb,
     DataTable,

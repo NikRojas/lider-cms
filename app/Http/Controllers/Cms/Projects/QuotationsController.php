@@ -24,7 +24,7 @@ class QuotationsController extends Controller
 
   public function getAll(Request $request,ProjectQuotationsRepository $repo){
     $q = $request->q;
-    $headers = ["Id", "Nombre", "Email","DNI","Tipología"];
+    $headers = ["Id", "Nombre","Teléfono", "Email","DNI","Tipología", "Proyecto", "Asesor", "Registrado el"];
     if($q){
         $elements = $repo->datatable($request->project_id,$request->itemsPerPage,$q);
     }
@@ -36,7 +36,7 @@ class QuotationsController extends Controller
   }
 
   public function get(ProjectQuotation $element){
-    return response()->json($element->load('projectTypeDepartmentRel'));
+    return response()->json($element->load('projectTypeDepartmentRel','projectRel','advisorRel'));
   }
 
   public function destroy(ProjectQuotation $element){

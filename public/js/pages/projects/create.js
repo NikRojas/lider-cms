@@ -712,6 +712,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 
 
@@ -1236,80 +1237,84 @@ var render = function() {
                       1
                     ),
                     _vm._v(" "),
-                    _c("div", { staticClass: "col-12 col-lg-6" }, [
-                      _c(
-                        "div",
-                        { staticClass: "form-group" },
-                        [
-                          _c(
-                            "label",
-                            {
-                              staticClass: "font-weight-bold",
-                              attrs: { for: "image" }
-                            },
-                            [_vm._v("Logo:")]
-                          ),
-                          _vm._v(" "),
-                          _c(
-                            "vue-dropzone",
-                            {
-                              ref: "ref_logo",
-                              staticClass: "text-center",
-                              attrs: {
-                                id: "image",
-                                options: _vm.dropzoneOptions,
-                                duplicateCheck: true,
-                                useCustomSlot: true
+                    _c(
+                      "div",
+                      { staticClass: "col-12 col-lg-6 vue-dropzone-dark" },
+                      [
+                        _c(
+                          "div",
+                          { staticClass: "form-group" },
+                          [
+                            _c(
+                              "label",
+                              {
+                                staticClass: "font-weight-bold",
+                                attrs: { for: "image" }
                               },
-                              on: {
-                                "vdropzone-file-added": function($event) {
-                                  return _vm.$validateImageDropzone(
-                                    $event,
-                                    _vm.$refs.ref_logo.dropzone,
-                                    1,
-                                    512000,
-                                    "500kb"
-                                  )
-                                }
-                              }
-                            },
-                            [
-                              _c(
-                                "div",
-                                { staticClass: "dropzone-custom-content" },
-                                [
-                                  _c(
-                                    "h5",
-                                    {
-                                      staticClass:
-                                        "dropzone-custom-title text-primary"
-                                    },
-                                    [
-                                      _vm._v(
-                                        "\n                          Suelte los archivos aquí o haga click para\n                          cargarlos.\n                        "
-                                      )
-                                    ]
-                                  )
-                                ]
-                              )
-                            ]
-                          ),
-                          _vm._v(" "),
-                          _vm.errors && _vm.errors.logo
-                            ? _c(
-                                "label",
-                                {
-                                  staticClass:
-                                    "text-danger text-sm d-block mt-2",
-                                  attrs: { for: "logo" }
+                              [_vm._v("Logo:")]
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "vue-dropzone",
+                              {
+                                ref: "ref_logo",
+                                staticClass: "text-center",
+                                attrs: {
+                                  id: "image",
+                                  options: _vm.dropzoneOptions,
+                                  duplicateCheck: true,
+                                  useCustomSlot: true
                                 },
-                                [_vm._v(_vm._s(_vm.errors.logo[0]))]
-                              )
-                            : _vm._e()
-                        ],
-                        1
-                      )
-                    ]),
+                                on: {
+                                  "vdropzone-file-added": function($event) {
+                                    return _vm.$validateImageDropzone(
+                                      $event,
+                                      _vm.$refs.ref_logo.dropzone,
+                                      1,
+                                      51200,
+                                      "50kb"
+                                    )
+                                  }
+                                }
+                              },
+                              [
+                                _c(
+                                  "div",
+                                  { staticClass: "dropzone-custom-content" },
+                                  [
+                                    _c(
+                                      "h5",
+                                      {
+                                        staticClass:
+                                          "dropzone-custom-title text-primary"
+                                      },
+                                      [
+                                        _vm._v(
+                                          "\n                          Suelte los archivos aquí o haga click para\n                          cargarlos.\n                        "
+                                        )
+                                      ]
+                                    )
+                                  ]
+                                )
+                              ]
+                            ),
+                            _vm._v(" "),
+                            _vm.errors && _vm.errors.logo
+                              ? _c(
+                                  "label",
+                                  {
+                                    staticClass:
+                                      "text-danger text-sm d-block mt-2",
+                                    attrs: { for: "logo" }
+                                  },
+                                  [_vm._v(_vm._s(_vm.errors.logo[0]))]
+                                )
+                              : _vm._e()
+                          ],
+                          1
+                        )
+                      ]
+                    ),
                     _vm._v(" "),
                     _c(
                       "div",
@@ -1317,6 +1322,8 @@ var render = function() {
                       [
                         _c("MultipleFiles", {
                           attrs: {
+                            desc:
+                              "La primera imagen se utilizará como cover del Proyecto",
                             fieldName: "images",
                             errors: _vm.errors,
                             messageOrder: _vm.messageOrder,

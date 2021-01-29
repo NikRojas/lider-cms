@@ -19,10 +19,9 @@
                         <div class="media align-items-center">
                             <span class="avatar avatar-sm rounded-circle bg-default">
                                 @if(Auth::user()->avatar)
-                                <img src="{{ route('cms.get-file',[ 'folder' => 'img', 'subfolder' => 'users', 'file' => Auth::user()->avatar ]) }}"
-                                    alt="User">
+                                <img src="{{ route('cms.get-file',[ 'folder' => 'img', 'subfolder' => 'users', 'file' => Auth::user()->avatar ]) }}" alt="User">
                                 @else
-                                    {{ Auth::user()->avatar_initials }}
+                                {{ Auth::user()->avatar_initials }}
                                 @endif
                             </span>
                         </div>
@@ -35,8 +34,7 @@
                         <span data-jam="user-circle" class="current-color mr-1" data-with="20" data-height="20"></span> <span class="v-align-middle">Mi perfil</span>
                     </b-dropdown-item>
                     <b-dropdown-divider></b-dropdown-divider>
-                    <b-dropdown-item href="{{ route('logout') }}"
-                        onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                    <b-dropdown-item href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                         <span data-jam="power" class="current-color text-danger mr-1" data-with="20" data-height="20"></span> <span class="v-align-middle">Cerrar Sesión</span>
                     </b-dropdown-item>
                 </b-dropdown>
@@ -65,44 +63,44 @@
                 @foreach($menu as $module)
                 <li class="nav-item  ">
                     @isset($module["menu_secondary"])
-                        <a class="nav-link position-relative d-inline-block w-100 py-3 {{ Request::segment(1) ==  $module["variable"] ? 'active' : ''   }}"
-                            v-b-toggle.{{$module["variable"]}}>
-                            <span class="current-color mr-3" data-jam="{{$module["icon"]}}" data-with="20" data-height="20"></span>
-                            <!--<span class="current-color" data-jam="box-f" data-with="20" data-height="20"></span>-->
-                            <span class="nav-link__text">{{ $module["name"] }}</span>
-                            <span class="arrow"><i class="menu-arrow"> <!--<i class="fas fa-chevron-down"></i>--> <span class="current-color" data-jam="arrow-right" data-with="16" data-height="16"></span> </i></span>
-                        </a>
-                        <b-collapse id="{{$module["variable"]}}" v-cloak>
-                            <ul class="nav flex-column sub-menu">
-                                @foreach($module["menu_secondary"] as $submodule)
-                                <li class="nav-item">
-                                    <a class="nav-link  {{ Request::path() ==  $submodule["slug"] ? 'active' : ''   }}" href="/{{ $submodule["slug"] }}">{{ $submodule["name"] }}</a>
-                                </li>
-                                @endforeach
-                            </ul>
-                        </b-collapse>
+                    <a class="nav-link position-relative d-inline-block w-100 py-3 {{ Request::segment(1) ==  $module["variable"] ? 'active' : ''   }}" v-b-toggle.{{$module["variable"]}}>
+                        <span class="current-color mr-3" data-jam="{{$module["icon"]}}" data-with="20" data-height="20"></span>
+                        <!--<span class="current-color" data-jam="box-f" data-with="20" data-height="20"></span>-->
+                        <span class="nav-link__text">{{ $module["name"] }}</span>
+                        <span class="arrow"><i class="menu-arrow">
+                                <!--<i class="fas fa-chevron-down"></i>--> <span class="current-color" data-jam="arrow-right" data-with="16" data-height="16"></span>
+                            </i></span>
+                    </a>
+                    <b-collapse id="{{$module["variable"]}}" v-cloak>
+                        <ul class="nav flex-column sub-menu">
+                            @foreach($module["menu_secondary"] as $submodule)
+                            <li class="nav-item">
+                                <a class="nav-link  {{ Request::path() ==  $submodule["slug"] ? 'active' : ''   }}" href="/{{ $submodule["slug"] }}">{{ $submodule["name"] }}</a>
+                            </li>
+                            @endforeach
+                        </ul>
+                    </b-collapse>
 
-                        <a class="nav-link position-relative text-center d-inline-block w-100 py-3 nav-link--hover {{ Request::segment(1) ==  $module["variable"] ? 'active' : ''   }}" :id="'popover-{{$module["variable"]}}'">
-                            
-                            <span class="current-color mr-3" data-jam="{{$module["icon"]}}" data-with="20" data-height="20"></span>
-                        </a>
-                        <b-popover :target="'popover-{{$module["variable"]}}'" custom-class="ml-0 shadow-none pl-0 pt-1 pb-2" triggers="hover" placement="right" v-cloak>
-                                <template v-slot:title >
-                                    <div class="ml-2 text-primary">{{ $module["name"] }}</div></template>
-                                <ul class="nav flex-column sub-menu">
-                                        @foreach($module["menu_secondary"] as $submodule)
-                                            <li class="nav-item">
-                                                <a class="nav-link py-1 px-0" href="/{{ $submodule["slug"] }}">{{ $submodule["name"] }}</a>
-                                            </li>
-                                        @endforeach
-                                </ul>
-                        </b-popover>
-                    @else 
-                    <a
-                        class="nav-link position-relative d-inline-block w-100 py-3 {{  Request::segment(1) ==  $module["variable"] ? 'active' : '' }}"
-                        href="/{{ $module["slug"] }}">
-                            <span class="current-color mr-3" data-jam="{{$module["icon"]}}" data-with="20" data-height="20"></span>
-                            <span class="nav-link__text">{{ $module["name"] }}</span>
+                    <a class="nav-link position-relative text-center d-inline-block w-100 py-3 nav-link--hover {{ Request::segment(1) ==  $module["variable"] ? 'active' : ''   }}" :id="'popover-{{$module["variable"]}}'">
+
+                        <span class="current-color mr-3" data-jam="{{$module["icon"]}}" data-with="20" data-height="20"></span>
+                    </a>
+                    <b-popover :target="'popover-{{$module["variable"]}}'" custom-class="ml-0 shadow-none pl-0 pt-1 pb-2" triggers="hover" placement="right" v-cloak>
+                        <template v-slot:title>
+                            <div class="ml-2 text-primary">{{ $module["name"] }}</div>
+                        </template>
+                        <ul class="nav flex-column sub-menu">
+                            @foreach($module["menu_secondary"] as $submodule)
+                            <li class="nav-item">
+                                <a class="nav-link py-1 px-0" href="/{{ $submodule["slug"] }}">{{ $submodule["name"] }}</a>
+                            </li>
+                            @endforeach
+                        </ul>
+                    </b-popover>
+                    @else
+                    <a class="nav-link position-relative d-inline-block w-100 py-3 {{  Request::segment(1) ==  $module["variable"] ? 'active' : '' }}" href="/{{ $module["slug"] }}">
+                        <span class="current-color mr-3" data-jam="{{$module["icon"]}}" data-with="20" data-height="20"></span>
+                        <span class="nav-link__text">{{ $module["name"] }}</span>
                     </a>
                     <a class="nav-link position-relative text-center d-inline-block w-100 py-3 nav-link--hover {{  Request::segment(1) ==  $module["variable"] ? 'active' : '' }}" :id="'popover-{{$module["slug"]}}'">
                         <span class="current-color mr-3" data-jam="{{$module["icon"]}}" data-with="20" data-height="20"></span>
@@ -126,18 +124,23 @@
     <nav class="navbar navbar-top navbar-expand navbar-light position-relative bg-white py-2 d-md-block d-none" id="navbar-main">
         <div class="container-fluid">
             <button-icons></button-icons>
+            <div class="d-inline-block ml-4">
+                <a href="{{ config('services.web_url')}}" target="_blank" class="btn btn-icon btn-inverse-primary mr-2">
+                    <span class="btn-inner--icon"><i class="current-color" data-jam="world"></i></span>
+                    <span class="btn-inner--text">
+                        Ir a la Web</span> </a>
+
+            </div>
             <ul class="navbar-nav align-items-center d-none d-md-flex ml-auto">
                 <li class="nav-item">
-                    <b-dropdown id="id_dropdown_navbar" class="border-0 pr-0" :lazy="true" variant="link"
-                        v-cloak>
+                    <b-dropdown id="id_dropdown_navbar" class="border-0 pr-0" :lazy="true" variant="link" v-cloak>
                         <template slot="button-content">
                             <div class="media align-items-center">
                                 <span class="avatar rounded-circle bg-default" style="font-size: 20px !important;">
                                     @if(Auth::user()->avatar)
-                                    <img src="{{ route('cms.get-file',[ 'folder' => 'img', 'subfolder' => 'users', 'file' => Auth::user()->avatar ]) }}"
-                                        alt="Usuario" />
+                                    <img src="{{ route('cms.get-file',[ 'folder' => 'img', 'subfolder' => 'users', 'file' => Auth::user()->avatar ]) }}" alt="Usuario" />
                                     @else
-                                        {{ Auth::user()->avatar_initials }}
+                                    {{ Auth::user()->avatar_initials }}
                                     @endif
                                 </span>
                                 <div class="media-body ml-2">
@@ -153,8 +156,7 @@
                             <span data-jam="user-circle" class="current-color mr-1" data-with="20" data-height="20"></span> <span class="v-align-middle">Mi perfil</span>
                         </b-dropdown-item>
                         <b-dropdown-divider></b-dropdown-divider>
-                        <b-dropdown-item class="my-1" href="{{ route('logout') }}"
-                            onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                        <b-dropdown-item class="my-1" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                             <span data-jam="power" class="current-color text-danger mr-1" data-with="20" data-height="20"></span> <span class="v-align-middle">Cerrar Sesión</span>
                         </b-dropdown-item>
                     </b-dropdown>
@@ -163,8 +165,8 @@
         </div>
     </nav>
     <div class="content-wrapper">
-    @yield('content')
-</div>
+        @yield('content')
+    </div>
     <footer class="pb-2 footer pt-2 mt-5">
         <div class="container-fluid">
             <div class="row">
@@ -179,10 +181,10 @@
 @endsection
 @push('scripts')
 <script type="text/javascript">
-const app = new Vue({
-     el: '#alert' ,
-     created(){
-        @if(Session::has('success'))
+    const app = new Vue({
+        el: '#alert',
+        created() {
+            @if(Session::has('success'))
             Swal.fire({
                 title: "{{ trans('custom.title.success') }}",
                 text: "{{ Session::get('success') }}",
@@ -190,11 +192,11 @@ const app = new Vue({
                 confirmButtonText: "OK",
                 buttonsStyling: false,
                 customClass: {
-                confirmButton: "btn btn-inverse-primary"
+                    confirmButton: "btn btn-inverse-primary"
                 }
             });
-        @endif
-        @if(Session::has('error'))
+            @endif
+            @if(Session::has('error'))
             Swal.fire({
                 title: "{{ trans('custom.title.error') }}",
                 text: "{{ Session::get('error') }}",
@@ -202,11 +204,11 @@ const app = new Vue({
                 confirmButtonText: "OK",
                 buttonsStyling: false,
                 customClass: {
-                confirmButton: "btn btn-inverse-primary"
+                    confirmButton: "btn btn-inverse-primary"
                 }
             });
-        @endif
-     }
-});
+            @endif
+        }
+    });
 </script>
 @endpush

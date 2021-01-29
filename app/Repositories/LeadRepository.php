@@ -60,8 +60,11 @@ class LeadRepository
             ->paginate($items_per_page);
         }
         foreach ($leads as $lead) {
-            $avatar = asset('storage/img/advisors/'.$lead["advisorRel"]["avatar"]);
-            $avatarHTML = "<div class='media align-items-center'><span class='avatar avatar-sm mr-3 rounded-circle bg-primary'><img src='".$avatar."' /></span>".$lead['advisorRel']['name']."</div>";
+            $avatarHTML = "No asignado aún";
+            if($lead["advisorRel"]){
+                $avatar = asset('storage/img/advisors/'.$lead["advisorRel"]["avatar"]);
+                $avatarHTML = "<div class='media align-items-center'><span class='avatar avatar-sm mr-2 rounded-circle bg-primary'><img src='".$avatar."' /></span>".$lead['advisorRel']['name']."</div>";
+            }
 
             $image = asset('storage/img/projects/'.$lead["projectRel"]["images_format"][0]);
             $projectHTML = "<div class='media align-items-center'><span class='mr-3'><img height='55' width='auto' src='".$image."' /></span>".$lead["projectRel"]["name_es"]."</div>";
@@ -73,7 +76,8 @@ class LeadRepository
                 "document_number" => $lead["document_number"],
                 "schedule" => $lead["schedule"],
                 "project" => $projectHTML,
-                "advisor" => $avatarHTML
+                "advisor" => $avatarHTML,
+                "created" => $lead["created_at_format"]
             );
         }
         $leads = $leads->toArray();

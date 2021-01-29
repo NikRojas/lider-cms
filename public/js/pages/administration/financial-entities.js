@@ -392,6 +392,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 
 
@@ -1100,7 +1101,7 @@ var render = function() {
                             _vm._v(" "),
                             _c(
                               "div",
-                              { staticClass: "col" },
+                              { staticClass: "col vue-dropzone-dark" },
                               [
                                 _c(
                                   "vue-dropzone",
@@ -1119,8 +1120,8 @@ var render = function() {
                                           $event,
                                           _vm.$refs.ref_image.dropzone,
                                           1,
-                                          100000,
-                                          "100kb"
+                                          51200,
+                                          "50kb"
                                         )
                                       }
                                     }

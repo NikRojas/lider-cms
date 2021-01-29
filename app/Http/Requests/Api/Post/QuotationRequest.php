@@ -43,8 +43,9 @@ class QuotationRequest extends FormRequest
           'name' => 'required|max:100',
           'email' => 'required|max:100|email',
           'mobile' => 'required|digits_between:7,9',
-          'document_number' => 'required|digits:7',
+          'document_number' => 'required|digits:8',
           'project_type_department_id' => 'required',
+          'slug' => 'required',
           'accepted' => 'accepted'
         ];
     }

@@ -15,6 +15,8 @@ use App\LeadVideocall;
 use App\Observers\LeadObserver;
 use App\Module;
 use App\Observers\LeadVideocallObserver;
+use App\Observers\ProjectQuotationObserver;
+use App\ProjectQuotation;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -66,5 +68,6 @@ class AppServiceProvider extends ServiceProvider
         });
         //Applicant::observe(ApplicantObserver::class);
         LeadVideocall::observe(LeadVideocallObserver::class);
+        ProjectQuotation::observe(ProjectQuotationObserver::class);
     }
 }

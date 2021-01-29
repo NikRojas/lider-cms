@@ -80,7 +80,7 @@
                       <span class="d-block font-weight-bold">Logo:</span>
                     </h3>
                     <img
-                      class="img-fluid"
+                      class="img-fluid p-2 bg-dark"
                       :src="imagesUrl + '/projects/' + element.logo"
                       alt
                     />

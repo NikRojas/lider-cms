@@ -107,11 +107,12 @@
                       :alt="element.name"
                     />
                   </div>
-                  <div class="col">
+                  <div class="col vue-dropzone-dark">
                     <vue-dropzone
                       ref="ref_image"
                       class="text-center"
-                      @vdropzone-file-added="$validateImageDropzone($event,$refs.ref_image.dropzone,1,100000,'100kb')"
+                      @vdropzone-file-added="$validateImageDropzone($event,$refs.ref_image.dropzone,1,51200,
+                          '50kb')"
                       id="image"
                       :options="dropzoneOptions"
                       :duplicateCheck="true"

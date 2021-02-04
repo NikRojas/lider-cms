@@ -11,15 +11,17 @@ class LeadRepository
     public function datatable($items_per_page, $q = false)
     {
         if ($q) {
-            $leads = Lead::select("id", "name", "mobile", "email", "lead_medium_id", "lead_source_id")
+            $leads = Lead::select("id", "name", "mobile", "email", "lead_source_id","created_at")
             ->where('name', 'like', '%'.$q.'%')
             ->orWhere('mobile', 'like', '%'.$q.'%')
-            ->with('mediumRel', 'sourceRel')
+            //->with('mediumRel', 'sourceRel')
+            ->with('sourceRel')
             ->orderBy('created_at', 'desc')
             ->paginate($items_per_page);
         } else {
-            $leads = Lead::select("id", "name", "mobile", "email", "lead_medium_id", "lead_source_id")
-            ->with('mediumRel', 'sourceRel')
+            $leads = Lead::select("id", "name", "mobile", "email", "lead_source_id","created_at")
+            //->with('mediumRel', 'sourceRel')
+            ->with('sourceRel')
             ->orderBy('created_at', 'desc')
             ->paginate($items_per_page);
         }
@@ -27,10 +29,10 @@ class LeadRepository
             $data[] = array(
                 "id" => $lead["id"],
                 "name" => $lead['name'],
-                "mobile" => $lead["mobile"],
+                "mobile" => $lead["mobile_format"],
                 "email" => $lead["email"],
-                "medium" => $lead["mediumRel"]["name"],
-                "source" => $lead["sourceRel"]["name"]
+                "source" => $lead["sourceRel"]["name"],
+                "created_at" => $lead["created_at_format"],
             );
         }
         $leads = $leads->toArray();

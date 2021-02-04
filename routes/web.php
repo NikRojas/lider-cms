@@ -380,6 +380,9 @@ Route::middleware(['auth'])->namespace('Cms')->name('cms.')->group(function () {
             
             Route::put('/', 'LeadTraditionalController@update')->name('update');
             Route::get('/get-email-destination', 'LeadTraditionalController@getEmailDestination')->name('get-email-destination');
+
+            Route::get('/all-export', 'LeadTraditionalController@allExport')->name('all-export');
+            Route::post('/filter-export', 'LeadTraditionalController@filterExport')->name('filter-export');
         });
 
         Route::name('online-appointment.')->prefix('cita-online')->group(function () {

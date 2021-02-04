@@ -8,6 +8,8 @@ use App\Repositories\LeadRepository;
 use App\Lead;
 use App\Http\Requests\Cms\ApplicantDestinationRequest;
 use App\EmailDestination;
+use App\Exports\LeadTraditionalExport;
+use App\Http\Requests\Cms\Export\LeadExportExcel;
 use App\Http\Traits\CmsTrait;
 
 class LeadTraditionalController extends Controller
@@ -22,7 +24,7 @@ class LeadTraditionalController extends Controller
     public function getAll(Request $request, LeadRepository $repo)
     {
         $q = $request->q;
-        $headers = ["id", "Nombre", "Telefono", "Correo", "Medio", "Fuente"];
+        $headers = ["id", "Nombre", "Telefono", "Correo", "Fuente", "Registrado El"];
         if ($q) {
             $elements = $repo->datatable($request->itemsPerPage, $q);
         } else {
@@ -71,5 +73,19 @@ class LeadTraditionalController extends Controller
     {
         $data = EmailDestination::where('type', 'traditional')->first();
         return response()->json($data);
+    }
+
+    public function allExport()
+    {
+        $leads = Lead::with("sourceRel")->get();
+        return new LeadTraditionalExport(null, null, $leads);
+    }
+
+    public function filterExport(LeadExportExcel $request)
+    {
+        $from = date("Y-m-d H:i:s", strtotime($request->from));
+        $to = date("Y-m-d H:i:s", strtotime($request->to));
+        $leads = Lead::with('sourceRel')->whereBetween('created_at', [$from,$to])->get();
+        return (new LeadTraditionalExport($from,$to,$leads));
     }
 }

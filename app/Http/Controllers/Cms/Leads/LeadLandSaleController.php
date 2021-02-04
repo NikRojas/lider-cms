@@ -8,6 +8,8 @@ use App\Repositories\LeadRepository;
 use App\LeadSaleLand;
 use App\Http\Requests\Cms\ApplicantDestinationRequest;
 use App\EmailDestination;
+use App\Exports\LeadSaleLandExport;
+use App\Http\Requests\Cms\Export\LeadExportExcel;
 use App\Http\Traits\CmsTrait;
 
 class LeadLandSaleController extends Controller
@@ -22,7 +24,7 @@ class LeadLandSaleController extends Controller
     public function getAll(Request $request, LeadRepository $repo)
     {
         $q = $request->q;
-        $headers = ["id", "Nombre", "Telefono", "Correo",'Área'];
+        $headers = ["id", "Nombre", "Móvil", "Email",'Área'];
         if ($q) {
             $elements = $repo->datatableLandSale($request->itemsPerPage, $q);
         } else {
@@ -71,5 +73,19 @@ class LeadLandSaleController extends Controller
     {
         $data = EmailDestination::where('type', 'sale_land')->first();
         return response()->json($data);
+    }
+
+    public function allExport()
+    {
+        $leads = LeadSaleLand::get();
+        return new LeadSaleLandExport(null, null, $leads);
+    }
+
+    public function filterExport(LeadExportExcel $request)
+    {
+        $from = date("Y-m-d H:i:s", strtotime($request->from));
+        $to = date("Y-m-d H:i:s", strtotime($request->to));
+        $leads = LeadSaleLand::whereBetween('created_at', [$from,$to])->get();
+        return (new LeadSaleLandExport($from,$to,$leads));
     }
 }

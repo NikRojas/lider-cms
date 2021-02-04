@@ -312,7 +312,7 @@ var render = function() {
           _c("DataTable", {
             attrs: {
               object: _vm.elements,
-              placeholder: "Nombre , Telefono",
+              placeholder: "Nombre , Móvil",
               "button-update": false,
               "button-read": false,
               "button-delete": true,

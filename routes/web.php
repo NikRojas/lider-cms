@@ -393,6 +393,9 @@ Route::middleware(['auth'])->namespace('Cms')->name('cms.')->group(function () {
             
             Route::put('/', 'LeadOnlineController@update')->name('update');
             Route::get('/get-email-destination', 'LeadOnlineController@getEmailDestination')->name('get-email-destination');
+
+            Route::get('/all-export', 'LeadTraditionalController@allExport')->name('all-export');
+            Route::post('/filter-export', 'LeadTraditionalController@filterExport')->name('filter-export');
         });
         
         Route::name('land-sale.')->prefix('venta-terreno')->group(function () {
@@ -403,6 +406,9 @@ Route::middleware(['auth'])->namespace('Cms')->name('cms.')->group(function () {
             
             Route::put('/', 'LeadLandSaleController@update')->name('update');
             Route::get('/get-email-destination', 'LeadLandSaleController@getEmailDestination')->name('get-email-destination');
+
+            Route::get('/all-export', 'LeadLandSaleController@allExport')->name('all-export');
+            Route::post('/filter-export', 'LeadLandSaleController@filterExport')->name('filter-export');
         });
     });
 

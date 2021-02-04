@@ -24,7 +24,7 @@ class LeadTraditionalController extends Controller
     public function getAll(Request $request, LeadRepository $repo)
     {
         $q = $request->q;
-        $headers = ["id", "Nombre", "Telefono", "Correo", "Fuente", "Registrado El"];
+        $headers = ["id", "Nombre", "Móvil", "Correo", "Fuente", "Registrado El"];
         if ($q) {
             $elements = $repo->datatable($request->itemsPerPage, $q);
         } else {

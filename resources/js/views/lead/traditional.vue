@@ -414,7 +414,7 @@ export default {
           );
           const link = document.createElement("a");
           link.href = downloadUrl;
-          link.setAttribute("download", "leads.xlsx");
+          link.setAttribute("download", "Líder Leads.xlsx");
           document.body.appendChild(link);
           link.click();
           link.remove();
@@ -469,11 +469,11 @@ export default {
               this.element_form.from == "" ||
               this.element_form.from == null
             ) {
-              this.errors_form.from = ["El campo desde Es requerido"];
+              this.errors_form.from = ["El campo desde es requerido"];
             }
 
             if (this.element_form.to == "" || this.element_form.to == null) {
-              this.errors_form.to = ["El campo hasta Es requerido"];
+              this.errors_form.to = ["El campo hasta es requerido"];
             }
             console.log(this.errors_form);
             return;

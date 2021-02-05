@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers\Cms\Projects;
 
+use App\Exports\LeadQuotationExport;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Cms\Export\LeadExportExcel;
 use Illuminate\Support\Facades\Storage;
 
 use App\Http\Traits\CmsTrait;
@@ -48,4 +50,20 @@ class QuotationsController extends Controller
         return response()->json(['title'=> trans('custom.title.error'), 'message'=> trans('custom.message.delete.error', ['name' => trans('custom.attribute.lead')]) ],500);
     }
   }
+
+  public function allExport($element)
+    {
+      $project = Project::where('id', $element)->firstOrFail();
+        $leads = ProjectQuotation::where('project_id', $project->id)->with("projectRel",'advisorRel','projectTypeDepartmentRel')->orderBy('created_at', 'asc')->get();
+        return new LeadQuotationExport(null, null, $leads,$project->name_es);
+    }
+
+    public function filterExport($element,LeadExportExcel $request)
+    {
+      $project = Project::where('id', $element)->firstOrFail();
+        $from = date("Y-m-d H:i:s", strtotime($request->from));
+        $to = date("Y-m-d H:i:s", strtotime($request->to));
+        $leads = ProjectQuotation::where('project_id', $project->id)->with('projectRel','advisorRel','projectTypeDepartmentRel')->whereBetween('created_at', [$from,$to])->orderBy('created_at', 'asc')->get();
+        return (new LeadQuotationExport($from,$to,$leads, $project->name_es));
+    }
 }

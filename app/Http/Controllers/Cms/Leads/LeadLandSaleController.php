@@ -24,7 +24,7 @@ class LeadLandSaleController extends Controller
     public function getAll(Request $request, LeadRepository $repo)
     {
         $q = $request->q;
-        $headers = ["id", "Nombre", "Móvil", "Email",'Área'];
+        $headers = ["id", "Nombre", "Móvil", "Email",'Área', "Registrado el"];
         if ($q) {
             $elements = $repo->datatableLandSale($request->itemsPerPage, $q);
         } else {
@@ -77,7 +77,7 @@ class LeadLandSaleController extends Controller
 
     public function allExport()
     {
-        $leads = LeadSaleLand::get();
+        $leads = LeadSaleLand::orderBy('created_at', 'asc')->get();
         return new LeadSaleLandExport(null, null, $leads);
     }
 
@@ -85,7 +85,7 @@ class LeadLandSaleController extends Controller
     {
         $from = date("Y-m-d H:i:s", strtotime($request->from));
         $to = date("Y-m-d H:i:s", strtotime($request->to));
-        $leads = LeadSaleLand::whereBetween('created_at', [$from,$to])->get();
+        $leads = LeadSaleLand::whereBetween('created_at', [$from,$to])->orderBy('created_at', 'asc')->get();
         return (new LeadSaleLandExport($from,$to,$leads));
     }
 }

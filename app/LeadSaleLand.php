@@ -11,8 +11,8 @@ class LeadSaleLand extends Model
     protected $guarded = [];
     protected $appends = ["created_at_format","mobile_format"];
 
-    public function getCreatedAtFormatAttribute( $value ) {
-        return (new Carbon($value))->format('g:iA d-m-Y');
+    public function getCreatedAtFormatAttribute(  ) {
+        return (new Carbon($this->created_at))->format('g:iA d-m-Y');
     }
 
     public function getMobileFormatAttribute(){

@@ -77,7 +77,7 @@ class LeadTraditionalController extends Controller
 
     public function allExport()
     {
-        $leads = Lead::with("sourceRel")->get();
+        $leads = Lead::with("sourceRel")->orderBy('created_at', 'asc')->get();
         return new LeadTraditionalExport(null, null, $leads);
     }
 
@@ -85,7 +85,7 @@ class LeadTraditionalController extends Controller
     {
         $from = date("Y-m-d H:i:s", strtotime($request->from));
         $to = date("Y-m-d H:i:s", strtotime($request->to));
-        $leads = Lead::with('sourceRel')->whereBetween('created_at', [$from,$to])->get();
+        $leads = Lead::with('sourceRel')->whereBetween('created_at', [$from,$to])->orderBy('created_at', 'asc')->get();
         return (new LeadTraditionalExport($from,$to,$leads));
     }
 }

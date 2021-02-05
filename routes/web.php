@@ -180,6 +180,9 @@ Route::middleware(['auth'])->namespace('Cms')->name('cms.')->group(function () {
             Route::get('/json/get-all', 'QuotationsController@getAll')->name('get-all');
             Route::get('/json/get/{element}', 'QuotationsController@get')->name('get');
             Route::delete('/{element}', 'QuotationsController@destroy')->name('destroy');
+
+            Route::get('/{element}/all-export', 'QuotationsController@allExport')->name('all-export');
+            Route::post('/{element}/filter-export', 'QuotationsController@filterExport')->name('filter-export');
         });
 
         Route::prefix('tipologias')->name('tipologies.')->group(function () {
@@ -191,7 +194,6 @@ Route::middleware(['auth'])->namespace('Cms')->name('cms.')->group(function () {
             Route::put('/{element}', 'TipologiesController@update')->name('update');
             Route::delete('/{element}', 'TipologiesController@destroy')->name('destroy');
             Route::put('/{element}', 'TipologiesController@update')->name('update');
-
             /*Route::prefix('planos')->name('blueprints.')->group(function () {
                 Route::get('/{element}/{subelement}', 'BlueprintsController@index')->name('index');
                 Route::post('/', 'BlueprintsController@store')->name('store');
@@ -394,8 +396,8 @@ Route::middleware(['auth'])->namespace('Cms')->name('cms.')->group(function () {
             Route::put('/', 'LeadOnlineController@update')->name('update');
             Route::get('/get-email-destination', 'LeadOnlineController@getEmailDestination')->name('get-email-destination');
 
-            Route::get('/all-export', 'LeadTraditionalController@allExport')->name('all-export');
-            Route::post('/filter-export', 'LeadTraditionalController@filterExport')->name('filter-export');
+            Route::get('/all-export', 'LeadOnlineController@allExport')->name('all-export');
+            Route::post('/filter-export', 'LeadOnlineController@filterExport')->name('filter-export');
         });
         
         Route::name('land-sale.')->prefix('venta-terreno')->group(function () {

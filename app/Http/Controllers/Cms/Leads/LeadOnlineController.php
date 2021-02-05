@@ -8,6 +8,8 @@ use App\Repositories\LeadRepository;
 use App\LeadVideocall;
 use App\Http\Requests\Cms\ApplicantDestinationRequest;
 use App\EmailDestination;
+use App\Exports\LeadVideocallExport;
+use App\Http\Requests\Cms\Export\LeadExportExcel;
 use App\Http\Traits\CmsTrait;
 
 class LeadOnlineController extends Controller
@@ -71,5 +73,19 @@ class LeadOnlineController extends Controller
     {
         $data = EmailDestination::where('type', 'videocall')->first();
         return response()->json($data);
+    }
+
+    public function allExport()
+    {
+        $leads = LeadVideocall::with('advisorRel','projectRel')->orderBy('created_at', 'asc')->get();
+        return new LeadVideocallExport(null, null, $leads);
+    }
+
+    public function filterExport(LeadExportExcel $request)
+    {
+        $from = date("Y-m-d H:i:s", strtotime($request->from));
+        $to = date("Y-m-d H:i:s", strtotime($request->to));
+        $leads = LeadVideocall::with('advisorRel','projectRel')->whereBetween('created_at', [$from,$to])->orderBy('created_at', 'asc')->get();
+        return (new LeadVideocallExport($from,$to,$leads));
     }
 }

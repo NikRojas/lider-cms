@@ -93,13 +93,13 @@ class LeadRepository
     public function datatableLandSale($items_per_page, $q = false)
     {
         if ($q) {
-            $leads = LeadSaleLand::select("id", "name", "mobile", "email", "area")
+            $leads = LeadSaleLand::select("id", "name", "mobile", "email", "area", "created_at")
             ->where('name', 'like', '%'.$q.'%')
             ->orWhere('mobile', 'like', '%'.$q.'%')
             ->orderBy('created_at', 'desc')
             ->paginate($items_per_page);
         } else {
-            $leads = LeadSaleLand::select("id", "name", "mobile", "email", "area")
+            $leads = LeadSaleLand::select("id", "name", "mobile", "email", "area", "created_at")
             ->orderBy('created_at', 'desc')
             ->paginate($items_per_page);
         }
@@ -107,9 +107,10 @@ class LeadRepository
             $data[] = array(
                 "id" => $lead["id"],
                 "name" => $lead['name'],
-                "mobile" => $lead["mobile"],
+                "mobile" => $lead["mobile_format"],
                 "email" => $lead["email"],
-                "area" => $lead["area"]
+                "area" => $lead["area"]."m2",
+                "created_at" => $lead["created_at_format"],
             );
         }
         $leads = $leads->toArray();

@@ -29,13 +29,15 @@
               <div class="col-12 mb-4 text-right">
               <button
                 type="button"
-                class="btn btn-icon btn-inverse-success"
+                class="btn btn-icon btn-inverse-primary"
                 @click="openModalExport"
+              :disabled="elements.total == 0 ? true : false"
+                :style="elements.total == 0 ? 'opacity: 0.50' : ''"
               >
                 <span class="btn-inner--icon">
                   <jam-download class="current-color" />
                 </span>
-                <span class="btn-inner--text">Exportar</span>
+                <span class="btn-inner--text">Exportar {{ elements.total == 0 ? '(0 Leads)' : '' }}</span>
               </button>
             </div>
             <div class="col-12">

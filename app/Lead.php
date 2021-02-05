@@ -21,8 +21,8 @@ class Lead extends Model
         return $this->belongsTo('App\MasterLeadSource', 'lead_source_id', 'id');
     }
 
-    public function getCreatedAtFormatAttribute( $value ) {
-        return (new Carbon($value))->format('g:iA d-m-Y');
+    public function getCreatedAtFormatAttribute(  ) {
+        return (new Carbon($this->created_at))->format('g:iA d-m-Y');
     }
 
     public function getMobileFormatAttribute(){

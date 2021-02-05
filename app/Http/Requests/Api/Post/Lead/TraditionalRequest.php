@@ -39,7 +39,7 @@ class TraditionalRequest extends FormRequest
           'name' => 'required|max:100',
           'email' =>  'required|max:100|email',
           'mobile' => 'required|digits_between:7,9',
-          'lead_medium_id' => 'required',
+          //'lead_medium_id' => 'required',
           'accepted' => 'accepted'
         ];
     }

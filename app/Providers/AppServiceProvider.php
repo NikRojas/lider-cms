@@ -69,6 +69,7 @@ class AppServiceProvider extends ServiceProvider
             $view->with(compact("menu"));
         });
         Applicant::observe(ApplicantObserver::class);
+        Lead::observe(LeadObserver::class);
         LeadVideocall::observe(LeadVideocallObserver::class);
         LeadSaleLand::observe(LeadSaleLandObserver::class);
         ProjectQuotation::observe(ProjectQuotationObserver::class);

@@ -43,7 +43,7 @@ class PostController extends BaseController
     }
 
     public function traditional(TraditionalRequest $request){
-        $el = request(['name','email','mobile','lead_medium_id']);
+        $el = request(['name','email','mobile']);
 		try {
             $el = Lead::UpdateOrCreate(array_merge($el,["lead_source_id" => 1]));
             return $this->sendResponse([], trans('custom.title.success'), 200);;

@@ -7,7 +7,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
-class LeadSaleLandNotification extends Notification implements ShouldQueue
+class UserLeadNotification extends Notification implements ShouldQueue
 {
     use Queueable;
     private $lead;
@@ -42,9 +42,9 @@ class LeadSaleLandNotification extends Notification implements ShouldQueue
     public function toMail($notifiable)
     {
         return (new MailMessage)
-                    ->subject('Nuevo Lead Venta de Terreno')
-                    ->line('Hay un nuevo lead de venta de terreno tienes una cita online Lead VideoCall:' .$this->lead->name . ' Email'. $this->lead->email)
-                    ->line('Thank you for using our application!');
+                ->subject('Lead Te contactaremos')
+                ->line('CONTACTO:' .$this->lead->name . ' Email'. $this->lead->email)
+                ->line('Thank you for using our application!');
     }
 
     /**

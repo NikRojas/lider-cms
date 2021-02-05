@@ -80,12 +80,13 @@ class PostController extends BaseController
     public function applicant(ApplicantRequest $request)
     {
         $applicant = request(['name','mobile', 'email', 'job','url']);
-        $name = $this->setFileName('a-',$request->file('pdf'));
+        /*$name = $this->setFileName('a-',$request->file('pdf'));
         $store = Storage::disk('public')->putFileAs('files/applicants-12920/',$request->file('pdf'),$name);
         if(!$store){
             return response()->json(['title'=> trans('custom.title.error'), 'message'=> "Ocurrió un error al subir el archivo. Por favor inténtelo en unos minutos." ],500);    
         }
-        $applicant = array_merge($applicant,["pdf"=>$name]);
+        $applicant = array_merge($applicant,["pdf"=>$name]);*/
+        $applicant = array_merge($applicant,["pdf"=> "PDF"]);
 		    try {
             $applicant = Applicant::UpdateOrCreate($applicant);
             return response()->json(['title'=> trans('custom.title.success')],200); 

@@ -42,7 +42,7 @@ class ApplicantNotification extends Notification implements ShouldQueue
     public function toMail($notifiable)
     {
         return (new MailMessage)
-            ->subject('PLAY Group Web - New Player')
+            ->subject('Nuevo Postulante')
             ->view(
             'emails.applicant', ['applicant' => $this->applicant]
         );

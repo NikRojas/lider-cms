@@ -4,7 +4,7 @@
 
 <html>
 <head>
-    <title>PLAY Group</title>
+    <title>Lider</title>
 </head>
 <body>
     <table align="center" bgcolor="#fbfbfb" border="0" cellpadding="0" cellspacing="0" width="100%">
@@ -31,15 +31,12 @@
                                                         <tbody>
                                                             <tr>
                                                                 <td align="center" style="font-family:Arial,sans-serif!important;font-size:16px!important;line-height:30px!important;font-weight:400!important;color:#7e8890!important">
-                                                                    <img src="https://storage.googleapis.com/playgroup-web/img/lid-mail.png" alt="lid" height="50">
                                                                     <h3><strong style="color:#1bafba;">Mensaje enviado desde la Web</strong></h3>
-                                                                    
-                                                                    
                                                                     <p style="margin: 0; color: #212121;margin-bottom: 5px;display:block;">
-                                                                    <strong>Nombre Completo:</strong> {{ $applicant->full_name }}
+                                                                    <strong>Nombre Completo:</strong> {{ $applicant->name }}
                                                                     </p>
                                                                     <p style="margin: 0; color: #212121;margin-bottom: 5px;display:block;">
-                                                                    <strong>Teléfono:</strong> {{ $applicant->phone }}
+                                                                    <strong>Móvil:</strong> {{ $applicant->mobile }}
                                                                     </p>
                                                                     <p style="margin: 0; color: #212121;margin-bottom: 5px;display:block;">
                                                                     <strong>Email:</strong> {{ $applicant->email }}

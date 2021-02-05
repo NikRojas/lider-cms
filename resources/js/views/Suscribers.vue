@@ -28,7 +28,7 @@
         <template slot="filters">
           <div class="row mb-3">
             <div class="col-6">
-              <FilterDateRange  :active.sync="filterDate.active"  :range.sync="filterDate.range" @get="getEls(1, elementsPerPage)"/>
+              <!--<FilterDateRange  :active.sync="filterDate.active"  :range.sync="filterDate.range" @get="getEls(1, elementsPerPage)"/>-->
             </div>
             <div class="col-6 text-right">
               <button class="btn btn-icon btn-inverse-primary" @click="exportData()">

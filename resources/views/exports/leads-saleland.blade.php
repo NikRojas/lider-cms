@@ -13,7 +13,7 @@
     style="background-color:#01C670;color:#FFFFFF;font-size:14px;font-weight:bold;text-align:center;vertical-align:middle;border: 1px solid black;"
     colspan="2">Rango de Exportación</th>
    <th style=" font-size:13px;font-weight:bold;text-align:center;vertical-align:middle;border: 1px solid black;">
-    {{ Carbon::createFromFormat("Y-m-d H:i",$start )->isoFormat('llll') }} - {{ Carbon::createFromFormat("Y-m-d H:i",$end )->isoFormat('llll') }}</th>
+   {{ \Carbon\Carbon::createFromFormat("Y-m-d H:i:s",$start )->isoFormat('llll') }} - {{ \Carbon\Carbon::createFromFormat("Y-m-d H:i:s",$end )->isoFormat('llll') }}</th>
   </tr>
   @endif
   <tr>

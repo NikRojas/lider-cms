@@ -27,7 +27,7 @@ class DatabaseSeeder extends Seeder
         $this->call(MasterTransactionStatusTableSeeder::class);*/
 
         /*$this->call(ComplaintsBookSeeder::class);*/
-        /*$this->call(ProjectQuotationsTableSeeder::class);*/
+        /**/
         //$this->call(SuscribersTableSeeder::class);
         #Need Projects & TipeDepartments
         /*$this->call(CustomersTableSeeder::class);
@@ -36,8 +36,9 @@ class DatabaseSeeder extends Seeder
         $this->call(TransactionsTableSeeder::class);*/
 
         //Leads
-        $this->call(LeadsTableSeeder::class);
+        /*$this->call(LeadsTableSeeder::class);
         $this->call(LeadsSalesLandTableSeeder::class);
-        $this->call(LeadsVideocallTableSeeder::class);
+        $this->call(LeadsVideocallTableSeeder::class);*/
+        $this->call(ProjectQuotationsTableSeeder::class);
     }
 }

@@ -7,7 +7,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
-class LeadVideocallNotification extends Notification implements ShouldQueue
+class LeadSaleLandNotification extends Notification implements ShouldQueue
 {
     use Queueable;
     private $lead;
@@ -42,9 +42,8 @@ class LeadVideocallNotification extends Notification implements ShouldQueue
     public function toMail($notifiable)
     {
         return (new MailMessage)
-                    ->subject('Nueva Cita Online')
-                    ->line('Asesor tienes una cita online Lead VideoCall:' .$this->lead->name . 'En horario de'. $this->lead->schedule)
-                    ->action('Notification Action', url('/'))
+                    ->subject('Nueva Lead Venta de Terreno')
+                    ->line('Hay un nuevo lead de venta de terreno tienes una cita online Lead VideoCall:' .$this->lead->name . ' Email'. $this->lead->email)
                     ->line('Thank you for using our application!');
     }
 

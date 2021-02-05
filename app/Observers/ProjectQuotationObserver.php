@@ -4,6 +4,7 @@ namespace App\Observers;
 
 use App\Advisor;
 use App\Notifications\ProjectQuotationNotification;
+use App\Notifications\UserProjectQuotationNotification;
 use App\ProjectQuotation;
 use Illuminate\Support\Facades\Notification;
 
@@ -39,5 +40,6 @@ class ProjectQuotationObserver
         $lead->save();
         $advisor = Advisor::find($advisorId);
         Notification::route('mail',$advisor->email)->notify(new ProjectQuotationNotification($lead,$project,$typeDepartment,$advisor));  
+        Notification::route('mail',$lead->email)->notify(new UserProjectQuotationNotification($lead,$project,$typeDepartment,$advisor));  
     }
 }

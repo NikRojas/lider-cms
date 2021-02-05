@@ -11,9 +11,11 @@ use App\Applicant;
 use App\Observers\ApplicantObserver;
 
 use App\Lead;
+use App\LeadSaleLand;
 use App\LeadVideocall;
 use App\Observers\LeadObserver;
 use App\Module;
+use App\Observers\LeadSaleLandObserver;
 use App\Observers\LeadVideocallObserver;
 use App\Observers\ProjectQuotationObserver;
 use App\ProjectQuotation;
@@ -68,6 +70,7 @@ class AppServiceProvider extends ServiceProvider
         });
         Applicant::observe(ApplicantObserver::class);
         LeadVideocall::observe(LeadVideocallObserver::class);
+        LeadSaleLand::observe(LeadSaleLandObserver::class);
         ProjectQuotation::observe(ProjectQuotationObserver::class);
     }
 }

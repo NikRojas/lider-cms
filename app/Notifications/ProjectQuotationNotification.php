@@ -51,8 +51,8 @@ class ProjectQuotationNotification extends Notification implements ShouldQueue
     public function toMail($notifiable)
     {
         return (new MailMessage)
-                    ->subject('Cotización')
-                    ->line('Estimado:' .$this->lead->first_name)
+                    ->subject('Nueva Cotización')
+                    ->line('Asesor Estimado:' .$this->lead->first_name)
                     ->line($this->project->description_es)
                     ->line($this->project->name_es)
                     ->line('Estado '.$this->project->statusRel["name_es"])

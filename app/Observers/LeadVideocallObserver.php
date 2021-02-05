@@ -5,6 +5,7 @@ namespace App\Observers;
 use App\Advisor;
 use App\LeadVideocall;
 use App\Notifications\LeadVideocallNotification;
+use App\Notifications\UserLeadVideocallNotification;
 use Illuminate\Support\Facades\Notification;
 
 class LeadVideocallObserver
@@ -37,5 +38,6 @@ class LeadVideocallObserver
         $lead->save();
         $advisor = Advisor::find($advisorId);
         Notification::route('mail',$advisor->email)->notify(new LeadVideocallNotification($lead));  
+        Notification::route('mail',$lead->email)->notify(new UserLeadVideocallNotification($lead));  
     }
 }

@@ -14,21 +14,22 @@ class ProjectQuotationNotification extends Notification implements ShouldQueue
 {
     use Queueable;
     private $lead;
-    private $project;
+    /*private $project;
     private $typeDepartment;
-    private $advisor;
+    private $advisor;*/
 
     /**
      * Create a new notification instance.
      *
      * @return void
      */
-    public function __construct($lead, $project, $typeDepartment, $advisor)
+    ///public function __construct($lead, $project, $typeDepartment, $advisor)
+    public function __construct($lead)
     {
         $this->lead = $lead;
-        $this->project = $project->load('statusRel');
+        /*$this->project = $project->load('statusRel');
         $this->typeDepartment = $typeDepartment;
-        $this->advisor = $advisor;
+        $this->advisor = $advisor;*/
     }
 
     /**
@@ -51,20 +52,12 @@ class ProjectQuotationNotification extends Notification implements ShouldQueue
     public function toMail($notifiable)
     {
         return (new MailMessage)
-                    ->subject('Nueva Cotización')
-                    ->line('Asesor Estimado:' .$this->lead->first_name)
+                    ->subject(config('app.name').' - Nueva Cotización')
+                    ->view('emails.advisor-quotation', ['lead' => $this->lead]);
+                    /*->line('Asesor Estimado:' .$this->lead->first_name)
                     ->line($this->project->description_es)
                     ->line($this->project->name_es)
-                    ->line('Estado '.$this->project->statusRel["name_es"])
-                    ->line('Tipologia '.$this->typeDepartment->name)
-                    ->line('Dormitorios '.$this->typeDepartment->room)
-                    ->line('Metraje '.$this->typeDepartment->area)
-                    ->line('Asesor')
-                    ->line('Nombre '.$this->advisor->name)
-                    ->line('Teléfono '.$this->advisor->mobile_masked)
-                    ->line('Correo '.$this->advisor->email)
-                    ->action('Notification Action', url('/'))
-                    ->line('Thank you for using our application!');
+                    ->line('Estado '.$this->project->statusRel["name_es"]);*/
     }
 
     /**

@@ -1,5 +1,10 @@
 <?php
 
+use App\Applicant;
+use App\FinancingOption;
+use App\Lead;
+use App\ProjectQuotation;
+
 Route::get('/', 'Cms\Auth\LoginController@showLoginForm')->name('login');
 Route::post('login', 'Cms\Auth\LoginController@login')->name('login.post');
 Route::post('logout', 'Cms\Auth\LoginController@logout')->name('logout');
@@ -433,3 +438,31 @@ Route::middleware(['auth'])->namespace('Cms')->name('cms.')->group(function () {
     Route::get('json/get-districts', 'CmsController@getDistrictsParent')->name('json.get-districts');
     Route::get('json/select/categories', 'CmsController@getCategories')->name('json.get-categories');
 });
+
+/*
+Route::get('/mail/test', function () {
+    return view('emails.test');
+});
+
+Route::get('/mail/advisor/lead', function () {
+    $lead = Lead::first();
+    return view('emails.advisor-lead',["lead" => $lead, "type" => "Tradicional"]);
+});
+
+Route::get('/mail/user/quotation', function () {
+    $lead = ProjectQuotation::with('projectRel.statusRel','advisorRel','projectTypeDepartmentRel')->first();
+    $financingOptions = FinancingOption::where('active',true)->orderBy('index','asc')->get();
+    return view('emails.user-quotation',["lead" => $lead, "financingOptions" => $financingOptions]);
+});
+
+Route::get('/mail/advisor/quotation', function () {
+    $lead = ProjectQuotation::with('projectRel.statusRel','advisorRel','projectTypeDepartmentRel')->first();
+    return view('emails.advisor-quotation',["lead" => $lead]);
+});*/
+
+Route::get('/mail/applicant', function () {
+    $applicant = Applicant::first();
+    return view('emails.applicant',["applicant" => $applicant]);
+});
+
+

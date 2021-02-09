@@ -9,7 +9,7 @@ class LeadSaleLand extends Model
 {
     protected $table = 'leads_sale_land';
     protected $guarded = [];
-    protected $appends = ["created_at_format","mobile_format"];
+    protected $appends = ["created_at_format","mobile_format","created_at_format_email"];
 
     public function getCreatedAtFormatAttribute(  ) {
         return (new Carbon($this->created_at))->format('g:iA d-m-Y');
@@ -27,5 +27,10 @@ class LeadSaleLand extends Model
             $data = $this->mobile;
         }
         return $data;
+    }
+
+    public function getCreatedAtFormatEmailAttribute() {
+        $date = new Carbon($this->created_at);
+        return $date->day.' de '.ucfirst($date->monthName).' '.$date->year;;
     }
 }

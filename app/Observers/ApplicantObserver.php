@@ -12,7 +12,6 @@ class ApplicantObserver
 {
     public function created(Applicant $applicant)
     {
-
         $email = EmailDestination::where('type','applicant')->first();
         if($email){
             Notification::route('mail',$email->email_destination_job_formatted)->notify(new ApplicantNotification($applicant));         

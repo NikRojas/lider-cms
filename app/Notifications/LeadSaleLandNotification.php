@@ -42,9 +42,8 @@ class LeadSaleLandNotification extends Notification implements ShouldQueue
     public function toMail($notifiable)
     {
         return (new MailMessage)
-                    ->subject('Nuevo Lead Venta de Terreno')
-                    ->line('Hay un nuevo lead de venta de terreno tienes una cita online Lead VideoCall:' .$this->lead->name . ' Email'. $this->lead->email)
-                    ->line('Thank you for using our application!');
+                    ->subject(config('app.name').' - Nuevo Lead Venta de Terreno')
+                    ->view('emails.advisor-lead', ['lead' => $this->lead, 'type' => "Venta de Terreno"]);
     }
 
     /**

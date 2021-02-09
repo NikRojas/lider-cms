@@ -42,10 +42,8 @@ class LeadVideocallNotification extends Notification implements ShouldQueue
     public function toMail($notifiable)
     {
         return (new MailMessage)
-                    ->subject('Nueva Cita Online')
-                    ->line('Asesor tienes una cita online Lead VideoCall:' .$this->lead->name . 'En horario de'. $this->lead->schedule)
-                    ->action('Notification Action', url('/'))
-                    ->line('Thank you for using our application!');
+                    ->subject(config('app.name').' -Nuevo Lead Cita Online')
+                    ->view('emails.advisor-lead', ['lead' => $this->lead, 'type' => "Cita Online"]);
     }
 
     /**

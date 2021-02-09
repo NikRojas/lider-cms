@@ -42,9 +42,8 @@ class LeadNotification extends Notification implements ShouldQueue
     public function toMail($notifiable)
     {
         return (new MailMessage)
-            ->subject('Nuevo Lead de Contacto')
-            ->line('Hay un nuevo lead de CONTACTO:' .$this->lead->name . ' Email'. $this->lead->email)
-            ->line('Thank you for using our application!');
+            ->subject(config('app.name').' - Nuevo Lead de Contacto')
+            ->view('emails.advisor-lead', ['lead' => $this->lead, 'type' => "Tradicional"]);
     }
 
     /**

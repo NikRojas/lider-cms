@@ -36,7 +36,7 @@ class ApplicantsController extends Controller
         } else {
             $applicants = $applicant_repository->datatable($request->desde);
         }
-        $applicants["headers"] = ["Id","Nombre Completo","Email","Celular","Puesto","PDF"];
+        $applicants["headers"] = ["Id","Nombre Completo","Email","Móvil","Puesto","PDF"];
         return response()->json($applicants);
     }
     
@@ -46,7 +46,7 @@ class ApplicantsController extends Controller
         try {
             $applicant_delete = $applicant->delete();
             if ($applicant_delete) {
-                Storage::disk('public')->delete('files/applicants-16720/'.$pdf);
+                Storage::disk('public')->delete('files/applicants-010221/'.$pdf);
             }
             return response()->json(['title'=> trans('custom.title.success'), 'message'=> trans('custom.message.delete.success', ['name' => trans('custom.attribute.applicant')])], 200);
         } catch (\Exception $e) {

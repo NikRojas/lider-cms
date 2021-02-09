@@ -80,7 +80,7 @@ class PostController extends BaseController
     {
         $applicant = request(['name','mobile', 'email', 'job','url']);
         $name = $this->setFileName('a-',$request->file('pdf'));
-        $store = Storage::disk('public')->putFileAs('files/applicants-12920/',$request->file('pdf'),$name);
+        $store = Storage::disk('public')->putFileAs('files/applicants-010221/',$request->file('pdf'),$name);
         if(!$store){
             return response()->json(['title'=> trans('custom.title.error'), 'message'=> "Ocurrió un error al subir el archivo. Por favor inténtelo en unos minutos." ],500);    
         }

@@ -9,7 +9,7 @@ class ProjectQuotation extends Model
 {
     protected $table = 'project_quotation';
     protected $guarded = [];
-    protected $appends = ['mobile_formatted','first_name','created_at_format'];
+    protected $appends = ['mobile_formatted','first_name','created_at_format','created_at_format_email'];
 
     public function projectRel()
     {
@@ -42,6 +42,11 @@ class ProjectQuotation extends Model
     public function getFirstNameAttribute(){
         $temp = explode(' ',trim($this->name));
         return $temp[0];
+    }
+
+    public function getCreatedAtFormatEmailAttribute() {
+        $date = new Carbon($this->created_at);
+        return $date->day.' de '.ucfirst($date->monthName).' '.$date->year;;
     }
 
 }

@@ -686,6 +686,49 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -874,6 +917,10 @@ __webpack_require__.r(__webpack_exports__);
 
       if (this.$refs.ref_logo.dropzone.files[0]) {
         fd.append("logo", this.$refs.ref_logo.dropzone.files[0]);
+      }
+
+      if (this.$refs.ref_logo_colour.dropzone.files[0]) {
+        fd.append("logo_colour", this.$refs.ref_logo_colour.dropzone.files[0]);
       }
 
       if (this.element.project_status_id) {
@@ -1425,7 +1472,7 @@ var render = function() {
                             staticClass: "font-weight-bold",
                             attrs: { for: "image" }
                           },
-                          [_vm._v("Logo:")]
+                          [_vm._v("Logo Blanco:")]
                         ),
                         _vm._v(" "),
                         _c("div", { staticClass: "row" }, [
@@ -1450,7 +1497,7 @@ var render = function() {
                                 "vue-dropzone",
                                 {
                                   ref: "ref_logo",
-                                  staticClass: "text-center",
+                                  staticClass: "text-center dropzone-dark",
                                   attrs: {
                                     id: "image",
                                     options: _vm.dropzoneOptions,
@@ -1510,6 +1557,98 @@ var render = function() {
                     ]),
                     _vm._v(" "),
                     _c("div", { staticClass: "col-12 col-lg-6" }, [
+                      _c("div", { staticClass: "form-group" }, [
+                        _c(
+                          "label",
+                          {
+                            staticClass: "font-weight-bold",
+                            attrs: { for: "image_colour" }
+                          },
+                          [_vm._v("Logo Color:")]
+                        ),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "row" }, [
+                          _c("div", { staticClass: "col-lg-4 mb-3 mb-lg-0" }, [
+                            _c("img", {
+                              staticClass: "img-fluid",
+                              attrs: {
+                                src:
+                                  _vm.imagesUrl +
+                                  "/projects/" +
+                                  _vm.element.logo_colour,
+                                alt: ""
+                              }
+                            })
+                          ]),
+                          _vm._v(" "),
+                          _c(
+                            "div",
+                            { staticClass: "col-lg-8 vue-dropzone-dark" },
+                            [
+                              _c(
+                                "vue-dropzone",
+                                {
+                                  ref: "ref_logo_colour",
+                                  staticClass: "text-center",
+                                  attrs: {
+                                    id: "image_colour",
+                                    options: _vm.dropzoneOptions,
+                                    duplicateCheck: true,
+                                    useCustomSlot: true
+                                  },
+                                  on: {
+                                    "vdropzone-file-added": function($event) {
+                                      return _vm.$validateImageDropzone(
+                                        $event,
+                                        _vm.$refs.ref_logo_colour.dropzone,
+                                        1,
+                                        51200,
+                                        "50kb"
+                                      )
+                                    }
+                                  }
+                                },
+                                [
+                                  _c(
+                                    "div",
+                                    { staticClass: "dropzone-custom-content" },
+                                    [
+                                      _c(
+                                        "h5",
+                                        {
+                                          staticClass:
+                                            "dropzone-custom-title text-primary"
+                                        },
+                                        [
+                                          _vm._v(
+                                            "\n                              Suelte los archivos aquí o haga click para\n                              cargarlos.\n                            "
+                                          )
+                                        ]
+                                      )
+                                    ]
+                                  )
+                                ]
+                              ),
+                              _vm._v(" "),
+                              _vm.errors && _vm.errors.logo_colour
+                                ? _c(
+                                    "label",
+                                    {
+                                      staticClass:
+                                        "text-danger text-sm d-block mt-2",
+                                      attrs: { for: "logo_colour" }
+                                    },
+                                    [_vm._v(_vm._s(_vm.errors.logo_colour[0]))]
+                                  )
+                                : _vm._e()
+                            ],
+                            1
+                          )
+                        ])
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "col-12 mb-2" }, [
                       _c("div", { staticClass: "form-group" }, [
                         _c(
                           "label",

@@ -17,6 +17,7 @@ class CreateProjectsTable extends Migration
             $table->bigIncrements('id');
             //$table->string('id')->primary();
             $table->string('logo',100);
+            $table->string('logo_colour',100);
             $table->json('images');
             $table->boolean('active')->default(true);
             $table->text('description_es');

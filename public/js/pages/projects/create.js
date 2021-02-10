@@ -736,6 +736,42 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -933,6 +969,10 @@ __webpack_require__.r(__webpack_exports__);
 
       if (this.$refs.ref_logo.dropzone.files[0]) {
         fd.append("logo", this.$refs.ref_logo.dropzone.files[0]);
+      }
+
+      if (this.$refs.ref_logo_colour.dropzone.files[0]) {
+        fd.append("logo_colour", this.$refs.ref_logo_colour.dropzone.files[0]);
       }
 
       if (this.element.project_status_id) {
@@ -1319,14 +1359,14 @@ var render = function() {
                                 staticClass: "font-weight-bold",
                                 attrs: { for: "image" }
                               },
-                              [_vm._v("Logo:")]
+                              [_vm._v("Logo Blanco:")]
                             ),
                             _vm._v(" "),
                             _c(
                               "vue-dropzone",
                               {
                                 ref: "ref_logo",
-                                staticClass: "text-center",
+                                staticClass: "text-center  dropzone-dark",
                                 attrs: {
                                   id: "image",
                                   options: _vm.dropzoneOptions,
@@ -1386,7 +1426,86 @@ var render = function() {
                     _vm._v(" "),
                     _c(
                       "div",
-                      { staticClass: "col-12 col-lg-6 mb-4 mb-lg-0" },
+                      { staticClass: "col-12 col-lg-6 vue-dropzone-dark" },
+                      [
+                        _c(
+                          "div",
+                          { staticClass: "form-group" },
+                          [
+                            _c(
+                              "label",
+                              {
+                                staticClass: "font-weight-bold",
+                                attrs: { for: "image_colour" }
+                              },
+                              [_vm._v("Logo Color:")]
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "vue-dropzone",
+                              {
+                                ref: "ref_logo_colour",
+                                staticClass: "text-center",
+                                attrs: {
+                                  id: "image_colour",
+                                  options: _vm.dropzoneOptions,
+                                  duplicateCheck: true,
+                                  useCustomSlot: true
+                                },
+                                on: {
+                                  "vdropzone-file-added": function($event) {
+                                    return _vm.$validateImageDropzone(
+                                      $event,
+                                      _vm.$refs.ref_logo_colour.dropzone,
+                                      1,
+                                      51200,
+                                      "50kb"
+                                    )
+                                  }
+                                }
+                              },
+                              [
+                                _c(
+                                  "div",
+                                  { staticClass: "dropzone-custom-content" },
+                                  [
+                                    _c(
+                                      "h5",
+                                      {
+                                        staticClass:
+                                          "dropzone-custom-title text-primary"
+                                      },
+                                      [
+                                        _vm._v(
+                                          "\n                          Suelte los archivos aquí o haga click para\n                          cargarlos.\n                        "
+                                        )
+                                      ]
+                                    )
+                                  ]
+                                )
+                              ]
+                            ),
+                            _vm._v(" "),
+                            _vm.errors && _vm.errors.logo_colour
+                              ? _c(
+                                  "label",
+                                  {
+                                    staticClass:
+                                      "text-danger text-sm d-block mt-2",
+                                    attrs: { for: "logo_colour" }
+                                  },
+                                  [_vm._v(_vm._s(_vm.errors.logo_colour[0]))]
+                                )
+                              : _vm._e()
+                          ],
+                          1
+                        )
+                      ]
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "div",
+                      { staticClass: "col-12 mb-4" },
                       [
                         _c("MultipleFiles", {
                           attrs: {

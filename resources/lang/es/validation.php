@@ -204,6 +204,7 @@ return [
         'features' => 'características',
         'advisors' => 'asesores',
         'mobile' => 'móvil',
+        'logo_colour' => 'logo color',
         'project_status_id' => 'estado del proyecto',
         'banner' => 'baner',
         'room' => 'dormitorio'

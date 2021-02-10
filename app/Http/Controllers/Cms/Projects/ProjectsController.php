@@ -80,6 +80,9 @@ class ProjectsController extends Controller
         if($request->projects_related){
             $project = array_merge($project,["projects_related" => $request->projects_related]);
         }
+
+        $logoNameColour = $this->setFileName('lc-',$request->file('logo_colour'));
+        $storeLogoClour = Storage::disk('public')->putFileAs('img/projects/',$request->file('logo_colour'),$logoNameColour);
         
         $logoName = $this->setFileName('l-',$request->file('logo'));
         $storeLogo = Storage::disk('public')->putFileAs('img/projects/',$request->file('logo'),$logoName);
@@ -102,9 +105,10 @@ class ProjectsController extends Controller
             }
             $images[] = ${$correlative.'Name'};
         }
-        if(!$storeLogo || !$storeBanner || !$storeBrochure){
+        if(!$storeLogo || !$storeBanner || !$storeBrochure || !$storeLogoClour){
             $request->session()->flash('error', trans('custom.message.create.error', ['name' => trans('custom.attribute.project')]));
             Storage::disk('public')->delete('img/projects/'.$logoName);
+            Storage::disk('public')->delete('img/projects/'.$logoNameColour);
             Storage::disk('public')->delete('img/projects/'.$imageBanner);
             Storage::disk('public')->delete('files/projects/'.$brochureName);
             return response()->json(["route" => route('cms.projects.index')],500);
@@ -113,12 +117,13 @@ class ProjectsController extends Controller
         $project = array_merge($project,["code_ubigeo" => $request->department.$request->province.$request->district]);
         $index = $this->getMaxIndex(Project::selectRaw('MAX(id),MAX(`index`) as "index"')->get());
 
-        $project = array_merge($project,["images" => json_encode($images), "logo"=>$logoName,"brochure"=>$brochureName,"index" => $index,"banner"=>$imageBanner]);
+        $project = array_merge($project,["images" => json_encode($images), "logo"=>$logoName, "logo_colour"=>$logoNameColour,"brochure"=>$brochureName,"index" => $index,"banner"=>$imageBanner]);
         try{
             $project = Project::UpdateOrCreate($project); 
         }
         catch(\Exception $e){
             Storage::disk('public')->delete('img/projects/'.$logoName);
+            Storage::disk('public')->delete('img/projects/'.$logoNameColour);
             Storage::disk('public')->delete('img/projects/'.$imageBanner);
             Storage::disk('public')->delete('files/projects/'.$brochureName);
             foreach ($images as $key => $value) {
@@ -154,6 +159,7 @@ class ProjectsController extends Controller
         catch(\Exception $e){
             Storage::disk('public')->delete('img/projects/'.$logoName);
             Storage::disk('public')->delete('img/projects/'.$imageBanner);
+            Storage::disk('public')->delete('img/projects/'.$logoNameColour);
             Storage::disk('public')->delete('files/projects/'.$brochureName);
             foreach ($images as $key => $value) {
                 Storage::disk('public')->delete('img/projects/'.$value);
@@ -188,6 +194,20 @@ class ProjectsController extends Controller
         }  
         else{
             $request_project = array_merge($request_project,["logo" => $element->logo]);   
+        }
+
+        if($request->hasFile('logo_colour')){
+            $logoNameColour = $this->setFileName('l-',$request->file('logo_colour'));
+            $storeLogoColour = Storage::disk('public')->putFileAs('img/projects/',$request->file('logo_colour'),$logoNameColour);
+            if(!$storeLogoColour){
+                Storage::disk('public')->delete('img/projects/'.$logoNameColour);
+                $request->session()->flash('error', trans('custom.message.update.error', ['name' => trans('custom.attribute.project')]));
+                return response()->json(["route" => route('cms.projects.index')],500);    
+            }
+            $request_project = array_merge($request_project,["logo_colour" => $logoNameColour]);   
+        }  
+        else{
+            $request_project = array_merge($request_project,["logo_colour" => $element->logo_colour]);   
         }
 
         if($request->hasFile('banner')){
@@ -256,12 +276,14 @@ class ProjectsController extends Controller
         if($request->hasFile('logo') && $element->logo){
             Storage::disk('public')->delete('img/projects/'.$element->logo);
         } 
+        if($request->hasFile('logo_colour') && $element->logo_colour){
+            Storage::disk('public')->delete('img/projects/'.$element->logo_colour);
+        } 
         $request_project = array_merge($request_project,["code_ubigeo" => $request->department.$request->province.$request->district]);
         try{
             $project = Project::UpdateOrCreate(["id"=>$element->id],$request_project); 
         }
         catch(\Exception $e){
-            dd($e);
             $request->session()->flash('error', trans('custom.message.update.error', ['name' => trans('custom.attribute.project')]));
             return response()->json(["route" => route('cms.projects.index')],500);
         }

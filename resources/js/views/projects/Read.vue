@@ -49,6 +49,17 @@
                     />
                   </div>
                   <div class="col-12 col-lg-6 mb-3">
+                    <h3 class="font-weight-normal">
+                      <span class="d-block font-weight-bold">Logo Color:</span>
+                    </h3>
+                    <img
+                      class=""
+                      height="90"
+                      :src="imagesUrl + '/projects/' + element.logo_colour"
+                      alt
+                    />
+                  </div>
+                  <div class="col-12 col-lg-6 mb-3">
                     <h3 class="mb-1 font-weight-normal">
                       <span class="d-block font-weight-bold"
                         >Nombre del Proyecto ES:</span

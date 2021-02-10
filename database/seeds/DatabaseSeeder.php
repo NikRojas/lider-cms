@@ -36,7 +36,7 @@ class DatabaseSeeder extends Seeder
         $this->call(TransactionsTableSeeder::class);*/
 
         //Leads
-        $this->call(LeadsTableSeeder::class);
+        //$this->call(LeadsTableSeeder::class);
         /*$this->call(LeadsSalesLandTableSeeder::class);
         $this->call(LeadsVideocallTableSeeder::class);
         $this->call(ProjectQuotationsTableSeeder::class);*/

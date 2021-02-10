@@ -67,13 +67,13 @@ class ProjectRequest extends FormRequest
             case 'POST':   
                 $rules = array_merge(
                     $rules,
-                    ['logo' => 'required','brochure' => 'required','banner' => 'required']
+                    ['logo' => 'required','logo_colour' => 'required','brochure' => 'required','banner' => 'required']
                 );
             break;
             case 'PUT':   
                 $rules = array_merge(
                     $rules,
-                    ['logo' => 'sometimes|required','brochure' => 'sometimes|required', 'banner' => 'sometimes|required']
+                    ['logo' => 'sometimes|required','logo_colour' => 'sometimes|required','brochure' => 'sometimes|required', 'banner' => 'sometimes|required']
                 );
             break;
         }

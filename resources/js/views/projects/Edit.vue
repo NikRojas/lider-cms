@@ -57,7 +57,7 @@
                   </div>
                   <div class="col-12 col-lg-6">
                     <div class="form-group">
-                      <label class="font-weight-bold" for="image">Logo:</label>
+                      <label class="font-weight-bold" for="image">Logo Blanco:</label>
                       <div class="row">
                         <div class="col-lg-4 mb-3 mb-lg-0">
                           <img class="img-fluid p-2 bg-dark" :src="imagesUrl+'/projects/'+element.logo" alt />
@@ -68,7 +68,7 @@
                             @vdropzone-file-added="$validateImageDropzone($event,$refs.ref_logo.dropzone,1,51200,
                             '50kb')"
                             id="image"
-                            class="text-center"
+                            class="text-center dropzone-dark"
                             :options="dropzoneOptions"
                             :duplicateCheck="true"
                             :useCustomSlot="true"
@@ -90,6 +90,49 @@
                     </div>
                   </div>
                   <div class="col-12 col-lg-6">
+                    <div class="form-group">
+                      <label class="font-weight-bold" for="image_colour">Logo Color:</label>
+                      <div class="row">
+                        <div class="col-lg-4 mb-3 mb-lg-0">
+                          <img class="img-fluid" :src="imagesUrl+'/projects/'+element.logo_colour" alt />
+                        </div>
+                        <div class="col-lg-8 vue-dropzone-dark">
+                          <vue-dropzone
+                            ref="ref_logo_colour"
+                            @vdropzone-file-added="
+                              $validateImageDropzone(
+                                $event,
+                                $refs.ref_logo_colour.dropzone,
+                                1,
+                                51200,
+                                '50kb'
+                              )
+                            "
+                            id="image_colour"
+                            class="text-center"
+                            :options="dropzoneOptions"
+                            :duplicateCheck="true"
+                            :useCustomSlot="true"
+                          >
+                            <div class="dropzone-custom-content">
+                              <h5 class="dropzone-custom-title text-primary">
+                                Suelte los archivos aquí o haga click para
+                                cargarlos.
+                              </h5>
+                            </div>
+                          </vue-dropzone>
+
+                          <label
+                            v-if="errors && errors.logo_colour"
+                            class="text-danger text-sm d-block mt-2"
+                            for="logo_colour"
+                            >{{ errors.logo_colour[0] }}</label
+                          >
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-12 mb-2">
                     <div class="form-group">
                       <label class="font-weight-bold" for="images">Imágenes:</label>
                       <div class="row">
@@ -821,6 +864,9 @@ export default {
       }
       if (this.$refs.ref_logo.dropzone.files[0]) {
         fd.append("logo", this.$refs.ref_logo.dropzone.files[0]);
+      }
+      if (this.$refs.ref_logo_colour.dropzone.files[0]) {
+        fd.append("logo_colour", this.$refs.ref_logo_colour.dropzone.files[0]);
       }
       if (this.element.project_status_id) {
         fd.append("project_status_id", this.element.project_status_id);

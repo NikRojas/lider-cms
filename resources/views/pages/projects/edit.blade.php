@@ -25,6 +25,9 @@
     border-radius: .625rem;
     background-size: 50% 50%;
 }
+.dropzone-dark .dz-preview{
+    background-color: black !important;
+}
         </style>
 @endsection
 @section('content')

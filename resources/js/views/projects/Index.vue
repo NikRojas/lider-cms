@@ -37,161 +37,182 @@
           <div class="col-12">
             <draggable class="row" v-model="elements" @change="handleChange">
               <div
-                class="col-12 col-lg-6 col-xl-4 mb-4"
+                class="col-12 col-lg-6 mb-4"
                 v-for="el in elements"
                 :key="el.id"
               >
-                <div class="card position-relative">
-                  <div class="text-center position-absolute pl-3 pt-3">
-                    <img
-                      :src="imagesUrl + '/projects/' + el.logo"
-                      height="50"
-                      :alt="el.name_es"
-                    />
-                  </div>
-                  <img
-                    class="object-fit--cover"
-                    height="300"
-                    :src="imagesUrl + '/projects/' + el.images_format[0]"
-                    alt
-                  />
+                <div class="card">
                   <div class="card-body">
-                    <div>
-                      <div class="row">
-                        <div class="col-12 mb-2 text-right">
+                    <div class="row mb-2">
+                      <div class="col-lg-4 col-12 mb-4 mb-lg">
+                        <img
+                          class="img-fluid"
+                          :src="imagesUrl + '/projects/' + el.images_format[0]"
+                          alt
+                        />
+                      </div>
+                      <div class="col-lg-8 col-12">
+                        <img
+                          :src="imagesUrl + '/projects/' + el.logo_colour"
+                          height="30"
+                          :alt="el.name_es"
+                        />
+                        <div class="row mt-2">
+                          <div class="col-12 mb-2">
+                            <div class>
+                              <a
+                                style="text-decoration: underline"
+                                :href="appUrl + '/proyectos/' + el.slug_es"
+                                >{{ appUrl }}/proyectos/{{ el.slug_es }}</a
+                              >
+                              <br />
+                              <a
+                                style="text-decoration: underline"
+                                :href="appUrl + '/projects/' + el.slug_en"
+                                >{{ appUrl }}/projects/{{ el.slug_en }}</a
+                              >
+                            </div>
+                          </div>
+                        </div>
+                        <div class="row">
+                          <div class="col-12">
+                            <span class="badge badge-warning badge-md">{{
+                              el.status_rel.name_es
+                            }}</span>
+
+                            <h2 class="mt-1">{{ el.name_es }}</h2>
+
+                            <div class="mb-3">
+                              <div class="row">
+                                <div class="col-12 mb-1">
+                                  Se muestra en la Web:
+                                  <span
+                                    :class="
+                                      el.active
+                                        ? 'font-weight-bold text-success'
+                                        : 'font-weight-bold text-danger'
+                                    "
+                                    >{{ el.active ? "Sí" : "No" }}</span
+                                  >
+                                </div>
+                                <div class="col-12">
+                                  <div>
+                                    <h4
+                                      class="d-inline-block font-weight-normal"
+                                    >
+                                      Ubicación:
+                                    </h4>
+                                    <h4 class="d-inline-block">
+                                      {{ el.location }},
+                                      {{ el.ubigeo_rel.district }} -
+                                      {{ el.ubigeo_rel.department }}
+                                    </h4>
+                                  </div>
+                                  <div>
+                                    <div v-if="el.price_total">
+                                      <h4
+                                        class="d-inline-block font-weight-normal"
+                                      >
+                                        Precio Soles Desde:
+                                      </h4>
+                                      <h4 class="d-inline-block">
+                                        {{ el.price_total_format }}
+                                      </h4>
+                                    </div>
+                                    <div v-if="el.price_total_foreign">
+                                      <h4
+                                        class="d-inline-block font-weight-normal"
+                                      >
+                                        Precio Dólares Desde:
+                                      </h4>
+                                      <h4 class="d-inline-block">
+                                        {{ el.price_total_foreign_format }}
+                                      </h4>
+                                    </div>
+                                  </div>
+                                </div>
+                                <div class="col-12">
+                                  <div>
+                                    <h4
+                                      class="d-inline-block font-weight-normal"
+                                    >
+                                      N° Documentos:
+                                    </h4>
+                                    <h4 class="d-inline-block">
+                                      {{ el.files_rel_count }}
+                                    </h4>
+                                  </div>
+                                  <div>
+                                    <h4
+                                      class="d-inline-block font-weight-normal"
+                                    >
+                                      N° Tipologias:
+                                    </h4>
+                                    <h4 class="d-inline-block">
+                                      {{ el.tipologies_rel_count }}
+                                    </h4>
+                                  </div>
+                                  <div>
+                                    <h4
+                                      class="d-inline-block font-weight-normal"
+                                    >
+                                      N° Imágenes en la Galeria:
+                                    </h4>
+                                    <h4 class="d-inline-block">
+                                      {{ el.gallery_rel_count }}
+                                    </h4>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-12">
+                        <div class="d-flex">
                           <div class="ml-auto d-inline">
                             <a
                               :href="'proyectos/tipologias/' + el.slug_es"
-                              class="btn btn-sm mb-2 btn-inverse-primary"
+                              class="btn btn-sm mb-2 btn-outline-primary"
                               >Ir a Tipologias</a
                             >
                             <a
                               :href="'proyectos/documentos/' + el.slug_es"
-                              class="btn btn-sm mb-2 btn-inverse-primary"
+                              class="btn btn-sm mb-2 btn-outline-primary"
                               >Ir a Documentos</a
                             >
                             <a
                               :href="'proyectos/galeria/' + el.slug_es"
-                              class="btn btn-sm mb-2 btn-inverse-primary"
+                              class="btn btn-sm mb-2 btn-outline-primary"
                               >Ir a Galeria</a
                             >
                             <a
                               :href="'proyectos/tour-virtual/' + el.slug_es"
-                              class="btn btn-sm mb-2 btn-inverse-primary"
+                              class="btn btn-sm mb-2 btn-outline-primary"
                               >Ir a Tour Virtual</a
                             >
                             <a
                               :href="'proyectos/cotizaciones/' + el.slug_es"
-                              class="btn btn-sm mb-2 btn-inverse-primary"
+                              class="btn btn-sm mb-2 btn-outline-primary"
                               >Ir a Cotizaciones</a
                             >
                           </div>
                         </div>
-                        <div class="col-12 mb-2">
-                          <div class>
+                        <div class="d-flex">
+                          <div class="ml-auto d-inline">
                             <a
-                              style="text-decoration: underline"
-                              :href="appUrl + '/proyectos/' + el.slug_es"
-                              >{{ appUrl }}/proyectos/{{ el.slug_es }}</a
+                              :href="route + '/' + el.slug_es"
+                              class="btn btn-sm btn-inverse-primary"
+                              >Ver Proyecto</a
                             >
-                            <br />
                             <a
-                              style="text-decoration: underline"
-                              :href="appUrl + '/projects/' + el.slug_en"
-                              >{{ appUrl }}/projects/{{ el.slug_en }}</a
+                              :href="route + '/editar/' + el.slug_es"
+                              class="btn btn-sm btn-inverse-info"
+                              >Editar</a
                             >
                           </div>
-                        </div>
-                      </div>
-                      <span class="badge badge-warning badge-md">{{
-                        el.status_rel.name_es
-                      }}</span>
-
-                      <h2 class="mt-1">{{ el.name_es }}</h2>
-
-                      <div class="mb-3">
-                        <div class="row">
-                          <div class="col-12 mb-1">
-                            Se muestra en la Web:
-                            <span
-                              :class="
-                                el.active
-                                  ? 'font-weight-bold text-success'
-                                  : 'font-weight-bold text-danger'
-                              "
-                              >{{ el.active ? "Sí" : "No" }}</span
-                            >
-                          </div>
-                          <div class="col-lg">
-                            <div>
-                              <h4 class="d-inline-block font-weight-normal">
-                                Ubicación:
-                              </h4>
-                              <h4 class="d-inline-block">
-                                {{ el.location }},
-                                {{ el.ubigeo_rel.district }} -
-                                {{ el.ubigeo_rel.department }}
-                              </h4>
-                            </div>
-                            <div>
-                              <div v-if="el.price_total">
-                                <h4 class="d-inline-block font-weight-normal">
-                                  Precio Soles Desde:
-                                </h4>
-                                <h4 class="d-inline-block">
-                                  {{ el.price_total_format }}
-                                </h4>
-                              </div>
-                              <div v-if="el.price_total_foreign">
-                                <h4 class="d-inline-block font-weight-normal">
-                                  Precio Dólares Desde:
-                                </h4>
-                                <h4 class="d-inline-block">
-                                  {{ el.price_total_foreign_format }}
-                                </h4>
-                              </div>
-                            </div>
-                          </div>
-                          <div class="col-lg">
-                            <div>
-                              <h4 class="d-inline-block font-weight-normal">
-                                N° Documentos:
-                              </h4>
-                              <h4 class="d-inline-block">
-                                {{ el.files_rel_count }}
-                              </h4>
-                            </div>
-                            <div>
-                              <h4 class="d-inline-block font-weight-normal">
-                                N° Tipologias:
-                              </h4>
-                              <h4 class="d-inline-block">
-                                {{ el.tipologies_rel_count }}
-                              </h4>
-                            </div>
-                            <div>
-                              <h4 class="d-inline-block font-weight-normal">
-                                N° Imágenes en la Galeria:
-                              </h4>
-                              <h4 class="d-inline-block">
-                                {{ el.gallery_rel_count }}
-                              </h4>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="d-flex">
-                        <div class="ml-auto d-inline">
-                          <a
-                            :href="route + '/' + el.slug_es"
-                            class="btn btn-sm btn-inverse-primary"
-                            >Ver Proyecto</a
-                          >
-                          <a
-                            :href="route + '/editar/' + el.slug_es"
-                            class="btn btn-sm btn-inverse-info"
-                            >Editar</a
-                          >
                         </div>
                       </div>
                     </div>

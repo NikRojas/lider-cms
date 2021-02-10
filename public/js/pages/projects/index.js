@@ -222,6 +222,27 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -413,463 +434,489 @@ var render = function() {
                               "div",
                               {
                                 key: el.id,
-                                staticClass: "col-12 col-lg-6 col-xl-4 mb-4"
+                                staticClass: "col-12 col-lg-6 mb-4"
                               },
                               [
-                                _c(
-                                  "div",
-                                  { staticClass: "card position-relative" },
-                                  [
-                                    _c(
-                                      "div",
-                                      {
-                                        staticClass:
-                                          "text-center position-absolute pl-3 pt-3"
-                                      },
-                                      [
-                                        _c("img", {
-                                          attrs: {
-                                            src:
-                                              _vm.imagesUrl +
-                                              "/projects/" +
-                                              el.logo,
-                                            height: "50",
-                                            alt: el.name_es
-                                          }
-                                        })
-                                      ]
-                                    ),
-                                    _vm._v(" "),
-                                    _c("img", {
-                                      staticClass: "object-fit--cover",
-                                      attrs: {
-                                        height: "300",
-                                        src:
-                                          _vm.imagesUrl +
-                                          "/projects/" +
-                                          el.images_format[0],
-                                        alt: ""
-                                      }
-                                    }),
-                                    _vm._v(" "),
-                                    _c("div", { staticClass: "card-body" }, [
-                                      _c("div", [
-                                        _c("div", { staticClass: "row" }, [
+                                _c("div", { staticClass: "card" }, [
+                                  _c("div", { staticClass: "card-body" }, [
+                                    _c("div", { staticClass: "row mb-2" }, [
+                                      _c(
+                                        "div",
+                                        {
+                                          staticClass:
+                                            "col-lg-4 col-12 mb-4 mb-lg"
+                                        },
+                                        [
+                                          _c("img", {
+                                            staticClass: "img-fluid",
+                                            attrs: {
+                                              src:
+                                                _vm.imagesUrl +
+                                                "/projects/" +
+                                                el.images_format[0],
+                                              alt: ""
+                                            }
+                                          })
+                                        ]
+                                      ),
+                                      _vm._v(" "),
+                                      _c(
+                                        "div",
+                                        { staticClass: "col-lg-8 col-12" },
+                                        [
+                                          _c("img", {
+                                            attrs: {
+                                              src:
+                                                _vm.imagesUrl +
+                                                "/projects/" +
+                                                el.logo_colour,
+                                              height: "30",
+                                              alt: el.name_es
+                                            }
+                                          }),
+                                          _vm._v(" "),
                                           _c(
                                             "div",
-                                            {
-                                              staticClass:
-                                                "col-12 mb-2 text-right"
-                                            },
+                                            { staticClass: "row mt-2" },
                                             [
                                               _c(
                                                 "div",
-                                                {
-                                                  staticClass:
-                                                    "ml-auto d-inline"
-                                                },
+                                                { staticClass: "col-12 mb-2" },
                                                 [
-                                                  _c(
-                                                    "a",
-                                                    {
-                                                      staticClass:
-                                                        "btn btn-sm mb-2 btn-inverse-primary",
-                                                      attrs: {
-                                                        href:
-                                                          "proyectos/tipologias/" +
-                                                          el.slug_es
-                                                      }
-                                                    },
-                                                    [_vm._v("Ir a Tipologias")]
-                                                  ),
-                                                  _vm._v(" "),
-                                                  _c(
-                                                    "a",
-                                                    {
-                                                      staticClass:
-                                                        "btn btn-sm mb-2 btn-inverse-primary",
-                                                      attrs: {
-                                                        href:
-                                                          "proyectos/documentos/" +
-                                                          el.slug_es
-                                                      }
-                                                    },
-                                                    [_vm._v("Ir a Documentos")]
-                                                  ),
-                                                  _vm._v(" "),
-                                                  _c(
-                                                    "a",
-                                                    {
-                                                      staticClass:
-                                                        "btn btn-sm mb-2 btn-inverse-primary",
-                                                      attrs: {
-                                                        href:
-                                                          "proyectos/galeria/" +
-                                                          el.slug_es
-                                                      }
-                                                    },
-                                                    [_vm._v("Ir a Galeria")]
-                                                  ),
-                                                  _vm._v(" "),
-                                                  _c(
-                                                    "a",
-                                                    {
-                                                      staticClass:
-                                                        "btn btn-sm mb-2 btn-inverse-primary",
-                                                      attrs: {
-                                                        href:
-                                                          "proyectos/tour-virtual/" +
-                                                          el.slug_es
-                                                      }
-                                                    },
-                                                    [
-                                                      _vm._v(
-                                                        "Ir a Tour Virtual"
-                                                      )
-                                                    ]
-                                                  ),
-                                                  _vm._v(" "),
-                                                  _c(
-                                                    "a",
-                                                    {
-                                                      staticClass:
-                                                        "btn btn-sm mb-2 btn-inverse-primary",
-                                                      attrs: {
-                                                        href:
-                                                          "proyectos/cotizaciones/" +
-                                                          el.slug_es
-                                                      }
-                                                    },
-                                                    [
-                                                      _vm._v(
-                                                        "Ir a Cotizaciones"
-                                                      )
-                                                    ]
-                                                  )
+                                                  _c("div", {}, [
+                                                    _c(
+                                                      "a",
+                                                      {
+                                                        staticStyle: {
+                                                          "text-decoration":
+                                                            "underline"
+                                                        },
+                                                        attrs: {
+                                                          href:
+                                                            _vm.appUrl +
+                                                            "/proyectos/" +
+                                                            el.slug_es
+                                                        }
+                                                      },
+                                                      [
+                                                        _vm._v(
+                                                          _vm._s(_vm.appUrl) +
+                                                            "/proyectos/" +
+                                                            _vm._s(el.slug_es)
+                                                        )
+                                                      ]
+                                                    ),
+                                                    _vm._v(" "),
+                                                    _c("br"),
+                                                    _vm._v(" "),
+                                                    _c(
+                                                      "a",
+                                                      {
+                                                        staticStyle: {
+                                                          "text-decoration":
+                                                            "underline"
+                                                        },
+                                                        attrs: {
+                                                          href:
+                                                            _vm.appUrl +
+                                                            "/projects/" +
+                                                            el.slug_en
+                                                        }
+                                                      },
+                                                      [
+                                                        _vm._v(
+                                                          _vm._s(_vm.appUrl) +
+                                                            "/projects/" +
+                                                            _vm._s(el.slug_en)
+                                                        )
+                                                      ]
+                                                    )
+                                                  ])
                                                 ]
                                               )
                                             ]
                                           ),
                                           _vm._v(" "),
-                                          _c(
-                                            "div",
-                                            { staticClass: "col-12 mb-2" },
-                                            [
-                                              _c("div", {}, [
-                                                _c(
-                                                  "a",
-                                                  {
-                                                    staticStyle: {
-                                                      "text-decoration":
-                                                        "underline"
-                                                    },
-                                                    attrs: {
-                                                      href:
-                                                        _vm.appUrl +
-                                                        "/proyectos/" +
-                                                        el.slug_es
-                                                    }
-                                                  },
-                                                  [
-                                                    _vm._v(
-                                                      _vm._s(_vm.appUrl) +
-                                                        "/proyectos/" +
-                                                        _vm._s(el.slug_es)
-                                                    )
-                                                  ]
-                                                ),
-                                                _vm._v(" "),
-                                                _c("br"),
-                                                _vm._v(" "),
-                                                _c(
-                                                  "a",
-                                                  {
-                                                    staticStyle: {
-                                                      "text-decoration":
-                                                        "underline"
-                                                    },
-                                                    attrs: {
-                                                      href:
-                                                        _vm.appUrl +
-                                                        "/projects/" +
-                                                        el.slug_en
-                                                    }
-                                                  },
-                                                  [
-                                                    _vm._v(
-                                                      _vm._s(_vm.appUrl) +
-                                                        "/projects/" +
-                                                        _vm._s(el.slug_en)
-                                                    )
-                                                  ]
-                                                )
-                                              ])
-                                            ]
-                                          )
-                                        ]),
-                                        _vm._v(" "),
-                                        _c(
-                                          "span",
-                                          {
-                                            staticClass:
-                                              "badge badge-warning badge-md"
-                                          },
-                                          [
-                                            _vm._v(
-                                              _vm._s(el.status_rel.name_es)
-                                            )
-                                          ]
-                                        ),
-                                        _vm._v(" "),
-                                        _c("h2", { staticClass: "mt-1" }, [
-                                          _vm._v(_vm._s(el.name_es))
-                                        ]),
-                                        _vm._v(" "),
-                                        _c("div", { staticClass: "mb-3" }, [
                                           _c("div", { staticClass: "row" }, [
                                             _c(
                                               "div",
-                                              { staticClass: "col-12 mb-1" },
+                                              { staticClass: "col-12" },
                                               [
-                                                _vm._v(
-                                                  "\n                          Se muestra en la Web:\n                          "
-                                                ),
                                                 _c(
                                                   "span",
                                                   {
-                                                    class: el.active
-                                                      ? "font-weight-bold text-success"
-                                                      : "font-weight-bold text-danger"
+                                                    staticClass:
+                                                      "badge badge-warning badge-md"
                                                   },
                                                   [
                                                     _vm._v(
                                                       _vm._s(
-                                                        el.active ? "Sí" : "No"
+                                                        el.status_rel.name_es
                                                       )
+                                                    )
+                                                  ]
+                                                ),
+                                                _vm._v(" "),
+                                                _c(
+                                                  "h2",
+                                                  { staticClass: "mt-1" },
+                                                  [_vm._v(_vm._s(el.name_es))]
+                                                ),
+                                                _vm._v(" "),
+                                                _c(
+                                                  "div",
+                                                  { staticClass: "mb-3" },
+                                                  [
+                                                    _c(
+                                                      "div",
+                                                      { staticClass: "row" },
+                                                      [
+                                                        _c(
+                                                          "div",
+                                                          {
+                                                            staticClass:
+                                                              "col-12 mb-1"
+                                                          },
+                                                          [
+                                                            _vm._v(
+                                                              "\n                                Se muestra en la Web:\n                                "
+                                                            ),
+                                                            _c(
+                                                              "span",
+                                                              {
+                                                                class: el.active
+                                                                  ? "font-weight-bold text-success"
+                                                                  : "font-weight-bold text-danger"
+                                                              },
+                                                              [
+                                                                _vm._v(
+                                                                  _vm._s(
+                                                                    el.active
+                                                                      ? "Sí"
+                                                                      : "No"
+                                                                  )
+                                                                )
+                                                              ]
+                                                            )
+                                                          ]
+                                                        ),
+                                                        _vm._v(" "),
+                                                        _c(
+                                                          "div",
+                                                          {
+                                                            staticClass:
+                                                              "col-12"
+                                                          },
+                                                          [
+                                                            _c("div", [
+                                                              _c(
+                                                                "h4",
+                                                                {
+                                                                  staticClass:
+                                                                    "d-inline-block font-weight-normal"
+                                                                },
+                                                                [
+                                                                  _vm._v(
+                                                                    "\n                                    Ubicación:\n                                  "
+                                                                  )
+                                                                ]
+                                                              ),
+                                                              _vm._v(" "),
+                                                              _c(
+                                                                "h4",
+                                                                {
+                                                                  staticClass:
+                                                                    "d-inline-block"
+                                                                },
+                                                                [
+                                                                  _vm._v(
+                                                                    "\n                                    " +
+                                                                      _vm._s(
+                                                                        el.location
+                                                                      ) +
+                                                                      ",\n                                    " +
+                                                                      _vm._s(
+                                                                        el
+                                                                          .ubigeo_rel
+                                                                          .district
+                                                                      ) +
+                                                                      " -\n                                    " +
+                                                                      _vm._s(
+                                                                        el
+                                                                          .ubigeo_rel
+                                                                          .department
+                                                                      ) +
+                                                                      "\n                                  "
+                                                                  )
+                                                                ]
+                                                              )
+                                                            ]),
+                                                            _vm._v(" "),
+                                                            _c("div", [
+                                                              el.price_total
+                                                                ? _c("div", [
+                                                                    _c(
+                                                                      "h4",
+                                                                      {
+                                                                        staticClass:
+                                                                          "d-inline-block font-weight-normal"
+                                                                      },
+                                                                      [
+                                                                        _vm._v(
+                                                                          "\n                                      Precio Soles Desde:\n                                    "
+                                                                        )
+                                                                      ]
+                                                                    ),
+                                                                    _vm._v(" "),
+                                                                    _c(
+                                                                      "h4",
+                                                                      {
+                                                                        staticClass:
+                                                                          "d-inline-block"
+                                                                      },
+                                                                      [
+                                                                        _vm._v(
+                                                                          "\n                                      " +
+                                                                            _vm._s(
+                                                                              el.price_total_format
+                                                                            ) +
+                                                                            "\n                                    "
+                                                                        )
+                                                                      ]
+                                                                    )
+                                                                  ])
+                                                                : _vm._e(),
+                                                              _vm._v(" "),
+                                                              el.price_total_foreign
+                                                                ? _c("div", [
+                                                                    _c(
+                                                                      "h4",
+                                                                      {
+                                                                        staticClass:
+                                                                          "d-inline-block font-weight-normal"
+                                                                      },
+                                                                      [
+                                                                        _vm._v(
+                                                                          "\n                                      Precio Dólares Desde:\n                                    "
+                                                                        )
+                                                                      ]
+                                                                    ),
+                                                                    _vm._v(" "),
+                                                                    _c(
+                                                                      "h4",
+                                                                      {
+                                                                        staticClass:
+                                                                          "d-inline-block"
+                                                                      },
+                                                                      [
+                                                                        _vm._v(
+                                                                          "\n                                      " +
+                                                                            _vm._s(
+                                                                              el.price_total_foreign_format
+                                                                            ) +
+                                                                            "\n                                    "
+                                                                        )
+                                                                      ]
+                                                                    )
+                                                                  ])
+                                                                : _vm._e()
+                                                            ])
+                                                          ]
+                                                        ),
+                                                        _vm._v(" "),
+                                                        _c(
+                                                          "div",
+                                                          {
+                                                            staticClass:
+                                                              "col-12"
+                                                          },
+                                                          [
+                                                            _c("div", [
+                                                              _c(
+                                                                "h4",
+                                                                {
+                                                                  staticClass:
+                                                                    "d-inline-block font-weight-normal"
+                                                                },
+                                                                [
+                                                                  _vm._v(
+                                                                    "\n                                    N° Documentos:\n                                  "
+                                                                  )
+                                                                ]
+                                                              ),
+                                                              _vm._v(" "),
+                                                              _c(
+                                                                "h4",
+                                                                {
+                                                                  staticClass:
+                                                                    "d-inline-block"
+                                                                },
+                                                                [
+                                                                  _vm._v(
+                                                                    "\n                                    " +
+                                                                      _vm._s(
+                                                                        el.files_rel_count
+                                                                      ) +
+                                                                      "\n                                  "
+                                                                  )
+                                                                ]
+                                                              )
+                                                            ]),
+                                                            _vm._v(" "),
+                                                            _c("div", [
+                                                              _c(
+                                                                "h4",
+                                                                {
+                                                                  staticClass:
+                                                                    "d-inline-block font-weight-normal"
+                                                                },
+                                                                [
+                                                                  _vm._v(
+                                                                    "\n                                    N° Tipologias:\n                                  "
+                                                                  )
+                                                                ]
+                                                              ),
+                                                              _vm._v(" "),
+                                                              _c(
+                                                                "h4",
+                                                                {
+                                                                  staticClass:
+                                                                    "d-inline-block"
+                                                                },
+                                                                [
+                                                                  _vm._v(
+                                                                    "\n                                    " +
+                                                                      _vm._s(
+                                                                        el.tipologies_rel_count
+                                                                      ) +
+                                                                      "\n                                  "
+                                                                  )
+                                                                ]
+                                                              )
+                                                            ]),
+                                                            _vm._v(" "),
+                                                            _c("div", [
+                                                              _c(
+                                                                "h4",
+                                                                {
+                                                                  staticClass:
+                                                                    "d-inline-block font-weight-normal"
+                                                                },
+                                                                [
+                                                                  _vm._v(
+                                                                    "\n                                    N° Imágenes en la Galeria:\n                                  "
+                                                                  )
+                                                                ]
+                                                              ),
+                                                              _vm._v(" "),
+                                                              _c(
+                                                                "h4",
+                                                                {
+                                                                  staticClass:
+                                                                    "d-inline-block"
+                                                                },
+                                                                [
+                                                                  _vm._v(
+                                                                    "\n                                    " +
+                                                                      _vm._s(
+                                                                        el.gallery_rel_count
+                                                                      ) +
+                                                                      "\n                                  "
+                                                                  )
+                                                                ]
+                                                              )
+                                                            ])
+                                                          ]
+                                                        )
+                                                      ]
                                                     )
                                                   ]
                                                 )
                                               ]
-                                            ),
-                                            _vm._v(" "),
-                                            _c(
-                                              "div",
-                                              { staticClass: "col-lg" },
-                                              [
-                                                _c("div", [
-                                                  _c(
-                                                    "h4",
-                                                    {
-                                                      staticClass:
-                                                        "d-inline-block font-weight-normal"
-                                                    },
-                                                    [
-                                                      _vm._v(
-                                                        "\n                              Ubicación:\n                            "
-                                                      )
-                                                    ]
-                                                  ),
-                                                  _vm._v(" "),
-                                                  _c(
-                                                    "h4",
-                                                    {
-                                                      staticClass:
-                                                        "d-inline-block"
-                                                    },
-                                                    [
-                                                      _vm._v(
-                                                        "\n                              " +
-                                                          _vm._s(el.location) +
-                                                          ",\n                              " +
-                                                          _vm._s(
-                                                            el.ubigeo_rel
-                                                              .district
-                                                          ) +
-                                                          " -\n                              " +
-                                                          _vm._s(
-                                                            el.ubigeo_rel
-                                                              .department
-                                                          ) +
-                                                          "\n                            "
-                                                      )
-                                                    ]
-                                                  )
-                                                ]),
-                                                _vm._v(" "),
-                                                _c("div", [
-                                                  el.price_total
-                                                    ? _c("div", [
-                                                        _c(
-                                                          "h4",
-                                                          {
-                                                            staticClass:
-                                                              "d-inline-block font-weight-normal"
-                                                          },
-                                                          [
-                                                            _vm._v(
-                                                              "\n                                Precio Soles Desde:\n                              "
-                                                            )
-                                                          ]
-                                                        ),
-                                                        _vm._v(" "),
-                                                        _c(
-                                                          "h4",
-                                                          {
-                                                            staticClass:
-                                                              "d-inline-block"
-                                                          },
-                                                          [
-                                                            _vm._v(
-                                                              "\n                                " +
-                                                                _vm._s(
-                                                                  el.price_total_format
-                                                                ) +
-                                                                "\n                              "
-                                                            )
-                                                          ]
-                                                        )
-                                                      ])
-                                                    : _vm._e(),
-                                                  _vm._v(" "),
-                                                  el.price_total_foreign
-                                                    ? _c("div", [
-                                                        _c(
-                                                          "h4",
-                                                          {
-                                                            staticClass:
-                                                              "d-inline-block font-weight-normal"
-                                                          },
-                                                          [
-                                                            _vm._v(
-                                                              "\n                                Precio Dólares Desde:\n                              "
-                                                            )
-                                                          ]
-                                                        ),
-                                                        _vm._v(" "),
-                                                        _c(
-                                                          "h4",
-                                                          {
-                                                            staticClass:
-                                                              "d-inline-block"
-                                                          },
-                                                          [
-                                                            _vm._v(
-                                                              "\n                                " +
-                                                                _vm._s(
-                                                                  el.price_total_foreign_format
-                                                                ) +
-                                                                "\n                              "
-                                                            )
-                                                          ]
-                                                        )
-                                                      ])
-                                                    : _vm._e()
-                                                ])
-                                              ]
-                                            ),
-                                            _vm._v(" "),
-                                            _c(
-                                              "div",
-                                              { staticClass: "col-lg" },
-                                              [
-                                                _c("div", [
-                                                  _c(
-                                                    "h4",
-                                                    {
-                                                      staticClass:
-                                                        "d-inline-block font-weight-normal"
-                                                    },
-                                                    [
-                                                      _vm._v(
-                                                        "\n                              N° Documentos:\n                            "
-                                                      )
-                                                    ]
-                                                  ),
-                                                  _vm._v(" "),
-                                                  _c(
-                                                    "h4",
-                                                    {
-                                                      staticClass:
-                                                        "d-inline-block"
-                                                    },
-                                                    [
-                                                      _vm._v(
-                                                        "\n                              " +
-                                                          _vm._s(
-                                                            el.files_rel_count
-                                                          ) +
-                                                          "\n                            "
-                                                      )
-                                                    ]
-                                                  )
-                                                ]),
-                                                _vm._v(" "),
-                                                _c("div", [
-                                                  _c(
-                                                    "h4",
-                                                    {
-                                                      staticClass:
-                                                        "d-inline-block font-weight-normal"
-                                                    },
-                                                    [
-                                                      _vm._v(
-                                                        "\n                              N° Tipologias:\n                            "
-                                                      )
-                                                    ]
-                                                  ),
-                                                  _vm._v(" "),
-                                                  _c(
-                                                    "h4",
-                                                    {
-                                                      staticClass:
-                                                        "d-inline-block"
-                                                    },
-                                                    [
-                                                      _vm._v(
-                                                        "\n                              " +
-                                                          _vm._s(
-                                                            el.tipologies_rel_count
-                                                          ) +
-                                                          "\n                            "
-                                                      )
-                                                    ]
-                                                  )
-                                                ]),
-                                                _vm._v(" "),
-                                                _c("div", [
-                                                  _c(
-                                                    "h4",
-                                                    {
-                                                      staticClass:
-                                                        "d-inline-block font-weight-normal"
-                                                    },
-                                                    [
-                                                      _vm._v(
-                                                        "\n                              N° Imágenes en la Galeria:\n                            "
-                                                      )
-                                                    ]
-                                                  ),
-                                                  _vm._v(" "),
-                                                  _c(
-                                                    "h4",
-                                                    {
-                                                      staticClass:
-                                                        "d-inline-block"
-                                                    },
-                                                    [
-                                                      _vm._v(
-                                                        "\n                              " +
-                                                          _vm._s(
-                                                            el.gallery_rel_count
-                                                          ) +
-                                                          "\n                            "
-                                                      )
-                                                    ]
-                                                  )
-                                                ])
-                                              ]
                                             )
                                           ])
+                                        ]
+                                      )
+                                    ]),
+                                    _vm._v(" "),
+                                    _c("div", { staticClass: "row" }, [
+                                      _c("div", { staticClass: "col-12" }, [
+                                        _c("div", { staticClass: "d-flex" }, [
+                                          _c(
+                                            "div",
+                                            { staticClass: "ml-auto d-inline" },
+                                            [
+                                              _c(
+                                                "a",
+                                                {
+                                                  staticClass:
+                                                    "btn btn-sm mb-2 btn-outline-primary",
+                                                  attrs: {
+                                                    href:
+                                                      "proyectos/tipologias/" +
+                                                      el.slug_es
+                                                  }
+                                                },
+                                                [_vm._v("Ir a Tipologias")]
+                                              ),
+                                              _vm._v(" "),
+                                              _c(
+                                                "a",
+                                                {
+                                                  staticClass:
+                                                    "btn btn-sm mb-2 btn-outline-primary",
+                                                  attrs: {
+                                                    href:
+                                                      "proyectos/documentos/" +
+                                                      el.slug_es
+                                                  }
+                                                },
+                                                [_vm._v("Ir a Documentos")]
+                                              ),
+                                              _vm._v(" "),
+                                              _c(
+                                                "a",
+                                                {
+                                                  staticClass:
+                                                    "btn btn-sm mb-2 btn-outline-primary",
+                                                  attrs: {
+                                                    href:
+                                                      "proyectos/galeria/" +
+                                                      el.slug_es
+                                                  }
+                                                },
+                                                [_vm._v("Ir a Galeria")]
+                                              ),
+                                              _vm._v(" "),
+                                              _c(
+                                                "a",
+                                                {
+                                                  staticClass:
+                                                    "btn btn-sm mb-2 btn-outline-primary",
+                                                  attrs: {
+                                                    href:
+                                                      "proyectos/tour-virtual/" +
+                                                      el.slug_es
+                                                  }
+                                                },
+                                                [_vm._v("Ir a Tour Virtual")]
+                                              ),
+                                              _vm._v(" "),
+                                              _c(
+                                                "a",
+                                                {
+                                                  staticClass:
+                                                    "btn btn-sm mb-2 btn-outline-primary",
+                                                  attrs: {
+                                                    href:
+                                                      "proyectos/cotizaciones/" +
+                                                      el.slug_es
+                                                  }
+                                                },
+                                                [_vm._v("Ir a Cotizaciones")]
+                                              )
+                                            ]
+                                          )
                                         ]),
                                         _vm._v(" "),
                                         _c("div", { staticClass: "d-flex" }, [
@@ -911,8 +958,8 @@ var render = function() {
                                         ])
                                       ])
                                     ])
-                                  ]
-                                )
+                                  ])
+                                ])
                               ]
                             )
                           }),

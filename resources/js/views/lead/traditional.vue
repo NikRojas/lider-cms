@@ -48,12 +48,13 @@
             <div class="col-12">
               <DataTable
                 :object="elements"
-                placeholder="Nombre, Teléfono"
+                placeholder="Nombre, Teléfono, DNI"
                 :button-update="false"
-                :button-read="false"
+                :button-read="true"
                 :button-delete="true"
                 @get="getElements"
                 @delete="deleteEl"
+                @read="showLead"
                 :entries-prop.sync="elementsPerPage"
                 :messageCantDelete="messageCantDelete"
               ></DataTable>
@@ -327,6 +328,71 @@
         </button>
       </template>
     </b-modal>
+
+
+    <b-modal
+      v-model="modalView"
+      @close="restoreEl"
+      no-close-on-esc
+      no-close-on-backdrop
+      centered
+      footer-class="border-0 pt-0"
+      body-class="pt-0"
+    >
+      <template slot="modal-title">
+        <div class="text-primary h2">Lead</div>
+      </template>
+      <template slot="modal-header-close">
+        <button type="button" class="btn p-0 bg-transparent" @click="restoreEl">
+          <jam-close></jam-close>
+        </button>
+      </template>
+      <div v-if="loadingGet">
+        <SkeletonForm></SkeletonForm>
+      </div>
+      <div v-else>
+        <div class="row">
+          <div class="col-12 col-md-6">
+            <div class="form-group">
+              <label class="font-weight-bold">Nombre:</label>
+
+              <p>{{ element.name }}</p>
+            </div>
+          </div>
+          <div class="col-12 col-md-6">
+            <div class="form-group">
+              <label class="font-weight-bold">Teléfono:</label>
+
+              <p>{{ element.mobile }}</p>
+            </div>
+          </div>
+          <div class="col-12 col-md-6">
+            <div class="form-group">
+              <label class="font-weight-bold">Email:</label>
+
+              <p>{{ element.email }}</p>
+            </div>
+          </div>
+          <div class="col-12 col-md-6">
+            <div class="form-group">
+              <label class="font-weight-bold">DNI:</label>
+
+              <p>{{ element.document_number }}</p>
+            </div>
+          </div>
+          <div class="col-12 col-md-12">
+            <div class="form-group">
+              <label class="font-weight-bold">Mensaje:</label>
+              <p>{{ element.message }}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <template v-slot:modal-footer="{ ok }">
+        <button type="button" class="btn btn-primary" @click="restoreEl">Cerrar</button>
+      </template>
+    </b-modal>
+
   </div>
 </template>
 <style>
@@ -372,6 +438,7 @@ export default {
   },
   data() {
     return {
+      modalView: false,
       request_todo: false,
       request_filter: false,
       errors_form: {},
@@ -587,7 +654,12 @@ export default {
       this.modalDestroy = true;
       this.getEl(id);
     },
+    showLead(id) {
+      this.modalView = true;
+      this.getEl(id);
+    },
     restoreEl() {
+      this.modalView = false;
       this.errors = {};
       this.element = {};
       this.modalDestroy = false;

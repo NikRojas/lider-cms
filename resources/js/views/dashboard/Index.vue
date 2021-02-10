@@ -152,7 +152,7 @@
                             <th class="border-0">Tipologías Disponibles</th>
                           </tr>
                         </thead>
-                        <tbody>
+                        <tbody v-if="statistics.projects.length">
                           <tr v-for="el in statistics.projects" :key="el.id">
                             <td>
                               <div class="media align-items-center">
@@ -181,6 +181,11 @@
                             <td>
                               {{ el.tipologiesActive }}
                             </td>
+                          </tr>
+                        </tbody>
+                        <tbody v-else>
+                          <tr>
+                            <td class="text-center py-5" colspan="4">No hay proyectos registrados</td>
                           </tr>
                         </tbody>
                       </table>

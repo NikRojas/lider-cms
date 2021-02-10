@@ -42,6 +42,9 @@
     Móvil</th>
    <th
     style="background-color:#01C670;color:#FFFFFF;width:20px;font-size:14px;font-weight:bold;text-align:center;vertical-align:middle;border: 1px solid black;">
+    DNI</th>
+   <th
+    style="background-color:#01C670;color:#FFFFFF;width:20px;font-size:14px;font-weight:bold;text-align:center;vertical-align:middle;border: 1px solid black;">
     Fuente</th>
    <th
     style="background-color:#01C670;color:#FFFFFF;width:30px;font-size:14px;font-weight:bold;text-align:center;vertical-align:middle;border: 1px solid black;">
@@ -55,6 +58,7 @@
    <td style="text-align:center;vertical-align:middle;border: 1px solid black;">{{ $lead->name ? $lead->name : 'No registrado' }}</td>
    <td style="text-align:center;vertical-align:middle;border: 1px solid black;">{{ $lead->email ? $lead->email : 'No registrado' }}</td>
    <td style="text-align:center;vertical-align:middle;border: 1px solid black;">{{ $lead->mobile ? $lead->mobile_format : 'No registrado' }}</td>
+   <td style="text-align:center;vertical-align:middle;border: 1px solid black;">{{ $lead->document_number ? $lead->document_number : 'No registrado' }}</td>
    <td style="text-align:center;vertical-align:middle;border: 1px solid black;">{{ $lead->sourceRel->name }}</td>
    <td style="text-align:center;vertical-align:middle;border: 1px solid black;">{{ $lead->created_at_format }}</td>
   </tr>

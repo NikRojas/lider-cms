@@ -11,15 +11,16 @@ class LeadRepository
     public function datatable($items_per_page, $q = false)
     {
         if ($q) {
-            $leads = Lead::select("id", "name", "mobile", "email", "lead_source_id","created_at")
+            $leads = Lead::select("*")
             ->where('name', 'like', '%'.$q.'%')
             ->orWhere('mobile', 'like', '%'.$q.'%')
+            ->orWhere('document_number', 'like', '%'.$q.'%')
             //->with('mediumRel', 'sourceRel')
             ->with('sourceRel')
             ->orderBy('created_at', 'desc')
             ->paginate($items_per_page);
         } else {
-            $leads = Lead::select("id", "name", "mobile", "email", "lead_source_id","created_at")
+            $leads = Lead::select("*")
             //->with('mediumRel', 'sourceRel')
             ->with('sourceRel')
             ->orderBy('created_at', 'desc')
@@ -30,6 +31,7 @@ class LeadRepository
                 "id" => $lead["id"],
                 "name" => $lead['name'],
                 "mobile" => $lead["mobile_format"],
+                "dni" => $lead["document_number"],
                 "email" => $lead["email"],
                 "source" => $lead["sourceRel"]["name"],
                 "created_at" => $lead["created_at_format"],

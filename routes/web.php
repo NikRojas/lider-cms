@@ -15,6 +15,7 @@ Route::post('login/reset', 'Cms\Auth\ResetPasswordController@reset')->name('pass
 Route::middleware(['auth'])->namespace('Cms')->name('cms.')->group(function () {
     Route::get('/dashboard', 'DashboardController@index')->name('dashboard');
     Route::get('json/dashboard', 'DashboardController@getStatistics')->name('dashboard.get-statistics');
+    Route::get('json/dashboard-by-date', 'DashboardController@getStatisticsByDate')->name('dashboard.get-statistics-by-date');
 
     Route::get('perfil', 'ProfileController@index')->name('profile');
     Route::get('json/profile', 'ProfileController@getProfile')->name('profile.json.get-profile');
@@ -458,11 +459,11 @@ Route::get('/mail/user/quotation', function () {
 Route::get('/mail/advisor/quotation', function () {
     $lead = ProjectQuotation::with('projectRel.statusRel','advisorRel','projectTypeDepartmentRel')->first();
     return view('emails.advisor-quotation',["lead" => $lead]);
-});*/
+});
 
 Route::get('/mail/applicant', function () {
     $applicant = Applicant::first();
     return view('emails.applicant',["applicant" => $applicant]);
-});
+});*/
 
 

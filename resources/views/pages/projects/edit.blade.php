@@ -31,6 +31,7 @@
     <projects-edit :element-parent="{{ $element }}" route-update="{{ route('cms.projects.store') }}" route-return="{{ route('cms.projects.index') }}"
     images-url="{{ config('services.images_url') }}"
     files-url="{{ config('services.files_url') }}"
+    app-url="{{ config('services.web_url') }}"
     route-advisors-get-all="{{ route('cms.administration.advisors.get-all') }}"
     route-features-get-all="{{ route('cms.administration.features-project.get-all') }}"
     route-financial-get-all="{{ route('cms.administration.financial-entities.get-all') }}"

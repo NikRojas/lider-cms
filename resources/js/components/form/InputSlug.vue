@@ -33,7 +33,7 @@
     </div>
     <input type="text" class="form-control" v-model="value[ active ]" />
     <div class="mt-3">
-      <small>{{ url }}{{ (parentSlug ? parentSlug+'/' : '') }}</small>
+      <small>{{ active == 'es' ? urlEs : urlEn }}{{ (parentSlug ? parentSlug+'/' : '') }}</small>
       <small class="bg-dark text-white" style="letter-spacing: 0.05rem" v-if="!value[ 'editBlock_'+active ]">{{ value[ 'slug_'+active ] }}</small>
       <input
         type="text"
@@ -59,7 +59,11 @@
 export default {
   props: {
     type: String,
-    url: {
+    urlEs: {
+      type: String,
+      required: false,
+    },
+    urlEn: {
       type: String,
       required: false,
     },

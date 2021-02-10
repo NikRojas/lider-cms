@@ -43,6 +43,7 @@
     route-bonds-create="{{ route('cms.administration.bonds.index') }}"
     route-departments-get="{{ route('cms.json.get-departments')}}"
     route-provinces-get="{{ route('cms.json.get-provinces')}}"
+    app-url="{{ config('services.web_url') }}"
     route-districts-get="{{ route('cms.json.get-districts')}}"
     message-order="@lang('custom.message.order')"></projects-create>
 @endsection

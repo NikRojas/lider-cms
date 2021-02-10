@@ -734,6 +734,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 
 
 
@@ -772,6 +774,7 @@ __webpack_require__.r(__webpack_exports__);
     quillEditor: vue_quill_editor__WEBPACK_IMPORTED_MODULE_0__["quillEditor"]
   },
   props: {
+    appUrl: String,
     imagesUrl: String,
     routeStore: String,
     routeReturn: String,
@@ -1256,6 +1259,8 @@ var render = function() {
                       [
                         _c("InputSlug", {
                           attrs: {
+                            urlEs: _vm.appUrl + "/proyectos/",
+                            urlEn: _vm.appUrl + "/projects/",
                             label: "Nombre",
                             variable: "name",
                             type: "Ruta",

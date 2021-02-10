@@ -44,7 +44,7 @@ const app = new Vue({
 
         'profile': () => import('./views/Profile.vue' /* webpackChunkName: "js/pages/profile" */),
 
-        //'dashboard': () => import('./views/Dashboard.vue' /* webpackChunkName: "js/dashboard" */),
+        'dashboard': () => import('./views/dashboard/Index.vue' /* webpackChunkName: "js/pages/dashboard" */),
         'applicants': () => import('./views/Applicants.vue' /* webpackChunkName: "js/pages/applicants" */),
 
         //lead

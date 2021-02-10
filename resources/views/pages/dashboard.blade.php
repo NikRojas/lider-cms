@@ -1,4 +1,4 @@
 @extends('layouts.dashboard')
 @section('content')
-   <!--<dashboard></dashboard>-->
+   <dashboard images-url="{{ config('services.images_url') }}"></dashboard>
 @endsection

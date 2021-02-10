@@ -39,6 +39,8 @@
                 <div class="row">
                   <div class="col-12">
                     <InputSlug
+                      :urlEs="appUrl+'/proyectos/'"
+                      :urlEn="appUrl+'/projects/'"
                       label="Nombre"
                       variable="name"
                       type="Ruta"
@@ -693,6 +695,7 @@ export default {
     quillEditor,
   },
   props: {
+    appUrl: String,
     elementParent: Object,
     imagesUrl: String,
     filesUrl: String,

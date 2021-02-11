@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>{{ config('app.name') }}</title>
     <meta name="robots" content="noindex,nofollow">
-    <!--<link rel="apple-touch-icon" sizes="57x57" href="{{ asset('storage/img/favicon/apple-icon-57x57.png') }}">
+    <link rel="apple-touch-icon" sizes="57x57" href="{{ asset('storage/img/favicon/apple-icon-57x57.png') }}">
     <link rel="apple-touch-icon" sizes="60x60" href="{{ asset('storage/img/favicon/apple-icon-60x60.png') }}">
     <link rel="apple-touch-icon" sizes="72x72" href="{{ asset('storage/img/favicon/apple-icon-72x72.png') }}">
     <link rel="apple-touch-icon" sizes="76x76" href="{{ asset('storage/img/favicon/apple-icon-76x76.png') }}">
@@ -22,7 +22,7 @@
     <link rel="manifest" href="{{ asset('storage/img/favicon/manifest.json') }}">
     <meta name="msapplication-TileColor" content="#ffffff">
     <meta name="msapplication-TileImage" content="{{ asset('storage/img/ms-icon-144x144.png') }}">
-    <meta name="theme-color" content="#ffffff">-->
+    <meta name="theme-color" content="#ffffff">
     <link href="{{ asset('css/app.css') }}" rel="stylesheet" >
     <!--<link href="{{ asset('css/font-awesome.min.css') }}" rel="stylesheet">-->
     <link href="{{ asset('css/fonts.css') }}" rel="stylesheet">

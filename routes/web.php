@@ -440,9 +440,9 @@ Route::middleware(['auth'])->namespace('Cms')->name('cms.')->group(function () {
     Route::get('json/select/categories', 'CmsController@getCategories')->name('json.get-categories');
 });
 
-/*
-Route::get('/mail/test', function () {
-    return view('emails.test');
+
+/*Route::get('/mail/user', function () {
+    return view('emails.user-lead');
 });
 
 Route::get('/mail/advisor/lead', function () {

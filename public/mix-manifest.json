@@ -67,9 +67,7 @@
     "/js/pages/testimonials.js": "/js/pages/testimonials.js",
     "/js/pages/users.js": "/js/pages/users.js",
     "/vendors~js/pages/administration/advisors~js/pages/administration/bonds~js/pages/administration/excha~90ded609.js": "/vendors~js/pages/administration/advisors~js/pages/administration/bonds~js/pages/administration/excha~90ded609.js",
-    "/vendors~js/pages/administration/advisors~js/pages/administration/bonds~js/pages/administration/excha~ca674bce.js": "/vendors~js/pages/administration/advisors~js/pages/administration/bonds~js/pages/administration/excha~ca674bce.js",
     "/vendors~js/pages/administration/advisors~js/pages/administration/bonds~js/pages/administration/featu~3701dd2f.js": "/vendors~js/pages/administration/advisors~js/pages/administration/bonds~js/pages/administration/featu~3701dd2f.js",
-    "/vendors~js/pages/administration/status-project~js/pages/applicants~js/pages/blog/category~js/pages/b~3264e2ea.js": "/vendors~js/pages/administration/status-project~js/pages/applicants~js/pages/blog/category~js/pages/b~3264e2ea.js",
     "/vendors~js/pages/blog/post/create.js": "/vendors~js/pages/blog/post/create.js",
     "/vendors~js/pages/blog/post/create~js/pages/cami~js/pages/cami-projects~js/pages/content/about~js/pag~bce07d8b.js": "/vendors~js/pages/blog/post/create~js/pages/cami~js/pages/cami-projects~js/pages/content/about~js/pag~bce07d8b.js",
     "/vendors~js/pages/cami~js/pages/cami-projects~js/pages/configuration/general~js/pages/content/about~j~6035e389.js": "/vendors~js/pages/cami~js/pages/cami-projects~js/pages/configuration/general~js/pages/content/about~j~6035e389.js",
@@ -78,5 +76,7 @@
     "/vendors~js/pages/dashboard.js": "/vendors~js/pages/dashboard.js",
     "/vendors~js/pages/dashboard~js/pages/statistics/index.js": "/vendors~js/pages/dashboard~js/pages/statistics/index.js",
     "/vendors~js/pages/orders/read.js": "/vendors~js/pages/orders/read.js",
-    "/vendors~js/pages/statistics/index.js": "/vendors~js/pages/statistics/index.js"
+    "/vendors~js/pages/statistics/index.js": "/vendors~js/pages/statistics/index.js",
+    "/vendors~js/pages/administration/advisors~js/pages/administration/bonds~js/pages/administration/excha~ca674bce.js": "/vendors~js/pages/administration/advisors~js/pages/administration/bonds~js/pages/administration/excha~ca674bce.js",
+    "/vendors~js/pages/administration/status-project~js/pages/applicants~js/pages/blog/category~js/pages/b~3264e2ea.js": "/vendors~js/pages/administration/status-project~js/pages/applicants~js/pages/blog/category~js/pages/b~3264e2ea.js"
 }

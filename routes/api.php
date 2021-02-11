@@ -22,8 +22,10 @@ Route::namespace('Api')->group(function() {
     Route::get('notify2','Orders\OrdersController@test2'); 
     Route::get('notify3','Orders\OrdersController@test3'); */
     Route::get('layout', 'BaseController@layout');
-    Route::get('departments', 'BaseController@getDepartments');
-    Route::get('districts', 'BaseController@getDistricts');
+
+    Route::get('filters', 'BaseController@getFilters');
+    /*Route::get('departments', 'BaseController@getDepartments');
+    Route::get('districts', 'BaseController@getDistricts');*/
     Route::prefix('paginate')->group(function() { 
         Route::get('projects', 'BaseController@paginateProjects');
     });

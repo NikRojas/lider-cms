@@ -3,12 +3,14 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Certification;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller as Controller;
 use App\Information;
 use App\MasterPage;
 use App\Member;
 use App\Project;
+use App\ProjectStatus;
 use App\SocialNetwork;
 use App\Ubigeo;
 
@@ -55,6 +57,7 @@ class BaseController extends Controller
         $social_networks = SocialNetwork::select('id','url','master_social_network_id')->with('master_social_networks:id,icon,name')->orderBy('index','asc')->get();  
         $information = Information::first();
         $members = Member::select('image','name')->orderBy('index','asc')->get();
+        $certificates = Certification::select('image','name')->orderBy('index','asc')->get();
         $data = array(
             "menu" => array(
                 "social_networks" => $social_networks,
@@ -63,7 +66,8 @@ class BaseController extends Controller
             "footer" => array(
                 "social_networks" => $social_networks,
                 "information" => $information,
-                "members" => $members
+                "members" => $members,
+                "certificates" => $certificates
             )
         );
         return $this->sendResponse($data,'');
@@ -73,19 +77,36 @@ class BaseController extends Controller
         $page = MasterPage::select('id','title_'.$lang,'seo_description_'.$lang,'seo_keywords_'.$lang,'seo_image','slug_'.$lang)->where('slug_en',$slug)->first()->toArray();
         return $page;
     }
-
+    
     public function getDepartments(){
-        $data = Ubigeo::select('code_ubigeo','code_department','department')->distinct('code_department')
+        $departments = Ubigeo::select('code_ubigeo','code_department','department')->distinct('code_department')
         ->has('projectsRel')->orderBy('department')->get();
-        $data =  $data->pluck('department','code_department');
-        return $this->sendResponse($data,'');
+        foreach ($departments as $key => $value) {
+            $departments[$key]["districts"] = $this->getDistricts($value->code_department);
+        }
+        return $departments;
     }
 
-    public function getDistricts(Request $request){
-        $data = Ubigeo::select('code_district','district')->distinct()->where('code_department',$request->code)
+    public function getDistricts($code){
+        $data = Ubigeo::select('code_district','district')->distinct()->where('code_department',$code)
         ->has('projectsRel')
         ->where('code_district','!=','00')->orderBy('district')->get();
-        return $this->sendResponse($data,'');
+        return $data;
+    }
+
+    public function getStatus(){
+        $data = ProjectStatus::has('projectsRel')->get();
+        return $data;
+    }
+
+    public function getFilters(){
+        $departments = $this->getDepartments();
+        $status = $this->getStatus();
+        $data = [
+            "departments" => $departments,
+            "status" => $status
+        ];
+        return $data;
     }
 
     public function paginateProjects(Request $request){

@@ -16,10 +16,10 @@ class MasterSocialNetworksTableSeeder extends Seeder
                 'name' 		=> 'Facebook',
                 'icon'     => 'facebook',
             ],
-            [
+            /*[
                 'name' 		=> 'Twitter',
                 'icon'     => 'twitter',
-            ],
+            ],*/
             [
                 'name' 		=> 'Whatsapp',
                 'icon'     => 'whatsapp',
@@ -28,10 +28,10 @@ class MasterSocialNetworksTableSeeder extends Seeder
                 'name' 		=> 'Youtube',
                 'icon'     => 'youtube',
             ],
-            [
+            /*[
                 'name' 		=> 'Messenger',
                 'icon'     => 'messenger',
-            ],
+            ],*/
             [
                 'name' 		=> 'LinkedIn',
                 'icon'     => 'linkedin',

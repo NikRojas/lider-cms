@@ -19,16 +19,18 @@ class PageController extends BaseController
     public function home(Request $request)
     {
         $page = $this->getSeoPage(NULL, $request->locale);
-        $slider = Slider::where('from', '<=', Carbon::now()->toDateTimeString())
+        $slider = Slider::select('id', 'image_' . $request->locale, 'image_responsive_' . $request->locale)->where('from', '<=', Carbon::now()->toDateTimeString())
             ->where('to', '>=', Carbon::now()->toDateTimeString())->orderBy('index')->get();
         $projects = $this->paginateProjects($request);
         $posts = Post::select('id', 'excerpt_' . $request->locale, 'created_at', 'category_id', 'thumbnail', 'title_' . $request->locale, 'slug_' . $request->locale)
             ->orderBy('created_at', 'desc')->where('published', 1)->with('category:id,name_' . $request->locale . ',slug_' . $request->locale)->take(9)->get();
+        $filters = $this->getFilters();
         $data = array(
             "page" => $page,
             "slider" => $slider,
             "projects" => $projects,
             "posts" => $posts,
+            "filters" => $filters
         );
         return $this->sendResponse($data, '');
     }

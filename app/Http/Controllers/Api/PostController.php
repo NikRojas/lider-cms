@@ -63,7 +63,7 @@ class PostController extends BaseController
     }
 
     public function quotation(QuotationRequest $request){
-        $project = Project::where('slug_'.$request->locale,$request->slug)->first();
+        $project = Project::where('id', $request->project_id)->first();
         if(!$project){
             return $this->sendError("Not found");
         }

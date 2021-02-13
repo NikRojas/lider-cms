@@ -111,7 +111,7 @@ class PageController extends BaseController
         $page = $this->getSeoPage('online-appointment', $request->locale);
         $timeDay = MasterLeadTimeDay::get();
         $medium = MasterLeadMedium::where('videocall', 1)->get();
-        $projects = Project::select('id', 'logo', 'name_es', 'name_en')->where('active', 1)->get();
+        $projects = Project::select('id', 'logo','logo_colour', 'name_es', 'name_en')->where('active', 1)->get();
         $data = array(
             "page" => $page,
             "timeDay" => $timeDay,
@@ -125,7 +125,7 @@ class PageController extends BaseController
     {
         $page = $this->getSeoPage('contact-us', $request->locale);
         $medium = MasterLeadMedium::where('videocall', 0)->get();
-        $projects = Project::select('id', 'logo', 'name_es', 'name_en')->where('active', 1)->get();
+        $projects = Project::select('id', 'logo','logo_colour', 'name_es', 'name_en')->where('active', 1)->get();
         $data = array(
             "page" => $page,
             "medium" => $medium,
@@ -145,12 +145,12 @@ class PageController extends BaseController
 
     public function projectsRead(Request $request)
     {
-        $project = Project::where('slug_' . $request->locale, $request->slug)->first();
+        $project = Project::where('slug_' . $request->locale, $request->slug)->where('active',true)->first();
         if (!$project) {
             return $this->sendError("");
         }
         $page = $this->getSeoPage('projects', $request->locale);
-        $project = $project->load('statusRel')->load('ubigeoRel')->load('banksRel')
+        $project = $project->load('statusRel')->load('ubigeoRel')->load('banksRel')->load('bondsRel')->load('virtualTourRel')
             ->load('advisorsRel')->load('featuresRel')->load('galleryRel:id,title_es,title_en,image as src')->load('galleryRel.typeGalleryRel')->load('tipologiesRel')->load('filesRel');
         if ($project->galleryRel) {
             $project["typeGallery"] = $project->galleryRel->pluck('typeGalleryRel.name', 'typeGalleryRel.id');
@@ -160,14 +160,24 @@ class PageController extends BaseController
             }
             $project["galleryFilter"] = $project->galleryRel->groupBy('typeGalleryRel.id');
         }
-        $projects = Project::select('id', 'project_status_id', 'logo', 'slug_' . $request->locale, 'images', 'code_ubigeo', 'name_' . $request->locale, 'rooms_' . $request->locale, 'footage_' . $request->locale, 'price_total', 'price_total_foreign')
-            ->with('statusRel', 'ubigeoRel')->where('active', 1)->whereHas('ubigeoRel', function ($query) use ($project) {
+        $projects_related = [];
+        if($project->projects_related){
+            $projects_related = null;
+            foreach (json_decode($project->projects_related) as $key => $value) {
+                $projects_related[] = Project::select('id', 'project_status_id', 'logo','logo_colour', 'slug_' . $request->locale, 'images', 'code_ubigeo', 'name_' . $request->locale, 'rooms_' . $request->locale, 'footage_' . $request->locale, 'price_total', 'price_total_foreign')->where('id',$value)->with('ubigeoRel','statusRel')->get()->toArray();
+            }
+        }   
+        else{
+            $projects_related = Project::select('id', 'project_status_id', 'logo','logo_colour', 'slug_' . $request->locale, 'images', 'code_ubigeo', 'name_' . $request->locale, 'rooms_' . $request->locale, 'footage_' . $request->locale, 'price_total', 'price_total_foreign')
+            ->where('id',$project->id)->with('statusRel', 'ubigeoRel')->where('active', 1)->whereHas('ubigeoRel', function ($query) use ($project) {
                 return $query->where('code_department', $project->ubigeoRel["code_department"]);
-            })->take(4)->get();
+            })->inRandomOrder()->limit(4)->get();
+        }
         $data = array(
             "page" => $page,
             "project" => $project,
-            "projects" => $projects
+            "projects" => $projects_related
+            //"projects" => $projects
         );
         return $this->sendResponse($data, '');
     }

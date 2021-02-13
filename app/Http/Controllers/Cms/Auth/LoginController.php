@@ -30,7 +30,7 @@ class LoginController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/dashboard';
+    protected $redirectTo = '/contenido/informacion-general';
 
     /**
      * Create a new controller instance.
@@ -47,7 +47,7 @@ class LoginController extends Controller
     }
 
     protected function sendLoginResponse(Request $request){
-        return ["route" => route('cms.dashboard')];
+        return ["route" => route('cms.content.general-information.index')];
     }
 
     protected function credentials(Request $request){     

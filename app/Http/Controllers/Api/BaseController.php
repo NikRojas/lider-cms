@@ -77,10 +77,10 @@ class BaseController extends Controller
         $page = MasterPage::select('id','title_'.$lang,'seo_description_'.$lang,'seo_keywords_'.$lang,'seo_image','slug_'.$lang)->where('slug_en',$slug)->first()->toArray();
         return $page;
     }
-    
+
     public function getDepartments(){
         $departments = Ubigeo::select('code_ubigeo','code_department','department')->distinct('code_department')
-        ->has('projectsRel')->orderBy('department')->get();
+        ->has('projectsRel')->orderBy('department')->groupBy('code_department')->get();
         foreach ($departments as $key => $value) {
             $departments[$key]["districts"] = $this->getDistricts($value->code_department);
         }
@@ -88,7 +88,7 @@ class BaseController extends Controller
     }
 
     public function getDistricts($code){
-        $data = Ubigeo::select('code_district','district')->distinct()->where('code_department',$code)
+        $data = Ubigeo::select('code_district','district','code_department')->distinct()->where('code_department',$code)
         ->has('projectsRel')
         ->where('code_district','!=','00')->orderBy('district')->get();
         return $data;
@@ -110,11 +110,17 @@ class BaseController extends Controller
     }
 
     public function paginateProjects(Request $request){
-        $department = $request->department;
-        $district = $request->district;
-        $projects = Project::select('id','project_status_id','logo','slug_'.$request->locale,'images','code_ubigeo','name_'.$request->locale,'rooms_'.$request->locale,'footage_'.$request->locale,'price_total','price_total_foreign')
+        $departments = $districts = $statuses = $rooms = null;
+        $departments = $request->departments;
+        $districts = $request->districts;
+        $statuses =  $request->statuses;
+        $rooms =  $request->rooms;
+        $projects = Project::select('id','project_status_id','logo','logo_colour','slug_'.$request->locale,'images','code_ubigeo','name_'.$request->locale,'rooms_'.$request->locale,'footage_'.$request->locale,'price_total','price_total_foreign')
         ->where('active',1);
-        if($department && !$district){
+        if($statuses){
+            $projects->whereIn('project_status_id', $statuses);
+        }
+        /*if($department && !$district){
             $projects = $projects->whereHas('ubigeoRel', function ($query) use ($department) {
                 return $query->where('code_department', $department);
             });
@@ -123,7 +129,7 @@ class BaseController extends Controller
             $projects = $projects->whereHas('ubigeoRel', function ($query) use ($department, $district) {
                 return $query->where('code_department', $department)->where('code_district', $district);
             });
-        }
+        }*/
         $projects = $projects->with('ubigeoRel','statusRel')->orderBy('index')->paginate(9);
         return $projects;
     }

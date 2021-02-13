@@ -17,18 +17,18 @@ class QuotationRequest extends FormRequest
     }
 
     public function messages(){
-        /*if($this->locale == 'es'){
+        if($this->locale == 'es'){
             return [
                 'name.required' => 'Por favor ingrese su :attribute.',
                 'required' => 'Por favor ingrese su :attribute.',
             ]; 
         }
-        else{*/
+        else{
             return [
                 'name.required' => 'Please insert :attribute.',
                 'required' => 'Please insert :attribute.',
             ]; 
-        //}
+        }
          
   }
 
@@ -45,7 +45,7 @@ class QuotationRequest extends FormRequest
           'mobile' => 'required|digits_between:7,9',
           'document_number' => 'required|digits:8',
           'project_type_department_id' => 'required',
-          'slug' => 'required',
+          'project_id' => 'required',
           'accepted' => 'accepted'
         ];
     }

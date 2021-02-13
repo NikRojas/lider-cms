@@ -25,6 +25,11 @@ class Project extends Model
         return $this->hasMany('App\ProjectFile', 'project_id', 'id');
     }
 
+    public function virtualTourRel()
+    {
+        return $this->hasMany('App\ProjectVirtualTour', 'project_id', 'id');
+    }
+
     public function tipologiesRel()
     {
         return $this->hasMany('App\ProjectTypeDepartment', 'project_id', 'id');

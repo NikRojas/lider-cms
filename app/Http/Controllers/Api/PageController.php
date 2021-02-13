@@ -194,7 +194,7 @@ class PageController extends BaseController
     public function testimonials(Request $request)
     {
         $page = $this->getSeoPage('testimonials', $request->locale);
-        $testimonials = Testimonial::orderBy('index', 'asc')->get();
+        $testimonials = $this->paginateTestimonials($request);
         $data = array(
             "page" => $page,
             "testimonials" => $testimonials

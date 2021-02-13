@@ -12,6 +12,7 @@ use App\Member;
 use App\Project;
 use App\ProjectStatus;
 use App\SocialNetwork;
+use App\Testimonial;
 use App\Ubigeo;
 
 class BaseController extends Controller
@@ -137,6 +138,11 @@ class BaseController extends Controller
     public function setFileName($name,$file) {
         $nameFile = $name.time().uniqid().'.'.$file->getClientOriginalExtension();
         return $nameFile;
+    }
+
+    public function paginateTestimonials(Request $request){
+        $testimonials = Testimonial::orderBy('index', 'asc')->paginate(9);
+        return $testimonials;
     }
 
     /*public function paginateBlog(Request $request){

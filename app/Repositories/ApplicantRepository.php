@@ -24,7 +24,7 @@ class ApplicantRepository
             $pdf = null;
             //$pdf = route('cms.get-file',["folder"=>'files','subfolder'=>'applicants','file'=>$applicant["pdf"]]);
             //$pdf = Storage::disk('public')->url('files/applicants-12920/'.$applicant["pdf"]);
-            $pdf = config('services.files_url').'/applicants-12920/'.$applicant["pdf"];
+            $pdf = config('services.files_url').'/applicants-010221/'.$applicant["pdf"];
             $data[] = array(
                 "id" => $applicant["id"],
                 "name" => $applicant["name"],

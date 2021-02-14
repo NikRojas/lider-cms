@@ -20,10 +20,10 @@ class SellLandRequest extends FormRequest
       return [
           'accepted.accepted' => 'Debe aceptar nuestros términos y condiciones.',
           'digits_between' => 'Debe ingresar un número de teléfono o celular entre :min y :max dígitos.',
-          'email.email' => 'Por favor ingrese un :attribute válido.',
+          //'email.email' => 'Por favor ingrese un :attribute válido.',
           'name.required' => 'Por favor ingrese su :attribute.',
           'required' => 'Por favor ingrese su :attribute.',
-          'phone.required' => 'Por favor ingrese su teléfono o celular.',
+          'mobile.required' => 'Por favor ingrese su teléfono o celular.',
           'area.regex' => 'Debe ingresar un formato válido. Ejemplo: 100.50'
       ];  
   }
@@ -39,7 +39,7 @@ class SellLandRequest extends FormRequest
           'name' => 'required|max:100',
           'email' =>  'required|max:100|email',
           'mobile' => 'required|digits_between:7,9',
-          'accepted' => 'accepted',
+          //'accepted' => 'accepted',
           'area' => 'required|regex:/^\d*(\.\d{1,2})?$/'
         ];
     }

@@ -20,7 +20,7 @@ class ApplicantRequest extends FormRequest
       return [
           'digits_between' => 'Debe ingresar un número de teléfono o celular entre :min y :max dígitos.',
           'email.unique' => 'El correo electrónico ya se encuentra registrado.',
-          'email.email' => 'Por favor ingrese un :attribute válido.',
+          //'email.email' => 'Por favor ingrese un :attribute válido.',
           'name.required' => 'Por favor ingrese su :attribute.',
           'required' => 'Por favor ingrese su :attribute.',
           'mobile.required' => 'Por favor ingrese su teléfono o celular.',

@@ -207,7 +207,9 @@ return [
         'logo_colour' => 'logo color',
         'project_status_id' => 'estado del proyecto',
         'banner' => 'baner',
-        'room' => 'dormitorio'
+        'room' => 'dormitorio',
+        'document_number' => 'dni',
+        'area'=> 'área'
     ],
 
 ];

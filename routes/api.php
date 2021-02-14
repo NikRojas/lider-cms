@@ -50,6 +50,7 @@ Route::namespace('Api')->group(function() {
         Route::get('sell-your-land', 'PageController@sellLand');
         Route::get('projects', 'PageController@projects');
         Route::get('projects/{slug}', 'PageController@projectsRead');
+        Route::get('cami', 'PageController@cami');
         /*Route::get('know-us', 'PageController@knowUs');
         Route::get('privacity-policy', 'PageController@privacityPolicy');*/
         Route::get('work-with-us', 'PageController@workWithUs');

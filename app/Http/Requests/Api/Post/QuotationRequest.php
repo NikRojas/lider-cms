@@ -17,19 +17,16 @@ class QuotationRequest extends FormRequest
     }
 
     public function messages(){
-        if($this->locale == 'es'){
-            return [
-                'name.required' => 'Por favor ingrese su :attribute.',
-                'required' => 'Por favor ingrese su :attribute.',
-            ]; 
-        }
-        else{
-            return [
-                'name.required' => 'Please insert :attribute.',
-                'required' => 'Please insert :attribute.',
-            ]; 
-        }
-         
+        $messages = [
+        'name.required' => 'Por favor ingrese su :attribute.',
+        'required' => 'Por favor ingrese su :attribute.',
+        'digits_between' => 'Debe ingresar un número de teléfono o celular entre :min y :max dígitos.',
+        'mobile.required' => 'Por favor ingrese su teléfono o celular.',
+        'name.required' => 'Por favor ingrese su :attribute.',
+        'mobile.required' => 'Por favor ingrese su teléfono o celular.',
+        'accepted.accepted' => 'Debe aceptar nuestros términos y condiciones.',
+        ];
+        return $messages;
   }
 
     /**

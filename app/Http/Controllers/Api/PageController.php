@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Cami;
+use App\CamiElement;
 use App\Category;
 use App\Http\Controllers\Api\BaseController;
 use App\MasterLeadMedium;
@@ -108,14 +110,15 @@ class PageController extends BaseController
 
     public function onlineAppointment(Request $request)
     {
+        $project = Project::where('slug_' . $request->locale, $request->project)->where('form_videocall',true)->first();
         $page = $this->getSeoPage('online-appointment', $request->locale);
         $timeDay = MasterLeadTimeDay::get();
-        $medium = MasterLeadMedium::where('videocall', 1)->get();
-        $projects = Project::select('id', 'logo','logo_colour', 'name_es', 'name_en')->where('active', 1)->get();
+        $projects = Project::select('id', 'logo','logo_colour', 'name_es', 'name_en','code_ubigeo')->where('active', 1)->with('ubigeoRel')->get();
         $data = array(
             "page" => $page,
             "timeDay" => $timeDay,
-            "medium" => $medium,
+            "project" => $project,
+            //"medium" => $medium,
             "projects" => $projects
         );
         return $this->sendResponse($data, '');
@@ -198,6 +201,19 @@ class PageController extends BaseController
         $data = array(
             "page" => $page,
             "testimonials" => $testimonials
+        );
+        return $this->sendResponse($data, '');
+    }
+
+    public function cami(Request $request)
+    {
+        $page = $this->getSeoPage('cami', $request->locale);
+        $cami = Cami::orderBy('created_at', 'desc')->first();
+        $elements = CamiElement::orderBy('index', 'asc')->get();
+        $data = array(
+            "page" => $page,
+            "cami" => $cami,
+            "cami_elements" => $elements
         );
         return $this->sendResponse($data, '');
     }

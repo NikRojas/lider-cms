@@ -20,10 +20,10 @@ class OnlineAppointmentRequest extends FormRequest
       return [
           'accepted.accepted' => 'Debe aceptar nuestros términos y condiciones.',
           'digits_between' => 'Debe ingresar un número de teléfono o celular entre :min y :max dígitos.',
-          'email.email' => 'Por favor ingrese un :attribute válido.',
+          //'email.email' => 'Por favor ingrese un :attribute válido.',
           'name.required' => 'Por favor ingrese su :attribute.',
           'required' => 'Por favor ingrese su :attribute.',
-          'phone.required' => 'Por favor ingrese su teléfono o celular.',
+          'mobile.required' => 'Por favor ingrese su teléfono o celular.',
           'project_id.required' => 'Por favor ingrese un Proyecto.',
           'schedule.required' => 'Por favor ingrese el horario que quiere ser contactado.',
       ];  

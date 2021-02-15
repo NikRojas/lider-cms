@@ -579,7 +579,7 @@
                       >
                     </div>
                   </div>
-                  <div class="col-12">
+                  <!--<div class="col-12">
                     <div class="form-group">
                       <label class="font-weight-bold" for="iframe_map"
                         >Iframe Google Maps</label
@@ -616,7 +616,46 @@
                         >{{ errors.iframe_map[0] }}</label
                       >
                     </div>
+                  </div>-->
+                  <div class="col-12">
+                    <div class="form-group">
+                      <label class="font-weight-bold" for="banner"
+                        >Imagen Mapa</label
+                      >
+                      <vue-dropzone
+                        ref="ref_banner"
+                        @vdropzone-file-added="
+                          $validateImageDropzone(
+                            $event,
+                            $refs.ref_banner.dropzone,
+                            1,
+                            512000,
+                            '500kb'
+                          )
+                        "
+                        id="image"
+                        class="text-center"
+                        :options="dropzoneOptions"
+                        :duplicateCheck="true"
+                        :useCustomSlot="true"
+                      >
+                        <div class="dropzone-custom-content">
+                          <h5 class="dropzone-custom-title text-primary">
+                            Suelte los archivos aquí o haga click para
+                            cargarlos.
+                          </h5>
+                        </div>
+                      </vue-dropzone>
+
+                      <label
+                        v-if="errors && errors.banner"
+                        class="text-danger text-sm d-block mt-2"
+                        for="banner"
+                        >{{ errors.banner[0] }}</label
+                      >
+                    </div>
                   </div>
+
                 </div>
               </div>
             </div>

@@ -18,6 +18,7 @@ class SuscribeRequest extends FormRequest
 
     public function messages(){
       return [
+            'accepted.accepted' => 'Debe aceptar nuestros términos y condiciones.',
           'name.required' => 'Por favor ingrese su :attribute.',
           'required' => 'Por favor ingrese su :attribute.',
       ];  
@@ -32,7 +33,8 @@ class SuscribeRequest extends FormRequest
     {
         return [
           'name' => 'required|max:100',
-          'email' => 'required|max:100|email'
+          'email' => 'required|max:100|email',
+          'accepted' => 'accepted'
         ];
     }
 }

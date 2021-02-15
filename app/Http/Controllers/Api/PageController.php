@@ -72,6 +72,7 @@ class PageController extends BaseController
         }
 
         $posts = Post::select('id', 'excerpt_' . $request->locale, 'created_at', 'category_id', 'thumbnail', 'title_' . $request->locale, 'slug_' . $request->locale)
+            ->where('category_id',$category->id)
             ->orderBy('created_at', 'desc')->where('published', 1)->with('category:id,name_' . $request->locale . ',slug_' . $request->locale)->take(9)->get();
 
         $page = $this->getSeoPage('blog', $request->locale);

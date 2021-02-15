@@ -9,6 +9,7 @@ use App\Http\Controllers\Controller as Controller;
 use App\Information;
 use App\MasterPage;
 use App\Member;
+use App\Post;
 use App\Project;
 use App\ProjectStatus;
 use App\SocialNetwork;
@@ -145,23 +146,16 @@ class BaseController extends Controller
         return $testimonials;
     }
 
-    /*public function paginateBlog(Request $request){
-        $posts = Post::select('title','slug','thumbnail','excerpt','category_id','image','created_at')->where('published',1)->with('category:id,name,slug')->orderBy('created_at','desc')->paginate(6);
-        $data = array(
-            "blog" => $posts
-        );
-        return $this->sendResponse($data);
-    }
-
-    public function paginateSuccessStories(Request $request){
-        $master_page = MasterPage::where('slug',$request->department)->first();
-        if(!$master_page){
-            return $this->sendError("Not found");
+    public function paginateBlog($q = false, Request $request, $category = false){
+        $posts = Post::select('id', 'excerpt_' . $request->locale, 'created_at', 'category_id', 'thumbnail', 'title_' . $request->locale, 'slug_' . $request->locale)
+        ->where('published',1);
+        if($q){
+            $posts = $posts->where('title_' . $request->locale, 'like', '%'.$q.'%');
         }
-        $success_stories = $this->getPaginateSuccessStories($request);
-        $data = array(
-            "success_stories" => $success_stories
-        );
-        return $this->sendResponse($data);
-    }*/
+        if($category){
+            $posts = $posts->where('category_id',$category);
+        }
+        $posts = $posts->with('category:id,name_' . $request->locale . ',slug_' . $request->locale)->orderBy('created_at','desc')->paginate(8);
+        return $posts;
+    }
 }

@@ -53,8 +53,10 @@ class PageController extends BaseController
         $page = $this->getSeoPage('blog', $request->locale);
         $categories = Category::orderBy('name_' . $request->locale)->get();
 
-        $posts = Post::select('id', 'excerpt_' . $request->locale, 'created_at', 'category_id', 'thumbnail', 'title_' . $request->locale, 'slug_' . $request->locale)
-            ->orderBy('created_at', 'desc')->where('published', 1)->with('category:id,name_' . $request->locale . ',slug_' . $request->locale)->take(9)->get();
+        /*$posts = Post::select('id', 'excerpt_' . $request->locale, 'created_at', 'category_id', 'thumbnail', 'title_' . $request->locale, 'slug_' . $request->locale)
+            ->orderBy('created_at', 'desc')->where('published', 1)->with('category:id,name_' . $request->locale . ',slug_' . $request->locale)->take(9)->get();*/
+        
+        $posts = $this->paginateBlog($request->q, $request);
 
         $data = array(
             "page" => $page,
@@ -71,10 +73,11 @@ class PageController extends BaseController
             return $this->sendError("");
         }
 
-        $posts = Post::select('id', 'excerpt_' . $request->locale, 'created_at', 'category_id', 'thumbnail', 'title_' . $request->locale, 'slug_' . $request->locale)
+        /*$posts = Post::select('id', 'excerpt_' . $request->locale, 'created_at', 'category_id', 'thumbnail', 'title_' . $request->locale, 'slug_' . $request->locale)
             ->where('category_id',$category->id)
-            ->orderBy('created_at', 'desc')->where('published', 1)->with('category:id,name_' . $request->locale . ',slug_' . $request->locale)->take(9)->get();
-
+            ->orderBy('created_at', 'desc')->where('published', 1)->with('category:id,name_' . $request->locale . ',slug_' . $request->locale)->take(9)->get();*/
+        
+        $posts = $this->paginateBlog($request->q, $request,$category->id);
         $page = $this->getSeoPage('blog', $request->locale);
         $categories = Category::orderBy('name_' . $request->locale)->get();
         $data = array(
@@ -172,10 +175,12 @@ class PageController extends BaseController
             }
         }   
         else{
-            $projects_related = Project::select('id', 'project_status_id', 'logo','logo_colour', 'slug_' . $request->locale, 'images', 'code_ubigeo', 'name_' . $request->locale, 'rooms_' . $request->locale, 'footage_' . $request->locale, 'price_total', 'price_total_foreign')
-            ->where('id',$project->id)->with('statusRel', 'ubigeoRel')->where('active', 1)->whereHas('ubigeoRel', function ($query) use ($project) {
+            /*$projects_related = Project::select('id', 'project_status_id', 'logo','logo_colour', 'slug_' . $request->locale, 'images', 'code_ubigeo', 'name_' . $request->locale, 'rooms_' . $request->locale, 'footage_' . $request->locale, 'price_total', 'price_total_foreign')
+            ->where('id','!=',$project->id)->with('statusRel', 'ubigeoRel')->where('active', 1)->whereHas('ubigeoRel', function ($query) use ($project) {
                 return $query->where('code_department', $project->ubigeoRel["code_department"]);
-            })->inRandomOrder()->limit(4)->get();
+            })->inRandomOrder()->limit(4)->get();*/
+            $projects_related = Project::select('id', 'project_status_id', 'logo','logo_colour', 'slug_' . $request->locale, 'images', 'code_ubigeo', 'name_' . $request->locale, 'rooms_' . $request->locale, 'footage_' . $request->locale, 'price_total', 'price_total_foreign')
+            ->where('id','!=',$project->id)->with('statusRel', 'ubigeoRel')->where('active', 1)->inRandomOrder()->limit(4)->get();
         }
         $data = array(
             "page" => $page,

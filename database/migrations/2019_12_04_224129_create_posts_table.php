@@ -29,8 +29,8 @@ class CreatePostsTable extends Migration
             $table->string('thumbnail');
             $table->boolean('published');
             //$table->dateTime('published_at');
-            $table->string('seo_keywords_es')->nullable();
-            $table->string('seo_keywords_en')->nullable();
+            $table->text('seo_keywords_es')->nullable();
+            $table->text('seo_keywords_en')->nullable();
 
             $table->bigInteger('user_id')->unsigned();
             $table->bigInteger('category_id')->unsigned();

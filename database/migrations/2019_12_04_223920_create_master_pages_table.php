@@ -24,8 +24,8 @@ class CreateMasterPagesTable extends Migration
 
             $table->string('seo_description_es')->nullable();
             $table->string('seo_description_en')->nullable();
-            $table->string('seo_keywords_es')->nullable();
-            $table->string('seo_keywords_en')->nullable();
+            $table->text('seo_keywords_es')->nullable();
+            $table->text('seo_keywords_en')->nullable();
             $table->string('seo_image',100)->nullable();
 
             $table->bigInteger('index');   

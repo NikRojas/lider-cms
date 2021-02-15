@@ -50,6 +50,17 @@ class Information extends Model
                     }
                     else{
                         $data[$key][$key2] = $value2;
+                        $number = null;
+                        if($value2 && strlen($value2) == 9){
+                            $number = substr($value2,0,3).'-'.substr($value2,3,3).'-'.substr($value2,6,3);
+                        }
+                        else if($value2 && strlen($value2) == 7){
+                            $number = substr($value2,0,3).'-'.substr($value2,3,4);
+                        }
+                        else{
+                            $number = $value2;
+                        }
+                        $data[$key]['number_format'] = $number;
                     }
                 }
             }

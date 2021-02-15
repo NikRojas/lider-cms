@@ -28,6 +28,7 @@ Route::namespace('Api')->group(function() {
     Route::get('districts', 'BaseController@getDistricts');*/
     Route::prefix('paginate')->group(function() { 
         Route::get('projects', 'BaseController@paginateProjects');
+        Route::get('blog', 'BaseController@paginateBlog');
         Route::get('testimonials', 'BaseController@paginateTestimonials');
     });
     Route::prefix('post')->group(function() { 

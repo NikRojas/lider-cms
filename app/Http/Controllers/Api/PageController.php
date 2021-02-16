@@ -2,6 +2,10 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\AboutCustomerSupport;
+use App\AboutProjectFinished;
+use App\AboutText;
+use App\AboutWarrantyElement;
 use App\Cami;
 use App\CamiElement;
 use App\Category;
@@ -203,7 +207,45 @@ class PageController extends BaseController
     public function aboutUs(Request $request)
     {
         $page = $this->getSeoPage('about-us', $request->locale);
+        $first_1 = AboutText::where('type','first-block-1')->first();
+        $first_2 = AboutText::where('type','first-block-2')->first();
+        $first_3 = AboutText::where('type','first-block-3')->first();
+        $first_4 = AboutText::where('type','first-block-4')->first();
+        $first_5 = AboutText::where('type','first-block-5')->first();
+        $first_6 = AboutText::where('type','first-block-6')->first();
+        $first_7 = AboutText::where('type','first-block-7')->first();
+        $first_8 = AboutText::where('type','first-block-8')->first();
+        $second = AboutText::where('type','compromise')->first();
+        $third_1 = AboutText::where('type','project-finished')->orderBy('created_at', 'desc')->first();
+        $third_2 = AboutProjectFinished::where('active',true)->orderBy('index')->get();
+        $fourth_1 = AboutText::where('type','warranty')->orderBy('created_at', 'desc')->first();
+        $fourth_2 = AboutWarrantyElement::orderBy('index')->get();
+        $fifth_1 = AboutText::where('type','customer-support')->orderBy('created_at', 'desc')->first();
+        $fifth_2 = AboutCustomerSupport::orderBy('index')->get();
         $data = array(
+            "first" => [
+                "1" => $first_1,
+                "2" => $first_2,
+                "3" => $first_3,
+                "4" => $first_4,
+                "5" => $first_5,
+                "6" => $first_6,
+                "7" => $first_7,
+                "8" => $first_8
+            ],
+            "second" => $second,
+            "third" => [
+                "1" => $third_1,
+                "2" => $third_2
+            ],
+            "fourth" => [
+                "1" => $fourth_1,
+                "2" => $fourth_2
+            ],
+            "fifth" => [
+                "1" => $fifth_1,
+                "2" => $fifth_2
+            ],
             "page" => $page,
         );
         return $this->sendResponse($data, '');

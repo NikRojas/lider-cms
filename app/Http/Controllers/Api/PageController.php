@@ -200,6 +200,15 @@ class PageController extends BaseController
         return $this->sendResponse($data, '');
     }
 
+    public function aboutUs(Request $request)
+    {
+        $page = $this->getSeoPage('about-us', $request->locale);
+        $data = array(
+            "page" => $page,
+        );
+        return $this->sendResponse($data, '');
+    }
+
     public function testimonials(Request $request)
     {
         $page = $this->getSeoPage('testimonials', $request->locale);

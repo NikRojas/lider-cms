@@ -149,7 +149,7 @@
                   </div>
                   <div class="col-12 mb-4">
                     <MultipleFiles
-                      desc="La primera imagen se utilizará como cover del Proyecto"
+                      desc="La primera imagen se utilizará como cover del Proyecto, La segunda imagen se utilizará como hover del cover del Proyecto"
                       fieldName="images"
                       :errors="errors"
                       :messageOrder="messageOrder"

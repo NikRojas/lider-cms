@@ -137,7 +137,7 @@
                       <label class="font-weight-bold" for="images">Imágenes:</label>
                       <div class="row">
                         <div class="col-12 mb-3">
-                          <MultipleFiles desc="La primera imagen se utilizará como cover del Proyecto" fieldName="images" :errors="errors" :messageOrder="messageOrder" :files.sync="element.files" :imagesUrl="imagesUrl" folder="projects" :filesParent="element.images_format"/>
+                          <MultipleFiles desc="La primera imagen se utilizará como cover del Proyecto, La segunda imagen se utilizará como hover del cover del Proyecto" fieldName="images" :errors="errors" :messageOrder="messageOrder" :files.sync="element.files" :imagesUrl="imagesUrl" folder="projects" :filesParent="element.images_format"/>
                         </div>
                       </div>
                     </div>

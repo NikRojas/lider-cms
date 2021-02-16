@@ -55,6 +55,7 @@ Route::namespace('Api')->group(function() {
         /*Route::get('know-us', 'PageController@knowUs');
         Route::get('privacity-policy', 'PageController@privacityPolicy');*/
         Route::get('work-with-us', 'PageController@workWithUs');
+        Route::get('about-us', 'PageController@aboutUs');
         Route::get('testimonials', 'PageController@testimonials');
     });
 });

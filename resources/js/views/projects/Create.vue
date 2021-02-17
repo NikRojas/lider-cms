@@ -623,11 +623,11 @@
                         >Imagen Mapa</label
                       >
                       <vue-dropzone
-                        ref="ref_banner"
+                        ref="ref_map"
                         @vdropzone-file-added="
                           $validateImageDropzone(
                             $event,
-                            $refs.ref_banner.dropzone,
+                            $refs.ref_map.dropzone,
                             1,
                             512000,
                             '500kb'
@@ -648,10 +648,10 @@
                       </vue-dropzone>
 
                       <label
-                        v-if="errors && errors.banner"
+                        v-if="errors && errors.iframe_map"
                         class="text-danger text-sm d-block mt-2"
-                        for="banner"
-                        >{{ errors.banner[0] }}</label
+                        for="iframe_map"
+                        >{{ errors.iframe_map[0] }}</label
                       >
                     </div>
                   </div>
@@ -992,6 +992,9 @@ export default {
       }
       if (this.$refs.ref_banner.dropzone.files[0]) {
         fd.append("banner", this.$refs.ref_banner.dropzone.files[0]);
+      }
+      if (this.$refs.ref_map.dropzone.files[0]) {
+        fd.append("iframe_map", this.$refs.ref_map.dropzone.files[0]);
       }
       if (this.element.text_place_en) {
         fd.append("text_place_en", this.element.text_place_en);

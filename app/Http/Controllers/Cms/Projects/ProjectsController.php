@@ -74,7 +74,7 @@ class ProjectsController extends Controller
 
     public function store(ProjectRequest $request){
         $project = request(['name_es',"description_en","description_es",'url_video','name_en','slug_en','slug_es',"rooms_es","rooms_en","footage_en","footage_es","url_google_maps","url_waze","text_place_es",
-        "text_place_en","project_status_id","location","price_total","price","price_total_foreign","iframe_map","map_indications_es","map_indications_en",
+        "text_place_en","project_status_id","location","price_total","price","price_total_foreign","map_indications_es","map_indications_en",
         "sales_room_es","sales_room_en","schedule_attention_es","schedule_attention_en",'active','form_videocall','price_parking','commentary_quotation','condition_quotation','excerpt_quotation']);
 
         if($request->projects_related){
@@ -93,6 +93,9 @@ class ProjectsController extends Controller
         $brochureName = $this->setFileName('bro-',$request->file('brochure'));
         $storeBrochure = Storage::disk('public')->putFileAs('files/projects/',$request->file('brochure'),$brochureName);
 
+        $mapName = $this->setFileName('ml-',$request->file('iframe_map'));
+        $storeMap = Storage::disk('public')->putFileAs('img/projects/',$request->file('iframe_map'),$mapName);
+
         $images = [];
         for ($i=0; $i < $request->images_count; $i++) { 
             $correlative = $i + 1;
@@ -105,19 +108,20 @@ class ProjectsController extends Controller
             }
             $images[] = ${$correlative.'Name'};
         }
-        if(!$storeLogo || !$storeBanner || !$storeBrochure || !$storeLogoClour){
+        if(!$storeLogo || !$storeBanner || !$storeBrochure || !$storeLogoClour || !$storeMap){
             $request->session()->flash('error', trans('custom.message.create.error', ['name' => trans('custom.attribute.project')]));
             Storage::disk('public')->delete('img/projects/'.$logoName);
             Storage::disk('public')->delete('img/projects/'.$logoNameColour);
             Storage::disk('public')->delete('img/projects/'.$imageBanner);
             Storage::disk('public')->delete('files/projects/'.$brochureName);
+            Storage::disk('public')->delete('files/projects/'.$mapName);
             return response()->json(["route" => route('cms.projects.index')],500);
         }
 
         $project = array_merge($project,["code_ubigeo" => $request->department.$request->province.$request->district]);
         $index = $this->getMaxIndex(Project::selectRaw('MAX(id),MAX(`index`) as "index"')->get());
 
-        $project = array_merge($project,["images" => json_encode($images), "logo"=>$logoName, "logo_colour"=>$logoNameColour,"brochure"=>$brochureName,"index" => $index,"banner"=>$imageBanner]);
+        $project = array_merge($project,["images" => json_encode($images), "logo"=>$logoName, "iframe_map"=>$mapName, "logo_colour"=>$logoNameColour,"brochure"=>$brochureName,"index" => $index,"banner"=>$imageBanner]);
         try{
             $project = Project::UpdateOrCreate($project); 
         }
@@ -171,7 +175,7 @@ class ProjectsController extends Controller
 
     public function update(ProjectRequest $request,Project $element){
         $request_project = request(['name_es',"description_en","url_video","description_es",'name_en','slug_en','slug_es',"rooms_es","rooms_en","footage_en","footage_es","url_google_maps","url_waze","text_place_es",
-        "text_place_en","project_status_id","location","price_total","price","price_total_foreign","iframe_map","map_indications_es","map_indications_en",
+        "text_place_en","project_status_id","location","price_total","price","price_total_foreign","map_indications_es","map_indications_en",
         "sales_room_es","sales_room_en","schedule_attention_es","schedule_attention_en",'active','form_videocall','price_parking','commentary_quotation','condition_quotation','excerpt_quotation']);
 
  
@@ -222,6 +226,20 @@ class ProjectsController extends Controller
         }  
         else{
             $request_project = array_merge($request_project,["banner" => $element->banner]);   
+        }
+
+        if($request->hasFile('iframe_map')){
+            $imageMap = $this->setFileName('mp-',$request->file('iframe_map'));
+            $storeMap = Storage::disk('public')->putFileAs('img/projects/',$request->file('iframe_map'),$imageMap);
+            if(!$storeMap){
+                Storage::disk('public')->delete('img/projects/'.$imageMap);
+                $request->session()->flash('error', trans('custom.message.update.error', ['name' => trans('custom.attribute.project')]));
+                return response()->json(["route" => route('cms.projects.index')],500);    
+            }
+            $request_project = array_merge($request_project,["iframe_map" => $imageMap]);   
+        }  
+        else{
+            $request_project = array_merge($request_project,["iframe_map" => $element->iframe_map]);   
         }
 
         if($request->hasFile('brochure')){
@@ -278,6 +296,9 @@ class ProjectsController extends Controller
         } 
         if($request->hasFile('logo_colour') && $element->logo_colour){
             Storage::disk('public')->delete('img/projects/'.$element->logo_colour);
+        } 
+        if($request->hasFile('iframe_map') && $element->iframe_map){
+            Storage::disk('public')->delete('img/projects/'.$element->iframe_map);
         } 
         $request_project = array_merge($request_project,["code_ubigeo" => $request->department.$request->province.$request->district]);
         try{

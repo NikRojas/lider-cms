@@ -546,7 +546,7 @@
                       >{{ errors.url_google_maps[0] }}</label>
                     </div>
                   </div>
-                  <div class="col-12">
+                  <!--<div class="col-12">
                     <div class="form-group">
                       <label class="font-weight-bold" for="iframe_map">Iframe Mapa</label>
                       <textarea class="form-control" v-model="element.iframe_map" id="iframe_map" cols="30" rows="5"></textarea>
@@ -563,6 +563,39 @@
                         class="mt-2 text-danger text-sm"
                         for="iframe_map"
                       >{{ errors.iframe_map[0] }}</label>
+                    </div>
+                  </div>-->
+                  <div class="col-12">
+                    <div class="form-group">
+                      <label class="font-weight-bold" for="iframe_map">Map:</label>
+                      <div class="row">
+                        <div class="col-lg-4 mb-3 mb-lg-0">
+                          <img class="img-fluid" :src="imagesUrl+'/projects/'+element.iframe_map" alt />
+                        </div>
+                        <div class="col-lg-8">
+                          <vue-dropzone
+                            ref="ref_map"
+                            @vdropzone-file-added="$validateImageDropzone($event,$refs.ref_map.dropzone,1,512000,'500kb')"
+                            id="image"
+                            class="text-center"
+                            :options="dropzoneOptions"
+                            :duplicateCheck="true"
+                            :useCustomSlot="true"
+                          >
+                            <div class="dropzone-custom-content">
+                              <h5
+                                class="dropzone-custom-title text-primary"
+                              >Suelte los archivos aquí o haga click para cargarlos.</h5>
+                            </div>
+                          </vue-dropzone>
+
+                          <label
+                            v-if="errors && errors.iframe_map"
+                            class="text-danger text-sm d-block mt-2"
+                            for="iframe_map"
+                          >{{ errors.iframe_map[0] }}</label>
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -961,9 +994,12 @@ export default {
       if (this.$refs.ref_banner.dropzone.files[0]) {
         fd.append("banner", this.$refs.ref_banner.dropzone.files[0]);
       }
-      if (this.element.iframe_map) {
-        fd.append("iframe_map", this.element.iframe_map);
+      if (this.$refs.ref_map.dropzone.files[0]) {
+        fd.append("iframe_map", this.$refs.ref_map.dropzone.files[0]);
       }
+      /*if (this.element.iframe_map) {
+        fd.append("iframe_map", this.element.iframe_map);
+      }*/
       if(this.element.active == true){
         fd.append("active",1);
       }

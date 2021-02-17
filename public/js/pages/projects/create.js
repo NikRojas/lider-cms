@@ -1058,6 +1058,10 @@ __webpack_require__.r(__webpack_exports__);
         fd.append("banner", this.$refs.ref_banner.dropzone.files[0]);
       }
 
+      if (this.$refs.ref_map.dropzone.files[0]) {
+        fd.append("iframe_map", this.$refs.ref_map.dropzone.files[0]);
+      }
+
       if (this.element.text_place_en) {
         fd.append("text_place_en", this.element.text_place_en);
       }
@@ -2649,7 +2653,7 @@ var render = function() {
                           _c(
                             "vue-dropzone",
                             {
-                              ref: "ref_banner",
+                              ref: "ref_map",
                               staticClass: "text-center",
                               attrs: {
                                 id: "image",
@@ -2661,7 +2665,7 @@ var render = function() {
                                 "vdropzone-file-added": function($event) {
                                   return _vm.$validateImageDropzone(
                                     $event,
-                                    _vm.$refs.ref_banner.dropzone,
+                                    _vm.$refs.ref_map.dropzone,
                                     1,
                                     512000,
                                     "500kb"
@@ -2691,15 +2695,15 @@ var render = function() {
                             ]
                           ),
                           _vm._v(" "),
-                          _vm.errors && _vm.errors.banner
+                          _vm.errors && _vm.errors.iframe_map
                             ? _c(
                                 "label",
                                 {
                                   staticClass:
                                     "text-danger text-sm d-block mt-2",
-                                  attrs: { for: "banner" }
+                                  attrs: { for: "iframe_map" }
                                 },
-                                [_vm._v(_vm._s(_vm.errors.banner[0]))]
+                                [_vm._v(_vm._s(_vm.errors.iframe_map[0]))]
                               )
                             : _vm._e()
                         ],

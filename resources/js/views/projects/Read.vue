@@ -532,13 +532,21 @@
                       <p v-else>No registrado</p>
                     </h3>
                   </div>
-                  <div class="col-12">
-                    <h3 class="font-weight-normal">
+                  <div class="col-12  col-lg-6">
+                    <!--<h3 class="font-weight-normal">
                       <span class="d-block font-weight-bold d-block mb-2"
                         >Iframe Mapa:</span
                       >
                       <div v-html="element.iframe_map"></div>
+                    </h3>-->
+                    <h3 class="font-weight-normal">
+                      <span class="d-block font-weight-bold">Mapa:</span>
                     </h3>
+                    <img
+                      class="img-fluid"
+                      :src="imagesUrl + '/projects/' + element.iframe_map"
+                      alt
+                    />
                   </div>
                 </div>
               </div>

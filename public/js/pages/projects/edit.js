@@ -729,6 +729,39 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -1047,9 +1080,13 @@ __webpack_require__.r(__webpack_exports__);
         fd.append("banner", this.$refs.ref_banner.dropzone.files[0]);
       }
 
-      if (this.element.iframe_map) {
-        fd.append("iframe_map", this.element.iframe_map);
+      if (this.$refs.ref_map.dropzone.files[0]) {
+        fd.append("iframe_map", this.$refs.ref_map.dropzone.files[0]);
       }
+      /*if (this.element.iframe_map) {
+        fd.append("iframe_map", this.element.iframe_map);
+      }*/
+
 
       if (this.element.active == true) {
         fd.append("active", 1);
@@ -2838,106 +2875,87 @@ var render = function() {
                             staticClass: "font-weight-bold",
                             attrs: { for: "iframe_map" }
                           },
-                          [_vm._v("Iframe Mapa")]
+                          [_vm._v("Map:")]
                         ),
                         _vm._v(" "),
-                        _c("textarea", {
-                          directives: [
-                            {
-                              name: "model",
-                              rawName: "v-model",
-                              value: _vm.element.iframe_map,
-                              expression: "element.iframe_map"
-                            }
-                          ],
-                          staticClass: "form-control",
-                          attrs: { id: "iframe_map", cols: "30", rows: "5" },
-                          domProps: { value: _vm.element.iframe_map },
-                          on: {
-                            input: function($event) {
-                              if ($event.target.composing) {
-                                return
-                              }
-                              _vm.$set(
-                                _vm.element,
-                                "iframe_map",
-                                $event.target.value
-                              )
-                            }
-                          }
-                        }),
-                        _vm._v(" "),
-                        _c(
-                          "div",
-                          {
-                            staticClass: "mt-2",
-                            staticStyle: { opacity: ".75" }
-                          },
-                          [
-                            _c(
-                              "a",
-                              {
-                                staticStyle: { cursor: "pointer" },
-                                on: {
-                                  click: function($event) {
-                                    $event.preventDefault()
-                                    _vm.info = !_vm.info
-                                  }
-                                }
-                              },
-                              [
-                                _c("jam-info", {
-                                  staticClass: "current-color",
-                                  attrs: { height: "14px", width: "14px" }
-                                }),
-                                _vm._v(
-                                  " Más Información\n                      "
-                                )
-                              ],
-                              1
-                            )
-                          ]
-                        ),
-                        _vm._v(" "),
-                        _c(
-                          "div",
-                          {
-                            directives: [
-                              {
-                                name: "show",
-                                rawName: "v-show",
-                                value: _vm.info,
-                                expression: "info"
-                              }
-                            ],
-                            staticClass: "mt-2"
-                          },
-                          [
-                            _c("div", { staticClass: "mb-2" }, [
-                              _vm._v(
-                                'Ir a Google Maps, buscar el proyecto que desee, seleccionar "Compartir -> Insertar Mapa" y darle click a "Copiar HTML"'
-                              )
-                            ]),
-                            _vm._v(" "),
+                        _c("div", { staticClass: "row" }, [
+                          _c("div", { staticClass: "col-lg-4 mb-3 mb-lg-0" }, [
                             _c("img", {
+                              staticClass: "img-fluid",
                               attrs: {
-                                src: "/files/img/info/iframe.jpg",
+                                src:
+                                  _vm.imagesUrl +
+                                  "/projects/" +
+                                  _vm.element.iframe_map,
                                 alt: ""
                               }
                             })
-                          ]
-                        ),
-                        _vm._v(" "),
-                        _vm.errors && _vm.errors.iframe_map
-                          ? _c(
-                              "label",
-                              {
-                                staticClass: "mt-2 text-danger text-sm",
-                                attrs: { for: "iframe_map" }
-                              },
-                              [_vm._v(_vm._s(_vm.errors.iframe_map[0]))]
-                            )
-                          : _vm._e()
+                          ]),
+                          _vm._v(" "),
+                          _c(
+                            "div",
+                            { staticClass: "col-lg-8" },
+                            [
+                              _c(
+                                "vue-dropzone",
+                                {
+                                  ref: "ref_map",
+                                  staticClass: "text-center",
+                                  attrs: {
+                                    id: "image",
+                                    options: _vm.dropzoneOptions,
+                                    duplicateCheck: true,
+                                    useCustomSlot: true
+                                  },
+                                  on: {
+                                    "vdropzone-file-added": function($event) {
+                                      return _vm.$validateImageDropzone(
+                                        $event,
+                                        _vm.$refs.ref_map.dropzone,
+                                        1,
+                                        512000,
+                                        "500kb"
+                                      )
+                                    }
+                                  }
+                                },
+                                [
+                                  _c(
+                                    "div",
+                                    { staticClass: "dropzone-custom-content" },
+                                    [
+                                      _c(
+                                        "h5",
+                                        {
+                                          staticClass:
+                                            "dropzone-custom-title text-primary"
+                                        },
+                                        [
+                                          _vm._v(
+                                            "Suelte los archivos aquí o haga click para cargarlos."
+                                          )
+                                        ]
+                                      )
+                                    ]
+                                  )
+                                ]
+                              ),
+                              _vm._v(" "),
+                              _vm.errors && _vm.errors.iframe_map
+                                ? _c(
+                                    "label",
+                                    {
+                                      staticClass:
+                                        "text-danger text-sm d-block mt-2",
+                                      attrs: { for: "iframe_map" }
+                                    },
+                                    [_vm._v(_vm._s(_vm.errors.iframe_map[0]))]
+                                  )
+                                : _vm._e()
+                            ],
+                            1
+                          )
+                        ])
                       ])
                     ])
                   ])

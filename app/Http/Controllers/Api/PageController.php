@@ -121,7 +121,8 @@ class PageController extends BaseController
         $project = Project::where('slug_' . $request->locale, $request->project)->where('form_videocall',true)->first();
         $page = $this->getSeoPage('online-appointment', $request->locale);
         $timeDay = MasterLeadTimeDay::get();
-        $projects = Project::select('id', 'logo','logo_colour', 'name_es', 'name_en','code_ubigeo')->where('active', 1)->with('ubigeoRel')->get();
+        $projects = Project::select('id', 'logo','logo_colour', 'name_es', 'name_en','code_ubigeo')->where('active', 1)
+        ->where('form_videocall',true)->with('ubigeoRel')->get();
         $content = $this->getContentPage('online-appointment');
         $data = array(
             "page" => $page,
@@ -191,7 +192,6 @@ class PageController extends BaseController
             "page" => $page,
             "project" => $project,
             "projects" => $projects_related,
-            "content" => $content
         );
         return $this->sendResponse($data, '');
     }

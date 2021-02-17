@@ -105,7 +105,7 @@
                     <div v-for="(field, index) in fields" :key="field.id">
                       <div class="col-12 p-0">
                         <div class="form-group">
-                          <label v-if="field.type != 'input'" class="font-weight-bold">{{
+                          <label v-if="field.type != 'input' || !field.type != 'editor_large' || !field.type != 'editor_small'" class="font-weight-bold">{{
                             field.name
                           }}</label>
                           <div v-if="field.type == 'input'">
@@ -120,24 +120,45 @@
                                     </Input>
                           </div>
                           <div v-if="field.type == 'editor_small'">
-                            <quill-editor
+                            <!--<quill-editor
                               class="ql-height-8"
                               @keydown.enter.prevent
                               v-model="fields[index].value"
                               ref="ref_content"
                               :placeholder="''"
                               :options="quillEditorOptions"
-                            ></quill-editor>
+                            ></quill-editor>-->
+                            <Editor
+                              size="sm"
+                              :label="field.name"
+                              variable="description"
+                              :errors="errors"
+                              :valueEn.sync="fields[index].value_en"
+                      :valueEs.sync="fields[index].value_es"
+                      :valueEnParent="fields[index].value_en"
+                      :valueEsParent="fields[index].value_es"
+                            />
                           </div>
                           <div v-if="field.type == 'editor_large'">
-                            <quill-editor
+                            <Editor
+                      size="lg"
+                      :label="field.name"
+                      variable="description"
+                      :errors="errors"
+                      :valueEn.sync="fields[index].value_en"
+                      :valueEs.sync="fields[index].value_es"
+                      :valueEnParent="fields[index].value_en"
+                      :valueEsParent="fields[index].value_es"
+                    />
+                            <!--<quill-editor
+
                               class="ql-height-25"
                               @keydown.enter.prevent
                               v-model="fields[index].value"
                               ref="ref_content"
                               :placeholder="''"
                               :options="quillEditorOptions"
-                            ></quill-editor>
+                            ></quill-editor>-->
                           </div>
                           <div v-if="field.type == 'image'">
                             <div class="row">
@@ -261,6 +282,7 @@ import BreadCrumb from "../../components/BreadCrumb";
 import SkeletonForm from "../../components/skeleton/form";
 import Destroy from "../../components/modals/Destroy";
 import Input from "../../components/form/Input";
+import Editor from "../../components/form/Editor";
 // import Loader from "../../components/Loader";
 export default {
   props: {
@@ -276,6 +298,7 @@ export default {
       Input,
     FileUpload,
     quillEditor,
+    Editor,
     Button,
     vueDropzone: vue2Dropzone,
     BreadCrumb,

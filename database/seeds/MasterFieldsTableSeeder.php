@@ -65,6 +65,12 @@ class MasterFieldsTableSeeder extends Seeder
                 'type'                  => 'editor_small',
                 'master_section_id'     => MasterSection::where('name','Información')->where('master_page_id',MasterPage::where('name','Contacto')->first()->id)->first()->id
             ],
+            [
+                'name' 		            => 'Imagen',
+                'variable' 		        => 'image',
+                'type'                  => 'image',
+                'master_section_id'     => MasterSection::where('name','Información')->where('master_page_id',MasterPage::where('name','Contacto')->first()->id)->first()->id
+            ],
 
             [
                 'name' 		            => 'Fondo',
@@ -125,6 +131,12 @@ class MasterFieldsTableSeeder extends Seeder
                 'name' 		            => 'Descripción',
                 'variable' 		        => 'description',
                 'type'                  => 'editor_small',
+                'master_section_id'     => MasterSection::where('name','Información')->where('master_page_id',MasterPage::where('name','Vende tu terreno')->first()->id)->first()->id
+            ],
+            [
+                'name' 		            => 'Imagen',
+                'variable' 		        => 'image',
+                'type'                  => 'image',
                 'master_section_id'     => MasterSection::where('name','Información')->where('master_page_id',MasterPage::where('name','Vende tu terreno')->first()->id)->first()->id
             ],
             
@@ -151,6 +163,12 @@ class MasterFieldsTableSeeder extends Seeder
                 'name' 		            => 'Descripción',
                 'variable' 		        => 'description',
                 'type'                  => 'editor_small',
+                'master_section_id'     => MasterSection::where('name','Información')->where('master_page_id',MasterPage::where('name','Trabaja con nosotros')->first()->id)->first()->id
+            ],
+            [
+                'name' 		            => 'Imagen',
+                'variable' 		        => 'image',
+                'type'                  => 'image',
                 'master_section_id'     => MasterSection::where('name','Información')->where('master_page_id',MasterPage::where('name','Trabaja con nosotros')->first()->id)->first()->id
             ],
 
@@ -224,6 +242,12 @@ class MasterFieldsTableSeeder extends Seeder
                 'name' 		            => 'Descripción',
                 'variable' 		        => 'description',
                 'type'                  => 'editor_small',
+                'master_section_id'     => MasterSection::where('name','Información')->where('master_page_id',MasterPage::where('name','Cita Online')->first()->id)->first()->id
+            ],
+            [
+                'name' 		            => 'Imagen',
+                'variable' 		        => 'image',
+                'type'                  => 'image',
                 'master_section_id'     => MasterSection::where('name','Información')->where('master_page_id',MasterPage::where('name','Cita Online')->first()->id)->first()->id
             ],
             [

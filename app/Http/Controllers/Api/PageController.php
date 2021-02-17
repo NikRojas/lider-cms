@@ -31,12 +31,14 @@ class PageController extends BaseController
         $posts = Post::select('id', 'excerpt_' . $request->locale, 'created_at', 'category_id', 'thumbnail', 'title_' . $request->locale, 'slug_' . $request->locale)
             ->orderBy('created_at', 'desc')->where('published', 1)->with('category:id,name_' . $request->locale . ',slug_' . $request->locale)->take(9)->get();
         $filters = $this->getFilters();
+        $content = $this->getContentPage(NULL);
         $data = array(
             "page" => $page,
             "slider" => $slider,
             "projects" => $projects,
             "posts" => $posts,
-            "filters" => $filters
+            "filters" => $filters,
+            "content" => $content
         );
         return $this->sendResponse($data, '');
     }
@@ -45,9 +47,11 @@ class PageController extends BaseController
     {
         $page = $this->getSeoPage('projects', $request->locale);
         $projects = $this->paginateProjects($request);
+        $content = $this->getContentPage('projects');
         $data = array(
             "page" => $page,
             "projects" => $projects,
+            "content" => $content
         );
         return $this->sendResponse($data, '');
     }
@@ -56,16 +60,13 @@ class PageController extends BaseController
     {
         $page = $this->getSeoPage('blog', $request->locale);
         $categories = Category::orderBy('name_' . $request->locale)->get();
-
-        /*$posts = Post::select('id', 'excerpt_' . $request->locale, 'created_at', 'category_id', 'thumbnail', 'title_' . $request->locale, 'slug_' . $request->locale)
-            ->orderBy('created_at', 'desc')->where('published', 1)->with('category:id,name_' . $request->locale . ',slug_' . $request->locale)->take(9)->get();*/
-        
         $posts = $this->paginateBlog($request->q, $request);
-
+        $content = $this->getContentPage('blog');
         $data = array(
             "page" => $page,
             "categories" => $categories,
             "posts" => $posts,
+            "content" => $content
         );
         return $this->sendResponse($data, '');
     }
@@ -76,19 +77,16 @@ class PageController extends BaseController
         if (!$category) {
             return $this->sendError("");
         }
-
-        /*$posts = Post::select('id', 'excerpt_' . $request->locale, 'created_at', 'category_id', 'thumbnail', 'title_' . $request->locale, 'slug_' . $request->locale)
-            ->where('category_id',$category->id)
-            ->orderBy('created_at', 'desc')->where('published', 1)->with('category:id,name_' . $request->locale . ',slug_' . $request->locale)->take(9)->get();*/
-        
         $posts = $this->paginateBlog($request->q, $request,$category->id);
         $page = $this->getSeoPage('blog', $request->locale);
         $categories = Category::orderBy('name_' . $request->locale)->get();
+        $content = $this->getContentPage('blog');
         $data = array(
             "page" => $page,
             "category" => $category,
             "categories" => $categories,
             "posts" => $posts,
+            "content" => $content
         );
         return $this->sendResponse($data, '');
     }
@@ -106,12 +104,14 @@ class PageController extends BaseController
         $page = $this->getSeoPage('blog', $request->locale);
         $categories = Category::orderBy('name_' . $request->locale)->get();
         $posts = Post::where('published', 1)->where('id', '!=', $post->id)->with('category:id,name_' . $request->locale . ',slug_' . $request->locale)->inRandomOrder()->take(3)->get();
+        $content = $this->getContentPage('blog');
         $data = array(
             "page" => $page,
             "category" => $category,
             "posts" => $posts,
             'post' => $post,
-            "categories" => $categories
+            "categories" => $categories,
+            "content" => $content
         );
         return $this->sendResponse($data, '');
     }
@@ -122,12 +122,13 @@ class PageController extends BaseController
         $page = $this->getSeoPage('online-appointment', $request->locale);
         $timeDay = MasterLeadTimeDay::get();
         $projects = Project::select('id', 'logo','logo_colour', 'name_es', 'name_en','code_ubigeo')->where('active', 1)->with('ubigeoRel')->get();
+        $content = $this->getContentPage('online-appointment');
         $data = array(
             "page" => $page,
             "timeDay" => $timeDay,
             "project" => $project,
-            //"medium" => $medium,
-            "projects" => $projects
+            "projects" => $projects,
+            "content" => $content
         );
         return $this->sendResponse($data, '');
     }
@@ -137,10 +138,12 @@ class PageController extends BaseController
         $page = $this->getSeoPage('contact-us', $request->locale);
         $medium = MasterLeadMedium::where('videocall', 0)->get();
         $projects = Project::select('id', 'logo','logo_colour', 'name_es', 'name_en')->where('active', 1)->get();
+        $content = $this->getContentPage('contact-us');
         $data = array(
             "page" => $page,
             "medium" => $medium,
-            "projects" => $projects
+            "projects" => $projects,
+            "content" => $content
         );
         return $this->sendResponse($data, '');
     }
@@ -148,8 +151,10 @@ class PageController extends BaseController
     public function sellLand(Request $request)
     {
         $page = $this->getSeoPage('sell-your-land', $request->locale);
+        $content = $this->getContentPage('sell-your-land');
         $data = array(
             "page" => $page,
+            "content" => $content
         );
         return $this->sendResponse($data, '');
     }
@@ -179,18 +184,14 @@ class PageController extends BaseController
             }
         }   
         else{
-            /*$projects_related = Project::select('id', 'project_status_id', 'logo','logo_colour', 'slug_' . $request->locale, 'images', 'code_ubigeo', 'name_' . $request->locale, 'rooms_' . $request->locale, 'footage_' . $request->locale, 'price_total', 'price_total_foreign')
-            ->where('id','!=',$project->id)->with('statusRel', 'ubigeoRel')->where('active', 1)->whereHas('ubigeoRel', function ($query) use ($project) {
-                return $query->where('code_department', $project->ubigeoRel["code_department"]);
-            })->inRandomOrder()->limit(4)->get();*/
             $projects_related = Project::select('id', 'project_status_id', 'logo','logo_colour', 'slug_' . $request->locale, 'images', 'code_ubigeo', 'name_' . $request->locale, 'rooms_' . $request->locale, 'footage_' . $request->locale, 'price_total', 'price_total_foreign')
             ->where('id','!=',$project->id)->with('statusRel', 'ubigeoRel')->where('active', 1)->inRandomOrder()->limit(4)->get();
         }
         $data = array(
             "page" => $page,
             "project" => $project,
-            "projects" => $projects_related
-            //"projects" => $projects
+            "projects" => $projects_related,
+            "content" => $content
         );
         return $this->sendResponse($data, '');
     }
@@ -198,8 +199,32 @@ class PageController extends BaseController
     public function workWithUs(Request $request)
     {
         $page = $this->getSeoPage('work-with-us', $request->locale);
+        $content = $this->getContentPage('work-with-us');
         $data = array(
             "page" => $page,
+            "content" => $content
+        );
+        return $this->sendResponse($data, '');
+    }
+
+    public function termsConditions(Request $request)
+    {
+        $page = $this->getSeoPage('terms-conditions', $request->locale);
+        $content = $this->getContentPage('terms-conditions');
+        $data = array(
+            "page" => $page,
+            "content" => $content
+        );
+        return $this->sendResponse($data, '');
+    }
+
+    public function privacityPolicy(Request $request)
+    {
+        $page = $this->getSeoPage('privacy-policies', $request->locale);
+        $content = $this->getContentPage('privacy-policies');
+        $data = array(
+            "page" => $page,
+            "content" => $content
         );
         return $this->sendResponse($data, '');
     }
@@ -222,6 +247,7 @@ class PageController extends BaseController
         $fourth_2 = AboutWarrantyElement::orderBy('index')->get();
         $fifth_1 = AboutText::where('type','customer-support')->orderBy('created_at', 'desc')->first();
         $fifth_2 = AboutCustomerSupport::orderBy('index')->get();
+        $content = $this->getContentPage('about-us');
         $data = array(
             "first" => [
                 "1" => $first_1,
@@ -247,6 +273,7 @@ class PageController extends BaseController
                 "2" => $fifth_2
             ],
             "page" => $page,
+            "content" => $content
         );
         return $this->sendResponse($data, '');
     }
@@ -255,9 +282,11 @@ class PageController extends BaseController
     {
         $page = $this->getSeoPage('testimonials', $request->locale);
         $testimonials = $this->paginateTestimonials($request);
+        $content = $this->getContentPage('testimonials');
         $data = array(
             "page" => $page,
-            "testimonials" => $testimonials
+            "testimonials" => $testimonials,
+            "content" => $content
         );
         return $this->sendResponse($data, '');
     }
@@ -265,12 +294,14 @@ class PageController extends BaseController
     public function cami(Request $request)
     {
         $page = $this->getSeoPage('cami', $request->locale);
+        $content = $this->getContentPage('cami');
         $cami = Cami::orderBy('created_at', 'desc')->first();
         $elements = CamiElement::orderBy('index', 'asc')->get();
         $data = array(
             "page" => $page,
             "cami" => $cami,
-            "cami_elements" => $elements
+            "cami_elements" => $elements,
+            "content" => $content
         );
         return $this->sendResponse($data, '');
     }

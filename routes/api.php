@@ -52,11 +52,11 @@ Route::namespace('Api')->group(function() {
         Route::get('projects', 'PageController@projects');
         Route::get('projects/{slug}', 'PageController@projectsRead');
         Route::get('cami', 'PageController@cami');
-        /*Route::get('know-us', 'PageController@knowUs');
-        Route::get('privacity-policy', 'PageController@privacityPolicy');*/
         Route::get('work-with-us', 'PageController@workWithUs');
         Route::get('about-us', 'PageController@aboutUs');
         Route::get('testimonials', 'PageController@testimonials');
+        Route::get('privacy-policies', 'PageController@privacityPolicy');
+        Route::get('terms-conditions', 'PageController@termsConditions');
     });
 });
 

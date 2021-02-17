@@ -17,6 +17,7 @@ class CreateContentTable extends Migration
             $table->bigIncrements('id');
 
             $table->string('field');
+            $table->longText('value')->nullable();
             $table->longText('value_es')->nullable();
             $table->longText('value_en')->nullable();
             $table->bigInteger('master_section_id')->unsigned();

@@ -58,14 +58,14 @@ class MasterPagesTableSeeder extends Seeder
                 'index' => $position++
             ],
 
-            [
+            /*[
                 'name' 		=> 'Cotiza aquí',
                 'slug_es'     => 'cotiza-aqui',
                 'title_es'     => 'Cotiza aquí',
                 'slug_en'     => 'quote-here',
                 'title_en'     => 'Quote here',
                 'index' => $position++
-            ],
+            ],*/
 
             [
                 'name' 		=> 'Cami',
@@ -126,8 +126,17 @@ class MasterPagesTableSeeder extends Seeder
                 'name' 		=> 'Políticas de Privacidad',
                 'slug_es'     => 'politicas-privacidad',
                 'title_es'     => 'Políticas de Privacidad',
-                'slug_en'     => 'privacy',
-                'title_en'     => 'Privacy Policy',
+                'slug_en'     => 'privacy-policies',
+                'title_en'     => 'Privacy Policies',
+                'index' => $position++
+            ],
+
+            [
+                'name' 		=> 'Términos y Condiciones',
+                'slug_es'     => 'terminos-condiciones',
+                'title_es'     => 'Términos y Condiciones',
+                'slug_en'     => 'terms-conditions',
+                'title_en'     => 'Terms & Conditions',
                 'index' => $position++
             ],
         ]);

@@ -231,6 +231,15 @@ Route::middleware(['auth'])->namespace('Cms')->name('cms.')->group(function () {
     });
 
     Route::namespace('Content')->prefix('contenido')->name('content.')->group(function () {
+        Route::name('general-content.')->prefix('contenido-general')->group(function () {
+            Route::get('/', 'GeneralContentController@index')->name('index');
+            Route::put('/', 'GeneralContentController@updateSection')->name('update-section');
+            Route::get('/json/get-all', 'GeneralContentController@getAllPages')->name('get-all');
+            Route::get('/json/get/{page}', 'GeneralContentController@getPageSections')->name('get');
+            Route::get('/json/get/section/{section}', 'GeneralContentController@getPageSectionFields')->name('get-page-sections-fields');
+            Route::post('/image', 'GeneralContentController@storeImage')->name('store-image');
+        });
+        
         #Social Networks
         Route::name('social-networks.')->prefix('redes-sociales')->group(function () {
             Route::get('/', 'SocialController@index')->name('index');

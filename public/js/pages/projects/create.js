@@ -1549,7 +1549,7 @@ var render = function() {
                         _c("MultipleFiles", {
                           attrs: {
                             desc:
-                              "La primera imagen se utilizará como cover del Proyecto",
+                              "La primera imagen se utilizará como cover del Proyecto, La segunda imagen se utilizará como hover del cover del Proyecto",
                             fieldName: "images",
                             errors: _vm.errors,
                             messageOrder: _vm.messageOrder,

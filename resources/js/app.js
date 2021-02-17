@@ -90,6 +90,10 @@ const app = new Vue({
 
         'statistics-index': () => import('./views/Statistics/Index.vue' /* webpackChunkName: "js/pages/statistics/index" */),
         'configuration-general': () => import('./views/configuration/General/Index.vue' /* webpackChunkName: "js/pages/configuration/general" */),
+        "content-general-content": () =>
+            import(
+                "./views/content/GeneralContent.vue" /* webpackChunkName: "js/pages/content/general-content" */
+            ),
     }
 });
 import Validation from './functions/validation.js'

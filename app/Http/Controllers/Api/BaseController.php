@@ -158,4 +158,9 @@ class BaseController extends Controller
         $posts = $posts->with('category:id,name_' . $request->locale . ',slug_' . $request->locale)->orderBy('created_at','desc')->paginate(8);
         return $posts;
     }
+
+    public function getContentPage($slug){
+        $content = MasterPage::where('slug_en',$slug)->first()->load('sections:id,name,master_page_id','sections.content:id,master_section_id,field,value,value_en,value_es')->sections->toArray();
+        return $content;
+    }
 }

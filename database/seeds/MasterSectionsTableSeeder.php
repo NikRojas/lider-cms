@@ -38,6 +38,10 @@ class MasterSectionsTableSeeder extends Seeder
                 'master_page_id'     => MasterPage::where('name','Blog')->first()->id,
             ],
             [
+                'name' 		=> 'Suscríbete',
+                'master_page_id'     => MasterPage::where('name','Blog')->first()->id,
+            ],
+            [
                 'name' 		=> 'Banner',
                 'master_page_id'     => MasterPage::where('name','Testimoniales')->first()->id,
             ],

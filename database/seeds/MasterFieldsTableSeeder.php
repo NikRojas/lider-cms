@@ -87,6 +87,20 @@ class MasterFieldsTableSeeder extends Seeder
 
             [
                 'name' 		            => 'Fondo',
+                'variable'              => 'background',
+                'type'                  => 'image',
+                'master_section_id'     => MasterSection::where('name','Suscríbete')->where('master_page_id',MasterPage::where('name','Blog')->first()->id)->first()->id
+            ],
+
+            [
+                'name' 		            => 'Imagen',
+                'variable'              => 'image',
+                'type'                  => 'image',
+                'master_section_id'     => MasterSection::where('name','Suscríbete')->where('master_page_id',MasterPage::where('name','Blog')->first()->id)->first()->id
+            ],
+
+            [
+                'name' 		            => 'Fondo',
                 'variable'              => 'image',
                 'type'                  => 'image',
                 'master_section_id'     => MasterSection::where('name','Banner')->where('master_page_id',MasterPage::where('name','Testimoniales')->first()->id)->first()->id

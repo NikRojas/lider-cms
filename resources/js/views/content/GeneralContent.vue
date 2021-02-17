@@ -105,7 +105,7 @@
                     <div v-for="(field, index) in fields" :key="field.id">
                       <div class="col-12 p-0">
                         <div class="form-group">
-                          <label v-if="field.type != 'input' || !field.type != 'editor_large' || !field.type != 'editor_small'" class="font-weight-bold">{{
+                          <label v-if="field.type != 'input' && field.type != 'editor_large' && field.type != 'editor_small'" class="font-weight-bold">{{
                             field.name
                           }}</label>
                           <div v-if="field.type == 'input'">

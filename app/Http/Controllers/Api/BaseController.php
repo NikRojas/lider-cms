@@ -83,7 +83,11 @@ class BaseController extends Controller
 
     public function getDepartments(){
         $departments = Ubigeo::select('code_ubigeo','code_department','department')->distinct('code_department')
-        ->has('projectsRel')->orderBy('department')->groupBy('code_department')->get();
+        //->has('projectsRel')
+        ->whereHas('projectsRel', function ($query) {
+            $query->where('active', 1);
+        })
+        ->orderBy('department')->groupBy('code_department')->get();
         foreach ($departments as $key => $value) {
             $departments[$key]["districts"] = $this->getDistricts($value->code_department);
         }
@@ -92,13 +96,19 @@ class BaseController extends Controller
 
     public function getDistricts($code){
         $data = Ubigeo::select('code_district','district','code_ubigeo','code_department')->distinct()->where('code_department',$code)
-        ->has('projectsRel')
+        //->has('projectsRel')
+        ->whereHas('projectsRel', function ($query) {
+            $query->where('active', 1);
+        })
         ->where('code_district','!=','00')->orderBy('district')->get();
         return $data;
     }
 
     public function getStatus(){
-        $data = ProjectStatus::has('projectsRel')->get();
+        //$data = ProjectStatus::has('projectsRel')->get();
+        $data = ProjectStatus::whereHas('projectsRel', function ($query) {
+            $query->where('active', 1);
+        })->get();
         return $data;
     }
 
@@ -115,7 +125,9 @@ class BaseController extends Controller
     }
 
     public function getRooms(){
-        $data = ProjectTypeDepartment::where('available',true)->groupBy('room')->get();
+        $data = ProjectTypeDepartment::where('available',true)->whereHas('projectRel', function ($query) {
+            $query->where('active', 1);
+        })->groupBy('room')->get();
         if($data){
             $data = $data->pluck('room');
         }

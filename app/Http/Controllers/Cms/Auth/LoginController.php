@@ -47,7 +47,14 @@ class LoginController extends Controller
     }
 
     protected function sendLoginResponse(Request $request){
-        return ["route" => route('cms.content.general-information.index')];
+        $route = session()->get('url.intended');
+        if(!$route){
+            $route = route('cms.dashboard');
+        }
+        else{
+            session()->forget('url.intended');
+        }
+        return ["route" => $route];
     }
 
     protected function credentials(Request $request){     

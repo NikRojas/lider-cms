@@ -613,6 +613,21 @@
               <div class="card-body">
                 <div class="row">
                   <div class="col-12">
+                    <div class="mt-2 text-right" style="opacity: 0.75">
+                        <a style="cursor: pointer" @click.prevent="info = !info"
+                          ><jam-info
+                            height="14px"
+                            class="current-color"
+                            width="14px"
+                          ></jam-info>
+                          Vista Previa Email de Cotización
+                        </a>
+                      </div>
+                      <div class="mt-2" v-show="info">
+                        <img src="/files/img/info/mail.jpg" alt="" />
+                      </div>
+                  </div>
+                  <div class="col-12">
                     <div class="form-group">
                       <label class="font-weight-bold" for="excerpt_quotation"
                         >Resumen del Proyecto</label

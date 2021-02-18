@@ -142,7 +142,7 @@
                 </div>
                 <div v-else>
                   <div class="table-responsive">
-                    <simplebar data-simplebar-auto-hide="false">
+                    <simplebar data-simplebar-auto-hide="false" style="height: 400px;">
                       <table class="table align-items-center">
                         <thead class="thead-light">
                           <tr>

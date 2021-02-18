@@ -57,7 +57,7 @@ class ProjectRequest extends FormRequest
             'url_video' => 'sometimes|required|url',
             'price_total_foreign' => 'nullable|max:1000000000|numeric',
             //'price' => 'nullable|max:1000000000|numeric',
-            'iframe_map' => 'required',
+            //'iframe_map' => 'required',
             'sales_room_es' => 'required',
             'sales_room_en' => 'required',
             'schedule_attention_es' => 'required',
@@ -67,13 +67,13 @@ class ProjectRequest extends FormRequest
             case 'POST':   
                 $rules = array_merge(
                     $rules,
-                    ['logo' => 'required','logo_colour' => 'required','brochure' => 'required','banner' => 'required']
+                    ['iframe_map' => 'required','logo' => 'required','logo_colour' => 'required','brochure' => 'required','banner' => 'required']
                 );
             break;
             case 'PUT':   
                 $rules = array_merge(
                     $rules,
-                    ['logo' => 'sometimes|required','logo_colour' => 'sometimes|required','brochure' => 'sometimes|required', 'banner' => 'sometimes|required']
+                    ['iframe_map' => 'sometimes|required','logo' => 'sometimes|required','logo_colour' => 'sometimes|required','brochure' => 'sometimes|required', 'banner' => 'sometimes|required']
                 );
             break;
         }

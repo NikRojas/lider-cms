@@ -19,7 +19,6 @@ class DatabaseSeeder extends Seeder
         $this->call(MasterLeadsSourceTableSeeder::class);
         $this->call(MasterCurrenciesTableSeeder::class);
         $this->call(MasterUbigeoTableSeeder::class);
-        $this->call(MasterPagesTableSeeder::class);
         $this->call(MasterTypeGalleryTableSeeder::class);
         $this->call(MasterDocumentsTypeSeeder::class);
         $this->call(MasterClaimsSeeder::class);

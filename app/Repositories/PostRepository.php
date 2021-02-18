@@ -17,8 +17,8 @@ class PostRepository
         if ($q) {
             $posts = Post::selectRaw($select)
             ->join('categories', 'categories.id', 'posts.category_id')
-            ->where('posts.title_es', 'like', $q.'%')
-            ->orWhere('posts.title_en', 'like', $q.'%')
+            ->where('posts.title_es', 'like', '%'.$q.'%')
+            ->orWhere('posts.title_en', 'like', '%'.$q.'%')
             ->orderBy('posts.created_at', 'desc')
             ->paginate($items_per_page);
         } else {
@@ -40,7 +40,7 @@ class PostRepository
                 "title_es" => $post["title_es"],
                 "title_en" => $post["title_en"],
                 "url" => "<a style='text-decoration: underline;' href=".$url."/blog/categoria/".$post["category_slug_es"] .'/'.$post["slug_es"]." target='_blank'>".$url.'/blog/categoria/'.$post["category_slug_es"] .'/'.$post["slug_es"]."</a>
-                <br><a style='text-decoration: underline;' href=".$url."/blog/category/".$post["category_slug_en"] .'/'.$post["slug_en"]." target='_blank'>".$url.'/blog/category/'.$post["category_slug_en"] .'/'.$post["slug_en"]."</a>",
+                <br><a style='text-decoration: underline;' href=".$url."/en/blog/category/".$post["category_slug_en"] .'/'.$post["slug_en"]." target='_blank'>".$url.'/en/blog/category/'.$post["category_slug_en"] .'/'.$post["slug_en"]."</a>",
                 "category_es" => '<span class="badge badge-pill badge-info badge-lg">'.$post["category_name_es"].'</span>',
                 "category_en" => '<span class="badge badge-pill badge-info badge-lg">'.$post["category_name_en"].'</span>',
                 "status" => $status,

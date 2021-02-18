@@ -12,6 +12,7 @@ use App\Member;
 use App\Post;
 use App\Project;
 use App\ProjectStatus;
+use App\ProjectTypeDepartment;
 use App\SocialNetwork;
 use App\Testimonial;
 use App\Ubigeo;
@@ -90,7 +91,7 @@ class BaseController extends Controller
     }
 
     public function getDistricts($code){
-        $data = Ubigeo::select('code_district','district','code_department')->distinct()->where('code_department',$code)
+        $data = Ubigeo::select('code_district','district','code_ubigeo','code_department')->distinct()->where('code_department',$code)
         ->has('projectsRel')
         ->where('code_district','!=','00')->orderBy('district')->get();
         return $data;
@@ -104,10 +105,20 @@ class BaseController extends Controller
     public function getFilters(){
         $departments = $this->getDepartments();
         $status = $this->getStatus();
+        $rooms = $this->getRooms();
         $data = [
             "departments" => $departments,
-            "status" => $status
+            "status" => $status,
+            "rooms" => $rooms
         ];
+        return $data;
+    }
+
+    public function getRooms(){
+        $data = ProjectTypeDepartment::where('available',true)->groupBy('room')->get();
+        if($data){
+            $data = $data->pluck('room');
+        }
         return $data;
     }
 
@@ -122,16 +133,38 @@ class BaseController extends Controller
         if($statuses){
             $projects->whereIn('project_status_id', $statuses);
         }
-        /*if($department && !$district){
-            $projects = $projects->whereHas('ubigeoRel', function ($query) use ($department) {
-                return $query->where('code_department', $department);
+        if($rooms){
+            $projects->whereHas('tipologiesRel', function ($query) use ($rooms) {
+                return $query->whereIn('room', $rooms)->where('available',true);
             });
         }
-        else if($department && $district){
-            $projects = $projects->whereHas('ubigeoRel', function ($query) use ($department, $district) {
-                return $query->where('code_department', $department)->where('code_district', $district);
+        if($departments && !$districts){
+            $projects->whereHas('ubigeoRel', function ($query) use ($departments) {
+                return $query->whereIn('code_department', $departments);
             });
-        }*/
+        }
+        else if($departments && $districts){
+            $departmentsTemp = null;
+            //$districtsTemp = null;
+            foreach ($districts as $k => $f) {
+                //$districtsTemp[$k] = substr($f, 2,2);
+                $departmentsTemp[] = substr($f, 0, 2);
+            }
+            foreach ($departmentsTemp as $key => $value) {
+                $pos = array_search($value, $departments);
+                if($pos !== FALSE){
+                    unset($departments[$pos]);
+                }
+            }
+            $projects->whereHas('ubigeoRel', function ($query) use ($departments, $districts) {
+                if(!$departments){
+                    return $query->whereIn('code_ubigeo',$districts);
+                }
+                else{
+                    return $query->whereIn('code_ubigeo',$districts)->orWhereIn('code_department', $departments);
+                }
+            });
+        }
         $projects = $projects->with('ubigeoRel','statusRel')->orderBy('index')->paginate(9);
         return $projects;
     }

@@ -33,11 +33,11 @@ class PageController extends BaseController
         $filters = $this->getFilters();
         $content = $this->getContentPage(NULL);
         $data = array(
+            "filters" => $filters,
             "page" => $page,
             "slider" => $slider,
             "projects" => $projects,
             "posts" => $posts,
-            "filters" => $filters,
             "content" => $content
         );
         return $this->sendResponse($data, '');

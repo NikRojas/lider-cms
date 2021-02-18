@@ -142,7 +142,7 @@
                 </div>
                 <div v-else>
                   <div class="table-responsive">
-                    <simplebar data-simplebar-auto-hide="false" style="height: 400px;">
+                    <simplebar data-simplebar-auto-hide="false" style="height: 350px;">
                       <table class="table align-items-center">
                         <thead class="thead-light">
                           <tr>
@@ -185,7 +185,9 @@
                         </tbody>
                         <tbody v-else>
                           <tr>
-                            <td class="text-center py-5" colspan="4">No hay proyectos registrados</td>
+                            <td class="text-center py-5" colspan="4">
+                              <NoData :show-title="false" customText="No hay proyectos registrados"/>
+                            </td>
                           </tr>
                         </tbody>
                       </table>
@@ -351,6 +353,7 @@ import { Skeleton } from "vue-loading-skeleton";
 import simplebar from "simplebar-vue";
 import "simplebar/dist/simplebar.min.css";
 import FilterDateRange from "../../components/filters/DateRange";
+import NoData from "../../components/NoData";
 /*import ChartBar from "../components/charts/Bar.js";
 import ChartLine from "../components/charts/Line.js";*/
 export default {
@@ -359,6 +362,7 @@ export default {
   },
   components: {
     //Footer,
+    NoData,
     BreadCrumb,
     Loader,
     FilterDateRange,

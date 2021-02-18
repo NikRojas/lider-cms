@@ -177,7 +177,7 @@ class BaseController extends Controller
                 }
             });
         }
-        $projects = $projects->with('ubigeoRel','statusRel')->orderBy('index')->paginate(9);
+        $projects = $projects->with('ubigeoRel','statusRel')->orderBy('index')->paginate(3);
         return $projects;
     }
 

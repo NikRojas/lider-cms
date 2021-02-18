@@ -48,10 +48,12 @@ class PageController extends BaseController
         $page = $this->getSeoPage('projects', $request->locale);
         $projects = $this->paginateProjects($request);
         $content = $this->getContentPage('projects');
+        $filters = $this->getFilters();
         $data = array(
             "page" => $page,
             "projects" => $projects,
-            "content" => $content
+            "content" => $content,
+            "filters" => $filters
         );
         return $this->sendResponse($data, '');
     }

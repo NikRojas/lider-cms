@@ -61,7 +61,7 @@ class PageController extends BaseController
     public function blog(Request $request)
     {
         $page = $this->getSeoPage('blog', $request->locale);
-        $categories = Category::orderBy('name_' . $request->locale)->get();
+        $categories = Category::has('post')->orderBy('name_' . $request->locale)->get();
         $posts = $this->paginateBlog($request->q, $request);
         $content = $this->getContentPage('blog');
         $data = array(
@@ -81,7 +81,7 @@ class PageController extends BaseController
         }
         $posts = $this->paginateBlog($request->q, $request,$category->id);
         $page = $this->getSeoPage('blog', $request->locale);
-        $categories = Category::orderBy('name_' . $request->locale)->get();
+        $categories = Category::has('post')->orderBy('name_' . $request->locale)->get();
         $content = $this->getContentPage('blog');
         $data = array(
             "page" => $page,
@@ -104,7 +104,7 @@ class PageController extends BaseController
             return $this->sendError("Not found");
         }
         $page = $this->getSeoPage('blog', $request->locale);
-        $categories = Category::orderBy('name_' . $request->locale)->get();
+        $categories = Category::has('post')->orderBy('name_' . $request->locale)->get();
         $posts = Post::where('published', 1)->where('id', '!=', $post->id)->with('category:id,name_' . $request->locale . ',slug_' . $request->locale)->inRandomOrder()->take(3)->get();
         $content = $this->getContentPage('blog');
         $data = array(

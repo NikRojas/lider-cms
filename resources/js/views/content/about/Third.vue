@@ -240,8 +240,8 @@
                           $event,
                           $refs.ref_image.dropzone,
                           1,
-                          51200,
-                          '50kb'
+                          102400,
+                          '100kb'
                         )
                       "
                       id="image"

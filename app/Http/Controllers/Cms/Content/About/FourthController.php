@@ -39,15 +39,14 @@ class FourthController extends Controller
         foreach ($elements as $el) {
             $data[] = array(
                 "id" => $el["id"],
-                "description_es" => substr($el["description_es"], 0, 45),
-                "description_en" => substr($el["description_en"], 0, 45),
+                "description_es" => $el["description_es"],
             );
         }
         if (isset($data)) {
             $elements["data"] = '';
             $elements["data"] = $data;
         }
-        $headers = ["Id", "Descripción ES", "Descripción EN"];
+        $headers = ["Id", "Descripción ES"];
         $elements["headers"] = $headers;
         return response()->json($elements);
     }

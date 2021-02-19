@@ -222,8 +222,8 @@
                             $event,
                             $refs.ref_brochure.dropzone,
                             1,
-                            512000,
-                            '500kb'
+                            5120000,
+                            '5mb'
                           )
                         "
                         id="brochure"
@@ -795,6 +795,12 @@
     </form>
   </div>
 </template>
+<style>
+.vue-dropzone-dark .dz-image{
+  padding: .5rem;
+  background: black;
+}
+</style>
 <script>
 import { quillEditor } from "vue-quill-editor";
 import vue2Dropzone from "vue2-dropzone";

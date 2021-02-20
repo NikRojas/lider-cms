@@ -463,9 +463,9 @@ Route::get('/mail/user/quotation', function () {
     $lead = ProjectQuotation::with('projectRel.statusRel','advisorRel','projectTypeDepartmentRel')->first();
     $financingOptions = FinancingOption::where('active',true)->orderBy('index','asc')->get();
     return view('emails.user-quotation',["lead" => $lead, "financingOptions" => $financingOptions]);
-});
+});*/
 
-Route::get('/mail/advisor/quotation', function () {
+/*Route::get('/mail/advisor/quotation', function () {
     $lead = ProjectQuotation::with('projectRel.statusRel','advisorRel','projectTypeDepartmentRel')->first();
     return view('emails.advisor-quotation',["lead" => $lead]);
 });

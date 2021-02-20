@@ -61,12 +61,14 @@
                           <div class="col-12 mb-2">
                             <div class>
                               <a
+                                target="_blank"
                                 style="text-decoration: underline"
                                 :href="appUrl + '/proyectos/' + el.slug_es"
                                 >{{ appUrl }}/proyectos/{{ el.slug_es }}</a
                               >
                               <br />
                               <a
+                                target="_blank"
                                 style="text-decoration: underline"
                                 :href="appUrl + '/projects/' + el.slug_en"
                                 >{{ appUrl }}/projects/{{ el.slug_en }}</a

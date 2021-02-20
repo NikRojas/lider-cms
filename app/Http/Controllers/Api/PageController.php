@@ -14,6 +14,7 @@ use App\MasterLeadMedium;
 use App\MasterLeadTimeDay;
 use App\Post;
 use App\Project;
+use App\ProjectTypeDepartment;
 use App\Slider;
 use App\Testimonial;
 use Carbon\Carbon;
@@ -192,10 +193,12 @@ class PageController extends BaseController
             $projects_related = Project::select('id', 'project_status_id', 'logo','logo_colour', 'slug_' . $request->locale, 'images', 'code_ubigeo', 'name_' . $request->locale, 'rooms_' . $request->locale, 'footage_' . $request->locale, 'price_total', 'price_total_foreign')
             ->where('id','!=',$project->id)->with('statusRel', 'ubigeoRel')->where('active', 1)->inRandomOrder()->limit(4)->get();
         }
+        $tipologiesCount = ProjectTypeDepartment::where('project_id',$project->id)->where('available',true)->count();
         $data = array(
             "page" => $page,
             "project" => $project,
             "projects" => $projects_related,
+            "tipologies_count" => $tipologiesCount
         );
         return $this->sendResponse($data, '');
     }
@@ -252,6 +255,33 @@ class PageController extends BaseController
         $fifth_1 = AboutText::where('type','customer-support')->orderBy('created_at', 'desc')->first();
         $fifth_2 = AboutCustomerSupport::orderBy('index')->get();
         $content = $this->getContentPage('about-us');
+        $temp = null;
+        $lastDiv = 0;
+        $max = 2;
+        $tempTwoItem = [];
+        if(count($third_2) > 0){
+            foreach ($third_2 as $key => $value) {
+                $div = $key / 2;
+                if($key == 0){
+                    $lastDiv = $div;
+                    $temp[][$key] = $value;
+                }
+                else{
+                    if(($lastDiv+1.5 == $div)){
+                        $temp[][$key] = $value;
+                        $lastDiv = $div;
+                    }
+                    else{
+                        $tempTwoItem[] = $value;
+                        if(count($tempTwoItem) == $max){
+                            $temp[] = $tempTwoItem;
+                            $tempTwoItem = null;
+                        }
+                        
+                    }
+                }
+            }
+        }
         $data = array(
             "first" => [
                 "1" => $first_1,
@@ -266,7 +296,7 @@ class PageController extends BaseController
             "second" => $second,
             "third" => [
                 "1" => $third_1,
-                "2" => $third_2
+                "2" => $third_2 ? $temp : $third_2
             ],
             "fourth" => [
                 "1" => $fourth_1,

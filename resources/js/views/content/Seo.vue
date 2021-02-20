@@ -63,7 +63,7 @@
                   
                       <div class="text-right" v-if="!editBlock">
                         <a style="text-decoration: underline;" target="_blank" rel="noopener noreferrer" :href="appUrl+(page.slug_es ? '/' +page.slug_es : '' )" class="d-inline-block">{{ appUrl}}<small v-if="page.slug_es">/{{ page.slug_es }}</small></a> <br>
-                        <a style="text-decoration: underline;" target="_blank" rel="noopener noreferrer" :href="appUrl+(page.slug_en ? '/' +page.slug_en : '' )" class="d-inline-block">{{ appUrl}}<small v-if="page.slug_en">/{{ page.slug_en }}</small></a>
+                        <a style="text-decoration: underline;" target="_blank" rel="noopener noreferrer" :href="appUrl+(page.slug_en ? '/en/' +page.slug_en : '/en' )" class="d-inline-block">{{ appUrl}}<small v-if="page.slug_en">/en/{{ page.slug_en }}</small ><small v-else>/en</small></a>
                       </div>
                       <h4
                         class="mb-3 font-weight-bold"

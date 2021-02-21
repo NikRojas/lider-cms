@@ -742,6 +742,88 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -1271,10 +1353,8 @@ var render = function() {
                             _vm._s(_vm.element.status_rel.name_es) +
                             "\n                  "
                         )
-                      ])
-                    ]),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "col-12 col-lg-6 mb-3" }, [
+                      ]),
+                      _vm._v(" "),
                       _c("h3", { staticClass: "font-weight-normal" }, [
                         _c(
                           "span",
@@ -1296,10 +1376,8 @@ var render = function() {
                         domProps: {
                           innerHTML: _vm._s(_vm.element.description_es)
                         }
-                      })
-                    ]),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "col-12 col-lg-6 mb-3" }, [
+                      }),
+                      _vm._v(" "),
                       _vm._m(5),
                       _vm._v(" "),
                       _c("div", {
@@ -1505,6 +1583,157 @@ var render = function() {
               _c("div", { staticClass: "card" }, [
                 _c("div", { staticClass: "card-body" }, [
                   _c("div", { staticClass: "row" }, [
+                    _c("div", { staticClass: "col-12 col-lg-6 mb-3" }, [
+                      _c("h3", { staticClass: "font-weight-normal" }, [
+                        _c(
+                          "span",
+                          { staticClass: "d-block font-weight-bold" },
+                          [_vm._v("SEO Imagen:")]
+                        ),
+                        _vm._v(" "),
+                        _vm.element.seo_image
+                          ? _c("div", [
+                              _c("img", {
+                                staticClass: "img-fluid",
+                                attrs: {
+                                  src:
+                                    _vm.imagesUrl +
+                                    "/projects/" +
+                                    _vm.element.seo_image,
+                                  alt: ""
+                                }
+                              })
+                            ])
+                          : _c("div", [_vm._v("No registrado")])
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "col-12 col-lg-6 mb-3" }, [
+                      _c("h3", { staticClass: "font-weight-normal" }, [
+                        _c(
+                          "span",
+                          { staticClass: "d-block font-weight-bold" },
+                          [_vm._v("SEO Título ES:")]
+                        ),
+                        _vm._v(" "),
+                        _vm.element.seo_title_es
+                          ? _c("div", [
+                              _vm._v(
+                                "\n                      " +
+                                  _vm._s(_vm.element.seo_title_es) +
+                                  "\n                    "
+                              )
+                            ])
+                          : _c("div", [_vm._v("No registrado")])
+                      ]),
+                      _vm._v(" "),
+                      _c("h3", { staticClass: "font-weight-normal" }, [
+                        _c(
+                          "span",
+                          { staticClass: "d-block font-weight-bold" },
+                          [_vm._v("SEO Título EN:")]
+                        ),
+                        _vm._v(" "),
+                        _vm.element.seo_title_en
+                          ? _c("div", [
+                              _vm._v(
+                                "\n                      " +
+                                  _vm._s(_vm.element.seo_title_en) +
+                                  "\n                    "
+                              )
+                            ])
+                          : _c("div", [_vm._v("No registrado")])
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "col-12 col-lg-6 mb-3" }, [
+                      _c("h3", { staticClass: "font-weight-normal" }, [
+                        _c(
+                          "span",
+                          { staticClass: "d-block font-weight-bold" },
+                          [_vm._v("SEO Descripción ES:")]
+                        ),
+                        _vm._v(" "),
+                        _vm.element.seo_description_es
+                          ? _c("div", [
+                              _vm._v(
+                                "\n                      " +
+                                  _vm._s(_vm.element.seo_description_es) +
+                                  "\n                    "
+                              )
+                            ])
+                          : _c("div", [_vm._v("No registrado")])
+                      ]),
+                      _vm._v(" "),
+                      _c("h3", { staticClass: "font-weight-normal" }, [
+                        _c(
+                          "span",
+                          { staticClass: "d-block font-weight-bold" },
+                          [_vm._v("SEO Descripción EN:")]
+                        ),
+                        _vm._v(" "),
+                        _vm.element.seo_description_en
+                          ? _c("div", [
+                              _vm._v(
+                                "\n                      " +
+                                  _vm._s(_vm.element.seo_description_en) +
+                                  "\n                    "
+                              )
+                            ])
+                          : _c("div", [_vm._v("No registrado")])
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "col-12 col-lg-6 mb-3" }, [
+                      _c("h3", { staticClass: "font-weight-normal" }, [
+                        _c(
+                          "span",
+                          { staticClass: "d-block font-weight-bold" },
+                          [_vm._v("SEO Keywords ES:")]
+                        ),
+                        _vm._v(" "),
+                        _vm.element.seo_keywords_es
+                          ? _c("div", [
+                              _vm._v(
+                                "\n                      " +
+                                  _vm._s(_vm.element.seo_keywords_es) +
+                                  "\n                    "
+                              )
+                            ])
+                          : _c("div", [_vm._v("No registrado")])
+                      ]),
+                      _vm._v(" "),
+                      _c("h3", { staticClass: "font-weight-normal" }, [
+                        _c(
+                          "span",
+                          { staticClass: "d-block font-weight-bold" },
+                          [_vm._v("SEO Keywords EN:")]
+                        ),
+                        _vm._v(" "),
+                        _vm.element.seo_keywords_en
+                          ? _c("div", [
+                              _vm._v(
+                                "\n                      " +
+                                  _vm._s(_vm.element.seo_keywords_en) +
+                                  "\n                    "
+                              )
+                            ])
+                          : _c("div", [_vm._v("No registrado")])
+                      ])
+                    ])
+                  ])
+                ])
+              ])
+            ])
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "row mb-4" }, [
+            _vm._m(9),
+            _vm._v(" "),
+            _c("div", { staticClass: "col-12 col-lg-10" }, [
+              _c("div", { staticClass: "card" }, [
+                _c("div", { staticClass: "card-body" }, [
+                  _c("div", { staticClass: "row" }, [
                     _c(
                       "div",
                       { staticClass: "col-12 col-lg-6 mb-3 text-center" },
@@ -1557,14 +1786,14 @@ var render = function() {
           ]),
           _vm._v(" "),
           _c("div", { staticClass: "row mb-4" }, [
-            _vm._m(9),
+            _vm._m(10),
             _vm._v(" "),
             _c("div", { staticClass: "col-12 col-lg-10" }, [
               _c("div", { staticClass: "card" }, [
                 _c("div", { staticClass: "card-body" }, [
                   _c("div", { staticClass: "row" }, [
                     _c("div", { staticClass: "col-12 col-lg-6 mb-3" }, [
-                      _vm._m(10),
+                      _vm._m(11),
                       _vm._v(" "),
                       _c("img", {
                         staticClass: "img-fluid",
@@ -1577,7 +1806,7 @@ var render = function() {
                     ]),
                     _vm._v(" "),
                     _c("div", { staticClass: "col-12 col-lg-6 mb-3" }, [
-                      _vm._m(11),
+                      _vm._m(12),
                       _vm._v(" "),
                       _vm.element.url_video
                         ? _c("iframe", {
@@ -1596,7 +1825,7 @@ var render = function() {
                     ]),
                     _vm._v(" "),
                     _c("div", { staticClass: "col-12 mb-3" }, [
-                      _vm._m(12),
+                      _vm._m(13),
                       _vm._v(" "),
                       _c(
                         "div",
@@ -1654,7 +1883,7 @@ var render = function() {
                     ]),
                     _vm._v(" "),
                     _c("div", { staticClass: "col-12 mb-3" }, [
-                      _vm._m(13),
+                      _vm._m(14),
                       _vm._v(" "),
                       _c(
                         "div",
@@ -1689,7 +1918,7 @@ var render = function() {
                     ]),
                     _vm._v(" "),
                     _c("div", { staticClass: "col-12 mb-3" }, [
-                      _vm._m(14),
+                      _vm._m(15),
                       _vm._v(" "),
                       _vm.element.bonds_rel.length
                         ? _c(
@@ -1722,7 +1951,7 @@ var render = function() {
                             }),
                             0
                           )
-                        : _c("div", { staticClass: "row" }, [_vm._m(15)])
+                        : _c("div", { staticClass: "row" }, [_vm._m(16)])
                     ]),
                     _vm._v(" "),
                     _c("div", { staticClass: "col-12 col-lg-6 mb-3" }, [
@@ -1759,7 +1988,7 @@ var render = function() {
           ]),
           _vm._v(" "),
           _c("div", { staticClass: "row mb-4" }, [
-            _vm._m(16),
+            _vm._m(17),
             _vm._v(" "),
             _c("div", { staticClass: "col-12 col-lg-10" }, [
               _c("div", { staticClass: "card" }, [
@@ -1982,7 +2211,7 @@ var render = function() {
                     ]),
                     _vm._v(" "),
                     _c("div", { staticClass: "col-12  col-lg-6" }, [
-                      _vm._m(17),
+                      _vm._m(18),
                       _vm._v(" "),
                       _c("img", {
                         staticClass: "img-fluid",
@@ -2002,7 +2231,7 @@ var render = function() {
           ]),
           _vm._v(" "),
           _c("div", { staticClass: "row mb-4" }, [
-            _vm._m(18),
+            _vm._m(19),
             _vm._v(" "),
             _c("div", { staticClass: "col-12 col-lg-10" }, [
               _c("div", { staticClass: "card" }, [
@@ -2090,12 +2319,12 @@ var render = function() {
           ]),
           _vm._v(" "),
           _c("div", { staticClass: "row" }, [
-            _vm._m(19),
+            _vm._m(20),
             _vm._v(" "),
             _c("div", { staticClass: "col-12 col-lg-10" }, [
               _c("div", { staticClass: "card" }, [
                 _c("div", { staticClass: "card-body" }, [
-                  _vm._m(20),
+                  _vm._m(21),
                   _vm._v(" "),
                   _vm.projectsRelated && _vm.projectsRelated.length
                     ? _c(
@@ -2132,7 +2361,7 @@ var render = function() {
                         }),
                         0
                       )
-                    : _c("div", { staticClass: "row" }, [_vm._m(21)])
+                    : _c("div", { staticClass: "row" }, [_vm._m(22)])
                 ])
               ])
             ])
@@ -2219,6 +2448,16 @@ var staticRenderFns = [
       _c("span", { staticClass: "d-block font-weight-bold" }, [
         _vm._v("Asesores:")
       ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "col-12 col-lg-2" }, [
+      _c("h2", [_vm._v("SEO")]),
+      _vm._v(" "),
+      _c("p", [_vm._v("Datos que se utilizarán para el SEO")])
     ])
   },
   function() {

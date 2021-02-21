@@ -78,5 +78,6 @@
     "/vendors~js/pages/dashboard.js": "/vendors~js/pages/dashboard.js",
     "/vendors~js/pages/dashboard~js/pages/statistics/index.js": "/vendors~js/pages/dashboard~js/pages/statistics/index.js",
     "/vendors~js/pages/orders/read.js": "/vendors~js/pages/orders/read.js",
-    "/vendors~js/pages/statistics/index.js": "/vendors~js/pages/statistics/index.js"
+    "/vendors~js/pages/statistics/index.js": "/vendors~js/pages/statistics/index.js",
+    "/js/pages/blog/post/create~js/pages/projects/create~js/pages/projects/edit.js": "/js/pages/blog/post/create~js/pages/projects/create~js/pages/projects/edit.js"
 }

@@ -63,6 +63,14 @@ class CreateProjectsTable extends Migration
 
             $table->text('iframe_map');
 
+            $table->string('seo_title_en')->nullable();
+            $table->string('seo_title_es')->nullable();
+            $table->string('seo_description_es')->nullable();
+            $table->string('seo_description_en')->nullable();
+            $table->text('seo_keywords_es')->nullable();
+            $table->text('seo_keywords_en')->nullable();
+            $table->string('seo_image',100)->nullable();
+
             $table->bigInteger('project_status_id')->unsigned();
             $table->foreign('project_status_id')->references('id')->on('project_statuses');
 

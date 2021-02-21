@@ -272,6 +272,79 @@
         </div>
         <div class="row mb-4">
           <div class="col-12 col-lg-2">
+            <h2>SEO</h2>
+            <p>Indica los datos del SEO</p>
+          </div>
+          <div class="col-12 col-lg-10">
+            <div class="card">
+              <div class="card-body">
+                <div class="row">
+                  <div class="col-12 mb-4">
+                    <label for="id_imagen" class="font-weight-bold mb-0">Imagen</label>
+                          <small class="text-muted d-block mb-0 lh-1">Resolución recomendada: 1200x900px</small>
+                          <small class="text-muted d-block mb-2 lh-1">Tamaño recomendado: Menor a 100kb</small>
+                          <div class="row">
+                          <div class="col-lg-4 mb-3 mb-lg-0" v-if="element.seo_image">
+                            <img class="img-fluid" :src="imagesUrl+'/projects/'+element.seo_image" alt />
+                          </div>
+                          <div class="" :class="element.seo_image ? 'col-lg-8' : 'col-12'">
+                            <vue-dropzone
+                              ref="ref_image_seo"
+                              @vdropzone-file-added="$validateImageDropzone($event,$refs.ref_image_seo.dropzone,1,100000,'100kb')"
+                              id="id_imagen"
+                              :options="dropzoneOptions"
+                              :duplicateCheck="true"
+                              :useCustomSlot="true"
+                            >
+                              <div class="dropzone-custom-content">
+                                <h5
+                                  class="dropzone-custom-title text-primary"
+                                >Suelte el archivo aquí o haga click para cargarlo.</h5>
+                              </div>
+                            </vue-dropzone>
+                          </div>
+                          </div>
+                  </div>
+                  <div class="col-12">
+                    <Input
+                          label="Título SEO"
+                          variable="seo_title"
+                          :errors="errors"
+                          :valueEn.sync="element.seo_title_en"
+                          :valueEs.sync="element.seo_title_es"
+                          :valueEnParent="element.seo_title_en"
+                          :valueEsParent="element.seo_title_es"
+                        />
+                  </div>
+                  <div class="col-12 col-lg-6">
+                    <Textarea
+                          label="Descripción SEO"
+                          variable="seo_description"
+                          :errors="errors"
+                          :valueEn.sync="element.seo_description_en"
+                          :valueEs.sync="element.seo_description_es"
+                          :valueEnParent="element.seo_description_en"
+                          :valueEsParent="element.seo_description_es"
+                          />
+                  </div>
+                  <div class="col-12  col-lg-6">
+                    <Textarea
+                          label="Keywords SEO"
+                          variable="seo_keywords"
+                          :errors="errors"
+                          :valueEn.sync="element.seo_keywords_en"
+                          :valueEs.sync="element.seo_keywords_es"
+                          :valueEnParent="element.seo_keywords_en"
+                          :valueEsParent="element.seo_keywords_es"
+                          />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row mb-4">
+          <div class="col-12 col-lg-2">
             <h2>Importes</h2>
             <p>Indica los montos que tendrá el Proyecto</p>
           </div>
@@ -765,6 +838,7 @@ import InputSlug from "../../components/form/InputSlug";
 import Bonds from "../../components/form/Bonds";
 import { Money } from "v-money";
 import ProjectsRelated from "../../components/form/ProjectsRelated";
+import Textarea from "../../components/form/Textarea";
 export default {
   components: {
     BreadCrumb,
@@ -785,6 +859,7 @@ export default {
     Bonds,
     ProjectsRelated,
     quillEditor,
+    Textarea
   },
   props: {
     appUrl: String,
@@ -1053,6 +1128,27 @@ export default {
       }
       if (this.element.condition_quotation) {
         fd.append("condition_quotation", this.element.condition_quotation);
+      }
+      if(this.element.seo_keywords_es){
+        fd.append("seo_keywords_es", this.element.seo_keywords_es);
+      }
+      if(this.element.seo_keywords_en){
+        fd.append("seo_keywords_en", this.element.seo_keywords_en);
+      }
+      if(this.element.seo_description_es){
+        fd.append("seo_description_es", this.element.seo_description_es);
+      }
+      if(this.element.seo_description_en){
+        fd.append("seo_description_en", this.element.seo_description_en);
+      }
+      if(this.element.seo_title_en){
+        fd.append("seo_title_en", this.element.seo_title_en);
+      }
+       if(this.element.seo_title_es){
+        fd.append("seo_title_es", this.element.seo_title_es);
+      }
+      if (this.$refs.ref_image_seo.dropzone.files[0]) {
+        fd.append("seo_image", this.$refs.ref_image_seo.dropzone.files[0]);
       }
       fd.append("_method","put");
       axios

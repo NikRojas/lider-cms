@@ -25,10 +25,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_form_Input__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../../components/form/Input */ "./resources/js/components/form/Input.vue");
 /* harmony import */ var _components_Button__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ../../components/Button */ "./resources/js/components/Button.vue");
 /* harmony import */ var _components_form_Editor__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ../../components/form/Editor */ "./resources/js/components/form/Editor.vue");
-/* harmony import */ var _components_form_InputSlug__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ../../components/form/InputSlug */ "./resources/js/components/form/InputSlug.vue");
-/* harmony import */ var _components_form_MultipleFiles__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ../../components/form/MultipleFiles */ "./resources/js/components/form/MultipleFiles.vue");
-/* harmony import */ var v_money__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! v-money */ "./node_modules/v-money/dist/v-money.js");
-/* harmony import */ var v_money__WEBPACK_IMPORTED_MODULE_16___default = /*#__PURE__*/__webpack_require__.n(v_money__WEBPACK_IMPORTED_MODULE_16__);
+/* harmony import */ var _components_form_Textarea__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ../../components/form/Textarea */ "./resources/js/components/form/Textarea.vue");
+/* harmony import */ var _components_form_InputSlug__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ../../components/form/InputSlug */ "./resources/js/components/form/InputSlug.vue");
+/* harmony import */ var _components_form_MultipleFiles__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ../../components/form/MultipleFiles */ "./resources/js/components/form/MultipleFiles.vue");
+/* harmony import */ var v_money__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! v-money */ "./node_modules/v-money/dist/v-money.js");
+/* harmony import */ var v_money__WEBPACK_IMPORTED_MODULE_17___default = /*#__PURE__*/__webpack_require__.n(v_money__WEBPACK_IMPORTED_MODULE_17__);
 //
 //
 //
@@ -832,6 +833,73 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
 
 
 
@@ -852,8 +920,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {
     BreadCrumb: _components_BreadCrumb__WEBPACK_IMPORTED_MODULE_2__["default"],
-    MultipleFiles: _components_form_MultipleFiles__WEBPACK_IMPORTED_MODULE_15__["default"],
-    Money: v_money__WEBPACK_IMPORTED_MODULE_16__["Money"],
+    MultipleFiles: _components_form_MultipleFiles__WEBPACK_IMPORTED_MODULE_16__["default"],
+    Money: v_money__WEBPACK_IMPORTED_MODULE_17__["Money"],
     Editor: _components_form_Editor__WEBPACK_IMPORTED_MODULE_13__["default"],
     Statuses: _components_form_Statuses__WEBPACK_IMPORTED_MODULE_7__["default"],
     Ubigeo: _components_form_Ubigeo__WEBPACK_IMPORTED_MODULE_10__["default"],
@@ -864,10 +932,11 @@ __webpack_require__.r(__webpack_exports__);
     FinancialEntities: _components_form_FinancialEntities__WEBPACK_IMPORTED_MODULE_4__["default"],
     Advisors: _components_form_Advisors__WEBPACK_IMPORTED_MODULE_6__["default"],
     Features: _components_form_Features__WEBPACK_IMPORTED_MODULE_8__["default"],
-    InputSlug: _components_form_InputSlug__WEBPACK_IMPORTED_MODULE_14__["default"],
+    InputSlug: _components_form_InputSlug__WEBPACK_IMPORTED_MODULE_15__["default"],
     Bonds: _components_form_Bonds__WEBPACK_IMPORTED_MODULE_9__["default"],
     ProjectsRelated: _components_form_ProjectsRelated__WEBPACK_IMPORTED_MODULE_5__["default"],
-    quillEditor: vue_quill_editor__WEBPACK_IMPORTED_MODULE_0__["quillEditor"]
+    quillEditor: vue_quill_editor__WEBPACK_IMPORTED_MODULE_0__["quillEditor"],
+    Textarea: _components_form_Textarea__WEBPACK_IMPORTED_MODULE_14__["default"]
   },
   props: {
     appUrl: String,
@@ -1179,6 +1248,34 @@ __webpack_require__.r(__webpack_exports__);
 
       if (this.element.features) {
         fd.append("features", JSON.stringify(this.element.features));
+      }
+
+      if (this.element.seo_keywords_es) {
+        fd.append("seo_keywords_es", this.element.seo_keywords_es);
+      }
+
+      if (this.element.seo_keywords_en) {
+        fd.append("seo_keywords_en", this.element.seo_keywords_en);
+      }
+
+      if (this.element.seo_description_es) {
+        fd.append("seo_description_es", this.element.seo_description_es);
+      }
+
+      if (this.element.seo_description_en) {
+        fd.append("seo_description_en", this.element.seo_description_en);
+      }
+
+      if (this.element.seo_title_en) {
+        fd.append("seo_title_en", this.element.seo_title_en);
+      }
+
+      if (this.element.seo_title_es) {
+        fd.append("seo_title_es", this.element.seo_title_es);
+      }
+
+      if (this.$refs.ref_image_seo.dropzone.files[0]) {
+        fd.append("seo_image", this.$refs.ref_image_seo.dropzone.files[0]);
       }
 
       if (this.element.financial_entities) {
@@ -1979,6 +2076,237 @@ var render = function() {
               _c("div", { staticClass: "card" }, [
                 _c("div", { staticClass: "card-body" }, [
                   _c("div", { staticClass: "row" }, [
+                    _c(
+                      "div",
+                      { staticClass: "col-12 mb-4" },
+                      [
+                        _c(
+                          "label",
+                          {
+                            staticClass: "font-weight-bold mb-0",
+                            attrs: { for: "id_imagen" }
+                          },
+                          [_vm._v("Imagen")]
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "small",
+                          { staticClass: "text-muted d-block mb-0 lh-1" },
+                          [_vm._v("Resolución recomendada: 1200x900px")]
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "small",
+                          { staticClass: "text-muted d-block mb-2 lh-1" },
+                          [_vm._v("Tamaño recomendado: Menor a 100kb")]
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "vue-dropzone",
+                          {
+                            ref: "ref_image_seo",
+                            attrs: {
+                              id: "id_imagen",
+                              options: _vm.dropzoneOptions,
+                              duplicateCheck: true,
+                              useCustomSlot: true
+                            },
+                            on: {
+                              "vdropzone-file-added": function($event) {
+                                return _vm.$validateImageDropzone(
+                                  $event,
+                                  _vm.$refs.ref_image_seo.dropzone,
+                                  1,
+                                  100000,
+                                  "100kb"
+                                )
+                              }
+                            }
+                          },
+                          [
+                            _c(
+                              "div",
+                              { staticClass: "dropzone-custom-content" },
+                              [
+                                _c(
+                                  "h5",
+                                  {
+                                    staticClass:
+                                      "dropzone-custom-title text-primary"
+                                  },
+                                  [
+                                    _vm._v(
+                                      "Suelte el archivo aquí o haga click para cargarlo."
+                                    )
+                                  ]
+                                )
+                              ]
+                            )
+                          ]
+                        )
+                      ],
+                      1
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "div",
+                      { staticClass: "col-12" },
+                      [
+                        _c("Input", {
+                          attrs: {
+                            label: "Título SEO",
+                            variable: "seo_title",
+                            errors: _vm.errors,
+                            valueEn: _vm.element.seo_title_en,
+                            valueEs: _vm.element.seo_title_es,
+                            valueEnParent: _vm.element.seo_title_en,
+                            valueEsParent: _vm.element.seo_title_es
+                          },
+                          on: {
+                            "update:valueEn": function($event) {
+                              return _vm.$set(
+                                _vm.element,
+                                "seo_title_en",
+                                $event
+                              )
+                            },
+                            "update:value-en": function($event) {
+                              return _vm.$set(
+                                _vm.element,
+                                "seo_title_en",
+                                $event
+                              )
+                            },
+                            "update:valueEs": function($event) {
+                              return _vm.$set(
+                                _vm.element,
+                                "seo_title_es",
+                                $event
+                              )
+                            },
+                            "update:value-es": function($event) {
+                              return _vm.$set(
+                                _vm.element,
+                                "seo_title_es",
+                                $event
+                              )
+                            }
+                          }
+                        })
+                      ],
+                      1
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "div",
+                      { staticClass: "col-12 col-lg-6" },
+                      [
+                        _c("Textarea", {
+                          attrs: {
+                            label: "Descripción SEO",
+                            variable: "seo_description",
+                            errors: _vm.errors,
+                            valueEn: _vm.element.seo_description_en,
+                            valueEs: _vm.element.seo_description_es,
+                            valueEnParent: _vm.element.seo_description_en,
+                            valueEsParent: _vm.element.seo_description_es
+                          },
+                          on: {
+                            "update:valueEn": function($event) {
+                              return _vm.$set(
+                                _vm.element,
+                                "seo_description_en",
+                                $event
+                              )
+                            },
+                            "update:value-en": function($event) {
+                              return _vm.$set(
+                                _vm.element,
+                                "seo_description_en",
+                                $event
+                              )
+                            },
+                            "update:valueEs": function($event) {
+                              return _vm.$set(
+                                _vm.element,
+                                "seo_description_es",
+                                $event
+                              )
+                            },
+                            "update:value-es": function($event) {
+                              return _vm.$set(
+                                _vm.element,
+                                "seo_description_es",
+                                $event
+                              )
+                            }
+                          }
+                        })
+                      ],
+                      1
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "div",
+                      { staticClass: "col-12  col-lg-6" },
+                      [
+                        _c("Textarea", {
+                          attrs: {
+                            label: "Keywords SEO",
+                            variable: "seo_keywords",
+                            errors: _vm.errors,
+                            valueEn: _vm.element.seo_keywords_en,
+                            valueEs: _vm.element.seo_keywords_es,
+                            valueEnParent: _vm.element.seo_keywords_en,
+                            valueEsParent: _vm.element.seo_keywords_es
+                          },
+                          on: {
+                            "update:valueEn": function($event) {
+                              return _vm.$set(
+                                _vm.element,
+                                "seo_keywords_en",
+                                $event
+                              )
+                            },
+                            "update:value-en": function($event) {
+                              return _vm.$set(
+                                _vm.element,
+                                "seo_keywords_en",
+                                $event
+                              )
+                            },
+                            "update:valueEs": function($event) {
+                              return _vm.$set(
+                                _vm.element,
+                                "seo_keywords_es",
+                                $event
+                              )
+                            },
+                            "update:value-es": function($event) {
+                              return _vm.$set(
+                                _vm.element,
+                                "seo_keywords_es",
+                                $event
+                              )
+                            }
+                          }
+                        })
+                      ],
+                      1
+                    )
+                  ])
+                ])
+              ])
+            ])
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "row mb-4" }, [
+            _vm._m(2),
+            _vm._v(" "),
+            _c("div", { staticClass: "col-12 col-lg-10" }, [
+              _c("div", { staticClass: "card" }, [
+                _c("div", { staticClass: "card-body" }, [
+                  _c("div", { staticClass: "row" }, [
                     _c("div", { staticClass: "col-12 col-lg-6" }, [
                       _c(
                         "div",
@@ -2091,7 +2419,7 @@ var render = function() {
           ]),
           _vm._v(" "),
           _c("div", { staticClass: "row mb-4" }, [
-            _vm._m(2),
+            _vm._m(3),
             _vm._v(" "),
             _c("div", { staticClass: "col-12 col-lg-10" }, [
               _c("div", { staticClass: "card" }, [
@@ -2361,7 +2689,7 @@ var render = function() {
           ]),
           _vm._v(" "),
           _c("div", { staticClass: "row mb-4" }, [
-            _vm._m(3),
+            _vm._m(4),
             _vm._v(" "),
             _c("div", { staticClass: "col-12 col-lg-10" }, [
               _c("div", { staticClass: "card" }, [
@@ -2787,7 +3115,7 @@ var render = function() {
           ]),
           _vm._v(" "),
           _c("div", { staticClass: "row mb-4" }, [
-            _vm._m(4),
+            _vm._m(5),
             _vm._v(" "),
             _c("div", { staticClass: "col-12 col-lg-10" }, [
               _c("div", { staticClass: "card" }, [
@@ -3091,7 +3419,7 @@ var render = function() {
           ]),
           _vm._v(" "),
           _c("div", { staticClass: "row" }, [
-            _vm._m(5),
+            _vm._m(6),
             _vm._v(" "),
             _c("div", { staticClass: "col-12 col-lg-10" }, [
               _c("div", { staticClass: "card" }, [
@@ -3136,6 +3464,16 @@ var staticRenderFns = [
       _c("h2", [_vm._v("Brief")]),
       _vm._v(" "),
       _c("p", [_vm._v("Indica los datos principales del Proyecto")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "col-12 col-lg-2" }, [
+      _c("h2", [_vm._v("SEO")]),
+      _vm._v(" "),
+      _c("p", [_vm._v("Indica los datos del SEO")])
     ])
   },
   function() {

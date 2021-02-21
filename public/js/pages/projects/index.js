@@ -245,6 +245,17 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -583,7 +594,7 @@ var render = function() {
                                                           },
                                                           [
                                                             _vm._v(
-                                                              "\n                                Se muestra en la Web:\n                                "
+                                                              "\n                                  Se muestra en la Web:\n                                  "
                                                             ),
                                                             _c(
                                                               "span",
@@ -621,7 +632,7 @@ var render = function() {
                                                                 },
                                                                 [
                                                                   _vm._v(
-                                                                    "\n                                    Ubicación:\n                                  "
+                                                                    "\n                                      Ubicación:\n                                    "
                                                                   )
                                                                 ]
                                                               ),
@@ -634,23 +645,23 @@ var render = function() {
                                                                 },
                                                                 [
                                                                   _vm._v(
-                                                                    "\n                                    " +
+                                                                    "\n                                      " +
                                                                       _vm._s(
                                                                         el.location
                                                                       ) +
-                                                                      ",\n                                    " +
+                                                                      ",\n                                      " +
                                                                       _vm._s(
                                                                         el
                                                                           .ubigeo_rel
                                                                           .district
                                                                       ) +
-                                                                      " -\n                                    " +
+                                                                      " -\n                                      " +
                                                                       _vm._s(
                                                                         el
                                                                           .ubigeo_rel
                                                                           .department
                                                                       ) +
-                                                                      "\n                                  "
+                                                                      "\n                                    "
                                                                   )
                                                                 ]
                                                               )
@@ -667,7 +678,7 @@ var render = function() {
                                                                       },
                                                                       [
                                                                         _vm._v(
-                                                                          "\n                                      Precio Soles Desde:\n                                    "
+                                                                          "\n                                        Precio Soles Desde:\n                                      "
                                                                         )
                                                                       ]
                                                                     ),
@@ -680,11 +691,11 @@ var render = function() {
                                                                       },
                                                                       [
                                                                         _vm._v(
-                                                                          "\n                                      " +
+                                                                          "\n                                        " +
                                                                             _vm._s(
                                                                               el.price_total_format
                                                                             ) +
-                                                                            "\n                                    "
+                                                                            "\n                                      "
                                                                         )
                                                                       ]
                                                                     )
@@ -701,7 +712,7 @@ var render = function() {
                                                                       },
                                                                       [
                                                                         _vm._v(
-                                                                          "\n                                      Precio Dólares Desde:\n                                    "
+                                                                          "\n                                        Precio Dólares Desde:\n                                      "
                                                                         )
                                                                       ]
                                                                     ),
@@ -714,11 +725,11 @@ var render = function() {
                                                                       },
                                                                       [
                                                                         _vm._v(
-                                                                          "\n                                      " +
+                                                                          "\n                                        " +
                                                                             _vm._s(
                                                                               el.price_total_foreign_format
                                                                             ) +
-                                                                            "\n                                    "
+                                                                            "\n                                      "
                                                                         )
                                                                       ]
                                                                     )
@@ -744,7 +755,7 @@ var render = function() {
                                                                 },
                                                                 [
                                                                   _vm._v(
-                                                                    "\n                                    N° Documentos:\n                                  "
+                                                                    "\n                                      N° Cotizaciones:\n                                    "
                                                                   )
                                                                 ]
                                                               ),
@@ -757,11 +768,43 @@ var render = function() {
                                                                 },
                                                                 [
                                                                   _vm._v(
-                                                                    "\n                                    " +
+                                                                    "\n                                      " +
+                                                                      _vm._s(
+                                                                        el.quotations_rel_count
+                                                                      ) +
+                                                                      "\n                                    "
+                                                                  )
+                                                                ]
+                                                              )
+                                                            ]),
+                                                            _vm._v(" "),
+                                                            _c("div", [
+                                                              _c(
+                                                                "h4",
+                                                                {
+                                                                  staticClass:
+                                                                    "d-inline-block font-weight-normal"
+                                                                },
+                                                                [
+                                                                  _vm._v(
+                                                                    "\n                                      N° Documentos:\n                                    "
+                                                                  )
+                                                                ]
+                                                              ),
+                                                              _vm._v(" "),
+                                                              _c(
+                                                                "h4",
+                                                                {
+                                                                  staticClass:
+                                                                    "d-inline-block"
+                                                                },
+                                                                [
+                                                                  _vm._v(
+                                                                    "\n                                      " +
                                                                       _vm._s(
                                                                         el.files_rel_count
                                                                       ) +
-                                                                      "\n                                  "
+                                                                      "\n                                    "
                                                                   )
                                                                 ]
                                                               )
@@ -776,7 +819,7 @@ var render = function() {
                                                                 },
                                                                 [
                                                                   _vm._v(
-                                                                    "\n                                    N° Tipologias:\n                                  "
+                                                                    "\n                                      N° Tipologias:\n                                    "
                                                                   )
                                                                 ]
                                                               ),
@@ -789,11 +832,11 @@ var render = function() {
                                                                 },
                                                                 [
                                                                   _vm._v(
-                                                                    "\n                                    " +
+                                                                    "\n                                      " +
                                                                       _vm._s(
                                                                         el.tipologies_rel_count
                                                                       ) +
-                                                                      "\n                                  "
+                                                                      "\n                                    "
                                                                   )
                                                                 ]
                                                               )
@@ -808,7 +851,7 @@ var render = function() {
                                                                 },
                                                                 [
                                                                   _vm._v(
-                                                                    "\n                                    N° Imágenes en la Galeria:\n                                  "
+                                                                    "\n                                      N° Imágenes en la Galeria:\n                                    "
                                                                   )
                                                                 ]
                                                               ),
@@ -821,11 +864,11 @@ var render = function() {
                                                                 },
                                                                 [
                                                                   _vm._v(
-                                                                    "\n                                    " +
+                                                                    "\n                                      " +
                                                                       _vm._s(
                                                                         el.gallery_rel_count
                                                                       ) +
-                                                                      "\n                                  "
+                                                                      "\n                                    "
                                                                   )
                                                                 ]
                                                               )

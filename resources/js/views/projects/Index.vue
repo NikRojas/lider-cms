@@ -135,6 +135,17 @@
                                 </div>
                                 <div class="col-12">
                                   <div>
+<h4
+                                      class="d-inline-block font-weight-normal"
+                                    >
+                                      N° Cotizaciones:
+                                    </h4>
+                                    <h4 class="d-inline-block">
+                                      {{ el.quotations_rel_count }}
+                                    </h4>
+                                    
+                                  </div>
+                                  <div>
                                     <h4
                                       class="d-inline-block font-weight-normal"
                                     >

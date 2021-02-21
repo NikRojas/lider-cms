@@ -20,6 +20,11 @@ class Project extends Model
         return $this->hasMany('App\ProjectGallery', 'project_id', 'id')->orderBy('master_type_gallery_id');
     }
 
+    public function quotationsRel()
+    {
+        return $this->hasMany('App\ProjectQuotation', 'project_id', 'id');
+    }
+
     public function filesRel()
     {
         return $this->hasMany('App\ProjectFile', 'project_id', 'id');

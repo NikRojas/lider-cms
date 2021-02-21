@@ -62,6 +62,15 @@ class ProjectRequest extends FormRequest
             'sales_room_en' => 'required',
             'schedule_attention_es' => 'required',
             'schedule_attention_en' => 'required',
+
+
+            'seo_image' => 'sometimes|required',
+            'seo_title_es' => 'sometimes|max:60',
+            'seo_title_en' => 'sometimes|max:60',
+            'seo_keywords_es' => 'sometimes',
+            'seo_keywords_en' => 'sometimes',
+            'seo_description_es' => 'sometimes|max:160',
+            'seo_description_en' => 'sometimes|max:160'
         ];
         switch ($this->method()) {
             case 'POST':   

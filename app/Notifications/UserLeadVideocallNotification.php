@@ -44,11 +44,6 @@ class UserLeadVideocallNotification extends Notification implements ShouldQueue
         return (new MailMessage)
                     ->subject(config('app.name').' - Confirmación Registro de Datos')
                     ->view('emails.user-lead');
-                    /*->line('Buenas tieedes una tienes una cita online Lead VideoCall:' .$this->lead->name . 'En horario de'. $this->lead->schedule)
-                    ->line('Asesor '.$this->lead->advisorRel->name)
-                    ->line('Asesor '.$this->lead->projectRel->name_es)
-                    ->action('Notification Action', url('/'))
-                    ->line('Thank you for using our application!');*/
     }
 
     /**

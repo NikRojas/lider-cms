@@ -199,22 +199,24 @@
                     </h3>
                     <div class="row">
                       <div
-                        class="col-12 col-lg-3 text-center"
+                        class="col-3 text-center"
                         v-for="el in element.advisors_rel"
                         :key="el.id"
                       >
                         <span
                           class="avatar avatar-lg rounded-circle bg-default object-fit--cover"
-                          style="height: 80px; width: 80px"
+                          style="height: 80px; width: 80px; font-size: 28px !important;"
                         >
                           <img
                             :src="imagesUrl + '/advisors/' + el.avatar"
                             :alt="el.name"
+                            v-if="el.avatar"
                           />
+                          <template v-else>{{ el.avatar_initials }} </template>
                         </span>
-                        <small class="text-uppercase d-block">{{
+                        <span class="text-uppercase d-block">{{
                           el.name
-                        }}</small>
+                        }}</span>
                       </div>
                     </div>
                   </div>
@@ -398,7 +400,7 @@
                     </h3>
                     <div class="row">
                       <div
-                        class="col-12 col-lg-3 text-center"
+                        class="col-3 text-center"
                         v-for="el in element.features_rel"
                         :key="el.id"
                       >
@@ -426,7 +428,7 @@
                     </h3>
                     <div class="row">
                       <div
-                        class="col-12 col-lg-3 text-center"
+                        class="col-3 text-center"
                         v-for="el in element.banks_rel"
                         :key="el.id"
                       >
@@ -448,7 +450,7 @@
                     </h3>
                     <div class="row" v-if="element.bonds_rel.length">
                       <div
-                        class="col-12 col-lg-3 text-center"
+                        class="col-3 text-center"
                         v-for="el in element.bonds_rel"
                         :key="el.id"
                       >

@@ -54,17 +54,6 @@ class UserProjectQuotationNotification extends Notification implements ShouldQue
         return (new MailMessage)
                     ->subject(config('app.name').' - Cotización')
                     ->view('emails.user-quotation', ['lead' => $this->lead, "financingOptions" => $this->financingOptions]);
-                    /*->line('Estimado:' .$this->lead->first_name)
-                    ->line($this->project->description_es)
-                    ->line($this->project->name_es)
-                    ->line('Estado '.$this->project->statusRel["name_es"])
-                    ->line('Tipologia '.$this->typeDepartment->name)
-                    ->line('Dormitorios '.$this->typeDepartment->room)
-                    ->line('Metraje '.$this->typeDepartment->area)
-                    ->line('Asesor')
-                    ->line('Nombre '.$this->advisor->name)
-                    ->line('Teléfono '.$this->advisor->mobile_masked)
-                    ->line('Correo '.$this->advisor->email);*/
     }
 
     /**

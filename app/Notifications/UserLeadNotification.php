@@ -44,8 +44,6 @@ class UserLeadNotification extends Notification implements ShouldQueue
         return (new MailMessage)
                 ->subject(config('app.name').' - Confirmación Registro de Datos')
                 ->view('emails.user-lead');
-                /*->line('CONTACTO:' .$this->lead->name . ' Email'. $this->lead->email)
-                ->line('Thank you for using our application!');*/
     }
 
     /**

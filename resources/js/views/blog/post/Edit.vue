@@ -64,7 +64,7 @@
                       />
                     </div>
                   </div>
-                  <div class="col-12">
+                  <!--<div class="col-12">
                     <InputArray
                       fieldName="tags"
                       label="Tags"
@@ -73,7 +73,7 @@
                       :array.sync="element.tags"
                       :array-prop="element.tags"
                     />
-                  </div>
+                  </div>-->
 
                   <div class="col-12">
                     <div class="form-group">
@@ -295,11 +295,11 @@ export default {
         fd.append("published", 0);
       }
 
-      if (this.element.tags) {
+      /*if (this.element.tags) {
         fd.append("tags", JSON.stringify(this.element.tags));
       } else {
         fd.append("tags", JSON.stringify([{ tag_en: "", tag_es: "" }]));
-      }
+      }*/
 
       if (this.element.category && this.element.category.id) {
         fd.append("category_id", this.element.category.id);

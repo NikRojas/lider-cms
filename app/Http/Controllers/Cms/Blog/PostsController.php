@@ -43,7 +43,8 @@ class PostsController extends Controller
 
     public function edit(Post $element)
     {
-        $element = $element->load('category', 'tags:post_id,name_es as tag_es,name_en as tag_en');
+        //$element = $element->load('category', 'tags:post_id,name_es as tag_es,name_en as tag_en');
+        $element = $element->load('category');
         return view("pages.blog.posts.edit", compact('element'));
     }
 
@@ -93,13 +94,15 @@ class PostsController extends Controller
         
         try {
             $post = Post::UpdateOrCreate($post);
+            $request->session()->flash('success', trans('custom.message.create.success', ['name' => trans('custom.attribute.post')]));
+            return response()->json(["route" => route('cms.blog.posts.index')]);
         } catch (\Exception $e) {
             $request->session()->flash('error', trans('custom.message.create.error', ['name' => trans('custom.attribute.post')]));
             return response()->json(["route" => route('cms.blog.posts.index')], 500);
         }
 
         
-        $tags = $request->tags;
+        /*$tags = $request->tags;
         try {
             foreach ($tags as $key => $value) {
                 $tag = Tag::UpdateOrCreate(["post_id" => $post->id, "name_es" => $value['tag_es'],"name_en" => $value['tag_en']]);
@@ -110,12 +113,13 @@ class PostsController extends Controller
         } catch (\Exception $e) {
             $request->session()->flash('error', trans('custom.message.create.error', ['name' => trans('custom.attribute.post')]));
             return response()->json(["route" => route('cms.blog.posts.index')], 500);
-        }
+        }*/
     }
 
     public function get(Post $element)
     {
-        $element = $element->load('category', 'tags:post_id,name_es,name_en');
+        //$element = $element->load('category', 'tags:post_id,name_es,name_en');
+        $element = $element->load('category');
         return response()->json($element);
     }
    
@@ -197,13 +201,15 @@ class PostsController extends Controller
         
         try {
             $element = Post::UpdateOrCreate(["id"=>$element->id], $request_post);
+            $request->session()->flash('success', trans('custom.message.update.success', ['name' => trans('custom.attribute.post')]));
+            return response()->json(["route" => route('cms.blog.posts.index')]);
         } catch (\Exception $e) {
             $request->session()->flash('error', trans('custom.message.update.error', ['name' => trans('custom.attribute.post')]));
             return response()->json(["route" => route('cms.blog.posts.index')], 500);
         }
 
         
-        $tags = $request->tags;
+        /*$tags = $request->tags;
         try {
             $tag = Tag::where('post_id', $element->id)->delete();
             foreach ($tags as $key => $value) {
@@ -214,6 +220,6 @@ class PostsController extends Controller
         } catch (\Exception $e) {
             $request->session()->flash('error', trans('custom.message.update.error', ['name' => trans('custom.attribute.post')]));
             return response()->json(["route" => route('cms.blog.posts.index')], 500);
-        }
+        }*/
     }
 }

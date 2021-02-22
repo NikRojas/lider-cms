@@ -93,7 +93,7 @@
                   <p v-else>No registrado Seo Keywords EN</p>
                 </div>
               </div>
-              <div class="col-12 col-md-6">
+              <!--<div class="col-12 col-md-6">
                 <div class="form-group">
                   <label class="font-weight-bold">Tags ES:</label>
                   <p>
@@ -114,7 +114,7 @@
                     </template>
                   </p>
                 </div>
-              </div>
+              </div>-->
 
               <div class="col-12 col-md-6">
                 <div class="form-group">

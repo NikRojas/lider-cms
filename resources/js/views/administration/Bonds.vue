@@ -36,7 +36,7 @@
               <div class="card-body">
                 <div class="mb-3">
                   <div class="d-inline-block bg-dark p-3">
-                  <img :src="imagesUrl+'/bonds/'+el.logo" height="75" :alt="el.name" />
+                  <img :src="imagesUrl+'/bonds/'+el.logo" height="30" :alt="el.name" />
                   </div>
                 </div>
                 <h3 class="mb-1 font-weight-bold">
@@ -92,14 +92,16 @@
               <div class="form-group">
                 <label class="font-weight-bold" for="image">Imagen:</label>
                 <div class="row">
-                  <div class="col text-center" v-if="element.logo">
+                  <div class="col " v-if="element.logo">
+                    <div class="mt-2 bg-dark p-3 d-inline-block">
                     <img
-                      :src="imagesUrl+'/banks/'+element.logo"
-                      height="75"
+                      :src="imagesUrl+'/bonds/'+element.logo"
+                      height="30"
                       :alt="element.name"
                     />
+                    </div>
                   </div>
-                  <div class="col">
+                  <div class="col vue-dropzone-dark">
                     <vue-dropzone
                       ref="ref_image"
                       class="text-center"
@@ -165,6 +167,12 @@
     ></destroy>
   </div>
 </template>
+<style>
+.vue-dropzone-dark .dz-image{
+  padding: .5rem;
+  background: black;
+}
+</style>
 <script>
 import BreadCrumb from "../../components/BreadCrumb";
 import Input from "../../components/form/Input";

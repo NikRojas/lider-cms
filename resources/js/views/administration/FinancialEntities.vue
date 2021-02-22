@@ -36,7 +36,7 @@
               <div class="card-body">
                 <div class="mb-3">
                   <div class="d-inline-block bg-dark p-3">
-                  <img :src="imagesUrl+'/banks/'+el.logo" height="75" :alt="el.name" />
+                  <img :src="imagesUrl+'/banks/'+el.logo" height="30" :alt="el.name" />
                   </div>
                 </div>
                 <h3 class="mb-1 font-weight-bold">
@@ -101,11 +101,13 @@
                 <label class="font-weight-bold" for="image">Imagen:</label>
                 <div class="row">
                   <div class="col text-center" v-if="element.logo">
+                    <div class="bg-dark p-3">
                     <img
                       :src="imagesUrl+'/banks/'+element.logo"
-                      height="75"
+                      height="30"
                       :alt="element.name"
                     />
+                    </div>
                   </div>
                   <div class="col vue-dropzone-dark">
                     <vue-dropzone
@@ -150,46 +152,7 @@
                 >{{ errors.name[0] }}</label>
               </div>
             </div>
-
-            <!--<div class="col-12">
-              <div class="form-group">
-                <label class="font-weight-bold" for="number_account">Número de Cuenta</label>
-                <input
-                  type="text"
-                  class="form-control"
-                  v-model="element.number_account"
-                  id="number_account"
-                />
-                 <small id="url_video" class="form-text" style="opacity: 0.7"
-                    >El formato debe ser "XXXX-XXX-XXXXXXXXXX".</small
-                  >
-                <label
-                  v-if="errors && errors.number_account"
-                  class="mt-2 text-danger text-sm"
-                  for="number_account"
-                >{{ errors.number_account[0] }}</label>
-              </div>
-            </div>
-
-            <div class="col-12">
-              <div class="form-group">
-                <label class="font-weight-bold" for="cci">CCI</label>
-                <input
-                  type="text"
-                  class="form-control"
-                  v-model="element.cci"
-                  id="cci"
-                />
-                <small id="url_video" class="form-text" style="opacity: 0.7"
-                    >El formato debe ser "XXX-XXXXXXXXXXXXXXX-XX".</small
-                  >
-                <label
-                  v-if="errors && errors.cci"
-                  class="mt-2 text-danger text-sm"
-                  for="cci"
-                >{{ errors.cci[0] }}</label>
-              </div>
-            </div>-->
+            
           </div>
         </form>
       </div>
@@ -213,6 +176,12 @@
     ></destroy>
   </div>
 </template>
+<style>
+.vue-dropzone-dark .dz-image{
+  padding: .5rem;
+  background: black;
+}
+</style>
 <script>
 import BreadCrumb from "../../components/BreadCrumb";
 import Input from "../../components/form/Input";

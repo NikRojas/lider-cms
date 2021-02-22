@@ -61,12 +61,14 @@
                           <div class="col-12 mb-2">
                             <div class>
                               <a
+                                target="_blank"
                                 style="text-decoration: underline"
                                 :href="appUrl + '/proyectos/' + el.slug_es"
                                 >{{ appUrl }}/proyectos/{{ el.slug_es }}</a
                               >
                               <br />
                               <a
+                                target="_blank"
                                 style="text-decoration: underline"
                                 :href="appUrl + '/projects/' + el.slug_en"
                                 >{{ appUrl }}/projects/{{ el.slug_en }}</a
@@ -132,6 +134,17 @@
                                   </div>
                                 </div>
                                 <div class="col-12">
+                                  <div>
+<h4
+                                      class="d-inline-block font-weight-normal"
+                                    >
+                                      N° Cotizaciones:
+                                    </h4>
+                                    <h4 class="d-inline-block">
+                                      {{ el.quotations_rel_count }}
+                                    </h4>
+                                    
+                                  </div>
                                   <div>
                                     <h4
                                       class="d-inline-block font-weight-normal"

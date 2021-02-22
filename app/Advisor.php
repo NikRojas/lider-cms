@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Advisor extends Model
 {
     protected $guarded = [];
-    protected $appends = ['can_delete','mobile_masked'];
+    protected $appends = ['can_delete','mobile_masked','avatar_initials'];
 
     public function projectsRel()
     {
@@ -26,5 +26,14 @@ class Advisor extends Model
         if($this->mobile){
             return substr($this->mobile,0,3).'-'.substr($this->mobile,3,3).'-'.substr($this->mobile,6,3);
         }
+    }
+
+    public function getAvatarInitialsAttribute(){
+        $temp = explode(' ',trim($this->name));
+        $initials = strtoupper(substr($temp[0],0,1));
+        if(count($temp) > 1){
+            $initials = $initials.strtoupper(substr($temp[1],0,1));
+        }
+        return $initials;
     }
 }

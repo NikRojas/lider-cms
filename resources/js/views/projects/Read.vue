@@ -119,8 +119,6 @@
                       >
                       {{ element.status_rel.name_es }}
                     </h3>
-                  </div>
-                  <div class="col-12 col-lg-6 mb-3">
                     <h3 class="font-weight-normal">
                       <span class="d-block font-weight-bold"
                         >Estado del Proyecto EN:</span
@@ -135,8 +133,6 @@
                       >
                     </h3>
                     <div v-html="element.description_es"></div>
-                  </div>
-                  <div class="col-12 col-lg-6 mb-3">
                     <h3 class="font-weight-normal">
                       <span class="d-block font-weight-bold"
                         >Descripción EN:</span
@@ -237,6 +233,92 @@
                       >
                         {{ element.form_videocall ? "Sí" : "No" }}
                       </p>
+                    </h3>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row mb-4">
+          <div class="col-12 col-lg-2">
+            <h2>SEO</h2>
+            <p>Datos que se utilizarán para el SEO</p>
+          </div>
+          <div class="col-12 col-lg-10">
+            <div class="card">
+              <div class="card-body">
+                <div class="row">
+                  <div class="col-12 col-lg-6 mb-3">
+                    <h3 class="font-weight-normal">
+                      <span class="d-block font-weight-bold"
+                        >SEO Imagen:</span
+                      >
+                      <div v-if="element.seo_image">
+                        <img :src="imagesUrl + '/projects/' + element.seo_image" class="img-fluid" alt="">
+                      </div>
+                      <div v-else>No registrado</div>
+                    </h3>
+                  </div>
+                  <div class="col-12 col-lg-6 mb-3">
+                    <h3 class="font-weight-normal">
+                      <span class="d-block font-weight-bold"
+                        >SEO Título ES:</span
+                      >
+                      <div v-if="element.seo_title_es">
+                        {{ element.seo_title_es }}
+                      </div>
+                      <div v-else>No registrado</div>
+                    </h3>
+                    <h3 class="font-weight-normal">
+                      <span class="d-block font-weight-bold"
+                        >SEO Título EN:</span
+                      >
+                      <div v-if="element.seo_title_en">
+                        {{ element.seo_title_en }}
+                      </div>
+                      <div v-else>No registrado</div>
+                    </h3>
+                  </div>
+                  <div class="col-12 col-lg-6 mb-3">
+                    <h3 class="font-weight-normal">
+                      <span class="d-block font-weight-bold"
+                        >SEO Descripción ES:</span
+                      >
+                      <div v-if="element.seo_description_es">
+                        {{ element.seo_description_es }}
+                      </div>
+                      <div v-else>No registrado</div>
+                    </h3>
+                    <h3 class="font-weight-normal">
+                      <span class="d-block font-weight-bold"
+                        >SEO Descripción EN:</span
+                      >
+                      <div v-if="element.seo_description_en">
+                        {{ element.seo_description_en }}
+                      </div>
+                      <div v-else>No registrado</div>
+                    </h3>
+                  </div>
+
+                  <div class="col-12 col-lg-6 mb-3">
+                    <h3 class="font-weight-normal">
+                      <span class="d-block font-weight-bold"
+                        >SEO Keywords ES:</span
+                      >
+                      <div v-if="element.seo_keywords_es">
+                        {{ element.seo_keywords_es }}
+                      </div>
+                      <div v-else>No registrado</div>
+                    </h3>
+                    <h3 class="font-weight-normal">
+                      <span class="d-block font-weight-bold"
+                        >SEO Keywords EN:</span
+                      >
+                      <div v-if="element.seo_keywords_en">
+                        {{ element.seo_keywords_en }}
+                      </div>
+                      <div v-else>No registrado</div>
                     </h3>
                   </div>
                 </div>

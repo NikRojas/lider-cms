@@ -21,9 +21,9 @@ class StatusProjectRepository
             $data[] = array(
                 "id" => $element["id"],
                 "name_es" => $element["name_es"],
-                "slug_es" => '<span class="badge badge-pill badge-info badge-lg">'.$element["slug_es"].'</span>',
+                //"slug_es" => '<span class="badge badge-pill badge-info badge-lg">'.$element["slug_es"].'</span>',
                 "name_en" => $element["name_en"],
-                "slug_en" => '<span class="badge badge-pill badge-info badge-lg">'.$element["slug_en"].'</span>',
+                //"slug_en" => '<span class="badge badge-pill badge-info badge-lg">'.$element["slug_en"].'</span>',
                 "can_delete" => $element["can_delete"]
             );
         }

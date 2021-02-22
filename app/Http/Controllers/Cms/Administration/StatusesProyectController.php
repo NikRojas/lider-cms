@@ -57,7 +57,8 @@ class StatusesProyectController extends Controller
     public function getAll(Request $request, StatusProjectRepository $repo)
     {
         $q = $request->q;
-        $headers = ["Id", "Nombre ES", "Etiqueta ES", "Nombre EN", "Etiqueta EN"];
+        //$headers = ["Id", "Nombre ES", "Etiqueta ES", "Nombre EN", "Etiqueta EN"];
+        $headers = ["Id", "Nombre ES", "Nombre EN"];
         if ($q) {
             $elements = $repo->datatable($request->itemsPerPage, $q);
         } else {

@@ -38,7 +38,8 @@
               <img
                 :src="imagesUrl + '/advisors/' + element.avatar"
                 :alt="element.name"
-              />
+              v-if="element.avatar"/>
+                    <span style="font-size: 2.5rem; font-weight:medium;" v-else>{{ element.avatar_initials }}</span>
             </span>
             <small class="text-uppercase d-block">{{ element.name }}</small>
           </div>

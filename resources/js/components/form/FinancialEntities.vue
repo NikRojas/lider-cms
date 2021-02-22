@@ -24,7 +24,7 @@
             <img
                 :src="imagesUrl+'/banks/'+element.logo"
                 class="p-2 bg-dark"
-                height="80"
+                height="35"
                 :alt="element.name"
               />
             <small class="text-uppercase d-block">{{ element.name }}</small>

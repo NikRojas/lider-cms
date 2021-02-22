@@ -105,7 +105,8 @@
                     <vue-dropzone
                       ref="ref_file"
                       class="text-center"
-                      @vdropzone-file-added="$validatePDFDropzone($event,$refs.ref_file.dropzone,1,512000,'500kb')"
+                      @vdropzone-file-added="$validatePDFDropzone($event,$refs.ref_file.dropzone,1,5120000,
+                            '5mb')"
                       id="image"
                       :options="dropzoneOptions"
                       :duplicateCheck="true"

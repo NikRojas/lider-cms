@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Storage;
 
 use App\Http\Traits\CmsTrait;
 use App\Project;
+use App\ProjectQuotation;
 
 class ProjectsController extends Controller
 {
@@ -40,7 +41,7 @@ class ProjectsController extends Controller
         if($request->not){
             $not = $request->not;
         }
-        $elements = Project::with('statusRel','ubigeoRel')->withCount('galleryRel','filesRel','tipologiesRel')->where('id',"!=",$not)->orderBy('index','asc')->get();
+        $elements = Project::with('statusRel','ubigeoRel')->withCount('galleryRel','filesRel','tipologiesRel','quotationsRel')->where('id',"!=",$not)->orderBy('index','asc')->get();
         return response()->json($elements);
     }
 
@@ -75,7 +76,8 @@ class ProjectsController extends Controller
     public function store(ProjectRequest $request){
         $project = request(['name_es',"description_en","description_es",'url_video','name_en','slug_en','slug_es',"rooms_es","rooms_en","footage_en","footage_es","url_google_maps","url_waze","text_place_es",
         "text_place_en","project_status_id","location","price_total","price","price_total_foreign","map_indications_es","map_indications_en",
-        "sales_room_es","sales_room_en","schedule_attention_es","schedule_attention_en",'active','form_videocall','price_parking','commentary_quotation','condition_quotation','excerpt_quotation']);
+        "sales_room_es","sales_room_en","schedule_attention_es","schedule_attention_en",'active','form_videocall','price_parking','commentary_quotation','condition_quotation','excerpt_quotation',
+        "seo_keywords_es","seo_keywords_en","seo_description_es","seo_description_en","seo_title_es","seo_title_en"]);
 
         if($request->projects_related){
             $project = array_merge($project,["projects_related" => $request->projects_related]);
@@ -95,6 +97,15 @@ class ProjectsController extends Controller
 
         $mapName = $this->setFileName('ml-',$request->file('iframe_map'));
         $storeMap = Storage::disk('public')->putFileAs('img/projects/',$request->file('iframe_map'),$mapName);
+
+        if($request->hasFile('seo_image')){
+            $imageName = $this->setFileName('si-',$request->file('seo_image'));
+            $storeImage = Storage::disk('public')->putFileAs('img/projects/',$request->file('seo_image'),$imageName);
+            if(!$storeImage){
+                return response()->json(['title'=> trans('custom.title.error'), 'message'=> trans('custom.errors.image') ],500);    
+            }
+            $project = array_merge($project,["seo_image"=>$imageName]);
+        }
 
         $images = [];
         for ($i=0; $i < $request->images_count; $i++) { 
@@ -130,6 +141,7 @@ class ProjectsController extends Controller
             Storage::disk('public')->delete('img/projects/'.$logoNameColour);
             Storage::disk('public')->delete('img/projects/'.$imageBanner);
             Storage::disk('public')->delete('files/projects/'.$brochureName);
+            Storage::disk('public')->delete('img/projects/'.$storeImage);
             foreach ($images as $key => $value) {
                 Storage::disk('public')->delete('img/projects/'.$value);
             }
@@ -176,7 +188,8 @@ class ProjectsController extends Controller
     public function update(ProjectRequest $request,Project $element){
         $request_project = request(['name_es',"description_en","url_video","description_es",'name_en','slug_en','slug_es',"rooms_es","rooms_en","footage_en","footage_es","url_google_maps","url_waze","text_place_es",
         "text_place_en","project_status_id","location","price_total","price","price_total_foreign","map_indications_es","map_indications_en",
-        "sales_room_es","sales_room_en","schedule_attention_es","schedule_attention_en",'active','form_videocall','price_parking','commentary_quotation','condition_quotation','excerpt_quotation']);
+        "sales_room_es","sales_room_en","schedule_attention_es","schedule_attention_en",'active','form_videocall','price_parking','commentary_quotation','condition_quotation','excerpt_quotation',
+        "seo_keywords_es","seo_keywords_en","seo_description_es","seo_description_en","seo_title_es","seo_title_en"]);
 
  
         if($request->projects_related){
@@ -242,6 +255,20 @@ class ProjectsController extends Controller
             $request_project = array_merge($request_project,["iframe_map" => $element->iframe_map]);   
         }
 
+        if($request->hasFile('seo_image')){
+            $seoImage = $this->setFileName('si-',$request->file('seo_image'));
+            $storeSeoImage = Storage::disk('public')->putFileAs('img/projects/',$request->file('seo_image'),$seoImage);
+            if(!$storeSeoImage){
+                Storage::disk('public')->delete('img/projects/'.$seoImage);
+                $request->session()->flash('error', trans('custom.message.update.error', ['name' => trans('custom.attribute.project')]));
+                return response()->json(["route" => route('cms.projects.index')],500);    
+            }
+            $request_project = array_merge($request_project,["seo_image" => $seoImage]);   
+        }  
+        else{
+            $request_project = array_merge($request_project,["seo_image" => $element->seo_image]);   
+        }
+
         if($request->hasFile('brochure')){
             $brochureName = $this->setFileName('ben-',$request->file('brochure'));
             $storeBrochure = Storage::disk('public')->putFileAs('img/projects/',$request->file('brochure'),$brochureName);
@@ -299,6 +326,9 @@ class ProjectsController extends Controller
         } 
         if($request->hasFile('iframe_map') && $element->iframe_map){
             Storage::disk('public')->delete('img/projects/'.$element->iframe_map);
+        } 
+        if($request->hasFile('seo_image') && $element->seo_image){
+            Storage::disk('public')->delete('img/projects/'.$element->seo_image);
         } 
         $request_project = array_merge($request_project,["code_ubigeo" => $request->department.$request->province.$request->district]);
         try{

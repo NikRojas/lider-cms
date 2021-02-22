@@ -32,7 +32,8 @@
               <div class="card-body">
                 <div class="text-center mb-2">
                   <span class="avatar rounded-circle bg-default object-fit--cover" style="height: 80px; width: 80px;">
-                    <img :src="imagesUrl+'/advisors/'+el.avatar" :alt="el.name" />
+                    <img :src="imagesUrl+'/advisors/'+el.avatar" :alt="el.name" v-if="el.avatar"/>
+                    <span style="font-size: 2.5rem; font-weight:medium;" v-else>{{ el.avatar_initials }}</span>
                   </span>
                 </div>
                 <h3 class="mb-1">

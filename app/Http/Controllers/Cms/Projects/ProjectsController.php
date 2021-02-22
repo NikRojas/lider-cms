@@ -70,7 +70,7 @@ class ProjectsController extends Controller
                 $projects_related[] = Project::select('id','images','name_es')->where('id',$value)->get()->toArray();
             }
         }   
-        return view("pages.projects.read", compact('element','projects_related','quotations')); 
+        return view("pages.projects.read", compact('element','projects_related')); 
     }
 
     public function store(ProjectRequest $request){

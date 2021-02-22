@@ -82,21 +82,26 @@ class BaseController extends Controller
     }
 
     public function getDepartments(){
-        $departments = Ubigeo::select('code_ubigeo','code_department','department')->distinct('code_department')
-        //->has('projectsRel')
+        $departments = Ubigeo::select('code_ubigeo','code_department','department','code_district')->distinct('code_department')
         ->whereHas('projectsRel', function ($query) {
             $query->where('active', 1);
         })
         ->orderBy('department')->groupBy('code_department')->get();
+        $districtsTemp = null;
         foreach ($departments as $key => $value) {
-            $departments[$key]["districts"] = $this->getDistricts($value->code_department);
+            $districtsTemp[] = $this->getDistricts($value->code_department);
         }
-        return $departments;
+        $districtsTemp2 = collect($districtsTemp);
+        $districtsTemp3 = $districtsTemp2->flatten();
+        $districtsTemp3 = $districtsTemp3->sortBy('district');
+        $districtsTemp3 = $districtsTemp3->values()->all();
+        $districts = collect($districtsTemp3);
+        $data = $departments->concat($districts);
+        return $data;
     }
 
     public function getDistricts($code){
         $data = Ubigeo::select('code_district','district','code_ubigeo','code_department')->distinct()->where('code_department',$code)
-        //->has('projectsRel')
         ->whereHas('projectsRel', function ($query) {
             $query->where('active', 1);
         })
@@ -104,11 +109,37 @@ class BaseController extends Controller
         return $data;
     }
 
-    public function getStatus(){
-        //$data = ProjectStatus::has('projectsRel')->get();
-        $data = ProjectStatus::whereHas('projectsRel', function ($query) {
-            $query->where('active', 1);
-        })->get();
+    public function getStatus($ubigeo = null){
+        if($ubigeo){
+            $isDepartment = strlen($ubigeo);
+            if($isDepartment == 2){
+                $data = ProjectStatus::whereHas('projectsRel', function ($query) use ($ubigeo){
+                    $query->where('active', 1)->whereHas('ubigeoRel', function($query) use ($ubigeo){
+                        $query->where('code_department', $ubigeo);
+                    });
+                })->get();
+            }
+            else{
+                $data = ProjectStatus::whereHas('projectsRel', function ($query) use ($ubigeo) {
+                    $query->where('active', 1)->where('code_ubigeo',$ubigeo);
+                })->get();
+            }
+        }
+        else{
+            $data = ProjectStatus::whereHas('projectsRel', function ($query) {
+                $query->where('active', 1);
+            })->get();
+        }
+        return $data;
+    }
+    
+    public function getFiltersSpecific(Request $request){
+        $status = $this->getStatus($request->ubigeo);
+        $rooms = $this->getRooms($request->ubigeo);
+        $data = [
+            "status" => $status,
+            "rooms" => $rooms
+        ];
         return $data;
     }
 
@@ -124,10 +155,29 @@ class BaseController extends Controller
         return $data;
     }
 
-    public function getRooms(){
-        $data = ProjectTypeDepartment::where('available',true)->whereHas('projectRel', function ($query) {
-            $query->where('active', 1);
-        })->groupBy('room')->get();
+    public function getRooms($ubigeo = null){
+        if($ubigeo){
+            $isDepartment = strlen($ubigeo);
+            if($isDepartment == 2){
+                $data = ProjectTypeDepartment::where('available',true)->whereHas('projectRel', function ($query) use ($ubigeo) {
+                    $query->where('active', 1)->whereHas('ubigeoRel', function($query) use ($ubigeo){
+                        $query->where('code_department', $ubigeo);
+                    });
+                })->groupBy('room')->get();
+            }
+            else{
+                $data = ProjectTypeDepartment::where('available',true)->whereHas('projectRel', function ($query) use ($ubigeo) {
+                    $query->where('active', 1)->whereHas('ubigeoRel', function($query) use ($ubigeo){
+                        $query->where('code_ubigeo', $ubigeo);
+                    });
+                })->groupBy('room')->get();
+            }
+        }
+        else{
+            $data = ProjectTypeDepartment::where('available',true)->whereHas('projectRel', function ($query) {
+                $query->where('active', 1);
+            })->groupBy('room')->get();
+        }
         if($data){
             $data = $data->pluck('room');
         }
@@ -135,7 +185,36 @@ class BaseController extends Controller
     }
 
     public function paginateProjects(Request $request){
-        $departments = $districts = $statuses = $rooms = null;
+        $ubigeo = $status = $rooms = null;
+        $ubigeo = $request->ubigeo;
+        $status =  $request->status;
+        $rooms =  $request->rooms;
+        $projects = Project::select('id','project_status_id','logo','logo_colour','slug_'.$request->locale,'images','code_ubigeo','name_'.$request->locale,'rooms_'.$request->locale,'footage_'.$request->locale,'price_total','price_total_foreign')
+        ->where('active',1);
+        if($status){
+            $projects->where('project_status_id', $status);
+        }
+        if($rooms){
+            $projects->whereHas('tipologiesRel', function ($query) use ($rooms) {
+                return $query->where('room', $rooms)->where('available',true);
+            });
+        }
+        if($ubigeo){
+            $isDepartment = strlen($ubigeo);
+            if($isDepartment == 2){
+                $projects->whereHas('ubigeoRel', function ($query) use ($ubigeo) {
+                    return $query->where('code_department', $ubigeo);
+                });
+            }   
+            else{
+                $projects->whereHas('ubigeoRel', function ($query) use ($ubigeo) {
+                    return $query->where('code_ubigeo', $ubigeo);
+                });
+            }
+        }
+        $projects = $projects->with('ubigeoRel','statusRel')->orderBy('index')->paginate(9);
+        return $projects;
+        /*$departments = $districts = $statuses = $rooms = null;
         $departments = $request->departments;
         $districts = $request->districts;
         $statuses =  $request->statuses;
@@ -178,7 +257,7 @@ class BaseController extends Controller
             });
         }
         $projects = $projects->with('ubigeoRel','statusRel')->orderBy('index')->paginate(3);
-        return $projects;
+        return $projects;*/
     }
 
     public function setFileName($name,$file) {

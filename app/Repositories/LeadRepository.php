@@ -66,8 +66,13 @@ class LeadRepository
         foreach ($leads as $lead) {
             $avatarHTML = "No asignado aún";
             if($lead["advisorRel"]){
-                $avatar = asset('storage/img/advisors/'.$lead["advisorRel"]["avatar"]);
-                $avatarHTML = "<div class='media align-items-center'><span class='avatar avatar-sm mr-2 rounded-circle bg-primary'><img src='".$avatar."' /></span>".$lead['advisorRel']['name']."</div>";
+                if($lead["advisorRel"]["avatar"]){
+                    $avatar = asset('storage/img/advisors/'.$lead["advisorRel"]["avatar"]);
+                    $avatarHTML = "<div class='media align-items-center'><span class='avatar avatar-sm mr-2 rounded-circle bg-primary'><img src='".$avatar."' /></span>".$lead['advisorRel']['name']."</div>";
+                }
+                else{
+                    $avatarHTML = "<div class='media align-items-center'><span class='avatar avatar-sm mr-2 rounded-circle bg-primary'><span style='font-size:16px!important;'>".$lead["advisorRel"]["avatar_initials"]."</span></span>".$lead['advisorRel']['name']."</div>";
+                }
             }
 
             $image = asset('storage/img/projects/'.$lead["projectRel"]["images_format"][0]);

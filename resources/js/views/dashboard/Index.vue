@@ -53,7 +53,7 @@
                   <!--<h2 class="text-primary">Cotizaciones por proyecto</h2>-->
                   
                   <skeleton height="300px" v-if="loadingByDate"></skeleton>
-                  <div class="pt-4">
+                  <div class="pt-4" v-else>
                     <ve-line
                       :data="charts.leadsQuotations"
                       :settings="chartSettings"
@@ -76,7 +76,7 @@
                       <!--<h2 class="text-primary">Leads Cita Online</h2>-->
                       
                       <skeleton height="300px" v-if="loadingByDate"></skeleton>
-                      <div class="pt-4">
+                      <div class="pt-4" v-else>
                         <ve-line
                           :data="charts.leadsVideocall"
                           :settings="chartSettings"

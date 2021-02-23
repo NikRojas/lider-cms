@@ -212,8 +212,9 @@
                         <div class="col-lg-10">
                           <vue-dropzone
                             ref="ref_brochure"
-                            @vdropzone-file-added="$validatePDFDropzone($event,$refs.ref_brochure.dropzone,1,5120000,
-                            '5mb')"
+                            @vdropzone-file-added="$validatePDFDropzone($event,$refs.ref_brochure.dropzone,1,
+                            35840000,
+                            '35mb')"
                             id="brochure"
                             class="text-center"
                             :options="dropzoneOptionsBrochure"

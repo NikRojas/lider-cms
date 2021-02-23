@@ -124,7 +124,7 @@
                   </div>
                 </div>
               </div>
-              <div class="col-12 col-md-6">
+              <div class="col-12">
                 <div class="form-group">
                   <label class="font-weight-bold" for="name">Nombre:</label>
                   <input
@@ -167,19 +167,19 @@
                     type="password"
                     class="form-control"
                     id="password"
-                    v-model="user.contrasena"
+                    v-model="user.password"
                     placeholder="Contraseña"
                   />
                   <small id="password" class>La contraseña debe tener mínimo 8 caracteres.</small>
                   <label
-                    v-if="errors && errors.contrasena"
+                    v-if="errors && errors.password"
                     class="mt-2 mb-0 text-danger"
                     for="password"
-                  >{{ errors.contrasena[0] }}</label>
+                  >{{ errors.password[0] }}</label>
                 </div>
               </div>
 
-              <div class="col-12 col-lg-6" v-if="!user.status">
+              <!--<div class="col-12 col-lg-6" v-if="!user.status">
                 <div class="form-group">
                   <b-form-checkbox
                     id="id_checkbox_status"
@@ -187,7 +187,7 @@
                     name="available"
                   >Activar</b-form-checkbox>
                 </div>
-              </div>
+              </div>-->
 
               <div class="col-12 text-right">
                 <Button
@@ -230,7 +230,7 @@
                   </vue-dropzone>
                 </div>
               </div>
-              <div class="col-12 col-md-6">
+              <div class="col-12">
                 <div class="form-group">
                   <label class="font-weight-bold" for="name">Nombre:</label>
                   <input
@@ -414,7 +414,6 @@ export default {
       user: {
         rel_role: {},
         role_id: "",
-        username: "",
         password: "",
         name: "",
         email: "",
@@ -436,7 +435,6 @@ export default {
         (this.user = {
           rel_role: {},
           role_id: "",
-          username: "",
           password: "",
           name: "",
           email: "",
@@ -450,7 +448,6 @@ export default {
         (this.user = {
           rel_role: {},
           role_id: "",
-          username: "",
           password: "",
           name: "",
           email: "",

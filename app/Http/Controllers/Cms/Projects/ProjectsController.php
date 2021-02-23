@@ -271,9 +271,9 @@ class ProjectsController extends Controller
 
         if($request->hasFile('brochure')){
             $brochureName = $this->setFileName('ben-',$request->file('brochure'));
-            $storeBrochure = Storage::disk('public')->putFileAs('img/projects/',$request->file('brochure'),$brochureName);
+            $storeBrochure = Storage::disk('public')->putFileAs('files/projects/',$request->file('brochure'),$brochureName);
             if(!$storeBrochure){
-                Storage::disk('public')->delete('img/projects/'.$brochureName);
+                Storage::disk('public')->delete('files/projects/'.$brochureName);
                 $request->session()->flash('error', trans('custom.message.update.error', ['name' => trans('custom.attribute.project')]));
                 return response()->json(["route" => route('cms.projects.index')],500);    
             }

@@ -172,7 +172,7 @@ class PageController extends BaseController
         $page = $this->getSeoPage('projects', $request->locale);
         $project = $project->load('statusRel')->load('ubigeoRel')->load('banksRel')->load('bondsRel')->load('virtualTourRel')
             ->load('advisorsRel')->load('featuresRel')->load('galleryRel:id,title_es,title_en,image as src')->load('galleryRel.typeGalleryRel')
-            ->load('tipologiesRel')
+            //->load('tipologiesRel')
             ->load('filesRel');
         if ($project->galleryRel) {
             $project["typeGallery"] = $project->galleryRel->pluck('typeGalleryRel.name', 'typeGalleryRel.id');
@@ -193,7 +193,9 @@ class PageController extends BaseController
             $projects_related = Project::select('id', 'project_status_id', 'logo','logo_colour', 'slug_' . $request->locale, 'images', 'code_ubigeo', 'name_' . $request->locale, 'rooms_' . $request->locale, 'footage_' . $request->locale, 'price_total', 'price_total_foreign')
             ->where('id','!=',$project->id)->with('statusRel', 'ubigeoRel')->where('active', 1)->inRandomOrder()->limit(4)->get();
         }
-        $tipologiesCount = ProjectTypeDepartment::where('project_id',$project->id)->where('available',true)->count();
+        $tipologies = ProjectTypeDepartment::where('project_id',$project->id)->where('available',true)->get();
+        $project["tipologies_rel"] = $tipologies;
+        $tipologiesCount = $tipologies->count();
         $data = array(
             "page" => $page,
             "project" => $project,

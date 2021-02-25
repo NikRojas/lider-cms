@@ -18,6 +18,7 @@ use App\LeadVideocall;
 use App\Project;
 use App\ProjectQuotation;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 
 class PostController extends BaseController
 {
@@ -68,9 +69,10 @@ class PostController extends BaseController
             return $this->sendError("Not found");
         }
         $el = request(['name','email','mobile','project_type_department_id','document_number','message']);
+        $str = Str::random(40);
 		try {
-            $el = ProjectQuotation::UpdateOrCreate(array_merge($el,["project_id" => $project->id]));
-            return $this->sendResponse([], trans('custom.title.success'), 200);;
+            $el = ProjectQuotation::UpdateOrCreate(array_merge($el,["project_id" => $project->id, 'identifier_str' => $str]));
+            return $this->sendResponse(["identifier" => $el->identifier_str], trans('custom.title.success'), 200);;
         } catch (\Exception $e) {
             return $this->sendError(trans('custom.title.error'), [], 500);
         }

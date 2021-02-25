@@ -423,7 +423,7 @@
                                                                                             <td height="10" style="-moz-hyphens:auto;-webkit-hyphens:auto;Margin:0;border-collapse:collapse!important;color:#0a0a0a;font-family:Helvetica,Arial,sans-serif;font-size:10px;font-weight:400;hyphens:auto;line-height:10px;margin:0;mso-line-height-rule:exactly;padding-bottom:0;padding-left:0;padding-right:0;padding-top:0;text-align:left;vertical-align:top;word-wrap:break-word">&nbsp;</td>
                                                                                         </tr>
                                                                                     </tbody>
-                                                                                </table><strong>{!! $lead->projectRel->price_parking !!}</strong>
+                                                                                </table><pre style="font-family:inherit; margin: 0;"><strong>{!! $lead->projectRel->price_parking !!}</pre></strong>
                                                                                 <table class="spacer" style="border-collapse:collapse;border-spacing:0;padding-bottom:0;padding-left:0;padding-right:0;padding-top:0;text-align:left;vertical-align:top;width:100%">
                                                                                     <tbody>
                                                                                         <tr style="padding-bottom:0;padding-left:0;padding-right:0;padding-top:0;text-align:left;vertical-align:top">

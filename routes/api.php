@@ -55,6 +55,7 @@ Route::namespace('Api')->group(function() {
         Route::get('testimonials', 'PageController@testimonials');
         Route::get('privacy-policies', 'PageController@privacityPolicy');
         Route::get('terms-conditions', 'PageController@termsConditions');
+        Route::get('quotation', 'PageController@quotation');
     });
 });
 

@@ -9,11 +9,13 @@ use App\AboutWarrantyElement;
 use App\Cami;
 use App\CamiElement;
 use App\Category;
+use App\FinancingOption;
 use App\Http\Controllers\Api\BaseController;
 use App\MasterLeadMedium;
 use App\MasterLeadTimeDay;
 use App\Post;
 use App\Project;
+use App\ProjectQuotation;
 use App\ProjectTypeDepartment;
 use App\Slider;
 use App\Testimonial;
@@ -338,6 +340,20 @@ class PageController extends BaseController
             "cami" => $cami,
             "cami_elements" => $elements,
             "content" => $content
+        );
+        return $this->sendResponse($data, '');
+    }
+
+    public function quotation(Request $request){
+        $lead = ProjectQuotation::where('identifier_str',$request->id)->first();
+        if (!$lead) {
+            return $this->sendError("");
+        }
+        $lead = $lead->load('projectRel.statusRel','advisorRel','projectTypeDepartmentRel');
+        $financingOptions = FinancingOption::where('active',true)->orderBy('index','asc')->get();
+        $data = array(
+            "lead" => $lead,
+            "financingOptions" => $financingOptions
         );
         return $this->sendResponse($data, '');
     }

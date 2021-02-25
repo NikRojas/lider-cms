@@ -26,6 +26,7 @@ class CreateProjectQuotationTable extends Migration
             $table->foreign('project_type_department_id')->references('id')->on('project_type_departments');
             $table->bigInteger('advisor_id')->unsigned()->nullable();
             $table->foreign('advisor_id')->references('id')->on('advisors');
+            $table->text('identifier_str')->nullable();
             $table->timestamps();
         });
     }

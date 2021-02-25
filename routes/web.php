@@ -458,7 +458,7 @@ Route::get('/mail/advisor/lead', function () {
 });
 
 Route::get('/mail/user/quotation', function () {
-    $lead = ProjectQuotation::with('projectRel.statusRel','advisorRel','projectTypeDepartmentRel')->first();
+    $lead = ProjectQuotation::with('projectRel.statusRel','advisorRel','projectTypeDepartmentRel')->find(7);
     $financingOptions = FinancingOption::where('active',true)->orderBy('index','asc')->get();
     return view('emails.user-quotation',["lead" => $lead, "financingOptions" => $financingOptions]);
 });*/

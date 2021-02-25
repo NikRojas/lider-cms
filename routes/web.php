@@ -448,11 +448,11 @@ Route::middleware(['auth'])->namespace('Cms')->name('cms.')->group(function () {
 });
 
 
-/*Route::get('/mail/user', function () {
+Route::get('/mail/user', function () {
     return view('emails.user-lead');
 });
 
-Route::get('/mail/advisor/lead', function () {
+/*Route::get('/mail/advisor/lead', function () {
     $lead = Lead::first();
     return view('emails.advisor-lead',["lead" => $lead, "type" => "Tradicional"]);
 });

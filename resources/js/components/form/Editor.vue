@@ -35,7 +35,7 @@
       @keydown.enter.prevent
       v-model="value[ active ]"
       :options="editorOptions"
-      :class="size == 'sm' ? 'ql-height-5' : 'ql-height-25'"
+      :class="size == 'sm' ? 'ql-height-5' : size == 'md' ? 'ql-height-10' : 'ql-height-25'"
       ref="ref_content"
     ></quill-Editor>
 

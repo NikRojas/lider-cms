@@ -39,7 +39,7 @@
                 <div class="row">
                   <div class="col-12"> 
                       <Editor
-                        size="sm"
+                        size="md"
                         label="Descripción"
                         :variable="'files.'+i+'.description'"
                         :errors="errors"

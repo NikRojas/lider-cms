@@ -110,7 +110,7 @@
 
                   <div class="col-12">
                     <Editor
-                      size="sm"
+                      size="md"
                       label="Contenido"
                       variable="content"
                       :errors="errors"

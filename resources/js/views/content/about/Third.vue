@@ -211,7 +211,7 @@
 
               <div class="form-group">
                 <Editor
-                  size="sm"
+                  size="md"
                   label="Descripción"
                   variable="description"
                   :errors="errors"

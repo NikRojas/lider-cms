@@ -272,16 +272,21 @@ class PageController extends BaseController
                 }
                 else{
                     if(($lastDiv+1.5 == $div)){
-                        $temp[][$key] = $value;
+                        $temp[] = array($value);
                         $lastDiv = $div;
                     }
                     else{
                         $tempTwoItem[] = $value;
                         if(count($tempTwoItem) == $max){
                             $temp[] = $tempTwoItem;
-                            $tempTwoItem = null;
+                            $tempTwoItem = [];
                         }
                         
+                    }
+                }
+                if ($key == count($third_2) - 1) {
+                    if(count($tempTwoItem) == 1){
+                        $temp[] = $tempTwoItem;
                     }
                 }
             }

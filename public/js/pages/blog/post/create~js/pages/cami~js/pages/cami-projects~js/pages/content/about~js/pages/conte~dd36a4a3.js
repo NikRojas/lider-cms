@@ -389,7 +389,12 @@ var render = function() {
       _vm._v(" "),
       _c("quill-Editor", {
         ref: "ref_content",
-        class: _vm.size == "sm" ? "ql-height-5" : "ql-height-25",
+        class:
+          _vm.size == "sm"
+            ? "ql-height-5"
+            : _vm.size == "md"
+            ? "ql-height-10"
+            : "ql-height-25",
         attrs: { options: _vm.editorOptions },
         on: {
           keydown: function($event) {

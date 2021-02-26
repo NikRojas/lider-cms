@@ -546,6 +546,15 @@ h6,
     }
 }
 
+.ql-editor{
+    overflow-y: hidden !important;
+}
+
+.ql-container.ql-snow{
+    overflow-y: scroll !important;
+    resize: vertical !important;
+}
+
 .multiple-files .dz-preview .dz-image img{
     height: 200px;
     width: 150px;

@@ -153,7 +153,7 @@
                   </div>
                   <div class="col-12">
                     <Editor
-                      size="sm"
+                      size="md"
                       label="Descripción"
                       variable="description"
                       :errors="errors"
@@ -542,7 +542,7 @@
                   </div>
                   <div class="col-12">
                     <Editor
-                      size="sm"
+                      size="md"
                       label="Indicaciones de Dirección (Opcional)"
                       variable="map_indications"
                       :errors="errors"
@@ -566,7 +566,7 @@
                   </div>
                   <div class="col-12 col-lg-6">
                     <Editor
-                      size="sm"
+                      size="md"
                       label="Sala de Ventas"
                       variable="sales_room"
                       :errors="errors"
@@ -578,7 +578,7 @@
                   </div>
                   <div class="col-12 col-lg-6">
                     <Editor
-                      size="sm"
+                      size="md"
                       label="Horario de Atención"
                       variable="schedule_attention"
                       :errors="errors"

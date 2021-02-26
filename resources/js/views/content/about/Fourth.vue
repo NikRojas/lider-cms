@@ -201,7 +201,7 @@
               <div class="col-12 col-md-12 col-lg-12">
                 <div class="form-group">
                   <Editor
-                    size="sm"
+                    size="md"
                     label="Descripción"
                     variable="description"
                     :errors="errorsText"
@@ -281,7 +281,7 @@
             <div class="col-12">
               <div class="form-group">
                 <Editor
-                  size="sm"
+                  size="md"
                   label="Descripción"
                   variable="description"
                   :errors="errors"

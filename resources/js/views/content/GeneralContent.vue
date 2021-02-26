@@ -129,7 +129,7 @@
                               :options="quillEditorOptions"
                             ></quill-editor>-->
                             <Editor
-                              size="sm"
+                              size="md"
                               :label="field.name"
                               variable="description"
                               :errors="errors"

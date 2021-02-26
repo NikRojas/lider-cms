@@ -152,7 +152,7 @@
             <div class="col-12">
               <div class="form-group">
                 <Editor
-                  size="sm"
+                  size="md"
                   label="Descripción"
                   variable="description"
                   :errors="errors"
@@ -222,7 +222,7 @@
             <div class="col-12">
               <div class="form-group">
                 <Editor
-                  size="sm"
+                  size="md"
                   label="Descripción Video"
                   variable="description_video"
                   :errors="errors"

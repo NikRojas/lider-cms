@@ -173,7 +173,7 @@
       no-close-on-esc
       no-close-on-backdrop
       centered
-      size="sm"
+      size="md"
       footer-class="border-0 pt-0"
       body-class="pt-0"
     >

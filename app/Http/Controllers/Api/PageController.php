@@ -15,6 +15,7 @@ use App\MasterLeadMedium;
 use App\MasterLeadTimeDay;
 use App\Post;
 use App\Project;
+use App\ProjectBanner;
 use App\ProjectQuotation;
 use App\ProjectTypeDepartment;
 use App\Slider;
@@ -198,6 +199,8 @@ class PageController extends BaseController
         $tipologies = ProjectTypeDepartment::where('project_id',$project->id)->where('available',true)->get();
         $project["tipologies_rel"] = $tipologies;
         $tipologiesCount = $tipologies->count();
+        $banners = ProjectBanner::where('project_id', $project->id)->orderBy('index', 'asc')->get();
+        $project["banners"] = $banners;
         $data = array(
             "page" => $page,
             "project" => $project,

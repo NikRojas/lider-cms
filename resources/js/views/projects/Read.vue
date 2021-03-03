@@ -97,11 +97,18 @@
                       >
                     </h3>
                   </div>
-                  
+
                   <div class="col-12 col-lg-6 mb-3">
                     <h3 class="font-weight-normal">
-                      <span class="d-block font-weight-bold">Imágenes:</span>
+                      <span class="d-block font-weight-bold">Card:</span>
                     </h3>
+                    <img
+                      class=""
+                      height="300"
+                      :src="imagesUrl + '/projects/' + element.images_format[0]"
+                      alt
+                    />
+                    <!--
                     <carousel :perPage="1">
                       <slide v-for="el in element.images_format" :key="el">
                         <img
@@ -111,7 +118,20 @@
                         />
                       </slide>
                     </carousel>
+                    -->
                   </div>
+                  <div class="col-12 col-lg-6 mb-3">
+                    <h3 class="font-weight-normal">
+                      <span class="d-block font-weight-bold">Card Hover:</span>
+                    </h3>
+                    <img
+                      class=""
+                      height="200"
+                      :src="imagesUrl + '/projects/' + element.images_format[1]"
+                      alt
+                    />
+                  </div>
+
                   <div class="col-12 col-lg-6 mb-3">
                     <h3 class="font-weight-normal">
                       <span class="d-block font-weight-bold"
@@ -205,7 +225,11 @@
                       >
                         <span
                           class="avatar avatar-lg rounded-circle bg-default object-fit--cover"
-                          style="height: 80px; width: 80px; font-size: 28px !important;"
+                          style="
+                            height: 80px;
+                            width: 80px;
+                            font-size: 28px !important;
+                          "
                         >
                           <img
                             :src="imagesUrl + '/advisors/' + el.avatar"
@@ -253,11 +277,13 @@
                 <div class="row">
                   <div class="col-12 col-lg-6 mb-3">
                     <h3 class="font-weight-normal">
-                      <span class="d-block font-weight-bold"
-                        >SEO Imagen:</span
-                      >
+                      <span class="d-block font-weight-bold">SEO Imagen:</span>
                       <div v-if="element.seo_image">
-                        <img :src="imagesUrl + '/projects/' + element.seo_image" class="img-fluid" alt="">
+                        <img
+                          :src="imagesUrl + '/projects/' + element.seo_image"
+                          class="img-fluid"
+                          alt=""
+                        />
                       </div>
                       <div v-else>No registrado</div>
                     </h3>
@@ -342,7 +368,11 @@
                       <span class="d-block h3 font-weight-bold"
                         >Precio Soles Desde:</span
                       >
-                      {{ element.price_total ? element.price_total_format : 'No registrado' }}
+                      {{
+                        element.price_total
+                          ? element.price_total_format
+                          : "No registrado"
+                      }}
                     </h2>
                   </div>
                   <div class="col-12 col-lg-6 mb-3 text-center">
@@ -350,7 +380,11 @@
                       <span class="d-block h3 font-weight-bold"
                         >Precio Dólares Desde:</span
                       >
-                      {{ element.price_total_foreign ? element.price_total_foreign_format : 'No registrado' }}
+                      {{
+                        element.price_total_foreign
+                          ? element.price_total_foreign_format
+                          : "No registrado"
+                      }}
                     </h2>
                   </div>
                 </div>
@@ -616,7 +650,7 @@
                       <p v-else>No registrado</p>
                     </h3>
                   </div>
-                  <div class="col-12  col-lg-6">
+                  <div class="col-12 col-lg-6">
                     <!--<h3 class="font-weight-normal">
                       <span class="d-block font-weight-bold d-block mb-2"
                         >Iframe Mapa:</span
@@ -646,7 +680,6 @@
             <div class="card">
               <div class="card-body">
                 <div class="row">
-                  
                   <div class="col-12 col-lg-6 mb-3">
                     <h3 class="font-weight-normal">
                       <span class="d-block font-weight-bold"
@@ -659,7 +692,6 @@
                       <p v-else>No registrado.</p>
                     </h3>
                   </div>
-
 
                   <div class="col-12 col-lg-6 mb-3">
                     <h3 class="font-weight-normal">
@@ -674,7 +706,6 @@
                     </h3>
                   </div>
 
-                  
                   <div class="col-12 col-lg-6 mb-3">
                     <h3 class="font-weight-normal">
                       <span class="d-block font-weight-bold"
@@ -688,7 +719,6 @@
                     </h3>
                   </div>
 
-                  
                   <div class="col-12 col-lg-6 mb-3">
                     <h3 class="font-weight-normal">
                       <span class="d-block font-weight-bold"

@@ -5,10 +5,16 @@
         <div class="header-body">
           <div class="row align-items-center pt-0 pt-md-2 pb-4">
             <div class="col-6 col-md-7">
-              <BreadCrumb :show-bread-crumb="false" title="Proyectos en los que interviene CAMI"></BreadCrumb>
+              <BreadCrumb
+                :show-bread-crumb="false"
+                title="Proyectos en los que interviene CAMI"
+              ></BreadCrumb>
             </div>
             <div class="col-6 col-md-5 text-right">
-              <div class="d-inline-block mr-3 mb-3 mb-lg-0" style="opacity: 0.75">
+              <div
+                class="d-inline-block mr-3 mb-3 mb-lg-0"
+                style="opacity: 0.75"
+              >
                 <a style="cursor: pointer" @click.prevent="info = !info"
                   ><jam-info
                     height="14px"
@@ -59,7 +65,11 @@
                 </template>
               </b-modal>
 
-              <a href="#" class="btn btn-icon btn-inverse-primary" @click.prevent="newEl">
+              <a
+                href="#"
+                class="btn btn-icon btn-inverse-primary"
+                @click.prevent="newEl"
+              >
                 <span class="btn-inner--icon">
                   <jam-heart class="current-color" />
                 </span>
@@ -79,15 +89,28 @@
       <div v-else>
         <div class="row" v-if="elements.length">
           <div class="col-12">
-            <p>{{ messageOrder}}</p>
+            <p>{{ messageOrder }}</p>
           </div>
         </div>
-        <draggable class="row" v-if="elements.length" v-model="elements" @change="handleChange">
-          <div class="col-12 col-md-6 col-lg-3 mb-4" v-for="(el,i) in elements" :key="el.id">
+        <draggable
+          class="row"
+          v-if="elements.length"
+          v-model="elements"
+          @change="handleChange"
+        >
+          <div
+            class="col-12 col-md-6 col-lg-3 mb-4"
+            v-for="(el, i) in elements"
+            :key="el.id"
+          >
             <div class="card">
               <div class="card-body">
                 <div class="text-center mb-3">
-                  <img :src="imagesUrl+'/cami-elements/'+el.image" :alt="el.name" class="img-fluid" />
+                  <img
+                    :src="imagesUrl + '/cami-elements/' + el.image"
+                    :alt="el.name"
+                    class="img-fluid"
+                  />
                 </div>
                 <h3 class="mb-1">
                   <span class="font-weight-normal">Nombre ES:</span>
@@ -98,9 +121,24 @@
                   {{ el.name_en }}
                 </h3>
                 <div class="mt-4 text-center">
-                  <button @click="detailEl(el.id)" class="btn btn-inverse-primary btn-sm">Ver</button>
-                  <button @click="editEl(el.id)" class="btn btn-inverse-info btn-sm">Editar</button>
-                  <button @click="deleteEl(el.id)" class="btn btn-inverse-danger btn-sm">Eliminar</button>
+                  <button
+                    @click="detailEl(el.id)"
+                    class="btn btn-inverse-primary btn-sm"
+                  >
+                    Ver
+                  </button>
+                  <button
+                    @click="editEl(el.id)"
+                    class="btn btn-inverse-info btn-sm"
+                  >
+                    Editar
+                  </button>
+                  <button
+                    @click="deleteEl(el.id)"
+                    class="btn btn-inverse-danger btn-sm"
+                  >
+                    Eliminar
+                  </button>
                 </div>
               </div>
             </div>
@@ -134,7 +172,6 @@
       <div v-else>
         <form @submit.prevent="submit">
           <div class="row">
-            
             <div class="col-12">
               <div class="form-group">
                 <Input
@@ -148,7 +185,7 @@
                 />
               </div>
             </div>
-            
+
             <div class="col-12">
               <div class="form-group">
                 <Editor
@@ -163,14 +200,16 @@
                 />
               </div>
             </div>
-            
+
             <div class="col-12 col-lg-6">
               <div class="form-group">
-                <label class="font-weight-bold" for="image">Imagen Video:</label>
+                <label class="font-weight-bold" for="image"
+                  >Imagen Video:</label
+                >
                 <div class="row">
                   <div class="col text-center" v-if="element.image">
                     <img
-                      :src="imagesUrl+'/cami-elements/'+element.image"
+                      :src="imagesUrl + '/cami-elements/' + element.image"
                       :alt="element.name"
                       class="img-fluid"
                     />
@@ -179,17 +218,24 @@
                     <vue-dropzone
                       ref="ref_image"
                       class="text-center"
-                      @vdropzone-file-added="$validateImageDropzone($event,$refs.ref_image.dropzone,1,100000,
-                            '100kb')"
+                      @vdropzone-file-added="
+                        $validateImageDropzone(
+                          $event,
+                          $refs.ref_image.dropzone,
+                          1,
+                          100000,
+                          '100kb'
+                        )
+                      "
                       id="image"
                       :options="dropzoneOptions"
                       :duplicateCheck="true"
                       :useCustomSlot="true"
                     >
                       <div class="dropzone-custom-content">
-                        <h5
-                          class="dropzone-custom-title text-primary"
-                        >Suelte los archivos aquí o haga click para cargarlos.</h5>
+                        <h5 class="dropzone-custom-title text-primary">
+                          Suelte los archivos aquí o haga click para cargarlos.
+                        </h5>
                       </div>
                     </vue-dropzone>
                   </div>
@@ -199,25 +245,34 @@
                   v-if="errors && errors.image"
                   class="text-danger text-sm d-block mt-2"
                   for="image"
-                >{{ errors.image[0] }}</label>
+                  >{{ errors.image[0] }}</label
+                >
               </div>
             </div>
 
-             <div class="col-12 col-lg-6">
-                <div class="form-group">
+            <div class="col-12 col-lg-6">
+              <div class="form-group">
+                <label class="font-weight-bold" for="url"
+                  >URL Video Youtube</label
+                >
+                <input
+                  type="text"
+                  class="form-control"
+                  v-model="element.url_video"
+                  id="url_video"
+                />
+                <small id="url_video" class="form-text" style="opacity: 0.7"
+                  >El formato de la URL debe ser
+                  "https://www.youtube.com/watch?v=N1bWwEfIDP0".</small
+                >
                 <label
-                  class="font-weight-bold"
-                  for="url"
-                >URL Video Youtube</label>
-                <input type="text" class="form-control" v-model="element.url_video" id="url_video" />
-                <small id="url_video" class="form-text" style="opacity: 0.7;">El formato de la URL debe ser "https://www.youtube.com/watch?v=N1bWwEfIDP0".</small>
-                <label
-                        v-if="errors && errors.url_video"
-                        class="mt-2 text-danger text-sm"
-                        for="url_video"
-                      >{{ errors.url_video[0] }}</label>
-                </div>
+                  v-if="errors && errors.url_video"
+                  class="mt-2 text-danger text-sm"
+                  for="url_video"
+                  >{{ errors.url_video[0] }}</label
+                >
               </div>
+            </div>
 
             <div class="col-12">
               <div class="form-group">
@@ -259,7 +314,7 @@
                 :imagesUrl="imagesUrl"
                 :filesParent="element.files"
                 :iconsParent="element.icons"
-                folder="elements"
+                folder="cami-elements"
               />
             </div>
           </div>
@@ -272,7 +327,9 @@
           @click="submit"
           :request-server="requestSubmit"
         ></Button>
-        <button type="button" class="btn btn-secondary" @click="restoreEl">Cancelar</button>
+        <button type="button" class="btn btn-secondary" @click="restoreEl">
+          Cancelar
+        </button>
       </template>
     </b-modal>
 
@@ -299,7 +356,6 @@
       </div>
       <div v-else>
         <div class="row">
-          
           <div class="col-12 col-md-6">
             <div class="form-group">
               <label class="font-weight-bold">Nombre Español:</label>
@@ -334,35 +390,38 @@
             </div>
           </div>
 
-
           <div class="col-12 col-lg-6">
             <div class="form-group">
               <label class="font-weight-bold" for="image">Imagen Video:</label>
               <div class="row">
                 <div class="col" v-if="element.image">
-                  <img :src="imagesUrl+'/cami-elements/'+element.image" class="img-fluid" :alt="element.name" />
+                  <img
+                    :src="imagesUrl + '/cami-elements/' + element.image"
+                    class="img-fluid"
+                    :alt="element.name"
+                  />
                 </div>
               </div>
             </div>
           </div>
 
           <div class="col-12 col-lg-6">
-              <div class="form-group">
-                <h3 class="font-weight-normal">
-                  <span class="d-block font-weight-bold">Video:</span>
-                </h3>
-                <iframe
-                  id="player"
-                  type="text/html"
-                  width="100%"
-                  height="360"
-                  v-if="element.url_video"
-                  :src="'http://www.youtube.com/embed/' + element.id_video"
-                  frameborder="0"
-                ></iframe>
-                <p v-else>No se ha registrado un video.</p>
-              </div>
+            <div class="form-group">
+              <h3 class="font-weight-normal">
+                <span class="d-block font-weight-bold">Video:</span>
+              </h3>
+              <iframe
+                id="player"
+                type="text/html"
+                width="100%"
+                height="360"
+                v-if="element.url_video"
+                :src="'http://www.youtube.com/embed/' + element.id_video"
+                frameborder="0"
+              ></iframe>
+              <p v-else>No se ha registrado un video.</p>
             </div>
+          </div>
 
           <div class="col-12 col-md-6">
             <div class="form-group">
@@ -382,16 +441,13 @@
             </div>
           </div>
 
-
           <div class="col-12 col-md-6">
             <div class="form-group">
               <label class="font-weight-bold">Titulo Elementos Español:</label>
               <template v-if="element.title_elements_es">
                 <div v-html="element.title_elements_es"></div>
               </template>
-              <p v-else>
-                No registrado
-              </p>
+              <p v-else>No registrado</p>
             </div>
           </div>
 
@@ -401,13 +457,10 @@
               <template v-if="element.title_elements_en">
                 <div v-html="element.title_elements_en"></div>
               </template>
-              <p v-else>
-                No registrado
-              </p>
+              <p v-else>No registrado</p>
             </div>
           </div>
 
-          
           <div class="col-12">
             <div class="card">
               <div class="table-responsive">
@@ -420,16 +473,21 @@
                   </thead>
                 </table>
 
-                <template class="row" v-for="(el,index) in element.files">
+                <template class="row" v-for="(el, index) in element.files">
                   <div class="col-12" :key="index">
                     <div class="row">
-                      
                       <div class="col-12 col-lg-6">
                         <div class="form-group">
-                          <label class="font-weight-bold" for="image">Imagen:</label>
+                          <label class="font-weight-bold" for="image"
+                            >Imagen:</label
+                          >
                           <div class="row">
                             <div class="col text-center" v-if="el.file">
-                              <img :src="imagesUrl+'/cami-elements/'+el.file" class="img-fluid" :alt="el.name" />
+                              <img
+                                :src="imagesUrl + '/cami-elements/' + el.file"
+                                class="img-fluid"
+                                :alt="el.name"
+                              />
                             </div>
                           </div>
                         </div>
@@ -437,45 +495,56 @@
                       <div class="col-12 col-lg-6">
                         <div class="row">
                           <div class="col-12">
-                        <div class="form-group">
-                          <label class="font-weight-bold">Icono:</label>
-                          <div class="text-center">
-                            <img :src="imagesUrl+'/cami-elements/'+el.icon" :alt="el.name" />
+                            <div class="form-group">
+                              <label class="font-weight-bold">Icono:</label>
+                              <div class="text-center">
+                                <img
+                                  :src="imagesUrl + '/cami-elements/' + el.icon"
+                                  :alt="el.name"
+                                />
+                              </div>
+                            </div>
                           </div>
-                        </div>
-                      </div>
-                        <div class="col-12 col-lg-6">
-                          <div class="form-group">
-                            <label class="font-weight-bold">Título Español:</label>
-                            <template v-if="el.title_es">
-                              <p>{{ el.title_es }}</p>
-                            </template>
+                          <div class="col-12 col-lg-6">
+                            <div class="form-group">
+                              <label class="font-weight-bold"
+                                >Título Español:</label
+                              >
+                              <template v-if="el.title_es">
+                                <p>{{ el.title_es }}</p>
+                              </template>
+                            </div>
                           </div>
-                        </div>
-                        <div class="col-12 col-lg-6">
-                          <div class="form-group">
-                            <label class="font-weight-bold">Título Inglés:</label>
-                            <template v-if="el.title_en">
-                              <p>{{ el.title_en }}</p>
-                            </template>
+                          <div class="col-12 col-lg-6">
+                            <div class="form-group">
+                              <label class="font-weight-bold"
+                                >Título Inglés:</label
+                              >
+                              <template v-if="el.title_en">
+                                <p>{{ el.title_en }}</p>
+                              </template>
+                            </div>
                           </div>
-                        </div>
-                        <div class="col-12 col-lg-6">
-                          <div class="form-group">
-                            <label class="font-weight-bold">Descripción Español:</label>
-                            <template v-if="el.description_es">
-                              <div v-html="el.description_es"></div>
-                            </template>
+                          <div class="col-12 col-lg-6">
+                            <div class="form-group">
+                              <label class="font-weight-bold"
+                                >Descripción Español:</label
+                              >
+                              <template v-if="el.description_es">
+                                <div v-html="el.description_es"></div>
+                              </template>
+                            </div>
                           </div>
-                        </div>
-                        <div class="col-12 col-lg-6">
-                          <div class="form-group">
-                            <label class="font-weight-bold">Descripción Inglés:</label>
-                            <template v-if="el.description_en">
-                              <div v-html="el.description_en"></div>
-                            </template>
+                          <div class="col-12 col-lg-6">
+                            <div class="form-group">
+                              <label class="font-weight-bold"
+                                >Descripción Inglés:</label
+                              >
+                              <template v-if="el.description_en">
+                                <div v-html="el.description_en"></div>
+                              </template>
+                            </div>
                           </div>
-                        </div>
                         </div>
                       </div>
                     </div>
@@ -487,7 +556,9 @@
         </div>
       </div>
       <template v-slot:modal-footer="{ ok }">
-        <button type="button" class="btn btn-primary" @click="restoreEl">Aceptar</button>
+        <button type="button" class="btn btn-primary" @click="restoreEl">
+          Aceptar
+        </button>
       </template>
     </b-modal>
 

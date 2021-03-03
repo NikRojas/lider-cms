@@ -4,11 +4,13 @@
     <div class="card">
       <div
         v-if="showLoading"
-        style="position: absolute;
-              height: calc(100% - 41px);
-              width: 100%;
-              z-index: 99;
-              top: 38px;"
+        style="
+          position: absolute;
+          height: calc(100% - 41px);
+          width: 100%;
+          z-index: 99;
+          top: 38px;
+        "
       >
         <Skeleton height="100%" />
       </div>
@@ -21,50 +23,59 @@
         </thead>
       </table>
       <draggable @change="handleEnd" class="row" v-model="files">
-        <div class="col-12" v-for="(el,i) in files" :key="i">
+        <div class="col-12" v-for="(el, i) in files" :key="i">
           <div class="row">
             <div class="col-10">
-              <div class="col-12"> 
-                  <Input
-                    label="Título"
-                    :variable="'files.'+i+'.title'"
-                    :errors="errors"
-                    :valueEn.sync="el.title_en"
-                    :valueEs.sync="el.title_es"
-                    :valueEnParent="el.title_en"
-                    :valueEsParent="el.title_es"
-                  /> 
+              <div class="col-12">
+                <Input
+                  label="Título"
+                  :variable="'files.' + i + '.title'"
+                  :errors="errors"
+                  :valueEn.sync="el.title_en"
+                  :valueEs.sync="el.title_es"
+                  :valueEnParent="el.title_en"
+                  :valueEsParent="el.title_es"
+                />
               </div>
               <div class="col-12">
                 <div class="row">
-                  <div class="col-12"> 
-                      <Editor
-                        size="md"
-                        label="Descripción"
-                        :variable="'files.'+i+'.description'"
-                        :errors="errors"
-                        :valueEn.sync="el.description_en"
-                        :valueEs.sync="el.description_es"
-                        :valueEnParent="el.description_en"
-                        :valueEsParent="el.description_es"
-                      /> 
+                  <div class="col-12">
+                    <Editor
+                      size="md"
+                      label="Descripción"
+                      :variable="'files.' + i + '.description'"
+                      :errors="errors"
+                      :valueEn.sync="el.description_en"
+                      :valueEs.sync="el.description_es"
+                      :valueEnParent="el.description_en"
+                      :valueEsParent="el.description_es"
+                    />
                   </div>
                 </div>
               </div>
               <div class="col-12">
                 <div class="form-group">
                   <label class="font-weight-bold d-block">Imagen</label>
+                  <!--
                   <a
-                    style="text-decoration:underline;"
+                    style="text-decoration: underline"
                     v-if="typeof el.file == 'string' && el.file !== ''"
-                    :href="imagesUrl+'/'+ folder +'/'+el.file"
+                    :href="imagesUrl + '/' + folder + '/' + el.file"
                     target="_blank"
-                  >{{ el.file }}</a>
+                    >{{ el.file }}</a
+                  >
+                  -->
+                  <img
+                    v-if="typeof el.file == 'string' && el.file !== ''"
+                    :src="imagesUrl + '/' + folder + '/' + el.file"
+                    width="200px"
+                    :alt="el.file"
+                  />
                   <a
                     v-if="typeof el.file == 'string' && el.file !== ''"
                     target="_blank"
-                    style="top: 50%;"
-                    :href="imagesUrl+'/'+ folder +'/'+el.file"
+                    style="margin-left: 10px; top: 50%"
+                    :href="imagesUrl + '/' + folder + '/' + el.file"
                     class="btn btn-sm btn-icon-only rounded-circle btn-inverse-info"
                   >
                     <jam-eye class="current-color" height="18" width="18" />
@@ -72,11 +83,19 @@
                   <vue-dropzone
                     v-else
                     :ref="`ref_file_${i}`"
-                    @vdropzone-file-added="$validateImageDropzone($event,$refs['ref_file_'+i][0].dropzone,1,512000,'500kb')"
-                    :id="'images'+i"
+                    @vdropzone-file-added="
+                      $validateImageDropzone(
+                        $event,
+                        $refs['ref_file_' + i][0].dropzone,
+                        1,
+                        512000,
+                        '500kb'
+                      )
+                    "
+                    :id="'images' + i"
                     class="text-center multiple-files"
                     :options="dropzoneOptions"
-                    @vdropzone-files-added="handleAddedFiles($event,i)"
+                    @vdropzone-files-added="handleAddedFiles($event, i)"
                     :duplicateCheck="true"
                     :useCustomSlot="true"
                   >
@@ -89,26 +108,36 @@
                   </vue-dropzone>
 
                   <label
-                    v-if="errors && errors['files.'+i+'.file']"
+                    v-if="errors && errors['files.' + i + '.file']"
                     class="text-danger text-sm d-block mt-2"
                     for="image"
-                  >{{ errors['files.'+i+'.file'][0] }}</label>
+                    >{{ errors["files." + i + ".file"][0] }}</label
+                  >
                 </div>
               </div>
               <div class="col-12" v-if="showIconField">
                 <div class="form-group">
                   <label class="font-weight-bold d-block">Icono</label>
+                  <!--
                   <a
-                    style="text-decoration:underline;"
+                    style="text-decoration: underline"
                     v-if="typeof el.icon == 'string' && el.icon !== ''"
-                    :href="imagesUrl+'/'+ folder +'/'+el.icon"
+                    :href="imagesUrl + '/' + folder + '/' + el.icon"
                     target="_blank"
-                  >{{ el.icon }}</a>
+                    >{{ el.icon }}</a
+                  >
+                  -->
+                  <img
+                    v-if="typeof el.icon == 'string' && el.icon !== ''"
+                    :src="imagesUrl + '/' + folder + '/' + el.icon"
+                    width="60px"
+                    :alt="el.icon"
+                  />
                   <a
                     v-if="typeof el.icon == 'string' && el.icon !== ''"
                     target="_blank"
-                    style="top: 50%;"
-                    :href="imagesUrl+'/'+ folder +'/'+el.icon"
+                    style="margin-left: 10px; top: 50%"
+                    :href="imagesUrl + '/' + folder + '/' + el.icon"
                     class="btn btn-sm btn-icon-only rounded-circle btn-inverse-info"
                   >
                     <jam-eye class="current-color" height="18" width="18" />
@@ -116,11 +145,19 @@
                   <vue-dropzone
                     v-else
                     :ref="`ref_icon_${i}`"
-                    @vdropzone-file-added="$validateImageDropzone($event,$refs['ref_icon_'+i][0].dropzone,1,51200,'50kb')"
-                    :id="'icon'+i"
+                    @vdropzone-file-added="
+                      $validateImageDropzone(
+                        $event,
+                        $refs['ref_icon_' + i][0].dropzone,
+                        1,
+                        51200,
+                        '50kb'
+                      )
+                    "
+                    :id="'icon' + i"
                     class="text-center multiple-files"
                     :options="dropzoneOptions"
-                    @vdropzone-files-added="handleAddedIcons($event,i)"
+                    @vdropzone-files-added="handleAddedIcons($event, i)"
                     :duplicateCheck="true"
                     :useCustomSlot="true"
                   >
@@ -133,38 +170,43 @@
                   </vue-dropzone>
 
                   <label
-                    v-if="errors && errors['files.'+i+'.icon']"
+                    v-if="errors && errors['files.' + i + '.icon']"
                     class="text-danger text-sm d-block mt-2"
                     for="image"
-                  >{{ errors['files.'+i+'.icon'][0] }}</label>
+                    >{{ errors["files." + i + ".icon"][0] }}</label
+                  >
                 </div>
               </div>
             </div>
             <div class="col-2">
-              
               <button
                 class="btn btn-sm btn-icon-only rounded-circle btn-inverse-danger"
                 @click.prevent="remove(i)"
-                style="top: 50%;"
+                style="top: 50%"
               >
                 <jam-trash class="current-color" height="18" width="18" />
               </button>
             </div>
           </div>
-          <hr class="mt-1 mb-4">
+          <hr class="mt-1 mb-4" />
         </div>
       </draggable>
     </div>
     <div class="mt-3">
-      <button class="btn btn-block btn-sm btn-icon btn-inverse-info" @click.prevent="add">
+      <button
+        class="btn btn-block btn-sm btn-icon btn-inverse-info"
+        @click.prevent="add"
+      >
         <span class="btn-inner--icon">
           <jam-plus class="current-color"></jam-plus>
         </span>
         <span class="btn-inner--text">Agregar</span>
       </button>
     </div>
-    <div v-if="errors && errors[fieldName+'0']">
-      <label class="mt-3 text-danger text-sm" :for="fieldName+'0'">{{ errors[fieldName+'0'][0] }}</label>
+    <div v-if="errors && errors[fieldName + '0']">
+      <label class="mt-3 text-danger text-sm" :for="fieldName + '0'">{{
+        errors[fieldName + "0"][0]
+      }}</label>
     </div>
   </div>
 </template>
@@ -187,8 +229,8 @@ export default {
     messageOrder: String,
     showIconField: {
       type: Boolean,
-      default: false
-    }
+      default: false,
+    },
   },
   components: {
     vueDropzone: vue2Dropzone,
@@ -219,7 +261,7 @@ export default {
   methods: {
     updateImages() {
       this.files.forEach((element, i) => {
-        if (element.file instanceof File) { 
+        if (element.file instanceof File) {
           this.$refs["ref_file_" + i][0].dropzone.files.pop();
           document
             .querySelectorAll("#images" + i + ">.dz-preview")
@@ -242,7 +284,7 @@ export default {
     },
     updateIcons() {
       this.icons.forEach((element, i) => {
-        if (element.file instanceof File) { 
+        if (element.file instanceof File) {
           this.$refs["ref_icon_" + i][0].dropzone.icons.pop();
           document
             .querySelectorAll("#icon" + i + ">.dz-preview")
@@ -263,12 +305,12 @@ export default {
         }
       });
     },
-    handleEnd(added, removed, moved) { 
+    handleEnd(added, removed, moved) {
       //this.updateImages();
       this.showLoading = true;
       setTimeout(() => {
         this.updateImages();
-        if(this.showIconField){
+        if (this.showIconField) {
           this.updateIcons();
         }
         this.showLoading = false;
@@ -286,7 +328,7 @@ export default {
         title_es: "",
         title_en: "",
         description_es: "",
-        description_en: ""
+        description_en: "",
       });
     },
     remove(index) {

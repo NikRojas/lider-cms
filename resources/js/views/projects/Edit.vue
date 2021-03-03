@@ -188,8 +188,8 @@
                                 $event,
                                 $refs.ref_card.dropzone,
                                 1,
-                                102400,
-                                '100kb'
+                                1024000,
+                                '1mb'
                               )
                             "
                             id="image_card"
@@ -239,8 +239,8 @@
                                 $event,
                                 $refs.ref_card_hover.dropzone,
                                 1,
-                                102400,
-                                '100kb'
+                                1024000,
+                                '1mb'
                               )
                             "
                             id="image_card_hover"

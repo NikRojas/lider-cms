@@ -343,7 +343,7 @@ var render = function() {
                                 attrs: {
                                   src:
                                     _vm.imagesUrl + "/" + _vm.folder + "/" + el,
-                                  height: "200px",
+                                  width: "200px",
                                   alt: el
                                 }
                               })

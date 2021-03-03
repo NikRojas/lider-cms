@@ -67,7 +67,7 @@
                       <img
                         :src="imagesUrl + '/projects/banner/' + el.image_es"
                         alt
-                        class="img-fluid"
+                        height="210px"
                       />
                       <h3 class="mb-1 mt-2">
                         <span class="font-weight-normal">Imagen ES</span>
@@ -78,7 +78,7 @@
                       <img
                         :src="imagesUrl + '/projects/banner/' + el.image_en"
                         alt
-                        class="img-fluid"
+                        height="210px"
                       />
                       <h3 class="mb-1 mt-2">
                         <span class="font-weight-normal">Imagen EN</span>
@@ -93,7 +93,7 @@
                           el.image_responsive_es
                         "
                         alt
-                        class="img-fluid"
+                        height="210px"
                       />
                       <h3 class="mb-1 mt-2">
                         <span class="font-weight-normal"
@@ -110,7 +110,7 @@
                           el.image_responsive_en
                         "
                         alt
-                        class="img-fluid"
+                        height="210px"
                       />
                       <h3 class="mb-1 mt-2">
                         <span class="font-weight-normal"
@@ -120,21 +120,19 @@
                       </h3>
                     </div>
                   </div>
-                  <div class="row">
-                    <div class="text-center">
-                      <button
-                        @click="editEl(el.id)"
-                        class="btn btn-inverse-info btn-sm"
-                      >
-                        Editar
-                      </button>
-                      <button
-                        @click="deleteEl(el.id)"
-                        class="btn btn-inverse-danger btn-sm"
-                      >
-                        Eliminar
-                      </button>
-                    </div>
+                  <div class="text-center">
+                    <button
+                      @click="editEl(el.id)"
+                      class="btn btn-inverse-info btn-sm"
+                    >
+                      Editar
+                    </button>
+                    <button
+                      @click="deleteEl(el.id)"
+                      class="btn btn-inverse-danger btn-sm"
+                    >
+                      Eliminar
+                    </button>
                   </div>
                 </div>
               </div>

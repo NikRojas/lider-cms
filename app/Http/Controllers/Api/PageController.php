@@ -78,7 +78,7 @@ class PageController extends BaseController
 
     public function blogCategory(Request $request)
     {
-        $category = Category::select('id', 'name_' . $request->locale, 'slug_' . $request->locale)->where('slug_' . $request->locale, $request->slug)->first();
+        $category = Category::select('id', 'name_' . $request->locale, 'slug_es', 'slug_en')->where('slug_' . $request->locale, $request->slug)->first();
         if (!$category) {
             return $this->sendError("");
         }
@@ -98,7 +98,7 @@ class PageController extends BaseController
 
     public function blogCategoryPost(Request $request)
     {
-        $category = Category::select('id', 'name_' . $request->locale, 'slug_' . $request->locale)->where('slug_' . $request->locale, $request->slug)->first();
+        $category = Category::select('id', 'name_' . $request->locale, 'slug_es', 'slug_en')->where('slug_' . $request->locale, $request->slug)->first();
         if (!$category) {
             return $this->sendError("Not found");
         }

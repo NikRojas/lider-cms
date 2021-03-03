@@ -135,7 +135,7 @@
                                 </div>
                                 <div class="col-12">
                                   <div>
-<h4
+                                    <h4
                                       class="d-inline-block font-weight-normal"
                                     >
                                       N° Cotizaciones:
@@ -143,7 +143,6 @@
                                     <h4 class="d-inline-block">
                                       {{ el.quotations_rel_count }}
                                     </h4>
-                                    
                                   </div>
                                   <div>
                                     <h4
@@ -186,6 +185,12 @@
                       <div class="col-12">
                         <div class="d-flex">
                           <div class="ml-auto d-inline">
+                            <a
+                              :href="'proyectos/banners/' + el.slug_es"
+                              class="btn btn-sm mb-2 btn-outline-primary"
+                              >Ir a Banners</a
+                            >
+
                             <a
                               :href="'proyectos/tipologias/' + el.slug_es"
                               class="btn btn-sm mb-2 btn-outline-primary"

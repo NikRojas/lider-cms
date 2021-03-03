@@ -107,7 +107,7 @@ class PostsController extends Controller
             foreach ($tags as $key => $value) {
                 $tag = Tag::UpdateOrCreate(["post_id" => $post->id, "name_es" => $value['tag_es'],"name_en" => $value['tag_en']]);
             }
- 
+
             $request->session()->flash('success', trans('custom.message.create.success', ['name' => trans('custom.attribute.post')]));
             return response()->json(["route" => route('cms.blog.posts.index')]);
         } catch (\Exception $e) {

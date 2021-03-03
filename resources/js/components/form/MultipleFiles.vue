@@ -1,16 +1,23 @@
 <template>
   <div>
     <p :class="desc ? 'mb-0' : ''">{{ messageOrder }}</p>
-    <small style="opacity: 0.7;" class="form-text mb-2 mt-0 d-block" v-if="desc">{{ desc }}</small>
+    <small
+      style="opacity: 0.7"
+      class="form-text mb-2 mt-0 d-block"
+      v-if="desc"
+      >{{ desc }}</small
+    >
     <div class="card">
       <div class="table-responsive">
         <div
           v-if="showLoading"
-          style="position: absolute;
-              height: calc(100% - 41px);
-              width: 100%;
-              z-index: 1;
-              top: 38px;"
+          style="
+            position: absolute;
+            height: calc(100% - 41px);
+            width: 100%;
+            z-index: 1;
+            top: 38px;
+          "
         >
           <Skeleton height="100%" />
         </div>
@@ -23,22 +30,39 @@
               </tr>
             </thead>
             <draggable @change="handleEnd" tag="tbody" v-model="files">
-              <tr v-for="(el,i) in files" :key="i">
+              <tr v-for="(el, i) in files" :key="i">
                 <td>
+                  <!--
                   <a
                     style="text-decoration:underline;"
                     v-if="typeof el == 'string' && el !== ''"
                     :href="imagesUrl+'/'+ folder +'/'+el"
                     target="_blank"
                   >{{ el }}</a>
+                  -->
+                  <img
+                    v-if="typeof el == 'string' && el !== ''"
+                    :src="imagesUrl + '/' + folder + '/' + el"
+                    width="200px"
+                    :alt="el"
+                  />
+
                   <vue-dropzone
                     v-else
                     :ref="`ref_file_${i}`"
-                    @vdropzone-file-added="$validateImageDropzone($event,$refs['ref_file_'+i][0].dropzone,1,512000,'500kb')"
-                    :id="'images'+i"
+                    @vdropzone-file-added="
+                      $validateImageDropzone(
+                        $event,
+                        $refs['ref_file_' + i][0].dropzone,
+                        1,
+                        512000,
+                        '500kb'
+                      )
+                    "
+                    :id="'images' + i"
                     class="text-center multiple-files"
                     :options="dropzoneOptions"
-                    @vdropzone-files-added="handleAddedFiles($event,i)"
+                    @vdropzone-files-added="handleAddedFiles($event, i)"
                     :duplicateCheck="true"
                     :useCustomSlot="true"
                   >
@@ -54,7 +78,7 @@
                   <a
                     v-if="typeof el == 'string' && el !== ''"
                     target="_blank"
-                    :href="imagesUrl+'/'+ folder +'/'+el"
+                    :href="imagesUrl + '/' + folder + '/' + el"
                     class="btn btn-sm btn-icon-only rounded-circle btn-inverse-info"
                   >
                     <jam-eye class="current-color" height="18" width="18" />
@@ -73,15 +97,20 @@
       </div>
     </div>
     <div class="mt-3">
-      <button class="btn btn-block btn-sm btn-icon btn-inverse-info" @click.prevent="add">
+      <button
+        class="btn btn-block btn-sm btn-icon btn-inverse-info"
+        @click.prevent="add"
+      >
         <span class="btn-inner--icon">
           <jam-plus class="current-color"></jam-plus>
         </span>
         <span class="btn-inner--text">Agregar</span>
       </button>
     </div>
-    <div v-if="errors && errors[fieldName+'0']">
-      <label class="mt-3 text-danger text-sm" :for="fieldName+'0'">{{ errors[fieldName+'0'][0] }}</label>
+    <div v-if="errors && errors[fieldName + '0']">
+      <label class="mt-3 text-danger text-sm" :for="fieldName + '0'">{{
+        errors[fieldName + "0"][0]
+      }}</label>
     </div>
   </div>
 </template>
@@ -99,7 +128,7 @@ export default {
     folder: String,
     filesParent: Array,
     messageOrder: String,
-    desc: String
+    desc: String,
   },
   components: {
     vueDropzone: vue2Dropzone,

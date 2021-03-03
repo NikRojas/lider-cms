@@ -12,11 +12,40 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue_loading_skeleton__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue-loading-skeleton */ "./node_modules/vue-loading-skeleton/dist/vue-loading-skeleton.esm.js");
 /* harmony import */ var vue2_dropzone__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vue2-dropzone */ "./node_modules/vue2-dropzone/dist/vue2Dropzone.js");
 /* harmony import */ var vue2_dropzone__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(vue2_dropzone__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var vuedraggable__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! vuedraggable */ "./node_modules/vuedraggable/dist/vuedraggable.umd.js");
+/* harmony import */ var vuedraggable__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! vuedraggable */ "./node_modules/vuedraggable/dist/vuedraggable.common.js");
 /* harmony import */ var vuedraggable__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(vuedraggable__WEBPACK_IMPORTED_MODULE_2__);
 /* harmony import */ var simplebar_vue__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! simplebar-vue */ "./node_modules/simplebar-vue/dist/simplebar-vue.esm.js");
 /* harmony import */ var simplebar_dist_simplebar_min_css__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! simplebar/dist/simplebar.min.css */ "./node_modules/simplebar/dist/simplebar.min.css");
 /* harmony import */ var simplebar_dist_simplebar_min_css__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(simplebar_dist_simplebar_min_css__WEBPACK_IMPORTED_MODULE_4__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -310,24 +339,14 @@ var render = function() {
                         "td",
                         [
                           typeof el == "string" && el !== ""
-                            ? _c(
-                                "a",
-                                {
-                                  staticStyle: {
-                                    "text-decoration": "underline"
-                                  },
-                                  attrs: {
-                                    href:
-                                      _vm.imagesUrl +
-                                      "/" +
-                                      _vm.folder +
-                                      "/" +
-                                      el,
-                                    target: "_blank"
-                                  }
-                                },
-                                [_vm._v(_vm._s(el))]
-                              )
+                            ? _c("img", {
+                                attrs: {
+                                  src:
+                                    _vm.imagesUrl + "/" + _vm.folder + "/" + el,
+                                  height: "200px",
+                                  alt: el
+                                }
+                              })
                             : _c(
                                 "vue-dropzone",
                                 {

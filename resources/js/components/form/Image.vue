@@ -23,34 +23,47 @@
         </span>
         <span class="btn-inner--text">Inglés</span>
       </a>
-      <div
-        class="d-inline-block ml-auto text-danger mt-1"
-        v-if="countErrors"
-      >{{ countErrors }} {{ countErrors > 1 ? 'Errores' : 'Error'}}</div>
+      <div class="d-inline-block ml-auto text-danger mt-1" v-if="countErrors">
+        {{ countErrors }} {{ countErrors > 1 ? "Errores" : "Error" }}
+      </div>
     </div>
     <div class="mt-2">
-        <label class="font-weight-bold" :for="label+active+random">{{ label }} {{active.toUpperCase() }}:</label>
+      <label class="font-weight-bold" :for="label + active + random"
+        >{{ label }} {{ active.toUpperCase() }}:</label
+      >
     </div>
     <div v-show="active == 'es'">
       <div class="row">
-        <div class="col" v-if="valueEsParent">
-          <img :src="imagesUrl + '/'+folder+'/'+ value.es" alt="" class="img-fluid">
+        <div class="col" v-if="value.es">
+          <img
+            :src="imagesUrl + '/' + folder + '/' + value.es"
+            alt=""
+            class="img-fluid"
+          />
         </div>
         <div class="col">
           <vue-dropzone
             class
             ref="ref_image_es"
-            @vdropzone-file-added="$validateImageDropzone($event,$refs.ref_image_es.dropzone,1,1024000,'1mb')"
-            :id="label+random"
+            @vdropzone-file-added="
+              $validateImageDropzone(
+                $event,
+                $refs.ref_image_es.dropzone,
+                1,
+                1024000,
+                '1mb'
+              )
+            "
+            :id="label + random"
             :options="dropzoneOptions"
-            @vdropzone-files-added="handleAddedFiles($event,'es')"
+            @vdropzone-files-added="handleAddedFiles($event, 'es')"
             :duplicateCheck="true"
             :useCustomSlot="true"
           >
             <div class="dropzone-custom-content">
-              <h5
-                class="dropzone-custom-title text-primary"
-              >Suelte el archivo aquí o haga click para cargarlo.</h5>
+              <h5 class="dropzone-custom-title text-primary">
+                Suelte el archivo aquí o haga click para cargarlo.
+              </h5>
             </div>
           </vue-dropzone>
         </div>
@@ -58,31 +71,47 @@
     </div>
     <div v-show="active == 'en'">
       <div class="row">
-        <div class="col" v-if="valueEnParent">
-          <img :src="imagesUrl + '/'+folder+'/'+ value.en" alt="" class="img-fluid">
+        <div class="col" v-if="value.en">
+          <img
+            :src="imagesUrl + '/' + folder + '/' + value.en"
+            alt=""
+            class="img-fluid"
+          />
         </div>
         <div class="col">
           <vue-dropzone
             class
             ref="ref_image_en"
-            @vdropzone-file-added="$validateImageDropzone($event,$refs.ref_image_en.dropzone,1,1024000,'1mb')"
-            @vdropzone-files-added="handleAddedFiles($event,'en')"
-            :id="label+random"
+            @vdropzone-file-added="
+              $validateImageDropzone(
+                $event,
+                $refs.ref_image_en.dropzone,
+                1,
+                1024000,
+                '1mb'
+              )
+            "
+            @vdropzone-files-added="handleAddedFiles($event, 'en')"
+            :id="label + random"
             :options="dropzoneOptions"
             :duplicateCheck="true"
             :useCustomSlot="true"
           >
             <div class="dropzone-custom-content">
-              <h5
-                class="dropzone-custom-title text-primary"
-              >Suelte el archivo aquí o haga click para cargarlo.</h5>
+              <h5 class="dropzone-custom-title text-primary">
+                Suelte el archivo aquí o haga click para cargarlo.
+              </h5>
             </div>
           </vue-dropzone>
         </div>
       </div>
     </div>
-    <div v-for="(el,i) in errors" :key="i">
-      <label class="text-danger text-sm d-block mt-2" v-if="i == variable+'_'+active">{{ el[0] }}</label>
+    <div v-for="(el, i) in errors" :key="i">
+      <label
+        class="text-danger text-sm d-block mt-2"
+        v-if="i == variable + '_' + active"
+        >{{ el[0] }}</label
+      >
     </div>
   </div>
 </template>
@@ -96,7 +125,7 @@ export default {
     errors: Object,
     valueEnParent: null,
     valueEsParent: null,
-    imagesUrl: String
+    imagesUrl: String,
   },
   components: {
     vueDropzone: vue2Dropzone,
@@ -123,24 +152,28 @@ export default {
     toggle(lang) {
       this.active = lang;
     },
-    handleAddedFiles(e, lang){
+    handleAddedFiles(e, lang) {
       setTimeout(() => {
-        if(lang == 'es'){
-          this.$emit("update:valueEs", this.$refs.ref_image_es.dropzone.files[0]);
-        }
-        else if(lang == 'en'){
-          this.$emit("update:valueEn", this.$refs.ref_image_en.dropzone.files[0]);
+        if (lang == "es") {
+          this.$emit(
+            "update:valueEs",
+            this.$refs.ref_image_es.dropzone.files[0]
+          );
+        } else if (lang == "en") {
+          this.$emit(
+            "update:valueEn",
+            this.$refs.ref_image_en.dropzone.files[0]
+          );
         }
       }, 500);
-    }
+    },
   },
   watch: {
     valueEnParent: {
       immediate: true,
       handler: function (newValue) {
-        if(newValue instanceof File){
-        }
-        else{
+        if (newValue instanceof File) {
+        } else {
           this.value.en = newValue;
         }
       },
@@ -148,9 +181,8 @@ export default {
     valueEsParent: {
       immediate: true,
       handler: function (newValue) {
-        if(newValue instanceof File){
-        }
-        else{
+        if (newValue instanceof File) {
+        } else {
           this.value.es = newValue;
         }
       },

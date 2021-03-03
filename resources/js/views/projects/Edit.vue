@@ -6,15 +6,21 @@
           <div class="header-body">
             <div class="row align-items-center pt-0 pt-md-2 pb-4">
               <div class="col-6 col-md-7">
-                <BreadCrumb title="Actualizar Proyecto" parent active="Proyectos"></BreadCrumb>
+                <BreadCrumb
+                  title="Actualizar Proyecto"
+                  parent
+                  active="Proyectos"
+                ></BreadCrumb>
               </div>
               <div class="col-6 col-md text-right">
                 <Button
                   :text="'Actualizar'"
-                  :classes="['btn-inverse-primary','mr-2']"
+                  :classes="['btn-inverse-primary', 'mr-2']"
                   :request-server="requestServer"
                 ></Button>
-                <a type="button" class="btn btn-secondary" :href="routeReturn">Cancelar</a>
+                <a type="button" class="btn btn-secondary" :href="routeReturn"
+                  >Cancelar</a
+                >
               </div>
             </div>
           </div>
@@ -23,7 +29,12 @@
       <div class="container-fluid mt--6">
         <div class="row mb-3">
           <div class="col-12 text-right">
-            <b-form-checkbox size="lg" v-model="element.active" name="check-button" switch>
+            <b-form-checkbox
+              size="lg"
+              v-model="element.active"
+              name="check-button"
+              switch
+            >
               Mostrar Proyecto en la Web
             </b-form-checkbox>
           </div>
@@ -39,8 +50,8 @@
                 <div class="row">
                   <div class="col-12">
                     <InputSlug
-                      :urlEs="appUrl+'/proyectos/'"
-                      :urlEn="appUrl+'/projects/'"
+                      :urlEs="appUrl + '/proyectos/'"
+                      :urlEn="appUrl + '/projects/'"
                       label="Nombre"
                       variable="name"
                       type="Ruta"
@@ -57,16 +68,29 @@
                   </div>
                   <div class="col-12 col-lg-6">
                     <div class="form-group">
-                      <label class="font-weight-bold" for="image">Logo Blanco:</label>
+                      <label class="font-weight-bold" for="image"
+                        >Logo Blanco:</label
+                      >
                       <div class="row">
                         <div class="col-lg-4 mb-3 mb-lg-0">
-                          <img class="img-fluid p-2 bg-dark" :src="imagesUrl+'/projects/'+element.logo" alt />
+                          <img
+                            class="img-fluid p-2 bg-dark"
+                            :src="imagesUrl + '/projects/' + element.logo"
+                            alt
+                          />
                         </div>
                         <div class="col-lg-8 vue-dropzone-dark">
                           <vue-dropzone
                             ref="ref_logo"
-                            @vdropzone-file-added="$validateImageDropzone($event,$refs.ref_logo.dropzone,1,51200,
-                            '50kb')"
+                            @vdropzone-file-added="
+                              $validateImageDropzone(
+                                $event,
+                                $refs.ref_logo.dropzone,
+                                1,
+                                51200,
+                                '50kb'
+                              )
+                            "
                             id="image"
                             class="text-center dropzone-dark"
                             :options="dropzoneOptions"
@@ -74,9 +98,10 @@
                             :useCustomSlot="true"
                           >
                             <div class="dropzone-custom-content">
-                              <h5
-                                class="dropzone-custom-title text-primary"
-                              >Suelte los archivos aquí o haga click para cargarlos.</h5>
+                              <h5 class="dropzone-custom-title text-primary">
+                                Suelte los archivos aquí o haga click para
+                                cargarlos.
+                              </h5>
                             </div>
                           </vue-dropzone>
 
@@ -84,17 +109,26 @@
                             v-if="errors && errors.logo"
                             class="text-danger text-sm d-block mt-2"
                             for="logo"
-                          >{{ errors.logo[0] }}</label>
+                            >{{ errors.logo[0] }}</label
+                          >
                         </div>
                       </div>
                     </div>
                   </div>
                   <div class="col-12 col-lg-6">
                     <div class="form-group">
-                      <label class="font-weight-bold" for="image_colour">Logo Color:</label>
+                      <label class="font-weight-bold" for="image_colour"
+                        >Logo Color:</label
+                      >
                       <div class="row">
                         <div class="col-lg-4 mb-3 mb-lg-0">
-                          <img class="img-fluid" :src="imagesUrl+'/projects/'+element.logo_colour" alt />
+                          <img
+                            class="img-fluid"
+                            :src="
+                              imagesUrl + '/projects/' + element.logo_colour
+                            "
+                            alt
+                          />
                         </div>
                         <div class="col-lg-8 vue-dropzone-dark">
                           <vue-dropzone
@@ -132,16 +166,108 @@
                       </div>
                     </div>
                   </div>
-                  <div class="col-12 mb-2">
+                  <div class="col-12 col-lg-6">
                     <div class="form-group">
-                      <label class="font-weight-bold" for="images">Imágenes:</label>
+                      <label class="font-weight-bold" for="image"
+                        >Card Proyecto:</label
+                      >
                       <div class="row">
-                        <div class="col-12 mb-3">
-                          <MultipleFiles desc="La primera imagen se utilizará como cover del Proyecto, La segunda imagen se utilizará como hover del cover del Proyecto" fieldName="images" :errors="errors" :messageOrder="messageOrder" :files.sync="element.files" :imagesUrl="imagesUrl" folder="projects" :filesParent="element.images_format"/>
+                        <div class="col-lg-4 mb-3 mb-lg-0">
+                          <img
+                            v-if="element.card"
+                            class="img-fluid p-2 bg-dark"
+                            :src="imagesUrl + '/projects/' + element.card"
+                            alt
+                          />
+                        </div>
+                        <div class="col-lg-8 vue-dropzone-dark">
+                          <vue-dropzone
+                            ref="ref_card"
+                            @vdropzone-file-added="
+                              $validateImageDropzone(
+                                $event,
+                                $refs.ref_card.dropzone,
+                                1,
+                                102400,
+                                '100kb'
+                              )
+                            "
+                            id="image_card"
+                            class="text-center dropzone-dark"
+                            :options="dropzoneOptions"
+                            :duplicateCheck="true"
+                            :useCustomSlot="true"
+                          >
+                            <div class="dropzone-custom-content">
+                              <h5 class="dropzone-custom-title text-primary">
+                                Suelte los archivos aquí o haga click para
+                                cargarlos.
+                              </h5>
+                            </div>
+                          </vue-dropzone>
+
+                          <label
+                            v-if="errors && errors.card"
+                            class="text-danger text-sm d-block mt-2"
+                            for="card"
+                            >{{ errors.card[0] }}</label
+                          >
                         </div>
                       </div>
                     </div>
                   </div>
+
+                  <div class="col-12 col-lg-6">
+                    <div class="form-group">
+                      <label class="font-weight-bold" for="image"
+                        >Card Hover Proyecto:</label
+                      >
+                      <div class="row">
+                        <div class="col-lg-4 mb-3 mb-lg-0">
+                          <img
+                            v-if="element.card_hover"
+                            class="img-fluid p-2 bg-dark"
+                            :src="imagesUrl + '/projects/' + element.card_hover"
+                            alt
+                          />
+                        </div>
+                        <div class="col-lg-8 vue-dropzone-dark">
+                          <vue-dropzone
+                            ref="ref_card_hover"
+                            @vdropzone-file-added="
+                              $validateImageDropzone(
+                                $event,
+                                $refs.ref_card_hover.dropzone,
+                                1,
+                                102400,
+                                '100kb'
+                              )
+                            "
+                            id="image_card_hover"
+                            class="text-center"
+                            :options="dropzoneOptions"
+                            :duplicateCheck="true"
+                            :useCustomSlot="true"
+                          >
+                            <div class="dropzone-custom-content">
+                              <h5 class="dropzone-custom-title text-primary">
+                                Suelte los archivos aquí o haga click para
+                                cargarlos.
+                              </h5>
+                            </div>
+                          </vue-dropzone>
+
+                          <label
+                            v-if="errors && errors.card_hover"
+                            class="text-danger text-sm d-block mt-2"
+                            for="card_hover"
+                            >{{ errors.card_hover[0] }}</label
+                          >
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
                   <div class="col-12">
                     <Statuses
                       :selected.sync="element.project_status_id"
@@ -173,10 +299,10 @@
                       :valueEnParent="element.rooms_en"
                       :valueEsParent="element.rooms_es"
                     >
-                    <small
-                        class="form-text"
-                        style="opacity: 0.7"
-                        >Ingrese un resumen de los Dormitorios con lo que cuenta el Proyecto, por ejemplo "1 a 3 Dormitorios".</small>
+                      <small class="form-text" style="opacity: 0.7"
+                        >Ingrese un resumen de los Dormitorios con lo que cuenta
+                        el Proyecto, por ejemplo "1 a 3 Dormitorios".</small
+                      >
                     </Input>
                   </div>
                   <div class="col-12 col-lg-6">
@@ -188,33 +314,47 @@
                       :valueEs.sync="element.footage_es"
                       :valueEnParent="element.footage_en"
                       :valueEsParent="element.footage_es"
-                    > 
-                      <small
-                        class="form-text"
-                        style="opacity: 0.7"
-                        >Ingrese un resumen del metraje con el que cuenta el Proyecto, por ejemplo "Desde 52 a 137m2".</small
+                    >
+                      <small class="form-text" style="opacity: 0.7"
+                        >Ingrese un resumen del metraje con el que cuenta el
+                        Proyecto, por ejemplo "Desde 52 a 137m2".</small
                       >
                     </Input>
                   </div>
                   <div class="col-12">
                     <div class="form-group">
-                      <label class="font-weight-bold" for="brochure">Brochure:</label>
+                      <label class="font-weight-bold" for="brochure"
+                        >Brochure:</label
+                      >
                       <div class="row">
-                        <div class="col-lg-2 mb-3 mb-lg-0 d-flex align-items-center justify-content-center">
+                        <div
+                          class="col-lg-2 mb-3 mb-lg-0 d-flex align-items-center justify-content-center"
+                        >
                           <div>
                             <div class="text-center mb-3 text-info">
-                            <!--<jam-file-f height="32px" class="current-color" width="32px"></jam-file-f>-->
-                            <PdfIcon/>
+                              <!--<jam-file-f height="32px" class="current-color" width="32px"></jam-file-f>-->
+                              <PdfIcon />
                             </div>
-                          <a :href="filesUrl+'/projects/'+element.brochure" class="btn btn-inverse-info btn-sm d-inline" target="_blank">Ver Brochure</a>
+                            <a
+                              :href="filesUrl + '/projects/' + element.brochure"
+                              class="btn btn-inverse-info btn-sm d-inline"
+                              target="_blank"
+                              >Ver Brochure</a
+                            >
                           </div>
                         </div>
                         <div class="col-lg-10">
                           <vue-dropzone
                             ref="ref_brochure"
-                            @vdropzone-file-added="$validatePDFDropzone($event,$refs.ref_brochure.dropzone,1,
-                            35840000,
-                            '35mb')"
+                            @vdropzone-file-added="
+                              $validatePDFDropzone(
+                                $event,
+                                $refs.ref_brochure.dropzone,
+                                1,
+                                35840000,
+                                '35mb'
+                              )
+                            "
                             id="brochure"
                             class="text-center"
                             :options="dropzoneOptionsBrochure"
@@ -222,9 +362,10 @@
                             :useCustomSlot="true"
                           >
                             <div class="dropzone-custom-content">
-                              <h5
-                                class="dropzone-custom-title text-primary"
-                              >Suelte los archivos aquí o haga click para cargarlos.</h5>
+                              <h5 class="dropzone-custom-title text-primary">
+                                Suelte los archivos aquí o haga click para
+                                cargarlos.
+                              </h5>
                             </div>
                           </vue-dropzone>
 
@@ -232,7 +373,8 @@
                             v-if="errors && errors.brochure"
                             class="text-danger text-sm d-block mt-2"
                             for="brochure"
-                          >{{ errors.brochure[0] }}</label>
+                            >{{ errors.brochure[0] }}</label
+                          >
                         </div>
                       </div>
                     </div>
@@ -249,10 +391,12 @@
                   </div>
                   <div class="col-12">
                     <div class="form-group">
-                      <label class="font-weight-bold">Formulario Cita Online:</label>
+                      <label class="font-weight-bold"
+                        >Formulario Cita Online:</label
+                      >
                       <p>
-                        Seleccione si el Proyecto cuanto con formulario de
-                        Cita Online
+                        Seleccione si el Proyecto cuanto con formulario de Cita
+                        Online
                       </p>
                       <b-form-radio-group
                         v-model="element.form_videocall"
@@ -281,63 +425,87 @@
               <div class="card-body">
                 <div class="row">
                   <div class="col-12 mb-4">
-                    <label for="id_imagen" class="font-weight-bold mb-0">Imagen</label>
-                          <small class="text-muted d-block mb-0 lh-1">Resolución recomendada: 1200x900px</small>
-                          <small class="text-muted d-block mb-2 lh-1">Tamaño recomendado: Menor a 100kb</small>
-                          <div class="row">
-                          <div class="col-lg-4 mb-3 mb-lg-0" v-if="element.seo_image">
-                            <img class="img-fluid" :src="imagesUrl+'/projects/'+element.seo_image" alt />
+                    <label for="id_imagen" class="font-weight-bold mb-0"
+                      >Imagen</label
+                    >
+                    <small class="text-muted d-block mb-0 lh-1"
+                      >Resolución recomendada: 1200x900px</small
+                    >
+                    <small class="text-muted d-block mb-2 lh-1"
+                      >Tamaño recomendado: Menor a 100kb</small
+                    >
+                    <div class="row">
+                      <div
+                        class="col-lg-4 mb-3 mb-lg-0"
+                        v-if="element.seo_image"
+                      >
+                        <img
+                          class="img-fluid"
+                          :src="imagesUrl + '/projects/' + element.seo_image"
+                          alt
+                        />
+                      </div>
+                      <div
+                        class=""
+                        :class="element.seo_image ? 'col-lg-8' : 'col-12'"
+                      >
+                        <vue-dropzone
+                          ref="ref_image_seo"
+                          @vdropzone-file-added="
+                            $validateImageDropzone(
+                              $event,
+                              $refs.ref_image_seo.dropzone,
+                              1,
+                              100000,
+                              '100kb'
+                            )
+                          "
+                          id="id_imagen"
+                          :options="dropzoneOptions"
+                          :duplicateCheck="true"
+                          :useCustomSlot="true"
+                        >
+                          <div class="dropzone-custom-content">
+                            <h5 class="dropzone-custom-title text-primary">
+                              Suelte el archivo aquí o haga click para cargarlo.
+                            </h5>
                           </div>
-                          <div class="" :class="element.seo_image ? 'col-lg-8' : 'col-12'">
-                            <vue-dropzone
-                              ref="ref_image_seo"
-                              @vdropzone-file-added="$validateImageDropzone($event,$refs.ref_image_seo.dropzone,1,100000,'100kb')"
-                              id="id_imagen"
-                              :options="dropzoneOptions"
-                              :duplicateCheck="true"
-                              :useCustomSlot="true"
-                            >
-                              <div class="dropzone-custom-content">
-                                <h5
-                                  class="dropzone-custom-title text-primary"
-                                >Suelte el archivo aquí o haga click para cargarlo.</h5>
-                              </div>
-                            </vue-dropzone>
-                          </div>
-                          </div>
+                        </vue-dropzone>
+                      </div>
+                    </div>
                   </div>
                   <div class="col-12">
                     <Input
-                          label="Título SEO"
-                          variable="seo_title"
-                          :errors="errors"
-                          :valueEn.sync="element.seo_title_en"
-                          :valueEs.sync="element.seo_title_es"
-                          :valueEnParent="element.seo_title_en"
-                          :valueEsParent="element.seo_title_es"
-                        />
+                      label="Título SEO"
+                      variable="seo_title"
+                      :errors="errors"
+                      :valueEn.sync="element.seo_title_en"
+                      :valueEs.sync="element.seo_title_es"
+                      :valueEnParent="element.seo_title_en"
+                      :valueEsParent="element.seo_title_es"
+                    />
                   </div>
                   <div class="col-12 col-lg-6">
                     <Textarea
-                          label="Descripción SEO"
-                          variable="seo_description"
-                          :errors="errors"
-                          :valueEn.sync="element.seo_description_en"
-                          :valueEs.sync="element.seo_description_es"
-                          :valueEnParent="element.seo_description_en"
-                          :valueEsParent="element.seo_description_es"
-                          />
+                      label="Descripción SEO"
+                      variable="seo_description"
+                      :errors="errors"
+                      :valueEn.sync="element.seo_description_en"
+                      :valueEs.sync="element.seo_description_es"
+                      :valueEnParent="element.seo_description_en"
+                      :valueEsParent="element.seo_description_es"
+                    />
                   </div>
-                  <div class="col-12  col-lg-6">
+                  <div class="col-12 col-lg-6">
                     <Textarea
-                          label="Keywords SEO"
-                          variable="seo_keywords"
-                          :errors="errors"
-                          :valueEn.sync="element.seo_keywords_en"
-                          :valueEs.sync="element.seo_keywords_es"
-                          :valueEnParent="element.seo_keywords_en"
-                          :valueEsParent="element.seo_keywords_es"
-                          />
+                      label="Keywords SEO"
+                      variable="seo_keywords"
+                      :errors="errors"
+                      :valueEn.sync="element.seo_keywords_en"
+                      :valueEs.sync="element.seo_keywords_es"
+                      :valueEnParent="element.seo_keywords_en"
+                      :valueEsParent="element.seo_keywords_es"
+                    />
                   </div>
                 </div>
               </div>
@@ -355,21 +523,27 @@
                 <div class="row">
                   <div class="col-12 col-lg-6">
                     <div class="form-group">
-                      <label class="font-weight-bold" for="price_total">Precio Soles Desde:</label>
-                      <money class="form-control" v-model="element.price_total" v-bind="moneyLocal"></money>
+                      <label class="font-weight-bold" for="price_total"
+                        >Precio Soles Desde:</label
+                      >
+                      <money
+                        class="form-control"
+                        v-model="element.price_total"
+                        v-bind="moneyLocal"
+                      ></money>
                       <label
                         v-if="errors && errors.price_total"
                         class="text-danger text-sm d-block mt-2"
                         for="price_total"
-                      >{{ errors.price_total[0] }}</label>
+                        >{{ errors.price_total[0] }}</label
+                      >
                     </div>
                   </div>
                   <div class="col-12 col-lg-6">
                     <div class="form-group">
-                      <label
-                        class="font-weight-bold"
-                        for="price_total_foreign"
-                      >Precio Dólares Desde:</label>
+                      <label class="font-weight-bold" for="price_total_foreign"
+                        >Precio Dólares Desde:</label
+                      >
                       <money
                         class="form-control"
                         v-model="element.price_total_foreign"
@@ -379,7 +553,8 @@
                         v-if="errors && errors.price_total_foreign"
                         class="text-danger text-sm d-block mt-2"
                         for="price_total_foreign"
-                      >{{ errors.price_total_foreign[0] }}</label>
+                        >{{ errors.price_total_foreign[0] }}</label
+                      >
                     </div>
                   </div>
                   <!--<div class="col-12">
@@ -413,15 +588,29 @@
                 <div class="row">
                   <div class="col-12">
                     <div class="form-group">
-                      <label class="font-weight-bold" for="banner">Banner:</label>
+                      <label class="font-weight-bold" for="banner"
+                        >Banner:</label
+                      >
                       <div class="row">
                         <div class="col-lg-4 mb-3 mb-lg-0">
-                          <img class="img-fluid" :src="imagesUrl+'/projects/'+element.banner" alt />
+                          <img
+                            class="img-fluid"
+                            :src="imagesUrl + '/projects/' + element.banner"
+                            alt
+                          />
                         </div>
                         <div class="col-lg-8">
                           <vue-dropzone
                             ref="ref_banner"
-                            @vdropzone-file-added="$validateImageDropzone($event,$refs.ref_banner.dropzone,1,512000,'500kb')"
+                            @vdropzone-file-added="
+                              $validateImageDropzone(
+                                $event,
+                                $refs.ref_banner.dropzone,
+                                1,
+                                512000,
+                                '500kb'
+                              )
+                            "
                             id="image"
                             class="text-center"
                             :options="dropzoneOptions"
@@ -429,9 +618,10 @@
                             :useCustomSlot="true"
                           >
                             <div class="dropzone-custom-content">
-                              <h5
-                                class="dropzone-custom-title text-primary"
-                              >Suelte los archivos aquí o haga click para cargarlos.</h5>
+                              <h5 class="dropzone-custom-title text-primary">
+                                Suelte los archivos aquí o haga click para
+                                cargarlos.
+                              </h5>
                             </div>
                           </vue-dropzone>
 
@@ -439,19 +629,32 @@
                             v-if="errors && errors.banner"
                             class="text-danger text-sm d-block mt-2"
                             for="banner"
-                          >{{ errors.banner[0] }}</label>
+                            >{{ errors.banner[0] }}</label
+                          >
                         </div>
                       </div>
                     </div>
                   </div>
                   <div class="col-12">
                     <div class="form-group">
-                      <label class="font-weight-bold" for="url_video">URL Video Youtube (Opcional)</label>
+                      <label class="font-weight-bold" for="url_video"
+                        >URL Video Youtube (Opcional)</label
+                      >
                       <div class="row">
-                        <div class="col-lg-4 mb-3 mb-lg-0"  v-if="element.url_video">
-                          <iframe id="player" type="text/html" width="100%" height="360"
-                          :src="'http://www.youtube.com/embed/'+element.id_video"
-                          frameborder="0"></iframe>
+                        <div
+                          class="col-lg-4 mb-3 mb-lg-0"
+                          v-if="element.url_video"
+                        >
+                          <iframe
+                            id="player"
+                            type="text/html"
+                            width="100%"
+                            height="360"
+                            :src="
+                              'http://www.youtube.com/embed/' + element.id_video
+                            "
+                            frameborder="0"
+                          ></iframe>
                         </div>
                         <div class="col-lg">
                           <input
@@ -464,7 +667,8 @@
                             v-if="errors && errors.url_video"
                             class="mt-2 text-danger text-sm"
                             for="url_video"
-                          >{{ errors.url_video[0] }}</label>
+                            >{{ errors.url_video[0] }}</label
+                          >
                         </div>
                       </div>
                     </div>
@@ -526,7 +730,9 @@
                 <div class="row">
                   <div class="col-12">
                     <div class="form-group">
-                      <label class="font-weight-bold" for="location">Dirección</label>
+                      <label class="font-weight-bold" for="location"
+                        >Dirección</label
+                      >
                       <input
                         type="text"
                         class="form-control"
@@ -537,7 +743,8 @@
                         v-if="errors && errors.location"
                         class="mt-2 text-danger text-sm"
                         for="location"
-                      >{{ errors.location[0] }}</label>
+                        >{{ errors.location[0] }}</label
+                      >
                     </div>
                   </div>
                   <div class="col-12">
@@ -591,7 +798,9 @@
 
                   <div class="col-12 col-lg-6">
                     <div class="form-group">
-                      <label class="font-weight-bold" for="url_waze">URL Waze (Opcional)</label>
+                      <label class="font-weight-bold" for="url_waze"
+                        >URL Waze (Opcional)</label
+                      >
                       <input
                         type="text"
                         class="form-control"
@@ -602,12 +811,15 @@
                         v-if="errors && errors.url_waze"
                         class="mt-2 text-danger text-sm"
                         for="url_waze"
-                      >{{ errors.url_waze[0] }}</label>
+                        >{{ errors.url_waze[0] }}</label
+                      >
                     </div>
                   </div>
                   <div class="col-12 col-lg-6">
                     <div class="form-group">
-                      <label class="font-weight-bold" for="url_google_maps">URL Google Maps (Opcional)</label>
+                      <label class="font-weight-bold" for="url_google_maps"
+                        >URL Google Maps (Opcional)</label
+                      >
                       <input
                         type="text"
                         class="form-control"
@@ -618,7 +830,8 @@
                         v-if="errors && errors.url_google_maps"
                         class="mt-2 text-danger text-sm"
                         for="url_google_maps"
-                      >{{ errors.url_google_maps[0] }}</label>
+                        >{{ errors.url_google_maps[0] }}</label
+                      >
                     </div>
                   </div>
                   <!--<div class="col-12">
@@ -642,15 +855,29 @@
                   </div>-->
                   <div class="col-12">
                     <div class="form-group">
-                      <label class="font-weight-bold" for="iframe_map">Map:</label>
+                      <label class="font-weight-bold" for="iframe_map"
+                        >Map:</label
+                      >
                       <div class="row">
                         <div class="col-lg-4 mb-3 mb-lg-0">
-                          <img class="img-fluid" :src="imagesUrl+'/projects/'+element.iframe_map" alt />
+                          <img
+                            class="img-fluid"
+                            :src="imagesUrl + '/projects/' + element.iframe_map"
+                            alt
+                          />
                         </div>
                         <div class="col-lg-8">
                           <vue-dropzone
                             ref="ref_map"
-                            @vdropzone-file-added="$validateImageDropzone($event,$refs.ref_map.dropzone,1,512000,'500kb')"
+                            @vdropzone-file-added="
+                              $validateImageDropzone(
+                                $event,
+                                $refs.ref_map.dropzone,
+                                1,
+                                512000,
+                                '500kb'
+                              )
+                            "
                             id="image"
                             class="text-center"
                             :options="dropzoneOptions"
@@ -658,9 +885,10 @@
                             :useCustomSlot="true"
                           >
                             <div class="dropzone-custom-content">
-                              <h5
-                                class="dropzone-custom-title text-primary"
-                              >Suelte los archivos aquí o haga click para cargarlos.</h5>
+                              <h5 class="dropzone-custom-title text-primary">
+                                Suelte los archivos aquí o haga click para
+                                cargarlos.
+                              </h5>
                             </div>
                           </vue-dropzone>
 
@@ -668,7 +896,8 @@
                             v-if="errors && errors.iframe_map"
                             class="text-danger text-sm d-block mt-2"
                             for="iframe_map"
-                          >{{ errors.iframe_map[0] }}</label>
+                            >{{ errors.iframe_map[0] }}</label
+                          >
                         </div>
                       </div>
                     </div>
@@ -689,18 +918,18 @@
                 <div class="row">
                   <div class="col-12">
                     <div class="mt-2 text-right" style="opacity: 0.75">
-                        <a style="cursor: pointer" @click.prevent="info = !info"
-                          ><jam-info
-                            height="14px"
-                            class="current-color"
-                            width="14px"
-                          ></jam-info>
-                          Vista Previa Email de Cotización
-                        </a>
-                      </div>
-                      <div class="mt-2" v-show="info">
-                        <img src="/files/img/info/mail.jpg" alt="" />
-                      </div>
+                      <a style="cursor: pointer" @click.prevent="info = !info"
+                        ><jam-info
+                          height="14px"
+                          class="current-color"
+                          width="14px"
+                        ></jam-info>
+                        Vista Previa Email de Cotización
+                      </a>
+                    </div>
+                    <div class="mt-2" v-show="info">
+                      <img src="/files/img/info/mail.jpg" alt="" />
+                    </div>
                   </div>
                   <div class="col-12">
                     <div class="form-group">
@@ -762,7 +991,7 @@
                       >
                     </div>
                   </div>
-                  <div class="col-12" >
+                  <div class="col-12">
                     <div class="form-group">
                       <label class="font-weight-bold" for="commentary_quotation"
                         >Comentario que incluye el inmueble</label
@@ -815,8 +1044,8 @@
   </div>
 </template>
 <style>
-.vue-dropzone-dark .dz-image{
-  padding: .5rem;
+.vue-dropzone-dark .dz-image {
+  padding: 0.5rem;
   background: black;
 }
 </style>
@@ -860,7 +1089,7 @@ export default {
     Bonds,
     ProjectsRelated,
     quillEditor,
-    Textarea
+    Textarea,
   },
   props: {
     appUrl: String,
@@ -915,6 +1144,8 @@ export default {
         },
       },
       element: {
+        card: "",
+        card_hover: "",
       },
       moneyLocal: {
         decimal: ",",
@@ -926,7 +1157,7 @@ export default {
       },
       elementsQuotation: [
         { text: "Sí", value: true },
-        { text: "No", value: false},
+        { text: "No", value: false },
       ],
       moneyForeign: {
         decimal: ",",
@@ -963,12 +1194,14 @@ export default {
       this.requestServer = true;
       const fd = new FormData();
       fd.append("id", this.element.id);
-      if(this.element.files && this.element.files.length){
-        this.element.files.forEach( (el, i) => {
-          fd.append("images"+i,el);
+      /*
+      if (this.element.files && this.element.files.length) {
+        this.element.files.forEach((el, i) => {
+          fd.append("images" + i, el);
         });
-        fd.append('images_count',this.element.files.length);
+        fd.append("images_count", this.element.files.length);
       }
+      */
       if (this.element.name_en) {
         fd.append("name_en", this.element.name_en);
       }
@@ -992,6 +1225,12 @@ export default {
       }
       if (this.$refs.ref_logo_colour.dropzone.files[0]) {
         fd.append("logo_colour", this.$refs.ref_logo_colour.dropzone.files[0]);
+      }
+      if (this.$refs.ref_card.dropzone.files[0]) {
+        fd.append("card", this.$refs.ref_card.dropzone.files[0]);
+      }
+      if (this.$refs.ref_card_hover.dropzone.files[0]) {
+        fd.append("card_hover", this.$refs.ref_card_hover.dropzone.files[0]);
       }
       if (this.element.project_status_id) {
         fd.append("project_status_id", this.element.project_status_id);
@@ -1092,11 +1331,10 @@ export default {
       /*if (this.element.iframe_map) {
         fd.append("iframe_map", this.element.iframe_map);
       }*/
-      if(this.element.active == true){
-        fd.append("active",1);
-      }
-      else{
-        fd.append("active",0);
+      if (this.element.active == true) {
+        fd.append("active", 1);
+      } else {
+        fd.append("active", 0);
       }
       if (this.element.financial_entities) {
         fd.append(
@@ -1105,18 +1343,18 @@ export default {
         );
       }
       if (this.element.bonds) {
-        fd.append(
-          "bonds",
-          JSON.stringify(this.element.bonds)
-        );
+        fd.append("bonds", JSON.stringify(this.element.bonds));
       }
       if (this.element.projects_related.length) {
-        fd.append("projects_related", JSON.stringify(this.element.projects_related));
+        fd.append(
+          "projects_related",
+          JSON.stringify(this.element.projects_related)
+        );
       }
       if (this.element.price_parking) {
         fd.append("price_parking", this.element.price_parking);
       }
-       if (this.element.form_videocall == true) {
+      if (this.element.form_videocall == true) {
         fd.append("form_videocall", 1);
       } else {
         fd.append("form_videocall", 0);
@@ -1130,30 +1368,30 @@ export default {
       if (this.element.condition_quotation) {
         fd.append("condition_quotation", this.element.condition_quotation);
       }
-      if(this.element.seo_keywords_es){
+      if (this.element.seo_keywords_es) {
         fd.append("seo_keywords_es", this.element.seo_keywords_es);
       }
-      if(this.element.seo_keywords_en){
+      if (this.element.seo_keywords_en) {
         fd.append("seo_keywords_en", this.element.seo_keywords_en);
       }
-      if(this.element.seo_description_es){
+      if (this.element.seo_description_es) {
         fd.append("seo_description_es", this.element.seo_description_es);
       }
-      if(this.element.seo_description_en){
+      if (this.element.seo_description_en) {
         fd.append("seo_description_en", this.element.seo_description_en);
       }
-      if(this.element.seo_title_en){
+      if (this.element.seo_title_en) {
         fd.append("seo_title_en", this.element.seo_title_en);
       }
-       if(this.element.seo_title_es){
+      if (this.element.seo_title_es) {
         fd.append("seo_title_es", this.element.seo_title_es);
       }
       if (this.$refs.ref_image_seo.dropzone.files[0]) {
         fd.append("seo_image", this.$refs.ref_image_seo.dropzone.files[0]);
       }
-      fd.append("_method","put");
+      fd.append("_method", "put");
       axios
-        .post(this.routeUpdate + '/' + this.element.id, fd)
+        .post(this.routeUpdate + "/" + this.element.id, fd)
         .then((response) => {
           this.requestServer = false;
           document.location.href = response.data.route;
@@ -1176,6 +1414,10 @@ export default {
         this.element = newValue;
       },
     },
+  },
+  created() {
+    this.element.card = this.element.images_format[0];
+    this.element.card_hover = this.element.images_format[1];
   },
 };
 </script>

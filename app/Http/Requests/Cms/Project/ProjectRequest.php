@@ -17,11 +17,14 @@ class ProjectRequest extends FormRequest
         return true;
     }
 
-    public function messages(){
+    /*
+    public function messages()
+    {
         return [
             'images0.required' => 'Debe ingresar al menos una imagen'
         ];
-      }
+    }
+    */
 
     /**
      * Get the validation rules that apply to the request.
@@ -47,7 +50,7 @@ class ProjectRequest extends FormRequest
             'text_place_en' => 'required|max:80',
             'project_status_id' => 'required',
             'location' => 'required',
-            'images0' => 'required',
+            //'images0' => 'required',
             //'statuses' => 'required',
             'financial_entities' => 'required',
             'features' => 'required',
@@ -73,16 +76,32 @@ class ProjectRequest extends FormRequest
             'seo_description_en' => 'sometimes|max:160'
         ];
         switch ($this->method()) {
-            case 'POST':   
+            case 'POST':
                 $rules = array_merge(
                     $rules,
-                    ['iframe_map' => 'required','logo' => 'required','logo_colour' => 'required','brochure' => 'required','banner' => 'required']
+                    [
+                        'iframe_map' => 'required',
+                        'logo' => 'required',
+                        'logo_colour' => 'required',
+                        'card' => 'required',
+                        'card_hover' => 'required',
+                        'brochure' => 'required',
+                        'banner' => 'required'
+                        ]
                 );
             break;
-            case 'PUT':   
+            case 'PUT':
                 $rules = array_merge(
                     $rules,
-                    ['iframe_map' => 'sometimes|required','logo' => 'sometimes|required','logo_colour' => 'sometimes|required','brochure' => 'sometimes|required', 'banner' => 'sometimes|required']
+                    [
+                        'iframe_map' => 'sometimes|required',
+                        'logo' => 'sometimes|required',
+                        'logo_colour' => 'sometimes|required',
+                        'card' => 'sometimes|required',
+                        'card_hover' => 'sometimes|required',
+                        'brochure' => 'sometimes|required',
+                         'banner' => 'sometimes|required'
+                    ]
                 );
             break;
         }

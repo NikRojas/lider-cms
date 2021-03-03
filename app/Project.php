@@ -52,7 +52,7 @@ class Project extends Model
     {
         return json_decode($this->images);
     }
-
+ 
     public function getPriceTotalFormatAttribute()
     {
         return 'S/ '.number_format($this->price_total, 2, '.', ',');

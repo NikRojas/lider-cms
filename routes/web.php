@@ -55,8 +55,6 @@ Route::middleware(['auth'])->namespace('Cms')->name('cms.')->group(function () {
                 Route::put('/{element}', 'FinancingOptionsController@update')->name('update');
                 Route::get('/json/get/{element}', 'FinancingOptionsController@get')->name('get');
             });
-
-            
         });
     });
 
@@ -117,10 +115,10 @@ Route::middleware(['auth'])->namespace('Cms')->name('cms.')->group(function () {
         Route::name('orders.')->prefix('ventas')->group(function () {
             Route::get('/', 'OrdersController@index')->name('index');
             Route::get('/json/get-all', 'OrdersController@getAll')->name('get-all');
-            Route::post('export', 'OrdersController@export')->name('export'); 
-            Route::post('export/total', 'OrdersController@exportTotal')->name('export-total'); 
-            Route::get('export/{from?}/{to?}', 'OrdersController@exportFile')->name('export-file'); 
-            Route::post('resend/{element}', 'OrdersController@resendEmail')->name('resend'); 
+            Route::post('export', 'OrdersController@export')->name('export');
+            Route::post('export/total', 'OrdersController@exportTotal')->name('export-total');
+            Route::get('export/{from?}/{to?}', 'OrdersController@exportFile')->name('export-file');
+            Route::post('resend/{element}', 'OrdersController@resendEmail')->name('resend');
             Route::get('/{element}', 'OrdersController@read')->name('read');
         });
         Route::name('statistics.')->prefix('estadisticas')->group(function () {
@@ -133,9 +131,9 @@ Route::middleware(['auth'])->namespace('Cms')->name('cms.')->group(function () {
     Route::namespace('Customers')->prefix('clientes')->name('customers.')->group(function () {
         Route::get('/', 'CustomersController@index')->name('index');
         Route::get('/json/get-all', 'CustomersController@getAll')->name('get-all');
-        Route::post('export', 'CustomersController@export')->name('export'); 
-        Route::post('export/total', 'CustomersController@exportTotal')->name('export-total'); 
-        Route::get('export/{from?}/{to?}', 'CustomersController@exportFile')->name('export-file'); 
+        Route::post('export', 'CustomersController@export')->name('export');
+        Route::post('export/total', 'CustomersController@exportTotal')->name('export-total');
+        Route::get('export/{from?}/{to?}', 'CustomersController@exportFile')->name('export-file');
         Route::get('/{element}', 'CustomersController@read')->name('read');
     });
  
@@ -153,9 +151,9 @@ Route::middleware(['auth'])->namespace('Cms')->name('cms.')->group(function () {
         Route::get('/json/get-all', 'SuscribersController@getAll')->name('get-all');
         Route::get('/json/get/{element}', 'SuscribersController@get')->name('get');
         Route::delete('/{element}', 'SuscribersController@destroy')->name('destroy');
-        Route::post('export', 'SuscribersController@export')->name('export'); 
-        Route::post('export/total', 'SuscribersController@exportTotal')->name('export-total'); 
-        Route::get('export/{from?}/{to?}', 'SuscribersController@exportFile')->name('export-file'); 
+        Route::post('export', 'SuscribersController@export')->name('export');
+        Route::post('export/total', 'SuscribersController@exportTotal')->name('export-total');
+        Route::get('export/{from?}/{to?}', 'SuscribersController@exportFile')->name('export-file');
     });
 
     
@@ -189,6 +187,17 @@ Route::middleware(['auth'])->namespace('Cms')->name('cms.')->group(function () {
 
             Route::get('/{element}/all-export', 'QuotationsController@allExport')->name('all-export');
             Route::post('/{element}/filter-export', 'QuotationsController@filterExport')->name('filter-export');
+        });
+
+        Route::prefix('banners')->name('banners.')->group(function () {
+            Route::get('/{element}', 'BannerController@index')->name('index');
+            Route::post('/', 'BannerController@store')->name('store');
+            Route::get('/json/get-all', 'BannerController@getAll')->name('get-all');
+            Route::get('/json/get/{element}', 'BannerController@get')->name('get');
+            Route::put('/order', 'BannerController@order')->name('order');
+            Route::put('/{element}', 'BannerController@update')->name('update');
+            Route::delete('/{element}', 'BannerController@destroy')->name('destroy');
+            Route::put('/{element}', 'BannerController@update')->name('update');
         });
 
         Route::prefix('tipologias')->name('tipologies.')->group(function () {
@@ -472,5 +481,3 @@ Route::get('/mail/applicant', function () {
     $applicant = Applicant::first();
     return view('emails.applicant',["applicant" => $applicant]);
 });*/
-
-

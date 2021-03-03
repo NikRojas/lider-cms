@@ -249,4 +249,20 @@ class BaseController extends Controller
         $content = MasterPage::where('slug_en',$slug)->first()->load('sections:id,name,master_page_id','sections.content:id,master_section_id,field,value,value_en,value_es')->sections->toArray();
         return $content;
     }
+
+    public function sitemapBlog(){
+        $blog = Post::select('slug_es','slug_en','id','category_id','created_at')->where('published', 1)->with('category:id,slug_es,slug_en')->orderBy('created_at','desc')->get();
+        $data = array(
+            "blog" => $blog,
+        );
+        return $this->sendResponse($data, '');
+    }
+
+    public function sitemapProjects(){
+        $projects = Project::select('slug_en','slug_es','id','active','created_at')->where('active', 1)->orderBy('created_at','desc')->get();
+        $data = array(
+            "projects" => $projects,
+        );
+        return $this->sendResponse($data, '');
+    }
 }

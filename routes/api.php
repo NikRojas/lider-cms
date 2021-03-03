@@ -23,6 +23,9 @@ Route::namespace('Api')->group(function() {
     Route::get('notify3','Orders\OrdersController@test3'); */
     Route::get('layout', 'BaseController@layout');
 
+    Route::get('sitemap-blog', 'BaseController@sitemapBlog');
+    Route::get('sitemap-projects', 'BaseController@sitemapProjects');
+
     Route::get('filters', 'BaseController@getFiltersSpecific');
     Route::prefix('paginate')->group(function() { 
         Route::get('projects', 'BaseController@paginateProjects');

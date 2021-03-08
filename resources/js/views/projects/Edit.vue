@@ -13,6 +13,15 @@
                 ></BreadCrumb>
               </div>
               <div class="col-6 col-md text-right">
+                <span
+                  v-if="
+                    Object.keys(errors).length === 0 &&
+                    errors.constructor === Object
+                  "
+                ></span>
+                <span v-else class="d-block text-danger mb-2"
+                  >Algunos campos estan incorrectos</span
+                >
                 <Button
                   :text="'Actualizar'"
                   :classes="['btn-inverse-primary', 'mr-2']"
@@ -1268,14 +1277,26 @@ export default {
       if (this.element.url_google_maps) {
         fd.append("url_google_maps", this.element.url_google_maps);
       }
+      else{
+        fd.append("url_google_maps", '');
+      }
       if (this.element.url_waze) {
         fd.append("url_waze", this.element.url_waze);
       }
-      if (this.element.map_indication_en) {
-        fd.append("map_indication_en", this.element.map_indication_en);
+      else{
+        fd.append("url_waze", '');
       }
-      if (this.element.map_indication_es) {
-        fd.append("map_indication_es", this.element.map_indication_es);
+      if (this.element.map_indications_en) {
+        fd.append("map_indications_en", this.element.map_indications_en);
+      }
+      else{
+        fd.append("map_indications_en", '');
+      }
+      if (this.element.map_indications_es) {
+        fd.append("map_indications_es", this.element.map_indications_es);
+      }
+      else{
+        fd.append("map_indications_es", '');
       }
       if (this.element.sales_room_en) {
         fd.append("sales_room_en", this.element.sales_room_en);
@@ -1362,11 +1383,20 @@ export default {
       if (this.element.excerpt_quotation) {
         fd.append("excerpt_quotation", this.element.excerpt_quotation);
       }
+      else{
+        fd.append("excerpt_quotation", '');
+      }
       if (this.element.commentary_quotation) {
         fd.append("commentary_quotation", this.element.commentary_quotation);
       }
+      else{
+        fd.append("commentary_quotation", '');
+      }
       if (this.element.condition_quotation) {
         fd.append("condition_quotation", this.element.condition_quotation);
+      }
+      else{
+        fd.append("condition_quotation", '');
       }
       if (this.element.seo_keywords_es) {
         fd.append("seo_keywords_es", this.element.seo_keywords_es);

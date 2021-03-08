@@ -130,12 +130,16 @@ class PageController extends BaseController
         $projects = Project::select('id', 'logo','logo_colour', 'name_es', 'name_en','code_ubigeo')->where('active', 1)
         ->where('form_videocall',true)->with('ubigeoRel')->get();
         $content = $this->getContentPage('online-appointment');
+        $terms = $this->getContentPage('terms-conditions');
+        $privacy = $this->getContentPage('privacy-policies');
         $data = array(
             "page" => $page,
             "timeDay" => $timeDay,
             "project" => $project,
             "projects" => $projects,
-            "content" => $content
+            "content" => $content,
+            'privacy' => $privacy,
+            'terms' => $terms
         );
         return $this->sendResponse($data, '');
     }
@@ -146,11 +150,15 @@ class PageController extends BaseController
         $medium = MasterLeadMedium::where('videocall', 0)->get();
         $projects = Project::select('id', 'logo','logo_colour', 'name_es', 'name_en')->where('active', 1)->get();
         $content = $this->getContentPage('contact-us');
+        $terms = $this->getContentPage('terms-conditions');
+        $privacy = $this->getContentPage('privacy-policies');
         $data = array(
             "page" => $page,
             "medium" => $medium,
             "projects" => $projects,
-            "content" => $content
+            "content" => $content,
+            'privacy' => $privacy,
+            'terms' => $terms
         );
         return $this->sendResponse($data, '');
     }
@@ -201,11 +209,15 @@ class PageController extends BaseController
         $tipologiesCount = $tipologies->count();
         $banners = ProjectBanner::where('project_id', $project->id)->orderBy('index', 'asc')->get();
         $project["banners"] = $banners;
+        $terms = $this->getContentPage('terms-conditions');
+        $privacy = $this->getContentPage('privacy-policies');
         $data = array(
             "page" => $page,
             "project" => $project,
             "projects" => $projects_related,
-            "tipologies_count" => $tipologiesCount
+            "tipologies_count" => $tipologiesCount,
+            'privacy' => $privacy,
+            'terms' => $terms
         );
         return $this->sendResponse($data, '');
     }

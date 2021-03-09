@@ -628,7 +628,7 @@
                   <div class="col-12">
                     <div class="form-group">
                       <label class="font-weight-bold" for="location"
-                        >Dirección</label
+                        >Dirección Corta</label
                       >
                       <input
                         type="text"
@@ -647,7 +647,7 @@
                   <div class="col-12">
                     <Editor
                       size="md"
-                      label="Indicaciones de Dirección (Opcional)"
+                      label="Dirección Completa (Opcional)"
                       variable="map_indications"
                       :errors="errors"
                       :valueEn.sync="element.map_indications_en"

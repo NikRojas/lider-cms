@@ -535,7 +535,7 @@
                 <div class="row">
                   <div class="col-12 mb-3">
                     <h3 class="font-weight-normal">
-                      <span class="d-block font-weight-bold">Dirección:</span>
+                      <span class="d-block font-weight-bold">Dirección Corta:</span>
                       {{ element.location }}
                     </h3>
                   </div>
@@ -564,26 +564,26 @@
                   <div class="col-12 col-lg-6 mb-3">
                     <h3 class="font-weight-normal">
                       <span class="d-block font-weight-bold"
-                        >Indicaciones de Dirección ES:</span
+                        >Dirección Completa ES:</span
                       >
                       <div
                         v-html="element.map_indications_es"
                         v-if="element.map_indications_es"
                       ></div>
-                      <p v-else>No hay indicaciones registradas.</p>
+                      <p v-else>No registrado.</p>
                     </h3>
                   </div>
 
                   <div class="col-12 col-lg-6 mb-3">
                     <h3 class="font-weight-normal">
                       <span class="d-block font-weight-bold"
-                        >Indicaciones de Dirección EN:</span
+                        >Dirección Completa EN:</span
                       >
                       <div
                         v-html="element.map_indications_en"
                         v-if="element.map_indications_en"
                       ></div>
-                      <p v-else>No hay indicaciones registradas.</p>
+                      <p v-else>No registrado.</p>
                     </h3>
                   </div>
 

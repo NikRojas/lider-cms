@@ -1319,8 +1319,14 @@ export default {
       if (this.element.price_total) {
         fd.append("price_total", this.element.price_total);
       }
+      else{
+        fd.append("price_total", '');
+      }
       if (this.element.price_total_foreign) {
         fd.append("price_total_foreign", this.element.price_total_foreign);
+      }
+      else{
+        fd.append("price_total_foreign", '');
       }
       if (this.element.price) {
         fd.append("price", this.element.price);

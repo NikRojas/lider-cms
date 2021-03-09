@@ -17,7 +17,7 @@ class Project extends Model
 
     public function galleryRel()
     {
-        return $this->hasMany('App\ProjectGallery', 'project_id', 'id')->orderBy('master_type_gallery_id');
+        return $this->hasMany('App\ProjectGallery', 'project_id', 'id')->orderBy('master_type_gallery_id')->orderBy('index');
     }
 
     public function quotationsRel()

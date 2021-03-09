@@ -150,7 +150,7 @@
                       height="360"
                       v-if="elText.first_block_2.url_video"
                       :src="
-                        'http://www.youtube.com/embed/' +
+                        'https://www.youtube.com/embed/' +
                         elText.first_block_2.id_video
                       "
                       frameborder="0"

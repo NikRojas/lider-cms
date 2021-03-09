@@ -660,7 +660,7 @@
                             width="100%"
                             height="360"
                             :src="
-                              'http://www.youtube.com/embed/' + element.id_video
+                              'https://www.youtube.com/embed/' + element.id_video
                             "
                             frameborder="0"
                           ></iframe>

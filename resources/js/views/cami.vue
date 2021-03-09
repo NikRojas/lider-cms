@@ -159,7 +159,7 @@
                   width="100%"
                   height="360"
                   v-if="el.url_video"
-                  :src="'http://www.youtube.com/embed/' + el.id_video"
+                  :src="'https://www.youtube.com/embed/' + el.id_video"
                   frameborder="0"
                 ></iframe>
                 <p v-else>No se ha registrado un video.</p>

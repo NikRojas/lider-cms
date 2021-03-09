@@ -55,17 +55,17 @@ class Project extends Model
  
     public function getPriceTotalFormatAttribute()
     {
-        return 'S/ '.number_format($this->price_total, 2, '.', ',');
+        return 'S/ '.number_format($this->price_total, 0, '.', ',');
     }
 
     public function getPriceFormatAttribute()
     {
-        return 'S/ '.number_format($this->price, 2, '.', ',');
+        return 'S/ '.number_format($this->price, 0, '.', ',');
     }
 
     public function getPriceTotalForeignFormatAttribute()
     {
-        return '$ '.number_format($this->price_total_foreign, 2, '.', ',');
+        return '$ '.number_format($this->price_total_foreign, 0, '.', ',');
     }
 
     public function featuresRel()

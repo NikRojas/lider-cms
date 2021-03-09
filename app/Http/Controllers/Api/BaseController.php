@@ -86,7 +86,7 @@ class BaseController extends Controller
         ->whereHas('projectsRel', function ($query) {
             $query->where('active', 1);
         })
-        ->orderBy('department')->groupBy('code_department')->get();
+        ->orderBy('department','desc')->groupBy('code_department')->get();
         $districtsTemp = null;
         foreach ($departments as $key => $value) {
             $districtsTemp[] = $this->getDistricts($value->code_department);

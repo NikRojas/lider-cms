@@ -204,7 +204,7 @@ class PageController extends BaseController
             $projects_related = Project::select('id', 'project_status_id', 'logo','logo_colour', 'slug_' . $request->locale, 'images', 'code_ubigeo', 'name_' . $request->locale, 'rooms_' . $request->locale, 'footage_' . $request->locale, 'price_total', 'price_total_foreign')
             ->where('id','!=',$project->id)->with('statusRel', 'ubigeoRel')->where('active', 1)->inRandomOrder()->limit(4)->get();
         }
-        $tipologies = ProjectTypeDepartment::where('project_id',$project->id)->where('available',true)->get();
+        $tipologies = ProjectTypeDepartment::where('project_id',$project->id)->where('available',true)->orderBy('index', 'asc')->get();
         $project["tipologies_rel"] = $tipologies;
         $tipologiesCount = $tipologies->count();
         $banners = ProjectBanner::where('project_id', $project->id)->orderBy('index', 'asc')->get();

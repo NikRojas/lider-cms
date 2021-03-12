@@ -70,8 +70,8 @@
                               <a
                                 target="_blank"
                                 style="text-decoration: underline"
-                                :href="appUrl + '/projects/' + el.slug_en"
-                                >{{ appUrl }}/projects/{{ el.slug_en }}</a
+                                :href="appUrl + '/en/projects/' + el.slug_en"
+                                >{{ appUrl }}/en/projects/{{ el.slug_en }}</a
                               >
                             </div>
                           </div>

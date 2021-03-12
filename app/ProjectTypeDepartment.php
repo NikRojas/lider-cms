@@ -10,6 +10,7 @@ class ProjectTypeDepartment extends Model
     protected $guarded = [];
     protected $casts = [
         'available' => 'boolean',
+        'area' => 'decimal:2'
     ];
     protected $appends = ['can_delete','price_format'];
 
@@ -23,7 +24,7 @@ class ProjectTypeDepartment extends Model
 
     public function getPriceFormatAttribute()
     {
-        return 'S/ '.number_format($this->price, 2, '.', ',');
+        return 'S/ '.number_format($this->price, 0, '.', ',');
     }
 
     public function projectQuotationsRel()

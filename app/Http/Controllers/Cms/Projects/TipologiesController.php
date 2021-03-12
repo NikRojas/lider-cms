@@ -60,7 +60,7 @@ class TipologiesController extends Controller
 
   public function store(TipologyRequest $request)
   {
-    $element = request(["name", "project_id",'price','available','area','room']);    
+    $element = request(["name", "project_id",'price','available','area','room','type_currency']);    
     if ($request->hasFile('image')) {
       $imageName = $this->setFileName('i-', $request->file('image'));
       $storeImage = Storage::disk('public')->putFileAs('img/projects/tipologies', $request->file('image'), $imageName);
@@ -82,7 +82,7 @@ class TipologiesController extends Controller
   }
 
   public function update(ProjectTypeDepartment $element,TipologyRequest $request){
-    $request_element = request(["name", "project_id",'price','available','area','room']);
+    $request_element = request(["name", "project_id",'price','available','area','room','type_currency']);
     if($request->hasFile('image')){
         $fileName = $this->setFileName('i-',$request->file('image'));
         Storage::disk('public')->putFileAs('img/projects/tipologies',$request->file('image'),$fileName);

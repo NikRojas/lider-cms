@@ -31,6 +31,10 @@
     border-radius: .625rem;
     background-size: 50% 50%;
 }
+.form-check-inline{
+    width: 100%;
+    padding-left: 15px;
+}
 </style>
 @endsection
 @section('content')

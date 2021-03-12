@@ -245,10 +245,22 @@
                 >
               </div>
             </div>
-            <div class="col-12" v-if="modalCreateUpdate">
+            <div class="col-12 col-lg-6">
+              <div class="form-group">
+                <p class="font-weight-bold mb-0">Elige el tipo de moneda</p>
+                <b-form-radio-group
+                  id="radio-group-1"
+                  v-model="element.type_currency"
+                  name="radios"
+                  plain
+                  :options="options"
+                ></b-form-radio-group>
+              </div>
+            </div>
+            <div class="col-12 col-lg-6" v-if="modalCreateUpdate">
               <div class="form-group">
                 <label class="font-weight-bold" for="price_total"
-                  >Precio Soles:</label
+                  >Precio:</label
                 >
                 <money
                   class="form-control"
@@ -341,10 +353,14 @@ export default {
   },
   data() {
     return {
+      options: [
+        { text: "Soles", value: true },
+        { text: "Dólares", value: false },
+      ],
       moneyLocal: {
         decimal: ",",
         thousands: ".",
-        prefix: "S/ ",
+        //prefix: "S/ ",
         //suffix: ' #',
         precision: 2,
         masked: false,
@@ -359,6 +375,7 @@ export default {
       project: {},
       element: {
         available: true,
+        type_currency: true,
       },
       loadingGet: false,
       requestSubmit: false,
@@ -442,6 +459,7 @@ export default {
       if (this.$refs.ref_image.dropzone.files[0]) {
         fd.append("image", this.$refs.ref_image.dropzone.files[0]);
       }
+      fd.append("type_currency", this.element.type_currency ? 1 : 0);
       fd.append("project_id", this.project.id);
       fd.append("slug_es", this.project.slug_es);
       axios({
@@ -470,8 +488,12 @@ export default {
       this.element = {
         image: "",
         available: true,
-        price: 0,
+        //price: 0,
+        type_currency: true,
       };
+      this.$nextTick(() => {
+        this.element.price = 0;
+      })
       this.modalCreateUpdate = this.requestSubmit = this.modalDestroy = false;
       this.getEls();
       this.errors = {};
@@ -480,8 +502,12 @@ export default {
       this.element = {
         image: "",
         available: true,
-        price: 0,
+        //price: 0,
+        type_currency: true,
       };
+      this.$nextTick(() => {
+        this.element.price = 0;
+      })
       this.modalCreateUpdate = this.modalDestroy = this.requestSubmit = false;
       //this.getEls();
       this.errors = {};

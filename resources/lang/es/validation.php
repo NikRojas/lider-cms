@@ -210,7 +210,8 @@ return [
         'banner' => 'baner',
         'room' => 'dormitorio',
         'document_number' => 'dni',
-        'area'=> 'área'
+        'area'=> 'área',
+        'price' => 'precio'
     ],
 
 ];

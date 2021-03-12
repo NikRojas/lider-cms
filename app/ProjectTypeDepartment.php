@@ -10,7 +10,9 @@ class ProjectTypeDepartment extends Model
     protected $guarded = [];
     protected $casts = [
         'available' => 'boolean',
-        'area' => 'decimal:2'
+        'area' => 'decimal:2',
+        'type_currency' => 'boolean',
+        'price' => 'decimal:2'
     ];
     protected $appends = ['can_delete','price_format'];
 
@@ -24,7 +26,14 @@ class ProjectTypeDepartment extends Model
 
     public function getPriceFormatAttribute()
     {
-        return 'S/ '.number_format($this->price, 0, '.', ',');
+        $type = null;
+        if($this->type_currency){
+            $type = 'S/ ';
+        }
+        else{
+            $type = '$ ';
+        }
+        return $type.number_format($this->price, 0, '.', ',');
     }
 
     public function projectQuotationsRel()

@@ -39,7 +39,7 @@ class SellLandRequest extends FormRequest
           'name' => 'required|max:100',
           'email' =>  'required|max:100|email',
           'mobile' => 'required|digits_between:7,9',
-          //'accepted' => 'accepted',
+          'accepted' => 'accepted',
           'area' => 'required|regex:/^\d*(\.\d{1,2})?$/'
         ];
     }

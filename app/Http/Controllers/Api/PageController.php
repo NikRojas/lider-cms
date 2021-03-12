@@ -167,9 +167,13 @@ class PageController extends BaseController
     {
         $page = $this->getSeoPage('sell-your-land', $request->locale);
         $content = $this->getContentPage('sell-your-land');
+        $terms = $this->getContentPage('terms-conditions');
+        $privacy = $this->getContentPage('privacy-policies');
         $data = array(
             "page" => $page,
-            "content" => $content
+            "content" => $content,
+            'privacy' => $privacy,
+            'terms' => $terms
         );
         return $this->sendResponse($data, '');
     }
@@ -226,9 +230,13 @@ class PageController extends BaseController
     {
         $page = $this->getSeoPage('work-with-us', $request->locale);
         $content = $this->getContentPage('work-with-us');
+        $terms = $this->getContentPage('terms-conditions');
+        $privacy = $this->getContentPage('privacy-policies');
         $data = array(
             "page" => $page,
-            "content" => $content
+            "content" => $content,
+            'privacy' => $privacy,
+            'terms' => $terms
         );
         return $this->sendResponse($data, '');
     }

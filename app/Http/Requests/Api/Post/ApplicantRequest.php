@@ -18,6 +18,7 @@ class ApplicantRequest extends FormRequest
 
     public function messages(){
       return [
+          'accepted.accepted' => 'Debe aceptar nuestros términos y condiciones.',
           'digits_between' => 'Debe ingresar un número de teléfono o celular entre :min y :max dígitos.',
           'email.unique' => 'El correo electrónico ya se encuentra registrado.',
           //'email.email' => 'Por favor ingrese un :attribute válido.',
@@ -42,7 +43,8 @@ class ApplicantRequest extends FormRequest
           'mobile' => 'required|digits_between:7,9',
           'job' => 'required|max:100',
           'pdf' => 'required',
-          'url' => 'nullable|sometimes|url'
+          'url' => 'nullable|sometimes|url',
+          'accepted' => 'accepted'
         ];
     }
 }

@@ -22,7 +22,7 @@ class SliderController extends Controller
     }
 
     public function store(SliderRequest $request){
-        //$slider = request(["url","posicion"]);
+        //$slider = request(["link","posicion"]);
         $imageNameEs = $this->setFileName('se-',$request->file('image_es'));
         $storeImageEs = Storage::disk('public')->putFileAs('img/slider/',$request->file('image_es'),$imageNameEs);
         $imageNameResponsiveEs = $this->setFileName('sre-',$request->file('image_responsive_es'));
@@ -38,7 +38,7 @@ class SliderController extends Controller
             return response()->json(["route" => route('cms.content.slider.index')],500);
         }
         $index = $this->getMaxIndex(Slider::selectRaw('MAX(id),MAX(`index`) as "index"')->get());
-        $slider = ["image_es"=>$imageNameEs,"image_en"=>$imageNameEn,"image_responsive_es"=>$imageNameResponsiveEs,"image_responsive_en"=>$imageNameResponsiveEn,"index" => $index];
+        $slider = ["image_es"=>$imageNameEs,"image_en"=>$imageNameEn,"image_responsive_es"=>$imageNameResponsiveEs,"image_responsive_en"=>$imageNameResponsiveEn,"index" => $index, "link" => $request->link];
         if($request->from){
             $slider = array_merge($slider,["from" => date("Y-m-d H:i:s", strtotime($request->from))]);
         }
@@ -175,7 +175,7 @@ class SliderController extends Controller
             $request_element = array_merge($request_element,["to" => date("Y-m-d H:i:s", strtotime($request->to))]);
         }
         try{
-            $element = Slider::UpdateOrCreate(["id"=>$element->id],$request_element); 
+            $element = Slider::UpdateOrCreate(["id"=>$element->id],array_merge($request_element,["link" => $request->link])); 
             $request->session()->flash('success', trans('custom.message.update.success', ['name' => trans('custom.attribute.slide')]));
             return response()->json(["route" => route('cms.content.slider.index')]);
         }

@@ -5,7 +5,11 @@
         <div class="header-body">
           <div class="row align-items-center pt-0 pt-md-2 pb-4">
             <div class="col-6 col-md-7">
-              <BreadCrumb title="Crear Slide" parent active="Slider"></BreadCrumb>
+              <BreadCrumb
+                title="Crear Slide"
+                parent
+                active="Slider"
+              ></BreadCrumb>
             </div>
           </div>
         </div>
@@ -19,19 +23,23 @@
               <form @submit.prevent="submit">
                 <div class="row">
                   <div class="col-12 col-md-6">
-                    <ImageForm label="Imagen"
-                    variable="image"
-                    :errors="errors"
-                    :valueEn.sync="element.image_en"
-                    :valueEs.sync="element.image_es"></ImageForm>
+                    <ImageForm
+                      label="Imagen"
+                      variable="image"
+                      :errors="errors"
+                      :valueEn.sync="element.image_en"
+                      :valueEs.sync="element.image_es"
+                    ></ImageForm>
                   </div>
 
                   <div class="col-12 col-md-6">
-                    <ImageForm label="Imagen Responsive"
-                    variable="image_responsive"
-                    :errors="errors"
-                    :valueEn.sync="element.image_responsive_en"
-                    :valueEs.sync="element.image_responsive_es"></ImageForm>
+                    <ImageForm
+                      label="Imagen Responsive"
+                      variable="image_responsive"
+                      :errors="errors"
+                      :valueEn.sync="element.image_responsive_en"
+                      :valueEs.sync="element.image_responsive_es"
+                    ></ImageForm>
                   </div>
 
                   <!--<div class="col-12 col-lg-6">
@@ -52,16 +60,21 @@
                   </div>-->
 
                   <div class="col-12 col-lg-6">
-                    
                     <div class="form-group">
-                      <label class="font-weight-bold" for="from">Válido desde</label>
+                      <label class="font-weight-bold" for="from"
+                        >Válido desde</label
+                      >
                       <date-picker
-                        :input-attr="{id: 'from'}"
+                        :input-attr="{ id: 'from' }"
                         value-type="format"
                         v-model="element.from"
                         format="HH:mm DD-MM-YYYY"
                         type="datetime"
-                        :time-picker-options="{ start: '06:00', step: '00:05', end: '24:00' }"
+                        :time-picker-options="{
+                          start: '06:00',
+                          step: '00:05',
+                          end: '24:00',
+                        }"
                         :first-day-of-week="1"
                         lang="es"
                         input-class="form-control"
@@ -73,20 +86,27 @@
                         v-if="errors && errors.from"
                         class="mt-2 text-danger text-sm"
                         for="from"
-                      >{{ errors.from[0] }}</label>
+                        >{{ errors.from[0] }}</label
+                      >
                     </div>
                   </div>
 
                   <div class="col-12 col-lg-6">
                     <div class="form-group">
-                      <label class="font-weight-bold" for="to">Válido hasta</label>
+                      <label class="font-weight-bold" for="to"
+                        >Válido hasta</label
+                      >
                       <date-picker
-                        :input-attr="{id: 'to'}"
+                        :input-attr="{ id: 'to' }"
                         value-type="format"
                         v-model="element.to"
                         format="HH:mm DD-MM-YYYY"
                         type="datetime"
-                        :time-picker-options="{ start: '06:00', step: '00:05', end: '24:00' }"
+                        :time-picker-options="{
+                          start: '06:00',
+                          step: '00:05',
+                          end: '24:00',
+                        }"
                         :first-day-of-week="1"
                         lang="es"
                         input-class="form-control"
@@ -98,17 +118,41 @@
                         v-if="errors && errors.to"
                         class="mt-2 text-danger text-sm"
                         for="to"
-                      >{{ errors.to[0] }}</label>
+                        >{{ errors.to[0] }}</label
+                      >
+                    </div>
+                  </div>
+
+                  <div class="col-12">
+                    <div class="form-group">
+                      <label class="font-weight-bold" for="link">Link</label>
+                      <input
+                        type="text"
+                        class="form-control"
+                        v-model="element.link"
+                        id="link"
+                      />
+                      <label
+                        v-if="errors && errors.link"
+                        class="mt-2 text-danger text-sm"
+                        for="link"
+                        >{{ errors.link[0] }}</label
+                      >
                     </div>
                   </div>
 
                   <div class="col-12 text-right">
                     <Button
                       :text="'Guardar'"
-                      :classes="['btn-inverse-primary','mr-2']"
+                      :classes="['btn-inverse-primary', 'mr-2']"
                       :request-server="requestServer"
                     ></Button>
-                    <a type="button" class="btn btn-secondary" :href="routeReturn">Cancelar</a>
+                    <a
+                      type="button"
+                      class="btn btn-secondary"
+                      :href="routeReturn"
+                      >Cancelar</a
+                    >
                   </div>
                 </div>
               </form>
@@ -131,7 +175,7 @@ export default {
     Button,
     vueDropzone: vue2Dropzone,
     DatePicker,
-    ImageForm
+    ImageForm,
   },
   props: {
     routeStore: String,
@@ -162,17 +206,23 @@ export default {
       if (this.element.to) {
         fd.append("to", this.element.to);
       }
-      if(this.element.image_en){
+      if (this.element.image_en) {
         fd.append("image_en", this.element.image_en);
       }
-      if(this.element.image_es){
+      if (this.element.image_es) {
         fd.append("image_es", this.element.image_es);
       }
-       if(this.element.image_responsive_en){
+      if (this.element.image_responsive_en) {
         fd.append("image_responsive_en", this.element.image_responsive_en);
       }
-      if(this.element.image_responsive_es){
+      if (this.element.image_responsive_es) {
         fd.append("image_responsive_es", this.element.image_responsive_es);
+      }
+      if (this.element.link) {
+        fd.append("link", this.element.link);
+      }
+      else{
+        fd.append("link", "");
       }
       axios
         .post(this.routeStore, fd)

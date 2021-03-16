@@ -31,6 +31,7 @@ class SliderRequest extends FormRequest
             'numeric','min:1'],*/
             'from' => 'required|date_format:H:i d-m-Y',
             'to' => 'required|date_format:H:i d-m-Y',
+            'link' => 'nullable|sometimes|url'
         ];
         switch ($this->method()) {
             case 'POST':   

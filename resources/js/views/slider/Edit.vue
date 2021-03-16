@@ -111,6 +111,24 @@
                     </div>
                   </div>
 
+                  <div class="col-12">
+                    <div class="form-group">
+                      <label class="font-weight-bold" for="link">Link</label>
+                      <input
+                        type="text"
+                        class="form-control"
+                        v-model="element.link"
+                        id="link"
+                      />
+                      <label
+                        v-if="errors && errors.link"
+                        class="mt-2 text-danger text-sm"
+                        for="link"
+                        >{{ errors.link[0] }}</label
+                      >
+                    </div>
+                  </div>
+
                   <div class="col-12 text-right">
                     <Button
                       :text="'Actualizar'"
@@ -184,6 +202,12 @@ export default {
       }
       if(this.element.image_responsive_es){
         fd.append("image_responsive_es", this.element.image_responsive_es);
+      }
+      if (this.element.link) {
+        fd.append("link", this.element.link);
+      }
+      else{
+        fd.append("link", "");
       }
       fd.append("_method","put");
       axios

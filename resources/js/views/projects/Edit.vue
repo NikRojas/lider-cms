@@ -1059,6 +1059,9 @@
 }
 </style>
 <script>
+import Quill from "quill";
+import PlainClipboard from "../../functions/PlainClipboard";
+Quill.register("modules/clipboard", PlainClipboard, true);
 import { quillEditor } from "vue-quill-editor";
 import vue2Dropzone from "vue2-dropzone";
 import BreadCrumb from "../../components/BreadCrumb";

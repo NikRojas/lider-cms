@@ -9,10 +9,13 @@
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var vue_quill_editor__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue-quill-editor */ "./node_modules/vue-quill-editor/dist/vue-quill-editor.js");
-/* harmony import */ var vue_quill_editor__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vue_quill_editor__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var vue_upload_component__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vue-upload-component */ "./node_modules/vue-upload-component/dist/vue-upload-component.js");
-/* harmony import */ var vue_upload_component__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(vue_upload_component__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var quill__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! quill */ "./node_modules/quill/dist/quill.js");
+/* harmony import */ var quill__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(quill__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _functions_PlainClipboard__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../functions/PlainClipboard */ "./resources/js/functions/PlainClipboard.js");
+/* harmony import */ var vue_quill_editor__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! vue-quill-editor */ "./node_modules/vue-quill-editor/dist/vue-quill-editor.js");
+/* harmony import */ var vue_quill_editor__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(vue_quill_editor__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var vue_upload_component__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! vue-upload-component */ "./node_modules/vue-upload-component/dist/vue-upload-component.js");
+/* harmony import */ var vue_upload_component__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(vue_upload_component__WEBPACK_IMPORTED_MODULE_3__);
 //
 //
 //
@@ -70,12 +73,15 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+
+
+quill__WEBPACK_IMPORTED_MODULE_0___default.a.register("modules/clipboard", _functions_PlainClipboard__WEBPACK_IMPORTED_MODULE_1__["default"], true);
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {
-    quillEditor: vue_quill_editor__WEBPACK_IMPORTED_MODULE_0__["quillEditor"],
-    FileUpload: vue_upload_component__WEBPACK_IMPORTED_MODULE_1___default.a
+    quillEditor: vue_quill_editor__WEBPACK_IMPORTED_MODULE_2__["quillEditor"],
+    FileUpload: vue_upload_component__WEBPACK_IMPORTED_MODULE_3___default.a
   },
   props: {
     size: String,
@@ -734,6 +740,78 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Input_vue_vue_type_template_id_8c9de0ac___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
+
+/***/ }),
+
+/***/ "./resources/js/functions/PlainClipboard.js":
+/*!**************************************************!*\
+  !*** ./resources/js/functions/PlainClipboard.js ***!
+  \**************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var quill__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! quill */ "./node_modules/quill/dist/quill.js");
+/* harmony import */ var quill__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(quill__WEBPACK_IMPORTED_MODULE_0__);
+function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Date.prototype.toString.call(Reflect.construct(Date, [], function () {})); return true; } catch (e) { return false; } }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+
+var Clipboard = quill__WEBPACK_IMPORTED_MODULE_0___default.a["import"]('modules/clipboard');
+var Delta = quill__WEBPACK_IMPORTED_MODULE_0___default.a["import"]('delta');
+
+var PlainClipboard = /*#__PURE__*/function (_Clipboard) {
+  _inherits(PlainClipboard, _Clipboard);
+
+  var _super = _createSuper(PlainClipboard);
+
+  function PlainClipboard() {
+    _classCallCheck(this, PlainClipboard);
+
+    return _super.apply(this, arguments);
+  }
+
+  _createClass(PlainClipboard, [{
+    key: "onPaste",
+    value: function onPaste(e) {
+      e.preventDefault();
+      var range = this.quill.getSelection();
+      var text = e.clipboardData.getData('text/plain');
+      var delta = new Delta().retain(range.index)["delete"](range.length).insert(text);
+      var index = text.length + range.index;
+      var length = 0;
+      this.quill.updateContents(delta, 'silent');
+      this.quill.setSelection(index, length, 'silent');
+      this.quill.scrollIntoView();
+      var length2 = this.quill.getSelection().index;
+      this.quill.insertText(length2, ' ', '', true);
+    }
+  }]);
+
+  return PlainClipboard;
+}(Clipboard);
+
+/* harmony default export */ __webpack_exports__["default"] = (PlainClipboard);
 
 /***/ })
 

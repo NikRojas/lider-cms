@@ -96,9 +96,14 @@
                           class
                         />
                       </div>
-                      <div class="col-12 col-lg-6">
+                      <div class="col-12">
                         <label class="font-weight-bold d-block">Válido</label>
                         <p>Desde {{ el.from_format }} hasta {{ el.to_format }}</p>
+                      </div>
+                      <div class="col-12 mb-3">
+                        <label class="font-weight-bold d-block">Link</label>
+                        <div v-if="el.link"><a style="text-decoration: underline;" :href="el.link" target="_blank">{{ el.link }}</a></div>
+                        <p v-else>No registrado</p>
                       </div>
                       <div class="col-12 col-lg-6">
                         <label class="font-weight-bold">Estado</label>

@@ -35,7 +35,7 @@
             <div class="col-12 col-md-6 col-lg-4">
               <div class="form-group">
                 <label class="font-weight-bold">Ubicación</label>
-                <pre v-if="el.location" style="font-family: inherit;font-size: 14px;}">{{ el.location }}</pre>
+                <div v-if="el.location" v-html="el.location">{{ el.location }}</div>
                 <p v-else>No registrado</p>
               </div>
             </div>
@@ -106,13 +106,20 @@
               <div class="col-12 col-md-6 col-lg-4">
                 <div class="form-group">
                   <label class="font-weight-bold" for="location">Ubicación</label>
-                  <textarea
+                  <!--<textarea
                     type="text"
                     class="form-control mb-2"
                     v-model="el.location"
                     id="location"
                     rows="3"
-                  ></textarea>
+                  ></textarea>-->
+                  <quill-Editor
+                  @keydown.enter.prevent
+                  v-model="el.location"
+                  :options="editorOptions"
+                  class="ql-height-10"
+                  ref="ref_content"
+                ></quill-Editor>
                   <label
                     v-if="errors && errors.location"
                     class="mt-2 text-danger text-sm"
@@ -204,6 +211,10 @@ import { Skeleton } from "vue-loading-skeleton";
 import Button from "../../components/Button";
 import BreadCrumb from "../../components/BreadCrumb";
 import InputSelectArray from "../../components/form/InputSelectArray";
+import Quill from "quill";
+import PlainClipboard from "../../functions/PlainClipboard";
+Quill.register("modules/clipboard", PlainClipboard, true);
+import { quillEditor } from "vue-quill-editor";
 export default {
   props: {
     routeGet: String,
@@ -214,10 +225,32 @@ export default {
     Button,
     BreadCrumb,
     Skeleton,
-    InputSelectArray
+    InputSelectArray,
+    quillEditor,
   },
   data() {
     return {
+      editorOptions: {
+        placeholder: "",
+        modules: {
+          toolbar: {
+            container: [
+              ["bold", "italic", "underline", "strike"],
+              ["blockquote"],
+              [{ header: 1 }, { header: 2 }],
+              [{ list: "ordered" }, { list: "bullet" }],
+              [{ indent: "-1" }, { indent: "+1" }],
+              //[{ size: [false] }],
+              [{ header: [1, 2, 3, 4, 5, false] }],
+              //[{ font: [false] }],
+              [{ color: [] }, { background: [] }],
+              [{ align: [] }],
+              //['clean'],
+              ["link"],
+            ],
+          },
+        },
+      },
       el: {
         location: "",
         main_office: "",

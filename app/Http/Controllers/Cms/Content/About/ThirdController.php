@@ -92,7 +92,7 @@ class ThirdController extends Controller
 
     public function update(AboutProjectFinishRequest $request, AboutProjectFinished $element)
     {
-        $request_element = request(["title_es", "title_en", "description_es", "description_en", "type_video", "url_video", "project"]);
+        $request_element = request(["name", "description_es", "description_en", "active"]);
             if ($request->hasFile('image')) {
                 $image_name = $this->setFileName('pf-', $request->file('image'));
                 $store_image = Storage::disk('public')->putFileAs('img/about/', $request->file('image'), $image_name);

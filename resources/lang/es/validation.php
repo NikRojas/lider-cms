@@ -211,7 +211,8 @@ return [
         'room' => 'dormitorio',
         'document_number' => 'dni',
         'area'=> 'área',
-        'price' => 'precio'
+        'price' => 'precio',
+        'link_jobs' => 'link trabaja con nosotros'
     ],
 
 ];

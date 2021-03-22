@@ -39,6 +39,7 @@ class GeneralInformationRequest extends FormRequest
             'main_office' => 'nullable|sometimes|digits:7',
             'email' => 'required|email|max:100',
             'billing_url' => 'nullable|sometimes|url',
+            'link_jobs' => 'nullable|sometimes|url',
             //'whatsapp_numbers' => 'required',
             'whatsapp_numbers.*.number' => 'required',
             'whatsapp_numbers.*.department' => 'required',

@@ -19,7 +19,7 @@ class SeoController extends Controller
     }
 
     public function getAll(){
-        $pages = MasterPage::all();
+        $pages = MasterPage::where('title_es','!=','Trabaja con nosotros')->get();
         return response()->json($pages);    
     }
 

@@ -69,6 +69,13 @@
             </div>
             <div class="col-12 col-md-6 col-lg-4">
               <div class="form-group">
+                <label class="font-weight-bold">Link de Trabaja con Nosotros</label>
+                <p v-if="el.link_jobs"><a style="text-decoration: underline;" :href="el.link_jobs" target="_blank">{{ el.link_jobs }}</a></p>
+                <p v-else>No registrado</p>
+              </div>
+            </div>
+            <div class="col-12 col-md-6 col-lg-4">
+              <div class="form-group">
                 <label class="font-weight-bold">Whatsapps</label>
                 <p v-if="!el.whatsapp_numbers">No registrado</p>
                 <p v-else> <span class="d-block" v-for="(el2,i) in el.whatsapp_formatted" :key="i">{{ el2.department }} - {{ el2.number }}</span> </p>
@@ -82,6 +89,8 @@
                 <p v-else> <span class="d-block" v-for="(el2,i) in el.phone_numbers_formatted" :key="i">{{ el2.department }} - {{ el2.number }}</span> </p>
               </div>
             </div>
+
+            
 
           </div>
         </div>
@@ -165,13 +174,25 @@
 
               <div class="col-12 col-md-6 col-lg-4">
                 <div class="form-group">
-                  <label class="font-weight-bold" for="email">Link Facturación</label>
+                  <label class="font-weight-bold" for="billing_url">Link Facturación</label>
                   <input type="text" class="form-control" v-model="el.billing_url" id="billing_url" />
                   <label
                     v-if="errors && errors.billing_url"
                     class="mt-2 text-danger text-sm"
                     for="billing_url"
                   >{{ errors.billing_url[0] }}</label>
+                </div>
+              </div>
+
+              <div class="col-12 col-md-6 col-lg-4">
+                <div class="form-group">
+                  <label class="font-weight-bold" for="link_jobs">Link Trabaja con Nosotros</label>
+                  <input type="text" class="form-control" v-model="el.link_jobs" id="link_jobs" />
+                  <label
+                    v-if="errors && errors.link_jobs"
+                    class="mt-2 text-danger text-sm"
+                    for="link_jobs"
+                  >{{ errors.link_jobs[0] }}</label>
                 </div>
               </div>
 
@@ -190,6 +211,8 @@
                         :array.sync="el.phone_numbers"
                         :array-prop="el.phone_numbers" :selectItems="departments"/>
               </div>
+
+              
 
               <div class="col-12 text-right">
                 <Button

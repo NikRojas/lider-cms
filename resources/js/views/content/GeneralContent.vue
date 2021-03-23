@@ -175,6 +175,11 @@
                                   'col-lg-8': field.value,
                                 }"
                               >
+                                <div v-if="field.name == 'Fondo'">
+                                <small class="d-block mb-0 lh-1">Resolución recomendada: 1440x250px</small> 
+                                <small class="d-block mb-0 lh-1">Formato: JPG</small> 
+                                <small class="d-block mb-2 lh-1">Tamaño recomendado: No mayor a 300KB</small>
+                                </div>
                                 <vue-dropzone
                                   :ref="`ref_${field.variable}`"
                                   @vdropzone-file-added="
@@ -183,8 +188,8 @@
                                       $refs['ref_' + field.variable][0]
                                         .dropzone,
                                       1,
-                                      250000,
-                                      '250kb'
+                                      310000,
+                                      '300kb'
                                     )
                                   "
                                   :id="'id_' + field.variable"

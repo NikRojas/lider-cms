@@ -167,7 +167,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n.loading-svg[data-v-e0422746]{\r\n    fill: currentColor;\r\n    stroke: currentColor;\n}\r\n", ""]);
+exports.push([module.i, "\n.loading-svg[data-v-e0422746]{\n    fill: currentColor;\n    stroke: currentColor;\n}\n", ""]);
 
 // exports
 

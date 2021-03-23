@@ -91,6 +91,9 @@
             <div class="col-12">
               <div class="form-group">
                 <label class="font-weight-bold" for="image">Imagen:</label>
+                <small class="d-block mb-0 lh-1">Resolución recomendada: 100x80px</small> 
+                  <small class="d-block mb-0 lh-1">Formato: PNG</small> 
+                  <small class="d-block mb-2 lh-1">Tamaño recomendado: No mayor a 100KB</small>
                 <div class="row">
                   <div class="col " v-if="element.logo">
                     <div class="mt-2 bg-dark p-3 d-inline-block">
@@ -105,7 +108,7 @@
                     <vue-dropzone
                       ref="ref_image"
                       class="text-center"
-                      @vdropzone-file-added="$validateImageDropzone($event,$refs.ref_image.dropzone,1,100000,'100kb')"
+                      @vdropzone-file-added="$validateImageDropzone($event,$refs.ref_image.dropzone,1,110000,'100kb')"
                       id="image"
                       :options="dropzoneOptions"
                       :duplicateCheck="true"

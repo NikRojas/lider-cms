@@ -80,6 +80,9 @@
                       <label class="font-weight-bold" for="image"
                         >Logo Blanco:</label
                       >
+                       <small class="d-block mb-0 lh-1">Resolución recomendada: 200×100px</small> 
+                    <small class="d-block mb-0 lh-1">Formato: PNG</small> 
+                    <small class="d-block mb-2 lh-1">Tamaño recomendado: No mayor a 100KB</small>
                       <vue-dropzone
                         ref="ref_logo"
                         @vdropzone-file-added="
@@ -87,8 +90,8 @@
                             $event,
                             $refs.ref_logo.dropzone,
                             1,
-                            51200,
-                            '50kb'
+                            110000,
+                            '100kb'
                           )
                         "
                         id="image"
@@ -118,6 +121,9 @@
                       <label class="font-weight-bold" for="image_colour"
                         >Logo Color:</label
                       >
+                       <small class="d-block mb-0 lh-1">Resolución recomendada: 200×100px</small> 
+                    <small class="d-block mb-0 lh-1">Formato: PNG</small> 
+                    <small class="d-block mb-2 lh-1">Tamaño recomendado: No mayor a 100KB</small>
                       <vue-dropzone
                         ref="ref_logo_colour"
                         @vdropzone-file-added="
@@ -125,8 +131,8 @@
                             $event,
                             $refs.ref_logo_colour.dropzone,
                             1,
-                            51200,
-                            '50kb'
+                            100000,
+                            '100kb'
                           )
                         "
                         id="image_colour"
@@ -156,6 +162,9 @@
                       <label class="font-weight-bold" for="image"
                         >Card Proyecto:</label
                       >
+                       <small class="d-block mb-0 lh-1">Resolución recomendada: 400×410px</small> 
+                    <small class="d-block mb-0 lh-1">Formato: JPG</small> 
+                    <small class="d-block mb-2 lh-1">Tamaño recomendado: No mayor a 100KB</small>
                       <vue-dropzone
                         ref="ref_card"
                         @vdropzone-file-added="
@@ -163,8 +172,8 @@
                             $event,
                             $refs.ref_card.dropzone,
                             1,
-                            1024000,
-                            '1mb'
+                            110000,
+                            '100kb'
                           )
                         "
                         id="image_card"
@@ -194,6 +203,9 @@
                       <label class="font-weight-bold" for="image_colour"
                         >Card Hover Proyecto:</label
                       >
+                      <small class="d-block mb-0 lh-1">Resolución recomendada: 700×410px</small> 
+                    <small class="d-block mb-0 lh-1">Formato: JPG</small> 
+                    <small class="d-block mb-2 lh-1">Tamaño recomendado: No mayor a 250KB</small>
                       <vue-dropzone
                         ref="ref_card_hover"
                         @vdropzone-file-added="
@@ -201,8 +213,8 @@
                             $event,
                             $refs.ref_card_hover.dropzone,
                             1,
-                            1024000,
-                            '1mb'
+                            260000,
+                            '250kb'
                           )
                         "
                         id="image_card_hover"
@@ -514,6 +526,9 @@
                       <label class="font-weight-bold" for="banner"
                         >Banner</label
                       >
+                      <small class="d-block mb-0 lh-1">Resolución recomendada: 650x700px</small> 
+                    <small class="d-block mb-0 lh-1">Formato: JPG</small> 
+                    <small class="d-block mb-2 lh-1">Tamaño recomendado: No mayor a 300KB</small>
                       <vue-dropzone
                         ref="ref_banner"
                         @vdropzone-file-added="
@@ -521,8 +536,8 @@
                             $event,
                             $refs.ref_banner.dropzone,
                             1,
-                            512000,
-                            '500kb'
+                            310000,
+                            '300kb'
                           )
                         "
                         id="image"
@@ -773,6 +788,9 @@
                       <label class="font-weight-bold" for="banner"
                         >Imagen Mapa</label
                       >
+                      <small class="d-block mb-0 lh-1">Resolución recomendada: 1100x680px</small> 
+                    <small class="d-block mb-0 lh-1">Formato: JPG</small> 
+                    <small class="d-block mb-2 lh-1">Tamaño recomendado: No mayor a 300KB</small>
                       <vue-dropzone
                         ref="ref_map"
                         @vdropzone-file-added="
@@ -780,8 +798,8 @@
                             $event,
                             $refs.ref_map.dropzone,
                             1,
-                            512000,
-                            '500kb'
+                            310000,
+                            '300kb'
                           )
                         "
                         id="image"

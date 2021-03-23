@@ -434,7 +434,10 @@
                           elText.first_block_2.image ? 'col-lg-8' : 'col-lg-12',
                         ]"
                         v-if="editBlock"
-                      >
+                      > 
+                         <small class="d-block mb-0 lh-1">Resolución recomendada: 500×300px</small> 
+                    <small class="d-block mb-0 lh-1">Formato: JPG</small> 
+                    <small class="d-block mb-2 lh-1">Tamaño recomendado: No mayor a 150KB</small>
                         <vue-dropzone
                           ref="ref_first_block_2_image"
                           @vdropzone-file-added="
@@ -442,8 +445,8 @@
                               $event,
                               $refs.ref_first_block_2_image.dropzone,
                               1,
-                              100000,
-                              '100kb'
+                              160000,
+                              '150kb'
                             )
                           "
                           id="first_block_2_image"
@@ -549,6 +552,9 @@
                         ]"
                         v-if="editBlock"
                       >
+                         <small class="d-block mb-0 lh-1">Resolución recomendada: 500×300px</small> 
+                    <small class="d-block mb-0 lh-1">Formato: JPG</small> 
+                    <small class="d-block mb-2 lh-1">Tamaño recomendado: No mayor a 150KB</small>
                         <vue-dropzone
                           ref="ref_first_block_4_image"
                           @vdropzone-file-added="
@@ -556,8 +562,8 @@
                               $event,
                               $refs.ref_first_block_4_image.dropzone,
                               1,
-                              100000,
-                              '100kb'
+                              160000,
+                              '150kb'
                             )
                           "
                           id="first_block_4_image"

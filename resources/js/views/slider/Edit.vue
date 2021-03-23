@@ -20,6 +20,9 @@
                 <div class="row">
 
                   <div class="col-12 col-md-6">
+                      <small class="d-block mb-0 lh-1">Resolución recomendada: 1920×969px</small> 
+                  <small class="d-block mb-0 lh-1">Formato: JPG</small> 
+                  <small class="d-block mb-2 lh-1">Tamaño recomendado: No mayor a 300KB</small>
                     <ImageForm label="Imagen"
                     variable="image"
                     folder="slider"
@@ -32,6 +35,9 @@
                   </div>
 
                   <div class="col-12 col-md-6">
+                     <small class="d-block mb-0 lh-1">Resolución recomendada: 600×965px</small> 
+                  <small class="d-block mb-0 lh-1">Formato: JPG</small> 
+                  <small class="d-block mb-2 lh-1">Tamaño recomendado: No mayor a 200KB</small>
                     <ImageForm label="Imagen Responsive"
                     variable="image_responsive"
                     :errors="errors"

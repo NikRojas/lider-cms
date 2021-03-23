@@ -168,9 +168,11 @@
           <div class="row">
             <div class="col-12">
               <div class="form-group">
-                <label class="font-weight-bold" for="image">Imagen:</label>
                 <div class="row">
                   <div class="col-12 col-md-12">
+                     <small class="d-block mb-0 lh-1">Resolución recomendada: 1315x870px</small> 
+                  <small class="d-block mb-0 lh-1">Formato: JPG</small> 
+                  <small class="d-block mb-2 lh-1">Tamaño recomendado: No mayor a 300KB</small>
                     <ImageForm
                       label="Imagen"
                       variable="image"
@@ -185,6 +187,9 @@
                   </div>
 
                   <div class="col-12 col-md-12">
+                     <small class="d-block mb-0 lh-1">Resolución recomendada: 500x510px</small> 
+                  <small class="d-block mb-0 lh-1">Formato: JPG</small> 
+                  <small class="d-block mb-2 lh-1">Tamaño recomendado: No mayor a 150KB</small>
                     <ImageForm
                       label="Imagen Responsive"
                       variable="image_responsive"

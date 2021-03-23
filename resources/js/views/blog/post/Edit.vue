@@ -131,6 +131,9 @@
               <div class="card-body">
                 <div class="form-group">
                   <label class="font-weight-bold d-block" for="thumbnail">Miniatura</label>
+                  <small class=" d-block mb-0 lh-1">Resolución recomendada: 590x330px</small> 
+                  <small class=" d-block mb-0 lh-1">Formato: JPG</small> 
+                  <small class=" d-block mb-2 lh-1">Tamaño recomendado: No mayor a 150KB</small>
                   <div class="row">
                     <div class="col-lg-4 mb-3 mb-lg-0">
                       <img :src="imagesUrl+'/posts/'+element.thumbnail" alt class="img-fluid" />
@@ -138,7 +141,7 @@
                     <div class="col-lg-8">
                       <vue-dropzone
                         ref="ref_thumbnail"
-                        @vdropzone-file-added="$validateImageDropzone($event,$refs.ref_thumbnail.dropzone,1,100000,'100kb')"
+                        @vdropzone-file-added="$validateImageDropzone($event,$refs.ref_thumbnail.dropzone,1,160000,'150kb')"
                         id="id_thumbnail"
                         :options="dropzoneOptions"
                         :duplicateCheck="true"
@@ -162,7 +165,9 @@
 
                 <div class="form-group mb-0">
                   <label class="font-weight-bold d-block" for="image">Imagen</label>
-
+                  <small class="d-block mb-0 lh-1">Resolución recomendada: 900x500px</small> 
+                  <small class="d-block mb-0 lh-1">Formato: JPG</small> 
+                  <small class="d-block mb-2 lh-1">Tamaño recomendado: No mayor a 250KB</small>
                   <div class="row">
                     <div class="col-lg-4 mb-3 mb-lg-0">
                       <img :src="imagesUrl+'/posts/'+element.image" alt class="img-fluid" />
@@ -170,7 +175,7 @@
                     <div class="col-lg-8">
                       <vue-dropzone
                         ref="ref_image"
-                        @vdropzone-file-added="$validateImageDropzone($event,$refs.ref_image.dropzone,1,100000,'100kb')"
+                        @vdropzone-file-added="$validateImageDropzone($event,$refs.ref_image.dropzone,1,260000,'250kb')"
                         id="id_image"
                         :options="dropzoneOptions"
                         :duplicateCheck="true"

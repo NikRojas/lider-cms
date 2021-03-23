@@ -144,6 +144,9 @@
             <div class="col-12">
               <div class="form-group">
                 <label class="font-weight-bold" for="image">Imagen:</label>
+                 <small class="d-block mb-0 lh-1">Resolución recomendada: 1050x600px</small> 
+                  <small class="d-block mb-0 lh-1">Formato: JPG</small> 
+                  <small class="d-block mb-2 lh-1">Tamaño recomendado: No mayor a 300KB</small>
                 <div class="row">
                   <div class="col text-center" v-if="element.image">
                     <img
@@ -161,8 +164,8 @@
                           $event,
                           $refs.ref_image.dropzone,
                           1,
-                          512000,
-                          '500kb'
+                          310000,
+                          '300kb'
                         )
                       "
                       id="image"

@@ -40,7 +40,7 @@ class ProjectQuotationObserver
         $lead->save();
         $advisor = Advisor::find($advisorId);
 
-        $lead = $lead->load('projectRel.statusRel','advisorRel','projectTypeDepartmentRel');
+        $lead = $lead->load('projectRel.statusRel','advisorRel','projectTypeDepartmentRel','projectRel.financingOptionsRel');
         Notification::route('mail',$advisor->email)->notify(new ProjectQuotationNotification($lead));  
         Notification::route('mail',$lead->email)->notify(new UserProjectQuotationNotification($lead));  
     }

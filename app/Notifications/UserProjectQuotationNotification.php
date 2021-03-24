@@ -26,7 +26,7 @@ class UserProjectQuotationNotification extends Notification implements ShouldQue
     public function __construct($lead)
     {
         $this->lead = $lead;
-        $this->financingOptions = FinancingOption::where('active',true)->orderBy('index','asc')->get();
+        //$this->financingOptions = FinancingOption::where('active',true)->orderBy('index','asc')->get();
         /*$this->project = $project->load('statusRel');
         $this->typeDepartment = $typeDepartment;
         $this->advisor = $advisor;*/

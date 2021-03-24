@@ -535,7 +535,9 @@
                 <div class="row">
                   <div class="col-12 mb-3">
                     <h3 class="font-weight-normal">
-                      <span class="d-block font-weight-bold">Dirección Corta:</span>
+                      <span class="d-block font-weight-bold"
+                        >Dirección Corta:</span
+                      >
                       {{ element.location }}
                     </h3>
                   </div>
@@ -730,6 +732,34 @@
                       ></div>
                       <p v-else>No registrado.</p>
                     </h3>
+                  </div>
+
+                  <div class="col-12">
+                    <h3 class="font-weight-normal">
+                      <span class="d-block font-weight-bold"
+                        >Opciones de Financiamiento:</span
+                      >
+                    </h3>
+                    <div
+                      class="row"
+                      v-if="element.financing_options_rel.length"
+                    >
+                      <div class="col-12">
+                        <ol>
+                          <li
+                            v-for="el in element.financing_options_rel"
+                            :key="el.id"
+                          >
+                            <span class="d-block">{{ el.name }}</span>
+                          </li>
+                        </ol>
+                      </div>
+                    </div>
+                    <div class="row" v-else>
+                      <div class="col-12 col-lg-6">
+                        <p>No registrado</p>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>

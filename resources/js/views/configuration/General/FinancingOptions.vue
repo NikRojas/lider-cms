@@ -69,14 +69,14 @@
                   >{{ errors.name[0] }}</label
                 >
               </div>
-              <div class="form-group">
+              <!--<div class="form-group">
                 <b-form-checkbox
                         id="id_checkbox_active"
                         v-model="element.active"
                         name="check-button"
                         switch
                       >Habilitado</b-form-checkbox>
-              </div>
+              </div>-->
             </div>
           </div>
         </form>

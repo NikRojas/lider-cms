@@ -19,14 +19,15 @@ class FinancingOptionsController extends Controller
    $data[] = array(
     "id" => $el["id"],
     "name" => $el["name"],
-    "status" => $el["active"] ? "<span class='badge badge-pill badge-info badge-lg'>Habilitado</span>" : "<span class='badge badge-pill badge-danger badge-lg'>Deshabilitado</span>",
+    //"status" => $el["active"] ? "<span class='badge badge-pill badge-info badge-lg'>Habilitado</span>" : "<span class='badge badge-pill badge-danger badge-lg'>Deshabilitado</span>",
    );
   }
   if (isset($data)) {
    $elements["data"] = '';
    $elements["data"] = $data;
   }
-  $headers = ["Id", "Nombre", "Estado"];
+  //$headers = ["Id", "Nombre", "Estado"];
+  $headers = ["Id", "Nombre"];
   $elements["headers"] = $headers;
   return response()->json($elements);
  }

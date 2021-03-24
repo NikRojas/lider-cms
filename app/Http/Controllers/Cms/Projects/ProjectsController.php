@@ -56,6 +56,7 @@ class ProjectsController extends Controller
         $element["advisors"] = $element->advisorsRel->pluck('pivot.advisor_id');
         $element["features"] = $element->featuresRel->pluck('pivot.feature_id');
         $element["bonds"] = $element->bondsRel->pluck('pivot.bond_id');
+        $element["financing_options"] = $element->financingOptionsRel->pluck('pivot.financing_option_id');
         $projects_related = [];
         if ($element->projects_related) {
             $projects_related = json_decode($element->projects_related);
@@ -67,7 +68,7 @@ class ProjectsController extends Controller
     public function read($element)
     {
         $element = Project::where('slug_es', $element)->firstOrFail();
-        $element = $element->load('advisorsRel', 'banksRel', 'featuresRel', 'ubigeoRel', 'statusRel', 'bondsRel');
+        $element = $element->load('advisorsRel', 'banksRel', 'featuresRel', 'ubigeoRel', 'statusRel', 'bondsRel','financingOptionsRel');
         
         $projects_related = null;
         if ($element->projects_related) {
@@ -164,6 +165,9 @@ class ProjectsController extends Controller
         if ($request->bonds) {
             $bonds = json_decode($request->bonds);
         }
+        if ($request->financing_options) {
+            $financing_options = json_decode($request->financing_options);
+        }
         try {
             foreach ($advisors as $key => $value) {
                 $project->advisorsRel()->attach($value);
@@ -177,6 +181,11 @@ class ProjectsController extends Controller
             if ($request->bonds) {
                 foreach ($bonds as $key => $value) {
                     $project->bondsRel()->attach($value);
+                }
+            }
+            if ($request->financing_options) {
+                foreach ($financing_options as $key => $value) {
+                    $project->financingOptionsRel()->attach($value);
                 }
             }
             $request->session()->flash('success', trans('custom.message.create.success', ['name' => trans('custom.attribute.project')]));
@@ -236,7 +245,7 @@ class ProjectsController extends Controller
         }
         
         $images_decode = $element->images_format;
-        \Log::info($images_decode);
+        //\Log::info($images_decode);
         //actualizacion 02/03/2021
         if ($request->hasFile('card')) {
             $cardName = $this->setFileName('c-', $request->file('card'));
@@ -394,6 +403,9 @@ class ProjectsController extends Controller
         if ($request->bonds) {
             $bonds = json_decode($request->bonds);
         }
+        if ($request->financing_options) {
+            $financing_options = json_decode($request->financing_options);
+        }
         try {
             $project->advisorsRel()->sync([]);
             foreach ($advisors as $key => $value) {
@@ -415,6 +427,16 @@ class ProjectsController extends Controller
             } else {
                 if ($project->bondsRel()) {
                     $project->bondsRel()->sync([]);
+                }
+            }
+            if ($request->financing_options) {
+                $project->financingOptionsRel()->sync([]);
+                foreach ($financing_options as $key => $value) {
+                    $project->financingOptionsRel()->attach($value);
+                }
+            } else {
+                if ($project->financingOptionsRel()) {
+                    $project->financingOptionsRel()->sync([]);
                 }
             }
             $request->session()->flash('success', trans('custom.message.update.success', ['name' => trans('custom.attribute.project')]));

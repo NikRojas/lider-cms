@@ -517,7 +517,7 @@
                                             </tr>
                                         </tbody>
                                     </table>
-                                    @if(count($financingOptions) > 0)
+                                    @if(count($lead->projectRel->financingOptionsRel) > 0)
                                     <table class="row" style="border-collapse:collapse;border-spacing:0;display:table;padding:0;padding-bottom:0;padding-left:0;padding-right:0;padding-top:0;position:relative;text-align:left;vertical-align:top;width:100%">
                                         <tbody>
                                             <tr style="padding-bottom:0;padding-left:0;padding-right:0;padding-top:0;text-align:left;vertical-align:top">
@@ -546,7 +546,7 @@
                                                                 <th style="-moz-hyphens:auto;-webkit-hyphens:auto;Margin:0;border-collapse:collapse!important;color:#0a0a0a;font-family:Helvetica,Arial,sans-serif;font-size:16px;font-weight:400;hyphens:auto;line-height:1.3;margin:0;padding-bottom:0;padding-left:0;padding-right:0;padding-top:0;text-align:left;vertical-align:top;word-wrap:break-word">
                                                                     <ol style="padding-top:0;margin-top:0;margin-bottom:0;padding-right:20px;padding-left:20px">
                                                                         
-                                                                        @foreach($financingOptions as $el )
+                                                                        @foreach($lead->projectRel->financingOptionsRel as $el )
                                                                         <li style="margin-bottom:.5rem">{{ $el->name}}</li>
                                                                         @endforeach
                                                                     </ol>

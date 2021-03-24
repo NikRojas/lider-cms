@@ -107,4 +107,9 @@ class Project extends Model
     {
         return $this->hasOne('App\Ubigeo', 'code_ubigeo', 'code_ubigeo');
     }
+
+    public function financingOptionsRel()
+    {
+        return $this->belongsToMany('App\FinancingOption', 'projects_financing_options', 'project_id', 'financing_option_id');
+    }
 }

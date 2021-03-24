@@ -80,6 +80,9 @@
                       <label class="font-weight-bold" for="image"
                         >Logo Blanco:</label
                       >
+                       <small class="d-block mb-0 lh-1">Resolución recomendada: 200×100px</small> 
+                    <small class="d-block mb-0 lh-1">Formato: PNG</small> 
+                    <small class="d-block mb-2 lh-1">Tamaño recomendado: No mayor a 100KB</small>
                       <div class="row">
                         <div class="col-lg-4 mb-3 mb-lg-0">
                           <img
@@ -96,8 +99,8 @@
                                 $event,
                                 $refs.ref_logo.dropzone,
                                 1,
-                                51200,
-                                '50kb'
+                                110000,
+                            '100kb'
                               )
                             "
                             id="image"
@@ -129,6 +132,9 @@
                       <label class="font-weight-bold" for="image_colour"
                         >Logo Color:</label
                       >
+                      <small class="d-block mb-0 lh-1">Resolución recomendada: 200×100px</small> 
+                    <small class="d-block mb-0 lh-1">Formato: PNG</small> 
+                    <small class="d-block mb-2 lh-1">Tamaño recomendado: No mayor a 100KB</small>
                       <div class="row">
                         <div class="col-lg-4 mb-3 mb-lg-0">
                           <img
@@ -147,8 +153,8 @@
                                 $event,
                                 $refs.ref_logo_colour.dropzone,
                                 1,
-                                51200,
-                                '50kb'
+                                110000,
+                            '100kb'
                               )
                             "
                             id="image_colour"
@@ -180,6 +186,9 @@
                       <label class="font-weight-bold" for="image"
                         >Card Proyecto:</label
                       >
+                       <small class="d-block mb-0 lh-1">Resolución recomendada: 400×410px</small> 
+                    <small class="d-block mb-0 lh-1">Formato: JPG</small> 
+                    <small class="d-block mb-2 lh-1">Tamaño recomendado: No mayor a 100KB</small>
                       <div class="row">
                         <div class="col-lg-4 mb-3 mb-lg-0">
                           <img
@@ -197,8 +206,8 @@
                                 $event,
                                 $refs.ref_card.dropzone,
                                 1,
-                                1024000,
-                                '1mb'
+                                110000,
+                            '100kb'
                               )
                             "
                             id="image_card"
@@ -231,6 +240,9 @@
                       <label class="font-weight-bold" for="image"
                         >Card Hover Proyecto:</label
                       >
+                       <small class="d-block mb-0 lh-1">Resolución recomendada: 700×410px</small> 
+                    <small class="d-block mb-0 lh-1">Formato: JPG</small> 
+                    <small class="d-block mb-2 lh-1">Tamaño recomendado: No mayor a 250KB</small>
                       <div class="row">
                         <div class="col-lg-4 mb-3 mb-lg-0">
                           <img
@@ -248,8 +260,8 @@
                                 $event,
                                 $refs.ref_card_hover.dropzone,
                                 1,
-                                1024000,
-                                '1mb'
+                                 260000,
+                            '250kb'
                               )
                             "
                             id="image_card_hover"
@@ -600,6 +612,9 @@
                       <label class="font-weight-bold" for="banner"
                         >Banner:</label
                       >
+                      <small class="d-block mb-0 lh-1">Resolución recomendada: 650x700px</small> 
+                    <small class="d-block mb-0 lh-1">Formato: JPG</small> 
+                    <small class="d-block mb-2 lh-1">Tamaño recomendado: No mayor a 300KB</small>
                       <div class="row">
                         <div class="col-lg-4 mb-3 mb-lg-0">
                           <img
@@ -616,8 +631,8 @@
                                 $event,
                                 $refs.ref_banner.dropzone,
                                 1,
-                                512000,
-                                '500kb'
+                                310000,
+                            '300kb'
                               )
                             "
                             id="image"
@@ -865,8 +880,11 @@
                   <div class="col-12">
                     <div class="form-group">
                       <label class="font-weight-bold" for="iframe_map"
-                        >Map:</label
+                        >Imagen Mapa:</label
                       >
+                       <small class="d-block mb-0 lh-1">Resolución recomendada: 1100x680px</small> 
+                    <small class="d-block mb-0 lh-1">Formato: JPG</small> 
+                    <small class="d-block mb-2 lh-1">Tamaño recomendado: No mayor a 300KB</small>
                       <div class="row">
                         <div class="col-lg-4 mb-3 mb-lg-0">
                           <img
@@ -883,8 +901,8 @@
                                 $event,
                                 $refs.ref_map.dropzone,
                                 1,
-                                512000,
-                                '500kb'
+                                310000,
+                            '300kb'
                               )
                             "
                             id="image"
@@ -1020,6 +1038,15 @@
                       >
                     </div>
                   </div>
+
+                  <div class="col-12">
+                    <FinancingOptions
+                      :errors="errors"
+                      :selectedParent="element.financing_options"
+                      :selected.sync="element.financing_options"
+                      :images-url="imagesUrl"
+                    />
+                  </div>
                 </div>
               </div>
             </div>
@@ -1067,6 +1094,7 @@ import vue2Dropzone from "vue2-dropzone";
 import BreadCrumb from "../../components/BreadCrumb";
 import ImageForm from "../../components/form/Image";
 import FinancialEntities from "../../components/form/FinancialEntities";
+import FinancingOptions from "../../components/form/FinancingOptions";
 import Advisors from "../../components/form/Advisors";
 import Statuses from "../../components/form/Statuses";
 import Features from "../../components/form/Features";
@@ -1087,6 +1115,7 @@ export default {
     PdfIcon,
     MultipleFiles,
     Money,
+    FinancingOptions,
     Editor,
     Statuses,
     Ubigeo,
@@ -1374,6 +1403,9 @@ export default {
       }
       if (this.element.bonds) {
         fd.append("bonds", JSON.stringify(this.element.bonds));
+      }
+      if (this.element.financing_options) {
+        fd.append("financing_options", JSON.stringify(this.element.financing_options));
       }
       if (this.element.projects_related.length) {
         fd.append(

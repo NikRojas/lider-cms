@@ -131,7 +131,7 @@
                             $event,
                             $refs.ref_logo_colour.dropzone,
                             1,
-                            100000,
+                            110000,
                             '100kb'
                           )
                         "
@@ -933,6 +933,14 @@
                       >
                     </div>
                   </div>
+
+                  <div class="col-12">
+                    <FinancingOptions
+                      :errors="errors"
+                      :selected.sync="element.financing_options"
+                      :images-url="imagesUrl"
+                    />
+                  </div>
                 </div>
               </div>
             </div>
@@ -990,6 +998,7 @@ import Editor from "../../components/form/Editor";
 import Textarea from "../../components/form/Textarea";
 import InputSlug from "../../components/form/InputSlug";
 import MultipleFiles from "../../components/form/MultipleFiles";
+import FinancingOptions from "../../components/form/FinancingOptions";
 import { Money } from "v-money";
 export default {
   components: {
@@ -1007,6 +1016,7 @@ export default {
     Advisors,
     Features,
     InputSlug,
+    FinancingOptions,
     Bonds,
     ProjectsRelated,
     quillEditor,
@@ -1064,6 +1074,7 @@ export default {
       element: {
         active: true,
         bonds: [],
+        financing_options: [],
         form_videocall: true,
         projects_related: [],
       },
@@ -1300,6 +1311,9 @@ export default {
       }
       if (this.element.bonds.length) {
         fd.append("bonds", JSON.stringify(this.element.bonds));
+      }
+      if (this.element.financing_options.length) {
+        fd.append("financing_options", JSON.stringify(this.element.financing_options));
       }
       if (this.element.projects_related.length) {
         fd.append(

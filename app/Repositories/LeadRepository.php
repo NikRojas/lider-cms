@@ -27,12 +27,17 @@ class LeadRepository
             ->paginate($items_per_page);
         }
         foreach ($leads as $lead) {
+            $department = "No registrado";
+            if($lead["department"]){
+                $department = $lead["department"];
+            }
             $data[] = array(
                 "id" => $lead["id"],
                 "name" => $lead['name'],
                 "mobile" => $lead["mobile_format"],
                 "dni" => $lead["document_number"],
                 "email" => $lead["email"],
+                "department" => $department,
                 "source" => $lead["sourceRel"]["name"],
                 "created_at" => $lead["created_at_format"],
             );

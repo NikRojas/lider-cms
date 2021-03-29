@@ -22,6 +22,7 @@ class TraditionalRequest extends FormRequest
           'digits_between' => 'Debe ingresar un número de teléfono o celular entre :min y :max dígitos.',
           'email.email' => 'Por favor ingrese un :attribute válido.',
           'name.required' => 'Por favor ingrese su :attribute.',
+          'department.required' => 'Por favor ingrese su sede.',
           'required' => 'Por favor ingrese su :attribute.',
           'mobile.required' => 'Por favor ingrese su teléfono o celular.',
           'lead_medium_id.required' => 'Por favor ingrese el medio por el que desee ser contactado.',
@@ -40,6 +41,7 @@ class TraditionalRequest extends FormRequest
           'email' =>  'required|max:100|email',
           'mobile' => 'required|digits_between:7,9',
           'document_number' => 'required|digits:8',
+          'department' => 'required',
           //'lead_medium_id' => 'required',
           'accepted' => 'accepted'
         ];

@@ -8,7 +8,7 @@ use Carbon\Carbon;
 class Post extends Model
 {
     protected $guarded = [];
-    protected $appends = ['published_format','date_format'];
+    protected $appends = ['published_format','date_format','created_at_format'];
 
     public function category()
     {
@@ -45,5 +45,9 @@ class Post extends Model
         else{
             return "<i class='fas fa-circle text-danger'></i>";
         }
+    }
+
+    public function getCreatedAtFormatAttribute( ) {
+        return (new Carbon($this->created_at))->format('d-m-Y');
     }
 }

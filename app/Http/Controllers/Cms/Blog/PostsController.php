@@ -93,7 +93,7 @@ class PostsController extends Controller
         $post = array_merge($post, ["image"=>$imageName,"thumbnail"=>$thumbnailName,"user_id"=>Auth::user()->id]);
         
         try {
-            $post = Post::UpdateOrCreate($post);
+            $post = Post::UpdateOrCreate(array_merge($post, ["created_at" => date("Y-m-d H:i:s", strtotime($request->created_at))]));
             $request->session()->flash('success', trans('custom.message.create.success', ['name' => trans('custom.attribute.post')]));
             return response()->json(["route" => route('cms.blog.posts.index')]);
         } catch (\Exception $e) {
@@ -200,7 +200,7 @@ class PostsController extends Controller
         }
         
         try {
-            $element = Post::UpdateOrCreate(["id"=>$element->id], $request_post);
+            $element = Post::UpdateOrCreate(["id"=>$element->id], array_merge($request_post, ["created_at" => date("Y-m-d H:i:s", strtotime($request->created_at_format))]));
             $request->session()->flash('success', trans('custom.message.update.success', ['name' => trans('custom.attribute.post')]));
             return response()->json(["route" => route('cms.blog.posts.index')]);
         } catch (\Exception $e) {

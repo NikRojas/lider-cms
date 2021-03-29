@@ -58,6 +58,27 @@
                       >Publicar</b-form-checkbox>
                     </div>
                   </div>
+
+                  <div class="col-12">
+                    <div class="form-group">
+                      <label class="font-weight-bold" for="created_at"
+                        >Fecha de Publicación</label
+                      >
+                      <date-picker
+                        :input-attr="{ id: 'created_at' }"
+                        value-type="format"
+                        v-model="element.created_at"
+                        format="DD-MM-YYYY"
+                        :first-day-of-week="1"
+                        lang="es"
+                        input-class="form-control"
+                        width="100%"
+                      >
+                        <jam-calendar></jam-calendar>
+                      </date-picker>
+                    </div>
+                  </div>
+
                   <div class="col-12">
                     <div class="form-group">
                       <Input
@@ -209,6 +230,7 @@
 </template>
 
 <script>
+import DatePicker from "vue2-datepicker";
 import NoData from "../../../components/NoData";
 import vue2Dropzone from "vue2-dropzone";
 import BreadCrumb from "../../../components/BreadCrumb";
@@ -222,6 +244,7 @@ import InputArray from "../../../components/form/InputArray2";
 import { ModelListSelect } from "vue-search-select";
 export default {
   components: {
+    DatePicker,
     BreadCrumb,
     Editor,
     vueDropzone: vue2Dropzone,
@@ -242,7 +265,7 @@ export default {
   },
   data() {
     return {
-      element: { published: true },
+      element: { published: true, created_at: new Date().getDate() + "-"+ (new Date().getMonth() + 1)+ "-" +new Date().getFullYear() },
       requestServer: false,
       categories: [],
       tags: [],
@@ -297,6 +320,10 @@ export default {
       }
       if (this.element.slug_es) {
         fd.append("slug_es", this.element.slug_es);
+      }
+
+      if (this.element.created_at) {
+        fd.append("created_at", this.element.created_at);
       }
 
       if (this.element.published) {

@@ -45,7 +45,7 @@ class PostRepository
                 "category_en" => '<span class="badge badge-pill badge-info badge-lg">'.$post["category_name_en"].'</span>',
                 "status" => $status,
                 //"published_at" => (new Carbon($post["published_at"]))->format('g:iA d-m-Y'),
-                "created_at" => $post["created_at"]
+                "created_at" => $post["created_at_format"]
             );
         }
         $posts = $posts->toArray();

@@ -6,6 +6,7 @@ use App\Advisor;
 use App\Notifications\ProjectQuotationNotification;
 use App\Notifications\UserProjectQuotationNotification;
 use App\ProjectQuotation;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Notification;
 
 class ProjectQuotationObserver
@@ -41,7 +42,9 @@ class ProjectQuotationObserver
         $advisor = Advisor::find($advisorId);
 
         $lead = $lead->load('projectRel.statusRel','advisorRel','projectTypeDepartmentRel','projectRel.financingOptionsRel');
-        Notification::route('mail',$advisor->email)->notify(new ProjectQuotationNotification($lead));  
+        if($lead->projectRel["send_to_email"]){
+            Notification::route('mail',$advisor->email)->notify(new ProjectQuotationNotification($lead));  
+        }
         Notification::route('mail',$lead->email)->notify(new UserProjectQuotationNotification($lead));  
     }
 }

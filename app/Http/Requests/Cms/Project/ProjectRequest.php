@@ -75,6 +75,12 @@ class ProjectRequest extends FormRequest
             'seo_description_es' => 'sometimes|max:160',
             'seo_description_en' => 'sometimes|max:160'
         ];
+        if($this->webhook_url_active){
+            $rules = array_merge(
+                $rules,
+                ["webhook_url" => 'required|url']
+            );
+        }
         switch ($this->method()) {
             case 'POST':
                 $rules = array_merge(

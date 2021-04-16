@@ -84,7 +84,7 @@ class ProjectsController extends Controller
         $project = request(['name_es',"description_en","description_es",'url_video','name_en','slug_en','slug_es',"rooms_es","rooms_en","footage_en","footage_es","url_google_maps","url_waze","text_place_es",
         "text_place_en","project_status_id","location","price_total","price","price_total_foreign","map_indications_es","map_indications_en",
         "sales_room_es","sales_room_en","schedule_attention_es","schedule_attention_en",'active','form_videocall','price_parking','commentary_quotation','condition_quotation','excerpt_quotation',
-        "seo_keywords_es","seo_keywords_en","seo_description_es","seo_description_en","seo_title_es","seo_title_en"]);
+        "seo_keywords_es","seo_keywords_en","seo_description_es","seo_description_en","seo_title_es","seo_title_en","webhook_url","webhook_url_active","send_to_email"]);
 
         if ($request->projects_related) {
             $project = array_merge($project, ["projects_related" => $request->projects_related]);
@@ -209,7 +209,7 @@ class ProjectsController extends Controller
         $request_project = request(['name_es',"description_en","url_video","description_es",'name_en','slug_en','slug_es',"rooms_es","rooms_en","footage_en","footage_es","url_google_maps","url_waze","text_place_es",
         "text_place_en","project_status_id","location","price_total","price","price_total_foreign","map_indications_es","map_indications_en",
         "sales_room_es","sales_room_en","schedule_attention_es","schedule_attention_en",'active','form_videocall','price_parking','commentary_quotation','condition_quotation','excerpt_quotation',
-        "seo_keywords_es","seo_keywords_en","seo_description_es","seo_description_en","seo_title_es","seo_title_en"]);
+        "seo_keywords_es","seo_keywords_en","seo_description_es","seo_description_en","seo_title_es","seo_title_en","webhook_url","webhook_url_active","send_to_email"]);
 
  
         if ($request->projects_related) {

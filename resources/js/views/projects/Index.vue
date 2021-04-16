@@ -175,6 +175,28 @@
                                     </h4>
                                   </div>
                                 </div>
+                                <div class="col-12">
+                                  Envio de Información de Cotizaciones al email de los asesores:
+                                  <span
+                                    :class="
+                                      el.send_to_email
+                                        ? 'font-weight-bold text-success'
+                                        : 'font-weight-bold text-danger'
+                                    "
+                                    >{{ el.send_to_email ? "Habilitado" : "Deshabilitado" }}</span
+                                  >
+                                </div>
+                                <div class="col-12">
+                                  Envio de Información de Cotizaciones por Webhook:
+                                  <span
+                                    :class="
+                                      el.webhook_url_active
+                                        ? 'font-weight-bold text-success'
+                                        : 'font-weight-bold text-danger'
+                                    "
+                                    >{{ el.webhook_url_active ? "Habilitado" : "Deshabilitado" }}</span
+                                  >
+                                </div>
                               </div>
                             </div>
                           </div>

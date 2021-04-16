@@ -1052,7 +1052,7 @@
             </div>
           </div>
         </div>
-        <div class="row">
+        <div class="row mb-4">
           <div class="col-12 col-lg-2">
             <h2>Proyectos Relacionados</h2>
             <p>
@@ -1071,6 +1071,80 @@
                   :images-url="imagesUrl"
                   :route-get-all="routeProjectsGetAll"
                 />
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row mb-4">
+          <div class="col-12 col-lg-2">
+            <h2>Configuración Proyecto</h2>
+            <p>Indica la configuración de notificaciones del <b>Proyecto</b> e integración webhook.</p>
+          </div>
+          <div class="col-12 col-lg-10">
+            <div class="card">
+              <div class="card-body">
+                <div class="row">
+                  <div class="col-12 mb-3">
+                    <div class="form-group">
+                        <label class="font-weight-bold">Notificación Email:</label>
+                        <p class="mb-0">
+                          Deseas enviar un correo de notificación a los asesores
+                          asignados al Proyecto, cada vez que se registre una
+                          cotización nueva en el <b>Proyecto</b>?
+                        </p>
+                        <b-form-checkbox
+                          class="ml-2"
+                          size="lg"
+                          v-model="element.send_to_email"
+                          name="check-button"
+                          switch
+                        >
+                          
+                        </b-form-checkbox>
+                        
+                    </div>
+                  </div>
+                  <div class="col-12">
+                    <div class="form-group">
+                        <label class="font-weight-bold">Webhook URL:</label>
+                        <div class="mb-0">
+                          <p>Al habilitar esta opción la información de las cotizaciones registradas en el <b>Proyecto</b> serán enviadas a la URL que defina. Además de los datos de la cotización se enviarán los siguentes datos.</p> 
+                          <b>Parámetros UTM</b>
+                          <ul>
+                            <li>UTM Source</li>
+                            <li>UTM Medium</li>
+                            <li>UTM Campaign</li>
+                            <li>UTM Term</li>
+                            <li>UTM Content</li>
+                          </ul>
+                        </div>
+                        <b-form-checkbox
+                          class="ml-2"
+                          size="lg"
+                          v-model="element.webhook_url_active"
+                          name="check-button"
+                          switch
+                        >
+                          
+                        </b-form-checkbox>
+                    </div>
+                    <div class="form-group" v-if="element.webhook_url_active">
+                      <label class="font-weight-bold" for="webhook_url">URL Destino</label>
+                        <input
+                          type="text"
+                          class="form-control"
+                          v-model="element.webhook_url"
+                          id="webhook_url"
+                        />
+                        <label
+                          v-if="errors && errors.webhook_url"
+                          class="mt-2 text-danger text-sm"
+                          for="webhook_url"
+                          >{{ errors.webhook_url[0] }}</label
+                        >
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -1459,6 +1533,19 @@ export default {
       }
       if (this.$refs.ref_image_seo.dropzone.files[0]) {
         fd.append("seo_image", this.$refs.ref_image_seo.dropzone.files[0]);
+      }
+      if (this.element.send_to_email == true) {
+        fd.append("send_to_email", 1);
+      } else {
+        fd.append("send_to_email", 0);
+      }
+      if (this.element.webhook_url_active == true) {
+        fd.append("webhook_url_active", 1);
+      } else {
+        fd.append("webhook_url_active", 0);
+      }
+      if (this.element.webhook_url) {
+        fd.append("webhook_url", this.element.webhook_url);
       }
       fd.append("_method", "put");
       axios

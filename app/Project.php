@@ -10,6 +10,8 @@ class Project extends Model
     protected $casts = [
         'images' => 'array',
         'active' => 'boolean',
+        'webhook_url_active' => 'boolean',
+        'send_to_email' => 'boolean',
         'projects_related' => 'array',
         'form_videocall' => 'boolean'
     ];

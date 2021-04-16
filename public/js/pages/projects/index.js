@@ -261,6 +261,28 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -878,6 +900,66 @@ var render = function() {
                                                                 ]
                                                               )
                                                             ])
+                                                          ]
+                                                        ),
+                                                        _vm._v(" "),
+                                                        _c(
+                                                          "div",
+                                                          {
+                                                            staticClass:
+                                                              "col-12"
+                                                          },
+                                                          [
+                                                            _vm._v(
+                                                              "\n                                Envio de Información de Cotizaciones al email de los asesores:\n                                "
+                                                            ),
+                                                            _c(
+                                                              "span",
+                                                              {
+                                                                class: el.send_to_email
+                                                                  ? "font-weight-bold text-success"
+                                                                  : "font-weight-bold text-danger"
+                                                              },
+                                                              [
+                                                                _vm._v(
+                                                                  _vm._s(
+                                                                    el.send_to_email
+                                                                      ? "Habilitado"
+                                                                      : "Deshabilitado"
+                                                                  )
+                                                                )
+                                                              ]
+                                                            )
+                                                          ]
+                                                        ),
+                                                        _vm._v(" "),
+                                                        _c(
+                                                          "div",
+                                                          {
+                                                            staticClass:
+                                                              "col-12"
+                                                          },
+                                                          [
+                                                            _vm._v(
+                                                              "\n                                Envio de Información de Cotizaciones por Webhook:\n                                "
+                                                            ),
+                                                            _c(
+                                                              "span",
+                                                              {
+                                                                class: el.webhook_url_active
+                                                                  ? "font-weight-bold text-success"
+                                                                  : "font-weight-bold text-danger"
+                                                              },
+                                                              [
+                                                                _vm._v(
+                                                                  _vm._s(
+                                                                    el.webhook_url_active
+                                                                      ? "Habilitado"
+                                                                      : "Deshabilitado"
+                                                                  )
+                                                                )
+                                                              ]
+                                                            )
                                                           ]
                                                         )
                                                       ]

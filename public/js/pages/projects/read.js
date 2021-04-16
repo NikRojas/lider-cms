@@ -886,6 +886,54 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -1630,7 +1678,9 @@ var render = function() {
                             _vm._v(
                               "\n                      " +
                                 _vm._s(
-                                  _vm.element.form_videocall ? "Sí" : "No"
+                                  _vm.element.form_videocall
+                                    ? "Habilitado"
+                                    : "Deshabilitado"
                                 ) +
                                 "\n                    "
                             )
@@ -2401,7 +2451,7 @@ var render = function() {
             ])
           ]),
           _vm._v(" "),
-          _c("div", { staticClass: "row" }, [
+          _c("div", { staticClass: "row mb-4" }, [
             _vm._m(23),
             _vm._v(" "),
             _c("div", { staticClass: "col-12 col-lg-10" }, [
@@ -2445,6 +2495,99 @@ var render = function() {
                         0
                       )
                     : _c("div", { staticClass: "row" }, [_vm._m(25)])
+                ])
+              ])
+            ])
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "row mb-4" }, [
+            _vm._m(26),
+            _vm._v(" "),
+            _c("div", { staticClass: "col-12 col-lg-10" }, [
+              _c("div", { staticClass: "card" }, [
+                _c("div", { staticClass: "card-body" }, [
+                  _c("div", { staticClass: "row" }, [
+                    _c("div", { staticClass: "col-12" }, [
+                      _c("div", { staticClass: "form-group" }, [
+                        _c("label", { staticClass: "font-weight-bold" }, [
+                          _vm._v(
+                            "Envio de Información de Cotizaciones al email de los asesores:"
+                          )
+                        ]),
+                        _vm._v(" "),
+                        _c(
+                          "p",
+                          {
+                            class: _vm.element.send_to_email
+                              ? "text-success"
+                              : "text-danger"
+                          },
+                          [
+                            _vm._v(
+                              "\n                        " +
+                                _vm._s(
+                                  _vm.element.send_to_email
+                                    ? "Habilitado"
+                                    : "Deshabilitado"
+                                ) +
+                                "\n                      "
+                            )
+                          ]
+                        )
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "col-12" }, [
+                      _c("div", { staticClass: "form-group" }, [
+                        _c("label", { staticClass: "font-weight-bold" }, [
+                          _vm._v(
+                            "Envio de Información de Cotizaciones a través de Webhook:"
+                          )
+                        ]),
+                        _vm._v(" "),
+                        _c(
+                          "p",
+                          {
+                            class: _vm.element.webhook_url_active
+                              ? "text-success"
+                              : "text-danger"
+                          },
+                          [
+                            _vm._v(
+                              "\n                        " +
+                                _vm._s(
+                                  _vm.element.webhook_url_active
+                                    ? "Habilitado"
+                                    : "Deshabilitado"
+                                ) +
+                                "\n                      "
+                            )
+                          ]
+                        )
+                      ]),
+                      _vm._v(" "),
+                      _vm.element.webhook_url_active
+                        ? _c("div", { staticClass: "form-group" }, [
+                            _c(
+                              "label",
+                              {
+                                staticClass: "font-weight-bold",
+                                attrs: { for: "webhook_url" }
+                              },
+                              [_vm._v("URL Destino")]
+                            ),
+                            _vm._v(" "),
+                            _c("p", { staticClass: "mb-0" }, [
+                              _vm._v(
+                                "\n                        " +
+                                  _vm._s(_vm.element.webhook_url) +
+                                  "\n                      "
+                              )
+                            ])
+                          ])
+                        : _vm._e()
+                    ])
+                  ])
                 ])
               ])
             ])
@@ -2706,6 +2849,20 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "col-12 col-lg-6" }, [
       _c("p", [_vm._v("No hay proyectos relacionados registrados")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "col-12 col-lg-2" }, [
+      _c("h2", [_vm._v("Configuración Proyecto")]),
+      _vm._v(" "),
+      _c("p", [
+        _vm._v("Indica la configuración de notificaciones del "),
+        _c("b", [_vm._v("Proyecto")]),
+        _vm._v(" e integración webhook.")
+      ])
     ])
   }
 ]

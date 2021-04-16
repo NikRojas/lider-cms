@@ -1013,6 +1013,104 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 quill__WEBPACK_IMPORTED_MODULE_0___default.a.register("modules/clipboard", _functions_PlainClipboard__WEBPACK_IMPORTED_MODULE_1__["default"], true);
@@ -1117,6 +1215,8 @@ quill__WEBPACK_IMPORTED_MODULE_0___default.a.register("modules/clipboard", _func
         }
       },
       element: {
+        send_to_email: true,
+        webhook_url_active: false,
         active: true,
         bonds: [],
         financing_options: [],
@@ -1443,6 +1543,22 @@ quill__WEBPACK_IMPORTED_MODULE_0___default.a.register("modules/clipboard", _func
         fd.append("form_videocall", 1);
       } else {
         fd.append("form_videocall", 0);
+      }
+
+      if (this.element.send_to_email == true) {
+        fd.append("send_to_email", 1);
+      } else {
+        fd.append("send_to_email", 0);
+      }
+
+      if (this.element.webhook_url_active == true) {
+        fd.append("webhook_url_active", 1);
+      } else {
+        fd.append("webhook_url_active", 0);
+      }
+
+      if (this.element.webhook_url) {
+        fd.append("webhook_url", this.element.webhook_url);
       }
 
       axios.post(this.routeStore, fd).then(function (response) {
@@ -3780,7 +3896,7 @@ var render = function() {
             ])
           ]),
           _vm._v(" "),
-          _c("div", { staticClass: "row" }, [
+          _c("div", { staticClass: "row mb-4" }, [
             _vm._m(6),
             _vm._v(" "),
             _c("div", { staticClass: "col-12 col-lg-10" }, [
@@ -3809,6 +3925,130 @@ var render = function() {
                   ],
                   1
                 )
+              ])
+            ])
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "row mb-4" }, [
+            _vm._m(7),
+            _vm._v(" "),
+            _c("div", { staticClass: "col-12 col-lg-10" }, [
+              _c("div", { staticClass: "card" }, [
+                _c("div", { staticClass: "card-body" }, [
+                  _c("div", { staticClass: "row" }, [
+                    _c("div", { staticClass: "col-12 mb-3" }, [
+                      _c(
+                        "div",
+                        { staticClass: "form-group" },
+                        [
+                          _c("label", { staticClass: "font-weight-bold" }, [
+                            _vm._v("Notificación Email:")
+                          ]),
+                          _vm._v(" "),
+                          _vm._m(8),
+                          _vm._v(" "),
+                          _c("b-form-checkbox", {
+                            staticClass: "ml-2",
+                            attrs: {
+                              size: "lg",
+                              name: "check-button",
+                              switch: ""
+                            },
+                            model: {
+                              value: _vm.element.send_to_email,
+                              callback: function($$v) {
+                                _vm.$set(_vm.element, "send_to_email", $$v)
+                              },
+                              expression: "element.send_to_email"
+                            }
+                          })
+                        ],
+                        1
+                      )
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "col-12" }, [
+                      _c(
+                        "div",
+                        { staticClass: "form-group" },
+                        [
+                          _c("label", { staticClass: "font-weight-bold" }, [
+                            _vm._v("Webhook URL:")
+                          ]),
+                          _vm._v(" "),
+                          _vm._m(9),
+                          _vm._v(" "),
+                          _c("b-form-checkbox", {
+                            staticClass: "ml-2",
+                            attrs: {
+                              size: "lg",
+                              name: "check-button",
+                              switch: ""
+                            },
+                            model: {
+                              value: _vm.element.webhook_url_active,
+                              callback: function($$v) {
+                                _vm.$set(_vm.element, "webhook_url_active", $$v)
+                              },
+                              expression: "element.webhook_url_active"
+                            }
+                          })
+                        ],
+                        1
+                      ),
+                      _vm._v(" "),
+                      _vm.element.webhook_url_active
+                        ? _c("div", { staticClass: "form-group" }, [
+                            _c(
+                              "label",
+                              {
+                                staticClass: "font-weight-bold",
+                                attrs: { for: "webhook_url" }
+                              },
+                              [_vm._v("URL Destino")]
+                            ),
+                            _vm._v(" "),
+                            _c("input", {
+                              directives: [
+                                {
+                                  name: "model",
+                                  rawName: "v-model",
+                                  value: _vm.element.webhook_url,
+                                  expression: "element.webhook_url"
+                                }
+                              ],
+                              staticClass: "form-control",
+                              attrs: { type: "text", id: "webhook_url" },
+                              domProps: { value: _vm.element.webhook_url },
+                              on: {
+                                input: function($event) {
+                                  if ($event.target.composing) {
+                                    return
+                                  }
+                                  _vm.$set(
+                                    _vm.element,
+                                    "webhook_url",
+                                    $event.target.value
+                                  )
+                                }
+                              }
+                            }),
+                            _vm._v(" "),
+                            _vm.errors && _vm.errors.webhook_url
+                              ? _c(
+                                  "label",
+                                  {
+                                    staticClass: "mt-2 text-danger text-sm",
+                                    attrs: { for: "webhook_url" }
+                                  },
+                                  [_vm._v(_vm._s(_vm.errors.webhook_url[0]))]
+                                )
+                              : _vm._e()
+                          ])
+                        : _vm._e()
+                    ])
+                  ])
+                ])
               ])
             ])
           ])
@@ -3890,6 +4130,62 @@ var staticRenderFns = [
           "\n            Indica los proyectos relacionados que se mostrarán en el\n            "
         ),
         _c("b", [_vm._v("Detalle del Proyecto")])
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "col-12 col-lg-2" }, [
+      _c("h2", [_vm._v("Configuración Proyecto")]),
+      _vm._v(" "),
+      _c("p", [
+        _vm._v("Indica la configuración de notificaciones del "),
+        _c("b", [_vm._v("Proyecto")]),
+        _vm._v(" e integración webhook.")
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("p", { staticClass: "mb-0" }, [
+      _vm._v(
+        "\n                        Deseas enviar un correo de notificación a los asesores\n                        asignados al Proyecto, cada vez que se registre una\n                        cotización nueva en el "
+      ),
+      _c("b", [_vm._v("Proyecto")]),
+      _vm._v("?\n                      ")
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "mb-0" }, [
+      _c("p", [
+        _vm._v(
+          "Al habilitar esta opción la información de las cotizaciones registradas en el "
+        ),
+        _c("b", [_vm._v("Proyecto")]),
+        _vm._v(
+          " serán enviadas a la URL que defina. Además de los datos de la cotización se enviarán los siguentes datos."
+        )
+      ]),
+      _vm._v(" "),
+      _c("b", [_vm._v("Parámetros UTM")]),
+      _vm._v(" "),
+      _c("ul", [
+        _c("li", [_vm._v("UTM Source")]),
+        _vm._v(" "),
+        _c("li", [_vm._v("UTM Medium")]),
+        _vm._v(" "),
+        _c("li", [_vm._v("UTM Campaign")]),
+        _vm._v(" "),
+        _c("li", [_vm._v("UTM Term")]),
+        _vm._v(" "),
+        _c("li", [_vm._v("UTM Content")])
       ])
     ])
   }

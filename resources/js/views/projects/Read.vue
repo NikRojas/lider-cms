@@ -257,7 +257,7 @@
                             : 'text-danger'
                         "
                       >
-                        {{ element.form_videocall ? "Sí" : "No" }}
+                        {{ element.form_videocall ? "Habilitado" : "Deshabilitado" }}
                       </p>
                     </h3>
                   </div>
@@ -766,7 +766,7 @@
             </div>
           </div>
         </div>
-        <div class="row">
+        <div class="row mb-4">
           <div class="col-12 col-lg-2">
             <h2>Proyectos Relacionados</h2>
             <p>
@@ -806,6 +806,54 @@
                 <div class="row" v-else>
                   <div class="col-12 col-lg-6">
                     <p>No hay proyectos relacionados registrados</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row mb-4">
+          <div class="col-12 col-lg-2">
+            <h2>Configuración Proyecto</h2>
+            <p>Indica la configuración de notificaciones del <b>Proyecto</b> e integración webhook.</p>
+          </div>
+          <div class="col-12 col-lg-10">
+            <div class="card">
+              <div class="card-body">
+                <div class="row">
+                  <div class="col-12">
+                    <div class="form-group">
+                        <label class="font-weight-bold">Envio de Información de Cotizaciones al email de los asesores:</label>
+                        <p
+                          :class="
+                            element.send_to_email
+                              ? 'text-success'
+                              : 'text-danger'
+                          "
+                        >
+                          {{ element.send_to_email ? "Habilitado" : "Deshabilitado" }}
+                        </p>
+                    </div>
+                  </div>
+                  <div class="col-12">
+                    <div class="form-group">
+                        <label class="font-weight-bold">Envio de Información de Cotizaciones a través de Webhook:</label>
+                        <p
+                          :class="
+                            element.webhook_url_active
+                              ? 'text-success'
+                              : 'text-danger'
+                          "
+                        >
+                          {{ element.webhook_url_active ? "Habilitado" : "Deshabilitado" }}
+                        </p>
+                    </div>
+                    <div class="form-group" v-if="element.webhook_url_active">
+                      <label class="font-weight-bold" for="webhook_url">URL Destino</label>
+                        <p class="mb-0">
+                          {{ element.webhook_url}}
+                        </p>
+                    </div>
                   </div>
                 </div>
               </div>

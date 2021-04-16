@@ -80,9 +80,13 @@
                       <label class="font-weight-bold" for="image"
                         >Logo Blanco:</label
                       >
-                       <small class="d-block mb-0 lh-1">Resolución recomendada: 200×100px</small> 
-                    <small class="d-block mb-0 lh-1">Formato: PNG</small> 
-                    <small class="d-block mb-2 lh-1">Tamaño recomendado: No mayor a 100KB</small>
+                      <small class="d-block mb-0 lh-1"
+                        >Resolución recomendada: 200×100px</small
+                      >
+                      <small class="d-block mb-0 lh-1">Formato: PNG</small>
+                      <small class="d-block mb-2 lh-1"
+                        >Tamaño recomendado: No mayor a 100KB</small
+                      >
                       <vue-dropzone
                         ref="ref_logo"
                         @vdropzone-file-added="
@@ -121,9 +125,13 @@
                       <label class="font-weight-bold" for="image_colour"
                         >Logo Color:</label
                       >
-                       <small class="d-block mb-0 lh-1">Resolución recomendada: 200×100px</small> 
-                    <small class="d-block mb-0 lh-1">Formato: PNG</small> 
-                    <small class="d-block mb-2 lh-1">Tamaño recomendado: No mayor a 100KB</small>
+                      <small class="d-block mb-0 lh-1"
+                        >Resolución recomendada: 200×100px</small
+                      >
+                      <small class="d-block mb-0 lh-1">Formato: PNG</small>
+                      <small class="d-block mb-2 lh-1"
+                        >Tamaño recomendado: No mayor a 100KB</small
+                      >
                       <vue-dropzone
                         ref="ref_logo_colour"
                         @vdropzone-file-added="
@@ -162,9 +170,13 @@
                       <label class="font-weight-bold" for="image"
                         >Card Proyecto:</label
                       >
-                       <small class="d-block mb-0 lh-1">Resolución recomendada: 400×410px</small> 
-                    <small class="d-block mb-0 lh-1">Formato: JPG</small> 
-                    <small class="d-block mb-2 lh-1">Tamaño recomendado: No mayor a 100KB</small>
+                      <small class="d-block mb-0 lh-1"
+                        >Resolución recomendada: 400×410px</small
+                      >
+                      <small class="d-block mb-0 lh-1">Formato: JPG</small>
+                      <small class="d-block mb-2 lh-1"
+                        >Tamaño recomendado: No mayor a 100KB</small
+                      >
                       <vue-dropzone
                         ref="ref_card"
                         @vdropzone-file-added="
@@ -203,9 +215,13 @@
                       <label class="font-weight-bold" for="image_colour"
                         >Card Hover Proyecto:</label
                       >
-                      <small class="d-block mb-0 lh-1">Resolución recomendada: 700×410px</small> 
-                    <small class="d-block mb-0 lh-1">Formato: JPG</small> 
-                    <small class="d-block mb-2 lh-1">Tamaño recomendado: No mayor a 250KB</small>
+                      <small class="d-block mb-0 lh-1"
+                        >Resolución recomendada: 700×410px</small
+                      >
+                      <small class="d-block mb-0 lh-1">Formato: JPG</small>
+                      <small class="d-block mb-2 lh-1"
+                        >Tamaño recomendado: No mayor a 250KB</small
+                      >
                       <vue-dropzone
                         ref="ref_card_hover"
                         @vdropzone-file-added="
@@ -526,9 +542,13 @@
                       <label class="font-weight-bold" for="banner"
                         >Banner</label
                       >
-                      <small class="d-block mb-0 lh-1">Resolución recomendada: 650x700px</small> 
-                    <small class="d-block mb-0 lh-1">Formato: JPG</small> 
-                    <small class="d-block mb-2 lh-1">Tamaño recomendado: No mayor a 300KB</small>
+                      <small class="d-block mb-0 lh-1"
+                        >Resolución recomendada: 650x700px</small
+                      >
+                      <small class="d-block mb-0 lh-1">Formato: JPG</small>
+                      <small class="d-block mb-2 lh-1"
+                        >Tamaño recomendado: No mayor a 300KB</small
+                      >
                       <vue-dropzone
                         ref="ref_banner"
                         @vdropzone-file-added="
@@ -788,9 +808,13 @@
                       <label class="font-weight-bold" for="banner"
                         >Imagen Mapa</label
                       >
-                      <small class="d-block mb-0 lh-1">Resolución recomendada: 1100x680px</small> 
-                    <small class="d-block mb-0 lh-1">Formato: JPG</small> 
-                    <small class="d-block mb-2 lh-1">Tamaño recomendado: No mayor a 300KB</small>
+                      <small class="d-block mb-0 lh-1"
+                        >Resolución recomendada: 1100x680px</small
+                      >
+                      <small class="d-block mb-0 lh-1">Formato: JPG</small>
+                      <small class="d-block mb-2 lh-1"
+                        >Tamaño recomendado: No mayor a 300KB</small
+                      >
                       <vue-dropzone
                         ref="ref_map"
                         @vdropzone-file-added="
@@ -946,7 +970,7 @@
             </div>
           </div>
         </div>
-        <div class="row">
+        <div class="row mb-4">
           <div class="col-12 col-lg-2">
             <h2>Proyectos Relacionados</h2>
             <p>
@@ -963,6 +987,80 @@
                   :images-url="imagesUrl"
                   :route-get-all="routeProjectsGetAll"
                 />
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row mb-4">
+          <div class="col-12 col-lg-2">
+            <h2>Configuración Proyecto</h2>
+            <p>Indica la configuración de notificaciones del <b>Proyecto</b> e integración webhook.</p>
+          </div>
+          <div class="col-12 col-lg-10">
+            <div class="card">
+              <div class="card-body">
+                <div class="row">
+                  <div class="col-12 mb-3">
+                    <div class="form-group">
+                        <label class="font-weight-bold">Notificación Email:</label>
+                        <p class="mb-0">
+                          Deseas enviar un correo de notificación a los asesores
+                          asignados al Proyecto, cada vez que se registre una
+                          cotización nueva en el <b>Proyecto</b>?
+                        </p>
+                        <b-form-checkbox
+                          class="ml-2"
+                          size="lg"
+                          v-model="element.send_to_email"
+                          name="check-button"
+                          switch
+                        >
+                          
+                        </b-form-checkbox>
+                        
+                    </div>
+                  </div>
+                  <div class="col-12">
+                    <div class="form-group">
+                        <label class="font-weight-bold">Webhook URL:</label>
+                        <div class="mb-0">
+                          <p>Al habilitar esta opción la información de las cotizaciones registradas en el <b>Proyecto</b> serán enviadas a la URL que defina. Además de los datos de la cotización se enviarán los siguentes datos.</p> 
+                          <b>Parámetros UTM</b>
+                          <ul>
+                            <li>UTM Source</li>
+                            <li>UTM Medium</li>
+                            <li>UTM Campaign</li>
+                            <li>UTM Term</li>
+                            <li>UTM Content</li>
+                          </ul>
+                        </div>
+                        <b-form-checkbox
+                          class="ml-2"
+                          size="lg"
+                          v-model="element.webhook_url_active"
+                          name="check-button"
+                          switch
+                        >
+                          
+                        </b-form-checkbox>
+                    </div>
+                    <div class="form-group" v-if="element.webhook_url_active">
+                      <label class="font-weight-bold" for="webhook_url">URL Destino</label>
+                        <input
+                          type="text"
+                          class="form-control"
+                          v-model="element.webhook_url"
+                          id="webhook_url"
+                        />
+                        <label
+                          v-if="errors && errors.webhook_url"
+                          class="mt-2 text-danger text-sm"
+                          for="webhook_url"
+                          >{{ errors.webhook_url[0] }}</label
+                        >
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -1072,6 +1170,8 @@ export default {
         },
       },
       element: {
+        send_to_email: true,
+        webhook_url_active: false,
         active: true,
         bonds: [],
         financing_options: [],
@@ -1313,7 +1413,10 @@ export default {
         fd.append("bonds", JSON.stringify(this.element.bonds));
       }
       if (this.element.financing_options.length) {
-        fd.append("financing_options", JSON.stringify(this.element.financing_options));
+        fd.append(
+          "financing_options",
+          JSON.stringify(this.element.financing_options)
+        );
       }
       if (this.element.projects_related.length) {
         fd.append(
@@ -1337,6 +1440,19 @@ export default {
         fd.append("form_videocall", 1);
       } else {
         fd.append("form_videocall", 0);
+      }
+      if (this.element.send_to_email == true) {
+        fd.append("send_to_email", 1);
+      } else {
+        fd.append("send_to_email", 0);
+      }
+      if (this.element.webhook_url_active == true) {
+        fd.append("webhook_url_active", 1);
+      } else {
+        fd.append("webhook_url_active", 0);
+      }
+      if (this.element.webhook_url) {
+        fd.append("webhook_url", this.element.webhook_url);
       }
       axios
         .post(this.routeStore, fd)

@@ -81,8 +81,8 @@
                       <a
                         target="_blank"
                         style="text-decoration: underline"
-                        :href="appUrl + '/proyectos/' + element.slug_es"
-                        >{{ appUrl }}/proyectos/{{ element.slug_es }}</a
+                        :href="appUrl + '/' + element.slug_es"
+                        >{{ appUrl }}/{{ element.slug_es }}</a
                       >
                     </h3>
                     <h3 class="font-weight-normal">
@@ -92,8 +92,8 @@
                       <a
                         target="_blank"
                         style="text-decoration: underline"
-                        :href="appUrl + '/projects/' + element.slug_en"
-                        >{{ appUrl }}/projects/{{ element.slug_en }}</a
+                        :href="appUrl + '/en/' + element.slug_en"
+                        >{{ appUrl }}/en/{{ element.slug_en }}</a
                       >
                     </h3>
                   </div>

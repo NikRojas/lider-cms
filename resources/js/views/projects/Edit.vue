@@ -59,8 +59,8 @@
                 <div class="row">
                   <div class="col-12">
                     <InputSlug
-                      :urlEs="appUrl + '/proyectos/'"
-                      :urlEn="appUrl + '/projects/'"
+                      :urlEs="appUrl + '/'"
+                      :urlEn="appUrl + '/en/'"
                       label="Nombre"
                       variable="name"
                       type="Ruta"

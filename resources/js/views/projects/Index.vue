@@ -63,15 +63,15 @@
                               <a
                                 target="_blank"
                                 style="text-decoration: underline"
-                                :href="appUrl + '/proyectos/' + el.slug_es"
-                                >{{ appUrl }}/proyectos/{{ el.slug_es }}</a
+                                :href="appUrl + '/' + el.slug_es"
+                                >{{ appUrl }}/{{ el.slug_es }}</a
                               >
                               <br />
                               <a
                                 target="_blank"
                                 style="text-decoration: underline"
-                                :href="appUrl + '/en/projects/' + el.slug_en"
-                                >{{ appUrl }}/en/projects/{{ el.slug_en }}</a
+                                :href="appUrl + '/en/' + el.slug_en"
+                                >{{ appUrl }}/en/{{ el.slug_en }}</a
                               >
                             </div>
                           </div>

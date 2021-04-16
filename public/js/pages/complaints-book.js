@@ -1,1 +1,1223 @@
-(window.webpackJsonp=window.webpackJsonp||[]).push([[27],{CkAj:function(t,e,a){"use strict";var s=a("0YuL"),l=a("TVlQ"),i={props:{open:Boolean,loadingGet:Boolean,element:String,loadingSubmit:Boolean},components:{Button:l.a,Skeleton:s.a},data:function(){return{requestSubmit:!1,requestGet:!1,inputDestroy:"",buttonDestroy:!0}},methods:{submit:function(){this.$emit("submit")},cancelCustom:function(){this.$emit("cancel")},restore:function(){this.requestSubmit=!1,this.requestGet=!1,this.inputDestroy="",this.buttonDestroy=!0}},watch:{open:function(t){0==t&&this.restore()},inputDestroy:function(t){t===t.toUpperCase()&&"ELIMINAR"===t?this.buttonDestroy=!1:this.buttonDestroy=!0}}},o=a("KHd+"),n=Object(o.a)(i,(function(){var t=this,e=t.$createElement,a=t._self._c||e;return a("b-modal",{attrs:{"no-close-on-esc":"","no-close-on-backdrop":"",centered:"","footer-class":"border-0 pt-0","body-class":"pt-0"},on:{close:t.cancelCustom},scopedSlots:t._u([{key:"modal-footer",fn:function(e){e.ok;return[a("Button",{directives:[{name:"show",rawName:"v-show",value:!t.loadingGet,expression:"!loadingGet"}],attrs:{classes:["btn-danger"],text:"Eliminar","request-server":t.loadingSubmit,disabled:t.buttonDestroy},on:{click:t.submit}}),t._v(" "),a("button",{staticClass:"btn btn-secondary",attrs:{type:"button"},on:{click:t.cancelCustom}},[t._v("Cancelar")])]}}]),model:{value:t.open,callback:function(e){t.open=e},expression:"open"}},[a("template",{slot:"modal-title"},[a("div",{staticClass:"text-primary h2"},[t._v("Eliminar "+t._s(t.element.charAt(0).toUpperCase()+t.element.slice(1)))])]),t._v(" "),a("template",{slot:"modal-header-close"},[a("button",{staticClass:"btn p-0 bg-transparent",attrs:{type:"button"},on:{click:t.cancelCustom}},[a("jam-close")],1)]),t._v(" "),t.loadingGet?a("div",[a("Skeleton"),t._v(" "),a("div",{staticClass:"w-25 mb-1"},[a("Skeleton")],1),t._v(" "),a("div",{staticClass:"w-75"},[a("Skeleton")],1)],1):a("div",[a("p",[t._v("Esta apunto de eliminar un "+t._s(t.element)+", una vez que realice esta acción no se puede deshacer")]),t._v(" "),a("p",{staticClass:"mb-2"},[t._v("\n      Escribe\n      "),a("b",[t._v("ELIMINAR")]),t._v(" para confirmar\n    ")]),t._v(" "),a("input",{directives:[{name:"model",rawName:"v-model",value:t.inputDestroy,expression:"inputDestroy"}],staticClass:"form-control",attrs:{type:"text"},domProps:{value:t.inputDestroy},on:{input:function(e){e.target.composing||(t.inputDestroy=e.target.value)}}})])],2)}),[],!1,null,null,null);e.a=n.exports},NUuF:function(t,e,a){"use strict";var s=a("6nZA"),l={props:{activeParent:Object,removeParent:String},components:{DatePicker:a.n(s).a},data:function(){return{range:null,filters:[{text:"Cualquier Fecha",value:"all"},{text:"Hoy",value:"today"},{text:"Últimos 7 días",value:"7"},{text:"Últimos 30 días",value:"30"},{text:"Últimos 90 días",value:"90"},{text:"Este Año",value:"this_year"}],active:{text:"Cualquier Fecha",value:"all"}}},methods:{handleFilterRange:function(){var t=this;if(!this.range[0])return this.removeParent?this.active={text:"Hoy",value:"today"}:this.active={text:"Cualquier Fecha",value:"all"},this.handleFilter(this.active),!1;setTimeout((function(){t.active={text:t.$refs.datepicker.text,value:"range"}}),50),this.$refs.dropdown.hide(!0)},handleFilter:function(t){this.range=[],this.active=t,this.$refs.dropdown.hide(!0)}},watch:{activeParent:{immediate:!0,handler:function(t){t&&(this.active=t)}},removeParent:{immediate:!0,handler:function(t){t&&(this.filters=this.filters.filter((function(e){return e.value!=t})))}},active:function(t,e){this.$emit("update:active",t),this.$emit("get")},range:function(t,e){this.$emit("update:range",t)}}},i=a("KHd+"),o=Object(i.a)(l,(function(){var t=this,e=t.$createElement,a=t._self._c||e;return a("div",{},[a("b-dropdown",{ref:"dropdown",attrs:{left:"",id:"dropdown-text","menu-class":["border","shadow-none"],variant:"all"==t.active.value?"inverse-light":"inverse-primary","toggle-class":[]},scopedSlots:t._u([{key:"button-content",fn:function(){return[a("jam-calendar",{staticClass:"current-color",staticStyle:{"margin-top":"-4px"},attrs:{height:"18px",width:"18px"}}),t._v(" "),a("span",{},[t._v(t._s(t.active.text))])]},proxy:!0}])},[t._v(" "),a("b-dropdown-text",{staticClass:"px-2",staticStyle:{width:"16rem"},attrs:{tag:"div"}},[t._l(t.filters,(function(e){return a("button",{key:e.value,staticClass:"btn mb-1 btn-sm btn-block",class:t.active.value==e.value?"btn-primary":"btn-inverse-primary",on:{click:function(a){return a.preventDefault(),t.handleFilter(e)}}},[t._v(t._s(e.text))])})),t._v(" "),a("date-picker",{ref:"datepicker",attrs:{placeholder:"Personalizado",shortcuts:[],lang:"es","input-class":"form-control mt-1",format:"D MMM YYYY","range-separator":"-",width:"100%",range:""},on:{change:t.handleFilterRange},model:{value:t.range,callback:function(e){t.range=e},expression:"range"}},[a("jam-calendar",{staticClass:"current-color mt-2",attrs:{slot:"calendar-icon",height:"18",width:"18"},slot:"calendar-icon"})],1)],2)],1)],1)}),[],!1,null,null,null);e.a=o.exports},fXGP:function(t,e,a){"use strict";a.r(e);var s=a("NUuF"),l=a("ZMUr"),i=a("F05R"),o=a("CkAj"),n=a("0YuL");function r(t,e){var a=Object.keys(t);if(Object.getOwnPropertySymbols){var s=Object.getOwnPropertySymbols(t);e&&(s=s.filter((function(e){return Object.getOwnPropertyDescriptor(t,e).enumerable}))),a.push.apply(a,s)}return a}function c(t){for(var e=1;e<arguments.length;e++){var a=null!=arguments[e]?arguments[e]:{};e%2?r(Object(a),!0).forEach((function(e){d(t,e,a[e])})):Object.getOwnPropertyDescriptors?Object.defineProperties(t,Object.getOwnPropertyDescriptors(a)):r(Object(a)).forEach((function(e){Object.defineProperty(t,e,Object.getOwnPropertyDescriptor(a,e))}))}return t}function d(t,e,a){return e in t?Object.defineProperty(t,e,{value:a,enumerable:!0,configurable:!0,writable:!0}):t[e]=a,t}var u={props:{elementParent:Object,imagesUrl:String,routeReturn:String,routeGetAll:String,route:String},data:function(){return{project:{},elements:{},filterDate:{active:{},range:null},element:{document_type_rel:{},claim_type_rel:{},good_contracted_rel:{},ubigeo_rel:{}},elementsPerPage:10,modalShow:!1,modalDestroy:!1,loadingGetAll:!1,loadingGet:!1,requestSubmit:!1}},components:{Skeleton:n.a,BreadCrumb:i.a,DataTable:l.a,Destroy:o.a,FilterDateRange:s.a},methods:{destroyConfirm:function(){var t=this;this.requestSubmit=!0,axios.delete(this.route+"/"+this.element.id).then((function(e){t.requestSubmit=!1,t.restore(),Swal.fire({title:e.data.title,text:e.data.message,type:"success",confirmButtonText:"OK",buttonsStyling:!1,customClass:{confirmButton:"btn btn-inverse-primary"}})})).catch((function(e){Swal.fire({title:e.response.data.title,text:e.response.data.message,type:"error",confirmButtonText:"OK",buttonsStyling:!1,customClass:{confirmButton:"btn btn-inverse-primary"}}),t.restoreEl()}))},restoreEl:function(){this.element={document_type_rel:{},claim_type_rel:{},ubigeo_rel:{},good_contracted_rel:{}},this.modalDestroy=this.modalShow=!1},showEl:function(t){this.modalShow=!0,this.getEl(t)},deleteEl:function(t){this.modalDestroy=!0,this.getEl(t)},getEls:function(t,e){var a=this,s=arguments.length>2&&void 0!==arguments[2]?arguments[2]:null;this.loadingGetAll=!0;var l=this.routeGetAll+"?page="+t+"&itemsPerPage="+e;s&&(l=l+"&q="+s),axios.get(l,{params:c({date:this.filterDate.active.value},this.filterDate.range?{range:this.filterDate.range}:{})}).then((function(t){a.elements=t.data,a.loadingGetAll=!1})).catch((function(t){}))},restore:function(){this.elements={},this.element={document_type_rel:{},claim_type_rel:{},good_contracted_rel:{},ubigeo_rel:{}},this.modalDestroy=this.modalShow=!1,this.getEls(1,this.elementsPerPage)},getEl:function(t){var e=this;this.loadingGet=!0,axios.get(this.route+"/json/get/"+t).then((function(t){e.element=t.data,e.loadingGet=!1})).catch((function(t){}))}},created:function(){this.getEls(1,this.elementsPerPage)}},v=a("KHd+"),m=Object(v.a)(u,(function(){var t=this,e=t.$createElement,a=t._self._c||e;return a("div",[a("div",{staticClass:"header pb-6"},[a("div",{staticClass:"container-fluid"},[a("div",{staticClass:"header-body"},[a("div",{staticClass:"row align-items-center pt-0 pt-md-2 pb-4"},[a("div",{staticClass:"col-12 col-lg-7"},[a("BreadCrumb",{attrs:{title:"Libro de Reclamaciones",parent:"",active:"Libro de Reclamaciones"}})],1)])])])]),t._v(" "),a("div",{staticClass:"container-fluid mt--6"},[a("DataTable",{attrs:{object:t.elements,placeholder:"Nombre, Apellido, Número Documento, Código de Reclamo","button-update":!1,"button-read":!0,"button-delete":!0,"button-disable":!1,"loading-prop":t.loadingGetAll,"entries-prop":t.elementsPerPage},on:{get:t.getEls,read:t.showEl,delete:t.deleteEl,"update:entriesProp":function(e){t.elementsPerPage=e},"update:entries-prop":function(e){t.elementsPerPage=e}}},[a("template",{slot:"filters"},[a("div",{staticClass:"mb-2"},[a("FilterDateRange",{attrs:{active:t.filterDate.active,range:t.filterDate.range},on:{"update:active":function(e){return t.$set(t.filterDate,"active",e)},"update:range":function(e){return t.$set(t.filterDate,"range",e)},get:function(e){return t.getEls(1,t.elementsPerPage)}}})],1)])],2)],1),t._v(" "),a("destroy",{attrs:{element:"Lead",open:t.modalDestroy,"loading-get":t.loadingGet,"loading-submit":t.requestSubmit},on:{cancel:t.restoreEl,submit:t.destroyConfirm}}),t._v(" "),a("b-modal",{attrs:{"no-close-on-esc":"","no-close-on-backdrop":"",centered:"",size:"lg","footer-class":"border-0 pt-0","body-class":"pt-0"},on:{close:t.restoreEl},scopedSlots:t._u([{key:"modal-footer",fn:function(e){e.ok;return[a("button",{staticClass:"btn btn-inverse-primary",attrs:{type:"button"},on:{click:t.restoreEl}},[t._v("Ok")])]}}]),model:{value:t.modalShow,callback:function(e){t.modalShow=e},expression:"modalShow"}},[a("template",{slot:"modal-title"},[a("div",{staticClass:"text-primary h2"},[t._v("Detalle del Reclamo")])]),t._v(" "),a("template",{slot:"modal-header-close"},[a("button",{staticClass:"btn p-0 bg-transparent",attrs:{type:"button"},on:{click:t.restoreEl}},[a("jam-close")],1)]),t._v(" "),t.loadingGet?a("div",[a("div",{staticClass:"w-25 mb-1"},[a("Skeleton")],1),t._v(" "),a("div",{staticClass:"w-75"},[a("Skeleton")],1),t._v(" "),a("div",{staticClass:"w-25 mb-1"},[a("Skeleton")],1),t._v(" "),a("div",{staticClass:"w-75"},[a("Skeleton")],1),t._v(" "),a("div",{staticClass:"w-25 mb-1"},[a("Skeleton")],1),t._v(" "),a("div",{staticClass:"w-75"},[a("Skeleton")],1)]):a("div",[a("div",{staticClass:"row"},[a("div",{staticClass:"col-12 text-center mb-1"},[a("h2",{staticClass:"mb-0"},[t._v("Código de Registro")]),t._v(" "),a("h3",{staticClass:"font-weight-normal"},[t._v(t._s(t.element.code))])]),t._v(" "),a("div",{staticClass:"col-12 text-right"},[a("p",[a("span",{staticClass:"font-weight-bold"},[t._v("Registrado el: ")]),t._v(t._s(t.element.created_at_format))])]),t._v(" "),a("div",{staticClass:"col-12"},[a("h2",{staticClass:"mb-3"},[t._v("Identificación del consumidor reclamante")])]),t._v(" "),a("div",{staticClass:"col-lg-6"},[a("div",{staticClass:"form-group"},[a("label",{staticClass:"font-weight-bold"},[t._v("Nombre Completo:")]),t._v(" "),a("p",[t._v(t._s(t.element.name)+" "+t._s(t.element.lastname))])])]),t._v(" "),a("div",{staticClass:"col-lg-6"},[a("div",{staticClass:"form-group"},[a("label",{staticClass:"font-weight-bold"},[t._v("Documento:")]),t._v(" "),a("p",[t._v(t._s(t.element.document_type_rel.description)+" - "+t._s(t.element.document_number))])])]),t._v(" "),a("div",{staticClass:"col-lg-6"},[a("div",{staticClass:"form-group"},[a("label",{staticClass:"font-weight-bold"},[t._v("Email:")]),t._v(" "),a("p",[t._v(t._s(t.element.email))])])]),t._v(" "),a("div",{staticClass:"col-lg-6"},[a("div",{staticClass:"form-group"},[a("label",{staticClass:"font-weight-bold"},[t._v("Móvil:")]),t._v(" "),a("p",[t._v(t._s(t.element.mobile_formatted))])])]),t._v(" "),a("div",{staticClass:"col-12"},[a("div",{staticClass:"form-group"},[a("label",{staticClass:"font-weight-bold"},[t._v("Dirección:")]),t._v(" "),a("p",[t._v(t._s(t.element.address))])])]),t._v(" "),a("div",{staticClass:"col-lg-4"},[a("div",{staticClass:"form-group"},[a("label",{staticClass:"font-weight-bold"},[t._v("Departamento:")]),t._v(" "),a("p",[t._v(t._s(t.element.ubigeo_rel.department))])])]),t._v(" "),a("div",{staticClass:"col-lg-4"},[a("div",{staticClass:"form-group"},[a("label",{staticClass:"font-weight-bold"},[t._v("Provincia:")]),t._v(" "),a("p",[t._v(t._s(t.element.ubigeo_rel.province))])])]),t._v(" "),a("div",{staticClass:"col-lg-4"},[a("div",{staticClass:"form-group"},[a("label",{staticClass:"font-weight-bold"},[t._v("Distrito:")]),t._v(" "),a("p",[t._v(t._s(t.element.ubigeo_rel.district))])])]),t._v(" "),a("div",{staticClass:"col-12"},[a("h2",{staticClass:"mb-3 mt-2"},[t._v("Identificación del bien contratado")])]),t._v(" "),a("div",{staticClass:"col-lg-6"},[a("div",{staticClass:"form-group"},[a("label",{staticClass:"font-weight-bold"},[t._v("Monto del bien objeto de Reclamo:")]),t._v(" "),a("p",[t._v(t._s(t.element.good_contracted_amount))])])]),t._v(" "),a("div",{staticClass:"col-lg-6"},[a("div",{staticClass:"form-group"},[a("label",{staticClass:"font-weight-bold"},[t._v("Identificación del Bien contratado:")]),t._v(" "),a("p",[t._v(t._s(t.element.good_contracted_rel.name))])])]),t._v(" "),a("div",{staticClass:"col-lg-6"},[a("div",{staticClass:"form-group"},[a("label",{staticClass:"font-weight-bold"},[t._v("Descripción:")]),t._v(" "),a("p",[t._v(t._s(t.element.good_contracted_description))])])]),t._v(" "),a("div",{staticClass:"col-12"},[a("h2",{staticClass:"mb-3 mt-2"},[t._v("Detalle de la reclamación")])]),t._v(" "),a("div",{staticClass:"col-lg-6"},[a("div",{staticClass:"form-group"},[a("label",{staticClass:"font-weight-bold"},[t._v("Tipo de reclamación:")]),t._v(" "),a("p",[t._v(t._s(t.element.claim_type_rel.name))])])]),t._v(" "),a("div",{staticClass:"col-lg-6"},[a("div",{staticClass:"form-group"},[a("label",{staticClass:"font-weight-bold"},[t._v("Detalle:")]),t._v(" "),a("p",[t._v(t._s(t.element.claim_detail))])])]),t._v(" "),a("div",{staticClass:"col-lg-6"},[a("div",{staticClass:"form-group"},[a("label",{staticClass:"font-weight-bold"},[t._v("Pedido:")]),t._v(" "),a("p",[t._v(t._s(t.element.claim_order))])])]),t._v(" "),a("div",{staticClass:"col-12 mt-2"},[a("h2",{staticClass:"mb-3"},[t._v("Acciones adoptadas por el proveedor")])]),t._v(" "),a("div",{staticClass:"col-lg-6"},[a("div",{staticClass:"form-group"},[a("label",{staticClass:"font-weight-bold"},[t._v("Detalle:")]),t._v(" "),t.element.provider_detail?a("p",[t._v(t._s(t.element.provider_detail))]):a("p",[t._v("No regitrado")])])])])])],2)],1)}),[],!1,null,null,null);e.default=m.exports}}]);
+(window["webpackJsonp"] = window["webpackJsonp"] || []).push([["js/pages/complaints-book"],{
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/filters/DateRange.vue?vue&type=script&lang=js&":
+/*!****************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/filters/DateRange.vue?vue&type=script&lang=js& ***!
+  \****************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var vue2_datepicker__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue2-datepicker */ "./node_modules/vue2-datepicker/lib/index.js");
+/* harmony import */ var vue2_datepicker__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vue2_datepicker__WEBPACK_IMPORTED_MODULE_0__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  props: {
+    activeParent: Object,
+    removeParent: String
+  },
+  components: {
+    DatePicker: vue2_datepicker__WEBPACK_IMPORTED_MODULE_0___default.a
+  },
+  data: function data() {
+    return {
+      range: null,
+      filters: [{
+        text: "Cualquier Fecha",
+        value: "all"
+      }, {
+        text: "Hoy",
+        value: "today"
+      }, {
+        text: "Últimos 7 días",
+        value: "7"
+      }, {
+        text: "Últimos 30 días",
+        value: "30"
+      }, {
+        text: "Últimos 90 días",
+        value: "90"
+      }, {
+        text: "Este Año",
+        value: "this_year"
+      }],
+      active: {
+        text: "Cualquier Fecha",
+        value: "all"
+      }
+    };
+  },
+  methods: {
+    handleFilterRange: function handleFilterRange() {
+      var _this = this;
+
+      if (!this.range[0]) {
+        if (this.removeParent) {
+          this.active = {
+            text: "Hoy",
+            value: "today"
+          };
+        } else {
+          this.active = {
+            text: "Cualquier Fecha",
+            value: "all"
+          };
+        }
+
+        this.handleFilter(this.active);
+        return false;
+      }
+
+      setTimeout(function () {
+        _this.active = {
+          text: _this.$refs.datepicker.text,
+          value: "range"
+        };
+      }, 50);
+      this.$refs.dropdown.hide(true);
+    },
+    handleFilter: function handleFilter(i) {
+      this.range = [];
+      this.active = i;
+      this.$refs.dropdown.hide(true);
+    }
+  },
+  watch: {
+    activeParent: {
+      immediate: true,
+      handler: function handler(newValue) {
+        if (newValue) {
+          this.active = newValue;
+        }
+      }
+    },
+    removeParent: {
+      immediate: true,
+      handler: function handler(newValue) {
+        if (newValue) {
+          this.filters = this.filters.filter(function (el) {
+            return el.value != newValue;
+          });
+        }
+      }
+    },
+    active: function active(newValue, oldValue) {
+      this.$emit("update:active", newValue);
+      this.$emit("get");
+    },
+    range: function range(newValue, oldValue) {
+      this.$emit("update:range", newValue);
+    }
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/views/ComplaintsBook.vue?vue&type=script&lang=js&":
+/*!********************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/views/ComplaintsBook.vue?vue&type=script&lang=js& ***!
+  \********************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _components_filters_DateRange__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../components/filters/DateRange */ "./resources/js/components/filters/DateRange.vue");
+/* harmony import */ var _components_DataTable__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../components/DataTable */ "./resources/js/components/DataTable.vue");
+/* harmony import */ var _components_BreadCrumb__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../components/BreadCrumb */ "./resources/js/components/BreadCrumb.vue");
+/* harmony import */ var _components_modals_Destroy__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../components/modals/Destroy */ "./resources/js/components/modals/Destroy.vue");
+/* harmony import */ var vue_loading_skeleton__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! vue-loading-skeleton */ "./node_modules/vue-loading-skeleton/dist/vue-loading-skeleton.esm.js");
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  props: {
+    elementParent: Object,
+    imagesUrl: String,
+    routeReturn: String,
+    routeGetAll: String,
+    route: String
+  },
+  data: function data() {
+    return {
+      project: {},
+      elements: {},
+      filterDate: {
+        active: {},
+        range: null
+      },
+      element: {
+        document_type_rel: {},
+        claim_type_rel: {},
+        good_contracted_rel: {},
+        ubigeo_rel: {}
+      },
+      elementsPerPage: 10,
+      modalShow: false,
+      modalDestroy: false,
+      loadingGetAll: false,
+      loadingGet: false,
+      requestSubmit: false
+    };
+  },
+  components: {
+    Skeleton: vue_loading_skeleton__WEBPACK_IMPORTED_MODULE_4__["Skeleton"],
+    BreadCrumb: _components_BreadCrumb__WEBPACK_IMPORTED_MODULE_2__["default"],
+    DataTable: _components_DataTable__WEBPACK_IMPORTED_MODULE_1__["default"],
+    Destroy: _components_modals_Destroy__WEBPACK_IMPORTED_MODULE_3__["default"],
+    FilterDateRange: _components_filters_DateRange__WEBPACK_IMPORTED_MODULE_0__["default"]
+  },
+  methods: {
+    destroyConfirm: function destroyConfirm() {
+      var _this = this;
+
+      this.requestSubmit = true;
+      axios["delete"](this.route + "/" + this.element.id).then(function (response) {
+        _this.requestSubmit = false;
+
+        _this.restore();
+
+        Swal.fire({
+          title: response.data.title,
+          text: response.data.message,
+          type: "success",
+          confirmButtonText: "OK",
+          buttonsStyling: false,
+          customClass: {
+            confirmButton: "btn btn-inverse-primary"
+          }
+        });
+      })["catch"](function (error) {
+        Swal.fire({
+          title: error.response.data.title,
+          text: error.response.data.message,
+          type: "error",
+          confirmButtonText: "OK",
+          buttonsStyling: false,
+          customClass: {
+            confirmButton: "btn btn-inverse-primary"
+          }
+        });
+
+        _this.restoreEl();
+      });
+    },
+    restoreEl: function restoreEl() {
+      this.element = {
+        document_type_rel: {},
+        claim_type_rel: {},
+        ubigeo_rel: {},
+        good_contracted_rel: {}
+      }, this.modalDestroy = this.modalShow = false;
+    },
+    showEl: function showEl(id) {
+      this.modalShow = true;
+      this.getEl(id);
+    },
+    deleteEl: function deleteEl(id) {
+      this.modalDestroy = true;
+      this.getEl(id);
+    },
+    getEls: function getEls(page, itemsPerPage) {
+      var _this2 = this;
+
+      var q = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : null;
+      this.loadingGetAll = true;
+      var url = this.routeGetAll + "?page=" + page + "&itemsPerPage=" + itemsPerPage;
+
+      if (q) {
+        url = url + "&q=" + q;
+      }
+
+      axios.get(url, {
+        params: _objectSpread({
+          date: this.filterDate.active.value
+        }, this.filterDate.range ? {
+          range: this.filterDate.range
+        } : {})
+      }).then(function (response) {
+        _this2.elements = response.data;
+        _this2.loadingGetAll = false;
+      })["catch"](function (error) {});
+    },
+    restore: function restore() {
+      this.elements = {};
+      this.element = {
+        document_type_rel: {},
+        claim_type_rel: {},
+        good_contracted_rel: {},
+        ubigeo_rel: {}
+      };
+      this.modalDestroy = this.modalShow = false;
+      this.getEls(1, this.elementsPerPage);
+    },
+    getEl: function getEl(id) {
+      var _this3 = this;
+
+      this.loadingGet = true;
+      axios.get(this.route + "/json/get/" + id).then(function (response) {
+        _this3.element = response.data;
+        _this3.loadingGet = false;
+      })["catch"](function (error) {});
+    }
+  },
+  created: function created() {
+    this.getEls(1, this.elementsPerPage);
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/filters/DateRange.vue?vue&type=template&id=52dcee80&":
+/*!********************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/filters/DateRange.vue?vue&type=template&id=52dcee80& ***!
+  \********************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    {},
+    [
+      _c(
+        "b-dropdown",
+        {
+          ref: "dropdown",
+          attrs: {
+            left: "",
+            id: "dropdown-text",
+            "menu-class": ["border", "shadow-none"],
+            variant:
+              _vm.active.value == "all" ? "inverse-light" : "inverse-primary",
+            "toggle-class": []
+          },
+          scopedSlots: _vm._u([
+            {
+              key: "button-content",
+              fn: function() {
+                return [
+                  _c("jam-calendar", {
+                    staticClass: "current-color",
+                    staticStyle: { "margin-top": "-4px" },
+                    attrs: { height: "18px", width: "18px" }
+                  }),
+                  _vm._v(" "),
+                  _c("span", {}, [_vm._v(_vm._s(_vm.active.text))])
+                ]
+              },
+              proxy: true
+            }
+          ])
+        },
+        [
+          _vm._v(" "),
+          _c(
+            "b-dropdown-text",
+            {
+              staticClass: "px-2",
+              staticStyle: { width: "16rem" },
+              attrs: { tag: "div" }
+            },
+            [
+              _vm._l(_vm.filters, function(i) {
+                return _c(
+                  "button",
+                  {
+                    key: i.value,
+                    staticClass: "btn mb-1 btn-sm btn-block",
+                    class:
+                      _vm.active.value == i.value
+                        ? "btn-primary"
+                        : "btn-inverse-primary",
+                    on: {
+                      click: function($event) {
+                        $event.preventDefault()
+                        return _vm.handleFilter(i)
+                      }
+                    }
+                  },
+                  [_vm._v(_vm._s(i.text))]
+                )
+              }),
+              _vm._v(" "),
+              _c(
+                "date-picker",
+                {
+                  ref: "datepicker",
+                  attrs: {
+                    placeholder: "Personalizado",
+                    shortcuts: [],
+                    lang: "es",
+                    "input-class": "form-control mt-1",
+                    format: "D MMM YYYY",
+                    "range-separator": "-",
+                    width: "100%",
+                    range: ""
+                  },
+                  on: { change: _vm.handleFilterRange },
+                  model: {
+                    value: _vm.range,
+                    callback: function($$v) {
+                      _vm.range = $$v
+                    },
+                    expression: "range"
+                  }
+                },
+                [
+                  _c("jam-calendar", {
+                    staticClass: "current-color mt-2",
+                    attrs: { slot: "calendar-icon", height: "18", width: "18" },
+                    slot: "calendar-icon"
+                  })
+                ],
+                1
+              )
+            ],
+            2
+          )
+        ],
+        1
+      )
+    ],
+    1
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/views/ComplaintsBook.vue?vue&type=template&id=32607690&":
+/*!************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/views/ComplaintsBook.vue?vue&type=template&id=32607690& ***!
+  \************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    [
+      _c("div", { staticClass: "header pb-6" }, [
+        _c("div", { staticClass: "container-fluid" }, [
+          _c("div", { staticClass: "header-body" }, [
+            _c(
+              "div",
+              { staticClass: "row align-items-center pt-0 pt-md-2 pb-4" },
+              [
+                _c(
+                  "div",
+                  { staticClass: "col-12 col-lg-7" },
+                  [
+                    _c("BreadCrumb", {
+                      attrs: {
+                        title: "Libro de Reclamaciones",
+                        parent: "",
+                        active: "Libro de Reclamaciones"
+                      }
+                    })
+                  ],
+                  1
+                )
+              ]
+            )
+          ])
+        ])
+      ]),
+      _vm._v(" "),
+      _c(
+        "div",
+        { staticClass: "container-fluid mt--6" },
+        [
+          _c(
+            "DataTable",
+            {
+              attrs: {
+                object: _vm.elements,
+                placeholder:
+                  "Nombre, Apellido, Número Documento, Código de Reclamo",
+                "button-update": false,
+                "button-read": true,
+                "button-delete": true,
+                "button-disable": false,
+                "loading-prop": _vm.loadingGetAll,
+                "entries-prop": _vm.elementsPerPage
+              },
+              on: {
+                get: _vm.getEls,
+                read: _vm.showEl,
+                delete: _vm.deleteEl,
+                "update:entriesProp": function($event) {
+                  _vm.elementsPerPage = $event
+                },
+                "update:entries-prop": function($event) {
+                  _vm.elementsPerPage = $event
+                }
+              }
+            },
+            [
+              _c("template", { slot: "filters" }, [
+                _c(
+                  "div",
+                  { staticClass: "mb-2" },
+                  [
+                    _c("FilterDateRange", {
+                      attrs: {
+                        active: _vm.filterDate.active,
+                        range: _vm.filterDate.range
+                      },
+                      on: {
+                        "update:active": function($event) {
+                          return _vm.$set(_vm.filterDate, "active", $event)
+                        },
+                        "update:range": function($event) {
+                          return _vm.$set(_vm.filterDate, "range", $event)
+                        },
+                        get: function($event) {
+                          return _vm.getEls(1, _vm.elementsPerPage)
+                        }
+                      }
+                    })
+                  ],
+                  1
+                )
+              ])
+            ],
+            2
+          )
+        ],
+        1
+      ),
+      _vm._v(" "),
+      _c("destroy", {
+        attrs: {
+          element: "Lead",
+          open: _vm.modalDestroy,
+          "loading-get": _vm.loadingGet,
+          "loading-submit": _vm.requestSubmit
+        },
+        on: { cancel: _vm.restoreEl, submit: _vm.destroyConfirm }
+      }),
+      _vm._v(" "),
+      _c(
+        "b-modal",
+        {
+          attrs: {
+            "no-close-on-esc": "",
+            "no-close-on-backdrop": "",
+            centered: "",
+            size: "lg",
+            "footer-class": "border-0 pt-0",
+            "body-class": "pt-0"
+          },
+          on: { close: _vm.restoreEl },
+          scopedSlots: _vm._u([
+            {
+              key: "modal-footer",
+              fn: function(ref) {
+                var ok = ref.ok
+                return [
+                  _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-inverse-primary",
+                      attrs: { type: "button" },
+                      on: { click: _vm.restoreEl }
+                    },
+                    [_vm._v("Ok")]
+                  )
+                ]
+              }
+            }
+          ]),
+          model: {
+            value: _vm.modalShow,
+            callback: function($$v) {
+              _vm.modalShow = $$v
+            },
+            expression: "modalShow"
+          }
+        },
+        [
+          _c("template", { slot: "modal-title" }, [
+            _c("div", { staticClass: "text-primary h2" }, [
+              _vm._v("Detalle del Reclamo")
+            ])
+          ]),
+          _vm._v(" "),
+          _c("template", { slot: "modal-header-close" }, [
+            _c(
+              "button",
+              {
+                staticClass: "btn p-0 bg-transparent",
+                attrs: { type: "button" },
+                on: { click: _vm.restoreEl }
+              },
+              [_c("jam-close")],
+              1
+            )
+          ]),
+          _vm._v(" "),
+          _vm.loadingGet
+            ? _c("div", [
+                _c("div", { staticClass: "w-25 mb-1" }, [_c("Skeleton")], 1),
+                _vm._v(" "),
+                _c("div", { staticClass: "w-75" }, [_c("Skeleton")], 1),
+                _vm._v(" "),
+                _c("div", { staticClass: "w-25 mb-1" }, [_c("Skeleton")], 1),
+                _vm._v(" "),
+                _c("div", { staticClass: "w-75" }, [_c("Skeleton")], 1),
+                _vm._v(" "),
+                _c("div", { staticClass: "w-25 mb-1" }, [_c("Skeleton")], 1),
+                _vm._v(" "),
+                _c("div", { staticClass: "w-75" }, [_c("Skeleton")], 1)
+              ])
+            : _c("div", [
+                _c("div", { staticClass: "row" }, [
+                  _c("div", { staticClass: "col-12 text-center mb-1" }, [
+                    _c("h2", { staticClass: "mb-0" }, [
+                      _vm._v("Código de Registro")
+                    ]),
+                    _vm._v(" "),
+                    _c("h3", { staticClass: "font-weight-normal" }, [
+                      _vm._v(_vm._s(_vm.element.code))
+                    ])
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "col-12 text-right" }, [
+                    _c("p", [
+                      _c("span", { staticClass: "font-weight-bold" }, [
+                        _vm._v("Registrado el: ")
+                      ]),
+                      _vm._v(_vm._s(_vm.element.created_at_format))
+                    ])
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "col-12" }, [
+                    _c("h2", { staticClass: "mb-3" }, [
+                      _vm._v("Identificación del consumidor reclamante")
+                    ])
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "col-lg-6" }, [
+                    _c("div", { staticClass: "form-group" }, [
+                      _c("label", { staticClass: "font-weight-bold" }, [
+                        _vm._v("Nombre Completo:")
+                      ]),
+                      _vm._v(" "),
+                      _c("p", [
+                        _vm._v(
+                          _vm._s(_vm.element.name) +
+                            " " +
+                            _vm._s(_vm.element.lastname)
+                        )
+                      ])
+                    ])
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "col-lg-6" }, [
+                    _c("div", { staticClass: "form-group" }, [
+                      _c("label", { staticClass: "font-weight-bold" }, [
+                        _vm._v("Documento:")
+                      ]),
+                      _vm._v(" "),
+                      _c("p", [
+                        _vm._v(
+                          _vm._s(_vm.element.document_type_rel.description) +
+                            " - " +
+                            _vm._s(_vm.element.document_number)
+                        )
+                      ])
+                    ])
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "col-lg-6" }, [
+                    _c("div", { staticClass: "form-group" }, [
+                      _c("label", { staticClass: "font-weight-bold" }, [
+                        _vm._v("Email:")
+                      ]),
+                      _vm._v(" "),
+                      _c("p", [_vm._v(_vm._s(_vm.element.email))])
+                    ])
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "col-lg-6" }, [
+                    _c("div", { staticClass: "form-group" }, [
+                      _c("label", { staticClass: "font-weight-bold" }, [
+                        _vm._v("Móvil:")
+                      ]),
+                      _vm._v(" "),
+                      _c("p", [_vm._v(_vm._s(_vm.element.mobile_formatted))])
+                    ])
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "col-12" }, [
+                    _c("div", { staticClass: "form-group" }, [
+                      _c("label", { staticClass: "font-weight-bold" }, [
+                        _vm._v("Dirección:")
+                      ]),
+                      _vm._v(" "),
+                      _c("p", [_vm._v(_vm._s(_vm.element.address))])
+                    ])
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "col-lg-4" }, [
+                    _c("div", { staticClass: "form-group" }, [
+                      _c("label", { staticClass: "font-weight-bold" }, [
+                        _vm._v("Departamento:")
+                      ]),
+                      _vm._v(" "),
+                      _c("p", [
+                        _vm._v(_vm._s(_vm.element.ubigeo_rel.department))
+                      ])
+                    ])
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "col-lg-4" }, [
+                    _c("div", { staticClass: "form-group" }, [
+                      _c("label", { staticClass: "font-weight-bold" }, [
+                        _vm._v("Provincia:")
+                      ]),
+                      _vm._v(" "),
+                      _c("p", [_vm._v(_vm._s(_vm.element.ubigeo_rel.province))])
+                    ])
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "col-lg-4" }, [
+                    _c("div", { staticClass: "form-group" }, [
+                      _c("label", { staticClass: "font-weight-bold" }, [
+                        _vm._v("Distrito:")
+                      ]),
+                      _vm._v(" "),
+                      _c("p", [_vm._v(_vm._s(_vm.element.ubigeo_rel.district))])
+                    ])
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "col-12" }, [
+                    _c("h2", { staticClass: "mb-3 mt-2" }, [
+                      _vm._v("Identificación del bien contratado")
+                    ])
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "col-lg-6" }, [
+                    _c("div", { staticClass: "form-group" }, [
+                      _c("label", { staticClass: "font-weight-bold" }, [
+                        _vm._v("Monto del bien objeto de Reclamo:")
+                      ]),
+                      _vm._v(" "),
+                      _c("p", [
+                        _vm._v(_vm._s(_vm.element.good_contracted_amount))
+                      ])
+                    ])
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "col-lg-6" }, [
+                    _c("div", { staticClass: "form-group" }, [
+                      _c("label", { staticClass: "font-weight-bold" }, [
+                        _vm._v("Identificación del Bien contratado:")
+                      ]),
+                      _vm._v(" "),
+                      _c("p", [
+                        _vm._v(_vm._s(_vm.element.good_contracted_rel.name))
+                      ])
+                    ])
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "col-lg-6" }, [
+                    _c("div", { staticClass: "form-group" }, [
+                      _c("label", { staticClass: "font-weight-bold" }, [
+                        _vm._v("Descripción:")
+                      ]),
+                      _vm._v(" "),
+                      _c("p", [
+                        _vm._v(_vm._s(_vm.element.good_contracted_description))
+                      ])
+                    ])
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "col-12" }, [
+                    _c("h2", { staticClass: "mb-3 mt-2" }, [
+                      _vm._v("Detalle de la reclamación")
+                    ])
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "col-lg-6" }, [
+                    _c("div", { staticClass: "form-group" }, [
+                      _c("label", { staticClass: "font-weight-bold" }, [
+                        _vm._v("Tipo de reclamación:")
+                      ]),
+                      _vm._v(" "),
+                      _c("p", [_vm._v(_vm._s(_vm.element.claim_type_rel.name))])
+                    ])
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "col-lg-6" }, [
+                    _c("div", { staticClass: "form-group" }, [
+                      _c("label", { staticClass: "font-weight-bold" }, [
+                        _vm._v("Detalle:")
+                      ]),
+                      _vm._v(" "),
+                      _c("p", [_vm._v(_vm._s(_vm.element.claim_detail))])
+                    ])
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "col-lg-6" }, [
+                    _c("div", { staticClass: "form-group" }, [
+                      _c("label", { staticClass: "font-weight-bold" }, [
+                        _vm._v("Pedido:")
+                      ]),
+                      _vm._v(" "),
+                      _c("p", [_vm._v(_vm._s(_vm.element.claim_order))])
+                    ])
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "col-12 mt-2" }, [
+                    _c("h2", { staticClass: "mb-3" }, [
+                      _vm._v("Acciones adoptadas por el proveedor")
+                    ])
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "col-lg-6" }, [
+                    _c("div", { staticClass: "form-group" }, [
+                      _c("label", { staticClass: "font-weight-bold" }, [
+                        _vm._v("Detalle:")
+                      ]),
+                      _vm._v(" "),
+                      _vm.element.provider_detail
+                        ? _c("p", [_vm._v(_vm._s(_vm.element.provider_detail))])
+                        : _c("p", [_vm._v("No regitrado")])
+                    ])
+                  ])
+                ])
+              ])
+        ],
+        2
+      )
+    ],
+    1
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./resources/js/components/filters/DateRange.vue":
+/*!*******************************************************!*\
+  !*** ./resources/js/components/filters/DateRange.vue ***!
+  \*******************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _DateRange_vue_vue_type_template_id_52dcee80___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./DateRange.vue?vue&type=template&id=52dcee80& */ "./resources/js/components/filters/DateRange.vue?vue&type=template&id=52dcee80&");
+/* harmony import */ var _DateRange_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./DateRange.vue?vue&type=script&lang=js& */ "./resources/js/components/filters/DateRange.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _DateRange_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _DateRange_vue_vue_type_template_id_52dcee80___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _DateRange_vue_vue_type_template_id_52dcee80___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/filters/DateRange.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/filters/DateRange.vue?vue&type=script&lang=js&":
+/*!********************************************************************************!*\
+  !*** ./resources/js/components/filters/DateRange.vue?vue&type=script&lang=js& ***!
+  \********************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_DateRange_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib??vue-loader-options!./DateRange.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/filters/DateRange.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_DateRange_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/filters/DateRange.vue?vue&type=template&id=52dcee80&":
+/*!**************************************************************************************!*\
+  !*** ./resources/js/components/filters/DateRange.vue?vue&type=template&id=52dcee80& ***!
+  \**************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_DateRange_vue_vue_type_template_id_52dcee80___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib??vue-loader-options!./DateRange.vue?vue&type=template&id=52dcee80& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/filters/DateRange.vue?vue&type=template&id=52dcee80&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_DateRange_vue_vue_type_template_id_52dcee80___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_DateRange_vue_vue_type_template_id_52dcee80___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
+/***/ "./resources/js/views/ComplaintsBook.vue":
+/*!***********************************************!*\
+  !*** ./resources/js/views/ComplaintsBook.vue ***!
+  \***********************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _ComplaintsBook_vue_vue_type_template_id_32607690___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./ComplaintsBook.vue?vue&type=template&id=32607690& */ "./resources/js/views/ComplaintsBook.vue?vue&type=template&id=32607690&");
+/* harmony import */ var _ComplaintsBook_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./ComplaintsBook.vue?vue&type=script&lang=js& */ "./resources/js/views/ComplaintsBook.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _ComplaintsBook_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _ComplaintsBook_vue_vue_type_template_id_32607690___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _ComplaintsBook_vue_vue_type_template_id_32607690___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/views/ComplaintsBook.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/views/ComplaintsBook.vue?vue&type=script&lang=js&":
+/*!************************************************************************!*\
+  !*** ./resources/js/views/ComplaintsBook.vue?vue&type=script&lang=js& ***!
+  \************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_ComplaintsBook_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib??ref--4-0!../../../node_modules/vue-loader/lib??vue-loader-options!./ComplaintsBook.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/views/ComplaintsBook.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_ComplaintsBook_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/views/ComplaintsBook.vue?vue&type=template&id=32607690&":
+/*!******************************************************************************!*\
+  !*** ./resources/js/views/ComplaintsBook.vue?vue&type=template&id=32607690& ***!
+  \******************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ComplaintsBook_vue_vue_type_template_id_32607690___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib??vue-loader-options!./ComplaintsBook.vue?vue&type=template&id=32607690& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/views/ComplaintsBook.vue?vue&type=template&id=32607690&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ComplaintsBook_vue_vue_type_template_id_32607690___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ComplaintsBook_vue_vue_type_template_id_32607690___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ })
+
+}]);

@@ -6,7 +6,7 @@
           <div class="row align-items-center pt-0 pt-md-2 pb-4">
             <div class="col-12 col-lg-7">
               <BreadCrumb
-                :title="'Cotizaciones Proyecto '+project.name_es"
+                :title="'Cotizaciones Proyecto ' + project.name_es"
                 parent
                 active="Proyectos"
               ></BreadCrumb>
@@ -14,7 +14,10 @@
           </div>
           <div class="row mb-3">
             <div class="col-6 col-md-5">
-              <a :href="routeReturn" class="btn btn-icon btn-sm btn-inverse-light">
+              <a
+                :href="routeReturn"
+                class="btn btn-icon btn-sm btn-inverse-light"
+              >
                 <span class="btn-inner--icon">
                   <jam-arrow-left class="current-color" />
                 </span>
@@ -26,8 +29,19 @@
       </div>
     </div>
     <div class="container-fluid mt--6">
-      <b-tabs pills vertical  nav-wrapper-class="col-12 col-lg-3 col-xl-2 mb-4 mb-lg-0" nav-class="border bg-white py-2" content-class="col-12 col-lg-9 col-xl-10">
-        <b-tab title="Leads" active title-link-class="border-0 shadow-none bg-white py-3" title-item-class="pr-0 my-0">
+      <b-tabs
+        pills
+        vertical
+        nav-wrapper-class="col-12 col-lg-3 col-xl-2 mb-4 mb-lg-0"
+        nav-class="border bg-white py-2"
+        content-class="col-12 col-lg-9 col-xl-10"
+      >
+        <b-tab
+          title="Leads"
+          active
+          title-link-class="border-0 shadow-none bg-white py-3"
+          title-item-class="pr-0 my-0"
+        >
           <div class="row">
             <div class="col-12 mb-4 text-right">
               <button
@@ -40,7 +54,9 @@
                 <span class="btn-inner--icon">
                   <jam-download class="current-color" />
                 </span>
-                <span class="btn-inner--text">Exportar {{ elements.total == 0 ? '(0 Leads)' : '' }}</span>
+                <span class="btn-inner--text"
+                  >Exportar {{ elements.total == 0 ? "(0 Leads)" : "" }}</span
+                >
               </button>
             </div>
             <div class="col-12">
@@ -59,7 +75,10 @@
             </div>
           </div>
         </b-tab>
-        <b-tab title="Emails Destino" title-link-class="border-0 shadow-none bg-white py-3" title-item-class="my-0"
+        <b-tab
+          title="Emails Destino"
+          title-link-class="border-0 shadow-none bg-white py-3"
+          title-item-class="my-0"
           ><div class="row">
             <div class="col-12">
               <div class="card">
@@ -72,8 +91,8 @@
                   <div class="row">
                     <div class="col-12 mb-4">
                       Los leads se enviarán automáticamente a los asesores
-                      asignados al Proyecto <b>{{ project.name_es }}</b>, se designará 1
-                      lead por orden de llegada a cada asesor.
+                      asignados al Proyecto <b>{{ project.name_es }}</b
+                      >, se designará 1 lead por orden de llegada a cada asesor.
                     </div>
                     <div class="col-12 py-3">
                       <IconContact></IconContact>
@@ -137,25 +156,25 @@
           <div class="col-lg-6">
             <div class="form-group">
               <label class="font-weight-bold">Nombre:</label>
-              <p>{{ element.name}}</p>
+              <p>{{ element.fullname }}</p>
             </div>
           </div>
           <div class="col-lg-6">
             <div class="form-group">
               <label class="font-weight-bold">DNI:</label>
-              <p>{{ element.document_number}}</p>
+              <p>{{ element.document_number }}</p>
             </div>
           </div>
           <div class="col-lg-6">
             <div class="form-group">
               <label class="font-weight-bold">Email:</label>
-              <p>{{ element.email}}</p>
+              <p>{{ element.email }}</p>
             </div>
           </div>
           <div class="col-lg-6">
             <div class="form-group">
               <label class="font-weight-bold">Móvil:</label>
-              <p>{{ element.mobile_formatted}}</p>
+              <p>{{ element.mobile_formatted }}</p>
             </div>
           </div>
           <div class="col-12">
@@ -164,7 +183,16 @@
               <div class="" v-if="element.advisor_rel">
                 <!--<p class="mb-0">{{ }}</p>
                 <img width="150" height="auto" :src="imagesUrl+'/projects/'+element.project_rel.images_format[0]" alt="">-->
-                <div class="media align-items-center"><span class="avatar avatar-sm mr-3 rounded-circle bg-primary"><img :src="imagesUrl+'/advisors/'+element.advisor_rel.avatar"></span>{{ element.advisor_rel.name }}</div>
+                <div class="media align-items-center">
+                  <span
+                    v-if="element.advisor_rel.avatar"
+                    class="avatar avatar-sm mr-3 rounded-circle bg-primary"
+                    ><img
+                      :src="
+                        imagesUrl + '/advisors/' + element.advisor_rel.avatar
+                      " /></span
+                  >{{ element.advisor_rel.name }}
+                </div>
               </div>
               <div v-else>
                 <p>Asesor no asignado aún.</p>
@@ -175,8 +203,18 @@
             <div class="form-group">
               <label class="font-weight-bold d-block">Proyecto:</label>
               <div class="" v-if="element.project_rel">
-                <p class="mb-0">{{ element.project_rel.name_es}}</p>
-                <img width="150" height="auto" v-if="element.project_rel.images_format" :src="imagesUrl+'/projects/'+element.project_rel.images_format[0]" alt="">
+                <p class="mb-0">{{ element.project_rel.name_es }}</p>
+                <img
+                  width="150"
+                  height="auto"
+                  v-if="element.project_rel.images_format"
+                  :src="
+                    imagesUrl +
+                    '/projects/' +
+                    element.project_rel.images_format[0]
+                  "
+                  alt=""
+                />
               </div>
             </div>
           </div>
@@ -184,23 +222,80 @@
             <div class="form-group">
               <label class="font-weight-bold d-block">Tipología:</label>
               <div class="">
-                <p class="mb-0">{{ element.project_type_department_rel.name}}</p>
-                <img width="150" height="auto" :src="imagesUrl+'/projects/tipologies/'+element.project_type_department_rel.image" alt="">
+                <p class="mb-0">
+                  {{ element.project_type_department_rel.name }}
+                </p>
+                <img
+                  width="150"
+                  height="auto"
+                  :src="
+                    imagesUrl +
+                    '/projects/tipologies/' +
+                    element.project_type_department_rel.image
+                  "
+                  alt=""
+                />
               </div>
             </div>
           </div>
           <div class="col-12">
             <div class="form-group">
               <label class="font-weight-bold">Mensaje:</label>
-              <p v-if="element.message">{{ element.message}}</p>
+              <p v-if="element.message">{{ element.message }}</p>
               <p v-else>No hay mensaje registrado</p>
             </div>
           </div>
-          
+
+          <div class="col-12">
+            <div class="form-group mb-0">
+              <label class="font-weight-bold">Parámetros UTM:</label>
+            </div>
+          </div>
+          <div class="col-6">
+            <div class="form-group">
+              <label class="font-weight-bold">UTM Source:</label>
+              <p v-if="element.utm_source">{{ element.utm_source }}</p>
+              <p v-else>No registrado</p>
+            </div>
+          </div>
+          <div class="col-6">
+            <div class="form-group">
+              <label class="font-weight-bold">UTM Medium:</label>
+              <p v-if="element.utm_medium">{{ element.utm_medium }}</p>
+              <p v-else>No registrado</p>
+            </div>
+          </div>
+          <div class="col-6">
+            <div class="form-group">
+              <label class="font-weight-bold">UTM Campaign:</label>
+              <p v-if="element.utm_campaign">{{ element.utm_campaign }}</p>
+              <p v-else>No registrado</p>
+            </div>
+          </div>
+          <div class="col-6">
+            <div class="form-group">
+              <label class="font-weight-bold">UTM Term:</label>
+              <p v-if="element.utm_term">{{ element.utm_term }}</p>
+              <p v-else>No registrado</p>
+            </div>
+          </div>
+          <div class="col-6">
+            <div class="form-group">
+              <label class="font-weight-bold">UTM Content:</label>
+              <p v-if="element.utm_content">{{ element.utm_content }}</p>
+              <p v-else>No registrado</p>
+            </div>
+          </div>
         </div>
       </div>
       <template v-slot:modal-footer="{ ok }">
-        <button type="button" class="btn btn-inverse-primary" @click="restoreEl">Ok</button>
+        <button
+          type="button"
+          class="btn btn-inverse-primary"
+          @click="restoreEl"
+        >
+          Ok
+        </button>
       </template>
     </b-modal>
 
@@ -368,9 +463,9 @@
   </div>
 </template>
 <style>
-.nav-pills .nav-link.active{
+.nav-pills .nav-link.active {
   border-left: 4px solid #1762e6 !important;
-  background-color: #FDFBFA  !important;
+  background-color: #fdfbfa !important;
 }
 </style>
 <script>
@@ -404,7 +499,7 @@ export default {
       element: {
         project_rel: {},
         advisor_rel: {},
-        project_type_department_rel:{}
+        project_type_department_rel: {},
       },
       elementsPerPage: 10,
       modalShow: false,
@@ -450,7 +545,10 @@ export default {
           );
           const link = document.createElement("a");
           link.href = downloadUrl;
-          link.setAttribute("download", "Líder Cotizaciones Proyecto "+this.project.name_es+".xlsx");
+          link.setAttribute(
+            "download",
+            "Líder Cotizaciones Proyecto " + this.project.name_es + ".xlsx"
+          );
           document.body.appendChild(link);
           link.click();
           link.remove();
@@ -488,7 +586,10 @@ export default {
           );
           const link = document.createElement("a");
           link.href = downloadUrl;
-          link.setAttribute("download", "Líder Cotizaciones Proyecto "+this.project.name_es+".xlsx");
+          link.setAttribute(
+            "download",
+            "Líder Cotizaciones Proyecto " + this.project.name_es + ".xlsx"
+          );
           document.body.appendChild(link);
           link.click();
           link.remove();
@@ -550,7 +651,8 @@ export default {
         });
     },
     restoreEl() {
-      (this.element = {project_type_department_rel:{}}), (this.modalDestroy = this.modalShow = false);
+      (this.element = { project_type_department_rel: {} }),
+        (this.modalDestroy = this.modalShow = false);
       this.modalExport = false;
       this.element_form = {};
       this.errors_form = {};
@@ -582,7 +684,7 @@ export default {
     },
     restore() {
       this.elements = {};
-      this.element = {project_type_department_rel:{}};
+      this.element = { project_type_department_rel: {} };
       this.modalDestroy = this.modalShow = false;
       this.getEls(1, this.elementsPerPage);
     },
@@ -592,7 +694,7 @@ export default {
         .get("json/get/" + id)
         .then((response) => {
           this.element = response.data;
-            this.loadingGet = false;
+          this.loadingGet = false;
         })
         .catch((error) => {});
     },

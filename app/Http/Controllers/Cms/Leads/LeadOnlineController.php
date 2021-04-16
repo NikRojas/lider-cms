@@ -24,7 +24,7 @@ class LeadOnlineController extends Controller
     public function getAll(Request $request, LeadRepository $repo)
     {
         $q = $request->q;
-        $headers = ["id", "Nombre", "Teléfono", "Email", "DNI", "Horario", "Proyecto", "Asesor", "Registrado el"];
+        $headers = ["id", "Nombre", "Teléfono", "Email", "DNI", "Horario", "Proyecto", "Asesor", "Registrado el","UTM Source","UTM Medium","UTM Campaign","UTM Term","UTM Content"];
         if ($q) {
             $elements = $repo->datatableOnline($request->itemsPerPage, $q);
         } else {

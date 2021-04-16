@@ -53,8 +53,9 @@ class LeadRepository
     public function datatableOnline($items_per_page, $q = false)
     {
         if ($q) {
-            $leads = LeadVideocall::select("id", "name","email",'project_id', "mobile", "document_number", "schedule", "advisor_id")
-            ->where('name', 'like', '%'.$q.'%')
+            $leads = LeadVideocall::
+            where('name', 'like', '%'.$q.'%')
+            ->orWhere('lastname', 'like', '%'.$q.'%')
             ->orWhere('mobile', 'like', '%'.$q.'%')
             ->orWhere('document_number', 'like', '%'.$q.'%')
             //->with('mediumRel', 'timeRel')
@@ -62,9 +63,9 @@ class LeadRepository
             ->orderBy('created_at', 'desc')
             ->paginate($items_per_page);
         } else {
-            $leads = LeadVideocall::select("id", "name","email",'project_id', "mobile", "document_number", "schedule", "advisor_id")
+            $leads = LeadVideocall::
             //->with('mediumRel', 'timeRel')
-            ->with('advisorRel','projectRel')
+            with('advisorRel','projectRel')
             ->orderBy('created_at', 'desc')
             ->paginate($items_per_page);
         }
@@ -84,14 +85,19 @@ class LeadRepository
             $projectHTML = "<div class='media align-items-center'><span class='mr-3'><img height='55' width='auto' src='".$image."' /></span>".$lead["projectRel"]["name_es"]."</div>";
             $data[] = array(
                 "id" => $lead["id"],
-                "name" => $lead['name'],
+                "name" => $lead['fullname'],
                 "mobile" => $lead["mobile_format"],
                 "email" => $lead["email"],
                 "document_number" => $lead["document_number"],
                 "schedule" => $lead["schedule"],
                 "project" => $projectHTML,
                 "advisor" => $avatarHTML,
-                "created" => $lead["created_at_format"]
+                "created" => $lead["created_at_format"],
+                'utm_source' => $lead["utm_source"] ? $lead["utm_source"] : 'No registrado',
+                'utm_medium' => $lead["utm_medium"] ? $lead["utm_medium"] : 'No registrado',
+                'utm_campaign' => $lead["utm_campaign"] ? $lead["utm_campaign"] : 'No registrado',
+                'utm_term' => $lead["utm_term"] ? $lead["utm_term"] : 'No registrado',
+                'utm_content' => $lead["utm_content"] ? $lead["utm_content"] : 'No registrado',
             );
         }
         $leads = $leads->toArray();

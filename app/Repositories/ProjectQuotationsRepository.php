@@ -11,6 +11,7 @@ class ProjectQuotationsRepository
             $leads = ProjectQuotation::
             where('project_id', $id)
             ->where('name','like','%'.$q.'%')
+            ->orWhere('lastname','like','%'.$q.'%')
             ->orWhere('document_number','like','%'.$q.'%')
             ->with('advisorRel','projectRel')
             ->with('projectTypeDepartmentRel:id,name')
@@ -40,14 +41,15 @@ class ProjectQuotationsRepository
             $projectHTML = "<div class='media align-items-center'><span class='mr-3'><img height='55' width='auto' src='".$image."' /></span>".$lead["projectRel"]["name_es"]."</div>";
             $data[] = array(
                 "id" => $lead["id"],
-                "name" => $lead["name"],
+                "name" => $lead["fullname"],
                 "mobile" => $lead["mobile_formatted"],
                 "email" => $lead["email"],
                 "document_number" => $lead["document_number"],
                 "tipology" => $lead["projectTypeDepartmentRel"]["name"],
                 "project" => $projectHTML,
                 "advisor" => $avatarHTML,
-                "created" => $lead["created_at_format"]
+                "created" => $lead["created_at_format"],
+                "source" => $lead["utm_source"] ? $lead["utm_source"] : 'No registrado'
             );
         }
         $leads = $leads->toArray();

@@ -391,6 +391,101 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -638,7 +733,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../../node_modules/c
 
 
 // module
-exports.push([module.i, "\n.nav-pills .nav-link.active{\n  border-left: 4px solid #1762e6 !important;\n  background-color: #FDFBFA  !important;\n}\n", ""]);
+exports.push([module.i, "\n.nav-pills .nav-link.active {\n  border-left: 4px solid #1762e6 !important;\n  background-color: #fdfbfa !important;\n}\n", ""]);
 
 // exports
 
@@ -880,7 +975,7 @@ var render = function() {
                               ),
                               _c("b", [_vm._v(_vm._s(_vm.project.name_es))]),
                               _vm._v(
-                                ", se designará 1\n                    lead por orden de llegada a cada asesor.\n                  "
+                                ", se designará 1 lead por orden de llegada a cada asesor.\n                  "
                               )
                             ]),
                             _vm._v(" "),
@@ -939,7 +1034,7 @@ var render = function() {
                       attrs: { type: "button" },
                       on: { click: _vm.restoreEl }
                     },
-                    [_vm._v("Ok")]
+                    [_vm._v("\n        Ok\n      ")]
                   )
                 ]
               }
@@ -995,7 +1090,7 @@ var render = function() {
                         _vm._v("Nombre:")
                       ]),
                       _vm._v(" "),
-                      _c("p", [_vm._v(_vm._s(_vm.element.name))])
+                      _c("p", [_vm._v(_vm._s(_vm.element.fullname))])
                     ])
                   ]),
                   _vm._v(" "),
@@ -1041,24 +1136,29 @@ var render = function() {
                               "div",
                               { staticClass: "media align-items-center" },
                               [
-                                _c(
-                                  "span",
-                                  {
-                                    staticClass:
-                                      "avatar avatar-sm mr-3 rounded-circle bg-primary"
-                                  },
-                                  [
-                                    _c("img", {
-                                      attrs: {
-                                        src:
-                                          _vm.imagesUrl +
-                                          "/advisors/" +
-                                          _vm.element.advisor_rel.avatar
-                                      }
-                                    })
-                                  ]
-                                ),
-                                _vm._v(_vm._s(_vm.element.advisor_rel.name))
+                                _vm.element.advisor_rel.avatar
+                                  ? _c(
+                                      "span",
+                                      {
+                                        staticClass:
+                                          "avatar avatar-sm mr-3 rounded-circle bg-primary"
+                                      },
+                                      [
+                                        _c("img", {
+                                          attrs: {
+                                            src:
+                                              _vm.imagesUrl +
+                                              "/advisors/" +
+                                              _vm.element.advisor_rel.avatar
+                                          }
+                                        })
+                                      ]
+                                    )
+                                  : _vm._e(),
+                                _vm._v(
+                                  _vm._s(_vm.element.advisor_rel.name) +
+                                    "\n              "
+                                )
                               ]
                             )
                           ])
@@ -1107,7 +1207,11 @@ var render = function() {
                       _c("div", {}, [
                         _c("p", { staticClass: "mb-0" }, [
                           _vm._v(
-                            _vm._s(_vm.element.project_type_department_rel.name)
+                            "\n                " +
+                              _vm._s(
+                                _vm.element.project_type_department_rel.name
+                              ) +
+                              "\n              "
                           )
                         ]),
                         _vm._v(" "),
@@ -1135,6 +1239,74 @@ var render = function() {
                       _vm.element.message
                         ? _c("p", [_vm._v(_vm._s(_vm.element.message))])
                         : _c("p", [_vm._v("No hay mensaje registrado")])
+                    ])
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "col-12" }, [
+                    _c("div", { staticClass: "form-group mb-0" }, [
+                      _c("label", { staticClass: "font-weight-bold" }, [
+                        _vm._v("Parámetros UTM:")
+                      ])
+                    ])
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "col-6" }, [
+                    _c("div", { staticClass: "form-group" }, [
+                      _c("label", { staticClass: "font-weight-bold" }, [
+                        _vm._v("UTM Source:")
+                      ]),
+                      _vm._v(" "),
+                      _vm.element.utm_source
+                        ? _c("p", [_vm._v(_vm._s(_vm.element.utm_source))])
+                        : _c("p", [_vm._v("No registrado")])
+                    ])
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "col-6" }, [
+                    _c("div", { staticClass: "form-group" }, [
+                      _c("label", { staticClass: "font-weight-bold" }, [
+                        _vm._v("UTM Medium:")
+                      ]),
+                      _vm._v(" "),
+                      _vm.element.utm_medium
+                        ? _c("p", [_vm._v(_vm._s(_vm.element.utm_medium))])
+                        : _c("p", [_vm._v("No registrado")])
+                    ])
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "col-6" }, [
+                    _c("div", { staticClass: "form-group" }, [
+                      _c("label", { staticClass: "font-weight-bold" }, [
+                        _vm._v("UTM Campaign:")
+                      ]),
+                      _vm._v(" "),
+                      _vm.element.utm_campaign
+                        ? _c("p", [_vm._v(_vm._s(_vm.element.utm_campaign))])
+                        : _c("p", [_vm._v("No registrado")])
+                    ])
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "col-6" }, [
+                    _c("div", { staticClass: "form-group" }, [
+                      _c("label", { staticClass: "font-weight-bold" }, [
+                        _vm._v("UTM Term:")
+                      ]),
+                      _vm._v(" "),
+                      _vm.element.utm_term
+                        ? _c("p", [_vm._v(_vm._s(_vm.element.utm_term))])
+                        : _c("p", [_vm._v("No registrado")])
+                    ])
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "col-6" }, [
+                    _c("div", { staticClass: "form-group" }, [
+                      _c("label", { staticClass: "font-weight-bold" }, [
+                        _vm._v("UTM Content:")
+                      ]),
+                      _vm._v(" "),
+                      _vm.element.utm_content
+                        ? _c("p", [_vm._v(_vm._s(_vm.element.utm_content))])
+                        : _c("p", [_vm._v("No registrado")])
                     ])
                   ])
                 ])

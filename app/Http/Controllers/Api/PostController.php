@@ -34,7 +34,7 @@ class PostController extends BaseController
     }
 
     public function onlineAppointment(OnlineAppointmentRequest $request){
-        $el = request(['name','email','mobile','document_number','project_id','schedule']);
+        $el = request(['name','email','lastname','mobile','document_number','project_id','schedule','utm_source','utm_medium','utm_campaign','utm_term','utm_content']);
 		try {
             $el = LeadVideocall::UpdateOrCreate($el);
             return $this->sendResponse([], trans('custom.title.success'), 200);;
@@ -68,7 +68,7 @@ class PostController extends BaseController
         if(!$project){
             return $this->sendError("Not found");
         }
-        $el = request(['name','email','mobile','project_type_department_id','document_number','message']);
+        $el = request(['name','email','lastname','mobile','project_type_department_id','document_number','message','utm_source','utm_medium','utm_campaign','utm_term','utm_content']);
         $str = Str::random(40);
 		try {
             $el = ProjectQuotation::UpdateOrCreate(array_merge($el,["project_id" => $project->id, 'identifier_str' => $str]));

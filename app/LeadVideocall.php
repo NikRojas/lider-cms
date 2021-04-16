@@ -9,7 +9,7 @@ class LeadVideocall extends Model
 {
     protected $table = 'leads_videocall';
     protected $guarded = [];
-    protected $appends = ["created_at_format","mobile_format","created_at_format_email"];
+    protected $appends = ["created_at_format","mobile_format","created_at_format_email",'fullname'];
 
     public function projectRel()
     {
@@ -42,5 +42,9 @@ class LeadVideocall extends Model
     public function getCreatedAtFormatEmailAttribute() {
         $date = new Carbon($this->created_at);
         return $date->day.' de '.ucfirst($date->monthName).' '.$date->year;;
+    }
+
+    public function getFullnameAttribute() {
+        return $this->name.' '.$this->lastname;
     }
 }

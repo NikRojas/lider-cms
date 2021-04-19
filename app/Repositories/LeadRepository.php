@@ -98,6 +98,7 @@ class LeadRepository
                 'utm_campaign' => $lead["utm_campaign"] ? $lead["utm_campaign"] : 'No registrado',
                 'utm_term' => $lead["utm_term"] ? $lead["utm_term"] : 'No registrado',
                 'utm_content' => $lead["utm_content"] ? $lead["utm_content"] : 'No registrado',
+                "webhook" => $lead["sended_to_webhook"] ? 'Enviado': 'No enviado'
             );
         }
         $leads = $leads->toArray();

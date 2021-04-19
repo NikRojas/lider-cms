@@ -1022,7 +1022,7 @@
                   </div>
                   <div class="col-12">
                     <div class="form-group">
-                        <label class="font-weight-bold">Webhook URL:</label>
+                        <label class="font-weight-bold">Webhook:</label>
                         <div class="mb-0">
                           <p>Al habilitar esta opción la información de las cotizaciones registradas en el <b>Proyecto</b> serán enviadas a la URL que defina. Además de los datos de la cotización se enviarán los siguentes datos.</p> 
                           <b>Parámetros UTM</b>

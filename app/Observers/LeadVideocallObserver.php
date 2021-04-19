@@ -3,6 +3,8 @@
 namespace App\Observers;
 
 use App\Advisor;
+use App\ConfigLead;
+use App\Jobs\Webhook;
 use App\LeadVideocall;
 use App\Notifications\LeadVideocallNotification;
 use App\Notifications\UserLeadVideocallNotification;
@@ -39,5 +41,10 @@ class LeadVideocallObserver
         $advisor = Advisor::find($advisorId);
         Notification::route('mail',$advisor->email)->notify(new LeadVideocallNotification($lead));  
         Notification::route('mail',$lead->email)->notify(new UserLeadVideocallNotification($lead));  
+
+        $config = ConfigLead::where('type','online')->first();
+        if($config && $config->webhook_url_active){
+            Webhook::dispatch($lead,$config->webhook_url,$advisor->name,0);
+        } 
     }
 }

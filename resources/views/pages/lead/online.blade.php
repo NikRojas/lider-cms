@@ -1,6 +1,7 @@
 @extends('layouts.dashboard')
 @section('content')
   <online  
+  :config="{{ json_encode($config) }}"
   route="{{ route('cms.leads.online-appointment.index') }}" 
   route-get-all="{{ route('cms.leads.online-appointment.get-all') }}"
   route-update="{{ route('cms.leads.online-appointment.update') }}" 

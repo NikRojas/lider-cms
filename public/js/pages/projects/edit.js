@@ -4375,7 +4375,7 @@ var render = function() {
                         { staticClass: "form-group" },
                         [
                           _c("label", { staticClass: "font-weight-bold" }, [
-                            _vm._v("Webhook URL:")
+                            _vm._v("Webhook:")
                           ]),
                           _vm._v(" "),
                           _vm._m(9),

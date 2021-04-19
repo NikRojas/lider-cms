@@ -2,6 +2,7 @@
 
 namespace App\Jobs;
 
+use App\LeadVideocall;
 use App\ProjectQuotation;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -40,13 +41,11 @@ class Webhook implements ShouldQueue
      */
     public function handle()
     {
-        /*Log::info($this->lead);
-        Log::info($this->webhook_url);
-        Log::info($this->is_quotation);*/
         $leadToSend = [];
         if($this->is_quotation){
             $leadToSend["name"] = $this->lead->name;
             $leadToSend["lastname"] = $this->lead->lastname;
+            $leadToSend["email"] = $this->lead->email;
             $leadToSend["document_number"] = $this->lead->document_number;
             $leadToSend["mobile"] = $this->lead->mobile;
             $leadToSend["message"] = $this->lead->message;
@@ -65,12 +64,23 @@ class Webhook implements ShouldQueue
             $leadToSend["type"] = "Cotización";
         }
         else{
-            $this->lead->type = "Cita Online";
+            $leadToSend["type"] = "Cita Online";
+            $leadToSend["schedule"] = $this->lead->schedule;
+            $leadToSend["name"] = $this->lead->name;
+            $leadToSend["project"] = $this->lead->projectRel->name_es;
+            $leadToSend["lastname"] = $this->lead->lastname;
+            $leadToSend["email"] = $this->lead->email;
+            $leadToSend["document_number"] = $this->lead->document_number;
+            $leadToSend["mobile"] = $this->lead->mobile;
+            $leadToSend["utm_source"] = $this->lead->utm_source;
+            $leadToSend["utm_medium"] = $this->lead->utm_medium;
+            $leadToSend["utm_campaign"] = $this->lead->utm_campaign;
+            $leadToSend["utm_term"] = $this->lead->utm_term;
+            $leadToSend["utm_content"] = $this->lead->utm_content;
+            $leadToSend["asesor"] = $this->advisor;
         }
         $client = new Client();
         $response = $client->request('POST', $this->webhook_url, ['json' => $leadToSend]);
-        //Log::info($leadToSend);
-        Log::info($response->getStatusCode());
         $status = $response->getStatusCode();
         if($this->is_quotation){
             if($status == 200){
@@ -80,8 +90,11 @@ class Webhook implements ShouldQueue
             }   
         }
         else{
-            
+            if($status == 200){
+                $toUpdate = LeadVideocall::find($this->lead->id);
+                $toUpdate->sended_to_webhook = true;
+                $toUpdate->save();
+            }   
         }
-        //Log::info(json_decode($response->getBody()));
     }
 }

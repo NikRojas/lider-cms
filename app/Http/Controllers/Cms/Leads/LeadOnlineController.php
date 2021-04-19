@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Cms\Leads;
 
+use App\ConfigLead;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Repositories\LeadRepository;
@@ -10,6 +11,7 @@ use App\Http\Requests\Cms\ApplicantDestinationRequest;
 use App\EmailDestination;
 use App\Exports\LeadVideocallExport;
 use App\Http\Requests\Cms\Export\LeadExportExcel;
+use App\Http\Requests\Cms\WebhookRequest;
 use App\Http\Traits\CmsTrait;
 
 class LeadOnlineController extends Controller
@@ -18,13 +20,31 @@ class LeadOnlineController extends Controller
     
     public function index()
     {
-        return view("pages.lead.online");
+        $config = ConfigLead::where('type','online')->first();
+        return view("pages.lead.online",compact('config'));
+    }
+
+    public function updateWebhook(WebhookRequest $request)
+    {
+        $configFirst = ConfigLead::where('type','online')->first();
+        $el = request(["webhook_url","webhook_url_active"]);
+        try{
+            if($configFirst){
+                $config = ConfigLead::UpdateOrCreate(["id"=>$configFirst->id], $el);          
+            }
+            else{
+                $config = ConfigLead::UpdateOrCreate(array_merge($el, ["type" => 'online']));
+            }
+            return response()->json(["config" => $config, 'title'=> trans('custom.title.success'), 'message'=> trans('custom.message.update.success', ['name' => trans('custom.attribute.element')]) ], 200);
+        } catch (\Exception $e) {
+            return response()->json(['title'=> trans('custom.title.error'), 'message'=> trans('custom.message.update.error', ['name' => trans('custom.attribute.element')]) ], 500);
+        }
     }
 
     public function getAll(Request $request, LeadRepository $repo)
     {
         $q = $request->q;
-        $headers = ["id", "Nombre", "Teléfono", "Email", "DNI", "Horario", "Proyecto", "Asesor", "Registrado el","UTM Source","UTM Medium","UTM Campaign","UTM Term","UTM Content"];
+        $headers = ["id", "Nombre", "Teléfono", "Email", "DNI", "Horario", "Proyecto", "Asesor", "Registrado el","UTM Source","UTM Medium","UTM Campaign","UTM Term","UTM Content","Enviado a Webhook"];
         if ($q) {
             $elements = $repo->datatableOnline($request->itemsPerPage, $q);
         } else {

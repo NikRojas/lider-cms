@@ -16,39 +16,55 @@
       </div>
     </div>
     <div class="container-fluid mt--6">
-      <b-tabs pills vertical  nav-wrapper-class="col-12 col-lg-3 col-xl-2 mb-4 mb-lg-0" nav-class="border bg-white py-2" content-class="col-12 col-lg-9 col-xl-10">
-        <b-tab title="Leads" active title-link-class="border-0 shadow-none bg-white py-3" title-item-class="pr-0 my-0">
+      <b-tabs
+        pills
+        vertical
+        nav-wrapper-class="col-12 col-lg-3 col-xl-2 mb-4 mb-lg-0"
+        nav-class="border bg-white py-2"
+        content-class="col-12 col-lg-9 col-xl-10"
+      >
+        <b-tab
+          title="Leads"
+          active
+          title-link-class="border-0 shadow-none bg-white py-3"
+          title-item-class="pr-0 my-0"
+        >
           <div class="row">
             <div class="col-12 mb-4 text-right">
               <button
                 type="button"
                 class="btn btn-icon btn-inverse-primary"
                 @click="openModalExport"
-              :disabled="elements.total == 0 ? true : false"
+                :disabled="elements.total == 0 ? true : false"
                 :style="elements.total == 0 ? 'opacity: 0.50' : ''"
               >
                 <span class="btn-inner--icon">
                   <jam-download class="current-color" />
                 </span>
-                <span class="btn-inner--text">Exportar {{ elements.total == 0 ? '(0 Leads)' : '' }}</span>
+                <span class="btn-inner--text"
+                  >Exportar {{ elements.total == 0 ? "(0 Leads)" : "" }}</span
+                >
               </button>
             </div>
             <div class="col-12">
-            <DataTable
-              :object="elements"
-              placeholder="Nombre, DNI, Teléfono"
-              :button-update="false"
-              :button-read="false"
-              :button-delete="true"
-              @get="getElements"
-              @delete="deleteEl"
-              :entries-prop.sync="elementsPerPage"
-              :messageCantDelete="messageCantDelete"
-            ></DataTable>
+              <DataTable
+                :object="elements"
+                placeholder="Nombre, DNI, Teléfono"
+                :button-update="false"
+                :button-read="false"
+                :button-delete="true"
+                @get="getElements"
+                @delete="deleteEl"
+                :entries-prop.sync="elementsPerPage"
+                :messageCantDelete="messageCantDelete"
+              ></DataTable>
             </div>
           </div>
         </b-tab>
-        <b-tab title="Emails Destino" title-link-class="border-0 shadow-none bg-white py-3" title-item-class="my-0"
+        <b-tab
+          title="Emails Destino"
+          title-link-class="border-0 shadow-none bg-white py-3"
+          title-item-class="my-0"
           ><div class="row">
             <div class="col-12">
               <div class="card">
@@ -72,6 +88,82 @@
               </div>
             </div></div
         ></b-tab>
+        <b-tab
+          title="Webhook"
+          title-link-class="border-0 shadow-none bg-white py-3"
+          title-item-class="my-0"
+        >
+          <div class="row">
+            <div class="col-12">
+              <div class="card">
+                <div class="card-header border-0 pb-0">
+                  <h2 class="mb-0 text-uppercase text-primary">Webhook</h2>
+                </div>
+                <div class="card-body">
+                  <form @submit.prevent="updateWebhook">
+                    <div class="row">
+                      <div class="col-12 mb-2">
+                        <div class="form-group">
+                          <label class="font-weight-bold">Webhook:</label>
+                          <div class="mb-0">
+                            <p>
+                              Al habilitar esta opción la información de los leads de las
+                              citas onlines registradas en la <b>Web</b> serán
+                              enviadas a la URL que defina. Además de los datos del lead se enviarán los siguentes datos.
+                            </p>
+                            <b>Parámetros UTM</b>
+                            <ul>
+                              <li>UTM Source</li>
+                              <li>UTM Medium</li>
+                              <li>UTM Campaign</li>
+                              <li>UTM Term</li>
+                              <li>UTM Content</li>
+                            </ul>
+                          </div>
+                          <b-form-checkbox
+                            class="ml-2"
+                            size="lg"
+                            v-model="configWebhook.webhook_url_active"
+                            name="check-button"
+                            switch
+                          >
+                          </b-form-checkbox>
+                        </div>
+                        <div
+                          class="form-group"
+                          v-if="configWebhook.webhook_url_active"
+                        >
+                          <label class="font-weight-bold" for="webhook_url"
+                            >URL Destino</label
+                          >
+                          <input
+                            type="text"
+                            class="form-control"
+                            v-model="configWebhook.webhook_url"
+                            id="webhook_url"
+                          />
+                          <label
+                            v-if="errors && errors.webhook_url"
+                            class="mt-2 text-danger text-sm"
+                            for="webhook_url"
+                            >{{ errors.webhook_url[0] }}</label
+                          >
+                        </div>
+                      </div>
+                      <div class="col-12 text-right">
+                      <Button
+                        :text="'Actualizar'"
+                        :classes="['btn-inverse-primary']"
+                        :request-server="requestSubmit"
+                      ></Button>
+                    </div>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </b-tab>
       </b-tabs>
     </div>
 
@@ -248,9 +340,9 @@
   </div>
 </template>
 <style>
-.nav-pills .nav-link.active{
+.nav-pills .nav-link.active {
   border-left: 4px solid #1762e6 !important;
-  background-color: #FDFBFA  !important;
+  background-color: #fdfbfa !important;
 }
 </style>
 <script>
@@ -263,7 +355,6 @@ import InputSlug from "../../components/form/InputSlug";
 import SkeletonForm from "../../components/skeleton/form";
 import Destroy from "../../components/modals/Destroy";
 import InputArray from "../../components/form/InputArray";
-
 import DatePicker from "vue2-datepicker";
 export default {
   components: {
@@ -276,13 +367,13 @@ export default {
     InputArray,
     Destroy,
     IconContact,
-     DatePicker,
+    DatePicker,
   },
   props: {
     routeGetAll: String,
     route: String,
     messageCantDelete: String,
-
+    config: Object,
     routeUpdate: String,
     getEmailDestination: String,
     allExport: String,
@@ -290,6 +381,11 @@ export default {
   },
   data() {
     return {
+      configWebhook: {
+        webhook_url: "",
+        webhook_url_active: false,
+      },
+
       request_todo: false,
       request_filter: false,
       errors_form: {},
@@ -535,10 +631,61 @@ export default {
         })
         .catch((error) => {});
     },
+    restoreWebhook(){
+      this.requestSubmit = false;
+
+    },
+    updateWebhook() {
+      this.requestSubmit = true;
+      axios
+        .put('/leads/cita-online/webhook', this.configWebhook)
+        .then((response) => {
+          this.requestSubmit = false;
+          this.configWebhook = response.data.config;
+          Swal.fire({
+            title: response.data.title,
+            text: response.data.message,
+            type: "success",
+            confirmButtonText: "OK",
+            buttonsStyling: false,
+            customClass: {
+              confirmButton: "btn btn-inverse-primary",
+            },
+          });
+        })
+        .catch((error) => {
+          this.requestSubmit = false;
+          if (error.response.status === 422) {
+            this.errors = error.response.data.errors || {};
+            return;
+          }
+          //this.restorePage();
+          Swal.fire({
+            title: error.response.data.title,
+            text: error.response.data.message,
+            type: "error",
+            confirmButtonText: "OK",
+            buttonsStyling: false,
+            customClass: {
+              confirmButton: "btn btn-inverse-primary",
+            },
+          });
+        });
+    },
   },
   created() {
     this.getElements(1, this.elementsPerPage);
     this.getContactEmailDestination();
+  },
+  watch: {
+    config: {
+      immediate: true,
+      handler: function (newValue) {
+        if (newValue) {
+          this.configWebhook = newValue;
+        }
+      },
+    },
   },
 };
 </script>

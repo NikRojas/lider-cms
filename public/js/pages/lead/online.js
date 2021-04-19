@@ -421,6 +421,98 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -448,6 +540,7 @@ __webpack_require__.r(__webpack_exports__);
     routeGetAll: String,
     route: String,
     messageCantDelete: String,
+    config: Object,
     routeUpdate: String,
     getEmailDestination: String,
     allExport: String,
@@ -455,6 +548,10 @@ __webpack_require__.r(__webpack_exports__);
   },
   data: function data() {
     return {
+      configWebhook: {
+        webhook_url: "",
+        webhook_url_active: false
+      },
       request_todo: false,
       request_filter: false,
       errors_form: {},
@@ -705,11 +802,62 @@ __webpack_require__.r(__webpack_exports__);
         _this7.element = response.data;
         _this7.loadingGet = false;
       })["catch"](function (error) {});
+    },
+    restoreWebhook: function restoreWebhook() {
+      this.requestSubmit = false;
+    },
+    updateWebhook: function updateWebhook() {
+      var _this8 = this;
+
+      this.requestSubmit = true;
+      axios.put('/leads/cita-online/webhook', this.configWebhook).then(function (response) {
+        _this8.requestSubmit = false;
+        _this8.configWebhook = response.data.config;
+        Swal.fire({
+          title: response.data.title,
+          text: response.data.message,
+          type: "success",
+          confirmButtonText: "OK",
+          buttonsStyling: false,
+          customClass: {
+            confirmButton: "btn btn-inverse-primary"
+          }
+        });
+      })["catch"](function (error) {
+        _this8.requestSubmit = false;
+
+        if (error.response.status === 422) {
+          _this8.errors = error.response.data.errors || {};
+          return;
+        } //this.restorePage();
+
+
+        Swal.fire({
+          title: error.response.data.title,
+          text: error.response.data.message,
+          type: "error",
+          confirmButtonText: "OK",
+          buttonsStyling: false,
+          customClass: {
+            confirmButton: "btn btn-inverse-primary"
+          }
+        });
+      });
     }
   },
   created: function created() {
     this.getElements(1, this.elementsPerPage);
     this.getContactEmailDestination();
+  },
+  watch: {
+    config: {
+      immediate: true,
+      handler: function handler(newValue) {
+        if (newValue) {
+          this.configWebhook = newValue;
+        }
+      }
+    }
   }
 });
 
@@ -727,7 +875,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.nav-pills .nav-link.active{\n  border-left: 4px solid #1762e6 !important;\n  background-color: #FDFBFA  !important;\n}\n", ""]);
+exports.push([module.i, "\n.nav-pills .nav-link.active {\n  border-left: 4px solid #1762e6 !important;\n  background-color: #fdfbfa !important;\n}\n", ""]);
 
 // exports
 
@@ -1099,6 +1247,198 @@ var render = function() {
                               1
                             )
                           ])
+                        ])
+                      ])
+                    ])
+                  ])
+                ]
+              ),
+              _vm._v(" "),
+              _c(
+                "b-tab",
+                {
+                  attrs: {
+                    title: "Webhook",
+                    "title-link-class": "border-0 shadow-none bg-white py-3",
+                    "title-item-class": "my-0"
+                  }
+                },
+                [
+                  _c("div", { staticClass: "row" }, [
+                    _c("div", { staticClass: "col-12" }, [
+                      _c("div", { staticClass: "card" }, [
+                        _c(
+                          "div",
+                          { staticClass: "card-header border-0 pb-0" },
+                          [
+                            _c(
+                              "h2",
+                              {
+                                staticClass: "mb-0 text-uppercase text-primary"
+                              },
+                              [_vm._v("Webhook")]
+                            )
+                          ]
+                        ),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "card-body" }, [
+                          _c(
+                            "form",
+                            {
+                              on: {
+                                submit: function($event) {
+                                  $event.preventDefault()
+                                  return _vm.updateWebhook($event)
+                                }
+                              }
+                            },
+                            [
+                              _c("div", { staticClass: "row" }, [
+                                _c("div", { staticClass: "col-12 mb-2" }, [
+                                  _c(
+                                    "div",
+                                    { staticClass: "form-group" },
+                                    [
+                                      _c(
+                                        "label",
+                                        { staticClass: "font-weight-bold" },
+                                        [_vm._v("Webhook:")]
+                                      ),
+                                      _vm._v(" "),
+                                      _c("div", { staticClass: "mb-0" }, [
+                                        _c("p", [
+                                          _vm._v(
+                                            "\n                            Al habilitar esta opción la información de los leads de las\n                            citas onlines registradas en la "
+                                          ),
+                                          _c("b", [_vm._v("Web")]),
+                                          _vm._v(
+                                            " serán\n                            enviadas a la URL que defina. Además de los datos del lead se enviarán los siguentes datos.\n                          "
+                                          )
+                                        ]),
+                                        _vm._v(" "),
+                                        _c("b", [_vm._v("Parámetros UTM")]),
+                                        _vm._v(" "),
+                                        _c("ul", [
+                                          _c("li", [_vm._v("UTM Source")]),
+                                          _vm._v(" "),
+                                          _c("li", [_vm._v("UTM Medium")]),
+                                          _vm._v(" "),
+                                          _c("li", [_vm._v("UTM Campaign")]),
+                                          _vm._v(" "),
+                                          _c("li", [_vm._v("UTM Term")]),
+                                          _vm._v(" "),
+                                          _c("li", [_vm._v("UTM Content")])
+                                        ])
+                                      ]),
+                                      _vm._v(" "),
+                                      _c("b-form-checkbox", {
+                                        staticClass: "ml-2",
+                                        attrs: {
+                                          size: "lg",
+                                          name: "check-button",
+                                          switch: ""
+                                        },
+                                        model: {
+                                          value:
+                                            _vm.configWebhook
+                                              .webhook_url_active,
+                                          callback: function($$v) {
+                                            _vm.$set(
+                                              _vm.configWebhook,
+                                              "webhook_url_active",
+                                              $$v
+                                            )
+                                          },
+                                          expression:
+                                            "configWebhook.webhook_url_active"
+                                        }
+                                      })
+                                    ],
+                                    1
+                                  ),
+                                  _vm._v(" "),
+                                  _vm.configWebhook.webhook_url_active
+                                    ? _c("div", { staticClass: "form-group" }, [
+                                        _c(
+                                          "label",
+                                          {
+                                            staticClass: "font-weight-bold",
+                                            attrs: { for: "webhook_url" }
+                                          },
+                                          [_vm._v("URL Destino")]
+                                        ),
+                                        _vm._v(" "),
+                                        _c("input", {
+                                          directives: [
+                                            {
+                                              name: "model",
+                                              rawName: "v-model",
+                                              value:
+                                                _vm.configWebhook.webhook_url,
+                                              expression:
+                                                "configWebhook.webhook_url"
+                                            }
+                                          ],
+                                          staticClass: "form-control",
+                                          attrs: {
+                                            type: "text",
+                                            id: "webhook_url"
+                                          },
+                                          domProps: {
+                                            value: _vm.configWebhook.webhook_url
+                                          },
+                                          on: {
+                                            input: function($event) {
+                                              if ($event.target.composing) {
+                                                return
+                                              }
+                                              _vm.$set(
+                                                _vm.configWebhook,
+                                                "webhook_url",
+                                                $event.target.value
+                                              )
+                                            }
+                                          }
+                                        }),
+                                        _vm._v(" "),
+                                        _vm.errors && _vm.errors.webhook_url
+                                          ? _c(
+                                              "label",
+                                              {
+                                                staticClass:
+                                                  "mt-2 text-danger text-sm",
+                                                attrs: { for: "webhook_url" }
+                                              },
+                                              [
+                                                _vm._v(
+                                                  _vm._s(
+                                                    _vm.errors.webhook_url[0]
+                                                  )
+                                                )
+                                              ]
+                                            )
+                                          : _vm._e()
+                                      ])
+                                    : _vm._e()
+                                ]),
+                                _vm._v(" "),
+                                _c(
+                                  "div",
+                                  { staticClass: "col-12 text-right" },
+                                  [
+                                    _c("Button", {
+                                      attrs: {
+                                        text: "Actualizar",
+                                        classes: ["btn-inverse-primary"],
+                                        "request-server": _vm.requestSubmit
+                                      }
+                                    })
+                                  ],
+                                  1
+                                )
+                              ])
+                            ]
+                          )
                         ])
                       ])
                     ])

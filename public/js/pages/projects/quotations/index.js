@@ -486,6 +486,13 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -1239,6 +1246,24 @@ var render = function() {
                       _vm.element.message
                         ? _c("p", [_vm._v(_vm._s(_vm.element.message))])
                         : _c("p", [_vm._v("No hay mensaje registrado")])
+                    ])
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "col-12" }, [
+                    _c("div", { staticClass: "form-group" }, [
+                      _c("label", { staticClass: "font-weight-bold" }, [
+                        _vm._v("Enviado a Webhook:")
+                      ]),
+                      _vm._v(" "),
+                      _c("p", [
+                        _vm._v(
+                          _vm._s(
+                            _vm.element.sended_to_webhook
+                              ? "Enviado"
+                              : "No enviado"
+                          )
+                        )
+                      ])
                     ])
                   ]),
                   _vm._v(" "),

@@ -247,6 +247,13 @@
           </div>
 
           <div class="col-12">
+            <div class="form-group">
+              <label class="font-weight-bold">Enviado a Webhook:</label>
+              <p>{{ element.sended_to_webhook ? 'Enviado' : 'No enviado'}}</p>
+            </div>
+          </div>
+
+          <div class="col-12">
             <div class="form-group mb-0">
               <label class="font-weight-bold">Parámetros UTM:</label>
             </div>

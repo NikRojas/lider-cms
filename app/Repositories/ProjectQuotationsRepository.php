@@ -49,7 +49,8 @@ class ProjectQuotationsRepository
                 "project" => $projectHTML,
                 "advisor" => $avatarHTML,
                 "created" => $lead["created_at_format"],
-                "source" => $lead["utm_source"] ? $lead["utm_source"] : 'No registrado'
+                "source" => $lead["utm_source"] ? $lead["utm_source"] : 'No registrado',
+                "webhook" => $lead["sended_to_webhook"] ? 'Enviado' : 'No enviado'
             );
         }
         $leads = $leads->toArray();

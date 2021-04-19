@@ -3,6 +3,7 @@
 namespace App\Observers;
 
 use App\Advisor;
+use App\Jobs\Webhook;
 use App\Notifications\ProjectQuotationNotification;
 use App\Notifications\UserProjectQuotationNotification;
 use App\ProjectQuotation;
@@ -45,6 +46,10 @@ class ProjectQuotationObserver
         if($lead->projectRel["send_to_email"]){
             Notification::route('mail',$advisor->email)->notify(new ProjectQuotationNotification($lead));  
         }
+        Log::info($advisor);
         Notification::route('mail',$lead->email)->notify(new UserProjectQuotationNotification($lead));  
+        if($lead->projectRel["webhook_url_active"]){
+            Webhook::dispatch($lead,$lead->projectRel["webhook_url"],$advisor->name,1);
+        }
     }
 }

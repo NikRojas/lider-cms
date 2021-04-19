@@ -26,7 +26,7 @@ class QuotationsController extends Controller
 
   public function getAll(Request $request,ProjectQuotationsRepository $repo){
     $q = $request->q;
-    $headers = ["Id", "Nombre","Teléfono", "Email","DNI","Tipología", "Proyecto", "Asesor", "Registrado el", "UTM Source"];
+    $headers = ["Id", "Nombre","Teléfono", "Email","DNI","Tipología", "Proyecto", "Asesor", "Registrado el", "UTM Source", "Enviado a Webhook"];
     if($q){
         $elements = $repo->datatable($request->project_id,$request->itemsPerPage,$q);
     }

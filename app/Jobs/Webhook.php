@@ -11,6 +11,7 @@ use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\Log;
 use GuzzleHttp\Client;
+use Carbon\Carbon;
 
 class Webhook implements ShouldQueue
 {
@@ -43,40 +44,42 @@ class Webhook implements ShouldQueue
     {
         $leadToSend = [];
         if($this->is_quotation){
-            $leadToSend["name"] = $this->lead->name;
-            $leadToSend["lastname"] = $this->lead->lastname;
+            $leadToSend["fname"] = $this->lead->name;
+            $leadToSend["lname"] = $this->lead->lastname;
             $leadToSend["email"] = $this->lead->email;
-            $leadToSend["document_number"] = $this->lead->document_number;
-            $leadToSend["mobile"] = $this->lead->mobile;
+            $leadToSend["document"] = $this->lead->document_number;
+            $leadToSend["phone"] = $this->lead->mobile;
             $leadToSend["message"] = $this->lead->message;
             $leadToSend["utm_source"] = $this->lead->utm_source;
             $leadToSend["utm_medium"] = $this->lead->utm_medium;
             $leadToSend["utm_campaign"] = $this->lead->utm_campaign;
             $leadToSend["utm_term"] = $this->lead->utm_term;
             $leadToSend["utm_content"] = $this->lead->utm_content;
-            $leadToSend["created_at"] = $this->lead->created_at_format;
+            $leadToSend["creation_date"] = (new Carbon($this->lead->created_at))->toDateTimeString();
             $leadToSend["project"] = $this->lead->projectRel->name_es;
             $leadToSend["tipology"] = $this->lead->projectTypeDepartmentRel->name;
+            $leadToSend["unit"] = $this->lead->projectTypeDepartmentRel->name." ".$this->lead->projectTypeDepartmentRel->area."m2";
             $leadToSend["identifier_web"] = config('services.web_url')."/cotizacion?id=".$this->lead->identifier_str;
-            $leadToSend["price"] = $this->lead->projectTypeDepartmentRel->price_format;
+            $leadToSend["price_total"] = $this->lead->projectTypeDepartmentRel->price_format;
             $leadToSend["area"] = $this->lead->projectTypeDepartmentRel->area;
             $leadToSend["asesor"] = $this->advisor;
             $leadToSend["type"] = "Cotización";
         }
         else{
             $leadToSend["type"] = "Cita Online";
-            $leadToSend["schedule"] = $this->lead->schedule;
-            $leadToSend["name"] = $this->lead->name;
+            $leadToSend["appointment_date"] = $this->lead->schedule;
+            $leadToSend["fname"] = $this->lead->name;
             $leadToSend["project"] = $this->lead->projectRel->name_es;
-            $leadToSend["lastname"] = $this->lead->lastname;
+            $leadToSend["lname"] = $this->lead->lastname;
             $leadToSend["email"] = $this->lead->email;
-            $leadToSend["document_number"] = $this->lead->document_number;
-            $leadToSend["mobile"] = $this->lead->mobile;
+            $leadToSend["document"] = $this->lead->document_number;
+            $leadToSend["phone"] = $this->lead->mobile;
             $leadToSend["utm_source"] = $this->lead->utm_source;
             $leadToSend["utm_medium"] = $this->lead->utm_medium;
             $leadToSend["utm_campaign"] = $this->lead->utm_campaign;
             $leadToSend["utm_term"] = $this->lead->utm_term;
             $leadToSend["utm_content"] = $this->lead->utm_content;
+            $leadToSend["creation_date"] = (new Carbon($this->lead->created_at))->toDateTimeString();
             $leadToSend["asesor"] = $this->advisor;
         }
         $client = new Client();

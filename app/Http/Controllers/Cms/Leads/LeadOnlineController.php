@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Cms\Leads;
 
 use App\ConfigLead;
+use App\Project;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Repositories\LeadRepository;
@@ -20,20 +21,47 @@ class LeadOnlineController extends Controller
     
     public function index()
     {
-        $config = ConfigLead::where('type','online')->first();
-        return view("pages.lead.online",compact('config'));
+        //$config = ;
+        $projects = Project::where('form_videocall',1)->orderBy('index','asc')->get();
+        foreach ($projects as $key => $value) {
+            $r = ConfigLead::where('project_id',$value->id)->first();
+            if($r){
+                $config[] = $r;
+            }
+            else{
+                $config[] = ["webhook_url" => null , "webhook_url_active" => false, "project_id" => $value->id]; 
+            }
+        }
+        return view("pages.lead.online",compact('projects','config'));
+        //return view("pages.lead.online",compact('config','projects'));
+    }
+
+    public function getWebhook()
+    {
+        $projects = Project::where('form_videocall',1)->orderBy('index','asc')->get();
+        foreach ($projects as $key => $value) {
+            $r = ConfigLead::where('project_id',$value->id)->first();
+            if($r){
+                $config[] = $r;
+            }
+            else{
+                $config[] = ["webhook_url" => null , "webhook_url_active" => false, "project_id" => $value->id]; 
+            }
+        }
+        return response()->json($config);
     }
 
     public function updateWebhook(WebhookRequest $request)
     {
-        $configFirst = ConfigLead::where('type','online')->first();
-        $el = request(["webhook_url","webhook_url_active"]);
+        //$configFirst = ConfigLead::where('type','online')->first();
+        $configFirst = ConfigLead::where('project_id',$request->project_id)->first();
+        $el = request(["webhook_url","webhook_url_active",'project_id']);
         try{
             if($configFirst){
                 $config = ConfigLead::UpdateOrCreate(["id"=>$configFirst->id], $el);          
             }
             else{
-                $config = ConfigLead::UpdateOrCreate(array_merge($el, ["type" => 'online']));
+                $config = ConfigLead::UpdateOrCreate(array_merge($el, ["project_id" => $request->project_id]));
             }
             return response()->json(["config" => $config, 'title'=> trans('custom.title.success'), 'message'=> trans('custom.message.update.success', ['name' => trans('custom.attribute.element')]) ], 200);
         } catch (\Exception $e) {

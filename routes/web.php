@@ -423,6 +423,7 @@ Route::middleware(['auth'])->namespace('Cms')->name('cms.')->group(function () {
             Route::get('/all-export', 'LeadOnlineController@allExport')->name('all-export');
             Route::post('/filter-export', 'LeadOnlineController@filterExport')->name('filter-export');
 
+            Route::get('/webhook', 'LeadOnlineController@getWebhook')->name('get.webhook');
             Route::put('/webhook', 'LeadOnlineController@updateWebhook')->name('update.webhook');
         });
         

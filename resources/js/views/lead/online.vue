@@ -100,65 +100,102 @@
                   <h2 class="mb-0 text-uppercase text-primary">Webhook</h2>
                 </div>
                 <div class="card-body">
-                  <form @submit.prevent="updateWebhook">
-                    <div class="row">
-                      <div class="col-12 mb-2">
-                        <div class="form-group">
-                          <label class="font-weight-bold">Webhook:</label>
-                          <div class="mb-0">
-                            <p>
-                              Al habilitar esta opción la información de los leads de las
-                              citas onlines registradas en la <b>Web</b> serán
-                              enviadas a la URL que defina. Además de los datos del lead se enviarán los siguentes datos.
-                            </p>
-                            <b>Parámetros UTM</b>
-                            <ul>
-                              <li>UTM Source</li>
-                              <li>UTM Medium</li>
-                              <li>UTM Campaign</li>
-                              <li>UTM Term</li>
-                              <li>UTM Content</li>
-                            </ul>
-                          </div>
-                          <b-form-checkbox
-                            class="ml-2"
-                            size="lg"
-                            v-model="configWebhook.webhook_url_active"
-                            name="check-button"
-                            switch
-                          >
-                          </b-form-checkbox>
-                        </div>
-                        <div
-                          class="form-group"
-                          v-if="configWebhook.webhook_url_active"
-                        >
-                          <label class="font-weight-bold" for="webhook_url"
-                            >URL Destino</label
-                          >
-                          <input
-                            type="text"
-                            class="form-control"
-                            v-model="configWebhook.webhook_url"
-                            id="webhook_url"
-                          />
-                          <label
-                            v-if="errors && errors.webhook_url"
-                            class="mt-2 text-danger text-sm"
-                            for="webhook_url"
-                            >{{ errors.webhook_url[0] }}</label
-                          >
+                  <div class="row">
+                    <div class="col-12 mb-2">
+                      <div class="form-group">
+                        <label class="font-weight-bold">Webhook:</label>
+                        <div class="mb-0">
+                          <p>
+                            Al habilitar esta opción la información de los leads
+                            de las citas onlines registradas en la
+                            <b>Web</b> serán enviadas a la URL correspondiente
+                            del Proyecto que usted defina. Además de los datos
+                            del lead se enviarán los siguentes datos.
+                          </p>
+                          <b>Parámetros UTM</b>
+                          <ul>
+                            <li>UTM Source</li>
+                            <li>UTM Medium</li>
+                            <li>UTM Campaign</li>
+                            <li>UTM Term</li>
+                            <li>UTM Content</li>
+                          </ul>
                         </div>
                       </div>
-                      <div class="col-12 text-right">
-                      <Button
-                        :text="'Actualizar'"
-                        :classes="['btn-inverse-primary']"
-                        :request-server="requestSubmit"
-                      ></Button>
+                      <div>
+                        <h2 class="mb-2">Lista de Proyectos</h2>
+                        <p>
+                          Los proyectos que se muestran a continuación son
+                          aquellos que cuentan con Cita Online, si desear
+                          activar esta opción para otros proyectos asegúrese de
+                          habilitar la opción <b>Formulario Cita Online</b> el
+                          mantenimiento del proyecto correspondiente.
+                        </p>
+                        <template v-if="loadingGetWebhook">
+                          <div class="row">
+                            <div class="col-12">
+                              <Skeleton height="200px" />
+                            </div>
+                            <div class="col-12">
+                              <Skeleton height="200px" />
+                            </div>
+                          </div>
+                        </template>
+                        <template v-else
+                          ><div
+                            class="row"
+                            v-for="(el, i) in projects"
+                            :key="el.id"
+                          >
+                            <form class="w-100">
+                              <div class="col-12">
+                                <h2 class="text-primary">{{ el.name_es }}</h2>
+
+                                <b-form-checkbox
+                                  class="ml-0 mb-3"
+                                  size="lg"
+                                  v-model="configWebhook[i].webhook_url_active"
+                                  name="check-button"
+                                  switch
+                                >
+                                  Habilitar</b-form-checkbox
+                                >
+                                <div
+                                  class="form-group"
+                                  v-if="configWebhook[i].webhook_url_active"
+                                >
+                                  <label
+                                    class="font-weight-bold"
+                                    :for="'webhook_url' + i"
+                                    >URL Destino</label
+                                  >
+                                  <input
+                                    type="text"
+                                    class="form-control"
+                                    v-model="configWebhook[i].webhook_url"
+                                    :id="'webhook_url' + i"
+                                  />
+                                  <label
+                                    v-if="errors && errors.webhook_url && configSelected == el.id"
+                                    class="mt-2 text-danger text-sm"
+                                    :for="'webhook_url' + i"
+                                    >{{ errors.webhook_url[0] }}</label
+                                  >
+                                </div>
+                              </div>
+                              <div class="col-12 text-right">
+                                <Button
+                                  :text="'Actualizar'"
+                                  :classes="['btn-inverse-primary']"
+                                  :request-server="requestSubmit"
+                                  @click="updateWebhook(configWebhook[i])"
+                                ></Button>
+                              </div>
+                            </form></div
+                        ></template>
+                      </div>
                     </div>
-                    </div>
-                  </form>
+                  </div>
                 </div>
               </div>
             </div>
@@ -370,10 +407,11 @@ export default {
     DatePicker,
   },
   props: {
+    projects: Array,
     routeGetAll: String,
     route: String,
     messageCantDelete: String,
-    config: Object,
+    config: Array,
     routeUpdate: String,
     getEmailDestination: String,
     allExport: String,
@@ -381,10 +419,17 @@ export default {
   },
   data() {
     return {
-      configWebhook: {
+      configWebhook: [],
+
+      configSelected: '',
+      /*configWebhook: {
         webhook_url: "",
         webhook_url_active: false,
-      },
+      },*/
+      /*configWebhook: [ {
+        webhook_url: "",
+        webhook_url_active: false,
+      }],*/
 
       request_todo: false,
       request_filter: false,
@@ -407,6 +452,7 @@ export default {
       },
       requestServer: false,
       editEmailBlock: false,
+      loadingGetWebhook: false,
     };
   },
   methods: {
@@ -631,17 +677,27 @@ export default {
         })
         .catch((error) => {});
     },
-    restoreWebhook(){
+    restoreWebhook() {
+      this.errors = {};
       this.requestSubmit = false;
-
-    },
-    updateWebhook() {
-      this.requestSubmit = true;
+      this.loadingGetWebhook = true;
+      this.configSelected = '';
       axios
-        .put('/leads/cita-online/webhook', this.configWebhook)
+        .get("/leads/cita-online/webhook")
+        .then((response) => {
+          this.configWebhook = response.data;
+          this.loadingGetWebhook = false;
+        })
+        .catch((error) => {});
+    },
+    updateWebhook(el) {
+      this.requestSubmit = true;
+      this.configSelected = el.project_id;
+      axios
+        .put("/leads/cita-online/webhook", el)
         .then((response) => {
           this.requestSubmit = false;
-          this.configWebhook = response.data.config;
+          this.restoreWebhook();
           Swal.fire({
             title: response.data.title,
             text: response.data.message,
@@ -659,6 +715,7 @@ export default {
             this.errors = error.response.data.errors || {};
             return;
           }
+          this.errors = {};
           //this.restorePage();
           Swal.fire({
             title: error.response.data.title,

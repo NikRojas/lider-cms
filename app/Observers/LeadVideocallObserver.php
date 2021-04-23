@@ -42,7 +42,7 @@ class LeadVideocallObserver
         Notification::route('mail',$advisor->email)->notify(new LeadVideocallNotification($lead));  
         Notification::route('mail',$lead->email)->notify(new UserLeadVideocallNotification($lead));  
 
-        $config = ConfigLead::where('type','online')->first();
+        $config = ConfigLead::where('project_id',$lead->project_id)->first();
         if($config && $config->webhook_url_active){
             Webhook::dispatch($lead,$config->webhook_url,$advisor->name,0);
         } 

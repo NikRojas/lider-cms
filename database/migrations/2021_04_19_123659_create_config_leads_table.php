@@ -15,9 +15,10 @@ class CreateConfigLeadsTable extends Migration
     {
         Schema::create('config_leads', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('type');
+            $table->bigInteger('project_id')->unsigned();
             $table->text('webhook_url')->nullable();
             $table->boolean('webhook_url_active')->default(false);
+            $table->foreign('project_id')->references('id')->on('projects');
             $table->timestamps();
         });
     }

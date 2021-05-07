@@ -87,7 +87,6 @@ class BannerController extends Controller
             $element = ProjectBanner::UpdateOrCreate($element);
             return response()->json(['title' => trans('custom.title.success'), 'message' => trans('custom.message.create.success', ['name' => trans('custom.attribute.element')])], 200);
         } catch (\Exception $e) {
-            dd($e);
             return response()->json(['title' => trans('custom.title.error'), 'message' => trans('custom.message.create.error', ['name' => trans('custom.attribute.element')])], 500);
         }
     }

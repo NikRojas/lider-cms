@@ -44,6 +44,7 @@
     route-return="{{ route('cms.projects.index') }}"
     message-order="@lang('custom.message.order')"
     :element-parent="{{ $element }}"
+    :types="{{ json_encode($projectParentTypeDepartments) }}"
     route-order="{{ route('cms.projects.tipologies.order') }}"
     route-get-all="{{ route('cms.projects.tipologies.get-all') }}"
     ></projects-tipologies-index>

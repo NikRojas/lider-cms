@@ -212,7 +212,9 @@ return [
         'document_number' => 'dni',
         'area'=> 'área',
         'price' => 'precio',
-        'link_jobs' => 'link trabaja con nosotros'
+        'link_jobs' => 'link trabaja con nosotros',
+        'sap_code' => 'código sap',
+        'parent_type_department_id' => 'tipo de inmueble'
     ],
 
 ];

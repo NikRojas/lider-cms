@@ -108,6 +108,24 @@ Route::middleware(['auth'])->namespace('Cms')->name('cms.')->group(function () {
             Route::get('/json/get-all', 'BondsController@getAll')->name('get-all');
             Route::get('/json/get/{element}', 'BondsController@get')->name('get');
         });
+
+        Route::name('views.')->prefix('vistas')->group(function () {
+            Route::get('/', 'ViewsController@index')->name('index');
+            Route::post('/', 'ViewsController@store')->name('store');
+            Route::put('/{element}', 'ViewsController@update')->name('update');
+            Route::delete('/{element}', 'ViewsController@destroy')->name('destroy');
+            Route::get('/json/get-all', 'ViewsController@getAll')->name('get-all');
+            Route::get('/json/get/{element}', 'ViewsController@get')->name('get');
+        });
+
+        Route::name('types.')->prefix('tipos')->group(function () {
+            Route::get('/', 'TypesController@index')->name('index');
+            Route::post('/', 'TypesController@store')->name('store');
+            Route::put('/{element}', 'TypesController@update')->name('update');
+            Route::delete('/{element}', 'TypesController@destroy')->name('destroy');
+            Route::get('/json/get-all', 'TypesController@getAll')->name('get-all');
+            Route::get('/json/get/{element}', 'TypesController@get')->name('get');
+        });
     });
 
     #Customers

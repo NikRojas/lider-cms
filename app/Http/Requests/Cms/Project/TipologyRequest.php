@@ -27,6 +27,8 @@ class TipologyRequest extends FormRequest
         $rules = [
             'name' => ['required',Rule::unique('project_type_departments')->ignore($this->id),'max:100'],
             //'url'  => 'required|url'
+            'sap_code' => ['required',Rule::unique('project_type_departments')->ignore($this->id),'max:100'],
+            'parent_type_department_id' => 'required',
             'area' => 'required',
             'price' => 'required|numeric',
             'room' => 'required|numeric|min:1'

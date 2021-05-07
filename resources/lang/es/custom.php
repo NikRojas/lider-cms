@@ -33,7 +33,9 @@ return [
         'schedule' => 'El horario',
         'financing-option' => 'La opción de financiamiento',
         'project_finished' => 'El proyecto entregado',
-        'bond' => 'El bono'
+        'bond' => 'El bono',
+        'view' => 'La vista del inmueble',
+        'type' => 'El tipo de inmueble'
     ],
     'title' => [
         'error' => 'Error',

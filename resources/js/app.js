@@ -68,6 +68,9 @@ const app = new Vue({
         'administration-exchange': () => import('./views/administration/Exchange.vue' /* webpackChunkName: "js/pages/administration/exchange" */),
         'administration-bonds': () => import('./views/administration/Bonds.vue' /* webpackChunkName: "js/pages/administration/bonds" */),
 
+        'administration-views': () => import('./views/administration/Views.vue' /* webpackChunkName: "js/pages/administration/views" */),
+        'administration-types': () => import('./views/administration/Types.vue' /* webpackChunkName: "js/pages/administration/types" */),
+
         'projects-index': () => import('./views/projects/Index.vue' /* webpackChunkName: "js/pages/projects/index" */),
         'projects-create': () => import('./views/projects/Create.vue' /* webpackChunkName: "js/pages/projects/create" */),
         'projects-edit': () => import('./views/projects/Edit.vue' /* webpackChunkName: "js/pages/projects/edit" */),

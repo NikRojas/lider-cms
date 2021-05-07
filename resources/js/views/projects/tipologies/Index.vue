@@ -65,22 +65,42 @@
                   <h3 class="mb-2 mt-3">
                     {{ el.name }}
                   </h3>
+                  <div >
+                    <span class="d-block font-weight-bold">Tipo de Inmueble: </span>
+                    <div v-if="el.parent_type_department_id">
+                      {{ el.parent_type_department_rel.name }} - {{ el.parent_type_department_rel.room}} Dormitorio(s)
+                    </div>
+                    <div v-else>
+                      No Registrado
+                    </div>
+                  </div>
+
                   <div>
-                    <span class="d-block">Precio: </span>
+                    <span class="d-block font-weight-bold">Código SAP: </span>
+                    <div v-if="el.sap_code">
+                      {{ el.sap_code }}
+                    </div>
+                    <div>
+                      No Registrado
+                    </div>
+                  </div>
+
+                  <div>
+                    <span class="d-block font-weight-bold">Precio: </span>
                     {{ el.price_format }}
                   </div>
 
-                  <div>
-                    <span class="d-block">Dormitorio: </span>
+                  <!--<div>
+                    <span class="d-block font-weight-bold">Dormitorio: </span>
                     {{ el.room }}
-                  </div>
+                  </div>-->
 
                   <div>
-                    <span class="d-block">Metraje: </span>
+                    <span class="d-block font-weight-bold">Metraje: </span>
                     {{ el.area }}
                   </div>
                   <div>
-                    <span class="d-block">Disponibilidad: </span>
+                    <span class="d-block font-weight-bold">Disponibilidad: </span>
                     <span
                       :class="el.available ? 'text-success' : 'text-danger'"
                       >{{ el.available ? "Disponible" : "No Disponible" }}</span
@@ -190,6 +210,8 @@
                 >
               </div>
             </div>
+            
+
             <div class="col-12">
               <div class="form-group">
                 <label class="font-weight-bold" for="name">Nombre</label>
@@ -207,8 +229,42 @@
                 >
               </div>
             </div>
+            <div class="col-12">
+              <div class="form-group">
+                <label class="font-weight-bold" for="parent_type_department_id">Tipo Inmueble</label>
+                <select class="form-control" v-model="element.parent_type_department_id" id="parent_type_department_id">
+                  <option value="">Seleccionar un Tipo de Inmueble</option>
+                  <option :value="el.id" v-for="el in types" :key="el.slug">
+                    {{ el.name }} - {{ el.room}} Dormitorio(s)
+                  </option>
+                </select>
+                <label
+                  v-if="errors && errors.parent_type_department_id"
+                  class="mt-2 text-danger text-sm"
+                  for="parent_type_department_id"
+                  >{{ errors.parent_type_department_id[0] }}</label
+                >
+              </div>
+            </div>
+            <div class="col-12">
+              <div class="form-group">
+                <label class="font-weight-bold" for="sap_code">Código SAP</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  v-model="element.sap_code"
+                  id="sap_code"
+                />
+                <label
+                  v-if="errors && errors.sap_code"
+                  class="mt-2 text-danger text-sm"
+                  for="sap_code"
+                  >{{ errors.sap_code[0] }}</label
+                >
+              </div>
+            </div>
 
-            <div class="col-12 col-lg-6">
+            <!--<div class="col-12 col-lg-6">
               <div class="form-group">
                 <label class="font-weight-bold" for="room">Dormitorios</label>
                 <input
@@ -227,8 +283,8 @@
                   >{{ errors.room[0] }}</label
                 >
               </div>
-            </div>
-            <div class="col-12 col-lg-6">
+            </div>-->
+            <div class="col-12">
               <div class="form-group">
                 <label class="font-weight-bold" for="area">Área</label>
                 <input
@@ -379,6 +435,7 @@ export default {
       element: {
         available: true,
         type_currency: true,
+        parent_type_department_id: ''
       },
       loadingGet: false,
       requestSubmit: false,
@@ -459,6 +516,12 @@ export default {
       if (this.element.area) {
         fd.append("area", this.element.area);
       }
+      if (this.element.parent_type_department_id) {
+        fd.append("parent_type_department_id", this.element.parent_type_department_id);
+      }
+      if (this.element.sap_code) {
+        fd.append("sap_code", this.element.sap_code);
+      }
       if (this.$refs.ref_image.dropzone.files[0]) {
         fd.append("image", this.$refs.ref_image.dropzone.files[0]);
       }
@@ -491,6 +554,7 @@ export default {
       this.element = {
         image: "",
         available: true,
+        parent_type_department_id: '',
         //price: 0,
         type_currency: true,
       };
@@ -505,6 +569,7 @@ export default {
       this.element = {
         image: "",
         available: true,
+        parent_type_department_id: '',
         //price: 0,
         type_currency: true,
       };

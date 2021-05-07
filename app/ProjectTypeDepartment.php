@@ -45,4 +45,9 @@ class ProjectTypeDepartment extends Model
     {
         return $this->belongsTo('App\Project', 'project_id', 'id');
     }
+
+    public function parentTypeDepartmentRel()
+    {
+        return $this->belongsTo(ProjectParentTypeDepartment::class, 'parent_type_department_id', 'id');
+    }
 }

@@ -11,6 +11,7 @@ use App\Project;
 use App\ProjectTypeDepartment;
 use Illuminate\Support\Str;
 use App\Http\Requests\Cms\Project\TipologyRequest;
+use App\ProjectParentTypeDepartment;
 
 class TipologiesController extends Controller
 {
@@ -19,16 +20,17 @@ class TipologiesController extends Controller
   public function index($element)
   {
     $element = Project::where('slug_es', $element)->firstOrFail();
-    return view("pages.projects.tipologies.index", compact('element'));
+    $projectParentTypeDepartments = ProjectParentTypeDepartment::get();
+    return view("pages.projects.tipologies.index", compact('element','projectParentTypeDepartments'));
   }
 
   public function getAll(Request $request){
-    $elements = ProjectTypeDepartment::where('project_id', $request->project_id)->orderBy('index','asc')->get();
+    $elements = ProjectTypeDepartment::with('parentTypeDepartmentRel')->where('project_id', $request->project_id)->orderBy('index','asc')->get();
     return response()->json($elements);
   }
 
   public function get(ProjectTypeDepartment $element){
-    return response()->json($element);
+    return response()->json($element->load('parentTypeDepartmentRel'));
   }
 
   public function destroy(ProjectTypeDepartment $element){
@@ -60,7 +62,7 @@ class TipologiesController extends Controller
 
   public function store(TipologyRequest $request)
   {
-    $element = request(["name", "project_id",'price','available','area','room','type_currency']);    
+    $element = request(["name", "project_id",'price','available','area','room','type_currency','sap_code','parent_type_department_id']);    
     if ($request->hasFile('image')) {
       $imageName = $this->setFileName('i-', $request->file('image'));
       $storeImage = Storage::disk('public')->putFileAs('img/projects/tipologies', $request->file('image'), $imageName);
@@ -82,7 +84,7 @@ class TipologiesController extends Controller
   }
 
   public function update(ProjectTypeDepartment $element,TipologyRequest $request){
-    $request_element = request(["name", "project_id",'price','available','area','room','type_currency']);
+    $request_element = request(["name", "project_id",'price','available','area','room','type_currency','sap_code','parent_type_department_id']);
     if($request->hasFile('image')){
         $fileName = $this->setFileName('i-',$request->file('image'));
         Storage::disk('public')->putFileAs('img/projects/tipologies',$request->file('image'),$fileName);

@@ -2,6 +2,8 @@
 
 namespace App\Console;
 
+use App\Jobs\GetThirdPartyCredential;
+use App\SapCredential;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
@@ -13,7 +15,7 @@ class Kernel extends ConsoleKernel
      * @var array
      */
     protected $commands = [
-        //
+        Commands\SapLogin::class,
     ];
 
     /**
@@ -24,8 +26,15 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        // $schedule->command('inspire')
-        //          ->hourly();
+        //$schedule->command('sap')
+            //->everyThirtyMinutes()
+        $schedule
+            ->command('sap:login');
+
+        //$schedule
+            //->job(new GetThirdPartyCredential)
+            //->everyThirtyMinutes();
+            //->cron('*/20 * * * *');
     }
 
     /**

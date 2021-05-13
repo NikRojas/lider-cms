@@ -12,6 +12,7 @@ class MasterModulesTableSeeder2 extends Seeder
     public function run()
     {
         $pAdmin = 7;
+        $pConfiguracion = 32;
         DB::table('master_modules')->insert([
             [
                 'name' 	=> 'Vistas Inmueble',
@@ -26,6 +27,13 @@ class MasterModulesTableSeeder2 extends Seeder
                 'parent' 	=> $pAdmin,
                 'icon' 		=> NULL,
                 'index'    => 7
+            ],
+            [
+                'name' 	=> 'Logs SAP',
+                'slug' 		=> 'configuracion/logs-sap',
+                'parent' 	=> $pConfiguracion,
+                'icon' 		=> NULL,
+                'index'    => 10
             ],
         ]); 
     }

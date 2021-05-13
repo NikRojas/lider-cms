@@ -22,7 +22,6 @@ Route::middleware(['auth'])->namespace('Cms')->name('cms.')->group(function () {
     Route::put('profile', 'ProfileController@updateProfile')->name('profile.update-profile');
     Route::put('change-password', 'ProfileController@updatePassword')->name('profile.update-contrasena');
 
-    #Users
     Route::namespace('Configuration')->prefix('configuracion')->name('configuration.')->group(function () {
         Route::name('users.')->prefix('usuarios')->group(function () {
             Route::get('/', 'UsersController@index')->name('index');
@@ -55,6 +54,10 @@ Route::middleware(['auth'])->namespace('Cms')->name('cms.')->group(function () {
                 Route::put('/{element}', 'FinancingOptionsController@update')->name('update');
                 Route::get('/json/get/{element}', 'FinancingOptionsController@get')->name('get');
             });
+        });
+        Route::name('logs-sap.')->prefix('logs-sap')->group(function () {
+            Route::get('/', 'LogsSapController@index')->name('index');
+            Route::get('/json/get-all', 'LogsSapController@getAll')->name('get-all');
         });
     });
 
@@ -254,6 +257,12 @@ Route::middleware(['auth'])->namespace('Cms')->name('cms.')->group(function () {
             Route::delete('/{element}', 'VirtualTourController@destroy')->name('destroy');
             Route::put('/order', 'VirtualTourController@order')->name('order');
             Route::put('/{element}', 'VirtualTourController@update')->name('update');
+        });
+
+        Route::prefix('inmuebles')->name('departments.')->group(function () {
+            Route::get('/{element}', 'DepartmentsController@index')->name('index');
+            Route::get('/get-sap/{element}', 'DepartmentsController@getSap')->name('get-sap-departments');
+            Route::get('/json/get-all', 'DepartmentsController@getAll')->name('get-all');
         });
     });
 
@@ -501,4 +510,6 @@ Route::get('/mail/user/quotation', function () {
 Route::get('/mail/applicant', function () {
     $applicant = Applicant::first();
     return view('emails.applicant',["applicant" => $applicant]);
-});*/
+});
+
+Route::get('/sap-departments/{element}','Cms\Projects\DepartmentsController@getSap');*/

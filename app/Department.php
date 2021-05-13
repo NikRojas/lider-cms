@@ -9,9 +9,25 @@ use Illuminate\Notifications\Notifiable;
 class Department extends Model
 {
     protected $guarded = [];
+    protected $appends = ['price_foreign_format','price_format'];
 
     public function viewRel()
     {
         return $this->belongsTo('App\ProjectView', 'view_id', 'id');
+    }
+
+    public function tipologyRel()
+    {
+        return $this->belongsTo('App\ProjectTypeDepartment','type_department_id','id');
+    }
+
+    public function getPriceFormatAttribute()
+    {
+        return 'S/ '.number_format($this->price, 0, '.', ',');
+    }
+
+    public function getPriceForeignFormatAttribute()
+    {
+        return 'S/ '.number_format($this->price_foreign, 0, '.', ',');
     }
 }

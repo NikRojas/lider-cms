@@ -21,6 +21,7 @@ class AddFieldsPaymentToProjectsTable extends Migration
             $table->decimal('price_bill',11,2)->nullable();
             $table->decimal('price_bill_foreign',11,2)->nullable();
             $table->tinyInteger('stock_parking')->nullable();
+            $table->string('sap_code',20)->nullable()->unique();
         });
     }
 

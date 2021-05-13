@@ -86,18 +86,21 @@ const app = new Vue({
         'complaints-book': () => import('./views/ComplaintsBook.vue' /* webpackChunkName: "js/pages/complaints-book" */),
         'suscribers': () => import('./views/Suscribers.vue' /* webpackChunkName: "js/pages/suscribers" */),
 
-        'customers-index': () => import('./views/Customers/Index.vue' /* webpackChunkName: "js/pages/customers/index" */),
-        'customers-read': () => import('./views/Customers/Read.vue' /* webpackChunkName: "js/pages/customers/read" */),
+        'customers-index': () => import('./views/customers/Index.vue' /* webpackChunkName: "js/pages/customers/index" */),
+        'customers-read': () => import('./views/customers/Read.vue' /* webpackChunkName: "js/pages/customers/read" */),
 
-        'orders-index': () => import('./views/Orders/Index.vue' /* webpackChunkName: "js/pages/orders/index" */),
-        'orders-read': () => import('./views/Orders/Read.vue' /* webpackChunkName: "js/pages/orders/read" */),
+        'orders-index': () => import('./views/orders/Index.vue' /* webpackChunkName: "js/pages/orders/index" */),
+        'orders-read': () => import('./views/orders/Read.vue' /* webpackChunkName: "js/pages/orders/read" */),
 
-        'statistics-index': () => import('./views/Statistics/Index.vue' /* webpackChunkName: "js/pages/statistics/index" */),
+        'statistics-index': () => import('./views/statistics/Index.vue' /* webpackChunkName: "js/pages/statistics/index" */),
         'configuration-general': () => import('./views/configuration/General/Index.vue' /* webpackChunkName: "js/pages/configuration/general" */),
         "content-general-content": () =>
             import(
                 "./views/content/GeneralContent.vue" /* webpackChunkName: "js/pages/content/general-content" */
             ),
+
+        'projects-departments-index': () => import('./views/projects/departments/Index.vue' /* webpackChunkName: "js/pages/projects/departments/index" */),
+        'configuration-logs-sap': () => import('./views/configuration/LogsSap.vue' /* webpackChunkName: "js/pages/configuration/logs-sap" */),
     }
 });
 import Validation from './functions/validation.js'

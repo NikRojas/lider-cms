@@ -240,6 +240,15 @@
                             >
                           </div>
                         </div>
+                        <div class="flex">
+                          <div class="ml-auto d-inline">
+                             <a
+                              :href="'proyectos/inmuebles/' + el.slug_es"
+                              class="btn btn-sm mb-2 btn-outline-primary"
+                              >Inmuebles del Proyecto</a
+                            >
+                          </div>
+                        </div>
                         <div class="d-flex">
                           <div class="ml-auto d-inline">
                             <a

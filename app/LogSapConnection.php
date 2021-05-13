@@ -12,4 +12,9 @@ class LogSapConnection extends Model
         'response' => 'array',
     ];
     protected $guarded = [];
+    protected $appends = ['created_at_format'];
+
+    public function getCreatedAtFormatAttribute() {
+        return (new Carbon($this->created_at))->format('g:iA d-m-Y');
+    }
 }

@@ -81,7 +81,18 @@ return [
         ],
         'order'  => 'Arrastre los elementos en el orden que desee mostrarlos',
         'cant_delete'  => 'No se puede eliminar debido a que está anidado en al menos un proyecto',
-        'cant_delete_post'  => 'No se puede eliminar debido a que está anidado en al menos un Post'
+        'cant_delete_post'  => 'No se puede eliminar debido a que está anidado en al menos un Post',
+        'sap'    => [
+            'no_token' => 'Token SAP no obtenido aún. Por favor, inténtelo de nuevo en unos minutos.',
+            'get_departments' => [
+                'no_code_sap' => 'El Proyecto :name no tiene un código de SAP registrado, por favor actualícelo en la sección Editar Proyecto :name.',
+                'no_departments' => 'El Proyecto :name no cuenta con inmuebles en SAP.',
+                'success' => 'Se obtuvieron :total inmuebles de SAP.',
+                'error' => 'Lo sentimos. Los inmuebles no se pudo registrar/actualizar debido a un error.',
+                'error_connection' => 'Lo sentimos. Hubo un error al realizar la conexión con SAP.',
+                '' => ''
+            ]
+        ]
     ],
     'order' => [
         'timeline' => [

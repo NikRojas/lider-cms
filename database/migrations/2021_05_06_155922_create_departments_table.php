@@ -17,8 +17,8 @@ class CreateDepartmentsTable extends Migration
             $table->bigIncrements('id');
             $table->string('slug',20);
             $table->string('description',100)->nullable();
-            $table->string('code_sap',20)->unique();
-            $table->boolean('available')->default(false);
+            $table->string('sap_code',20)->unique();
+            $table->boolean('available')->nullable();
             $table->decimal('price',11,2)->nullable();
             $table->decimal('price_foreign',11,2)->nullable();
             $table->float('area')->nullable();

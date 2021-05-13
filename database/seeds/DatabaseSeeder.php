@@ -29,10 +29,10 @@ class DatabaseSeeder extends Seeder
         $this->call(MasterFieldsTableSeeder::class);*/
 
         #Payment
-        /*$this->call(ProjectsParentTypeDepartmentsTableSeeder::class);
+        $this->call(ProjectsParentTypeDepartmentsTableSeeder::class);
         $this->call(ProjectsViewsTableSeeder::class);
         $this->call(MasterModulesTableSeeder2::class);
-        $this->call(MasterDocumentTypeSeeder2::class);*/
+        $this->call(MasterDocumentTypeSeeder2::class);
         $this->call(SapCredentiasTableSeeder::class);
 
         /*$this->call(ComplaintsBookSeeder::class);*/

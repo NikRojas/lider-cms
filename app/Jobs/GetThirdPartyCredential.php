@@ -15,8 +15,8 @@ use Illuminate\Support\Facades\Log;
 class GetThirdPartyCredential implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
-    //private $url = 'https://104.197.156.163:8072/api/seguridad/login';
-    private $url = 'http://127.0.0.1:9000/api';
+    private $url = 'https://apps.lider.com.pe:8072/api/seguridad/login';
+    //private $url = 'http://127.0.0.1:9000/api';
 
     /**
      * Create a new job instance.
@@ -57,5 +57,6 @@ class GetThirdPartyCredential implements ShouldQueue
             $sc = SapCredential::UpdateOrCreate(['id' => $getSapCredential->id],['token' => $responseFormat->token]);
         }
         $lsc = LogSapConnection::UpdateOrCreate(["type" => 'login', 'status' => $status, 'description' =>  (string) $description, 'response' => (string) $response->getBody() ]);
+        Log::info('Login Status:'. $status);
     }
 }

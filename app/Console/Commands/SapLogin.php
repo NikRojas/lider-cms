@@ -52,18 +52,19 @@ class SapLogin extends Command
         $status = $response->getStatusCode();
         $responseFormat = json_decode($response->getBody());
         if($status == 200){
-            $description = 'Login Success';
+            $description = 'Login - Éxito';
         }
         else{
-            $description = 'Login Error';
+            $description = 'Login - Error';
         }
         if(!$responseFormat->token){
-            $description = 'Login Token No Recibido';
+            $description = 'Login Token No Recibido - Error';
         }
         else{
-            $description = 'Login Credenciales Obtenidas';
+            $description = 'Login Credenciales Obtenidas - Éxito';
             $sc = SapCredential::UpdateOrCreate(['id' => $getSapCredential->id],['token' => $responseFormat->token]);
         }
-        $lsc = LogSapConnection::UpdateOrCreate(["type" => 'login', 'status' => $status, 'description' =>  (string) $description, 'response' => (string) $response->getBody() ]);
+        $lsc = LogSapConnection::UpdateOrCreate(["type" => 'Login', 'status' => $status, 'description' =>  (string) $description, 'response' => (string) $response->getBody() ]);
+        $this->info('Login Status: '.$status);
     }
 }

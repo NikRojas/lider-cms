@@ -283,6 +283,15 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -1062,6 +1071,32 @@ var render = function() {
                                                   }
                                                 },
                                                 [_vm._v("Ir a Cotizaciones")]
+                                              )
+                                            ]
+                                          )
+                                        ]),
+                                        _vm._v(" "),
+                                        _c("div", { staticClass: "flex" }, [
+                                          _c(
+                                            "div",
+                                            { staticClass: "ml-auto d-inline" },
+                                            [
+                                              _c(
+                                                "a",
+                                                {
+                                                  staticClass:
+                                                    "btn btn-sm mb-2 btn-outline-primary",
+                                                  attrs: {
+                                                    href:
+                                                      "proyectos/inmuebles/" +
+                                                      el.slug_es
+                                                  }
+                                                },
+                                                [
+                                                  _vm._v(
+                                                    "Inmuebles del Proyecto"
+                                                  )
+                                                ]
                                               )
                                             ]
                                           )

@@ -26,14 +26,11 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        //$schedule->command('sap')
-            //->everyThirtyMinutes()
         $schedule
-            ->command('sap:login');
-
-        //$schedule
-            //->job(new GetThirdPartyCredential)
-            //->everyThirtyMinutes();
+            ->command('sap:login')->everyThirtyMinutes();
+        /*$schedule
+            ->job(new GetThirdPartyCredential)
+            ->everyThirtyMinutes();*/
             //->cron('*/20 * * * *');
     }
 

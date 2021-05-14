@@ -96,7 +96,7 @@ class BaseController extends Controller
         $districtsTemp3 = $districtsTemp3->sortBy('district');
         $districtsTemp3 = $districtsTemp3->values()->all();
         $districts = collect($districtsTemp3);
-        $data = $departments->concat($districts);
+        $data = $departments->concat($districts)->sortByDesc('code_department')->values()->all();
         return $data;
     }
 

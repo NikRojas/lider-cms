@@ -934,6 +934,95 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -1852,6 +1941,147 @@ var render = function() {
               _c("div", { staticClass: "card" }, [
                 _c("div", { staticClass: "card-body" }, [
                   _c("div", { staticClass: "row" }, [
+                    _c("div", { staticClass: "col-12 mb-3" }, [
+                      _c("div", { staticClass: "form-group" }, [
+                        _c("p", { staticClass: "mb-0" }, [
+                          _vm._v(
+                            "\n                      El código SAP será utilizado para realizar la conexión\n                      con SAP y obtener los inmuebles y su disponibilidad del\n                      Proyecto.\n                    "
+                          )
+                        ]),
+                        _vm._v(" "),
+                        _c(
+                          "label",
+                          {
+                            staticClass: "font-weight-bold",
+                            attrs: { for: "sap_code" }
+                          },
+                          [_vm._v("Código SAP")]
+                        ),
+                        _vm._v(" "),
+                        _vm.element.code_sap
+                          ? _c("div", [
+                              _vm._v(
+                                "\n                      " +
+                                  _vm._s(_vm.element.code_sap) +
+                                  "\n                    "
+                              )
+                            ])
+                          : _c("div", [_vm._v("No registrado")])
+                      ]),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "form-group" }, [
+                        _c("p", { staticClass: "mb-0" }, [
+                          _vm._v(
+                            "\n                      Este será el monto que cuesta separar un inmueble en el Proyecto.\n                    "
+                          )
+                        ]),
+                        _vm._v(" "),
+                        _c(
+                          "label",
+                          {
+                            staticClass: "font-weight-bold",
+                            attrs: { for: "price_separation" }
+                          },
+                          [_vm._v("Precio de Separación de Inmueble")]
+                        ),
+                        _vm._v(" "),
+                        _vm.element.price_separation
+                          ? _c("div", [
+                              _vm._v(
+                                "\n                      " +
+                                  _vm._s(_vm.element.price_separation) +
+                                  "\n                    "
+                              )
+                            ])
+                          : _c("div", [_vm._v("No registrado")])
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _vm._m(11),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "col-12 col-lg-4 " }, [
+                      _c("div", { staticClass: "form-group" }, [
+                        _c(
+                          "label",
+                          {
+                            staticClass: "font-weight-bold",
+                            attrs: { for: "stock_parking" }
+                          },
+                          [_vm._v("Stock Estacionamiento")]
+                        ),
+                        _vm._v(" "),
+                        _vm.element.stock_parking
+                          ? _c("div", [
+                              _vm._v(
+                                "\n                      " +
+                                  _vm._s(_vm.element.stock_parking) +
+                                  "\n                    "
+                              )
+                            ])
+                          : _c("div", [_vm._v("No registrado")])
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "col-12 col-lg-4 " }, [
+                      _c("div", { staticClass: "form-group" }, [
+                        _c(
+                          "label",
+                          {
+                            staticClass: "font-weight-bold",
+                            attrs: { for: "price_parking_sap" }
+                          },
+                          [_vm._v("Precio Estacionamiento Soles")]
+                        ),
+                        _vm._v(" "),
+                        _vm.element.price_parking_sap
+                          ? _c("div", [
+                              _vm._v(
+                                "\n                      " +
+                                  _vm._s(_vm.element.price_parking_sap) +
+                                  "\n                    "
+                              )
+                            ])
+                          : _c("div", [_vm._v("No registrado")])
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "col-12 col-lg-4 " }, [
+                      _c("div", { staticClass: "form-group" }, [
+                        _c(
+                          "label",
+                          {
+                            staticClass: "font-weight-bold",
+                            attrs: { for: "price_parking_foreign_sap" }
+                          },
+                          [_vm._v("Precio Estacionamiento Dólares ")]
+                        ),
+                        _vm._v(" "),
+                        _vm.element.price_parking_foreign_sap
+                          ? _c("div", [
+                              _vm._v(
+                                "\n                      " +
+                                  _vm._s(
+                                    _vm.element.price_parking_foreign_sap
+                                  ) +
+                                  "\n                    "
+                              )
+                            ])
+                          : _c("div", [_vm._v("No registrado")])
+                      ])
+                    ])
+                  ])
+                ])
+              ])
+            ])
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "row mb-4" }, [
+            _vm._m(12),
+            _vm._v(" "),
+            _c("div", { staticClass: "col-12 col-lg-10" }, [
+              _c("div", { staticClass: "card" }, [
+                _c("div", { staticClass: "card-body" }, [
+                  _c("div", { staticClass: "row" }, [
                     _c(
                       "div",
                       { staticClass: "col-12 col-lg-6 mb-3 text-center" },
@@ -1904,14 +2134,14 @@ var render = function() {
           ]),
           _vm._v(" "),
           _c("div", { staticClass: "row mb-4" }, [
-            _vm._m(11),
+            _vm._m(13),
             _vm._v(" "),
             _c("div", { staticClass: "col-12 col-lg-10" }, [
               _c("div", { staticClass: "card" }, [
                 _c("div", { staticClass: "card-body" }, [
                   _c("div", { staticClass: "row" }, [
                     _c("div", { staticClass: "col-12 col-lg-6 mb-3" }, [
-                      _vm._m(12),
+                      _vm._m(14),
                       _vm._v(" "),
                       _c("img", {
                         staticClass: "img-fluid",
@@ -1924,7 +2154,7 @@ var render = function() {
                     ]),
                     _vm._v(" "),
                     _c("div", { staticClass: "col-12 col-lg-6 mb-3" }, [
-                      _vm._m(13),
+                      _vm._m(15),
                       _vm._v(" "),
                       _vm.element.url_video
                         ? _c("iframe", {
@@ -1943,7 +2173,7 @@ var render = function() {
                     ]),
                     _vm._v(" "),
                     _c("div", { staticClass: "col-12 mb-3" }, [
-                      _vm._m(14),
+                      _vm._m(16),
                       _vm._v(" "),
                       _c(
                         "div",
@@ -1998,7 +2228,7 @@ var render = function() {
                     ]),
                     _vm._v(" "),
                     _c("div", { staticClass: "col-12 mb-3" }, [
-                      _vm._m(15),
+                      _vm._m(17),
                       _vm._v(" "),
                       _c(
                         "div",
@@ -2030,7 +2260,7 @@ var render = function() {
                     ]),
                     _vm._v(" "),
                     _c("div", { staticClass: "col-12 mb-3" }, [
-                      _vm._m(16),
+                      _vm._m(18),
                       _vm._v(" "),
                       _vm.element.bonds_rel.length
                         ? _c(
@@ -2063,7 +2293,7 @@ var render = function() {
                             }),
                             0
                           )
-                        : _c("div", { staticClass: "row" }, [_vm._m(17)])
+                        : _c("div", { staticClass: "row" }, [_vm._m(19)])
                     ]),
                     _vm._v(" "),
                     _c("div", { staticClass: "col-12 col-lg-6 mb-3" }, [
@@ -2100,7 +2330,7 @@ var render = function() {
           ]),
           _vm._v(" "),
           _c("div", { staticClass: "row mb-4" }, [
-            _vm._m(18),
+            _vm._m(20),
             _vm._v(" "),
             _c("div", { staticClass: "col-12 col-lg-10" }, [
               _c("div", { staticClass: "card" }, [
@@ -2319,7 +2549,7 @@ var render = function() {
                     ]),
                     _vm._v(" "),
                     _c("div", { staticClass: "col-12 col-lg-6" }, [
-                      _vm._m(19),
+                      _vm._m(21),
                       _vm._v(" "),
                       _c("img", {
                         staticClass: "img-fluid",
@@ -2339,7 +2569,7 @@ var render = function() {
           ]),
           _vm._v(" "),
           _c("div", { staticClass: "row mb-4" }, [
-            _vm._m(20),
+            _vm._m(22),
             _vm._v(" "),
             _c("div", { staticClass: "col-12 col-lg-10" }, [
               _c("div", { staticClass: "card" }, [
@@ -2422,7 +2652,7 @@ var render = function() {
                     ]),
                     _vm._v(" "),
                     _c("div", { staticClass: "col-12" }, [
-                      _vm._m(21),
+                      _vm._m(23),
                       _vm._v(" "),
                       _vm.element.financing_options_rel.length
                         ? _c("div", { staticClass: "row" }, [
@@ -2443,7 +2673,7 @@ var render = function() {
                               )
                             ])
                           ])
-                        : _c("div", { staticClass: "row" }, [_vm._m(22)])
+                        : _c("div", { staticClass: "row" }, [_vm._m(24)])
                     ])
                   ])
                 ])
@@ -2452,12 +2682,12 @@ var render = function() {
           ]),
           _vm._v(" "),
           _c("div", { staticClass: "row mb-4" }, [
-            _vm._m(23),
+            _vm._m(25),
             _vm._v(" "),
             _c("div", { staticClass: "col-12 col-lg-10" }, [
               _c("div", { staticClass: "card" }, [
                 _c("div", { staticClass: "card-body" }, [
-                  _vm._m(24),
+                  _vm._m(26),
                   _vm._v(" "),
                   _vm.projectsRelated && _vm.projectsRelated.length
                     ? _c(
@@ -2494,14 +2724,14 @@ var render = function() {
                         }),
                         0
                       )
-                    : _c("div", { staticClass: "row" }, [_vm._m(25)])
+                    : _c("div", { staticClass: "row" }, [_vm._m(27)])
                 ])
               ])
             ])
           ]),
           _vm._v(" "),
           _c("div", { staticClass: "row mb-4" }, [
-            _vm._m(26),
+            _vm._m(28),
             _vm._v(" "),
             _c("div", { staticClass: "col-12 col-lg-10" }, [
               _c("div", { staticClass: "card" }, [
@@ -2699,9 +2929,37 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "col-12 col-lg-2" }, [
+      _c("h2", [_vm._v("Pasarela")]),
+      _vm._v(" "),
+      _c("p", [
+        _vm._v(
+          "\n            Indica los datos que se utilizan para\n            "
+        ),
+        _c("b", [_vm._v("Separar un Inmueble")]),
+        _vm._v(".\n          ")
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "col-12" }, [
+      _c("p", { staticClass: "mb-0" }, [
+        _vm._v(
+          "Estos campos se actualizaran automaticamente cuando se obtenga la Disponibilidad de los Inmuebles del Proyecto"
+        )
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "col-12 col-lg-2" }, [
       _c("h2", [_vm._v("Importes")]),
       _vm._v(" "),
-      _c("p", [_vm._v("Montos con los que cuenta el Proyecto")])
+      _c("p", [_vm._v("Montos generales con los que cuenta el Proyecto")])
     ])
   },
   function() {

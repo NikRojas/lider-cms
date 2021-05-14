@@ -37,26 +37,31 @@
           <div class="col-12">
             <draggable class="row" v-model="elements" @change="handleChange">
               <div
-                class="col-12 col-lg-6 mb-4"
+                class="col-12 col-md-6 col-lg-4 mb-4"
                 v-for="el in elements"
                 :key="el.id"
               >
                 <div class="card">
                   <div class="card-body">
                     <div class="row mb-2">
-                      <div class="col-lg-4 col-12 mb-4 mb-lg">
+                      <div class="col-12 mb-4 mb-lg position-relative">
+                        <div class="text-right">
                         <img
-                          class="img-fluid"
+                          class=""
+                          :src="imagesUrl + '/projects/' + el.logo_colour"
+                          height="25"
+                          :alt="el.name_es"
+                        />
+                        </div>
+                        <img
+                          style="max-height: 200px;"
+                          class="img-fluid mx-auto d-block mt-3"
                           :src="imagesUrl + '/projects/' + el.images_format[0]"
                           alt
                         />
                       </div>
-                      <div class="col-lg-8 col-12">
-                        <img
-                          :src="imagesUrl + '/projects/' + el.logo_colour"
-                          height="30"
-                          :alt="el.name_es"
-                        />
+                      <div class="col-12">
+                        
                         <div class="row mt-2">
                           <div class="col-12 mb-2">
                             <div class>
@@ -78,61 +83,60 @@
                         </div>
                         <div class="row">
                           <div class="col-12">
-                            <span class="badge badge-warning badge-md">{{
+                            <span class="badge text-white badge-md" style="background-color: black">{{
                               el.status_rel.name_es
                             }}</span>
 
-                            <h2 class="mt-1">{{ el.name_es }}</h2>
+                            <h1 class="mt-1">{{ el.name_es }}</h1>
 
-                            <div class="mb-3">
+                            <div class="">
                               <div class="row">
-                                <div class="col-12 mb-1">
-                                  Se muestra en la Web:
+                                <div class="col-12 mb-1 h3 font-weight-normal mb-0">
+                                  Mostrar en la Web:
                                   <span
                                     :class="
                                       el.active
                                         ? 'font-weight-bold text-success'
                                         : 'font-weight-bold text-danger'
                                     "
-                                    >{{ el.active ? "Sí" : "No" }}</span
+                                    >{{ el.active ? "Habilitado" : "Deshabilitado" }}</span
                                   >
                                 </div>
+                                
                                 <div class="col-12">
-                                  <!--<div>
-                                    <h4
-                                      class="d-inline-block font-weight-normal"
-                                    >
-                                      Ubicación:
-                                    </h4>
-                                    <h4 class="d-inline-block">
-                                      {{ el.location }},
-                                      {{ el.ubigeo_rel.district }} -
-                                      {{ el.ubigeo_rel.department }}
-                                    </h4>
-                                  </div>-->
                                   <div>
-                                    <div v-if="el.price_total">
-                                      <h4
-                                        class="d-inline-block font-weight-normal"
-                                      >
-                                        Precio Soles Desde:
-                                      </h4>
-                                      <h4 class="d-inline-block">
-                                        {{ el.price_total_format }}
-                                      </h4>
-                                    </div>
-                                    <div v-if="el.price_total_foreign">
-                                      <h4
-                                        class="d-inline-block font-weight-normal"
-                                      >
-                                        Precio Dólares Desde:
-                                      </h4>
-                                      <h4 class="d-inline-block">
-                                        {{ el.price_total_foreign_format }}
-                                      </h4>
-                                    </div>
+                                    <h3
+                                      class="d-inline-block font-weight-normal mb-0"
+                                    >
+                                      Código SAP:
+                                    </h3>
+                                    <h3 class="d-inline-block  mb-0" v-if="el.sap_code">
+                                      {{ el.sap_code }}
+                                    </h3>
+                                    <h3 class="d-inline-block  mb-0" v-else>
+                                      No registrado
+                                    </h3>
+                                  </div>
+                                  <div>
+                                    <h3
+                                      class="d-inline-block font-weight-normal  mb-0"
+                                    >
+                                      Precio Separación Inmueble:
+                                    </h3>
+                                    <h3 class="d-inline-block  mb-0" v-if="el.price_separation">
+                                      {{ el.price_separation_format }}
+                                    </h3>
+                                    <h3 class="d-inline-block  mb-0" v-else>
+                                      No registrado
+                                    </h3>
                                   </div>
                                 </div>
+
+                                  <div class="col-12">
+                                    <hr class="mt-2 mb-2">
+
+                                  </div>
+
                                 <div class="col-12">
                                   <div>
                                     <h4
@@ -176,6 +180,30 @@
                                   </div>
                                 </div>
                                 <div class="col-12">
+                                  <div>
+                                    <div v-if="el.price_total">
+                                      <h4
+                                        class="d-inline-block font-weight-normal"
+                                      >
+                                        Precio Soles Desde:
+                                      </h4>
+                                      <h4 class="d-inline-block">
+                                        {{ el.price_total_format }}
+                                      </h4>
+                                    </div>
+                                    <div v-if="el.price_total_foreign">
+                                      <h4
+                                        class="d-inline-block font-weight-normal"
+                                      >
+                                        Precio Dólares Desde:
+                                      </h4>
+                                      <h4 class="d-inline-block">
+                                        {{ el.price_total_foreign_format }}
+                                      </h4>
+                                    </div>
+                                  </div>
+                                </div>
+                                <div class="col-12 h4 font-weight-normal">
                                   Envio de Información de Cotizaciones al email de los asesores:
                                   <span
                                     :class="
@@ -186,7 +214,7 @@
                                     >{{ el.send_to_email ? "Habilitado" : "Deshabilitado" }}</span
                                   >
                                 </div>
-                                <div class="col-12">
+                                <div class="col-12 h4 font-weight-normal">
                                   Envio de Información de Cotizaciones por Webhook:
                                   <span
                                     :class="
@@ -204,51 +232,49 @@
                       </div>
                     </div>
                     <div class="row">
+                       <div class="col-12 mb-2">
+                             <a
+                              :href="'proyectos/inmuebles/' + el.slug_es"
+                              class="btn btn-sm mb-2 btn-inverse-primary btn-block"
+                              >Ir a Inmuebles del Proyecto</a
+                            >
+                        </div>
                       <div class="col-12">
-                        <div class="d-flex">
-                          <div class="ml-auto d-inline">
-                            <a
+                        <div class="d-flex" style="flex-flow: row wrap;
+    justify-content: space-around;">
+                          <a
                               :href="'proyectos/banners/' + el.slug_es"
-                              class="btn btn-sm mb-2 btn-outline-primary"
+                              class="btn btn-sm mb-2 mr-0 btn-outline-primary"
                               >Ir a Banners</a
                             >
 
                             <a
                               :href="'proyectos/tipologias/' + el.slug_es"
-                              class="btn btn-sm mb-2 btn-outline-primary"
+                              class="btn btn-sm mb-2 mr-0 btn-outline-primary"
                               >Ir a Tipologias</a
                             >
                             <a
                               :href="'proyectos/documentos/' + el.slug_es"
-                              class="btn btn-sm mb-2 btn-outline-primary"
+                              class="btn btn-sm mb-2 mr-0 btn-outline-primary"
                               >Ir a Documentos</a
                             >
                             <a
                               :href="'proyectos/galeria/' + el.slug_es"
-                              class="btn btn-sm mb-2 btn-outline-primary"
+                              class="btn btn-sm mb-2 mr-0 btn-outline-primary"
                               >Ir a Galeria</a
                             >
                             <a
                               :href="'proyectos/tour-virtual/' + el.slug_es"
-                              class="btn btn-sm mb-2 btn-outline-primary"
+                              class="btn btn-sm mb-2 mr-0 btn-outline-primary"
                               >Ir a Tour Virtual</a
                             >
                             <a
                               :href="'proyectos/cotizaciones/' + el.slug_es"
-                              class="btn btn-sm mb-2 btn-outline-primary"
+                              class="btn btn-sm mb-2 mr-0 btn-outline-primary"
                               >Ir a Cotizaciones</a
                             >
-                          </div>
                         </div>
-                        <div class="d-flex">
-                          <div class="ml-auto d-inline">
-                             <a
-                              :href="'proyectos/inmuebles/' + el.slug_es"
-                              class="btn btn-sm mb-2 btn-outline-primary"
-                              >Inmuebles del Proyecto</a
-                            >
-                          </div>
-                        </div>
+                         
                         <div class="d-flex">
                           <div class="ml-auto d-inline">
                             <a

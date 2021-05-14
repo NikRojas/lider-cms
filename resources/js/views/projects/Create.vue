@@ -462,8 +462,144 @@
         </div>
         <div class="row mb-4">
           <div class="col-12 col-lg-2">
+            <h2>Pasarela</h2>
+            <p>
+              Indica los datos que se utilizan para
+              <b>Separar un Inmueble</b>.
+            </p>
+          </div>
+          <div class="col-12 col-lg-10">
+            <div class="card">
+              <div class="card-body">
+                <div class="row">
+                  <div class="col-12 mb-3">
+                    <div class="form-group">
+                      <p class="mb-0">
+                        El código SAP será utilizado para realizar la conexión
+                        con SAP y obtener los inmuebles y su disponibilidad del
+                        Proyecto.
+                      </p>
+                      <label class="font-weight-bold" for="sap_code"
+                        >Código SAP</label
+                      >
+                      <input
+                        type="text"
+                        class="form-control"
+                        v-model="element.sap_code"
+                        id="sap_code"
+                      />
+                      <label
+                        v-if="errors && errors.sap_code"
+                        class="mt-2 text-danger text-sm"
+                        for="sap_code"
+                        >{{ errors.sap_code[0] }}</label
+                      >
+                    </div>
+
+                    <div class="form-group">
+                      <p class="mb-0">
+                        Este será el monto que cuesta separar un inmueble en el Proyecto.
+                      </p>
+                      <label class="font-weight-bold" for="price_separation"
+                        >Precio de Separación de Inmueble</label
+                      >
+                      <!--<input
+                        type="text"
+                        class="form-control"
+                        v-model="element.price_separation"
+                        id="price_separation"
+                      />-->
+                      <money
+                        class="form-control form-control-lg"
+                        v-model="element.price_separation"
+                        v-bind="moneyLocal"
+                      ></money>
+                      <label
+                        v-if="errors && errors.price_separation"
+                        class="mt-2 text-danger text-sm"
+                        for="price_separation"
+                        >{{ errors.price_separation[0] }}</label
+                      >
+                    </div>
+                  </div>
+
+                  <div class="col-12">
+                    <p class="mb-0">Estos campos se actualizaran automaticamente cuando se obtenga la Disponibilidad de los Inmuebles del Proyecto</p>
+                  </div>
+
+                  <div class="col-12 col-lg-4 ">
+                    <div class="form-group">
+                      <label class="font-weight-bold" for="stock_parking"
+                        >Stock Estacionamiento</label
+                      >
+                      <input
+                        type="text"
+                        class="form-control"
+                        v-model="element.stock_parking"
+                        id="stock_parking"
+                        disabled
+                      />
+                      <label
+                        v-if="errors && errors.stock_parking"
+                        class="mt-2 text-danger text-sm"
+                        for="stock_parking"
+                        >{{ errors.stock_parking[0] }}</label
+                      >
+                    </div>
+                  </div>
+
+                  <div class="col-12 col-lg-4 ">
+                    <div class="form-group">
+                      <label class="font-weight-bold" for="price_parking_sap"
+                        >Precio Estacionamiento Soles</label
+                      >
+                      <input
+                        type="text"
+                        class="form-control"
+                        v-model="element.price_parking_sap"
+                        id="price_parking_sap"
+                        disabled
+                      />
+                      <label
+                        v-if="errors && errors.price_parking_sap"
+                        class="mt-2 text-danger text-sm"
+                        for="price_parking_sap"
+                        >{{ errors.price_parking_sap[0] }}</label
+                      >
+                    </div>
+                  </div>
+
+                  <div class="col-12 col-lg-4 ">
+                    <div class="form-group">
+                      <label
+                        class="font-weight-bold"
+                        for="price_parking_foreign_sap"
+                        >Precio Estacionamiento Dólares </label
+                      >
+                      <input
+                        type="text"
+                        class="form-control"
+                        v-model="element.price_parking_foreign_sap"
+                        id="price_parking_foreign_sap"
+                        disabled
+                      />
+                      <label
+                        v-if="errors && errors.price_parking_foreign_sap"
+                        class="mt-2 text-danger text-sm"
+                        for="price_parking_foreign_sap"
+                        >{{ errors.price_parking_foreign_sap[0] }}</label
+                      >
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row mb-4">
+          <div class="col-12 col-lg-2">
             <h2>Importes</h2>
-            <p>Indica los montos que tendrá el Proyecto</p>
+            <p>Indica los montos generales que tendrá el Proyecto</p>
           </div>
           <div class="col-12 col-lg-10">
             <div class="card">
@@ -1339,6 +1475,12 @@ export default {
         fd.append("active", 1);
       } else {
         fd.append("active", 0);
+      }
+      if (this.element.sap_code) {
+        fd.append("sap_code", this.element.sap_code);
+      }
+      if (this.element.price_separation) {
+        fd.append("price_separation", this.element.price_separation);
       }
       if (this.element.schedule_attention_es) {
         fd.append("schedule_attention_es", this.element.schedule_attention_es);

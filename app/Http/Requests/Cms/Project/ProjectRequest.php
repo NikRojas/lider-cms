@@ -73,7 +73,9 @@ class ProjectRequest extends FormRequest
             'seo_keywords_es' => 'sometimes',
             'seo_keywords_en' => 'sometimes',
             'seo_description_es' => 'sometimes|max:160',
-            'seo_description_en' => 'sometimes|max:160'
+            'seo_description_en' => 'sometimes|max:160',
+
+            'price_separation' => 'nullable|max:1000000000|numeric',
         ];
         if($this->webhook_url_active){
             $rules = array_merge(

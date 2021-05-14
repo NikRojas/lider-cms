@@ -1196,6 +1196,177 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 quill__WEBPACK_IMPORTED_MODULE_0___default.a.register("modules/clipboard", _functions_PlainClipboard__WEBPACK_IMPORTED_MODULE_1__["default"], true);
@@ -1456,25 +1627,25 @@ quill__WEBPACK_IMPORTED_MODULE_0___default.a.register("modules/clipboard", _func
       if (this.element.url_google_maps) {
         fd.append("url_google_maps", this.element.url_google_maps);
       } else {
-        fd.append("url_google_maps", '');
+        fd.append("url_google_maps", "");
       }
 
       if (this.element.url_waze) {
         fd.append("url_waze", this.element.url_waze);
       } else {
-        fd.append("url_waze", '');
+        fd.append("url_waze", "");
       }
 
       if (this.element.map_indications_en) {
         fd.append("map_indications_en", this.element.map_indications_en);
       } else {
-        fd.append("map_indications_en", '');
+        fd.append("map_indications_en", "");
       }
 
       if (this.element.map_indications_es) {
         fd.append("map_indications_es", this.element.map_indications_es);
       } else {
-        fd.append("map_indications_es", '');
+        fd.append("map_indications_es", "");
       }
 
       if (this.element.sales_room_en) {
@@ -1504,13 +1675,13 @@ quill__WEBPACK_IMPORTED_MODULE_0___default.a.register("modules/clipboard", _func
       if (this.element.price_total) {
         fd.append("price_total", this.element.price_total);
       } else {
-        fd.append("price_total", '');
+        fd.append("price_total", "");
       }
 
       if (this.element.price_total_foreign) {
         fd.append("price_total_foreign", this.element.price_total_foreign);
       } else {
-        fd.append("price_total_foreign", '');
+        fd.append("price_total_foreign", "");
       }
 
       if (this.element.price) {
@@ -1553,6 +1724,14 @@ quill__WEBPACK_IMPORTED_MODULE_0___default.a.register("modules/clipboard", _func
       }*/
 
 
+      if (this.element.sap_code) {
+        fd.append("sap_code", this.element.sap_code);
+      }
+
+      if (this.element.price_separation) {
+        fd.append("price_separation", this.element.price_separation);
+      }
+
       if (this.element.active == true) {
         fd.append("active", 1);
       } else {
@@ -1588,19 +1767,19 @@ quill__WEBPACK_IMPORTED_MODULE_0___default.a.register("modules/clipboard", _func
       if (this.element.excerpt_quotation) {
         fd.append("excerpt_quotation", this.element.excerpt_quotation);
       } else {
-        fd.append("excerpt_quotation", '');
+        fd.append("excerpt_quotation", "");
       }
 
       if (this.element.commentary_quotation) {
         fd.append("commentary_quotation", this.element.commentary_quotation);
       } else {
-        fd.append("commentary_quotation", '');
+        fd.append("commentary_quotation", "");
       }
 
       if (this.element.condition_quotation) {
         fd.append("condition_quotation", this.element.condition_quotation);
       } else {
-        fd.append("condition_quotation", '');
+        fd.append("condition_quotation", "");
       }
 
       if (this.element.seo_keywords_es) {
@@ -3087,6 +3266,302 @@ var render = function() {
               _c("div", { staticClass: "card" }, [
                 _c("div", { staticClass: "card-body" }, [
                   _c("div", { staticClass: "row" }, [
+                    _c("div", { staticClass: "col-12 mb-3" }, [
+                      _c("div", { staticClass: "form-group" }, [
+                        _c("p", { staticClass: "mb-0" }, [
+                          _vm._v(
+                            "\n                      El código SAP será utilizado para realizar la conexión\n                      con SAP y obtener los inmuebles y su disponibilidad del\n                      Proyecto.\n                    "
+                          )
+                        ]),
+                        _vm._v(" "),
+                        _c(
+                          "label",
+                          {
+                            staticClass: "font-weight-bold",
+                            attrs: { for: "sap_code" }
+                          },
+                          [_vm._v("Código SAP")]
+                        ),
+                        _vm._v(" "),
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.element.sap_code,
+                              expression: "element.sap_code"
+                            }
+                          ],
+                          staticClass: "form-control",
+                          attrs: { type: "text", id: "sap_code" },
+                          domProps: { value: _vm.element.sap_code },
+                          on: {
+                            input: function($event) {
+                              if ($event.target.composing) {
+                                return
+                              }
+                              _vm.$set(
+                                _vm.element,
+                                "sap_code",
+                                $event.target.value
+                              )
+                            }
+                          }
+                        }),
+                        _vm._v(" "),
+                        _vm.errors && _vm.errors.sap_code
+                          ? _c(
+                              "label",
+                              {
+                                staticClass: "mt-2 text-danger text-sm",
+                                attrs: { for: "sap_code" }
+                              },
+                              [_vm._v(_vm._s(_vm.errors.sap_code[0]))]
+                            )
+                          : _vm._e()
+                      ]),
+                      _vm._v(" "),
+                      _c(
+                        "div",
+                        { staticClass: "form-group" },
+                        [
+                          _c("p", { staticClass: "mb-0" }, [
+                            _vm._v(
+                              "\n                      Este será el monto que cuesta separar un inmueble en el Proyecto.\n                    "
+                            )
+                          ]),
+                          _vm._v(" "),
+                          _c(
+                            "label",
+                            {
+                              staticClass: "font-weight-bold",
+                              attrs: { for: "price_separation" }
+                            },
+                            [_vm._v("Precio de Separación de Inmueble")]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "money",
+                            _vm._b(
+                              {
+                                staticClass: "form-control form-control-lg",
+                                model: {
+                                  value: _vm.element.price_separation,
+                                  callback: function($$v) {
+                                    _vm.$set(
+                                      _vm.element,
+                                      "price_separation",
+                                      $$v
+                                    )
+                                  },
+                                  expression: "element.price_separation"
+                                }
+                              },
+                              "money",
+                              _vm.moneyLocal,
+                              false
+                            )
+                          ),
+                          _vm._v(" "),
+                          _vm.errors && _vm.errors.price_separation
+                            ? _c(
+                                "label",
+                                {
+                                  staticClass: "mt-2 text-danger text-sm",
+                                  attrs: { for: "price_separation" }
+                                },
+                                [_vm._v(_vm._s(_vm.errors.price_separation[0]))]
+                              )
+                            : _vm._e()
+                        ],
+                        1
+                      )
+                    ]),
+                    _vm._v(" "),
+                    _vm._m(3),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "col-12 col-lg-4 " }, [
+                      _c("div", { staticClass: "form-group" }, [
+                        _c(
+                          "label",
+                          {
+                            staticClass: "font-weight-bold",
+                            attrs: { for: "stock_parking" }
+                          },
+                          [_vm._v("Stock Estacionamiento")]
+                        ),
+                        _vm._v(" "),
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.element.stock_parking,
+                              expression: "element.stock_parking"
+                            }
+                          ],
+                          staticClass: "form-control",
+                          attrs: {
+                            type: "text",
+                            id: "stock_parking",
+                            disabled: ""
+                          },
+                          domProps: { value: _vm.element.stock_parking },
+                          on: {
+                            input: function($event) {
+                              if ($event.target.composing) {
+                                return
+                              }
+                              _vm.$set(
+                                _vm.element,
+                                "stock_parking",
+                                $event.target.value
+                              )
+                            }
+                          }
+                        }),
+                        _vm._v(" "),
+                        _vm.errors && _vm.errors.stock_parking
+                          ? _c(
+                              "label",
+                              {
+                                staticClass: "mt-2 text-danger text-sm",
+                                attrs: { for: "stock_parking" }
+                              },
+                              [_vm._v(_vm._s(_vm.errors.stock_parking[0]))]
+                            )
+                          : _vm._e()
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "col-12 col-lg-4 " }, [
+                      _c("div", { staticClass: "form-group" }, [
+                        _c(
+                          "label",
+                          {
+                            staticClass: "font-weight-bold",
+                            attrs: { for: "price_parking_sap" }
+                          },
+                          [_vm._v("Precio Estacionamiento Soles")]
+                        ),
+                        _vm._v(" "),
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.element.price_parking_sap,
+                              expression: "element.price_parking_sap"
+                            }
+                          ],
+                          staticClass: "form-control",
+                          attrs: {
+                            type: "text",
+                            id: "price_parking_sap",
+                            disabled: ""
+                          },
+                          domProps: { value: _vm.element.price_parking_sap },
+                          on: {
+                            input: function($event) {
+                              if ($event.target.composing) {
+                                return
+                              }
+                              _vm.$set(
+                                _vm.element,
+                                "price_parking_sap",
+                                $event.target.value
+                              )
+                            }
+                          }
+                        }),
+                        _vm._v(" "),
+                        _vm.errors && _vm.errors.price_parking_sap
+                          ? _c(
+                              "label",
+                              {
+                                staticClass: "mt-2 text-danger text-sm",
+                                attrs: { for: "price_parking_sap" }
+                              },
+                              [_vm._v(_vm._s(_vm.errors.price_parking_sap[0]))]
+                            )
+                          : _vm._e()
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "col-12 col-lg-4 " }, [
+                      _c("div", { staticClass: "form-group" }, [
+                        _c(
+                          "label",
+                          {
+                            staticClass: "font-weight-bold",
+                            attrs: { for: "price_parking_foreign_sap" }
+                          },
+                          [_vm._v("Precio Estacionamiento Dólares ")]
+                        ),
+                        _vm._v(" "),
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.element.price_parking_foreign_sap,
+                              expression: "element.price_parking_foreign_sap"
+                            }
+                          ],
+                          staticClass: "form-control",
+                          attrs: {
+                            type: "text",
+                            id: "price_parking_foreign_sap",
+                            disabled: ""
+                          },
+                          domProps: {
+                            value: _vm.element.price_parking_foreign_sap
+                          },
+                          on: {
+                            input: function($event) {
+                              if ($event.target.composing) {
+                                return
+                              }
+                              _vm.$set(
+                                _vm.element,
+                                "price_parking_foreign_sap",
+                                $event.target.value
+                              )
+                            }
+                          }
+                        }),
+                        _vm._v(" "),
+                        _vm.errors && _vm.errors.price_parking_foreign_sap
+                          ? _c(
+                              "label",
+                              {
+                                staticClass: "mt-2 text-danger text-sm",
+                                attrs: { for: "price_parking_foreign_sap" }
+                              },
+                              [
+                                _vm._v(
+                                  _vm._s(
+                                    _vm.errors.price_parking_foreign_sap[0]
+                                  )
+                                )
+                              ]
+                            )
+                          : _vm._e()
+                      ])
+                    ])
+                  ])
+                ])
+              ])
+            ])
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "row mb-4" }, [
+            _vm._m(4),
+            _vm._v(" "),
+            _c("div", { staticClass: "col-12 col-lg-10" }, [
+              _c("div", { staticClass: "card" }, [
+                _c("div", { staticClass: "card-body" }, [
+                  _c("div", { staticClass: "row" }, [
                     _c("div", { staticClass: "col-12 col-lg-6" }, [
                       _c(
                         "div",
@@ -3199,7 +3674,7 @@ var render = function() {
           ]),
           _vm._v(" "),
           _c("div", { staticClass: "row mb-4" }, [
-            _vm._m(3),
+            _vm._m(5),
             _vm._v(" "),
             _c("div", { staticClass: "col-12 col-lg-10" }, [
               _c("div", { staticClass: "card" }, [
@@ -3512,7 +3987,7 @@ var render = function() {
           ]),
           _vm._v(" "),
           _c("div", { staticClass: "row mb-4" }, [
-            _vm._m(4),
+            _vm._m(6),
             _vm._v(" "),
             _c("div", { staticClass: "col-12 col-lg-10" }, [
               _c("div", { staticClass: "card" }, [
@@ -3968,7 +4443,7 @@ var render = function() {
           ]),
           _vm._v(" "),
           _c("div", { staticClass: "row mb-4" }, [
-            _vm._m(5),
+            _vm._m(7),
             _vm._v(" "),
             _c("div", { staticClass: "col-12 col-lg-10" }, [
               _c("div", { staticClass: "card" }, [
@@ -4297,7 +4772,7 @@ var render = function() {
           ]),
           _vm._v(" "),
           _c("div", { staticClass: "row mb-4" }, [
-            _vm._m(6),
+            _vm._m(8),
             _vm._v(" "),
             _c("div", { staticClass: "col-12 col-lg-10" }, [
               _c("div", { staticClass: "card" }, [
@@ -4332,7 +4807,7 @@ var render = function() {
           ]),
           _vm._v(" "),
           _c("div", { staticClass: "row mb-4" }, [
-            _vm._m(7),
+            _vm._m(9),
             _vm._v(" "),
             _c("div", { staticClass: "col-12 col-lg-10" }, [
               _c("div", { staticClass: "card" }, [
@@ -4347,7 +4822,7 @@ var render = function() {
                             _vm._v("Notificación Email:")
                           ]),
                           _vm._v(" "),
-                          _vm._m(8),
+                          _vm._m(10),
                           _vm._v(" "),
                           _c("b-form-checkbox", {
                             staticClass: "ml-2",
@@ -4378,7 +4853,7 @@ var render = function() {
                             _vm._v("Webhook:")
                           ]),
                           _vm._v(" "),
-                          _vm._m(9),
+                          _vm._m(11),
                           _vm._v(" "),
                           _c("b-form-checkbox", {
                             staticClass: "ml-2",
@@ -4485,9 +4960,37 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "col-12 col-lg-2" }, [
+      _c("h2", [_vm._v("Pasarela")]),
+      _vm._v(" "),
+      _c("p", [
+        _vm._v(
+          "\n            Indica los datos que se utilizan para\n            "
+        ),
+        _c("b", [_vm._v("Separar un Inmueble")]),
+        _vm._v(".\n          ")
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "col-12" }, [
+      _c("p", { staticClass: "mb-0" }, [
+        _vm._v(
+          "Estos campos se actualizaran automaticamente cuando se obtenga la Disponibilidad de los Inmuebles del Proyecto"
+        )
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "col-12 col-lg-2" }, [
       _c("h2", [_vm._v("Importes")]),
       _vm._v(" "),
-      _c("p", [_vm._v("Indica los montos que tendrá el Proyecto")])
+      _c("p", [_vm._v("Indica los montos generales que tendrá el Proyecto")])
     ])
   },
   function() {
@@ -4515,9 +5018,11 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "col-12 col-lg-2" }, [
-      _c("h2", [_vm._v("Cotización")]),
+      _c("h2", [_vm._v("Email Cotización")]),
       _vm._v(" "),
-      _c("p", [_vm._v("Indica la Información de la cotización del Proyecto")])
+      _c("p", [
+        _vm._v("Indica la información en el email de cotización del Proyecto")
+      ])
     ])
   },
   function() {
@@ -4543,9 +5048,9 @@ var staticRenderFns = [
       _c("h2", [_vm._v("Configuración Proyecto")]),
       _vm._v(" "),
       _c("p", [
-        _vm._v("Indica la configuración de notificaciones del "),
+        _vm._v("\n            Indica la configuración de notificaciones del "),
         _c("b", [_vm._v("Proyecto")]),
-        _vm._v(" e integración webhook.")
+        _vm._v(" e\n            integración webhook.\n          ")
       ])
     ])
   },
@@ -4555,10 +5060,10 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("p", { staticClass: "mb-0" }, [
       _vm._v(
-        "\n                        Deseas enviar un correo de notificación a los asesores\n                        asignados al Proyecto, cada vez que se registre una\n                        cotización nueva en el "
+        "\n                      Deseas enviar un correo de notificación a los asesores\n                      asignados al Proyecto, cada vez que se registre una\n                      cotización nueva en el "
       ),
       _c("b", [_vm._v("Proyecto")]),
-      _vm._v("?\n                      ")
+      _vm._v("?\n                    ")
     ])
   },
   function() {
@@ -4568,11 +5073,11 @@ var staticRenderFns = [
     return _c("div", { staticClass: "mb-0" }, [
       _c("p", [
         _vm._v(
-          "Al habilitar esta opción la información de las cotizaciones registradas en el "
+          "\n                        Al habilitar esta opción la información de las\n                        cotizaciones registradas en el "
         ),
         _c("b", [_vm._v("Proyecto")]),
         _vm._v(
-          " serán enviadas a la URL que defina. Además de los datos de la cotización se enviarán los siguentes datos."
+          " serán\n                        enviadas a la URL que defina. Además de los datos de\n                        la cotización se enviarán los siguentes datos.\n                      "
         )
       ]),
       _vm._v(" "),

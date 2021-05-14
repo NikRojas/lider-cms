@@ -80,9 +80,13 @@
                       <label class="font-weight-bold" for="image"
                         >Logo Blanco:</label
                       >
-                       <small class="d-block mb-0 lh-1">Resolución recomendada: 200×100px</small> 
-                    <small class="d-block mb-0 lh-1">Formato: PNG</small> 
-                    <small class="d-block mb-2 lh-1">Tamaño recomendado: No mayor a 100KB</small>
+                      <small class="d-block mb-0 lh-1"
+                        >Resolución recomendada: 200×100px</small
+                      >
+                      <small class="d-block mb-0 lh-1">Formato: PNG</small>
+                      <small class="d-block mb-2 lh-1"
+                        >Tamaño recomendado: No mayor a 100KB</small
+                      >
                       <div class="row">
                         <div class="col-lg-4 mb-3 mb-lg-0">
                           <img
@@ -100,7 +104,7 @@
                                 $refs.ref_logo.dropzone,
                                 1,
                                 110000,
-                            '100kb'
+                                '100kb'
                               )
                             "
                             id="image"
@@ -132,9 +136,13 @@
                       <label class="font-weight-bold" for="image_colour"
                         >Logo Color:</label
                       >
-                      <small class="d-block mb-0 lh-1">Resolución recomendada: 200×100px</small> 
-                    <small class="d-block mb-0 lh-1">Formato: PNG</small> 
-                    <small class="d-block mb-2 lh-1">Tamaño recomendado: No mayor a 100KB</small>
+                      <small class="d-block mb-0 lh-1"
+                        >Resolución recomendada: 200×100px</small
+                      >
+                      <small class="d-block mb-0 lh-1">Formato: PNG</small>
+                      <small class="d-block mb-2 lh-1"
+                        >Tamaño recomendado: No mayor a 100KB</small
+                      >
                       <div class="row">
                         <div class="col-lg-4 mb-3 mb-lg-0">
                           <img
@@ -154,7 +162,7 @@
                                 $refs.ref_logo_colour.dropzone,
                                 1,
                                 110000,
-                            '100kb'
+                                '100kb'
                               )
                             "
                             id="image_colour"
@@ -186,9 +194,13 @@
                       <label class="font-weight-bold" for="image"
                         >Card Proyecto:</label
                       >
-                       <small class="d-block mb-0 lh-1">Resolución recomendada: 400×410px</small> 
-                    <small class="d-block mb-0 lh-1">Formato: JPG</small> 
-                    <small class="d-block mb-2 lh-1">Tamaño recomendado: No mayor a 100KB</small>
+                      <small class="d-block mb-0 lh-1"
+                        >Resolución recomendada: 400×410px</small
+                      >
+                      <small class="d-block mb-0 lh-1">Formato: JPG</small>
+                      <small class="d-block mb-2 lh-1"
+                        >Tamaño recomendado: No mayor a 100KB</small
+                      >
                       <div class="row">
                         <div class="col-lg-4 mb-3 mb-lg-0">
                           <img
@@ -207,7 +219,7 @@
                                 $refs.ref_card.dropzone,
                                 1,
                                 110000,
-                            '100kb'
+                                '100kb'
                               )
                             "
                             id="image_card"
@@ -240,9 +252,13 @@
                       <label class="font-weight-bold" for="image"
                         >Card Hover Proyecto:</label
                       >
-                       <small class="d-block mb-0 lh-1">Resolución recomendada: 700×410px</small> 
-                    <small class="d-block mb-0 lh-1">Formato: JPG</small> 
-                    <small class="d-block mb-2 lh-1">Tamaño recomendado: No mayor a 250KB</small>
+                      <small class="d-block mb-0 lh-1"
+                        >Resolución recomendada: 700×410px</small
+                      >
+                      <small class="d-block mb-0 lh-1">Formato: JPG</small>
+                      <small class="d-block mb-2 lh-1"
+                        >Tamaño recomendado: No mayor a 250KB</small
+                      >
                       <div class="row">
                         <div class="col-lg-4 mb-3 mb-lg-0">
                           <img
@@ -260,8 +276,8 @@
                                 $event,
                                 $refs.ref_card_hover.dropzone,
                                 1,
-                                 260000,
-                            '250kb'
+                                260000,
+                                '250kb'
                               )
                             "
                             id="image_card_hover"
@@ -535,8 +551,144 @@
         </div>
         <div class="row mb-4">
           <div class="col-12 col-lg-2">
+            <h2>Pasarela</h2>
+            <p>
+              Indica los datos que se utilizan para
+              <b>Separar un Inmueble</b>.
+            </p>
+          </div>
+          <div class="col-12 col-lg-10">
+            <div class="card">
+              <div class="card-body">
+                <div class="row">
+                  <div class="col-12 mb-3">
+                    <div class="form-group">
+                      <p class="mb-0">
+                        El código SAP será utilizado para realizar la conexión
+                        con SAP y obtener los inmuebles y su disponibilidad del
+                        Proyecto.
+                      </p>
+                      <label class="font-weight-bold" for="sap_code"
+                        >Código SAP</label
+                      >
+                      <input
+                        type="text"
+                        class="form-control"
+                        v-model="element.sap_code"
+                        id="sap_code"
+                      />
+                      <label
+                        v-if="errors && errors.sap_code"
+                        class="mt-2 text-danger text-sm"
+                        for="sap_code"
+                        >{{ errors.sap_code[0] }}</label
+                      >
+                    </div>
+
+                    <div class="form-group">
+                      <p class="mb-0">
+                        Este será el monto que cuesta separar un inmueble en el Proyecto.
+                      </p>
+                      <label class="font-weight-bold" for="price_separation"
+                        >Precio de Separación de Inmueble</label
+                      >
+                      <!--<input
+                        type="text"
+                        class="form-control"
+                        v-model="element.price_separation"
+                        id="price_separation"
+                      />-->
+                      <money
+                        class="form-control form-control-lg"
+                        v-model="element.price_separation"
+                        v-bind="moneyLocal"
+                      ></money>
+                      <label
+                        v-if="errors && errors.price_separation"
+                        class="mt-2 text-danger text-sm"
+                        for="price_separation"
+                        >{{ errors.price_separation[0] }}</label
+                      >
+                    </div>
+                  </div>
+
+                  <div class="col-12">
+                    <p class="mb-0">Estos campos se actualizaran automaticamente cuando se obtenga la Disponibilidad de los Inmuebles del Proyecto</p>
+                  </div>
+
+                  <div class="col-12 col-lg-4 ">
+                    <div class="form-group">
+                      <label class="font-weight-bold" for="stock_parking"
+                        >Stock Estacionamiento</label
+                      >
+                      <input
+                        type="text"
+                        class="form-control"
+                        v-model="element.stock_parking"
+                        id="stock_parking"
+                        disabled
+                      />
+                      <label
+                        v-if="errors && errors.stock_parking"
+                        class="mt-2 text-danger text-sm"
+                        for="stock_parking"
+                        >{{ errors.stock_parking[0] }}</label
+                      >
+                    </div>
+                  </div>
+
+                  <div class="col-12 col-lg-4 ">
+                    <div class="form-group">
+                      <label class="font-weight-bold" for="price_parking_sap"
+                        >Precio Estacionamiento Soles</label
+                      >
+                      <input
+                        type="text"
+                        class="form-control"
+                        v-model="element.price_parking_sap"
+                        id="price_parking_sap"
+                        disabled
+                      />
+                      <label
+                        v-if="errors && errors.price_parking_sap"
+                        class="mt-2 text-danger text-sm"
+                        for="price_parking_sap"
+                        >{{ errors.price_parking_sap[0] }}</label
+                      >
+                    </div>
+                  </div>
+
+                  <div class="col-12 col-lg-4 ">
+                    <div class="form-group">
+                      <label
+                        class="font-weight-bold"
+                        for="price_parking_foreign_sap"
+                        >Precio Estacionamiento Dólares </label
+                      >
+                      <input
+                        type="text"
+                        class="form-control"
+                        v-model="element.price_parking_foreign_sap"
+                        id="price_parking_foreign_sap"
+                        disabled
+                      />
+                      <label
+                        v-if="errors && errors.price_parking_foreign_sap"
+                        class="mt-2 text-danger text-sm"
+                        for="price_parking_foreign_sap"
+                        >{{ errors.price_parking_foreign_sap[0] }}</label
+                      >
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row mb-4">
+          <div class="col-12 col-lg-2">
             <h2>Importes</h2>
-            <p>Indica los montos que tendrá el Proyecto</p>
+            <p>Indica los montos generales que tendrá el Proyecto</p>
           </div>
           <div class="col-12 col-lg-10">
             <div class="card">
@@ -612,9 +764,13 @@
                       <label class="font-weight-bold" for="banner"
                         >Banner:</label
                       >
-                      <small class="d-block mb-0 lh-1">Resolución recomendada: 650x700px</small> 
-                    <small class="d-block mb-0 lh-1">Formato: JPG</small> 
-                    <small class="d-block mb-2 lh-1">Tamaño recomendado: No mayor a 300KB</small>
+                      <small class="d-block mb-0 lh-1"
+                        >Resolución recomendada: 650x700px</small
+                      >
+                      <small class="d-block mb-0 lh-1">Formato: JPG</small>
+                      <small class="d-block mb-2 lh-1"
+                        >Tamaño recomendado: No mayor a 300KB</small
+                      >
                       <div class="row">
                         <div class="col-lg-4 mb-3 mb-lg-0">
                           <img
@@ -632,7 +788,7 @@
                                 $refs.ref_banner.dropzone,
                                 1,
                                 310000,
-                            '300kb'
+                                '300kb'
                               )
                             "
                             id="image"
@@ -675,7 +831,8 @@
                             width="100%"
                             height="360"
                             :src="
-                              'https://www.youtube.com/embed/' + element.id_video
+                              'https://www.youtube.com/embed/' +
+                              element.id_video
                             "
                             frameborder="0"
                           ></iframe>
@@ -882,9 +1039,13 @@
                       <label class="font-weight-bold" for="iframe_map"
                         >Imagen Mapa:</label
                       >
-                       <small class="d-block mb-0 lh-1">Resolución recomendada: 1100x680px</small> 
-                    <small class="d-block mb-0 lh-1">Formato: JPG</small> 
-                    <small class="d-block mb-2 lh-1">Tamaño recomendado: No mayor a 300KB</small>
+                      <small class="d-block mb-0 lh-1"
+                        >Resolución recomendada: 1100x680px</small
+                      >
+                      <small class="d-block mb-0 lh-1">Formato: JPG</small>
+                      <small class="d-block mb-2 lh-1"
+                        >Tamaño recomendado: No mayor a 300KB</small
+                      >
                       <div class="row">
                         <div class="col-lg-4 mb-3 mb-lg-0">
                           <img
@@ -902,7 +1063,7 @@
                                 $refs.ref_map.dropzone,
                                 1,
                                 310000,
-                            '300kb'
+                                '300kb'
                               )
                             "
                             id="image"
@@ -936,8 +1097,8 @@
         </div>
         <div class="row mb-4">
           <div class="col-12 col-lg-2">
-            <h2>Cotización</h2>
-            <p>Indica la Información de la cotización del Proyecto</p>
+            <h2>Email Cotización</h2>
+            <p>Indica la información en el email de cotización del Proyecto</p>
           </div>
           <div class="col-12 col-lg-10">
             <div class="card">
@@ -1075,10 +1236,14 @@
             </div>
           </div>
         </div>
+
         <div class="row mb-4">
           <div class="col-12 col-lg-2">
             <h2>Configuración Proyecto</h2>
-            <p>Indica la configuración de notificaciones del <b>Proyecto</b> e integración webhook.</p>
+            <p>
+              Indica la configuración de notificaciones del <b>Proyecto</b> e
+              integración webhook.
+            </p>
           </div>
           <div class="col-12 col-lg-10">
             <div class="card">
@@ -1086,62 +1251,68 @@
                 <div class="row">
                   <div class="col-12 mb-3">
                     <div class="form-group">
-                        <label class="font-weight-bold">Notificación Email:</label>
-                        <p class="mb-0">
-                          Deseas enviar un correo de notificación a los asesores
-                          asignados al Proyecto, cada vez que se registre una
-                          cotización nueva en el <b>Proyecto</b>?
-                        </p>
-                        <b-form-checkbox
-                          class="ml-2"
-                          size="lg"
-                          v-model="element.send_to_email"
-                          name="check-button"
-                          switch
-                        >
-                          
-                        </b-form-checkbox>
-                        
+                      <label class="font-weight-bold"
+                        >Notificación Email:</label
+                      >
+                      <p class="mb-0">
+                        Deseas enviar un correo de notificación a los asesores
+                        asignados al Proyecto, cada vez que se registre una
+                        cotización nueva en el <b>Proyecto</b>?
+                      </p>
+                      <b-form-checkbox
+                        class="ml-2"
+                        size="lg"
+                        v-model="element.send_to_email"
+                        name="check-button"
+                        switch
+                      >
+                      </b-form-checkbox>
                     </div>
                   </div>
                   <div class="col-12">
                     <div class="form-group">
-                        <label class="font-weight-bold">Webhook:</label>
-                        <div class="mb-0">
-                          <p>Al habilitar esta opción la información de las cotizaciones registradas en el <b>Proyecto</b> serán enviadas a la URL que defina. Además de los datos de la cotización se enviarán los siguentes datos.</p> 
-                          <b>Parámetros UTM</b>
-                          <ul>
-                            <li>UTM Source</li>
-                            <li>UTM Medium</li>
-                            <li>UTM Campaign</li>
-                            <li>UTM Term</li>
-                            <li>UTM Content</li>
-                          </ul>
-                        </div>
-                        <b-form-checkbox
-                          class="ml-2"
-                          size="lg"
-                          v-model="element.webhook_url_active"
-                          name="check-button"
-                          switch
-                        >
-                          
-                        </b-form-checkbox>
+                      <label class="font-weight-bold">Webhook:</label>
+                      <div class="mb-0">
+                        <p>
+                          Al habilitar esta opción la información de las
+                          cotizaciones registradas en el <b>Proyecto</b> serán
+                          enviadas a la URL que defina. Además de los datos de
+                          la cotización se enviarán los siguentes datos.
+                        </p>
+                        <b>Parámetros UTM</b>
+                        <ul>
+                          <li>UTM Source</li>
+                          <li>UTM Medium</li>
+                          <li>UTM Campaign</li>
+                          <li>UTM Term</li>
+                          <li>UTM Content</li>
+                        </ul>
+                      </div>
+                      <b-form-checkbox
+                        class="ml-2"
+                        size="lg"
+                        v-model="element.webhook_url_active"
+                        name="check-button"
+                        switch
+                      >
+                      </b-form-checkbox>
                     </div>
                     <div class="form-group" v-if="element.webhook_url_active">
-                      <label class="font-weight-bold" for="webhook_url">URL Destino</label>
-                        <input
-                          type="text"
-                          class="form-control"
-                          v-model="element.webhook_url"
-                          id="webhook_url"
-                        />
-                        <label
-                          v-if="errors && errors.webhook_url"
-                          class="mt-2 text-danger text-sm"
-                          for="webhook_url"
-                          >{{ errors.webhook_url[0] }}</label
-                        >
+                      <label class="font-weight-bold" for="webhook_url"
+                        >URL Destino</label
+                      >
+                      <input
+                        type="text"
+                        class="form-control"
+                        v-model="element.webhook_url"
+                        id="webhook_url"
+                      />
+                      <label
+                        v-if="errors && errors.webhook_url"
+                        class="mt-2 text-danger text-sm"
+                        for="webhook_url"
+                        >{{ errors.webhook_url[0] }}</label
+                      >
                     </div>
                   </div>
                 </div>
@@ -1382,27 +1553,23 @@ export default {
       }
       if (this.element.url_google_maps) {
         fd.append("url_google_maps", this.element.url_google_maps);
-      }
-      else{
-        fd.append("url_google_maps", '');
+      } else {
+        fd.append("url_google_maps", "");
       }
       if (this.element.url_waze) {
         fd.append("url_waze", this.element.url_waze);
-      }
-      else{
-        fd.append("url_waze", '');
+      } else {
+        fd.append("url_waze", "");
       }
       if (this.element.map_indications_en) {
         fd.append("map_indications_en", this.element.map_indications_en);
-      }
-      else{
-        fd.append("map_indications_en", '');
+      } else {
+        fd.append("map_indications_en", "");
       }
       if (this.element.map_indications_es) {
         fd.append("map_indications_es", this.element.map_indications_es);
-      }
-      else{
-        fd.append("map_indications_es", '');
+      } else {
+        fd.append("map_indications_es", "");
       }
       if (this.element.sales_room_en) {
         fd.append("sales_room_en", this.element.sales_room_en);
@@ -1424,15 +1591,13 @@ export default {
       }
       if (this.element.price_total) {
         fd.append("price_total", this.element.price_total);
-      }
-      else{
-        fd.append("price_total", '');
+      } else {
+        fd.append("price_total", "");
       }
       if (this.element.price_total_foreign) {
         fd.append("price_total_foreign", this.element.price_total_foreign);
-      }
-      else{
-        fd.append("price_total_foreign", '');
+      } else {
+        fd.append("price_total_foreign", "");
       }
       if (this.element.price) {
         fd.append("price", this.element.price);
@@ -1464,6 +1629,12 @@ export default {
       /*if (this.element.iframe_map) {
         fd.append("iframe_map", this.element.iframe_map);
       }*/
+      if (this.element.sap_code) {
+        fd.append("sap_code", this.element.sap_code);
+      }
+      if (this.element.price_separation) {
+        fd.append("price_separation", this.element.price_separation);
+      }
       if (this.element.active == true) {
         fd.append("active", 1);
       } else {
@@ -1479,7 +1650,10 @@ export default {
         fd.append("bonds", JSON.stringify(this.element.bonds));
       }
       if (this.element.financing_options) {
-        fd.append("financing_options", JSON.stringify(this.element.financing_options));
+        fd.append(
+          "financing_options",
+          JSON.stringify(this.element.financing_options)
+        );
       }
       if (this.element.projects_related.length) {
         fd.append(
@@ -1497,21 +1671,18 @@ export default {
       }
       if (this.element.excerpt_quotation) {
         fd.append("excerpt_quotation", this.element.excerpt_quotation);
-      }
-      else{
-        fd.append("excerpt_quotation", '');
+      } else {
+        fd.append("excerpt_quotation", "");
       }
       if (this.element.commentary_quotation) {
         fd.append("commentary_quotation", this.element.commentary_quotation);
-      }
-      else{
-        fd.append("commentary_quotation", '');
+      } else {
+        fd.append("commentary_quotation", "");
       }
       if (this.element.condition_quotation) {
         fd.append("condition_quotation", this.element.condition_quotation);
-      }
-      else{
-        fd.append("condition_quotation", '');
+      } else {
+        fd.append("condition_quotation", "");
       }
       if (this.element.seo_keywords_es) {
         fd.append("seo_keywords_es", this.element.seo_keywords_es);

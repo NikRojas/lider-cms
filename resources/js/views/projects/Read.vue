@@ -356,8 +356,97 @@
         </div>
         <div class="row mb-4">
           <div class="col-12 col-lg-2">
+            <h2>Pasarela</h2>
+            <p>
+              Indica los datos que se utilizan para
+              <b>Separar un Inmueble</b>.
+            </p>
+          </div>
+          <div class="col-12 col-lg-10">
+            <div class="card">
+              <div class="card-body">
+                <div class="row">
+                  <div class="col-12 mb-3">
+                    <div class="form-group">
+                      <p class="mb-0">
+                        El código SAP será utilizado para realizar la conexión
+                        con SAP y obtener los inmuebles y su disponibilidad del
+                        Proyecto.
+                      </p>
+                      <label class="font-weight-bold" for="sap_code"
+                        >Código SAP</label
+                      >
+                      <div v-if="element.code_sap">
+                        {{ element.code_sap }}
+                      </div>
+                      <div v-else>No registrado</div>
+                    </div>
+
+                    <div class="form-group">
+                      <p class="mb-0">
+                        Este será el monto que cuesta separar un inmueble en el Proyecto.
+                      </p>
+                      <label class="font-weight-bold" for="price_separation"
+                        >Precio de Separación de Inmueble</label
+                      >
+
+                      <div v-if="element.price_separation">
+                        {{ element.price_separation }}
+                      </div>
+                      <div v-else>No registrado</div>
+                    </div>
+                  </div>
+
+                  <div class="col-12">
+                    <p class="mb-0">Estos campos se actualizaran automaticamente cuando se obtenga la Disponibilidad de los Inmuebles del Proyecto</p>
+                  </div>
+
+                  <div class="col-12 col-lg-4 ">
+                    <div class="form-group">
+                      <label class="font-weight-bold" for="stock_parking"
+                        >Stock Estacionamiento</label
+                      >
+                      <div v-if="element.stock_parking">
+                        {{ element.stock_parking }}
+                      </div>
+                      <div v-else>No registrado</div>
+                    </div>
+                  </div>
+
+                  <div class="col-12 col-lg-4 ">
+                    <div class="form-group">
+                      <label class="font-weight-bold" for="price_parking_sap"
+                        >Precio Estacionamiento Soles</label
+                      >
+                      <div v-if="element.price_parking_sap">
+                        {{ element.price_parking_sap }}
+                      </div>
+                      <div v-else>No registrado</div>
+                    </div>
+                  </div>
+
+                  <div class="col-12 col-lg-4 ">
+                    <div class="form-group">
+                      <label
+                        class="font-weight-bold"
+                        for="price_parking_foreign_sap"
+                        >Precio Estacionamiento Dólares </label
+                      >
+                       <div v-if="element.price_parking_foreign_sap">
+                        {{ element.price_parking_foreign_sap }}
+                      </div>
+                      <div v-else>No registrado</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row mb-4">
+          <div class="col-12 col-lg-2">
             <h2>Importes</h2>
-            <p>Montos con los que cuenta el Proyecto</p>
+            <p>Montos generales con los que cuenta el Proyecto</p>
           </div>
           <div class="col-12 col-lg-10">
             <div class="card">

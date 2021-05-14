@@ -15,7 +15,7 @@ class Project extends Model
         'projects_related' => 'array',
         'form_videocall' => 'boolean'
     ];
-    protected $appends = ['images_format','price_total_format','price_total_foreign_format','price_format','id_video'];
+    protected $appends = ['images_format','price_total_format','price_total_foreign_format','price_format','id_video','price_separation_format'];
 
     public function galleryRel()
     {
@@ -113,5 +113,10 @@ class Project extends Model
     public function financingOptionsRel()
     {
         return $this->belongsToMany('App\FinancingOption', 'projects_financing_options', 'project_id', 'financing_option_id');
+    }
+
+    public function getPriceSeparationFormatAttribute()
+    {
+        return 'S/ '.number_format($this->price_separation, 0, '.', ',');
     }
 }

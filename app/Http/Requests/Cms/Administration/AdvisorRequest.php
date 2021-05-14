@@ -3,6 +3,7 @@
 namespace App\Http\Requests\Cms\Administration;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class AdvisorRequest extends FormRequest
 {
@@ -27,7 +28,8 @@ class AdvisorRequest extends FormRequest
             'name' => 'required|max:100',
             'mobile' => 'required|digits:9',
             'email' => 'required|max:100',
-            'avatar' => 'sometimes|required'
+            'avatar' => 'sometimes|required',
+            'sap_code' => ['nullable',Rule::unique('advisors')->ignore($this->id),'max:100']
         ];
         /*switch ($this->method()) {
             case 'POST':   

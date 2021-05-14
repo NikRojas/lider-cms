@@ -517,6 +517,10 @@ __webpack_require__.r(__webpack_exports__);
         fd.append("avatar", this.$refs.ref_image.dropzone.files[0]);
       }
 
+      if (this.element.id) {
+        fd.append("id", this.element.id);
+      }
+
       axios({
         method: method,
         url: url,

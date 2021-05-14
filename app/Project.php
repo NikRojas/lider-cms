@@ -15,7 +15,7 @@ class Project extends Model
         'projects_related' => 'array',
         'form_videocall' => 'boolean'
     ];
-    protected $appends = ['images_format','price_total_format','price_total_foreign_format','price_format','id_video','price_separation_format'];
+    protected $appends = ['images_format','price_total_format','price_total_foreign_format','price_format','id_video','price_separation_format','price_parking_format','price_parking_foreign_format'];
 
     public function galleryRel()
     {
@@ -118,5 +118,20 @@ class Project extends Model
     public function getPriceSeparationFormatAttribute()
     {
         return 'S/ '.number_format($this->price_separation, 0, '.', ',');
+    }
+
+    public function departmentsRel()
+    {
+        return $this->hasMany('App\Department','project_id','id');
+    }
+
+    public function getPriceParkingFormatAttribute()
+    {
+        return 'S/ '.number_format($this->price_parking_sap, 0, '.', ',');
+    }
+
+    public function getPriceParkingForeignFormatAttribute()
+    {
+        return '$ '.number_format($this->price_parking_foreign_sap, 0, '.', ',');
     }
 }

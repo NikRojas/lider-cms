@@ -2010,7 +2010,8 @@ var render = function() {
                           [_vm._v("Stock Estacionamiento")]
                         ),
                         _vm._v(" "),
-                        _vm.element.stock_parking
+                        _vm.element.stock_parking !== null &&
+                        _vm.element.stock_parking !== ""
                           ? _c("div", [
                               _vm._v(
                                 "\n                      " +
@@ -2037,7 +2038,7 @@ var render = function() {
                           ? _c("div", [
                               _vm._v(
                                 "\n                      " +
-                                  _vm._s(_vm.element.price_parking_sap) +
+                                  _vm._s(_vm.element.price_parking_format) +
                                   "\n                    "
                               )
                             ])
@@ -2061,7 +2062,7 @@ var render = function() {
                               _vm._v(
                                 "\n                      " +
                                   _vm._s(
-                                    _vm.element.price_parking_foreign_sap
+                                    _vm.element.price_parking_foreign_format
                                   ) +
                                   "\n                    "
                               )

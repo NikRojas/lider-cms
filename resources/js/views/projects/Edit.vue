@@ -624,7 +624,7 @@
                       <input
                         type="text"
                         class="form-control"
-                        v-model="element.stock_parking"
+                        :value="element.stock_parking !== null && element.stock_parking !== '' ? element.stock_parking : ''"
                         id="stock_parking"
                         disabled
                       />
@@ -645,16 +645,10 @@
                       <input
                         type="text"
                         class="form-control"
-                        v-model="element.price_parking_sap"
+                        :value="element.price_parking_sap ? element.price_parking_format : ''"
                         id="price_parking_sap"
                         disabled
                       />
-                      <label
-                        v-if="errors && errors.price_parking_sap"
-                        class="mt-2 text-danger text-sm"
-                        for="price_parking_sap"
-                        >{{ errors.price_parking_sap[0] }}</label
-                      >
                     </div>
                   </div>
 
@@ -668,16 +662,10 @@
                       <input
                         type="text"
                         class="form-control"
-                        v-model="element.price_parking_foreign_sap"
+                        :value="element.price_parking_foreign_sap ? element.price_parking_foreign_format : ''"
                         id="price_parking_foreign_sap"
                         disabled
                       />
-                      <label
-                        v-if="errors && errors.price_parking_foreign_sap"
-                        class="mt-2 text-danger text-sm"
-                        for="price_parking_foreign_sap"
-                        >{{ errors.price_parking_foreign_sap[0] }}</label
-                      >
                     </div>
                   </div>
                 </div>

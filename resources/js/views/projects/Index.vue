@@ -91,7 +91,7 @@
 
                             <div class="">
                               <div class="row">
-                                <div class="col-12 mb-1 h3 font-weight-normal mb-0">
+                                <div class="col-12 h3 font-weight-normal mb-0">
                                   Mostrar en la Web:
                                   <span
                                     :class="
@@ -130,6 +130,29 @@
                                       No registrado
                                     </h3>
                                   </div>
+
+
+                                  <div>
+                                    <h3
+                                      class="d-inline-block font-weight-normal mb-0"
+                                    >
+                                      N° Tipologias:
+                                    </h3>
+                                    <h3 class="d-inline-block mb-0">
+                                      {{ el.tipologies_rel_count }}
+                                    </h3>
+                                  </div>
+                                  <div>
+                                    <h3
+                                      class="d-inline-block font-weight-normal mb-0"
+                                    >
+                                      N° Inmuebles:
+                                    </h3>
+                                    <h3 class="d-inline-block mb-0">
+                                      {{ el.departments_rel_count }}
+                                    </h3>
+                                  </div>
+
                                 </div>
 
                                   <div class="col-12">
@@ -138,43 +161,34 @@
                                   </div>
 
                                 <div class="col-12">
+                                  
                                   <div>
                                     <h4
-                                      class="d-inline-block font-weight-normal"
+                                      class="d-inline-block mb-0 font-weight-normal"
                                     >
                                       N° Cotizaciones:
                                     </h4>
-                                    <h4 class="d-inline-block">
+                                    <h4 class="d-inline-block mb-0">
                                       {{ el.quotations_rel_count }}
                                     </h4>
                                   </div>
                                   <div>
                                     <h4
-                                      class="d-inline-block font-weight-normal"
+                                      class="d-inline-block mb-0 font-weight-normal"
                                     >
                                       N° Documentos:
                                     </h4>
-                                    <h4 class="d-inline-block">
+                                    <h4 class="d-inline-block mb-0">
                                       {{ el.files_rel_count }}
                                     </h4>
                                   </div>
                                   <div>
                                     <h4
-                                      class="d-inline-block font-weight-normal"
-                                    >
-                                      N° Tipologias:
-                                    </h4>
-                                    <h4 class="d-inline-block">
-                                      {{ el.tipologies_rel_count }}
-                                    </h4>
-                                  </div>
-                                  <div>
-                                    <h4
-                                      class="d-inline-block font-weight-normal"
+                                      class="d-inline-block mb-0 font-weight-normal"
                                     >
                                       N° Imágenes en la Galeria:
                                     </h4>
-                                    <h4 class="d-inline-block">
+                                    <h4 class="d-inline-block mb-0">
                                       {{ el.gallery_rel_count }}
                                     </h4>
                                   </div>
@@ -183,27 +197,27 @@
                                   <div>
                                     <div v-if="el.price_total">
                                       <h4
-                                        class="d-inline-block font-weight-normal"
+                                        class="d-inline-block mb-0 font-weight-normal"
                                       >
                                         Precio Soles Desde:
                                       </h4>
-                                      <h4 class="d-inline-block">
+                                      <h4 class="d-inline-block mb-0">
                                         {{ el.price_total_format }}
                                       </h4>
                                     </div>
                                     <div v-if="el.price_total_foreign">
                                       <h4
-                                        class="d-inline-block font-weight-normal"
+                                        class="d-inline-block mb-0 font-weight-normal"
                                       >
                                         Precio Dólares Desde:
                                       </h4>
-                                      <h4 class="d-inline-block">
+                                      <h4 class="d-inline-block mb-0">
                                         {{ el.price_total_foreign_format }}
                                       </h4>
                                     </div>
                                   </div>
                                 </div>
-                                <div class="col-12 h4 font-weight-normal">
+                                <div class="col-12 h4 font-weight-normal  mb-0">
                                   Envio de Información de Cotizaciones al email de los asesores:
                                   <span
                                     :class="
@@ -214,7 +228,7 @@
                                     >{{ el.send_to_email ? "Habilitado" : "Deshabilitado" }}</span
                                   >
                                 </div>
-                                <div class="col-12 h4 font-weight-normal">
+                                <div class="col-12 h4 font-weight-normal ">
                                   Envio de Información de Cotizaciones por Webhook:
                                   <span
                                     :class="

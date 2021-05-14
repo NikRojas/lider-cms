@@ -28,6 +28,6 @@ class Department extends Model
 
     public function getPriceForeignFormatAttribute()
     {
-        return 'S/ '.number_format($this->price_foreign, 0, '.', ',');
+        return '$/ '.number_format($this->price_foreign, 0, '.', ',');
     }
 }

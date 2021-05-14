@@ -318,6 +318,20 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -648,7 +662,7 @@ var render = function() {
                                                     "div",
                                                     {
                                                       staticClass:
-                                                        "col-12 mb-1 h3 font-weight-normal mb-0"
+                                                        "col-12 h3 font-weight-normal mb-0"
                                                     },
                                                     [
                                                       _vm._v(
@@ -766,6 +780,70 @@ var render = function() {
                                                                 )
                                                               ]
                                                             )
+                                                      ]),
+                                                      _vm._v(" "),
+                                                      _c("div", [
+                                                        _c(
+                                                          "h3",
+                                                          {
+                                                            staticClass:
+                                                              "d-inline-block font-weight-normal mb-0"
+                                                          },
+                                                          [
+                                                            _vm._v(
+                                                              "\n                                    N° Tipologias:\n                                  "
+                                                            )
+                                                          ]
+                                                        ),
+                                                        _vm._v(" "),
+                                                        _c(
+                                                          "h3",
+                                                          {
+                                                            staticClass:
+                                                              "d-inline-block mb-0"
+                                                          },
+                                                          [
+                                                            _vm._v(
+                                                              "\n                                    " +
+                                                                _vm._s(
+                                                                  el.tipologies_rel_count
+                                                                ) +
+                                                                "\n                                  "
+                                                            )
+                                                          ]
+                                                        )
+                                                      ]),
+                                                      _vm._v(" "),
+                                                      _c("div", [
+                                                        _c(
+                                                          "h3",
+                                                          {
+                                                            staticClass:
+                                                              "d-inline-block font-weight-normal mb-0"
+                                                          },
+                                                          [
+                                                            _vm._v(
+                                                              "\n                                    N° Inmuebles:\n                                  "
+                                                            )
+                                                          ]
+                                                        ),
+                                                        _vm._v(" "),
+                                                        _c(
+                                                          "h3",
+                                                          {
+                                                            staticClass:
+                                                              "d-inline-block mb-0"
+                                                          },
+                                                          [
+                                                            _vm._v(
+                                                              "\n                                    " +
+                                                                _vm._s(
+                                                                  el.departments_rel_count
+                                                                ) +
+                                                                "\n                                  "
+                                                            )
+                                                          ]
+                                                        )
                                                       ])
                                                     ]
                                                   ),
@@ -789,7 +867,7 @@ var render = function() {
                                                           "h4",
                                                           {
                                                             staticClass:
-                                                              "d-inline-block font-weight-normal"
+                                                              "d-inline-block mb-0 font-weight-normal"
                                                           },
                                                           [
                                                             _vm._v(
@@ -802,7 +880,7 @@ var render = function() {
                                                           "h4",
                                                           {
                                                             staticClass:
-                                                              "d-inline-block"
+                                                              "d-inline-block mb-0"
                                                           },
                                                           [
                                                             _vm._v(
@@ -821,7 +899,7 @@ var render = function() {
                                                           "h4",
                                                           {
                                                             staticClass:
-                                                              "d-inline-block font-weight-normal"
+                                                              "d-inline-block mb-0 font-weight-normal"
                                                           },
                                                           [
                                                             _vm._v(
@@ -834,7 +912,7 @@ var render = function() {
                                                           "h4",
                                                           {
                                                             staticClass:
-                                                              "d-inline-block"
+                                                              "d-inline-block mb-0"
                                                           },
                                                           [
                                                             _vm._v(
@@ -853,39 +931,7 @@ var render = function() {
                                                           "h4",
                                                           {
                                                             staticClass:
-                                                              "d-inline-block font-weight-normal"
-                                                          },
-                                                          [
-                                                            _vm._v(
-                                                              "\n                                    N° Tipologias:\n                                  "
-                                                            )
-                                                          ]
-                                                        ),
-                                                        _vm._v(" "),
-                                                        _c(
-                                                          "h4",
-                                                          {
-                                                            staticClass:
-                                                              "d-inline-block"
-                                                          },
-                                                          [
-                                                            _vm._v(
-                                                              "\n                                    " +
-                                                                _vm._s(
-                                                                  el.tipologies_rel_count
-                                                                ) +
-                                                                "\n                                  "
-                                                            )
-                                                          ]
-                                                        )
-                                                      ]),
-                                                      _vm._v(" "),
-                                                      _c("div", [
-                                                        _c(
-                                                          "h4",
-                                                          {
-                                                            staticClass:
-                                                              "d-inline-block font-weight-normal"
+                                                              "d-inline-block mb-0 font-weight-normal"
                                                           },
                                                           [
                                                             _vm._v(
@@ -898,7 +944,7 @@ var render = function() {
                                                           "h4",
                                                           {
                                                             staticClass:
-                                                              "d-inline-block"
+                                                              "d-inline-block mb-0"
                                                           },
                                                           [
                                                             _vm._v(
@@ -925,7 +971,7 @@ var render = function() {
                                                                 "h4",
                                                                 {
                                                                   staticClass:
-                                                                    "d-inline-block font-weight-normal"
+                                                                    "d-inline-block mb-0 font-weight-normal"
                                                                 },
                                                                 [
                                                                   _vm._v(
@@ -938,7 +984,7 @@ var render = function() {
                                                                 "h4",
                                                                 {
                                                                   staticClass:
-                                                                    "d-inline-block"
+                                                                    "d-inline-block mb-0"
                                                                 },
                                                                 [
                                                                   _vm._v(
@@ -959,7 +1005,7 @@ var render = function() {
                                                                 "h4",
                                                                 {
                                                                   staticClass:
-                                                                    "d-inline-block font-weight-normal"
+                                                                    "d-inline-block mb-0 font-weight-normal"
                                                                 },
                                                                 [
                                                                   _vm._v(
@@ -972,7 +1018,7 @@ var render = function() {
                                                                 "h4",
                                                                 {
                                                                   staticClass:
-                                                                    "d-inline-block"
+                                                                    "d-inline-block mb-0"
                                                                 },
                                                                 [
                                                                   _vm._v(
@@ -994,7 +1040,7 @@ var render = function() {
                                                     "div",
                                                     {
                                                       staticClass:
-                                                        "col-12 h4 font-weight-normal"
+                                                        "col-12 h4 font-weight-normal  mb-0"
                                                     },
                                                     [
                                                       _vm._v(
@@ -1024,7 +1070,7 @@ var render = function() {
                                                     "div",
                                                     {
                                                       staticClass:
-                                                        "col-12 h4 font-weight-normal"
+                                                        "col-12 h4 font-weight-normal "
                                                     },
                                                     [
                                                       _vm._v(

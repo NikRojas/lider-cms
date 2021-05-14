@@ -406,7 +406,7 @@
                       <label class="font-weight-bold" for="stock_parking"
                         >Stock Estacionamiento</label
                       >
-                      <div v-if="element.stock_parking">
+                      <div v-if="element.stock_parking !== null && element.stock_parking !== ''">
                         {{ element.stock_parking }}
                       </div>
                       <div v-else>No registrado</div>
@@ -419,7 +419,7 @@
                         >Precio Estacionamiento Soles</label
                       >
                       <div v-if="element.price_parking_sap">
-                        {{ element.price_parking_sap }}
+                        {{ element.price_parking_format }}
                       </div>
                       <div v-else>No registrado</div>
                     </div>
@@ -433,7 +433,7 @@
                         >Precio Estacionamiento Dólares </label
                       >
                        <div v-if="element.price_parking_foreign_sap">
-                        {{ element.price_parking_foreign_sap }}
+                        {{ element.price_parking_foreign_format }}
                       </div>
                       <div v-else>No registrado</div>
                     </div>

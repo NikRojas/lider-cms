@@ -17,6 +17,7 @@ class DepartmentsRepository
             ->with('viewRel')
             ->with('tipologyRel.parentTypeDepartmentRel')
             ->orderBy('created_at','desc')
+            ->orderBy('available','desc')
             ->paginate($items_per_page);
         }
         else{
@@ -26,12 +27,14 @@ class DepartmentsRepository
             })
             ->with('viewRel')
             ->with('tipologyRel.parentTypeDepartmentRel')
+            ->orderBy('available','desc')
             ->orderBy('created_at','desc')
             ->paginate($items_per_page);
         }   
         foreach($deps as $dep){
-            if(empty($dep->available))
+            if(is_null($dep->available)){
                 $stock = 'No registrado';   
+            }
             else{
                 if($dep->available){
                     $stock = '<span class="font-weight-bold text-success badge badge-success" style="color: #26ff0c; background-color: rgb(204 255 230);">En Stock</span>';

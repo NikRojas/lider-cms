@@ -1355,18 +1355,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 
 quill__WEBPACK_IMPORTED_MODULE_0___default.a.register("modules/clipboard", _functions_PlainClipboard__WEBPACK_IMPORTED_MODULE_1__["default"], true);
@@ -3392,32 +3380,18 @@ var render = function() {
                         ),
                         _vm._v(" "),
                         _c("input", {
-                          directives: [
-                            {
-                              name: "model",
-                              rawName: "v-model",
-                              value: _vm.element.stock_parking,
-                              expression: "element.stock_parking"
-                            }
-                          ],
                           staticClass: "form-control",
                           attrs: {
                             type: "text",
                             id: "stock_parking",
                             disabled: ""
                           },
-                          domProps: { value: _vm.element.stock_parking },
-                          on: {
-                            input: function($event) {
-                              if ($event.target.composing) {
-                                return
-                              }
-                              _vm.$set(
-                                _vm.element,
-                                "stock_parking",
-                                $event.target.value
-                              )
-                            }
+                          domProps: {
+                            value:
+                              _vm.element.stock_parking !== null &&
+                              _vm.element.stock_parking !== ""
+                                ? _vm.element.stock_parking
+                                : ""
                           }
                         }),
                         _vm._v(" "),
@@ -3446,45 +3420,18 @@ var render = function() {
                         ),
                         _vm._v(" "),
                         _c("input", {
-                          directives: [
-                            {
-                              name: "model",
-                              rawName: "v-model",
-                              value: _vm.element.price_parking_sap,
-                              expression: "element.price_parking_sap"
-                            }
-                          ],
                           staticClass: "form-control",
                           attrs: {
                             type: "text",
                             id: "price_parking_sap",
                             disabled: ""
                           },
-                          domProps: { value: _vm.element.price_parking_sap },
-                          on: {
-                            input: function($event) {
-                              if ($event.target.composing) {
-                                return
-                              }
-                              _vm.$set(
-                                _vm.element,
-                                "price_parking_sap",
-                                $event.target.value
-                              )
-                            }
+                          domProps: {
+                            value: _vm.element.price_parking_sap
+                              ? _vm.element.price_parking_format
+                              : ""
                           }
-                        }),
-                        _vm._v(" "),
-                        _vm.errors && _vm.errors.price_parking_sap
-                          ? _c(
-                              "label",
-                              {
-                                staticClass: "mt-2 text-danger text-sm",
-                                attrs: { for: "price_parking_sap" }
-                              },
-                              [_vm._v(_vm._s(_vm.errors.price_parking_sap[0]))]
-                            )
-                          : _vm._e()
+                        })
                       ])
                     ]),
                     _vm._v(" "),
@@ -3500,14 +3447,6 @@ var render = function() {
                         ),
                         _vm._v(" "),
                         _c("input", {
-                          directives: [
-                            {
-                              name: "model",
-                              rawName: "v-model",
-                              value: _vm.element.price_parking_foreign_sap,
-                              expression: "element.price_parking_foreign_sap"
-                            }
-                          ],
                           staticClass: "form-control",
                           attrs: {
                             type: "text",
@@ -3516,37 +3455,10 @@ var render = function() {
                           },
                           domProps: {
                             value: _vm.element.price_parking_foreign_sap
-                          },
-                          on: {
-                            input: function($event) {
-                              if ($event.target.composing) {
-                                return
-                              }
-                              _vm.$set(
-                                _vm.element,
-                                "price_parking_foreign_sap",
-                                $event.target.value
-                              )
-                            }
+                              ? _vm.element.price_parking_foreign_format
+                              : ""
                           }
-                        }),
-                        _vm._v(" "),
-                        _vm.errors && _vm.errors.price_parking_foreign_sap
-                          ? _c(
-                              "label",
-                              {
-                                staticClass: "mt-2 text-danger text-sm",
-                                attrs: { for: "price_parking_foreign_sap" }
-                              },
-                              [
-                                _vm._v(
-                                  _vm._s(
-                                    _vm.errors.price_parking_foreign_sap[0]
-                                  )
-                                )
-                              ]
-                            )
-                          : _vm._e()
+                        })
                       ])
                     ])
                   ])

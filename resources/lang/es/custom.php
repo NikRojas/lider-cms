@@ -35,7 +35,9 @@ return [
         'project_finished' => 'El proyecto entregado',
         'bond' => 'El bono',
         'view' => 'La vista del inmueble',
-        'type' => 'El tipo de inmueble'
+        'type' => 'El tipo de inmueble',
+        'image' => 'La imagen',
+        'elements' => 'Los elementos'
     ],
     'title' => [
         'error' => 'Error',
@@ -71,6 +73,10 @@ return [
         'delete' => [
             'success' => ':name se ha eliminado.',
             'error' => "Lo sentimos, :name no se pudo eliminar debido a un error.",
+            'plural' => [
+                'success' => ':name se han eliminado.',
+                'error' => "Lo sentimos. :name no se pudieron eliminar debido a un error.",
+            ]
         ],
         'export' => [
             'success' => 'El archivo se ha exportado.',
@@ -90,8 +96,10 @@ return [
                 'success' => 'Se obtuvieron :total inmuebles de SAP.',
                 'error' => 'Lo sentimos. Los inmuebles no se pudo registrar/actualizar debido a un error.',
                 'error_connection' => 'Lo sentimos. Hubo un error al realizar la conexión con SAP.',
-                '' => ''
             ]
+        ],
+        'departments_images' => [
+            'error' => 'Lo sentimos. Hubo un error al subir las imágenes.',
         ]
     ],
     'order' => [

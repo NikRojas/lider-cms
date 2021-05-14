@@ -98,7 +98,7 @@
                                   >
                                 </div>
                                 <div class="col-12">
-                                  <div>
+                                  <!--<div>
                                     <h4
                                       class="d-inline-block font-weight-normal"
                                     >
@@ -109,7 +109,7 @@
                                       {{ el.ubigeo_rel.district }} -
                                       {{ el.ubigeo_rel.department }}
                                     </h4>
-                                  </div>
+                                  </div>-->
                                   <div>
                                     <div v-if="el.price_total">
                                       <h4
@@ -240,7 +240,7 @@
                             >
                           </div>
                         </div>
-                        <div class="flex">
+                        <div class="d-flex">
                           <div class="ml-auto d-inline">
                              <a
                               :href="'proyectos/inmuebles/' + el.slug_es"

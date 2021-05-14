@@ -44,7 +44,7 @@ class ProjectsController extends Controller
         if ($request->not) {
             $not = $request->not;
         }
-        $elements = Project::with('statusRel', 'ubigeoRel')->withCount('galleryRel', 'filesRel', 'tipologiesRel', 'quotationsRel')->where('id', "!=", $not)->orderBy('index', 'asc')->get();
+        $elements = Project::with('statusRel', 'ubigeoRel','tipologiesRel')->withCount('galleryRel', 'filesRel', 'tipologiesRel', 'quotationsRel')->where('id', "!=", $not)->orderBy('index', 'asc')->get();
         return response()->json($elements);
     }
 

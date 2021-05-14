@@ -43,7 +43,6 @@ class DepartmentsController extends Controller
 
     public function getSap($element)
     {
-        return response()->json(LogSapConnection::get());
         $element = Project::where('slug_es', $element)->firstOrFail();
         $sapCredentials = SapCredential::first();
         if (!$sapCredentials->token) {
@@ -100,7 +99,7 @@ class DepartmentsController extends Controller
                                     $registeredCount++;
                                 }
                             } else {
-                                $createDeparment = Department::UpdateOrCreate(["slug" => Str::random(20), "sap_code" => $value->codigo, "description" => $value->descripcion, "area" => $value->area, "floor" => $value->piso, "view_id" => $checkView->id, "type_department_id" => $checkTipology->id]);
+                                $createDeparment = Department::UpdateOrCreate(["slug" => Str::random(20), "sap_code" => $value->codigo, "description" => $value->descripcion, "area" => $value->area, "floor" => $value->piso, "view_id" => $checkView->id, "type_department_id" => $checkTipology->id, "project_id" => $element->id]);
                                 if ($createDeparment) {
                                     $registeredCount++;
                                 }
@@ -131,6 +130,20 @@ class DepartmentsController extends Controller
             $description = 'Obtener Inmuebles Proyecto ' . $element->name_es . ' - Error.';
             $lsc = LogSapConnection::UpdateOrCreate(["type" => 'Obtener Inmuebles', 'status' => $status, 'description' =>  (string) $description]);
             return response()->json(['title' => trans('custom.title.error'), 'message' => trans('custom.message.sap.get_departments.error_connection')], 500);
+        }
+    }
+
+    public function destroy(Department $element){
+        $image = $element->image;
+        try {
+            $destroy = $element->delete();
+            if($image){
+                Storage::disk('public')->delete('img/projects/estates/'.$image);   
+            }
+            return response()->json(['title'=> trans('custom.title.success'), 'message'=> trans('custom.message.delete.success', ['name' => trans('custom.attribute.element')]) ],200);
+        } 
+        catch (\Exception $e){
+            return response()->json(['title'=> trans('custom.title.error'), 'message'=> trans('custom.message.delete.error', ['name' => trans('custom.attribute.element')]) ],500);
         }
     }
 }

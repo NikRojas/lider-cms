@@ -660,50 +660,6 @@ var render = function() {
                                                           },
                                                           [
                                                             _c("div", [
-                                                              _c(
-                                                                "h4",
-                                                                {
-                                                                  staticClass:
-                                                                    "d-inline-block font-weight-normal"
-                                                                },
-                                                                [
-                                                                  _vm._v(
-                                                                    "\n                                    Ubicación:\n                                  "
-                                                                  )
-                                                                ]
-                                                              ),
-                                                              _vm._v(" "),
-                                                              _c(
-                                                                "h4",
-                                                                {
-                                                                  staticClass:
-                                                                    "d-inline-block"
-                                                                },
-                                                                [
-                                                                  _vm._v(
-                                                                    "\n                                    " +
-                                                                      _vm._s(
-                                                                        el.location
-                                                                      ) +
-                                                                      ",\n                                    " +
-                                                                      _vm._s(
-                                                                        el
-                                                                          .ubigeo_rel
-                                                                          .district
-                                                                      ) +
-                                                                      " -\n                                    " +
-                                                                      _vm._s(
-                                                                        el
-                                                                          .ubigeo_rel
-                                                                          .department
-                                                                      ) +
-                                                                      "\n                                  "
-                                                                  )
-                                                                ]
-                                                              )
-                                                            ]),
-                                                            _vm._v(" "),
-                                                            _c("div", [
                                                               el.price_total
                                                                 ? _c("div", [
                                                                     _c(
@@ -1076,7 +1032,7 @@ var render = function() {
                                           )
                                         ]),
                                         _vm._v(" "),
-                                        _c("div", { staticClass: "flex" }, [
+                                        _c("div", { staticClass: "d-flex" }, [
                                           _c(
                                             "div",
                                             { staticClass: "ml-auto d-inline" },

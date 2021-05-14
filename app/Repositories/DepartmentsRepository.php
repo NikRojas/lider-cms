@@ -41,8 +41,8 @@ class DepartmentsRepository
                 }
             }
             if($dep["image"]){
-                $imageEstate = asset('storage/img/estates/'.$dep["image"]);
-                $depHTML = "<div class='media align-items-center'><img src='".$imageEstate."' /></span>".$dep['description']."</div>";
+                $imageEstate = asset('storage/img/projects/estates/'.$dep["image"]);
+                $depHTML = "<div class='d-inline-flex align-items-center mr-2'><div class='text-center'><img height='25' class=' ' src='".$imageEstate."' /><a style='color: #1762e6; text-decoration: underline;' class='d-block mt-1 small' target='_blank' href='".$imageEstate."'>Ver Imagen</a></span></div></div><div class='d-inline-block mt-2'>".$dep['description']."</div>";
             }
             else{
                 $depHTML = "<div class='media align-items-center'>".$dep['description']."</div>";

@@ -41,10 +41,16 @@ class ProjectTypeDepartment extends Model
         return $this->hasMany('App\ProjectQuotation','project_type_department_id','id');
     }
 
+    public function departmentsRel()
+    {
+        return $this->hasMany('App\Department','type_department_id','id');
+    }
+
     public function projectRel()
     {
         return $this->belongsTo('App\Project', 'project_id', 'id');
     }
+
 
     public function parentTypeDepartmentRel()
     {

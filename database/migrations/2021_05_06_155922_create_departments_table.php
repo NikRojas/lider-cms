@@ -27,6 +27,8 @@ class CreateDepartmentsTable extends Migration
             $table->foreign('view_id')->references('id')->on('projects_views');
             $table->bigInteger('type_department_id')->unsigned();
             $table->foreign('type_department_id')->references('id')->on('project_type_departments');
+            $table->bigInteger('project_id')->unsigned();
+            $table->foreign('project_id')->references('id')->on('projects');
             $table->string('image',100)->nullable();            
             $table->timestamps();
         });

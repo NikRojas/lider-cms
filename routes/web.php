@@ -260,7 +260,13 @@ Route::middleware(['auth'])->namespace('Cms')->name('cms.')->group(function () {
         });
 
         Route::prefix('inmuebles')->name('departments.')->group(function () {
+            Route::prefix('images')->name('images.')->group(function () {
+                Route::delete('/', 'DepartmentsImagesController@deleteImages')->name('store');
+                Route::post('/', 'DepartmentsImagesController@store')->name('store');
+                Route::get('/json/get-all/{element}', 'DepartmentsImagesController@getAll')->name('json.get-all');
+            });
             Route::get('/{element}', 'DepartmentsController@index')->name('index');
+            Route::delete('/{element}', 'DepartmentsController@destroy')->name('index');
             Route::get('/get-sap/{element}', 'DepartmentsController@getSap')->name('get-sap-departments');
             Route::get('/json/get-all', 'DepartmentsController@getAll')->name('get-all');
         });

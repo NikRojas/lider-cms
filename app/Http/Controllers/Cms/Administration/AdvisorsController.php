@@ -19,7 +19,7 @@ class AdvisorsController extends Controller
     }
 
     public function store(AdvisorRequest $request){
-        $element = request(["name","email","mobile"]);
+        $element = request(["name","email","mobile",'sap_code']);
         if($request->hasFile('avatar')){
             $imageName = $this->setFileName('a-',$request->file('avatar'));
             $storeImage = Storage::disk('public')->putFileAs('img/advisors/',$request->file('avatar'),$imageName);
@@ -47,7 +47,7 @@ class AdvisorsController extends Controller
     }
 
     public function update(Advisor $element,AdvisorRequest $request){
-        $request_element = request(["name","email","mobile"]);;
+        $request_element = request(["name","email","mobile",'sap_code']);;
         if($request->hasFile('avatar')){
             $fileName = $this->setFileName('a-',$request->file('avatar'));
             Storage::disk('public')->putFileAs('img/advisors',$request->file('avatar'),$fileName);

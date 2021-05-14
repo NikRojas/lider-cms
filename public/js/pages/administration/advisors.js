@@ -368,6 +368,23 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -486,6 +503,10 @@ __webpack_require__.r(__webpack_exports__);
 
       if (this.element.email) {
         fd.append("email", this.element.email);
+      }
+
+      if (this.element.sap_code) {
+        fd.append("sap_code", this.element.sap_code);
       }
 
       if (this.element.mobile) {
@@ -921,7 +942,7 @@ var render = function() {
                                   )
                                 ]),
                                 _vm._v(" "),
-                                _c("h3", { staticClass: "mb-1" }, [
+                                _c("h3", [
                                   _c(
                                     "span",
                                     { staticClass: "font-weight-normal" },
@@ -934,7 +955,7 @@ var render = function() {
                                   )
                                 ]),
                                 _vm._v(" "),
-                                _c("h3", [
+                                _c("h3", { staticClass: "mb-1" }, [
                                   _c(
                                     "span",
                                     { staticClass: "font-weight-normal" },
@@ -943,6 +964,23 @@ var render = function() {
                                   _vm._v(
                                     "\n                " +
                                       _vm._s(el.mobile_masked) +
+                                      "\n              "
+                                  )
+                                ]),
+                                _vm._v(" "),
+                                _c("h3", [
+                                  _c(
+                                    "span",
+                                    { staticClass: "font-weight-normal" },
+                                    [_vm._v("Código SAP:")]
+                                  ),
+                                  _vm._v(
+                                    "\n                " +
+                                      _vm._s(
+                                        el.sap_code
+                                          ? el.sap_code
+                                          : "No registrado"
+                                      ) +
                                       "\n              "
                                   )
                                 ]),
@@ -1352,6 +1390,69 @@ var render = function() {
                                   attrs: { for: "mobile" }
                                 },
                                 [_vm._v(_vm._s(_vm.errors.mobile[0]))]
+                              )
+                            : _vm._e()
+                        ])
+                      ]),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "col-12" }, [
+                        _c("div", { staticClass: "form-group" }, [
+                          _c(
+                            "label",
+                            {
+                              staticClass: "font-weight-bold",
+                              attrs: { for: "sap_code" }
+                            },
+                            [_vm._v("Código SAP")]
+                          ),
+                          _vm._v(" "),
+                          _c("input", {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.element.sap_code,
+                                expression: "element.sap_code"
+                              }
+                            ],
+                            staticClass: "form-control",
+                            attrs: { type: "text", id: "sap_code" },
+                            domProps: { value: _vm.element.sap_code },
+                            on: {
+                              input: function($event) {
+                                if ($event.target.composing) {
+                                  return
+                                }
+                                _vm.$set(
+                                  _vm.element,
+                                  "sap_code",
+                                  $event.target.value
+                                )
+                              }
+                            }
+                          }),
+                          _vm._v(" "),
+                          _c(
+                            "p",
+                            {
+                              staticClass: "mb-0 small",
+                              staticStyle: { opacity: "0.7" }
+                            },
+                            [
+                              _vm._v(
+                                "Código utilizado para determinar si la separación del inmueble se le asigna al asesor, cuando se anida el parámatero a la URL de separación de inmueble"
+                              )
+                            ]
+                          ),
+                          _vm._v(" "),
+                          _vm.errors && _vm.errors.sap_code
+                            ? _c(
+                                "label",
+                                {
+                                  staticClass: "mt-2 text-danger text-sm",
+                                  attrs: { for: "sap_code" }
+                                },
+                                [_vm._v(_vm._s(_vm.errors.sap_code[0]))]
                               )
                             : _vm._e()
                         ])

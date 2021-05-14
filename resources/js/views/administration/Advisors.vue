@@ -40,13 +40,17 @@
                   <span class="font-weight-normal">Nombre:</span>
                   {{ el.name }}
                 </h3>
-                <h3 class="mb-1">
+                <h3 >
                   <span class="font-weight-normal">Email:</span>
                   {{ el.email }}
                 </h3>
-                <h3>
+                <h3 class="mb-1">
                   <span class="font-weight-normal">Móvil:</span>
                   {{ el.mobile_masked }}
+                </h3>
+                <h3>
+                  <span class="font-weight-normal">Código SAP:</span>
+                  {{ el.sap_code ? el.sap_code : 'No registrado' }}
                 </h3>
                 <div class="mt-4 text-center">
                   <button @click="editEl(el.id)" class="btn btn-inverse-info btn-sm">Editar</button>
@@ -163,6 +167,19 @@
                   class="mt-2 text-danger text-sm"
                   for="mobile"
                 >{{ errors.mobile[0] }}</label>
+              </div>
+            </div>
+             <div class="col-12">
+              <div class="form-group">
+                <label class="font-weight-bold" for="sap_code">Código SAP</label>
+                <input type="text" class="form-control" v-model="element.sap_code" id="sap_code" />
+                <p class="mb-0 small" style="opacity: 0.7;">Código utilizado para determinar si la separación del inmueble se le asigna al asesor, cuando se anida el parámatero a la URL de separación de inmueble</p>
+
+                <label
+                  v-if="errors && errors.sap_code"
+                  class="mt-2 text-danger text-sm"
+                  for="sap_code"
+                >{{ errors.sap_code[0] }}</label>
               </div>
             </div>
           </div>
@@ -300,6 +317,9 @@ export default {
       }
       if (this.element.email) {
         fd.append("email", this.element.email);
+      }
+      if (this.element.sap_code) {
+        fd.append("sap_code", this.element.sap_code);
       }
       if (this.element.mobile) {
         fd.append("mobile", this.element.mobile);

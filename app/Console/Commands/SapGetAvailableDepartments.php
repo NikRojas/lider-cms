@@ -14,7 +14,7 @@ class SapGetAvailableDepartments extends Command
 {
     private $url = 'https://apps.lider.com.pe:8072/api/cliente/inmuebles?codigo=&proyecto=';
     private $lscType = 'Obtener Inmuebles Disponibilidad';
-    //private $url = 'http://127.0.0.1:9000/api';
+    //private $url = 'http://127.0.0.1:9000/api?test=';
     /**
      * The name and signature of the console command.
      *
@@ -272,9 +272,9 @@ class SapGetAvailableDepartments extends Command
                 $updateProject = $value->update(['stock_parking' => $stock, 'price_parking_sap' => $price_parking, 'price_parking_foreign_sap' => $price_foreign_parking]);
             }
             catch (\GuzzleHttp\Exception\RequestException $e) {
-                #Si falla la verificación de Disponibilidad mandar un alerta por Correo (CREO Q SE PONE EL JOB CON EMAIL)
+                #Cuando sea cualquier código de error, se enviara un email al correo indicado.
                 $status = $e->getResponse()->getStatusCode();
-                $description = 'Obtener Inmuebles Disponibilidad Proyecto ' . $value->name_es . ' - Error.';
+                $description = 'Obtener Inmuebles Disponibilidad Proyecto ' . $value->name_es . ' (Código SAP:'.$value->sap_code.') - Error.';
                 $lsc = LogSapConnection::UpdateOrCreate(["type" => $this->lscType, 'status' => $status, 'description' =>  (string) $description]);
             }
         }

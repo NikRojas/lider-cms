@@ -217,7 +217,7 @@ class SapGetAvailableDepartments extends Command
                 $lsc->type = $this->lscType;
                 $lsc->status = $status;
                 $lsc->description = $description;
-                $lsc->response = ["project_id" => $value->id];
+                $lsc->response = ["sap_code" => $value->sap_code, "project_id" => $value->id];
                 $lsc->save();
                 #EndLogSapConnection
                 $responseData = json_decode($responseSap->getBody());

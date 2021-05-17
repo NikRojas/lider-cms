@@ -500,7 +500,7 @@ Route::middleware(['auth'])->namespace('Cms')->name('cms.')->group(function () {
 Route::get('/mail/advisor/lead', function () {
     $lead = Lead::first();
     return view('emails.advisor-lead',["lead" => $lead, "type" => "Tradicional"]);
-});*/
+});
 
 Route::get('/mail/user/quotation', function () {
     $lead = ProjectQuotation::with('projectRel.statusRel','advisorRel','projectTypeDepartmentRel','projectRel.financingOptionsRel')->find(7);

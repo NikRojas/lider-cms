@@ -62,6 +62,7 @@ class DepartmentsRepository
                 "available" => $stock,
                 "price" => $dep["price"] ? $dep['price_format'] : 'No registrado',
                 "price_foreign" => $dep["price_foreign"] ? $dep['price_foreign_format'] : 'No registrado',
+                "update_at" => $dep["update_at_format"]
             );
         }
         $deps = $deps->toArray();

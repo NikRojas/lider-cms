@@ -31,7 +31,7 @@ class DepartmentsController extends Controller
     public function getAll(Request $request, DepartmentsRepository $repo)
     {
         $q = $request->q;
-        $headers = ["Id", "Código SAP", "Descripción", "Área (m2)", "Piso", "Vista", "Tipología", "Tipo", "Stock", "Precio S/", "Precio $"];
+        $headers = ["Id", "Código SAP", "Descripción", "Área (m2)", "Piso", "Vista", "Tipología", "Tipo", "Stock", "Precio S/", "Precio $",'Actualizado el'];
         if ($q) {
             $elements = $repo->datatable($request->project_id, $request->itemsPerPage, $q);
         } else {

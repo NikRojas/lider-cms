@@ -28,11 +28,17 @@ class LogSapRepository
                     $res = 'No response';
                 }   
             }
+            if(is_null($el["status"])){
+                $status = 'No registrado';   
+            }
+            else{
+                $status = $el["status"];
+            }
             $data[] = array(
                 "id" => $el["id"],
                 "created_at" => $el["created_at_format"],
                 "type" => $el["type"],
-                "status" => $el["status"],
+                "status" => $status,
                 "description" => $el["description"],
                 "response" => $res,
             );

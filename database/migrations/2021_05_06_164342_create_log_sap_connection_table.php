@@ -16,7 +16,7 @@ class CreateLogSapConnectionTable extends Migration
         Schema::create('log_sap_connection', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('type',50);
-            $table->integer('status');
+            $table->integer('status')->nullable();
             $table->text('description');
             $table->json('response')->nullable();
             $table->timestamps();

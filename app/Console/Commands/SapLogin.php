@@ -12,7 +12,6 @@ use Illuminate\Support\Str;
 class SapLogin extends Command
 {
     private $url = 'https://apps.lider.com.pe:8072/api/seguridad/login';
-    //private $url = 'http://127.0.0.1:9000/api';
     private $lscType = 'Login';
     /**
      * The name and signature of the console command.

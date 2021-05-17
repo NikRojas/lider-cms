@@ -42,6 +42,7 @@ class LogSapConnectionNotification extends Notification implements ShouldQueue
     public function toMail($notifiable)
     {
         return (new MailMessage)
+                    ->subject(config('app.name').' - Notificación Error Conexión SAP')
                     ->line('Ocurrió un error '.$this->lsc->status.' al actualizar el evento:')
                     ->line($this->lsc->description);
     }

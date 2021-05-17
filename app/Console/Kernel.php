@@ -15,10 +15,10 @@ class Kernel extends ConsoleKernel
      * @var array
      */
     protected $commands = [
-        Commands\SapLogin::class,
-        Commands\SapGetAvailableDepartments::class,
-        //'App\Console\Commands\SapLogin',
-        //'App\Console\Commands\SapGetAvailableDepartments'
+        //Commands\SapLogin::class,
+        //Commands\SapGetAvailableDepartments::class,
+        'App\Console\Commands\SapLogin',
+        'App\Console\Commands\SapGetAvailableDepartments'
     ];
 
     /**

@@ -51,6 +51,7 @@ class DepartmentsController extends Controller
         if (!$element->sap_code) {
             return response()->json(['title' => trans('custom.title.error'), 'message' => trans('custom.message.sap.get_departments.no_code_sap', ['name' => $element->name_es])], 500);
         }
+        $slug = Str::random(20);
         try {
             $client = new Client();
             $responseSap = $client->request('GET', $this->url . $element->sap_code, [
@@ -62,6 +63,7 @@ class DepartmentsController extends Controller
             $lsc = new LogSapConnection();
             $lsc->type = 'Obtener Inmuebles';
             $lsc->status = $status;
+            $lsc->slug = $slug;
             $lsc->description = $description;
             $lsc->response = ["project_id" => $element->id];
             $lsc->save();

@@ -15,9 +15,9 @@ use Illuminate\Support\Str;
 
 class SapGetAvailableDepartments extends Command
 {
-    //private $url = 'https://apps.lider.com.pe:8072/api/cliente/inmueble?codigo=&proyecto=';
+    private $url = 'https://apps.lider.com.pe:8072/api/cliente/inmueble?codigo=&proyecto=';
     private $lscType = 'Obtener Inmuebles Disponibilidad';
-    private $url = 'http://127.0.0.1:9000/api?test=';
+    //private $url = 'http://127.0.0.1:9000/api?test=';
     /**
      * The name and signature of the console command.
      *

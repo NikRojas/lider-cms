@@ -8,15 +8,16 @@ use App\Project;
 use App\SapCredential;
 use GuzzleHttp\Client;
 use Illuminate\Console\Command;
-use Illuminate\Support\Facades\Log;
-use App\Notifications\LogSapConnectionNotification;
-use Illuminate\Support\Facades\Notification;
+//use Illuminate\Support\Facades\Log;
+//use App\Notifications\LogSapConnectionNotification;
+//use Illuminate\Support\Facades\Notification;
+use Illuminate\Support\Str;
 
 class SapGetAvailableDepartments extends Command
 {
-    private $url = 'https://apps.lider.com.pe:8072/api/cliente/inmueble?codigo=&proyecto=';
+    //private $url = 'https://apps.lider.com.pe:8072/api/cliente/inmueble?codigo=&proyecto=';
     private $lscType = 'Obtener Inmuebles Disponibilidad';
-    //private $url = 'http://127.0.0.1:9000/api?test=';
+    private $url = 'http://127.0.0.1:9000/api?test=';
     /**
      * The name and signature of the console command.
      *
@@ -57,6 +58,7 @@ class SapGetAvailableDepartments extends Command
         }
         #Por cada Proyecto realizar un llamado a SAP
         foreach ($projects as $key => $value) {
+            $slug = Str::random(20);
             try {
                 $client = new Client();
                 $responseSap = $client->request('GET', $this->url . $value->sap_code, [
@@ -218,6 +220,7 @@ class SapGetAvailableDepartments extends Command
                 $lsc = new LogSapConnection();
                 $lsc->type = $this->lscType;
                 $lsc->status = $status;
+                $lsc->slug = $slug;
                 $lsc->description = $description;
                 $lsc->response = ["sap_code" => $value->sap_code, "project_id" => $value->id];
                 $lsc->save();
@@ -277,8 +280,7 @@ class SapGetAvailableDepartments extends Command
                 #Cuando sea cualquier código de error, se enviara un email al correo indicado.
                 $status = $e->getResponse()->getStatusCode();
                 $description = 'Obtener Inmuebles Disponibilidad Proyecto ' . $value->name_es . ' (Código SAP:'.$value->sap_code.') - Error.';
-                $lsc = LogSapConnection::UpdateOrCreate(["type" => $this->lscType, 'status' => $status, 'description' =>  (string) $description]);
-                Notification::route('mail','anthony@playgroup.pe')->notify(new LogSapConnectionNotification($lsc));  
+                $lsc = LogSapConnection::UpdateOrCreate(["slug" => $slug, "type" => $this->lscType, 'status' => $status, 'description' =>  (string) $description]);
             }
         }
     }

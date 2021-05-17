@@ -26,7 +26,12 @@ class LogSapRepository
             else{
                 if(!$res){
                     $res = 'No response';
-                }   
+                }  
+                else{
+                    if(is_array($res)){
+                        unset($res["project_id"]);
+                    }
+                } 
             }
             if(is_null($el["status"])){
                 $status = 'No registrado';   

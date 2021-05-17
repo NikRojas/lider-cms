@@ -20,7 +20,7 @@ class LogsSapController extends Controller
     public function getAll(Request $request, LogSapRepository $repo)
     {
         $q = $request->q;
-        $headers = ["Id", "Registrado el", "Tipo", "Status" , "Descripción","Response"];
+        $headers = ["Id", "Registrado el", "Tipo", "Status" , "Descripción","Info"];
         if ($q) {
             $elements = $repo->datatable($request->itemsPerPage, $q);
         } else {

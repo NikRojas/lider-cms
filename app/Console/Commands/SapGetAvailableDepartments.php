@@ -9,6 +9,8 @@ use App\SapCredential;
 use GuzzleHttp\Client;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Log;
+use App\Notifications\LogSapConnectionNotification;
+use Illuminate\Support\Facades\Notification;
 
 class SapGetAvailableDepartments extends Command
 {
@@ -276,6 +278,7 @@ class SapGetAvailableDepartments extends Command
                 $status = $e->getResponse()->getStatusCode();
                 $description = 'Obtener Inmuebles Disponibilidad Proyecto ' . $value->name_es . ' (Código SAP:'.$value->sap_code.') - Error.';
                 $lsc = LogSapConnection::UpdateOrCreate(["type" => $this->lscType, 'status' => $status, 'description' =>  (string) $description]);
+                Notification::route('mail','anthony@playgroup.pe')->notify(new LogSapConnectionNotification($lsc));  
             }
         }
     }

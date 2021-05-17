@@ -15,8 +15,8 @@ class Kernel extends ConsoleKernel
      * @var array
      */
     protected $commands = [
-        App\Console\Commands\SapLogin::class,
-        App\Console\Commands\SapGetAvailableDepartments::class,
+        Commands\SapLogin::class,
+        Commands\SapGetAvailableDepartments::class,
     ];
 
     /**

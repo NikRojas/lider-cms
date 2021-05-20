@@ -80,7 +80,7 @@
                     <div v-if="el.sap_code">
                       {{ el.sap_code }}
                     </div>
-                    <div>
+                    <div v-else>
                       No Registrado
                     </div>
                   </div>

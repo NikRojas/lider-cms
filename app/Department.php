@@ -16,6 +16,11 @@ class Department extends Model
         return $this->belongsTo('App\ProjectView', 'view_id', 'id');
     }
 
+    public function projectRel()
+    {
+        return $this->belongsTo('App\Project', 'project_id', 'id');
+    }
+
     public function tipologyRel()
     {
         return $this->belongsTo('App\ProjectTypeDepartment','type_department_id','id');
@@ -23,12 +28,12 @@ class Department extends Model
 
     public function getPriceFormatAttribute()
     {
-        return 'S/ '.number_format($this->price, 0, '.', ',');
+        return 'S/ '.number_format($this->price, 2, '.', ',');
     }
 
     public function getPriceForeignFormatAttribute()
     {
-        return '$/ '.number_format($this->price_foreign, 0, '.', ',');
+        return '$/ '.number_format($this->price_foreign, 2, '.', ',');
     }
 
     public function getUpdatedAtFormatAttribute() {

@@ -31,6 +31,7 @@ Route::namespace('Api')->group(function() {
         Route::get('projects', 'BaseController@paginateProjects');
         Route::get('blog', 'BaseController@paginateBlog');
         Route::get('testimonials', 'BaseController@paginateTestimonials');
+        Route::get('departments', 'ReserveYourPropertyController@paginateDepartments');
     });
     Route::prefix('post')->group(function() { 
         Route::post('suscribe', 'PostController@suscribe');
@@ -59,6 +60,7 @@ Route::namespace('Api')->group(function() {
         Route::get('privacy-policies', 'PageController@privacityPolicy');
         Route::get('terms-conditions', 'PageController@termsConditions');
         Route::get('quotation', 'PageController@quotation');
+        Route::get('reserve-your-property', 'ReserveYourPropertyController@index');
     });
 });
 

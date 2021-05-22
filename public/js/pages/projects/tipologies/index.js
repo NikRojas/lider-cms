@@ -562,6 +562,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
 
 
 
@@ -1242,12 +1244,7 @@ var render = function() {
                                                   el.parent_type_department_rel
                                                     .name
                                                 ) +
-                                                " - " +
-                                                _vm._s(
-                                                  el.parent_type_department_rel
-                                                    .room
-                                                ) +
-                                                " Dormitorio(s)\n                  "
+                                                "\n                  "
                                             )
                                           ])
                                         : _c("div", [
@@ -1255,6 +1252,22 @@ var render = function() {
                                               "\n                    No Registrado\n                  "
                                             )
                                           ])
+                                    ]),
+                                    _vm._v(" "),
+                                    _c("div", [
+                                      _c(
+                                        "span",
+                                        {
+                                          staticClass:
+                                            "d-block font-weight-bold"
+                                        },
+                                        [_vm._v("Dormitorios: ")]
+                                      ),
+                                      _vm._v(
+                                        "\n                  " +
+                                          _vm._s(el.room) +
+                                          "\n                "
+                                      )
                                     ]),
                                     _vm._v(" "),
                                     _c("div", [
@@ -1275,13 +1288,11 @@ var render = function() {
                                                 "\n                  "
                                             )
                                           ])
-                                        : _vm._e(),
-                                      _vm._v(" "),
-                                      _c("div", [
-                                        _vm._v(
-                                          "\n                    No Registrado\n                  "
-                                        )
-                                      ])
+                                        : _c("div", [
+                                            _vm._v(
+                                              "\n                    No Registrado\n                  "
+                                            )
+                                          ])
                                     ]),
                                     _vm._v(" "),
                                     _c("div", [
@@ -1801,6 +1812,66 @@ var render = function() {
                                   attrs: { for: "sap_code" }
                                 },
                                 [_vm._v(_vm._s(_vm.errors.sap_code[0]))]
+                              )
+                            : _vm._e()
+                        ])
+                      ]),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "col-12 col-lg-6" }, [
+                        _c("div", { staticClass: "form-group" }, [
+                          _c(
+                            "label",
+                            {
+                              staticClass: "font-weight-bold",
+                              attrs: { for: "room" }
+                            },
+                            [_vm._v("Dormitorios")]
+                          ),
+                          _vm._v(" "),
+                          _c("input", {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.element.room,
+                                expression: "element.room"
+                              }
+                            ],
+                            staticClass: "form-control",
+                            attrs: { type: "number", id: "room" },
+                            domProps: { value: _vm.element.room },
+                            on: {
+                              input: function($event) {
+                                if ($event.target.composing) {
+                                  return
+                                }
+                                _vm.$set(
+                                  _vm.element,
+                                  "room",
+                                  $event.target.value
+                                )
+                              }
+                            }
+                          }),
+                          _vm._v(" "),
+                          _c(
+                            "small",
+                            {
+                              staticClass: "form-text",
+                              staticStyle: { opacity: "0.7" },
+                              attrs: { id: "" }
+                            },
+                            [_vm._v('Debe ingresar un número entero "3".')]
+                          ),
+                          _vm._v(" "),
+                          _vm.errors && _vm.errors.room
+                            ? _c(
+                                "label",
+                                {
+                                  staticClass: "mt-2 text-danger text-sm",
+                                  attrs: { for: "room" }
+                                },
+                                [_vm._v(_vm._s(_vm.errors.room[0]))]
                               )
                             : _vm._e()
                         ])

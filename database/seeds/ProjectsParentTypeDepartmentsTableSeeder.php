@@ -16,32 +16,32 @@ class ProjectsParentTypeDepartmentsTableSeeder extends Seeder
             [
                 'name' 	=> 'Flat',
                 'slug'  => Str::random(20),
-                'room'  => 1
+                //'room'  => 1
             ],
             [
                 'name' 	=> 'Duplex',
                 'slug'  => Str::random(20),
-                'room'  => 2
+                //'room'  => 2
             ],
             [
                 'name' 	=> 'Triplex',
                 'slug'  => Str::random(20),
-                'room'  => 3
+                //'room'  => 3
             ],
             [
                 'name' 	=> 'Loft',
                 'slug'  => Str::random(20),
-                'room'  => 4
+                //'room'  => 4
             ],
             [
                 'name' 	=> 'Penthouse',
                 'slug'  => Str::random(20),
-                'room'  => 4
+                //'room'  => 4
             ],
             [
                 'name' 	=> 'Casa',
                 'slug'  => Str::random(20),
-                'room'  => 4
+                //'room'  => 4
             ],
         ]);
     }

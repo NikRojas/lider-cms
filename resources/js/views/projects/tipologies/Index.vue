@@ -68,11 +68,16 @@
                   <div >
                     <span class="d-block font-weight-bold">Tipo de Inmueble: </span>
                     <div v-if="el.parent_type_department_id">
-                      {{ el.parent_type_department_rel.name }} - {{ el.parent_type_department_rel.room}} Dormitorio(s)
+                      {{ el.parent_type_department_rel.name }}
                     </div>
                     <div v-else>
                       No Registrado
                     </div>
+                  </div>
+
+                  <div>
+                    <span class="d-block font-weight-bold">Dormitorios: </span>
+                    {{ el.room }}
                   </div>
 
                   <div>
@@ -90,10 +95,7 @@
                     {{ el.price_format }}
                   </div>
 
-                  <!--<div>
-                    <span class="d-block font-weight-bold">Dormitorio: </span>
-                    {{ el.room }}
-                  </div>-->
+                  
 
                   <div>
                     <span class="d-block font-weight-bold">Metraje: </span>
@@ -264,7 +266,7 @@
               </div>
             </div>
 
-            <!--<div class="col-12 col-lg-6">
+            <div class="col-12 col-lg-6">
               <div class="form-group">
                 <label class="font-weight-bold" for="room">Dormitorios</label>
                 <input
@@ -283,7 +285,7 @@
                   >{{ errors.room[0] }}</label
                 >
               </div>
-            </div>-->
+            </div>
             <div class="col-12">
               <div class="form-group">
                 <label class="font-weight-bold" for="area">Área</label>

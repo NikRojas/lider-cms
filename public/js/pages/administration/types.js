@@ -159,17 +159,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 
 
@@ -631,56 +620,6 @@ var render = function() {
                                   attrs: { for: "name" }
                                 },
                                 [_vm._v(_vm._s(_vm.errors.name[0]))]
-                              )
-                            : _vm._e()
-                        ])
-                      ]),
-                      _vm._v(" "),
-                      _c("div", { staticClass: "col-12" }, [
-                        _c("div", { staticClass: "form-group" }, [
-                          _c(
-                            "label",
-                            {
-                              staticClass: "font-weight-bold",
-                              attrs: { for: "room" }
-                            },
-                            [_vm._v("Número de Dormitorio")]
-                          ),
-                          _vm._v(" "),
-                          _c("input", {
-                            directives: [
-                              {
-                                name: "model",
-                                rawName: "v-model",
-                                value: _vm.element.room,
-                                expression: "element.room"
-                              }
-                            ],
-                            staticClass: "form-control",
-                            attrs: { type: "number", id: "room" },
-                            domProps: { value: _vm.element.room },
-                            on: {
-                              input: function($event) {
-                                if ($event.target.composing) {
-                                  return
-                                }
-                                _vm.$set(
-                                  _vm.element,
-                                  "room",
-                                  $event.target.value
-                                )
-                              }
-                            }
-                          }),
-                          _vm._v(" "),
-                          _vm.errors && _vm.errors.room
-                            ? _c(
-                                "label",
-                                {
-                                  staticClass: "mt-2 text-danger text-sm",
-                                  attrs: { for: "room" }
-                                },
-                                [_vm._v(_vm._s(_vm.errors.room[0]))]
                               )
                             : _vm._e()
                         ])

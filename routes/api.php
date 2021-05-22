@@ -31,7 +31,7 @@ Route::namespace('Api')->group(function() {
         Route::get('projects', 'BaseController@paginateProjects');
         Route::get('blog', 'BaseController@paginateBlog');
         Route::get('testimonials', 'BaseController@paginateTestimonials');
-        Route::get('departments', 'ReserveYourPropertyController@paginateDepartments');
+        Route::get('departments', 'Reserve\IndexController@paginateDepartments');
     });
     Route::prefix('post')->group(function() { 
         Route::post('suscribe', 'PostController@suscribe');
@@ -60,7 +60,13 @@ Route::namespace('Api')->group(function() {
         Route::get('privacy-policies', 'PageController@privacityPolicy');
         Route::get('terms-conditions', 'PageController@termsConditions');
         Route::get('quotation', 'PageController@quotation');
-        Route::get('reserve-your-property', 'ReserveYourPropertyController@index');
+        Route::get('reserve', 'Reserve\IndexController@index');
+        Route::get('reserve/summary/{code}', 'Reserve\IndexController@summary');
+        Route::get('reserve/{code}', 'Reserve\IndexController@detail');
+    });
+    Route::prefix('reserve')->group(function() { 
+        Route::post('customer', 'Reserve\PostController@customer');
+        Route::get('available/{code}', 'Reserve\ConnectionController@availableSap');
     });
 });
 

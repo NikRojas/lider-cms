@@ -215,7 +215,7 @@ class SapGetAvailableDepartments extends Command
                 }';*/
                 ###Test
                 #LogSapConnection
-                $description = 'Obtener Inmuebles Disponibilidad Proyecto ' . $value->name_es . ' - Éxito.';
+                $description = 'Proyecto ' . $value->name_es . ' - Éxito.';
                 $lsc = new LogSapConnection();
                 $lsc->type = $this->lscType;
                 $lsc->status = $status;
@@ -278,7 +278,7 @@ class SapGetAvailableDepartments extends Command
             catch (\GuzzleHttp\Exception\RequestException $e) {
                 #Cuando sea cualquier código de error, se enviara un email al correo indicado.
                 $status = $e->getResponse()->getStatusCode();
-                $description = 'Obtener Inmuebles Disponibilidad Proyecto ' . $value->name_es . ' (Código SAP:'.$value->sap_code.') - Error.';
+                $description = 'Proyecto ' . $value->name_es . ' (Código SAP:'.$value->sap_code.') - Error.';
                 $lsc = LogSapConnection::UpdateOrCreate(["slug" => $slug, "type" => $this->lscType, 'status' => $status, 'description' =>  (string) $description]);
             }
         }

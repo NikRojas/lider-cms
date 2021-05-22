@@ -67,17 +67,6 @@
                 >{{ errors.name[0] }}</label>
               </div>
             </div>
-            <div class="col-12">
-              <div class="form-group">
-                <label class="font-weight-bold" for="room">Número de Dormitorio</label>
-                <input type="number" class="form-control" v-model="element.room" id="room" />
-                <label
-                  v-if="errors && errors.room"
-                  class="mt-2 text-danger text-sm"
-                  for="room"
-                >{{ errors.room[0] }}</label>
-              </div>
-            </div>
           </div>
         </form>
       </div>

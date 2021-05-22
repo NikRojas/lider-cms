@@ -16,7 +16,7 @@ class CreateProjectsParentTypeDepartmentsTable extends Migration
         Schema::create('projects_parent_type_departments', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('slug',20);
-            $table->integer('room');
+            $table->integer('room')->nullable();
             $table->string('name',100)->nullable();
             $table->timestamps();
         });

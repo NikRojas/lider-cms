@@ -20,7 +20,7 @@ class ProjectParentTypeParentRepository
             $data[] = array(
                 "id" => $element["id"],
                 "name" => $element["name"],
-                "room" => $element["room"],
+                //"room" => $element["room"],
                 "can_delete" => $element["can_delete"]
             );
         }

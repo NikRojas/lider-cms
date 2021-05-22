@@ -11,8 +11,8 @@ class MasterDocumentTypeSeeder2 extends Seeder
      */
     public function run()
     {
-        DB::table('master_documents_type')->where('name', 'DNI')->update(['sap_value' => 'D']);
-        DB::table('master_documents_type')->where('name', 'description')->update(['sap_value' => 'C']);
+        DB::table('master_documents_type')->where('name', 'DNI')->update(['description' => 'DNI', 'sap_value' => 'D']);
+        DB::table('master_documents_type')->where('name', 'CE')->update(['sap_value' => 'C']);
         DB::table('master_documents_type')->insert([
             [
                 'name' 	=> 'Pasaporte',

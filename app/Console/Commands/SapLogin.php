@@ -55,13 +55,13 @@ class SapLogin extends Command
             $status = $response->getStatusCode();
             $responseFormat = json_decode($response->getBody());
             if($status == 200){
-                $description = 'Login - Éxito';
+                $description = 'Éxito';
             }
             if(!$responseFormat->token){
-                $description = 'Login Token No Recibido - Error';
+                $description = 'Token No Recibido - Error';
             }
             else{
-                $description = 'Login Credenciales Obtenidas - Éxito';
+                $description = 'Credenciales Obtenidas - Éxito';
                 $sc = SapCredential::UpdateOrCreate(['id' => $getSapCredential->id],['token' => $responseFormat->token]);
             }
             $lsc = LogSapConnection::UpdateOrCreate(["slug" => $slug, "type" => $this->lscType, 'status' => $status, 'description' =>  (string) $description, 'response' => (string) $response->getBody() ]);
@@ -69,7 +69,7 @@ class SapLogin extends Command
         catch (\GuzzleHttp\Exception\RequestException $e) {
             #Cuando sea cualquier código de error, se enviara un email al correo indicado.
             $status = $e->getResponse()->getStatusCode();
-            $description = 'Login - Error';
+            $description = 'Error';
             $lsc = LogSapConnection::UpdateOrCreate(["slug" => $slug, "type" => $this->lscType, 'status' => $status, 'description' =>  (string) $description]);
         }
     }

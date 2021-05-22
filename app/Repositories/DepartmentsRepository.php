@@ -57,7 +57,7 @@ class DepartmentsRepository
                 "area" => $dep["area"],
                 "floor" => $dep["floor"],
                 "vista" => $dep["viewRel"]["name"],
-                "tipology" => $dep["tipologyRel"]["name"],
+                "tipology" => $dep["tipologyRel"]["name"].' ('.$dep["tipologyRel"]["room"].' Dormitorios)',
                 "type" => $dep["tipologyRel"]["parentTypeDepartmentRel"] ? $dep["tipologyRel"]["parentTypeDepartmentRel"]["name"] : 'No registrado',
                 "available" => $stock,
                 "price" => $dep["price"] ? $dep['price_format'] : 'No registrado',

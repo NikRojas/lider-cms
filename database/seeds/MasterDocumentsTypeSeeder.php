@@ -14,7 +14,7 @@ class MasterDocumentsTypeSeeder extends Seeder
         DB::table('master_documents_type')->insert([
             [
                 'name' 	=> 'DNI',
-                'description' 	=> 'Documento Nacional de Indentidad',
+                'description' 	=> 'Documento Nacional de Identidad',
             ],
             [
                 'name' 	=> 'CE',

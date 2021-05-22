@@ -1,34 +1,20 @@
 <?php
 
-namespace App\Http\Controllers\Api;
+namespace App\Http\Controllers\Api\Reserve;
 
-use App\AboutCustomerSupport;
-use App\AboutProjectFinished;
-use App\AboutText;
-use App\AboutWarrantyElement;
-use App\Cami;
-use App\CamiElement;
-use App\Category;
 use App\Department;
-use App\FinancingOption;
 use App\Http\Controllers\Api\BaseController;
-use App\MasterLeadMedium;
-use App\MasterLeadTimeDay;
-use App\Post;
+use App\MasterDocumentType;
 use App\Project;
-use App\ProjectBanner;
 use App\ProjectParentTypeDepartment;
-use App\ProjectQuotation;
 use App\ProjectStatus;
 use App\ProjectTypeDepartment;
 use App\ProjectView;
-use App\Slider;
-use App\Testimonial;
 use App\Ubigeo;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 
-class ReserveYourPropertyController extends BaseController
+class IndexController extends BaseController
 {
     public function index(Request $request)
     {
@@ -101,9 +87,10 @@ class ReserveYourPropertyController extends BaseController
         if ($request->rooms) {
             $rooms = $request->rooms;
             $data = $data->whereHas('tipologyRel', function ($query) use ($rooms) {
-                $query->whereHas('parentTypeDepartmentRel', function ($query2) use ($rooms){
+                $query->whereIn('room',$rooms);
+                /*$query->whereHas('parentTypeDepartmentRel', function ($query2) use ($rooms){
                     $query2->whereIn('room',$rooms);
-                });
+                });*/
             });
         }
         //Misma tabla
@@ -187,10 +174,8 @@ class ReserveYourPropertyController extends BaseController
 
     public function getRoomsEstates()
     {
-        $data = ProjectParentTypeDepartment::whereHas('tipologyRel', function ($query) {
-            $query->whereHas('departmentsRel', function ($query2) {
-                $query2->where('available', 1);
-            });
+        $data = ProjectTypeDepartment::whereHas('departmentsRel', function ($query2) {
+            $query2->where('available', 1);
         })->get();
         $data = $data->pluck('room')->unique()->flatten()->all();
         return $data;
@@ -208,7 +193,7 @@ class ReserveYourPropertyController extends BaseController
 
     public function getFloorsEstates()
     {
-        $data = Department::select('id', 'sap_code', 'floor')->orderBy('floor')->get();
+        $data = Department::select('id', 'sap_code', 'floor')->where('available',1)->orderBy('floor')->get();
         $data = $data->pluck('floor')->unique()->flatten()->all();
         return $data;
     }
@@ -274,5 +259,42 @@ class ReserveYourPropertyController extends BaseController
             })
             ->where('code_district', '!=', '00')->orderBy('district')->get();
         return $data;
+    }
+
+    public function detail(Request $request, $code){
+        $department = Department::where('slug',$code)->with('viewRel', 'tipologyRel.parentTypeDepartmentRel', 'projectRel:id,logo_colour,price_separation,name_es,name_en,code_ubigeo,project_status_id', 'projectRel.ubigeoRel', 'projectRel.statusRel')->first();
+        if (!$department) {
+            return $this->sendError("");
+        }
+        $page = $this->getSeoPage('reserve-your-department', $request->locale);
+        $content = $this->getContentPage('reserve-your-department');
+        $typeDocuments = MasterDocumentType::select('id','name','description')->get();
+        $terms = $this->getContentPage('terms-conditions');
+        $privacy = $this->getContentPage('privacy-policies');
+        $data = array(
+            "page" => $page,
+            "department" => $department,
+            "content" => $content,
+            "typeDocuments" => $typeDocuments,
+            "terms" => $terms,
+            "privacy" => $privacy
+        );
+        return $this->sendResponse($data, '');
+    }
+
+    public function summary(Request $request, $code)
+    {
+        $department = Department::where('slug',$code)->where('available',1)->with('viewRel', 'tipologyRel.parentTypeDepartmentRel', 'projectRel:id,logo_colour,price_separation,name_es,name_en,code_ubigeo,project_status_id', 'projectRel.ubigeoRel', 'projectRel.statusRel')->first();
+        if (!$department) {
+            return $this->sendError("");
+        }
+        $page = $this->getSeoPage('reserve-your-department', $request->locale);
+        $content = $this->getContentPage('reserve-your-department');
+        $data = array(
+            "page" => $page,
+            "content" => $content,
+            "department" => $department
+        );
+        return $this->sendResponse($data, '');
     }
 }

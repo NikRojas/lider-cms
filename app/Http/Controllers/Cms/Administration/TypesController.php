@@ -19,7 +19,7 @@ class TypesController extends Controller
 
     public function update(TypeRequest $request, ProjectParentTypeDepartment $element)
     {
-        $request_element = request(['name','room']);
+        $request_element = request(['name']);
         $request_element = array_merge($request_element,["slug" => Str::random(20)]);
         try {
             $element = ProjectParentTypeDepartment::UpdateOrCreate(['id' => $element->id], $request_element);
@@ -31,7 +31,7 @@ class TypesController extends Controller
 
     public function store(TypeRequest $request)
     {
-        $element = request(['name','room']);
+        $element = request(['name']);
         try {
             $element = ProjectParentTypeDepartment::UpdateOrCreate($element);
             return response()->json(['title'=> trans('custom.title.success'), 'message'=> trans('custom.message.create.success', ['name' => trans('custom.attribute.type')])]);
@@ -58,7 +58,7 @@ class TypesController extends Controller
     public function getAll(Request $request, ProjectParentTypeParentRepository $repo)
     {
         $q = $request->q;
-        $headers = ["Id", "Nombre", "Número de Dormitorios"];
+        $headers = ["Id", "Nombre"];
         if ($q) {
             $elements = $repo->datatable($request->itemsPerPage, $q);
         } else {

@@ -8,7 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 class Order extends Model
 {
     protected $appends = ['order_date_format','total_format','order_date_format_table'];
-
+    protected $guarded = [];
+    
     public function getOrderDateFormatAttribute() {
         return (new Carbon($this->order_date))->isoFormat('DD MMMM YYYY [a las] h:mm a');
     }
@@ -19,13 +20,13 @@ class Order extends Model
 
     public function getTotalFormatAttribute()
     {
-        return 'S/. '.number_format($this->total, 2, '.', ',');
+        return 'S/. '.number_format($this->total_price, 2, '.', ',');
     }
 
     public function orderDetailsRel()
     {
+        return $this->hasMany('App\OrderDetail', 'order_id', 'id');
         //return $this->hasOne('App\OrderDetail', 'order_id', 'id');
-        return $this->hasOne('App\OrderDetail', 'order_id', 'id');
     }
 
     public function customerRel()

@@ -10,14 +10,15 @@ class CustomerRepository
     public function datatable($date, $range = false, $items_per_page, $q = false)
     {
         if ($q) {
-            $elements = Customer::select("id", "name","slug", "lastname", "email", "document_number",  'created_at')
+            $elements = Customer::select("id", "name","slug", "lastname",'lastname_2', "email", "document_number",  'created_at')
             ->where(function($query) use ($q){
                 return $query->where('name', 'like', '%' . $q . '%')
                 ->orWhere('lastname', 'like', '%' . $q . '%')
+                ->orWhere('lastname_2', 'like', '%' . $q . '%')
                 ->orWhere('document_number', 'like', '%' . $q . '%');
             });
         } else {
-            $elements = Customer::select("id", "name","slug", "lastname", "email", "document_number",  'created_at');
+            $elements = Customer::select("id", "name","slug", "lastname",'lastname_2', "email", "document_number",  'created_at');
         }
         switch ($date) {
             case 'all':
@@ -55,7 +56,7 @@ class CustomerRepository
         foreach ($elements as $element) {
             $data[] = array(
                 "id" => $element["slug"],
-                "name" => $element["name"] .' ' .$element["lastname"],
+                "name" => $element["full_name"],
                 "document_number" => $element["document_number"],
                 "sales" => $element["orders_rel_count"].' Reservas',
                 "created_at" => $element["created_at_format"],

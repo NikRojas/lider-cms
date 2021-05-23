@@ -43,7 +43,8 @@ class OrdersController extends Controller
 
     public function read(Order $element)
     {
-        $element = $element->load('customerRel', 'orderDetailsRel.projectRel:id,name_es,slug_es,images,price', 'orderDetailsRel.tipologyRel', 'transactionsRel.statusRel', 'transactionLatestRel.statusRel');
+        $element = $element->load('customerRel', 'orderDetailsRel.projectRel:id,name_es,slug_es,price_separation'
+        , 'orderDetailsRel.departmentRel.viewRel', 'orderDetailsRel.departmentRel.tipologyRel', 'transactionsRel.statusRel', 'transactionLatestRel.statusRel');
         $element["type"] = "Reserve Created";
         $timelineTemp = [];
         $timelineTempGroup = [];

@@ -225,9 +225,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var v_charts_lib_line_common__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(v_charts_lib_line_common__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var v_charts_lib_pie_common__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! v-charts/lib/pie.common */ "./node_modules/v-charts/lib/pie.common.js");
 /* harmony import */ var v_charts_lib_pie_common__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(v_charts_lib_pie_common__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var _components_filters_DateRange__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../components/filters/DateRange */ "./resources/js/components/filters/DateRange.vue");
-/* harmony import */ var _components_BreadCrumb__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../components/BreadCrumb */ "./resources/js/components/BreadCrumb.vue");
-/* harmony import */ var vue_loading_skeleton__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! vue-loading-skeleton */ "./node_modules/vue-loading-skeleton/dist/vue-loading-skeleton.esm.js");
+/* harmony import */ var v_charts_lib_bar_common__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! v-charts/lib/bar.common */ "./node_modules/v-charts/lib/bar.common.js");
+/* harmony import */ var v_charts_lib_bar_common__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(v_charts_lib_bar_common__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var _components_filters_DateRange__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../components/filters/DateRange */ "./resources/js/components/filters/DateRange.vue");
+/* harmony import */ var _components_BreadCrumb__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../components/BreadCrumb */ "./resources/js/components/BreadCrumb.vue");
+/* harmony import */ var vue_loading_skeleton__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! vue-loading-skeleton */ "./node_modules/vue-loading-skeleton/dist/vue-loading-skeleton.esm.js");
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
@@ -374,6 +376,14 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+
 
 
 
@@ -385,11 +395,12 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     routeGetAll: String
   },
   components: {
-    Skeleton: vue_loading_skeleton__WEBPACK_IMPORTED_MODULE_5__["Skeleton"],
-    FilterDateRange: _components_filters_DateRange__WEBPACK_IMPORTED_MODULE_3__["default"],
-    BreadCrumb: _components_BreadCrumb__WEBPACK_IMPORTED_MODULE_4__["default"],
+    Skeleton: vue_loading_skeleton__WEBPACK_IMPORTED_MODULE_6__["Skeleton"],
+    FilterDateRange: _components_filters_DateRange__WEBPACK_IMPORTED_MODULE_4__["default"],
+    BreadCrumb: _components_BreadCrumb__WEBPACK_IMPORTED_MODULE_5__["default"],
     VeLine: v_charts_lib_line_common__WEBPACK_IMPORTED_MODULE_1___default.a,
-    VePie: v_charts_lib_pie_common__WEBPACK_IMPORTED_MODULE_2___default.a
+    VePie: v_charts_lib_pie_common__WEBPACK_IMPORTED_MODULE_2___default.a,
+    VeBar: v_charts_lib_bar_common__WEBPACK_IMPORTED_MODULE_3___default.a
   },
   data: function data() {
     return {
@@ -954,58 +965,42 @@ var render = function() {
                 _vm._v(" "),
                 _vm.loadingEls
                   ? _c("skeleton", { attrs: { height: "300px" } })
-                  : _c(
-                      "div",
-                      [
-                        _c("div", { staticClass: "card" }, [
-                          _c(
-                            "table",
-                            { staticClass: "table align-items-center" },
-                            [
-                              _c("thead", { staticClass: "thead-light" }, [
-                                _c("tr", [
-                                  _c("th", { staticClass: "border-0" }, [
-                                    _vm._v("Nombre")
-                                  ]),
-                                  _vm._v(" "),
-                                  _c("th", { staticClass: "border-0" }, [
-                                    _vm._v("Total")
-                                  ])
+                  : _c("div", [
+                      _c("div", { staticClass: "card" }, [
+                        _c(
+                          "table",
+                          { staticClass: "table align-items-center" },
+                          [
+                            _c("thead", { staticClass: "thead-light" }, [
+                              _c("tr", [
+                                _c("th", { staticClass: "border-0" }, [
+                                  _vm._v("Nombre")
+                                ]),
+                                _vm._v(" "),
+                                _c("th", { staticClass: "border-0" }, [
+                                  _vm._v("Total")
                                 ])
-                              ]),
-                              _vm._v(" "),
-                              _c(
-                                "tbody",
-                                _vm._l(
-                                  _vm.charts.reservers_per_tipology.rows,
-                                  function(el, i) {
-                                    return _c("tr", { key: i }, [
-                                      _c("td", [
-                                        _vm._v(_vm._s(el.name_format))
-                                      ]),
-                                      _vm._v(" "),
-                                      _c("td", [_vm._v(_vm._s(el.value))])
-                                    ])
-                                  }
-                                ),
-                                0
-                              )
-                            ]
-                          )
-                        ]),
-                        _vm._v(" "),
-                        _c("ve-pie", {
-                          staticStyle: { "margin-top": "-50px" },
-                          attrs: {
-                            data: _vm.charts.reservers_per_tipology,
-                            legend: _vm.chartLegendPie,
-                            colors: _vm.colors,
-                            settings: _vm.chartSettingsPie
-                          }
-                        })
-                      ],
-                      1
-                    )
+                              ])
+                            ]),
+                            _vm._v(" "),
+                            _c(
+                              "tbody",
+                              _vm._l(
+                                _vm.charts.reservers_per_tipology.rows,
+                                function(el, i) {
+                                  return _c("tr", { key: i }, [
+                                    _c("td", [_vm._v(_vm._s(el.name_format))]),
+                                    _vm._v(" "),
+                                    _c("td", [_vm._v(_vm._s(el.value))])
+                                  ])
+                                }
+                              ),
+                              0
+                            )
+                          ]
+                        )
+                      ])
+                    ])
               ],
               1
             )

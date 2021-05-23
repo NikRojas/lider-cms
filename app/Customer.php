@@ -9,7 +9,9 @@ use Illuminate\Notifications\Notifiable;
 class Customer extends Model
 {
     use Notifiable;
-    protected $appends = ['mobile_formatted','created_at_format','avatar_initials'];
+    protected $appends = ['mobile_formatted','created_at_format','avatar_initials','full_name'];
+    protected $guarded = [];
+
     public function getCreatedAtFormatAttribute() {
         return (new Carbon($this->created_at))->format('g:iA d-m-Y');
     }
@@ -29,6 +31,10 @@ class Customer extends Model
 
     public function getAvatarInitialsAttribute(){
         return substr($this->name,0,1).substr($this->lastname,0,1);
+    }
+
+    public function getFullnameAttribute(){
+        return $this->name.' '.$this->lastname.' '.$this->lastname_2;
     }
 
     public function ordersRel()

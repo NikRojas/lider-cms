@@ -37,7 +37,8 @@ class CustomersController extends Controller
     }
 
     public function read(Customer $element){
-        $element = $element->load('ordersRel')->load('ordersRel.orderDetailsRel.projectRel:id,name_es,slug_es,images','ordersRel.orderDetailsRel.tipologyRel');
+        $element = $element->load('ordersRel')->load('ordersRel.orderDetailsRel.projectRel:id,name_es,slug_es','ordersRel.orderDetailsRel.departmentRel.viewRel'
+        ,'ordersRel.orderDetailsRel.departmentRel.tipologyRel');
         return view ("pages.customers.read", compact('element'));   
     }
 

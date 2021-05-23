@@ -76,6 +76,13 @@
                   :colors="colors"
                   :settings="chartSettingsPie"
                 ></ve-pie>
+                <!--<ve-bar
+                  style="margin-top: -50px;"
+                  :data="charts.reservers_per_project"
+                  :legend="chartLegendPie"
+                  :colors="colors"
+                  :settings="chartSettingsPie"
+                ></ve-bar>-->
               </div>
             </div>
           </div>
@@ -123,13 +130,13 @@
                     </tbody>
                   </table>
                 </div>
-                <ve-pie
+                <!--<ve-pie
                     style="margin-top: -50px;"
                     :data="charts.reservers_per_tipology"
                     :legend="chartLegendPie"
                     :colors="colors"
                     :settings="chartSettingsPie"
-                  ></ve-pie>
+                  ></ve-pie>-->
               </div>
             </div>
           </div>
@@ -142,6 +149,7 @@
 import "v-charts/lib/style.css";
 import VeLine from "v-charts/lib/line.common";
 import VePie from "v-charts/lib/pie.common";
+import VeBar from "v-charts/lib/bar.common";
 import FilterDateRange from "../../components/filters/DateRange";
 import BreadCrumb from "../../components/BreadCrumb";
 import { Skeleton } from "vue-loading-skeleton";
@@ -155,6 +163,7 @@ export default {
     BreadCrumb,
     VeLine,
     VePie,
+    VeBar
   },
   data() {
     return {

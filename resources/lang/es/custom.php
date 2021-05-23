@@ -112,6 +112,10 @@ return [
             'resend_order_received' => 'Se reenvió el email sobre: Espera de confirmación de pago de la reserva a :name (:email).',
             'resend_order_paid' => 'Se reenvió el email sobre: Pago confirmado de la reserva a :name (:email).',
             'resend_order_not_paid' => 'Se reenvió el email sobre: Pago rechazado de la reserva a :name (:email).'
+        ],
+        'payment' => [
+            'no_pay' => '',
+            'error' => 'Lo sentimos. Hubo un error al procesar el pago.'
         ]
     ],
     'mail' => [

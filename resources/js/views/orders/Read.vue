@@ -41,7 +41,7 @@
                       <h2 class>Detalle de Reserva</h2>
                     </div>
                   </div>
-                  <div class="card mb-4">
+                  <div class="card mb-4" v-for="el in element.order_details_rel" :key="el.id">
                     <div class="row p-2 p-md-3">
                       <div class="col-10 d-flex align-items-center">
                         <div class="row w-100">
@@ -49,31 +49,48 @@
                             <img
                               height="50"
                               class="ml-md-0 ml-3 d-block d-md-inline"
-                              :src="imagesUrl + '/projects/tipologies/'+element.order_details_rel.tipology_rel.image"
+                              :src="imagesUrl + '/projects/estates/'+el.department_rel.image"
                               alt
                             />
                             <div class="ml-md-0 ml-3 mt-1">
                               <a
                                 style="text-decoration: underline;"
-                                :href="routeProject+'/'+element.order_details_rel.project_rel.slug_es"
+                                :href="routeProject+'/'+el.project_rel.slug_es"
                                 class="h3 text-primary"
-                              >Projecto {{ element.order_details_rel.project_rel.name_es}}</a>
+                              >Projecto {{ el.project_rel.name_es}}</a>
                               <div class="mt-2">
                                 <h3 class="font-weight-normal">
+                                  Inmueble:
+                                  <span class="font-weight-bold">{{ el.department_rel.description}}</span>
+                                </h3>
+                                <h3 class="font-weight-normal" v-if="el.department_rel.type_department_id">
                                   Tipología:
-                                  <span class="font-weight-bold">{{ element.order_details_rel.tipology_rel.name}}</span>
-                                </h3>DETALLES ADICIONALES
+                                  <span class="font-weight-bold">{{ el.department_rel.tipology_rel.name}}</span>
+                                </h3>
+                                <h3 class="font-weight-normal">
+                                  Vista:
+                                  <span class="font-weight-bold">{{ el.department_rel.view_rel.name}}</span>
+                                </h3>
+                                <h3 class="font-weight-normal">
+                                  Piso:
+                                  <span class="font-weight-bold">{{ el.department_rel.floor}}</span>
+                                </h3>
+                                <h3 class="font-weight-normal">
+                                  Área:
+                                  <span class="font-weight-bold">{{ el.department_rel.area}}m2</span>
+                                </h3>
                               </div>
                             </div>
                           </div>
                           <div
                             class="col-6 d-flex align-items-center justify-content-center"
-                          >{{element.order_details_rel.project_rel.price_format}} x 1 --- Desc</div>
+                          >{{el.price_element_format}} <span v-if="el.discount_price"> - {{ el.discount_price_format }}</span></div>
                         </div>
                       </div>
+                      <!--Cuando haya descuento, restar el precio del elemento menos precio de descuento -->
                       <div
                         class="col-2 d-flex align-items-center justify-content-center"
-                      >{{ element.total_format}}</div>
+                      >{{ el.total_price_format}}</div>
                     </div>
                   </div>
                 </div>
@@ -86,7 +103,6 @@
 
               <div class="card">
                 <div class="card-body">
-
                   <div v-for="(el,i) in timelineParent" :key="i">
                     <h3 class="text-primary">{{i}}</h3>
                     <div v-for="(el2,j) in el" :key="j">
@@ -125,7 +141,7 @@
               <div class="row mb-4">
                 <div class="col-12">Procesado el {{ element.transaction_latest_rel.transaction_date_format }}</div>
               </div>
-
+            <!-- Ver que precios pongo aca si tengo que poner el precio de la transaccion como total y el subtotal y descuento segun los elementos de la orden -->
               <div class="row mb-2">
                 <div class="col-6">Subtotal</div>
                 <div class="col-6 text-right">{{ element.total_format}}----</div>
@@ -134,7 +150,7 @@
                 <div class="col-6">Descuento</div>
                 <div class="col-6 text-right">{{ element.total_format}}---</div>
               </div>
-              <hr class="mt-2 mb-3" />
+              <hr class="mt-2 mb-3"/>
               <div class="row">
                 <div class="col-6">Total</div>
                 <div class="col-6 text-right">{{ element.total_format}}</div>

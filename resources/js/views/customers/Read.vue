@@ -100,7 +100,7 @@
                     <div class="col-12 col-lg-6 text-right">{{ el.order_date_format }}</div>
                   </div>
                   <div class="row">
-                    <div class="col-6 mb-4" v-for="el2 in el.order_details_rel" :key="el2.id">
+                    <div class="col-12 mb-4" v-for="el2 in el.order_details_rel" :key="el2.id">
                       <div class="card">
                         <div class="card-body">
                           <!--<div class="d-inline-flex align-items-center">
@@ -118,32 +118,56 @@
                           </div>
                           <div class="ml-3 d-inline-flex align-items-center">
                             <img
-                              :src="imagesUrl+'/projects/tipologies/'+el2.tipology_rel.image"
+                              :src="imagesUrl+'/projects/estates/'+el2.tipology_rel.image"
                               height="35"
                               width="auto"
                               alt
                             />
                             <p class="ml-2 mb-0 d-inline">Tipología {{el2.tipology_rel.name}}</p>
                           </div>-->
-                          <img
-                              height="50"
-                              class="d-block d-md-inline"
-                              :src="imagesUrl + '/projects/tipologies/'+el2.tipology_rel.image"
+                          <div class="row">
+                            <div class="col-12 col-lg-3"  v-if="el2.department_rel.image">
+                               <img
+                              class="d-block img-fluid"
+                             
+                              :src="imagesUrl + '/projects/estates/'+el2.department_rel.image"
                               alt
                             />
-                            <div class="ml-md-0 ml-3 mt-1">
+                            </div>
+                            <div class="col">
+                              <div class="ml-md-0 ml-3 mt-1">
                               <a
                                 style="text-decoration: underline;"
                                 :href="routeProject+'/'+el2.project_rel.slug_es"
                                 class="h3 text-primary"
-                              >Projecto {{ el2.project_rel.name_es}}</a>
+                              >Proyecto {{ el2.project_rel.name_es}}</a>
                               <div class="mt-2">
                                 <h3 class="font-weight-normal">
+                                  Inmueble:
+                                  <span class="font-weight-bold">{{ el2.department_rel.description}}</span>
+                                </h3>
+                                <h3 class="font-weight-normal" v-if="el2.department_rel.type_department_id">
                                   Tipología:
-                                  <span class="font-weight-bold">{{ el2.tipology_rel.name}}</span>
+                                  <span class="font-weight-bold">{{ el2.department_rel.tipology_rel.name}}</span>
+                                </h3>
+                                <h3 class="font-weight-normal">
+                                  Vista:
+                                  <span class="font-weight-bold">{{ el2.department_rel.view_rel.name}}</span>
+                                </h3>
+                                <h3 class="font-weight-normal">
+                                  Piso:
+                                  <span class="font-weight-bold">{{ el2.department_rel.floor}}</span>
+                                </h3>
+                                <h3 class="font-weight-normal">
+                                  Área:
+                                  <span class="font-weight-bold">{{ el2.department_rel.area}}m2</span>
                                 </h3>
                               </div>
                             </div>
+                            </div>
+                          </div>
+                         
+                            
                         </div>
                       </div>
                     </div>

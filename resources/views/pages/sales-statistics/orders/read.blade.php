@@ -2,7 +2,8 @@
 @section('head')
     <style>
         body{ background-color: #FDFBFA !important}
-        a{color: initial !important;}
+        /*a{color: initial !important;}*/
+        a.btn-inverse-light{color: initial !important;}
     </style>
 @endsection
 @section('content')

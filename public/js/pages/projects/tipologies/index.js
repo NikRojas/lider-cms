@@ -1737,9 +1737,7 @@ var render = function() {
                                     _vm._v(
                                       "\n                  " +
                                         _vm._s(el.name) +
-                                        " - " +
-                                        _vm._s(el.room) +
-                                        " Dormitorio(s)\n                "
+                                        " \n                "
                                     )
                                   ]
                                 )

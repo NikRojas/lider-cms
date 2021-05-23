@@ -7,17 +7,33 @@ use Carbon\Carbon;
 
 class OrderRepository
 {
-    public function datatable($date, $range = false, $items_per_page, $q = false)
+    public function datatable($date, $range = false, $items_per_page, $q = false, $projects, $transactions)
     {
         if ($q) {
             $elements = Order::select("*")->has('orderDetailsRel')->has('transactionLatestRel')
+            //$elements = Order::select("*")->has('orderDetailsRel')
             ->whereHas('customerRel', function( $query ) use ( $q ){
                 $query->where('name', 'like', '%'.$q.'%')->orWhere('lastname', 'like', '%'.$q.'%')->orWhere('lastname_2', 'like', '%'.$q.'%');
-            })->orWhereHas('orderDetailsRel.projectRel', function( $query ) use ( $q ){
-                $query->where('name_es', 'like', '%'.$q.'%');
             });
+            /*->orWhereHas('orderDetailsRel.projectRel', function( $query ) use ( $q ){
+                $query->where('name_es', 'like', '%'.$q.'%');
+            });*/
         } else {
             $elements = Order::select("*")->has('orderDetailsRel')->has('transactionLatestRel');
+            //$elements = Order::select("*")->has('orderDetailsRel');
+        }
+        if(count($projects) > 0){
+            $elements = $elements->whereHas('orderDetailsRel.projectRel', function( $query ) use ( $projects ){
+                $query->whereIn('project_id', $projects);
+            });
+        }
+        if(count($transactions) > 0){
+            $elements = $elements->whereHas('transactionLatestRel', function( $query ) use ( $transactions ){
+                //$query->whereIn('id', $transactions);
+                $query->whereHas('statusRel', function ($query2) use ( $transactions ){
+                    $query2->whereIn('id', $transactions);
+                });
+            });
         }
         switch ($date) {
             case 'all':
@@ -52,9 +68,6 @@ class OrderRepository
             ->paginate($items_per_page);
         foreach ($elements as $el) {
             $reserve = null;
-            /*foreach ($el["orderDetailsRel"] as $key => $el2) {
-                $reserve.= '<div class="mb-1">Proyecto '.$el2["projectRel"]["name_es"].' - Tipología '.$el2["tipologyRel"]["name"].'</div>';
-            }*/
             $reserve .= '<div class="mb-1">Proyecto ' . $el["orderDetailsRel"][0]["projectRel"]["name_es"] . ' - Tipología ' . $el["orderDetailsRel"][0]["departmentRel"]["description"] . '</div>';
             $data[] = array(
                 "id" => $el["id"],

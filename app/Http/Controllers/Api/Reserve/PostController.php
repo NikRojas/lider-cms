@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api\Reserve;
 
+use App\Advisor;
 use App\Customer;
 use App\Department;
 use App\Http\Controllers\Api\BaseController;
@@ -25,6 +26,10 @@ class PostController extends BaseController
             return $this->sendError("");
         }
         //Aca se tiene que ver la disponibilidad del departamento antes de pagar
+
+        //Si no esta disponible mandar error
+
+        //Si esta disponible proceder con el pago
         $dt = MasterDocumentType::where('description',$request->type_document_id)->first();
         $r_customer = request(['document_number','name','lastname','lastname_2','email','mobile']);
         $r_customer = array_merge($r_customer, [ "type_document_id" => $dt->id]);
@@ -37,22 +42,29 @@ class PostController extends BaseController
                 $slug = Str::random(20);
                 $customer = Customer::UpdateOrCreate(array_merge($r_customer, ["slug" => $slug]));
             }
-            //return $this->sendResponse([], trans('custom.title.success'), 200);;
+            //return $this->sendResponse([], trans('custom.title.success'), 200);
         } catch (\Exception $e) {
             dd($e);
+            //OCURRIO UN ERROR AL PROCESAR EL PAGO
             return $this->sendError(trans('custom.title.error'), [], 500);
         }
         $advisor = null;
         $price_deparment_separation = $department->projectRel->price_separation;
+        //Procesar los items con su descuento y su total
         $r_order = ["customer_id" => $customer->id, "department_id" => $department->id, "total_price" => $price_deparment_separation, "order_date" => Carbon::now()];
+        #Setear Asesor si viene desde la URL de Separacion
         if($request->adv){
-            $advisor = $request->adv;
-            $r_order = array_merge($r_order,["advisor_id" => $advisor]);
+            $r_advisor = $request->adv;
+            $advisor = Advisor::where('sap_code',$r_advisor)->first();
+            if($advisor){
+                $r_order = array_merge($r_order,["advisor_id" => $advisor->id]);
+            }
         }
         try {
             $order = Order::UpdateOrCreate($r_order);
         }
         catch (\Exception $e) {
+            //OCURRIO UN ERROR AL PROCESAR EL PAGO
             dd($e);
             return $this->sendError(trans('custom.order.payment'), [], 500);
         }
@@ -62,8 +74,14 @@ class PostController extends BaseController
             return $this->sendResponse([], trans('custom.title.success'), 200);
         }
         catch (\Exception $e) {
+            //OCURRIO UN ERROR AL PROCESAR EL PAGO
             dd($e);
             return $this->sendError(trans('custom.order.payment'), [], 500);
         }
+        //Transaccion con Pasarela segun Proyecto
+        //Si es exitoso
+
+        //Si hay fallo
+        //OCURRIO UN ERROR AL PROCESAR EL PAGO Y MANDAR EL ERROR RESPECTIVO
     }
 }

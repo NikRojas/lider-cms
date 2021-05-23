@@ -237,7 +237,7 @@
                 <select class="form-control" v-model="element.parent_type_department_id" id="parent_type_department_id">
                   <option value="">Seleccionar un Tipo de Inmueble</option>
                   <option :value="el.id" v-for="el in types" :key="el.slug">
-                    {{ el.name }} - {{ el.room}} Dormitorio(s)
+                    {{ el.name }} 
                   </option>
                 </select>
                 <label

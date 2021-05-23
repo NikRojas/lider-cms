@@ -47,7 +47,8 @@ class CustomerRepository
                 $elements->whereYear('created_at', '=', date('Y'));
                 break;
         }
-        //pedidos
+        //Pedido con Transaccion 
+        //Falta la transaccion
         $elements = $elements
             ->with('ordersRel')
             ->withCount('ordersRel')

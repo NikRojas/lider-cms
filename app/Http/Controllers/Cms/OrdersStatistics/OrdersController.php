@@ -5,21 +5,16 @@ namespace App\Http\Controllers\Cms\OrdersStatistics;
 use App\Exports\OrderExport;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Cms\Export\RangeExportExcel;
-use App\Http\Requests\Cms\SalesStatistics\OrderExportRequest;
 use App\Http\Traits\CmsTrait;
 use App\Order;
-use App\Http\Requests\Cms\SalesStatistics\SalesExportRequest;
+use App\MasterTransactionStatus;
 use App\Notifications\OrderNotPaid;
 use App\Notifications\OrderPaid;
 use App\Notifications\OrderReceived;
+use App\Project;
 use App\Repositories\OrderRepository;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
-
-use PhpOffice\PhpSpreadsheet\Spreadsheet;
-use PhpOffice\PhpSpreadsheet\Writer\Xls;
-use PhpOffice\PhpSpreadsheet\Style\Fill as Fill;
-use PhpOffice\PhpSpreadsheet\Cell\DataType as DataType;
 
 class OrdersController extends Controller
 {
@@ -27,17 +22,27 @@ class OrdersController extends Controller
 
     public function index()
     {
-        return view("pages.sales-statistics.orders.index");
+        $projects = Project::select('id','name_es')->orderBy('index')->get();
+        $transactions = MasterTransactionStatus::get();
+        return view("pages.sales-statistics.orders.index", compact('projects','transactions'));
     }
 
     public function getAll(Request $request, OrderRepository $repo)
     {
         $q = $request->q;
         $headers = ["Id", "Código", "Fecha", "Cliente", "Reserva Detalle", "Total", "Estado de Pago"];
+        $projects = [];
+        $transactions = [];
+        if($request->projects){
+            $projects = $request->projects;
+        }
+        if($request->transactions){
+            $transactions = $request->transactions;
+        }
         if ($q) {
-            $elements = $repo->datatable($request->date, $request->range, $request->itemsPerPage, $q);
+            $elements = $repo->datatable($request->date, $request->range, $request->itemsPerPage, $q, $projects, $transactions);
         } else {
-            $elements = $repo->datatable($request->date, $request->range, $request->itemsPerPage);
+            $elements = $repo->datatable($request->date, $request->range, $request->itemsPerPage, NULL, $projects, $transactions);
         }
         $elements["headers"] = $headers;
         return response()->json($elements);

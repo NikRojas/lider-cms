@@ -15,7 +15,7 @@
     <div class="container-fluid mt--6">
       <DataTable
         :object="elements"
-        placeholder="Nombres, Apellidos, Proyecto"
+        placeholder="Nombres, Apellidos"
         :button-update="false"
         :button-read="true"
         :button-delete="false"
@@ -27,10 +27,18 @@
       >
         <template slot="filters">
           <div class="row mb-3">
-            <div class="col-6">
-              <FilterDateRange  :active.sync="filterDate.active"  :range.sync="filterDate.range" @get="getEls(1, elementsPerPage)"/>
+            <div class="col-12 col-md-9 mb-2 mb-md-0">
+              <div class="d-inline-block mb-2 mb-sm-0 mr-2">
+              <FilterDateRange  :active.sync="filterDate.active" :range.sync="filterDate.range" @get="getEls(1, elementsPerPage)"/>
               </div>
-              <div class="col-6 text-right">
+              <div class="d-inline-block mb-2 mb-sm-0 mr-2">
+              <FilterProjects :projects="projects" :active.sync="filterProjects.active" @get="getEls(1, elementsPerPage)"/>
+              </div>
+               <div class="d-inline-block mb-2 mb-sm-0">
+              <FilterStatusTransactions :transactions="transactions" :active.sync="filterTransactions.active" @get="getEls(1, elementsPerPage)"/>
+              </div>
+            </div>
+            <div class="col-12 col-md-3 text-right">
               <!--<button class="btn btn-icon btn-inverse-primary" @click="exportData()">
                 <span class="btn-inner--icon">
                   <jam-download class="current-color" />
@@ -145,6 +153,8 @@
 import Button from "../../components/Button";
 import DatePicker from "vue2-datepicker";
 import FilterDateRange from "../../components/filters/DateRange"
+import FilterProjects from "../../components/filters/Projects"
+import FilterStatusTransactions from "../../components/filters/StatusTransactions"
 import DataTable from "../../components/DataTable";
 import BreadCrumb from "../../components/BreadCrumb";
 import { Skeleton } from "vue-loading-skeleton";
@@ -157,6 +167,8 @@ export default {
     route: String,    
     allExport: String,
     filterExport: String,
+    projects: Array,
+    transactions: Array
   },
   data() {
     return {
@@ -172,6 +184,12 @@ export default {
       modalExport: false,
       project: {},
       elements: {},
+      filterProjects: {
+        active: []
+      },
+      filterTransactions: {
+        active: []
+      },
       filterDate: {
         active: {},
         range: null
@@ -195,6 +213,8 @@ export default {
     BreadCrumb,
     DataTable,
     FilterDateRange,
+    FilterProjects,
+    FilterStatusTransactions
   },
   methods: {
     restoreExport() {
@@ -284,6 +304,8 @@ export default {
           params: {
             date: this.filterDate.active.value,
             ...(this.filterDate.range ? { range: this.filterDate.range } : {}),
+            ...(this.filterProjects.active ? { projects: this.filterProjects.active } : {}),
+            ...(this.filterTransactions.active ? { transactions: this.filterTransactions.active } : {}),
           },
         })
         .then((response) => {

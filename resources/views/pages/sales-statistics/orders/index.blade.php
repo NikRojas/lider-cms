@@ -10,7 +10,10 @@
 </style>
 @endsection
 @section('content')
-    <orders-index route="{{ route('cms.sales-statistics.orders.index') }}" route-get-all="{{ route('cms.sales-statistics.orders.get-all') }}"
+    <orders-index
+    :projects=" {{ $projects }}"
+    :transactions=" {{ $transactions }}"
+    route="{{ route('cms.sales-statistics.orders.index') }}" route-get-all="{{ route('cms.sales-statistics.orders.get-all') }}"
     all-export="{{ route('cms.sales-statistics.orders.all-export')}}" 
     filter-export="{{ route('cms.sales-statistics.orders.filter-export')}}"></orders-index>
 @endsection

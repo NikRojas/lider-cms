@@ -8,6 +8,7 @@ use App\Project;
 use App\SapCredential;
 use GuzzleHttp\Client;
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\Log;
 //use Illuminate\Support\Facades\Log;
 //use App\Notifications\LogSapConnectionNotification;
 //use Illuminate\Support\Facades\Notification;
@@ -59,161 +60,12 @@ class SapGetAvailableDepartments extends Command
         foreach ($projects as $key => $value) {
             $slug = Str::random(20);
             try {
+                $client = $responseSap = NULL;
                 $client = new Client();
                 $responseSap = $client->request('GET', $this->url . $value->sap_code, [
                     'headers' => ['Content-Type' => 'application/json', 'Authorization' => $sapCredentials->token]
                 ]);
                 $status = $responseSap->getStatusCode();
-                ###Test
-                /*$status = 200;
-                $responseSap = '{
-                    "inmuebles": [
-                        {
-                            "codigo": "NCA1EB1206",
-                            "precio_pen": 323500.0,
-                            "precio_usd": 0.0
-                        },
-                        {
-                            "codigo": "NCA1EB1205",
-                            "precio_pen": 323500.0,
-                            "precio_usd": 0.0
-                        },
-                        {
-                            "codigo": "NCA1EB1204",
-                            "precio_pen": 324300.0,
-                            "precio_usd": 0.0
-                        },
-                        {
-                            "codigo": "NCA1EB1203",
-                            "precio_pen": 324200.0,
-                            "precio_usd": 0.0
-                        },
-                        {
-                            "codigo": "NCA1EB1202",
-                            "precio_pen": 339200.0,
-                            "precio_usd": 0.0
-                        },
-                        {
-                            "codigo": "NCA1EB1102",
-                            "precio_pen": 340400.0,
-                            "precio_usd": 0.0
-                        },
-                        {
-                            "codigo": "NCA1EB1004",
-                            "precio_pen": 328300.0,
-                            "precio_usd": 0.0
-                        },
-                        {
-                            "codigo": "NCA1EB1002",
-                            "precio_pen": 341700.0,
-                            "precio_usd": 0.0
-                        },
-                        {
-                            "codigo": "NCA1EB0902",
-                            "precio_pen": 343900.0,
-                            "precio_usd": 0.0
-                        },
-                        {
-                            "codigo": "NCA1EA1206",
-                            "precio_pen": 324800.0,
-                            "precio_usd": 0.0
-                        },
-                        {
-                            "codigo": "NCA1EA1205",
-                            "precio_pen": 324800.0,
-                            "precio_usd": 0.0
-                        },
-                        {
-                            "codigo": "NCA1EA1204",
-                            "precio_pen": 324800.0,
-                            "precio_usd": 0.0
-                        },
-                        {
-                            "codigo": "NCA1EA1203",
-                            "precio_pen": 324000.0,
-                            "precio_usd": 0.0
-                        },
-                        {
-                            "codigo": "NCA1EA1202",
-                            "precio_pen": 333700.0,
-                            "precio_usd": 0.0
-                        },
-                        {
-                            "codigo": "NCA1EA1106",
-                            "precio_pen": 326000.0,
-                            "precio_usd": 0.0
-                        },
-                        {
-                            "codigo": "NCA1EA1105",
-                            "precio_pen": 326000.0,
-                            "precio_usd": 0.0
-                        },
-                        {
-                            "codigo": "NCA1EA1104",
-                            "precio_pen": 326000.0,
-                            "precio_usd": 0.0
-                        },
-                        {
-                            "codigo": "NCA1EA1103",
-                            "precio_pen": 325300.0,
-                            "precio_usd": 0.0
-                        },
-                        {
-                            "codigo": "NCA1EA1102",
-                            "precio_pen": 334900.0,
-                            "precio_usd": 0.0
-                        },
-                        {
-                            "codigo": "NCA1EA1005",
-                            "precio_pen": 327300.0,
-                            "precio_usd": 0.0
-                        },
-                        {
-                            "codigo": "NCA1EA1004",
-                            "precio_pen": 327300.0,
-                            "precio_usd": 0.0
-                        },
-                        {
-                            "codigo": "NCA1EA1003",
-                            "precio_pen": 326500.0,
-                            "precio_usd": 0.0
-                        },
-                        {
-                            "codigo": "NCA1EA0905",
-                            "precio_pen": 328100.0,
-                            "precio_usd": 0.0
-                        },
-                        {
-                            "codigo": "NCA1EA0904",
-                            "precio_pen": 328100.0,
-                            "precio_usd": 0.0
-                        },
-                        {
-                            "codigo": "NCA1EA0903",
-                            "precio_pen": 327300.0,
-                            "precio_usd": 0.0
-                        },
-                        {
-                            "codigo": "NCA1EA0902",
-                            "precio_pen": 338400.0,
-                            "precio_usd": 0.0
-                        },
-                        {
-                            "codigo": "NCA1EA0304",
-                            "precio_pen": 335100.0,
-                            "precio_usd": 0.0
-                        }
-                    ],
-                    "estacionamientos": [
-                        {
-                            "proyecto": "1212",
-                            "precio_pen": 39000.0,
-                            "precio_usd": 40.0,
-                            "cantidad": 0
-                        }
-                    ]
-                }';*/
-                ###Test
                 #LogSapConnection
                 $description = 'Proyecto ' . $value->name_es . ' - Éxito.';
                 $lsc = new LogSapConnection();
@@ -224,12 +76,10 @@ class SapGetAvailableDepartments extends Command
                 $lsc->response = ["sap_code" => $value->sap_code, "project_id" => $value->id];
                 $lsc->save();
                 #EndLogSapConnection
+                $responseData = $countEstates = NULL;
                 $responseData = json_decode($responseSap->getBody());
                 $countEstates = count($responseData->inmuebles);
-                ###Test
-                /*$responseData = json_decode($responseSap);
-                $countEstates = count($responseData->inmuebles);*/
-                ###Test
+                //$estates = $departments = $updateDepartment = NULL;
                 #Array Inmuebles verificar si tiene objetos
                 if ($countEstates > 0) {
                     $estates = $responseData->inmuebles;
@@ -238,6 +88,7 @@ class SapGetAvailableDepartments extends Command
                     foreach ($departments as $key => $dep) {
                         foreach ($estates as $key2 => $value2) {
                             if($dep->sap_code == $value2->codigo ){
+                                Log::info('Hay en la base Id'.$dep->id.' Cod'.$value2->codigo);
                                 $price = $price_foreign = null;
                                 if($value2->precio_pen){
                                     $price = $value2->precio_pen;
@@ -245,15 +96,17 @@ class SapGetAvailableDepartments extends Command
                                 if($value2->precio_usd > 0){
                                     $price_foreign = $value2->precio_usd;   
                                 }
-                                $updateDepartment = $dep->update(['price' => $price, 'price_foreign' => $price_foreign,'available' => true]);
+                                $updateDepartment = Department::UpdateOrCreate(["id" => $dep->id ], ['price' => $price, 'price_foreign' => $price_foreign,'available' => true]);
                             }
                         }
                     }
                     #Actualizar Departamentos que no hay en el response a no disponible
                     $estatestArray = collect($estates);
+                    /*Log::info('Inside Inmuebles'.$value->name_es.' - '.$value->id);
+                    Log::info((string) $responseSap->getBody());*/
                     $estatesCodigoSapPlucked = $estatestArray->pluck('codigo');
                     $estatesCodigoSapPlucked = $estatesCodigoSapPlucked->all();
-                    $departmentsNotAvailable = Department::whereNotIn('sap_code',$estatesCodigoSapPlucked)->update(['available' => false]);
+                    $departmentsNotAvailable = Department::whereNotIn('sap_code',$estatesCodigoSapPlucked)->where('project_id',$value->id)->update(['available' => false]);
                 }
                 #Si no tiene todos pasan a No Disponibles
                 else{

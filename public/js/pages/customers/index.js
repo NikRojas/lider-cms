@@ -338,6 +338,30 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -350,9 +374,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     routeReturn: String,
     routeGetAll: String,
     route: String,
-    routeExport: String,
-    routeExportTotal: String,
-    routeExportFile: String
+    allExport: String,
+    filterExport: String
   },
   data: function data() {
     return {
@@ -379,7 +402,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       modalDestroy: false,
       loadingGetAll: false,
       loadingGet: false,
-      requestSubmit: false
+      requestExport: false
     };
   },
   components: {
@@ -396,54 +419,61 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       };
       this.modalExport = false;
     },
-    exportConfirm: function exportConfirm() {
+    allExportFunction: function allExportFunction() {
       var _this = this;
 
-      this.requestSubmit = true;
-      var url;
+      this.requestExport = true;
+      axios.get(this.allExport, {
+        responseType: "arraybuffer" //necesaario
 
-      if (this.exportOptions.total) {
-        url = this.routeExportTotal;
-      } else {
-        url = this.routeExport;
+      }).then(function (response) {
+        var downloadUrl = window.URL.createObjectURL(new Blob([response.data]));
+        var link = document.createElement("a");
+        link.href = downloadUrl;
+        link.setAttribute("download", "Líder Clientes.xlsx");
+        document.body.appendChild(link);
+        link.click();
+        link.remove();
+        _this.requestExport = false;
+      })["catch"](function (error) {
+        _this.requestExport = false;
+      });
+    },
+    filterExportFunction: function filterExportFunction() {
+      var _this2 = this;
+
+      this.requestExport = true;
+      var fd = new FormData();
+
+      if (this.exportOptions.range && this.exportOptions.range[0]) {
+        fd.append("from", this.exportOptions.range[0]);
       }
 
-      axios.post(url, this.exportOptions).then(function (response) {
-        _this.requestSubmit = false;
+      if (this.exportOptions.range && this.exportOptions.range[1]) {
+        fd.append("to", this.exportOptions.range[1]);
+      }
 
-        _this.restoreExport();
+      axios.post(this.filterExport, fd, {
+        responseType: "arraybuffer" //necesaario
 
-        window.open(response.data.route);
-        Swal.fire({
-          title: response.data.title,
-          text: response.data.message,
-          type: "success",
-          confirmButtonText: "Ok",
-          buttonsStyling: false,
-          customClass: {
-            confirmButton: "btn btn-primary"
-          }
-        });
+      }).then(function (response) {
+        var downloadUrl = window.URL.createObjectURL(new Blob([response.data]));
+        var link = document.createElement("a");
+        link.href = downloadUrl;
+        link.setAttribute("download", "Líder Clientes.xlsx");
+        document.body.appendChild(link);
+        link.click();
+        link.remove();
+        _this2.requestExport = false;
       })["catch"](function (error) {
-        _this.requestSubmit = false;
+        _this2.requestExport = false;
 
         if (error.response.status === 422) {
-          _this.errors = error.response.data.errors || {};
+          _this2.errors = {
+            range: ["Ingrese un rango válido"]
+          };
           return;
         }
-
-        _this.restoreExport();
-
-        Swal.fire({
-          title: error.response.data.title,
-          text: error.response.data.message,
-          type: "error",
-          confirmButtonText: "Ok",
-          buttonsStyling: false,
-          customClass: {
-            confirmButton: "btn btn-primary"
-          }
-        });
       });
     },
     exportData: function exportData() {
@@ -453,7 +483,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       window.location.href = this.route + '/' + id;
     },
     getEls: function getEls(page, itemsPerPage) {
-      var _this2 = this;
+      var _this3 = this;
 
       var q = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : null;
       this.loadingGetAll = true;
@@ -470,8 +500,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           range: this.filterDate.range
         } : {})
       }).then(function (response) {
-        _this2.elements = response.data;
-        _this2.loadingGetAll = false;
+        _this3.elements = response.data;
+        _this3.loadingGetAll = false;
       })["catch"](function (error) {});
     }
   },
@@ -863,11 +893,12 @@ var render = function() {
                       "button",
                       {
                         staticClass: "btn btn-icon btn-inverse-primary",
-                        on: {
-                          click: function($event) {
-                            return _vm.exportData()
-                          }
-                        }
+                        style: _vm.elements.total == 0 ? "opacity: 0.75" : "",
+                        attrs: {
+                          type: "button",
+                          disabled: _vm.elements.total == 0 ? true : false
+                        },
+                        on: { click: _vm.exportData }
                       },
                       [
                         _c(
@@ -878,7 +909,15 @@ var render = function() {
                           ],
                           1
                         ),
-                        _vm._v("\n              Exportar\n            ")
+                        _vm._v(" "),
+                        _c("span", { staticClass: "btn-inner--text" }, [
+                          _vm._v(
+                            "Exportar " +
+                              _vm._s(
+                                _vm.elements.total == 0 ? "(0 Clientes)" : ""
+                              )
+                          )
+                        ])
                       ]
                     )
                   ])
@@ -918,14 +957,23 @@ var render = function() {
                     [_vm._v("Cancelar")]
                   ),
                   _vm._v(" "),
-                  _c("Button", {
-                    attrs: {
-                      classes: ["btn-inverse-primary"],
-                      text: "Confirmar",
-                      "request-server": _vm.requestSubmit
-                    },
-                    on: { click: _vm.exportConfirm }
-                  })
+                  _vm.exportOptions.total
+                    ? _c("Button", {
+                        attrs: {
+                          classes: ["btn-inverse-primary"],
+                          text: "Confirmar",
+                          "request-server": _vm.requestExport
+                        },
+                        on: { click: _vm.allExportFunction }
+                      })
+                    : _c("Button", {
+                        attrs: {
+                          classes: ["btn-inverse-primary"],
+                          text: "Confirmar",
+                          "request-server": _vm.requestExport
+                        },
+                        on: { click: _vm.filterExportFunction }
+                      })
                 ]
               }
             }
@@ -1007,11 +1055,14 @@ var render = function() {
                           shortcuts: [],
                           lang: "es",
                           id: "range",
+                          "value-type": "format",
                           "input-class": "form-control",
-                          format: "D MMM YYYY",
+                          format: "HH:mm DD-MM-YYYY",
                           "range-separator": "-",
                           width: "100%",
-                          range: ""
+                          type: "datetime",
+                          range: "",
+                          "show-second": false
                         },
                         model: {
                           value: _vm.exportOptions.range,

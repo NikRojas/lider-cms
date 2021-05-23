@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers\Cms\OrdersStatistics;
 
+use App\Exports\OrderExport;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Cms\Export\RangeExportExcel;
 use App\Http\Requests\Cms\SalesStatistics\OrderExportRequest;
 use App\Http\Traits\CmsTrait;
 use App\Order;
@@ -94,96 +96,21 @@ class OrdersController extends Controller
         }
         return view("pages.sales-statistics.orders.read", compact('element'))->with('timeline', $timeline);
     }
-
-    public function export(OrderExportRequest $request)
+    
+    public function allExport()
     {
-        $from = date("Y-m-d 23:59:59", strtotime($request->range[0]));
-        $to = date("Y-m-d 23:59:59", strtotime($request->range[1]));
-        if ($from == $to) {
-            $orders = Order::has('orderDetailsRel')->has('transactionLatestRel')->whereDate('created_at', '=', date("Y-m-d", strtotime($request->range[0])))->count();
-        } else {
-            $orders = Order::has('orderDetailsRel')->has('transactionLatestRel')->whereBetween('created_at', [$from, $to])->count();
-        }
-        if (!$orders) {
-            return response()->json(['title' => trans('custom.title.error'), 'message' => trans('custom.message.export.no_data.range')], 500);
-        }
-        return response()->json(['title' => trans('custom.title.success'), 'message' => trans('custom.message.export.success'), 'route' => route('cms.sales-statistics.orders.export-file', ["from" => $from, "to" => $to])]);
+        $els = Order::has('orderDetailsRel')->has('transactionLatestRel')->with('customerRel:id,name,lastname,document_number,lastname_2,type_document_id','customerRel.documentTypeRel')->with('orderDetailsRel.departmentRel:id,description')->with('orderDetailsRel.projectRel:id,name_es')
+        ->with('transactionLatestRel.statusRel')->orderBy('created_at', 'asc')->get();
+        return new OrderExport(null, null, $els);
     }
 
-    public function exportTotal()
+    public function filterExport(RangeExportExcel $request)
     {
-        $orders = Order::first();
-        if (!$orders) {
-            return response()->json(['title' => trans('custom.title.error'), 'message' => trans('custom.message.export.no_data.total')], 500);
-        }
-        return response()->json(['title' => trans('custom.title.success'), 'message' => trans('custom.message.export.success'), 'route' => route('cms.sales-statistics.orders.export-file')]);
-    }
-
-    public function exportFile($from = null, $to = null)
-    {
-        $spreadsheet = new Spreadsheet();
-        $sheet = $spreadsheet->getActiveSheet();
-        if ($from && $to) {
-            if ($from == $to) {
-                $orders = Order::has('orderDetailsRel')->has('transactionLatestRel')->whereDate('created_at', '=', date("Y-m-d", strtotime($from)))
-                    ->with('customerRel:id,name,lastname')->with('orderDetailsRel.tipologyRel:id,name')->with('orderDetailsRel.projectRel:id,name_es')
-                    ->with('transactionLatestRel.statusRel')->orderBy('created_at', 'desc')->get();
-            } else {
-                $orders = Order::has('orderDetailsRel')->has('transactionLatestRel')->whereBetween('created_at', [date("Y-m-d", strtotime($from)), date("Y-m-d", strtotime($to))])
-                    ->with('customerRel:id,name,lastname')->with('orderDetailsRel.tipologyRel:id,name')->with('orderDetailsRel.projectRel:id,name_es')
-                    ->with('transactionLatestRel.statusRel')->orderBy('created_at', 'desc')->get();
-            }
-            $sheet->setTitle('' . (new Carbon($from))->format('d-m-Y') . ' hasta ' . (new Carbon($to))->format('d-m-Y'));
-            $fileName = 'Ventas ' . (new Carbon($from))->format('d-m-Y') . ' hasta ' . (new Carbon($to))->format('d-m-Y') . '.xls';
-        } else {
-            $orders = Order::has('orderDetailsRel')->has('transactionLatestRel')->orderBy('created_at', 'desc')->get();
-            $sheet->setTitle('Total');
-            $fileName = 'Ventas Totales.xls';
-        }
-        $style = [
-            'font' => [
-                'bold' => true,
-                'color' => ['rgb' => 'FFFFFF'],
-                'size'  => 12,
-            ],
-            'fill' => [
-                'fillType' => Fill::FILL_SOLID,
-                'color' => ['rgb' => '1762e6']
-            ]
-        ];
-        $sheet->getStyle('A1:F1')->applyFromArray($style);
-        $sheet->setCellValue('A1', 'CODIGO');
-        $sheet->setCellValue('B1', 'FECHA');
-        $sheet->setCellValue('C1', 'CLIENTE NOMBRES');
-        $sheet->setCellValue('D1', 'CLIENTE APELLIDOS');
-        $sheet->setCellValue('E1', 'RESERVA PROYECTO');
-        $sheet->setCellValue('F1', 'RESERVA TIPOLOGIA');
-        $sheet->setCellValue('G1', 'TOTAL');
-        $sheet->setCellValue('H1', 'ESTADO DE PAGO');
-        $sheet->setAutoFilter('A1:H1');
-        foreach ($orders as $key => $el) {
-            $sheet->setCellValue('A' . ($key + 2), '#' . $el->id);
-            $sheet->setCellValue('B' . ($key + 2), $el->order_date_format_table);
-            $sheet->setCellValue('C' . ($key + 2), $el->customerRel["name"]);
-            $sheet->setCellValue('D' . ($key + 2), $el->customerRel["lastname"]);
-            $sheet->setCellValue('E' . ($key + 2), $el->orderDetailsRel["projectRel"]["name_es"]);
-            $sheet->setCellValue('F' . ($key + 2), $el->orderDetailsRel["tipologyRel"]["name"]);
-            $sheet->setCellValue('G' . ($key + 2), $el->total_format);
-            $sheet->setCellValue('H' . ($key + 2), $el->transactionLatestRel["statusRel"]["name"]);
-        }
-        $sheet->getStyle('A1:H1')->applyFromArray($style);
-        $sheet->getColumnDimension('A')->setAutoSize(true);
-        $sheet->getColumnDimension('B')->setAutoSize(true);
-        $sheet->getColumnDimension('C')->setAutoSize(true);
-        $sheet->getColumnDimension('D')->setAutoSize(true);
-        $sheet->getColumnDimension('E')->setAutoSize(true);
-        $sheet->getColumnDimension('F')->setAutoSize(true);
-        $sheet->getColumnDimension('G')->setAutoSize(true);
-        $writer = new Xls($spreadsheet);
-        header('Content-Type: application/vnd.ms-excel');
-        header('Content-Disposition: attachment; filename="' . $fileName . '"');
-        header('Cache-Control: max-age=0');
-        return $writer->save("php://output");
+        $from = date("Y-m-d H:i:s", strtotime($request->from));
+        $to = date("Y-m-d H:i:s", strtotime($request->to));
+        $els = Order::has('orderDetailsRel')->has('transactionLatestRel')->with('customerRel:id,name,lastname,document_number,lastname_2,type_document_id','customerRel.documentTypeRel')->with('orderDetailsRel.departmentRel:id,description')->with('orderDetailsRel.projectRel:id,name_es')
+        ->with('transactionLatestRel.statusRel')->whereBetween('created_at', [$from,$to])->orderBy('created_at', 'asc')->get();
+        return (new OrderExport($from,$to,$els));
     }
 
     public function resendEmail(Order $element, Request $request)

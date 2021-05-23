@@ -41,4 +41,9 @@ class Customer extends Model
     {
         return $this->hasMany('App\Order', 'customer_id', 'id');
     }
+
+    public function documentTypeRel()
+    {
+        return $this->hasOne('App\MasterDocumentType','id','type_document_id');
+    }
 }

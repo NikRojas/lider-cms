@@ -6,7 +6,7 @@
           <div class="row align-items-center pt-0 pt-md-2 pb-4">
             <div class="col-12 col-lg-7">
               <BreadCrumb
-                :title="'Cliente ' + element.name + ' ' +  element.lastname"
+                :title="'Cliente ' + element.full_name"
                 parent
                 active="Clientes"
               ></BreadCrumb>
@@ -35,7 +35,7 @@
                   style="font-size: 26px !important;"
                 >{{element.avatar_initials}}</span>
                 <div class="media-body ml-3">
-                  <span class="mb-0 h2 font-weight-semibold">{{ element.name}} {{ element.lastname}}</span>
+                  <span class="mb-0 h2 font-weight-semibold">{{ element.full_name }} </span>
                   <div>Registrado el {{ element.created_at_format }}</div>
                 </div>
               </div>
@@ -50,7 +50,7 @@
                     ></jam-id-card>
                   </div>
                   <div class="col pl-0">
-                    <span class="h3 font-weight-normal">DNI</span>
+                    <span class="h3 font-weight-normal">{{ element.document_type_rel.description}}</span>
                     <h3>{{ element.document_number}}</h3>
                   </div>
                 </div>

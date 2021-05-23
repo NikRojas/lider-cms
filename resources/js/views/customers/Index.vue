@@ -30,12 +30,18 @@
             <div class="col-6">
           <FilterDateRange  :active.sync="filterDate.active"  :range.sync="filterDate.range" @get="getEls(1, elementsPerPage)"/>
             </div>
-          <div class="col-6 text-right">
-              <button class="btn btn-icon btn-inverse-primary" @click="exportData()">
+           <div class="col-6 text-right">
+              <button
+                type="button"
+                class="btn btn-icon btn-inverse-primary"
+                @click="exportData"
+                :disabled="elements.total == 0 ? true : false"
+                :style="elements.total == 0 ? 'opacity: 0.75' : ''"
+              >
                 <span class="btn-inner--icon">
                   <jam-download class="current-color" />
                 </span>
-                Exportar
+                <span class="btn-inner--text">Exportar {{ elements.total == 0 ? '(0 Clientes)' : '' }}</span>
               </button>
             </div>
           </div>
@@ -81,11 +87,14 @@
               v-model="exportOptions.range"
               lang="es"
               id="range"
+              value-type="format"
               input-class="form-control"
-              format="D MMM YYYY"
+              format="HH:mm DD-MM-YYYY"
               range-separator="-"
               width="100%"
+              type="datetime"
               range
+              :show-second="false"
             >
               <slot name="icon-calendar">
                 <jam-users></jam-users>
@@ -101,12 +110,27 @@
       </div>
       <template v-slot:modal-footer="{ ok }">
         <button type="button" class="btn btn-secondary" @click="restoreExport">Cancelar</button>
-        <Button
+        <!--<Button
           :classes="['btn-inverse-primary']"
           text="Confirmar"
           @click="exportConfirm"
-          :request-server="requestSubmit"
+          :request-server="requestExport"
+        ></Button>-->
+        <Button
+          v-if="exportOptions.total"
+          :classes="['btn-inverse-primary']"
+          text="Confirmar"
+          @click="allExportFunction"
+          :request-server="requestExport"
         ></Button>
+        <Button
+          v-else
+          :classes="['btn-inverse-primary']"
+          text="Confirmar"
+          @click="filterExportFunction"
+          :request-server="requestExport"
+        ></Button>
+
       </template>
     </b-modal>
     
@@ -125,9 +149,8 @@ export default {
     routeReturn: String,
     routeGetAll: String,
     route: String,
-    routeExport: String,
-    routeExportTotal: String,
-    routeExportFile: String
+    allExport: String,
+    filterExport: String,
   },
   data() {
     return {
@@ -151,7 +174,7 @@ export default {
       modalDestroy: false,
       loadingGetAll: false,
       loadingGet: false,
-      requestSubmit: false,
+      requestExport: false,
     };
   },
   components: {
@@ -163,52 +186,62 @@ export default {
   methods: {
     restoreExport() {
       this.exportOptions = {total: true,
-        range: null};
+      range: null};
       this.modalExport = false;
-      
     },
-    exportConfirm() {
-      this.requestSubmit = true;
-      let url;
-      if (this.exportOptions.total) {
-        url = this.routeExportTotal;
-      } else {
-        url = this.routeExport;
-      }
+    allExportFunction() {
+      this.requestExport = true;
       axios
-        .post(url, this.exportOptions)
+        .get(this.allExport, {
+          responseType: "arraybuffer", //necesaario
+        })
         .then((response) => {
-          this.requestSubmit = false;
-          this.restoreExport();
-          window.open(response.data.route);
-          Swal.fire({
-            title: response.data.title,
-            text: response.data.message,
-            type: "success",
-            confirmButtonText: "Ok",
-            buttonsStyling: false,
-            customClass: {
-              confirmButton: "btn btn-primary",
-            },
-          });
+          const downloadUrl = window.URL.createObjectURL(
+            new Blob([response.data])
+          );
+          const link = document.createElement("a");
+          link.href = downloadUrl;
+          link.setAttribute("download", "Líder Clientes.xlsx");
+          document.body.appendChild(link);
+          link.click();
+          link.remove();
+          this.requestExport = false;
         })
         .catch((error) => {
-          this.requestSubmit = false;
+          this.requestExport = false;
+        });
+    },
+    filterExportFunction() {
+      this.requestExport = true;
+      const fd = new FormData();
+      if (this.exportOptions.range && this.exportOptions.range[0]) {
+        fd.append("from", this.exportOptions.range[0]);
+      }
+      if (this.exportOptions.range && this.exportOptions.range[1]) {
+        fd.append("to", this.exportOptions.range[1]);
+      }
+      axios
+        .post(this.filterExport, fd, {
+          responseType: "arraybuffer", //necesaario
+        })
+        .then((response) => {
+          const downloadUrl = window.URL.createObjectURL(
+            new Blob([response.data])
+          );
+          const link = document.createElement("a");
+          link.href = downloadUrl;
+          link.setAttribute("download", "Líder Clientes.xlsx");
+          document.body.appendChild(link);
+          link.click();
+          link.remove();
+          this.requestExport = false;
+        })
+        .catch((error) => {
+          this.requestExport = false;
           if (error.response.status === 422) {
-            this.errors = error.response.data.errors || {};
+            this.errors = { range : ["Ingrese un rango válido"]};
             return;
           }
-          this.restoreExport();
-          Swal.fire({
-            title: error.response.data.title,
-            text: error.response.data.message,
-            type: "error",
-            confirmButtonText: "Ok",
-            buttonsStyling: false,
-            customClass: {
-              confirmButton: "btn btn-primary",
-            },
-          });
         });
     },
     exportData() {

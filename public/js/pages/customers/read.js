@@ -294,11 +294,7 @@ var render = function() {
                 [
                   _c("BreadCrumb", {
                     attrs: {
-                      title:
-                        "Cliente " +
-                        _vm.element.name +
-                        " " +
-                        _vm.element.lastname,
+                      title: "Cliente " + _vm.element.full_name,
                       parent: "",
                       active: "Clientes"
                     }
@@ -351,11 +347,7 @@ var render = function() {
                 _vm._v(" "),
                 _c("div", { staticClass: "media-body ml-3" }, [
                   _c("span", { staticClass: "mb-0 h2 font-weight-semibold" }, [
-                    _vm._v(
-                      _vm._s(_vm.element.name) +
-                        " " +
-                        _vm._s(_vm.element.lastname)
-                    )
+                    _vm._v(_vm._s(_vm.element.full_name) + " ")
                   ]),
                   _vm._v(" "),
                   _c("div", [
@@ -383,7 +375,7 @@ var render = function() {
                   _vm._v(" "),
                   _c("div", { staticClass: "col pl-0" }, [
                     _c("span", { staticClass: "h3 font-weight-normal" }, [
-                      _vm._v("DNI")
+                      _vm._v(_vm._s(_vm.element.document_type_rel.description))
                     ]),
                     _vm._v(" "),
                     _c("h3", [_vm._v(_vm._s(_vm.element.document_number))])

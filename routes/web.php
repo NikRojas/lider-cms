@@ -131,14 +131,12 @@ Route::middleware(['auth'])->namespace('Cms')->name('cms.')->group(function () {
         });
     });
 
-    #Customers
     Route::namespace('OrdersStatistics')->prefix('ventas-estadisticas')->name('sales-statistics.')->group(function () {
         Route::name('orders.')->prefix('ventas')->group(function () {
             Route::get('/', 'OrdersController@index')->name('index');
             Route::get('/json/get-all', 'OrdersController@getAll')->name('get-all');
-            Route::post('export', 'OrdersController@export')->name('export');
-            Route::post('export/total', 'OrdersController@exportTotal')->name('export-total');
-            Route::get('export/{from?}/{to?}', 'OrdersController@exportFile')->name('export-file');
+            Route::get('/all-export', 'OrdersController@allExport')->name('all-export');
+            Route::post('/filter-export', 'OrdersController@filterExport')->name('filter-export');
             Route::post('resend/{element}', 'OrdersController@resendEmail')->name('resend');
             Route::get('/{element}', 'OrdersController@read')->name('read');
         });
@@ -152,9 +150,8 @@ Route::middleware(['auth'])->namespace('Cms')->name('cms.')->group(function () {
     Route::namespace('Customers')->prefix('clientes')->name('customers.')->group(function () {
         Route::get('/', 'CustomersController@index')->name('index');
         Route::get('/json/get-all', 'CustomersController@getAll')->name('get-all');
-        Route::post('export', 'CustomersController@export')->name('export');
-        Route::post('export/total', 'CustomersController@exportTotal')->name('export-total');
-        Route::get('export/{from?}/{to?}', 'CustomersController@exportFile')->name('export-file');
+        Route::get('/all-export', 'CustomersController@allExport')->name('all-export');
+        Route::post('/filter-export', 'CustomersController@filterExport')->name('filter-export');
         Route::get('/{element}', 'CustomersController@read')->name('read');
     });
  

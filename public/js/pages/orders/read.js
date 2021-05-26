@@ -286,6 +286,52 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -310,19 +356,55 @@ __webpack_require__.r(__webpack_exports__);
       element: {},
       modalResend: false,
       resendElement: {},
-      requestSubmit: false
+      requestSubmit: false,
+      requestSap: false,
+      sap: {
+        sended: false,
+        success: false,
+        message: ''
+      }
     };
   },
   methods: {
-    resendConfirm: function resendConfirm() {
+    reloadPage: function reloadPage() {
+      window.location.reload();
+    },
+    sendToSap: function sendToSap() {
       var _this = this;
+
+      this.requestSap = true;
+      axios.post(this.routeResend + '/sap/' + this.elementParent.id).then(function (response) {
+        _this.requestSap = false;
+        _this.sap.message = response.data.message;
+        _this.sap.sended = true;
+        _this.sap.success = response.data.success;
+
+        if (!response.data.success) {
+          setTimeout(function () {
+            _this.sap.message = '';
+            _this.sap.success = false;
+            _this.sap.sended = false;
+          }, 5000);
+        }
+      })["catch"](function (error) {
+        _this.requestSap = false;
+        _this.sap.sended = true;
+        _this.sap.message = error.response.data.message;
+        setTimeout(function () {
+          _this.sap.message = '';
+          _this.sap.sended = false;
+        }, 5000);
+      });
+    },
+    resendConfirm: function resendConfirm() {
+      var _this2 = this;
 
       this.requestSubmit = true;
       axios.post(this.routeResend + '/resend/' + this.resendElement.data.order_id, this.resendElement).then(function (response) {
-        _this.requestServer = false;
+        _this2.requestServer = false;
         document.location.href = response.data.route;
       })["catch"](function (error) {
-        _this.requestServer = false;
+        _this2.requestServer = false;
         document.location.href = error.response.data.route;
       });
     },
@@ -530,16 +612,6 @@ var render = function() {
                       }
                     }),
                     _vm._v(" "),
-                    _vm.element.proforma_number
-                      ? _c("h3", { staticClass: "font-weight-normal mb-1" }, [
-                          _vm._v(
-                            "Número de Proforma: " +
-                              _vm._s(_vm.element.proforma_number)
-                          )
-                        ])
-                      : _c("h3", { staticClass: "font-weight-normal mb-1" }, [
-                          _vm._v("No hay Número de Proforma")
-                        ]),
                     _vm._v(
                       "\n            Registrado el " +
                         _vm._s(_vm.element.order_date_format) +
@@ -1020,20 +1092,16 @@ var render = function() {
                         _vm.routeCustomer + "/" + _vm.element.customer_rel.slug
                     }
                   },
-                  [
-                    _vm._v(
-                      _vm._s(
-                        _vm.element.customer_rel.name +
-                          " " +
-                          _vm.element.customer_rel.lastname
-                      )
-                    )
-                  ]
+                  [_vm._v(_vm._s(_vm.element.customer_rel.full_name))]
                 ),
                 _vm._v(" "),
                 _c("h3", { staticClass: "font-weight-normal" }, [
                   _vm._v(
-                    "DNI " + _vm._s(_vm.element.customer_rel.document_number)
+                    _vm._s(
+                      _vm.element.customer_rel.document_type_rel.description
+                    ) +
+                      ": " +
+                      _vm._s(_vm.element.customer_rel.document_number)
                   )
                 ]),
                 _vm._v(" "),
@@ -1065,7 +1133,137 @@ var render = function() {
                   )
                 ])
               ])
-            ])
+            ]),
+            _vm._v(" "),
+            _vm.element.advisor_id &&
+            _vm.element.transaction_latest_rel.status_rel.name == "Pagado"
+              ? _c("div", { staticClass: "card mt-4" }, [
+                  _c("div", { staticClass: "card-body" }, [
+                    _c("h2", [_vm._v("Asignado a")]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "h3 text-primary" }, [
+                      _vm._v(_vm._s(_vm.element.advisor_rel.name))
+                    ]),
+                    _vm._v(" "),
+                    _c("h3", { staticClass: "font-weight-normal" }, [
+                      _vm._v("Email: " + _vm._s(_vm.element.advisor_rel.email))
+                    ])
+                  ])
+                ])
+              : _vm._e(),
+            _vm._v(" "),
+            _vm.element.advisor_id &&
+            _vm.element.transaction_latest_rel.status_rel.name == "Pagado"
+              ? _c("div", { staticClass: "card mt-4" }, [
+                  _c("div", { staticClass: "card-body" }, [
+                    _c("h2", [_vm._v("Conexión SAP")]),
+                    _vm._v(" "),
+                    _vm.element.transaction_latest_rel.status_rel.name ==
+                    "Pagado"
+                      ? _c("div", [
+                          _vm.element.sended_to_sap
+                            ? _c("div", [
+                                _c("p", [
+                                  _vm._v(
+                                    "\n                  La reserva se envío a SAP\n                "
+                                  )
+                                ]),
+                                _vm._v(" "),
+                                _c(
+                                  "h3",
+                                  { staticClass: "font-weight-normal" },
+                                  [
+                                    _vm._v(
+                                      "Fecha: " +
+                                        _vm._s(
+                                          _vm.element.sended_sap_date_format
+                                        )
+                                    )
+                                  ]
+                                ),
+                                _vm._v(" "),
+                                _c(
+                                  "h3",
+                                  { staticClass: "font-weight-normal" },
+                                  [
+                                    _vm._v(
+                                      "Código: " +
+                                        _vm._s(_vm.element.sended_code_sap)
+                                    )
+                                  ]
+                                )
+                              ])
+                            : _c("div", [
+                                !_vm.sap.success
+                                  ? _c(
+                                      "div",
+                                      [
+                                        _c("p", [
+                                          _vm._v(
+                                            "\n                    La reserva no se pudo enviar a SAP. \n                  "
+                                          )
+                                        ]),
+                                        _vm._v(" "),
+                                        _c("Button", {
+                                          attrs: {
+                                            text: "Enviar",
+                                            classes: ["btn-inverse-primary"],
+                                            "request-server": _vm.requestSap
+                                          },
+                                          on: { click: _vm.sendToSap }
+                                        })
+                                      ],
+                                      1
+                                    )
+                                  : _vm._e(),
+                                _vm._v(" "),
+                                _vm.sap.sended
+                                  ? _c(
+                                      "div",
+                                      {
+                                        staticClass: "mt-2 ",
+                                        class: _vm.sap.success
+                                          ? "text-success"
+                                          : "text-danger"
+                                      },
+                                      [
+                                        _vm._v(
+                                          "\n                  " +
+                                            _vm._s(_vm.sap.message) +
+                                            "\n                  "
+                                        ),
+                                        _vm.sap.success
+                                          ? _c("div", { staticClass: "mt-2" }, [
+                                              _c(
+                                                "a",
+                                                {
+                                                  staticClass:
+                                                    "btn btn-primary",
+                                                  attrs: { href: "#" },
+                                                  on: {
+                                                    click: function($event) {
+                                                      $event.preventDefault()
+                                                      return _vm.reloadPage()
+                                                    }
+                                                  }
+                                                },
+                                                [_vm._v("Recargar")]
+                                              )
+                                            ])
+                                          : _vm._e()
+                                      ]
+                                    )
+                                  : _vm._e()
+                              ])
+                        ])
+                      : _c("div", [
+                          _vm._v(
+                            "\n              No se puede enviar ya que no se concluyó con la separación del inmueble.\n            "
+                          )
+                        ])
+                  ])
+                ])
+              : _vm._e()
           ])
         ])
       ]),

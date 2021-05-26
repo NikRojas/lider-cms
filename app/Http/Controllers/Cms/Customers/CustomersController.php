@@ -33,8 +33,12 @@ class CustomersController extends Controller
     }
 
     public function read(Customer $element){
-        $element = $element->load('ordersRel')->load('documentTypeRel')->load('ordersRel.orderDetailsRel.projectRel:id,name_es,slug_es','ordersRel.orderDetailsRel.departmentRel.viewRel'
-        ,'ordersRel.orderDetailsRel.departmentRel.tipologyRel');
+        $element = $element->load(['ordersRel' => function ($query) {
+            #Ordenes solo que tienen transacciones
+            $query->has('transactionsRel')->with('orderDetailsRel.projectRel:id,name_es,slug_es','orderDetailsRel.departmentRel.viewRel'
+            ,'orderDetailsRel.departmentRel.tipologyRel');
+        }])
+        ->load('documentTypeRel');
         return view ("pages.customers.read", compact('element'));   
     }
 

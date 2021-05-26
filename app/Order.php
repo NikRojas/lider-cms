@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Order extends Model
 {
-    protected $appends = ['order_date_format','total_format','order_date_format_table'];
+    protected $appends = ['order_date_format','total_format','order_date_format_table','sended_sap_date_format'];
     protected $guarded = [];
     
     public function getOrderDateFormatAttribute() {
@@ -42,5 +42,16 @@ class Order extends Model
     public function transactionLatestRel()
     {
         return $this->hasOne('App\Transaction', 'order_id', 'id')->latest();
+    }
+
+    public function advisorRel()
+    {
+        return $this->hasOne('App\Advisor', 'id', 'advisor_id');
+    }
+
+    public function getSendedSapDateFormatAttribute() {
+        if($this->sended_to_sap_date){
+            return (new Carbon($this->sended_to_sap_date))->isoFormat('DD MMMM YYYY [a las] h:mm a');
+        }
     }
 }

@@ -214,7 +214,8 @@ return [
         'price' => 'precio',
         'link_jobs' => 'link trabaja con nosotros',
         'sap_code' => 'código sap',
-        'parent_type_department_id' => 'tipo de inmueble'
+        'parent_type_department_id' => 'tipo de inmueble',
+        'user' => 'usuario'
     ],
 
 ];

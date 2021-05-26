@@ -82,6 +82,7 @@ const app = new Vue({
         'projects-blueprints-index': () => import('./views/projects/blueprints/Index.vue' /* webpackChunkName: "js/pages/projects/blueprints/index" */),
         'projects-quotations-index': () => import('./views/projects/quotations/Index.vue' /* webpackChunkName: "js/pages/projects/quotations/index" */),
         'projects-virtual-index': () => import('./views/projects/virtual/Index.vue' /* webpackChunkName: "js/pages/projects/virtual/index" */),
+        'projects-credentials-index': () => import('./views/projects/credentials/Index.vue' /* webpackChunkName: "js/pages/projects/credentials/index" */),
 
         'complaints-book': () => import('./views/ComplaintsBook.vue' /* webpackChunkName: "js/pages/complaints-book" */),
         'suscribers': () => import('./views/Suscribers.vue' /* webpackChunkName: "js/pages/suscribers" */),

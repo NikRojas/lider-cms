@@ -10,7 +10,7 @@ class CustomerRepository
     public function datatable($date, $range = false, $items_per_page, $q = false)
     {
         if ($q) {
-            $elements = Customer::select("id", "name","slug", "lastname",'lastname_2', "email", "document_number",  'created_at')
+            $elements = Customer::select("id", "name","slug", "lastname",'lastname_2', "email", "document_number",'type_document_id',  'created_at')
             ->where(function($query) use ($q){
                 return $query->where('name', 'like', '%' . $q . '%')
                 ->orWhere('lastname', 'like', '%' . $q . '%')
@@ -18,7 +18,7 @@ class CustomerRepository
                 ->orWhere('document_number', 'like', '%' . $q . '%');
             });
         } else {
-            $elements = Customer::select("id", "name","slug", "lastname",'lastname_2', "email", "document_number",  'created_at');
+            $elements = Customer::select("id", "name","slug", "lastname",'lastname_2', "email", "document_number",'type_document_id',  'created_at');
         }
         switch ($date) {
             case 'all':
@@ -47,19 +47,23 @@ class CustomerRepository
                 $elements->whereYear('created_at', '=', date('Y'));
                 break;
         }
-        //Pedido con Transaccion 
-        //Falta la transaccion
         $elements = $elements
-            ->with('ordersRel')
-            ->withCount('ordersRel')
+            ->with('documentTypeRel')
+            ->with('ordersRel.transactionsRel')
             ->orderBy('created_at', 'desc')
             ->paginate($items_per_page);
         foreach ($elements as $element) {
+            $countOrders = 0;
+            foreach ($element["ordersRel"] as $key => $value) {
+                if(count($value["transactionsRel"])){
+                    $countOrders++;
+                }
+            }
             $data[] = array(
                 "id" => $element["slug"],
                 "name" => $element["full_name"],
-                "document_number" => $element["document_number"],
-                "sales" => $element["orders_rel_count"].' Reservas',
+                "document_number" => '<strong>'.$element["documentTypeRel"]["description"].'</strong> <br> '.$element["document_number"],
+                "sales" => $countOrders,
                 "created_at" => $element["created_at_format"],
             );
         }

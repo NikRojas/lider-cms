@@ -247,11 +247,23 @@
                     </div>
                     <div class="row">
                        <div class="col-12 mb-2">
-                             <a
+                         <div class="row">
+                           <div class="col-8">
+                              <a
                               :href="'proyectos/inmuebles/' + el.slug_es"
                               class="btn btn-sm mb-2 btn-inverse-primary btn-block"
                               >Ir a Inmuebles del Proyecto</a
                             >
+                           </div>
+                           <div class="col-4">
+
+                             <a  :href="'proyectos/credenciales-pasarela/' + el.slug_es"
+                              class="btn btn-sm mb-2 btn-inverse-primary btn-block">
+                               Ir a Credenciales Pasarela
+                             </a>
+                           </div>
+                         </div>
+                            
                         </div>
                       <div class="col-12">
                         <div class="d-flex" style="flex-flow: row wrap;

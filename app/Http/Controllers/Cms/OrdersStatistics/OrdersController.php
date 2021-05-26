@@ -6,6 +6,7 @@ use App\Exports\OrderExport;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Cms\Export\RangeExportExcel;
 use App\Http\Traits\CmsTrait;
+use App\LogSapConnection;
 use App\Order;
 use App\MasterTransactionStatus;
 use App\Notifications\OrderNotPaid;
@@ -14,7 +15,9 @@ use App\Notifications\OrderReceived;
 use App\Project;
 use App\Repositories\OrderRepository;
 use Carbon\Carbon;
+use GuzzleHttp\Client;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 class OrdersController extends Controller
 {
@@ -30,7 +33,7 @@ class OrdersController extends Controller
     public function getAll(Request $request, OrderRepository $repo)
     {
         $q = $request->q;
-        $headers = ["Id", "Código", "Fecha", "Cliente", "Reserva Detalle", "Total", "Estado de Pago"];
+        $headers = ["Id", "Código", "Fecha", "Cliente", "Reserva Detalle", "Total", "Estado de Pago", "Enviado a SAP"];
         $projects = [];
         $transactions = [];
         if($request->projects){
@@ -50,7 +53,7 @@ class OrdersController extends Controller
 
     public function read(Order $element)
     {
-        $element = $element->load('customerRel', 'orderDetailsRel.projectRel:id,name_es,slug_es,price_separation'
+        $element = $element->load('advisorRel','customerRel.documentTypeRel', 'orderDetailsRel.projectRel:id,name_es,slug_es,price_separation'
         , 'orderDetailsRel.departmentRel.viewRel', 'orderDetailsRel.departmentRel.tipologyRel', 'transactionsRel.statusRel', 'transactionLatestRel.statusRel');
         $element["type"] = "Reserve Created";
         $timelineTemp = [];
@@ -138,6 +141,88 @@ class OrdersController extends Controller
         } catch (\Exception $e) {
             $request->session()->flash('error', trans('custom.message.resend.error'));
             return response()->json(["route" => route('cms.sales-statistics.orders.read',["element" => $element->id])], 500);
+        }
+    }
+
+    //private $url = 'https://apps.lider.com.pe:8072/api/cliente/inmuebles/reserva';
+
+    public function sendToSap(Order $element){
+        $element = $element->load('customerRel.documentTypeRel')->load('advisorRel')->load('orderDetailsRel.departmentRel');
+        $type = 'Reserva Inmueble';
+        $estate = $element->orderDetailsRel->first();
+        $description = 'Reserva ' . $element->id . ' Inmueble '.$estate->description.'(Código SAP: '.$estate->departmentRel->sap_code.')' ;
+        if($element->advisor_id){
+            if($element->advisorRel->sap_code){
+                $slug = Str::random(20);
+                try {
+                    #Hacer las pruebas con SAP
+                    $client = new Client();
+                    $responseSap = $client->request('POST', $this->url,  [
+                        'form_params' => [
+                            'nro_documento' => $element->customerRel->document_number,
+                            'tipo_documento' => $element->customerRel->documentTypeRel->sap_code,
+                            'nombre' =>  $element->customerRel->name,
+                            'apellido_paterno' => $element->customerRel->lastname,
+                            'apellido_materno' => $element->customerRel->lastname_2,
+                            'telefono' => $element->customerRel->mobile,
+                            'correo' => $element->customerRel->email,
+                            'inmueble' => $element->orderDetailsRel->first()->departmentRel->sap_code,
+                            'vendedor' => $element->advisorRel->sap_code,
+                        ]
+                    ]);
+                    $status = $responseSap->getStatusCode();
+                    $responseData = json_decode($responseSap->getBody());
+                    /*$status = 200;
+                    $responseSap = '{
+                        "exito": false,
+                        "reserva": "0040000200",
+                        "mensaje": ""
+                    }';
+                    $responseData = json_decode($responseSap);*/
+                    if($responseData->exito){
+                        $element->sended_to_sap = 1;
+                        $element->sended_to_sap_date = Carbon::now();
+                        $element->sended_code_sap = $responseData->reserva;
+                        $element->save();
+                        #LogSapConnection
+                        $lsc = new LogSapConnection();
+                        $lsc->type = $type;
+                        $lsc->status = $status;
+                        $lsc->slug = $slug;
+                        $lsc->description = $description. ' - Éxito.';
+                        $lsc->response =  (string) $responseSap->getBody();
+                        #Test
+                        //$lsc->response =  (string) $responseSap;
+                        $lsc->save();
+                        #EndLogSapConnection
+                        return response()->json(["success" => true, 'message' => 'La reserva envío con éxito.']);
+                    }
+                    else{
+                        #LogSapConnection
+                        $lsc = new LogSapConnection();
+                        $lsc->type = $type;
+                        $lsc->status = $status;
+                        $lsc->slug = $slug;
+                        $lsc->description = $description. ' - Error.';
+                        $lsc->response =  (string) $responseSap->getBody();
+                        #Test
+                        //$lsc->response =  (string) $responseSap;
+                        $lsc->save();
+                        #EndLogSapConnection
+                        return response()->json(["success" => false, 'message' => 'Lo sentimos, ocurrió un error en SAP al registrar la reserva.']);
+                    }
+                    
+                }
+                catch (\GuzzleHttp\Exception\RequestException $e) {
+                    return response()->json(["success" => false, 'message' => 'Lo sentimos, no se pudo enviar la reserva.'], 500);
+                }
+            }
+            else{
+                return response()->json(["success" => false,'message' => 'El asesor no tiene código SAP.'], 500); 
+            }
+        }
+        else{
+            return response()->json(["success" => false,'message' => 'La reserva no tiene un asesor asignado.'], 500); 
         }
     }
 }

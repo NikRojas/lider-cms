@@ -48,7 +48,7 @@ class CustomerRequest extends FormRequest
           'lastname_2' => 'required|max:170',
           'type_document_id' => 'required',
           'email' => 'required|max:100|email',
-          'mobile' => 'required|digits_between:7,9',
+          'mobile' => 'required|digits:9',
           //'document_number' => 'required|digits:8',
           'document_number' => 'required',
           'accepted' => 'accepted'

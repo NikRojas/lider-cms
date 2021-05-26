@@ -10,11 +10,11 @@
                 parent="Ventas y Estadísticas"
                 active="Ventas"
               ></BreadCrumb>
-              <h3
+              <!--<h3
                 class="font-weight-normal mb-1"
                 v-if="element.proforma_number"
               >Número de Proforma: {{ element.proforma_number}}</h3>
-              <h3 class="font-weight-normal mb-1" v-else>No hay Número de Proforma</h3>
+              <h3 class="font-weight-normal mb-1" v-else>No hay Número de Proforma</h3>-->
               Registrado el {{element.order_date_format}}
             </div>
             <div class="col-12 col-lg text-right">
@@ -165,8 +165,8 @@
                 :href="routeCustomer+'/'+element.customer_rel.slug"
                 class="h3 text-primary"
                 style="text-decoration:underline;"
-              >{{element.customer_rel.name +' '+element.customer_rel.lastname}}</a>
-              <h3 class="font-weight-normal">DNI {{element.customer_rel.document_number}}</h3>
+              >{{element.customer_rel.full_name}}</a>
+              <h3 class="font-weight-normal">{{ element.customer_rel.document_type_rel.description }}: {{element.customer_rel.document_number}}</h3>
 
               <div class="mb-1">
                 <a
@@ -181,6 +181,52 @@
                   style="text-decoration:underline;"
                   :href="'tel:+51'+element.customer_rel.mobile"
                 >{{ element.customer_rel.mobile_formatted}}</a>
+              </div>
+            </div>
+          </div>
+          <!-- Cuando es rechazado o algun estado que fallo no se muestra --->
+          <div class="card mt-4" v-if="element.advisor_id && element.transaction_latest_rel.status_rel.name == 'Pagado'">
+            <div class="card-body">
+              <h2>Asignado a</h2>
+              <div
+                class="h3 text-primary"
+              >{{element.advisor_rel.name}}</div>
+              <h3 class="font-weight-normal">Email: {{element.advisor_rel.email}}</h3>
+            </div>
+          </div>
+          <div class="card mt-4" v-if="element.advisor_id && element.transaction_latest_rel.status_rel.name == 'Pagado'">
+            <div class="card-body">
+              <h2>Conexión SAP</h2>
+              <div v-if="element.transaction_latest_rel.status_rel.name == 'Pagado'">
+                <div v-if="element.sended_to_sap">
+                  <p>
+                    La reserva se envío a SAP
+                  </p>
+                  <h3 class="font-weight-normal">Fecha: {{ element.sended_sap_date_format}}</h3>
+                  <h3 class="font-weight-normal">Código: {{element.sended_code_sap}}</h3>
+                </div>
+                <div v-else>
+                  <div v-if="!sap.success">
+                    <p>
+                      La reserva no se pudo enviar a SAP. 
+                    </p>
+                      <Button
+                      @click="sendToSap"
+                      :text="'Enviar'"
+                      :classes="['btn-inverse-primary']"
+                      :request-server="requestSap"
+                    ></Button>
+                  </div>
+                  <div v-if="sap.sended" class="mt-2 " :class="sap.success ? 'text-success' : 'text-danger'">
+                    {{ sap.message }}
+                    <div v-if="sap.success" class="mt-2">
+                      <a class="btn btn-primary" href="#" @click.prevent="reloadPage()">Recargar</a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div v-else>
+                No se puede enviar ya que no se concluyó con la separación del inmueble.
               </div>
             </div>
           </div>
@@ -248,10 +294,46 @@ export default {
       },
       modalResend: false,
       resendElement: {},
-      requestSubmit: false
+      requestSubmit: false,
+      requestSap: false,
+      sap: {
+        sended: false,
+        success: false,
+        message: ''
+      },
     };
   },
   methods:{
+    reloadPage(){
+      window.location.reload()
+    },
+    sendToSap(){
+      this.requestSap = true;
+      axios
+        .post(this.routeResend+ '/sap/' + this.elementParent.id)
+        .then((response) => {
+          this.requestSap = false;
+          this.sap.message = response.data.message;
+          this.sap.sended = true;
+          this.sap.success = response.data.success;
+          if(!response.data.success){
+            setTimeout(() => {
+              this.sap.message = '';
+              this.sap.success = false;
+              this.sap.sended = false;
+            }, 5000);
+          }
+        })
+        .catch((error) => {
+          this.requestSap = false;
+          this.sap.sended = true;
+          this.sap.message = error.response.data.message;
+          setTimeout(() => {
+            this.sap.message = '';
+            this.sap.sended = false;
+          }, 5000);
+        });
+    },
     resendConfirm(){
       this.requestSubmit = true;
       axios

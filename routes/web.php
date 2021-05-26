@@ -137,6 +137,7 @@ Route::middleware(['auth'])->namespace('Cms')->name('cms.')->group(function () {
             Route::get('/json/get-all', 'OrdersController@getAll')->name('get-all');
             Route::get('/all-export', 'OrdersController@allExport')->name('all-export');
             Route::post('/filter-export', 'OrdersController@filterExport')->name('filter-export');
+            Route::post('/sap/{element}', 'OrdersController@sendToSap')->name('send-to-sap');
             Route::post('resend/{element}', 'OrdersController@resendEmail')->name('resend');
             Route::get('/{element}', 'OrdersController@read')->name('read');
         });
@@ -266,6 +267,14 @@ Route::middleware(['auth'])->namespace('Cms')->name('cms.')->group(function () {
             Route::delete('/{element}', 'DepartmentsController@destroy')->name('index');
             Route::get('/get-sap/{element}', 'DepartmentsController@getSap')->name('get-sap-departments');
             Route::get('/json/get-all', 'DepartmentsController@getAll')->name('get-all');
+        });
+
+        Route::prefix('credenciales-pasarela')->name('credentials.')->group(function () {
+            Route::post('/updated-credential', 'CredentialsController@updateCredential')->name('update-credential');
+            Route::post('/updated-tokens', 'CredentialsController@updateTokens')->name('update-tokens');
+            Route::post('/test', 'CredentialsController@test')->name('test');
+            Route::post('/activate', 'CredentialsController@activate')->name('activate');
+            Route::get('/{element}', 'CredentialsController@index')->name('index');
         });
     });
 
@@ -489,6 +498,7 @@ Route::middleware(['auth'])->namespace('Cms')->name('cms.')->group(function () {
     Route::get('json/select/categories', 'CmsController@getCategories')->name('json.get-categories');
 });
 
+Route::get('send-to-sap/{element}','Cms\OrdersStatistics\OrdersController@sendToSap');
 
 /*Route::get('/mail/user', function () {
     return view('emails.user-lead');

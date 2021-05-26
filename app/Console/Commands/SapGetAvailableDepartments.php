@@ -88,7 +88,6 @@ class SapGetAvailableDepartments extends Command
                     foreach ($departments as $key => $dep) {
                         foreach ($estates as $key2 => $value2) {
                             if($dep->sap_code == $value2->codigo ){
-                                Log::info('Hay en la base Id'.$dep->id.' Cod'.$value2->codigo);
                                 $price = $price_foreign = null;
                                 if($value2->precio_pen){
                                     $price = $value2->precio_pen;
@@ -102,8 +101,6 @@ class SapGetAvailableDepartments extends Command
                     }
                     #Actualizar Departamentos que no hay en el response a no disponible
                     $estatestArray = collect($estates);
-                    /*Log::info('Inside Inmuebles'.$value->name_es.' - '.$value->id);
-                    Log::info((string) $responseSap->getBody());*/
                     $estatesCodigoSapPlucked = $estatestArray->pluck('codigo');
                     $estatesCodigoSapPlucked = $estatesCodigoSapPlucked->all();
                     $departmentsNotAvailable = Department::whereNotIn('sap_code',$estatesCodigoSapPlucked)->where('project_id',$value->id)->update(['available' => false]);

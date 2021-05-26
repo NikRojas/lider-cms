@@ -68,7 +68,14 @@ class OrderRepository
             ->paginate($items_per_page);
         foreach ($elements as $el) {
             $reserve = null;
-            $reserve .= '<div class="mb-1">Proyecto ' . $el["orderDetailsRel"][0]["projectRel"]["name_es"] . ' - Tipología ' . $el["orderDetailsRel"][0]["departmentRel"]["description"] . '</div>';
+            if($el->sended_to_sap){
+                //$sap = '<span class="font-weight-bold text-success text-uppercase" style="color: #26ff0c;font-size: .65rem !important;">Enviado</span>';
+                $sap = '<span>'.$el->sended_code_sap.'</span>';
+            }
+            else{
+                $sap = '<span class="font-weight-bold text-danger text-uppercase" style="font-size: .65rem !important;">No Enviado</span>';
+            }
+            $reserve .= '<div class="mb-1">Proyecto ' . $el["orderDetailsRel"][0]["projectRel"]["name_es"] . ' <br> Inmueble ' . $el["orderDetailsRel"][0]["departmentRel"]["description"] . '</div>';
             $data[] = array(
                 "id" => $el["id"],
                 "code" => '#' . $el["id"],
@@ -76,7 +83,8 @@ class OrderRepository
                 "customer" => $el["customerRel"]["full_name"],
                 "reserve" => $reserve,
                 "total" => $el["total_format"],
-                "status" => $el["transactionLatestRel"]["statusRel"]["name_format"]
+                "status" => $el["transactionLatestRel"]["statusRel"]["name_format"],
+                "send" => $sap,
             );
         }
         $elements = $elements->toArray();

@@ -332,6 +332,18 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -1108,23 +1120,55 @@ var render = function() {
                                         "div",
                                         { staticClass: "col-12 mb-2" },
                                         [
-                                          _c(
-                                            "a",
-                                            {
-                                              staticClass:
-                                                "btn btn-sm mb-2 btn-inverse-primary btn-block",
-                                              attrs: {
-                                                href:
-                                                  "proyectos/inmuebles/" +
-                                                  el.slug_es
-                                              }
-                                            },
-                                            [
-                                              _vm._v(
-                                                "Ir a Inmuebles del Proyecto"
-                                              )
-                                            ]
-                                          )
+                                          _c("div", { staticClass: "row" }, [
+                                            _c(
+                                              "div",
+                                              { staticClass: "col-8" },
+                                              [
+                                                _c(
+                                                  "a",
+                                                  {
+                                                    staticClass:
+                                                      "btn btn-sm mb-2 btn-inverse-primary btn-block",
+                                                    attrs: {
+                                                      href:
+                                                        "proyectos/inmuebles/" +
+                                                        el.slug_es
+                                                    }
+                                                  },
+                                                  [
+                                                    _vm._v(
+                                                      "Ir a Inmuebles del Proyecto"
+                                                    )
+                                                  ]
+                                                )
+                                              ]
+                                            ),
+                                            _vm._v(" "),
+                                            _c(
+                                              "div",
+                                              { staticClass: "col-4" },
+                                              [
+                                                _c(
+                                                  "a",
+                                                  {
+                                                    staticClass:
+                                                      "btn btn-sm mb-2 btn-inverse-primary btn-block",
+                                                    attrs: {
+                                                      href:
+                                                        "proyectos/credenciales-pasarela/" +
+                                                        el.slug_es
+                                                    }
+                                                  },
+                                                  [
+                                                    _vm._v(
+                                                      "\n                             Ir a Credenciales Pasarela\n                           "
+                                                    )
+                                                  ]
+                                                )
+                                              ]
+                                            )
+                                          ])
                                         ]
                                       ),
                                       _vm._v(" "),

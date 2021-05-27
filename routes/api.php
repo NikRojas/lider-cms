@@ -69,6 +69,7 @@ Route::namespace('Api')->group(function() {
         Route::get('available/{code}', 'Reserve\ConnectionController@availableSap');
         Route::prefix('payment')->group(function() { 
             Route::post('init', 'Reserve\PostController@paymentInit');
+            Route::post('ipn', 'Reserve\PostController@ipn');
         });
     });
 });

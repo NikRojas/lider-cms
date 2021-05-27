@@ -25,6 +25,7 @@ class PostController extends BaseController
     private $urlIpn = '/api/reserve/payment/ipn';
 
     public function ipn(Request $request){
+        Log::info('ipn');
         Log::info($request);
     }
 

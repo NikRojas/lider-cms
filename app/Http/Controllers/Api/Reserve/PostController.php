@@ -9,8 +9,10 @@ use App\Department;
 use App\Http\Controllers\Api\BaseController;
 use App\Http\Requests\Api\Reservation\CustomerRequest;
 use App\MasterDocumentType;
+use App\MasterTransactionStatus;
 use App\Order;
 use App\OrderDetail;
+use App\Transaction;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
@@ -24,9 +26,33 @@ class PostController extends BaseController
     private $urlCreatePayment = 'https://api.micuentaweb.pe/api-payment/V4/Charge/CreatePayment';
     private $urlIpn = '/api/reserve/payment/ipn';
 
+    #Aca se maneja las transacciones de la Order
     public function ipn(Request $request){
         Log::info('ipn');
         Log::info($request);
+        #orderId
+        //orderId
+        #Verificar Disponibilidad
+        /*$transaction = new Transaction();
+        $transaction->order_id = ;
+        $transaction->transaction_date = Carbon::now();
+        $transaction->amount = ;*/
+        /*switch ($variable) {
+            case 'value':
+                # code...
+                break;
+            
+            default:
+                # code...
+                break;
+        }
+        $transactionsStatus = MasterTransactionStatus::where('value',)->first();
+        $transaction->status_id = $transactionsStatus->id;
+        $transaction->response = Respuesta;
+        $transaction->save();
+        //Respuesta
+        */
+        
     }
 
     public function checkHash($key=NULL)
@@ -64,51 +90,24 @@ class PostController extends BaseController
         if (!$department) {
             return $this->sendError("");
         }
-        #Crear Cliente
-        $dt = MasterDocumentType::where('description',$request->type_document_id)->first();
-        $r_customer = request(['document_number','name','lastname','lastname_2','email','mobile']);
-        $r_customer = array_merge($r_customer, [ "type_document_id" => $dt->id]);
-        $checkCustomer = Customer::where('document_number',$request->document_number)->first();
-        try {
-            if($checkCustomer){
-                $customer = Customer::UpdateOrCreate(["id" => $checkCustomer->id],$r_customer);
-            }
-            else{
-                $slug = Str::random(20);
-                $customer = Customer::UpdateOrCreate(array_merge($r_customer, ["slug" => $slug]));
-            }
-        } catch (\Exception $e) {
-            #Ocurrio un error al crear el cliente
-            return $this->sendError(trans('custom.title.error'), ['success '=> false, 'cu' => false], 500);
-        }
-        #Crear Orden 
-        $advisor = null;
         $price_deparment_separation = $department->projectRel->price_separation;
-        #Si hubiera descuento se debe procesar aqui antes de guardar en la orden
-        $r_order = ["customer_id" => $customer->id, "department_id" => $department->id, "total_price" => $price_deparment_separation, "order_date" => Carbon::now()];
-        #Setear Asesor si viene desde la URL de Separacion
-        if($request->adv){
-            $r_advisor = $request->adv;
-            $advisor = Advisor::where('sap_code',$r_advisor)->first();
-            if($advisor){
-                $r_order = array_merge($r_order,["advisor_id" => $advisor->id]);
+        #Comenzar la transacción
+        $transactionsStatus = MasterTransactionStatus::where('name','Pendiente')->first();
+        $transactionRegistered = Transaction::where('order_id',$request->oi)->where('transaction_status_id', $transactionsStatus->id)->first();
+        #Si no existe registrarla
+        if(!$transactionRegistered){
+            try {
+                $transaction = new Transaction();
+                $transaction->order_id = $request->oi;
+                $transaction->transaction_date = Carbon::now();
+                $transaction->amount = $price_deparment_separation;
+                $transaction->transaction_status_id = $transactionsStatus->id;
+                $transaction->save();
             }
-        }
-        try {
-            $order = Order::UpdateOrCreate($r_order);
-        }
-        catch (\Exception $e) {
-            #Ocurrio un error al crear la orden
-            return $this->sendError(trans('custom.order.payment'), ['success '=> false, 'or' => false], 500);
-        }
-        #Si hubiar descuento del item se debe procesar aqui
-        $r_order_detail = ["order_id" => $order->id, "project_id" => $department->project_id, "quantity" => 1, "department_id" => $department->id, 'price_element' => $price_deparment_separation, 'total_price' => $price_deparment_separation];
-        try {
-            $order_detail = OrderDetail::UpdateOrCreate($r_order_detail);
-        }
-        catch (\Exception $e) {
-            #Ocurrio un error al crear el Detalle de la Orden
-            return $this->sendError(trans('custom.order.payment'), ['success '=> false, 'ord' => false], 500);
+            catch (\Exception $e) {
+                #Ocurrio un error al crear el cliente
+                return $this->sendError(trans('custom.title.error'), ['success '=> false, 'tr' => false], 500);
+            }
         }
         #Conexión con Pasarela
         $price_deparment_separation_payment_gateway = intval(str_replace(".", "", $price_deparment_separation));
@@ -119,7 +118,8 @@ class PostController extends BaseController
             "ipnTargetUrl" => config('app.url').$this->urlIpn,
             //Order
             //"orderId" => "myOrderId-999999",
-            "orderId" => $order->id,
+            //"orderId" => $order->id,
+            "orderId" => $request->oi,
             "customer" => [
                 "email" => $request->email,
                 "billingDetails" => [
@@ -177,8 +177,64 @@ class PostController extends BaseController
     }
 
     public function customer(CustomerRequest $request){
-        return $this->sendResponse([], trans('custom.title.success'), 200);
+        $department = Department::where('slug',$request->slug)->with('projectRel')->first();
+        if (!$department) {
+            return $this->sendError("");
+        }
+        #Crear Cliente
+        $dt = MasterDocumentType::where('description',$request->type_document_id)->first();
+        $r_customer = request(['document_number','name','lastname','lastname_2','email','mobile']);
+        $r_customer = array_merge($r_customer, [ "type_document_id" => $dt->id]);
+        $checkCustomer = Customer::where('document_number',$request->document_number)->first();
+        try {
+            if($checkCustomer){
+                $customer = Customer::UpdateOrCreate(["id" => $checkCustomer->id],$r_customer);
+            }
+            else{
+                $slug = Str::random(20);
+                $customer = Customer::UpdateOrCreate(array_merge($r_customer, ["slug" => $slug]));
+            }
+        } catch (\Exception $e) {
+            #Ocurrio un error al crear el cliente
+            return $this->sendError(trans('custom.title.error'), ['success '=> false, 'cu' => false], 500);
+        }
+        #Crear Orden solo si no existe la orden creada
+        if(!$request->oi){
+            $advisor = null;
+            $price_deparment_separation = $department->projectRel->price_separation;
+            #Si hubiera descuento se debe procesar aqui antes de guardar en la orden
+            $r_order = ["customer_id" => $customer->id, "department_id" => $department->id, "total_price" => $price_deparment_separation, "order_date" => Carbon::now()];
+            #Setear Asesor si viene desde la URL de Separacion
+            if($request->adv){
+                $r_advisor = $request->adv;
+                $advisor = Advisor::where('sap_code',$r_advisor)->first();
+                if($advisor){
+                    $r_order = array_merge($r_order,["advisor_id" => $advisor->id]);
+                }
+            }
+            try {
+                $order = Order::UpdateOrCreate($r_order);
+            }
+            catch (\Exception $e) {
+                #Ocurrio un error al crear la orden
+                return $this->sendError(trans('custom.order.payment'), ['success '=> false, 'or' => false], 500);
+            }
+            #Si hubiar descuento del item se debe procesar aqui
+            $r_order_detail = ["order_id" => $order->id, "project_id" => $department->project_id, "quantity" => 1, "department_id" => $department->id, 'price_element' => $price_deparment_separation, 'total_price' => $price_deparment_separation];
+            try {
+                $order_detail = OrderDetail::UpdateOrCreate($r_order_detail);
+                return $this->sendResponse(["order_id" => $order->id], trans('custom.title.success'), 200);
+            }
+            catch (\Exception $e) {
+                #Ocurrio un error al crear el Detalle de la Orden
+                return $this->sendError(trans('custom.order.payment'), ['success '=> false, 'ord' => false], 500);
+            }
+        }
+        else{
+            return $this->sendResponse(["order_id" => $request->id], trans('custom.title.success'), 200);
+        }
     }
+    
     //Esto seria el flujo antes de crear orden o ver si la orden puede ser random
     /*public function pay(Request $request){
         $department = Department::where('slug',$request->slug)->with('projectRel')->first();

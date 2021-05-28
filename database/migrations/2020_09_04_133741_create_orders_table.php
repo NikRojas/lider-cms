@@ -22,7 +22,7 @@ class CreateOrdersTable extends Migration
             $table->string('proforma_number')->nullable();
             $table->timestamps();
         });
-        DB::update("ALTER TABLE orders AUTO_INCREMENT = 1000;");
+        DB::update("ALTER TABLE orders AUTO_INCREMENT = 100000000;");
     }
 
     /**

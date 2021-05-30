@@ -25,7 +25,7 @@ class ConnectionController extends BaseController
         $type = 'Obtener Inmueble Disponibilidad';
         $sapCredentials = SapCredential::first();
         if (!$sapCredentials->token) {
-            $lsc = LogSapConnection::UpdateOrCreate(["type" => $type, 'description' =>  'Token SAP no obtenido aún. Por favor, inténtelo de nuevo en unos minutos.']);
+            $lsc = LogSapConnection::UpdateOrCreate(["type" => $type, 'description' =>  trans('custom.message.sap.no_token')]);
         }
         $description = $estateCurrent->description.' (Código SAP:'.$estateCurrent->sap_code.')'.' Proyecto ' . $estateCurrent->projectRel->name_es . ' (Código SAP:'.$estateCurrent->projectRel->sap_code.') - ';
         $slug = Str::random(20);

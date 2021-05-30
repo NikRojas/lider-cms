@@ -21,7 +21,7 @@ class OrderPaid extends Notification implements ShouldQueue
      */
     public function __construct(Order $order, $resend = false)
     {
-        $this->order = $order->load('customerRel','orderDetailsRel.projectRel','orderDetailsRel.tipologyRel');
+        $this->order = $order->load('customerRel','orderDetailsRel.projectRel','orderDetailsRel.departmentRel');
         $this->resend = $resend;
     }
 
@@ -55,8 +55,8 @@ class OrderPaid extends Notification implements ShouldQueue
                     ->line('Total (Impuestos incluidos)')
                     ->line($this->order->total_format)
                     ->line('Tu reserva:')
-                    ->line($this->order->orderDetailsRel["projectRel"]["name_es"])
-                    ->line($this->order->orderDetailsRel["tipologyRel"]["name"])
+                    ->line($this->order->orderDetailsRel[0]["projectRel"]["name_es"])
+                    ->line($this->order->orderDetailsRel[0]["departmentRel"]["description"])
                     ->line("Detalles Adicionales")
                     ->action('Notification Action', url('/'))
                     ->line('Thank you for using our application!');

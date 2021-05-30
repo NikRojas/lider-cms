@@ -58,7 +58,7 @@ class CredentialsController extends Controller
     }
 
     public function updateTokens(Request $request){
-        $request_element = request(["token_test","token_prod",'token_js_test','token_js_prod']);
+        $request_element = request(["token_test","token_prod",'token_js_test','token_js_prod','token_sha_256_test','token_sha_256_prod']);
         $project = Project::where('id',$request->project_id)->first();
         try{
             $element = CredentialPayment::UpdateOrCreate(["id"=>$request->id],$request_element); 

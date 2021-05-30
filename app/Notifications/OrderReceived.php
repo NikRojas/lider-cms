@@ -46,7 +46,7 @@ class OrderReceived extends Notification implements ShouldQueue
     {
         return (new MailMessage)
                     ->subject(trans('custom.mail.subjects.order_received', ['name' => $this->order->customerRel["name"]]))
-                    ->line('The introduction to the notification Proyecto.'.$this->order->orderDetailsRel["projectRel"]["name_es"])
+                    ->line('Proyecto.'.$this->order->orderDetailsRel[0]["projectRel"]["name_es"])
                     ->action('Notification Action', url('/'))
                     ->line('Thank you for using our application!');
     }

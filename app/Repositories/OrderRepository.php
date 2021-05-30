@@ -28,12 +28,18 @@ class OrderRepository
             });
         }
         if(count($transactions) > 0){
-            $elements = $elements->whereHas('transactionLatestRel', function( $query ) use ( $transactions ){
-                //$query->whereIn('id', $transactions);
+            /*$elements = $elements->whereHas('transactionLatestRel', function( $query ) use ( $transactions ){
                 $query->whereHas('statusRel', function ($query2) use ( $transactions ){
                     $query2->whereIn('id', $transactions);
                 });
-            });
+            });*/
+
+            $elements = $elements->with(["transactionLatestRel" => function($query) use ( $transactions ){
+                $query->where('transaction_status_id', $transactions);
+            }]);
+            /*$elements = $elements->filter(function ($value, $key) {
+                return $value->customer_id = 104;
+            });*/
         }
         switch ($date) {
             case 'all':

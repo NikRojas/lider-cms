@@ -20,6 +20,7 @@ use GuzzleHttp\Client;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\URL;
+use Lyra\Client as LyraClient;
 
 class PostController extends BaseController
 {
@@ -28,61 +29,84 @@ class PostController extends BaseController
 
     #Aca se maneja las transacciones de la Order
     public function ipn(Request $request){
-        Log::info('ipn');
-        Log::info($request);
-        #orderId
-        //orderId
-        #Verificar Disponibilidad
-        /*$transaction = new Transaction();
-        $transaction->order_id = ;
-        $transaction->transaction_date = Carbon::now();
-        $transaction->amount = ;*/
-        /*switch ($variable) {
-            case 'value':
-                # code...
-                break;
-            
-            default:
-                # code...
-                break;
+        /*Log::info($request);*/
+        $rawKrAnswer = json_decode($request["kr-answer"]);
+        $orderId = $rawKrAnswer->orderDetails->orderId;
+
+        $order = Order::with('orderDetailsRel')->findOrFail($orderId);
+        $orderDetails = $order->orderDetailsRel[0];
+        $project_id = $orderDetails->project_id;
+
+        $credentialPayment = CredentialPayment::where('project_id',$project_id)->firstorFail();
+        $checkCredentials = $this->checkCredentialsStored($credentialPayment);
+        if(!$checkCredentials['active']){
+            return $this->sendError(trans('custom.title.error'), $checkCredentials, 500);
         }
-        $transactionsStatus = MasterTransactionStatus::where('value',)->first();
-        $transaction->status_id = $transactionsStatus->id;
-        $transaction->response = Respuesta;
-        $transaction->save();
-        //Respuesta
-        */
+
+        /* Username, password and endpoint used for server to server web-service calls */
+        LyraClient::setDefaultUsername($credentialPayment->user);
+        LyraClient::setDefaultPassword($credentialPayment->password_prod);
+        LyraClient::setDefaultEndpoint("https://api.micuentaweb.pe");
+
+        /* publicKey and used by the javascript client */
+        LyraClient::setDefaultPublicKey($credentialPayment->token_js_prod);
+
+        /* SHA256 key */
+        LyraClient::setDefaultSHA256Key($credentialPayment->token_sha_256_prod);
         
+        $client = new LyraClient();
+        #Verificar Fraude
+        if (!$client->checkHash()) {
+            Log::info("Hash no coincide");
+            //something wrong, probably a fraud ....
+            /*signature_error($formAnswer['kr-answer']['transactions'][0]['uuid'], $hashKey, 
+                            $client->getLastCalculatedHash(), $_POST['kr-hash']);
+            throw new Exception("invalid signature");*/
+        }
+
+        #Verificar Disponibilidad
+
+        #Transacción
+        //Ver que pasa si viene uno de los q no tenga guardado en base de datos
+        $transactionsStatus = MasterTransactionStatus::where('value_detailed_status',$rawKrAnswer->transactions[0]->detailedStatus)->first();
+        if(!$transactionsStatus){
+            return $this->sendError(trans('custom.title.error'), ['ts' => false], 500);
+        }
+        try {
+            $transaction = new Transaction();
+            $transaction->order_id = $orderId;
+            $transaction->transaction_date = Carbon::now();
+            $transaction->amount = $order->total_price;
+            $transaction->transaction_status_id = $transactionsStatus->id;
+            $transaction->response = $request["kr-answer"];
+            $transaction->save();
+            return $this->sendResponse(['success' => true], trans('custom.title.success'), 200);
+        }
+        catch (\Exception $e) {
+            #Ocurrio crear la transacción
+            return $this->sendError(trans('custom.title.error'), ['success '=> false, 'utr' => false], 500);
+        }
     }
 
-    public function checkHash($key=NULL)
-    {
-        $supportedHashAlgorithm = array('sha256_hmac');
-
-        /* check if the hash algorithm is supported */
-        if (!in_array($_POST['kr-hash-algorithm'],  $supportedHashAlgorithm)) {
-            throw new LyraException("hash algorithm not supported:" . $_POST['kr-hash-algorithm'] .". Update your SDK");
+    #Verificar Credenciales
+    public function checkCredentialsStored($credentialPayment){
+        #Si no esta registrado ninguna credencial
+        if (!$credentialPayment) {
+            return ['active' => false];
         }
-
-        /* on some servers, / can be escaped */
-        $krAnswer = str_replace('\/', '/', $_POST['kr-answer']);
-
-        /* if key is not defined, we use kr-hash-key POST parameter to choose it */
-        if (is_null($key)) {
-            if ($_POST['kr-hash-key'] == "sha256_hmac") {
-                $key = $this->_hashKey;
-            } elseif ($_POST['kr-hash-key'] == "password") {
-                $key = $this->_password;
-            } else {
-                throw new LyraException("invalid kr-hash-key POST parameter");
-            }
+        #Si esta en modo Test
+        if(!$credentialPayment->active){
+            return ['active' => false, 'mode' => false];
         }
-    
-        $calculatedHash = hash_hmac('sha256', $krAnswer, $key);
-        $this->_lastCalculatedHash = $calculatedHash;
-
-        /* return true if calculated hash and sent hash are the same */
-        return ($calculatedHash == $_POST['kr-hash']);
+        #Si no tiene Password de Producción
+        if(!$credentialPayment->password_prod){
+            return ['active' => false, 'pass' => false];
+        }
+        #Si no tiene Token JS de Producción
+        if(!$credentialPayment->token_js_prod){
+            return ['active' => false, 'js' => false];
+        }
+        return ['active' => true ];
     }
 
     public function paymentInit(Request $request){
@@ -103,6 +127,7 @@ class PostController extends BaseController
                 $transaction->amount = $price_deparment_separation;
                 $transaction->transaction_status_id = $transactionsStatus->id;
                 $transaction->save();
+                return $this->sendResponse(['success' => true], trans('custom.title.success'), 200);
             }
             catch (\Exception $e) {
                 #Ocurrio un error al crear el cliente
@@ -139,21 +164,9 @@ class PostController extends BaseController
         ];
         //Cada Proyecto tiene un usuario y una password diferente;
         $credentialPayment = CredentialPayment::where('project_id',$department->project_id)->first();
-        #Si no esta registrado ninguna credencial
-        if (!$credentialPayment) {
-            return $this->sendError(trans('custom.title.error'), ['active' => false], 500);
-        }
-        #Si esta en modo Test
-        if(!$credentialPayment->active){
-            return $this->sendError(trans('custom.title.error'), ['active' => false, 'mode' => false], 500);
-        }
-        #Si no tiene Password de Producción
-        if(!$credentialPayment->password_prod){
-            return $this->sendError(trans('custom.title.error'), ['active' => false, 'pass' => false], 500);
-        }
-        #Si no tiene Token JS de Producción
-        if(!$credentialPayment->token_js_prod){
-            return $this->sendError(trans('custom.title.error'), ['active' => false, 'js' => false], 500);
+        $checkCredentials = $this->checkCredentialsStored($credentialPayment);
+        if(!$checkCredentials['active']){
+            return $this->sendError(trans('custom.title.error'), $checkCredentials, 500);
         }
         $authToken = $credentialPayment->user.':'.$credentialPayment->password_prod;
         $codeAuthToken = base64_encode($authToken);

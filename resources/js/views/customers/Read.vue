@@ -93,6 +93,7 @@
                   <div class="row mb-3">
                     <div class="col-12 col-lg-6">
                       <a style="text-decoration:underline;"  class="text-primary" :href="routeOrder+'/'+el.id">Reserva #{{el.id}}</a>
+                      <div class="mt-2" v-html="el.transaction_latest_rel.status_rel.name_format"></div>
                       <div class="mt-4">
                         <h3 class="font-weight-normal">{{el.total_format}}</h3>
                       </div>

@@ -184,22 +184,6 @@
           <div class="card">
             <div class="card-body">
               <div v-if="!updateTokensBlock">
-                <!--<h3 class="font-weight-normal">
-                  <div class="font-weight-bold">Token API REST Test:</div>
-                  {{
-                    credential.token_test
-                      ? credential.token_test
-                      : "No registrado"
-                  }}
-                </h3>
-                <h3 class="font-weight-normal">
-                  <div class="font-weight-bold">Token API REST Producción:</div>
-                  {{
-                    credential.token_prod
-                      ? credential.token_prod
-                      : "No registrado"
-                  }}
-                </h3>-->
                 <h3 class="font-weight-normal">
                   <div class="font-weight-bold">
                     Token Cliente Javascript Test:
@@ -217,6 +201,28 @@
                   {{
                     credential.token_js_prod
                       ? credential.token_js_prod
+                      : "No registrado"
+                  }}
+                </h3>
+                <hr class="my-3">
+                <p >Tokens utilizados para calcular/verificar el campo kr-hash cuando se obtiene respuesta de la IPN(URL de notificación instantánea)</p>
+                <h3 class="font-weight-normal">
+                  <div class="font-weight-bold">
+                    Token HMAC-SHA-256 Test:
+                  </div>
+                  {{
+                    credential.token_sha_256_test
+                      ? credential.token_sha_256_test
+                      : "No registrado"
+                  }}
+                </h3>
+                <h3 class="font-weight-normal">
+                  <div class="font-weight-bold">
+                    Token HMAC-SHA-256 Producción:
+                  </div>
+                  {{
+                    credential.token_sha_256_prod
+                      ? credential.token_sha_256_prod
                       : "No registrado"
                   }}
                 </h3>
@@ -299,6 +305,44 @@
                     >{{ errors.token_js_prod[0] }}</label
                   >
                 </div>
+
+                <div class="form-group">
+                  <label class="font-weight-bold" for="token_sha_256_test"
+                    >Token HMAC-SHA-256 Test</label
+                  >
+                  <input
+                    type="text"
+                    class="form-control"
+                    v-model="credential.token_sha_256_test"
+                    id="token_sha_256_test"
+                  />
+                  <label
+                    v-if="errors && errors.token_sha_256_test"
+                    class="mt-2 text-danger text-sm"
+                    for="token_sha_256_test"
+                    >{{ errors.token_sha_256_test[0] }}</label
+                  >
+                </div>
+                
+                <div class="form-group">
+                  <label class="font-weight-bold" for="token_sha_256_prod"
+                    >Token HMAC-SHA-256 Producción</label
+                  >
+                  <input
+                    type="text"
+                    class="form-control"
+                    v-model="credential.token_sha_256_prod"
+                    id="token_sha_256_prod"
+                  />
+                  <label
+                    v-if="errors && errors.token_sha_256_prod"
+                    class="mt-2 text-danger text-sm"
+                    for="token_sha_256_prod"
+                    >{{ errors.token_sha_256_prod[0] }}</label
+                  >
+                </div>
+
+
                 <div class="text-right">
                   <Button
                     @click="updateTokens"

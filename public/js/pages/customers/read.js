@@ -224,6 +224,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 
 
@@ -472,6 +473,16 @@ var render = function() {
                                 },
                                 [_vm._v("Reserva #" + _vm._s(el.id))]
                               ),
+                              _vm._v(" "),
+                              _c("div", {
+                                staticClass: "mt-2",
+                                domProps: {
+                                  innerHTML: _vm._s(
+                                    el.transaction_latest_rel.status_rel
+                                      .name_format
+                                  )
+                                }
+                              }),
                               _vm._v(" "),
                               _c("div", { staticClass: "mt-4" }, [
                                 _c(

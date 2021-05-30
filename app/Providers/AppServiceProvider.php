@@ -20,7 +20,9 @@ use App\Observers\LeadSaleLandObserver;
 use App\Observers\LeadVideocallObserver;
 use App\Observers\LogSapConnectionObserver;
 use App\Observers\ProjectQuotationObserver;
+use App\Observers\TransactionObserver;
 use App\ProjectQuotation;
+use App\Transaction;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -78,5 +80,8 @@ class AppServiceProvider extends ServiceProvider
         LeadSaleLand::observe(LeadSaleLandObserver::class);
         ProjectQuotation::observe(ProjectQuotationObserver::class);
         LogSapConnection::observe(LogSapConnectionObserver::class);
+        #Notificaciones de Orden Pendiente, Pagado y Rechazado
+        #Envio a SAP Reserva de Inmueble
+        Transaction::observe(TransactionObserver::class);
     }
 }

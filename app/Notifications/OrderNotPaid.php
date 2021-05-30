@@ -21,7 +21,7 @@ class OrderNotPaid extends Notification implements ShouldQueue
      */
     public function __construct(Order $order, $resend = false)
     {
-        $this->order = $order->load('customerRel','orderDetailsRel.projectRel','orderDetailsRel.tipologyRel');
+        $this->order = $order->load('customerRel','orderDetailsRel.projectRel','orderDetailsRel.departmentRel');
         $this->resend = $resend;
     }
 

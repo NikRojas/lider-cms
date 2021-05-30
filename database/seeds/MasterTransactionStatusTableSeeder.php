@@ -22,10 +22,11 @@ class MasterTransactionStatusTableSeeder extends Seeder
                 'name' 	=> 'Rechazado',
             ],
             [
+                //Para los pedidos con pagos capturados, el pago es reembolsado
                 'name' 	=> 'Reintegrado',
             ],
             [
-                //Pago no terminado en el carrito
+                //Para un pedido en el que aún no se ha capturado el pago, el estado del pago aparece como Anulado 
                 'name' 	=> 'Anulado',
             ],
         ]);

@@ -17,6 +17,8 @@ class MasterTransactionStatus extends Model
                 $class = "warning";
                 break;
 
+            case 'Autorizado': 
+            case 'Capturado': 
             case 'Pagado':
                 $class = "info";
                 break;

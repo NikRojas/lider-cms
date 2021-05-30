@@ -72,8 +72,8 @@
     "/js/pages/suscribers.js": "/js/pages/suscribers.js",
     "/js/pages/testimonials.js": "/js/pages/testimonials.js",
     "/js/pages/users.js": "/js/pages/users.js",
+    "/vendors~js/pages/administration/advisors~js/pages/administration/bonds~js/pages/administration/excha~6538a116.js": "/vendors~js/pages/administration/advisors~js/pages/administration/bonds~js/pages/administration/excha~6538a116.js",
     "/vendors~js/pages/administration/advisors~js/pages/administration/bonds~js/pages/administration/excha~9dcf4862.js": "/vendors~js/pages/administration/advisors~js/pages/administration/bonds~js/pages/administration/excha~9dcf4862.js",
-    "/vendors~js/pages/administration/advisors~js/pages/administration/bonds~js/pages/administration/excha~e62a9256.js": "/vendors~js/pages/administration/advisors~js/pages/administration/bonds~js/pages/administration/excha~e62a9256.js",
     "/vendors~js/pages/administration/advisors~js/pages/administration/bonds~js/pages/administration/featu~c4b5e150.js": "/vendors~js/pages/administration/advisors~js/pages/administration/bonds~js/pages/administration/featu~c4b5e150.js",
     "/vendors~js/pages/administration/status-project~js/pages/administration/types~js/pages/administration~e5b365e0.js": "/vendors~js/pages/administration/status-project~js/pages/administration/types~js/pages/administration~e5b365e0.js",
     "/vendors~js/pages/blog/post/create.js": "/vendors~js/pages/blog/post/create.js",
@@ -84,6 +84,5 @@
     "/vendors~js/pages/cami~js/pages/projects/read.js": "/vendors~js/pages/cami~js/pages/projects/read.js",
     "/vendors~js/pages/dashboard~js/pages/statistics/index.js": "/vendors~js/pages/dashboard~js/pages/statistics/index.js",
     "/vendors~js/pages/orders/read.js": "/vendors~js/pages/orders/read.js",
-    "/vendors~js/pages/statistics/index.js": "/vendors~js/pages/statistics/index.js",
-    "/vendors~js/pages/administration/advisors~js/pages/administration/bonds~js/pages/administration/excha~6538a116.js": "/vendors~js/pages/administration/advisors~js/pages/administration/bonds~js/pages/administration/excha~6538a116.js"
+    "/vendors~js/pages/statistics/index.js": "/vendors~js/pages/statistics/index.js"
 }

@@ -468,6 +468,50 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -1344,6 +1388,48 @@ var render = function() {
                           )
                         ]),
                         _vm._v(" "),
+                        _c("hr", { staticClass: "my-3" }),
+                        _vm._v(" "),
+                        _c("p", [
+                          _vm._v(
+                            "Tokens utilizados para calcular/verificar el campo kr-hash cuando se obtiene respuesta de la IPN(URL de notificación instantánea)"
+                          )
+                        ]),
+                        _vm._v(" "),
+                        _c("h3", { staticClass: "font-weight-normal" }, [
+                          _c("div", { staticClass: "font-weight-bold" }, [
+                            _vm._v(
+                              "\n                  Token HMAC-SHA-256 Test:\n                "
+                            )
+                          ]),
+                          _vm._v(
+                            "\n                " +
+                              _vm._s(
+                                _vm.credential.token_sha_256_test
+                                  ? _vm.credential.token_sha_256_test
+                                  : "No registrado"
+                              ) +
+                              "\n              "
+                          )
+                        ]),
+                        _vm._v(" "),
+                        _c("h3", { staticClass: "font-weight-normal" }, [
+                          _c("div", { staticClass: "font-weight-bold" }, [
+                            _vm._v(
+                              "\n                  Token HMAC-SHA-256 Producción:\n                "
+                            )
+                          ]),
+                          _vm._v(
+                            "\n                " +
+                              _vm._s(
+                                _vm.credential.token_sha_256_prod
+                                  ? _vm.credential.token_sha_256_prod
+                                  : "No registrado"
+                              ) +
+                              "\n              "
+                          )
+                        ]),
+                        _vm._v(" "),
                         _c("div", { staticClass: "text-right" }, [
                           _c(
                             "button",
@@ -1452,6 +1538,114 @@ var render = function() {
                                   attrs: { for: "token_js_prod" }
                                 },
                                 [_vm._v(_vm._s(_vm.errors.token_js_prod[0]))]
+                              )
+                            : _vm._e()
+                        ]),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "form-group" }, [
+                          _c(
+                            "label",
+                            {
+                              staticClass: "font-weight-bold",
+                              attrs: { for: "token_sha_256_test" }
+                            },
+                            [_vm._v("Token HMAC-SHA-256 Test")]
+                          ),
+                          _vm._v(" "),
+                          _c("input", {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.credential.token_sha_256_test,
+                                expression: "credential.token_sha_256_test"
+                              }
+                            ],
+                            staticClass: "form-control",
+                            attrs: { type: "text", id: "token_sha_256_test" },
+                            domProps: {
+                              value: _vm.credential.token_sha_256_test
+                            },
+                            on: {
+                              input: function($event) {
+                                if ($event.target.composing) {
+                                  return
+                                }
+                                _vm.$set(
+                                  _vm.credential,
+                                  "token_sha_256_test",
+                                  $event.target.value
+                                )
+                              }
+                            }
+                          }),
+                          _vm._v(" "),
+                          _vm.errors && _vm.errors.token_sha_256_test
+                            ? _c(
+                                "label",
+                                {
+                                  staticClass: "mt-2 text-danger text-sm",
+                                  attrs: { for: "token_sha_256_test" }
+                                },
+                                [
+                                  _vm._v(
+                                    _vm._s(_vm.errors.token_sha_256_test[0])
+                                  )
+                                ]
+                              )
+                            : _vm._e()
+                        ]),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "form-group" }, [
+                          _c(
+                            "label",
+                            {
+                              staticClass: "font-weight-bold",
+                              attrs: { for: "token_sha_256_prod" }
+                            },
+                            [_vm._v("Token HMAC-SHA-256 Producción")]
+                          ),
+                          _vm._v(" "),
+                          _c("input", {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.credential.token_sha_256_prod,
+                                expression: "credential.token_sha_256_prod"
+                              }
+                            ],
+                            staticClass: "form-control",
+                            attrs: { type: "text", id: "token_sha_256_prod" },
+                            domProps: {
+                              value: _vm.credential.token_sha_256_prod
+                            },
+                            on: {
+                              input: function($event) {
+                                if ($event.target.composing) {
+                                  return
+                                }
+                                _vm.$set(
+                                  _vm.credential,
+                                  "token_sha_256_prod",
+                                  $event.target.value
+                                )
+                              }
+                            }
+                          }),
+                          _vm._v(" "),
+                          _vm.errors && _vm.errors.token_sha_256_prod
+                            ? _c(
+                                "label",
+                                {
+                                  staticClass: "mt-2 text-danger text-sm",
+                                  attrs: { for: "token_sha_256_prod" }
+                                },
+                                [
+                                  _vm._v(
+                                    _vm._s(_vm.errors.token_sha_256_prod[0])
+                                  )
+                                ]
                               )
                             : _vm._e()
                         ]),

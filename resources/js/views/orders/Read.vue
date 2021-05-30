@@ -43,10 +43,11 @@
                   </div>
                   <div class="card mb-4" v-for="el in element.order_details_rel" :key="el.id">
                     <div class="row p-2 p-md-3">
-                      <div class="col-10 d-flex align-items-center">
+                      <div class="col-9 d-flex align-items-center">
                         <div class="row w-100">
-                          <div class="col-6">
+                          <div class="col-12">
                             <img
+                              v-if="el.department_rel.image"
                               height="50"
                               class="ml-md-0 ml-3 d-block d-md-inline"
                               :src="imagesUrl + '/projects/estates/'+el.department_rel.image"
@@ -82,22 +83,22 @@
                               </div>
                             </div>
                           </div>
-                          <div
+                          <!--<div
                             class="col-6 d-flex align-items-center justify-content-center"
-                          >{{el.price_element_format}} <span v-if="el.discount_price"> - {{ el.discount_price_format }}</span></div>
+                          >{{el.price_element_format}} <span v-if="el.discount_price"> - {{ el.discount_price_format }}</span></div>-->
                         </div>
                       </div>
                       <!--Cuando haya descuento, restar el precio del elemento menos precio de descuento -->
                       <div
-                        class="col-2 d-flex align-items-center justify-content-center"
-                      >{{ el.total_price_format}}</div>
+                        class="col-3 d-flex align-items-center justify-content-center"
+                      >Precio Separación <br> {{ el.total_price_format}}</div>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
           </div>
-          <div class="row">
+          <div class="row mb-4 mb-lg-0">
             <div class="col-12">
               <h2 class="mb-3">Historial de la Reserva</h2>
 
@@ -144,12 +145,12 @@
             <!-- Ver que precios pongo aca si tengo que poner el precio de la transaccion como total y el subtotal y descuento segun los elementos de la orden -->
               <div class="row mb-2">
                 <div class="col-6">Subtotal</div>
-                <div class="col-6 text-right">{{ element.total_format}}----</div>
+                <div class="col-6 text-right">{{ element.total_format}}</div>
               </div>
-              <div class="row mb-2">
+              <!--<div class="row mb-2">
                 <div class="col-6">Descuento</div>
-                <div class="col-6 text-right">{{ element.total_format}}---</div>
-              </div>
+                <div class="col-6 text-right">{{ element.total_format}}</div>
+              </div>-->
               <hr class="mt-2 mb-3"/>
               <div class="row">
                 <div class="col-6">Total</div>

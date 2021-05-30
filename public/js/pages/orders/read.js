@@ -332,6 +332,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 
 
@@ -671,24 +672,25 @@ var render = function() {
                               _c(
                                 "div",
                                 {
-                                  staticClass:
-                                    "col-10 d-flex align-items-center"
+                                  staticClass: "col-9 d-flex align-items-center"
                                 },
                                 [
                                   _c("div", { staticClass: "row w-100" }, [
-                                    _c("div", { staticClass: "col-6" }, [
-                                      _c("img", {
-                                        staticClass:
-                                          "ml-md-0 ml-3 d-block d-md-inline",
-                                        attrs: {
-                                          height: "50",
-                                          src:
-                                            _vm.imagesUrl +
-                                            "/projects/estates/" +
-                                            el.department_rel.image,
-                                          alt: ""
-                                        }
-                                      }),
+                                    _c("div", { staticClass: "col-12" }, [
+                                      el.department_rel.image
+                                        ? _c("img", {
+                                            staticClass:
+                                              "ml-md-0 ml-3 d-block d-md-inline",
+                                            attrs: {
+                                              height: "50",
+                                              src:
+                                                _vm.imagesUrl +
+                                                "/projects/estates/" +
+                                                el.department_rel.image,
+                                              alt: ""
+                                            }
+                                          })
+                                        : _vm._e(),
                                       _vm._v(" "),
                                       _c(
                                         "div",
@@ -859,30 +861,7 @@ var render = function() {
                                           ])
                                         ]
                                       )
-                                    ]),
-                                    _vm._v(" "),
-                                    _c(
-                                      "div",
-                                      {
-                                        staticClass:
-                                          "col-6 d-flex align-items-center justify-content-center"
-                                      },
-                                      [
-                                        _vm._v(
-                                          _vm._s(el.price_element_format) + " "
-                                        ),
-                                        el.discount_price
-                                          ? _c("span", [
-                                              _vm._v(
-                                                " - " +
-                                                  _vm._s(
-                                                    el.discount_price_format
-                                                  )
-                                              )
-                                            ])
-                                          : _vm._e()
-                                      ]
-                                    )
+                                    ])
                                   ])
                                 ]
                               ),
@@ -891,9 +870,13 @@ var render = function() {
                                 "div",
                                 {
                                   staticClass:
-                                    "col-2 d-flex align-items-center justify-content-center"
+                                    "col-3 d-flex align-items-center justify-content-center"
                                 },
-                                [_vm._v(_vm._s(el.total_price_format))]
+                                [
+                                  _vm._v("Precio Separación "),
+                                  _c("br"),
+                                  _vm._v(" " + _vm._s(el.total_price_format))
+                                ]
                               )
                             ])
                           ]
@@ -906,7 +889,7 @@ var render = function() {
               ])
             ]),
             _vm._v(" "),
-            _c("div", { staticClass: "row" }, [
+            _c("div", { staticClass: "row mb-4 mb-lg-0" }, [
               _c("div", { staticClass: "col-12" }, [
                 _c("h2", { staticClass: "mb-3" }, [
                   _vm._v("Historial de la Reserva")
@@ -1054,15 +1037,7 @@ var render = function() {
                   _c("div", { staticClass: "col-6" }, [_vm._v("Subtotal")]),
                   _vm._v(" "),
                   _c("div", { staticClass: "col-6 text-right" }, [
-                    _vm._v(_vm._s(_vm.element.total_format) + "----")
-                  ])
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "row mb-2" }, [
-                  _c("div", { staticClass: "col-6" }, [_vm._v("Descuento")]),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "col-6 text-right" }, [
-                    _vm._v(_vm._s(_vm.element.total_format) + "---")
+                    _vm._v(_vm._s(_vm.element.total_format))
                   ])
                 ]),
                 _vm._v(" "),

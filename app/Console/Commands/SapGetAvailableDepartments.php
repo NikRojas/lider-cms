@@ -54,7 +54,7 @@ class SapGetAvailableDepartments extends Command
         #Obtener Credenciales
         $sapCredentials = SapCredential::first();
         if (!$sapCredentials->token) {
-            $lsc = LogSapConnection::UpdateOrCreate(["type" => $this->lscType, 'description' =>  'Token SAP no obtenido aún. Por favor, inténtelo de nuevo en unos minutos.']);
+            $lsc = LogSapConnection::UpdateOrCreate(["type" => $this->lscType, 'description' =>  trans('custom.message.sap.no_token')]);
         }
         #Por cada Proyecto realizar un llamado a SAP
         foreach ($projects as $key => $value) {

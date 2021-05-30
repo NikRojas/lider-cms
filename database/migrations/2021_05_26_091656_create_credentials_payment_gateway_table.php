@@ -20,6 +20,8 @@ class CreateCredentialsPaymentGatewayTable extends Migration
             $table->text('password_prod')->nullable();
             $table->text('token_js_test')->nullable();
             $table->text('token_js_prod')->nullable();
+            $table->text('token_sha_256_test')->nullable();
+            $table->text('token_sha_256_prod')->nullable();
             $table->boolean('active')->default(false);
             $table->bigInteger('project_id')->unsigned();
             $table->foreign('project_id')->references('id')->on('projects');

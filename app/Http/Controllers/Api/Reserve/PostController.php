@@ -81,6 +81,9 @@ class PostController extends BaseController
                             $client->getLastCalculatedHash(), $_POST['kr-hash']);
             throw new Exception("invalid signature");*/
         }
+        else{
+            Log::info("Hash coincide");
+        }
 
         #Verificar Disponibilidad
 

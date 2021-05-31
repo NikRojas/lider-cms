@@ -9,6 +9,7 @@ use App\Department;
 use App\Http\Controllers\Api\BaseController;
 use App\Http\Requests\Api\Reservation\CustomerRequest;
 use App\MasterDocumentType;
+use App\MasterOrderCycle;
 use App\MasterTransactionStatus;
 use App\Order;
 use App\OrderDetail;
@@ -32,6 +33,7 @@ class PostController extends BaseController
         /*Log::info($request);*/
         $rawKrAnswer = json_decode($request["kr-answer"]);
         $orderId = $rawKrAnswer->orderDetails->orderId;
+        $orderCycle = $rawKrAnswer->orderCycle;
         $order = Order::with('orderDetailsRel')->findOrFail($orderId);
         $orderDetails = $order->orderDetailsRel[0];
         $project_id = $orderDetails->project_id;
@@ -41,12 +43,14 @@ class PostController extends BaseController
         $transactionRegistered = Transaction::where('order_id',$orderId)->where('transaction_status_id', $transactionsStatusPending->id)->first();
         #Si no existe registrarla
         if(!$transactionRegistered){
+            $masterOrderCycle = MasterOrderCycle::where('payment_gateway_value','OPEN')->first();
             try {
                 $transaction = new Transaction();
                 $transaction->order_id = $orderId;
                 $transaction->transaction_date = Carbon::now();
                 $transaction->amount = $order->total_price;
                 $transaction->transaction_status_id = $transactionsStatusPending->id;
+                $transaction->order_cycle_id = $masterOrderCycle->id;
                 $transaction->save();
             }
             catch (\Exception $e) {
@@ -93,9 +97,14 @@ class PostController extends BaseController
         #Transacción
         //Ver que pasa si viene uno de los q no tenga guardado en base de datos
         $transactionsStatus = MasterTransactionStatus::where('value_detailed_status',$rawKrAnswer->transactions[0]->detailedStatus)->first();
+        $masterOrderCycle = MasterOrderCycle::where('payment_gateway_value',$orderCycle)->first();
         if(!$transactionsStatus){
             Log::info("TS: FALSE");
             return $this->sendError(trans('custom.title.error'), ['ts' => false], 500);
+        }
+        if(!$masterOrderCycle){
+            Log::info("MOC: FALSE");
+            return $this->sendError(trans('custom.title.error'), ['moc' => false], 500);
         }
         try {
             $transaction = new Transaction();
@@ -104,6 +113,7 @@ class PostController extends BaseController
             $transaction->amount = $order->total_price;
             $transaction->transaction_status_id = $transactionsStatus->id;
             $transaction->response = $request["kr-answer"];
+            $transaction->order_cycle_id = $masterOrderCycle->id;
             $transaction->save();
             return $this->sendResponse(['success' => true], trans('custom.title.success'), 200);
         }

@@ -3,6 +3,7 @@
 namespace App\Observers;
 
 use App\Jobs\SendReserveToSap;
+use App\MasterOrderCycle;
 use App\MasterTransactionStatus;
 use App\Notifications\OrderNotPaid;
 use App\Notifications\OrderPaid;
@@ -17,6 +18,7 @@ class TransactionObserver
         $status = $tr->transaction_status_id;
         $statusTr = MasterTransactionStatus::find($status);
         $order = Order::find($tr->order_id);
+        $closeCycle = MasterOrderCycle::where('payment_gateway_value','CLOSED')->first();
         switch ($statusTr->name) {
             case 'Pendiente':
                 $order->customerRel->notify(new OrderReceived($order));
@@ -27,12 +29,16 @@ class TransactionObserver
             #Asignar Asesor con los datos de retorno del SAP
             case 'Pagado':
             case 'Capturado':
-                $order->customerRel->notify(new OrderPaid($order));
-                //SendReserveToSap::dispatch($order);
+                if($order->order_cycle_id = $closeCycle->id){
+                    $order->customerRel->notify(new OrderPaid($order));
+                    //SendReserveToSap::dispatch($order);
+                }
                 break;
             case 'Rechazado':
             case 'Error':
-                $order->customerRel->notify(new OrderNotPaid($order));
+                if($order->order_cycle_id = $closeCycle->id){
+                    $order->customerRel->notify(new OrderNotPaid($order));
+                }
                 break;
             default:
                 # code...

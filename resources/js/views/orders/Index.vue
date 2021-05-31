@@ -15,7 +15,7 @@
     <div class="container-fluid mt--6">
       <DataTable
         :object="elements"
-        placeholder="Nombres, Apellidos"
+        placeholder="Nombres, Apellidos o Código de Orden"
         :button-update="false"
         :button-read="true"
         :button-delete="false"
@@ -23,19 +23,20 @@
         :loading-prop="loadingGetAll"
         @get="getEls"
         @read="showEl"
+        :q-prop.sync="q"
         :entries-prop.sync="elementsPerPage"
       >
         <template slot="filters">
           <div class="row mb-3">
             <div class="col-12 col-md-9 mb-2 mb-md-0">
               <div class="d-inline-block mb-2 mb-sm-0 mr-2">
-              <FilterDateRange  :active.sync="filterDate.active" :range.sync="filterDate.range" @get="getEls(1, elementsPerPage)"/>
+              <FilterDateRange  :active.sync="filterDate.active" :range.sync="filterDate.range" @get="getEls(1, elementsPerPage, q)"/>
               </div>
               <div class="d-inline-block mb-2 mb-sm-0 mr-2">
-              <FilterProjects :projects="projects" :active.sync="filterProjects.active" @get="getEls(1, elementsPerPage)"/>
+              <FilterProjects :projects="projects" :active.sync="filterProjects.active" @get="getEls(1, elementsPerPage, q)"/>
               </div>
                <div class="d-inline-block mb-2 mb-sm-0">
-              <FilterStatusTransactions :transactions="transactions" :active.sync="filterTransactions.active" @get="getEls(1, elementsPerPage)"/>
+              <FilterStatusTransactions :transactions="transactions" :active.sync="filterTransactions.active" @get="getEls(1, elementsPerPage, q)"/>
               </div>
             </div>
             <div class="col-12 col-md-3 text-right">
@@ -172,6 +173,7 @@ export default {
   },
   data() {
     return {
+      q: null,
       errors:{},
       exportOptions: {
         total: true,
@@ -297,12 +299,17 @@ export default {
       let url =
         this.routeGetAll + "?page=" + page + "&itemsPerPage=" + itemsPerPage;
       if (q) {
-        url = url + "&q=" + q;
+        //url = url + "&q=" + q;
+        this.q = q;
+      }
+      else{
+        this.q = null;
       }
       axios
         .get(url, {
           params: {
             date: this.filterDate.active.value,
+            ...(this.q ? { q: this.q } : {}),
             ...(this.filterDate.range ? { range: this.filterDate.range } : {}),
             ...(this.filterProjects.active ? { projects: this.filterProjects.active } : {}),
             ...(this.filterTransactions.active ? { transactions: this.filterTransactions.active } : {}),

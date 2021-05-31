@@ -221,6 +221,10 @@ import "simplebar/dist/simplebar.min.css";
 import NoData from "../components/NoData";
 export default {
   props: {
+    qProp: {
+      type: String,
+      required: false,
+    },
     entriesProp: {
       type: Number,
       required: false,
@@ -357,6 +361,9 @@ export default {
       if (newValue) {
         this.pageActive = newValue;
       }
+    },
+    qProp: function (newValue, oldValue) {
+      this.q = newValue;
     },
   },
   computed: {

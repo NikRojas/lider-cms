@@ -2,6 +2,7 @@
 
 namespace App\Repositories;
 
+use App\Helpers\CollectionHelper;
 use App\Order;
 use Carbon\Carbon;
 
@@ -11,35 +12,22 @@ class OrderRepository
     {
         if ($q) {
             $elements = Order::select("*")->has('orderDetailsRel')->has('transactionLatestRel')
-            //$elements = Order::select("*")->has('orderDetailsRel')
-            ->whereHas('customerRel', function( $query ) use ( $q ){
+            /*->whereHas('customerRel', function( $query ) use ( $q ){
                 $query->where('name', 'like', '%'.$q.'%')->orWhere('lastname', 'like', '%'.$q.'%')->orWhere('lastname_2', 'like', '%'.$q.'%');
-            });
-            /*->orWhereHas('orderDetailsRel.projectRel', function( $query ) use ( $q ){
-                $query->where('name_es', 'like', '%'.$q.'%');
             });*/
+            ->where(function($query) use ($q){
+                return $query->where('id', 'like', $q . '%')
+                ->orWhereHas('customerRel', function( $query ) use ( $q ){
+                    $query->where('name', 'like', '%'.$q.'%')->orWhere('lastname', 'like', '%'.$q.'%')->orWhere('lastname_2', 'like', '%'.$q.'%');
+                });;
+            });
         } else {
             $elements = Order::select("*")->has('orderDetailsRel')->has('transactionLatestRel');
-            //$elements = Order::select("*")->has('orderDetailsRel');
         }
         if(count($projects) > 0){
             $elements = $elements->whereHas('orderDetailsRel.projectRel', function( $query ) use ( $projects ){
                 $query->whereIn('project_id', $projects);
             });
-        }
-        if(count($transactions) > 0){
-            /*$elements = $elements->whereHas('transactionLatestRel', function( $query ) use ( $transactions ){
-                $query->whereHas('statusRel', function ($query2) use ( $transactions ){
-                    $query2->whereIn('id', $transactions);
-                });
-            });*/
-
-            $elements = $elements->with(["transactionLatestRel" => function($query) use ( $transactions ){
-                $query->where('transaction_status_id', $transactions);
-            }]);
-            /*$elements = $elements->filter(function ($value, $key) {
-                return $value->customer_id = 104;
-            });*/
         }
         switch ($date) {
             case 'all':
@@ -70,12 +58,21 @@ class OrderRepository
         }
         $elements = $elements->with('customerRel:id,name,lastname,lastname_2')->with('orderDetailsRel.departmentRel')->with('orderDetailsRel.projectRel:id,name_es')
             ->with('transactionLatestRel.statusRel')
-            ->orderBy('orders.created_at', 'desc')
-            ->paginate($items_per_page);
+            ->orderBy('orders.created_at', 'desc');
+        if(count($transactions) > 0){
+                $elements = $elements->get()->filter(function($order) use ( $transactions ){
+
+                    return in_array($order->transactionLatestRel->transaction_status_id, $transactions);
+            
+                });
+                $elements = CollectionHelper::paginate($elements, $items_per_page);
+        }
+        else{
+            $elements = $elements->paginate($items_per_page);
+        }
         foreach ($elements as $el) {
             $reserve = null;
             if($el->sended_to_sap){
-                //$sap = '<span class="font-weight-bold text-success text-uppercase" style="color: #26ff0c;font-size: .65rem !important;">Enviado</span>';
                 $sap = '<span>'.$el->sended_code_sap.'</span>';
             }
             else{

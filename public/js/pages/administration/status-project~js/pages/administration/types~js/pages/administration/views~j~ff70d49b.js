@@ -237,6 +237,10 @@ __webpack_require__.r(__webpack_exports__);
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
+    qProp: {
+      type: String,
+      required: false
+    },
     entriesProp: {
       type: Number,
       required: false
@@ -378,6 +382,9 @@ __webpack_require__.r(__webpack_exports__);
       if (newValue) {
         this.pageActive = newValue;
       }
+    },
+    qProp: function qProp(newValue, oldValue) {
+      this.q = newValue;
     }
   },
   computed: {

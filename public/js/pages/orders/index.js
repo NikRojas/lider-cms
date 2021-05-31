@@ -497,6 +497,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
 
 
 
@@ -519,6 +520,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   },
   data: function data() {
     return {
+      q: null,
       errors: {},
       exportOptions: {
         total: true,
@@ -653,13 +655,18 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       var url = this.routeGetAll + "?page=" + page + "&itemsPerPage=" + itemsPerPage;
 
       if (q) {
-        url = url + "&q=" + q;
+        //url = url + "&q=" + q;
+        this.q = q;
+      } else {
+        this.q = null;
       }
 
       axios.get(url, {
-        params: _objectSpread(_objectSpread(_objectSpread({
+        params: _objectSpread(_objectSpread(_objectSpread(_objectSpread({
           date: this.filterDate.active.value
-        }, this.filterDate.range ? {
+        }, this.q ? {
+          q: this.q
+        } : {}), this.filterDate.range ? {
           range: this.filterDate.range
         } : {}), this.filterProjects.active ? {
           projects: this.filterProjects.active
@@ -1194,17 +1201,24 @@ var render = function() {
             {
               attrs: {
                 object: _vm.elements,
-                placeholder: "Nombres, Apellidos",
+                placeholder: "Nombres, Apellidos o Código de Orden",
                 "button-update": false,
                 "button-read": true,
                 "button-delete": false,
                 "button-disable": false,
                 "loading-prop": _vm.loadingGetAll,
+                "q-prop": _vm.q,
                 "entries-prop": _vm.elementsPerPage
               },
               on: {
                 get: _vm.getEls,
                 read: _vm.showEl,
+                "update:qProp": function($event) {
+                  _vm.q = $event
+                },
+                "update:q-prop": function($event) {
+                  _vm.q = $event
+                },
                 "update:entriesProp": function($event) {
                   _vm.elementsPerPage = $event
                 },
@@ -1234,7 +1248,7 @@ var render = function() {
                               return _vm.$set(_vm.filterDate, "range", $event)
                             },
                             get: function($event) {
-                              return _vm.getEls(1, _vm.elementsPerPage)
+                              return _vm.getEls(1, _vm.elementsPerPage, _vm.q)
                             }
                           }
                         })
@@ -1260,7 +1274,7 @@ var render = function() {
                               )
                             },
                             get: function($event) {
-                              return _vm.getEls(1, _vm.elementsPerPage)
+                              return _vm.getEls(1, _vm.elementsPerPage, _vm.q)
                             }
                           }
                         })
@@ -1286,7 +1300,7 @@ var render = function() {
                               )
                             },
                             get: function($event) {
-                              return _vm.getEls(1, _vm.elementsPerPage)
+                              return _vm.getEls(1, _vm.elementsPerPage, _vm.q)
                             }
                           }
                         })

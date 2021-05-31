@@ -18,7 +18,7 @@ class TransactionObserver
         $status = $tr->transaction_status_id;
         $statusTr = MasterTransactionStatus::find($status);
         $order = Order::find($tr->order_id);
-        $closeCycle = MasterOrderCycle::where('payment_gateway_value','CLOSED')->first();
+        $closedCycle = MasterOrderCycle::where('payment_gateway_value','CLOSED')->first();
         switch ($statusTr->name) {
             case 'Pendiente':
                 $order->customerRel->notify(new OrderReceived($order));
@@ -29,14 +29,15 @@ class TransactionObserver
             #Asignar Asesor con los datos de retorno del SAP
             case 'Pagado':
             case 'Capturado':
-                if($order->order_cycle_id = $closeCycle->id){
+            case 'Autorizado':
+                if($tr->order_cycle_id == $closedCycle->id){
                     $order->customerRel->notify(new OrderPaid($order));
                     //SendReserveToSap::dispatch($order);
                 }
                 break;
             case 'Rechazado':
             case 'Error':
-                if($order->order_cycle_id = $closeCycle->id){
+                if($tr->order_cycle_id == $closedCycle->id){
                     $order->customerRel->notify(new OrderNotPaid($order));
                 }
                 break;

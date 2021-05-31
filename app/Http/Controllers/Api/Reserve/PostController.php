@@ -43,14 +43,14 @@ class PostController extends BaseController
         $transactionRegistered = Transaction::where('order_id',$orderId)->where('transaction_status_id', $transactionsStatusPending->id)->first();
         #Si no existe registrarla
         if(!$transactionRegistered){
-            $masterOrderCycle = MasterOrderCycle::where('payment_gateway_value','OPEN')->first();
+            $masterOrderCycleOpen = MasterOrderCycle::where('payment_gateway_value','OPEN')->first();
             try {
                 $transaction = new Transaction();
                 $transaction->order_id = $orderId;
                 $transaction->transaction_date = Carbon::now();
                 $transaction->amount = $order->total_price;
                 $transaction->transaction_status_id = $transactionsStatusPending->id;
-                $transaction->order_cycle_id = $masterOrderCycle->id;
+                $transaction->order_cycle_id = $masterOrderCycleOpen->id;
                 $transaction->save();
             }
             catch (\Exception $e) {
@@ -91,7 +91,6 @@ class PostController extends BaseController
 
         Log::info($request);
         #Verificar Disponibilidad
-
         Log::info($rawKrAnswer->transactions[0]->detailedStatus);
 
         #Transacción
@@ -107,14 +106,14 @@ class PostController extends BaseController
             return $this->sendError(trans('custom.title.error'), ['moc' => false], 500);
         }
         try {
-            $transaction = new Transaction();
-            $transaction->order_id = $orderId;
-            $transaction->transaction_date = Carbon::now();
-            $transaction->amount = $order->total_price;
-            $transaction->transaction_status_id = $transactionsStatus->id;
-            $transaction->response = $request["kr-answer"];
-            $transaction->order_cycle_id = $masterOrderCycle->id;
-            $transaction->save();
+            $transaction2 = new Transaction();
+            $transaction2->order_id = $orderId;
+            $transaction2->transaction_date = Carbon::now();
+            $transaction2->amount = $order->total_price;
+            $transaction2->transaction_status_id = $transactionsStatus->id;
+            $transaction2->response = $request["kr-answer"];
+            $transaction2->order_cycle_id = $masterOrderCycle->id;
+            $transaction2->save();
             return $this->sendResponse(['success' => true], trans('custom.title.success'), 200);
         }
         catch (\Exception $e) {

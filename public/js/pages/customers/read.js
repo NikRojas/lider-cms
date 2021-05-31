@@ -225,6 +225,10 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
 
 
 
@@ -623,6 +627,41 @@ var render = function() {
                                                                     .department_rel
                                                                     .tipology_rel
                                                                     .name
+                                                                )
+                                                              )
+                                                            ]
+                                                          )
+                                                        ]
+                                                      )
+                                                    : _vm._e(),
+                                                  _vm._v(" "),
+                                                  el2.department_rel
+                                                    .type_department_id &&
+                                                  el2.department_rel
+                                                    .tipology_rel.room
+                                                    ? _c(
+                                                        "h3",
+                                                        {
+                                                          staticClass:
+                                                            "font-weight-normal"
+                                                        },
+                                                        [
+                                                          _vm._v(
+                                                            "\n                                Dormitorios:\n                                "
+                                                          ),
+                                                          _c(
+                                                            "span",
+                                                            {
+                                                              staticClass:
+                                                                "font-weight-bold"
+                                                            },
+                                                            [
+                                                              _vm._v(
+                                                                _vm._s(
+                                                                  el2
+                                                                    .department_rel
+                                                                    .tipology_rel
+                                                                    .room
                                                                 )
                                                               )
                                                             ]

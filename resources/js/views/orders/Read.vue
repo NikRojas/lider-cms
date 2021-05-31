@@ -68,6 +68,10 @@
                                   Tipología:
                                   <span class="font-weight-bold">{{ el.department_rel.tipology_rel.name}}</span>
                                 </h3>
+                                <h3 class="font-weight-normal" v-if="el.department_rel.type_department_id && el.department_rel.tipology_rel.room">
+                                  Dormitorios:
+                                  <span class="font-weight-bold">{{ el.department_rel.tipology_rel.room}}</span>
+                                </h3>
                                 <h3 class="font-weight-normal">
                                   Vista:
                                   <span class="font-weight-bold">{{ el.department_rel.view_rel.name}}</span>
@@ -156,6 +160,9 @@
                 <div class="col-6">Total</div>
                 <div class="col-6 text-right">{{ element.total_format}}</div>
               </div>
+              <div class="text-center" v-if="element.transaction_latest_rel.response">
+                <a href="#" class="btn btn-link mx-auto p-0 mt-3 text-sm text-primary" @click.prevent="modalRaw = true">Ver RAW Response Pasarela</a>
+              </div>
             </div>
           </div>
 
@@ -243,30 +250,56 @@
     centered
     footer-class="border-0 pt-0"
     body-class="pt-0"
-  >
-    <template slot="modal-title">
-      <div class="text-primary h2">Reenviar Email</div>
-    </template>
-    <template slot="modal-header-close">
-      <button type="button" class="btn p-0 bg-transparent" @click="restoreResend">
-        <jam-close></jam-close>
-      </button>
-    </template>
-    <div class="row">
-      <div class="col-12">
-        <p>Esta seguro que desea reenviar el correo?</p>
+    >
+      <template slot="modal-title">
+        <div class="text-primary h2">Reenviar Email</div>
+      </template>
+      <template slot="modal-header-close">
+        <button type="button" class="btn p-0 bg-transparent" @click="restoreResend">
+          <jam-close></jam-close>
+        </button>
+      </template>
+      <div class="row">
+        <div class="col-12">
+          <p>Esta seguro que desea reenviar el correo?</p>
+        </div>
       </div>
-    </div>
-    <template v-slot:modal-footer="{ ok }">
-      <Button
-        :classes="['btn-primary']"
-        text="Enviar"
-        @click="resendConfirm"
-        :request-server="requestSubmit"
-      ></Button>
-      <button type="button" class="btn btn-secondary" @click="restoreResend">Cancelar</button>
-    </template>
-  </b-modal>
+      <template v-slot:modal-footer="{ ok }">
+        <Button
+          :classes="['btn-primary']"
+          text="Enviar"
+          @click="resendConfirm"
+          :request-server="requestSubmit"
+        ></Button>
+        <button type="button" class="btn btn-secondary" @click="restoreResend">Cancelar</button>
+      </template>
+    </b-modal>
+    <b-modal
+      v-model="modalRaw"
+      @close="modalRaw = !modalRaw"
+      no-close-on-esc
+      no-close-on-backdrop
+      centered
+    id="modal-xl" size="xl"
+      footer-class="border-0 pt-0"
+      body-class="pt-0"
+    >
+      <template slot="modal-title">
+        <div class="text-primary h2">Response RAW Pasarela</div>
+      </template>
+      <template slot="modal-header-close">
+        <button type="button" class="btn p-0 bg-transparent" @click="modalRaw = !modalRaw">
+          <jam-close></jam-close>
+        </button>
+      </template>
+      <div>
+        <div class="row">
+            <div class="col-12" style="word-break: break-all;" v-if="element.transaction_latest_rel.response">
+              {{ element.transaction_latest_rel.response }}
+            </div>
+        </div>
+      </div>
+    </b-modal>
   </div>
 </template>
 <script>
@@ -291,6 +324,7 @@ export default {
   },
   data() {
     return {
+      modalRaw: false,
       element: {
       },
       modalResend: false,

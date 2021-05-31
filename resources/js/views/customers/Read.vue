@@ -151,6 +151,10 @@
                                   Tipología:
                                   <span class="font-weight-bold">{{ el2.department_rel.tipology_rel.name}}</span>
                                 </h3>
+                                <h3 class="font-weight-normal" v-if="el2.department_rel.type_department_id && el2.department_rel.tipology_rel.room">
+                                  Dormitorios:
+                                  <span class="font-weight-bold">{{ el2.department_rel.tipology_rel.room}}</span>
+                                </h3>
                                 <h3 class="font-weight-normal">
                                   Vista:
                                   <span class="font-weight-bold">{{ el2.department_rel.view_rel.name}}</span>

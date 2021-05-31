@@ -21,7 +21,9 @@ class OrderPaid extends Notification implements ShouldQueue
      */
     public function __construct(Order $order, $resend = false)
     {
-        $this->order = $order->load('customerRel','orderDetailsRel.projectRel','orderDetailsRel.departmentRel');
+        $this->order = $order->load('orderDetailsRel.departmentRel','orderDetailsRel.projectRel.ubigeoRel'
+        ,'orderDetailsRel.projectRel.statusRel','customerRel.documentTypeRel',
+        'orderDetailsRel.departmentRel.tipologyRel.parentTypeDepartmentRel','orderDetailsRel.departmentRel.viewRel');
         $this->resend = $resend;
     }
 
@@ -46,20 +48,7 @@ class OrderPaid extends Notification implements ShouldQueue
     {
         return (new MailMessage)
                     ->subject(trans('custom.mail.subjects.order_paid', ['name' => $this->order->customerRel["name"]]))
-                    ->line('Resumen de la reserva:')
-                    ->line('---------------')
-                    ->line('Reserva')
-                    ->line($this->order->total_format)
-                    ->line('Descuento')
-                    ->line('XXXXXX')
-                    ->line('Total (Impuestos incluidos)')
-                    ->line($this->order->total_format)
-                    ->line('Tu reserva:')
-                    ->line($this->order->orderDetailsRel[0]["projectRel"]["name_es"])
-                    ->line($this->order->orderDetailsRel[0]["departmentRel"]["description"])
-                    ->line("Detalles Adicionales")
-                    ->action('Notification Action', url('/'))
-                    ->line('Thank you for using our application!');
+                    ->view('emails.orders.paid', ['order' => $this->order]);
     }
 
     /**

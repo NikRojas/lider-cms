@@ -21,7 +21,9 @@ class OrderReceived extends Notification implements ShouldQueue
      */
     public function __construct(Order $order, $resend = false)
     {
-        $this->order = $order->load('customerRel','orderDetailsRel.projectRel');
+        $this->order = $order->load('orderDetailsRel.departmentRel','orderDetailsRel.projectRel.ubigeoRel'
+        ,'orderDetailsRel.projectRel.statusRel','customerRel.documentTypeRel',
+        'orderDetailsRel.departmentRel.tipologyRel.parentTypeDepartmentRel','orderDetailsRel.departmentRel.viewRel');
         $this->resend = $resend;
     }
 
@@ -46,9 +48,7 @@ class OrderReceived extends Notification implements ShouldQueue
     {
         return (new MailMessage)
                     ->subject(trans('custom.mail.subjects.order_received', ['name' => $this->order->customerRel["name"]]))
-                    ->line('Proyecto.'.$this->order->orderDetailsRel[0]["projectRel"]["name_es"])
-                    ->action('Notification Action', url('/'))
-                    ->line('Thank you for using our application!');
+                    ->view('emails.orders.received', ['order' => $this->order]);
     }
 
     /*public function toDatabase($notifiable)

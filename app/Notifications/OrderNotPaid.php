@@ -21,7 +21,9 @@ class OrderNotPaid extends Notification implements ShouldQueue
      */
     public function __construct(Order $order, $resend = false)
     {
-        $this->order = $order->load('customerRel','orderDetailsRel.projectRel','orderDetailsRel.departmentRel');
+        $this->order = $order->load('orderDetailsRel.departmentRel','orderDetailsRel.projectRel.ubigeoRel'
+        ,'orderDetailsRel.projectRel.statusRel','customerRel.documentTypeRel',
+        'orderDetailsRel.departmentRel.tipologyRel.parentTypeDepartmentRel','orderDetailsRel.departmentRel.viewRel');
         $this->resend = $resend;
     }
 
@@ -46,9 +48,7 @@ class OrderNotPaid extends Notification implements ShouldQueue
     {
         return (new MailMessage)
                     ->subject(trans('custom.mail.subjects.order_not_paid', ['name' => $this->order->customerRel["name"]]))
-                    ->line('The introduction to the notification.')
-                    ->action('Notification Action', url('/'))
-                    ->line('Thank you for using our application!');
+                    ->view('emails.orders.not-paid', ['order' => $this->order]);
     }
 
     /**

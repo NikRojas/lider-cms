@@ -333,6 +333,39 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -354,6 +387,7 @@ __webpack_require__.r(__webpack_exports__);
   },
   data: function data() {
     return {
+      modalRaw: false,
       element: {},
       modalResend: false,
       resendElement: {},
@@ -777,6 +811,38 @@ var render = function() {
                                                 )
                                               : _vm._e(),
                                             _vm._v(" "),
+                                            el.department_rel
+                                              .type_department_id &&
+                                            el.department_rel.tipology_rel.room
+                                              ? _c(
+                                                  "h3",
+                                                  {
+                                                    staticClass:
+                                                      "font-weight-normal"
+                                                  },
+                                                  [
+                                                    _vm._v(
+                                                      "\n                                Dormitorios:\n                                "
+                                                    ),
+                                                    _c(
+                                                      "span",
+                                                      {
+                                                        staticClass:
+                                                          "font-weight-bold"
+                                                      },
+                                                      [
+                                                        _vm._v(
+                                                          _vm._s(
+                                                            el.department_rel
+                                                              .tipology_rel.room
+                                                          )
+                                                        )
+                                                      ]
+                                                    )
+                                                  ]
+                                                )
+                                              : _vm._e(),
+                                            _vm._v(" "),
                                             _c(
                                               "h3",
                                               {
@@ -1049,7 +1115,27 @@ var render = function() {
                   _c("div", { staticClass: "col-6 text-right" }, [
                     _vm._v(_vm._s(_vm.element.total_format))
                   ])
-                ])
+                ]),
+                _vm._v(" "),
+                _vm.element.transaction_latest_rel.response
+                  ? _c("div", { staticClass: "text-center" }, [
+                      _c(
+                        "a",
+                        {
+                          staticClass:
+                            "btn btn-link mx-auto p-0 mt-3 text-sm text-primary",
+                          attrs: { href: "#" },
+                          on: {
+                            click: function($event) {
+                              $event.preventDefault()
+                              _vm.modalRaw = true
+                            }
+                          }
+                        },
+                        [_vm._v("Ver RAW Response Pasarela")]
+                      )
+                    ])
+                  : _vm._e()
               ])
             ]),
             _vm._v(" "),
@@ -1313,6 +1399,79 @@ var render = function() {
           _c("div", { staticClass: "row" }, [
             _c("div", { staticClass: "col-12" }, [
               _c("p", [_vm._v("Esta seguro que desea reenviar el correo?")])
+            ])
+          ])
+        ],
+        2
+      ),
+      _vm._v(" "),
+      _c(
+        "b-modal",
+        {
+          attrs: {
+            "no-close-on-esc": "",
+            "no-close-on-backdrop": "",
+            centered: "",
+            id: "modal-xl",
+            size: "xl",
+            "footer-class": "border-0 pt-0",
+            "body-class": "pt-0"
+          },
+          on: {
+            close: function($event) {
+              _vm.modalRaw = !_vm.modalRaw
+            }
+          },
+          model: {
+            value: _vm.modalRaw,
+            callback: function($$v) {
+              _vm.modalRaw = $$v
+            },
+            expression: "modalRaw"
+          }
+        },
+        [
+          _c("template", { slot: "modal-title" }, [
+            _c("div", { staticClass: "text-primary h2" }, [
+              _vm._v("Response RAW Pasarela")
+            ])
+          ]),
+          _vm._v(" "),
+          _c("template", { slot: "modal-header-close" }, [
+            _c(
+              "button",
+              {
+                staticClass: "btn p-0 bg-transparent",
+                attrs: { type: "button" },
+                on: {
+                  click: function($event) {
+                    _vm.modalRaw = !_vm.modalRaw
+                  }
+                }
+              },
+              [_c("jam-close")],
+              1
+            )
+          ]),
+          _vm._v(" "),
+          _c("div", [
+            _c("div", { staticClass: "row" }, [
+              _vm.element.transaction_latest_rel.response
+                ? _c(
+                    "div",
+                    {
+                      staticClass: "col-12",
+                      staticStyle: { "word-break": "break-all" }
+                    },
+                    [
+                      _vm._v(
+                        "\n            " +
+                          _vm._s(_vm.element.transaction_latest_rel.response) +
+                          "\n          "
+                      )
+                    ]
+                  )
+                : _vm._e()
             ])
           ])
         ],

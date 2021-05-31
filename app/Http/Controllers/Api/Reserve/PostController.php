@@ -32,10 +32,28 @@ class PostController extends BaseController
         /*Log::info($request);*/
         $rawKrAnswer = json_decode($request["kr-answer"]);
         $orderId = $rawKrAnswer->orderDetails->orderId;
-
         $order = Order::with('orderDetailsRel')->findOrFail($orderId);
         $orderDetails = $order->orderDetailsRel[0];
         $project_id = $orderDetails->project_id;
+
+        #Comenzar la transacción
+        $transactionsStatusPending = MasterTransactionStatus::where('name','Pendiente')->first();
+        $transactionRegistered = Transaction::where('order_id',$orderId)->where('transaction_status_id', $transactionsStatusPending->id)->first();
+        #Si no existe registrarla
+        if(!$transactionRegistered){
+            try {
+                $transaction = new Transaction();
+                $transaction->order_id = $orderId;
+                $transaction->transaction_date = Carbon::now();
+                $transaction->amount = $order->total_price;
+                $transaction->transaction_status_id = $transactionsStatusPending->id;
+                $transaction->save();
+            }
+            catch (\Exception $e) {
+                #Ocurrio un error al crear la transacción pendiente
+                return $this->sendError(trans('custom.title.error'), ['success '=> false, 'tr_pending' => false], 500);
+            }
+        }
 
         $credentialPayment = CredentialPayment::where('project_id',$project_id)->firstorFail();
         $checkCredentials = $this->checkCredentialsStored($credentialPayment);
@@ -115,25 +133,6 @@ class PostController extends BaseController
             return $this->sendError("");
         }
         $price_deparment_separation = $department->projectRel->price_separation;
-        #Comenzar la transacción
-        $transactionsStatus = MasterTransactionStatus::where('name','Pendiente')->first();
-        $transactionRegistered = Transaction::where('order_id',$request->oi)->where('transaction_status_id', $transactionsStatus->id)->first();
-        #Si no existe registrarla
-        if(!$transactionRegistered){
-            try {
-                $transaction = new Transaction();
-                $transaction->order_id = $request->oi;
-                $transaction->transaction_date = Carbon::now();
-                $transaction->amount = $price_deparment_separation;
-                $transaction->transaction_status_id = $transactionsStatus->id;
-                $transaction->save();
-                return $this->sendResponse(['success' => true], trans('custom.title.success'), 200);
-            }
-            catch (\Exception $e) {
-                #Ocurrio un error al crear el cliente
-                return $this->sendError(trans('custom.title.error'), ['success '=> false, 'tr' => false], 500);
-            }
-        }
         #Conexión con Pasarela
         $price_deparment_separation_payment_gateway = intval(str_replace(".", "", $price_deparment_separation));
         $body = [
@@ -170,11 +169,11 @@ class PostController extends BaseController
         }
         $authToken = $credentialPayment->user.':'.$credentialPayment->password_prod;
         $codeAuthToken = base64_encode($authToken);
-        #Test
-        //$authToken = '89289758:testpassword_7vAtvN49E8Ad6e6ihMqIOvOHC6QV5YKmIXgxisMm0V7Eq';
-        //$codeAuthToken = base64_encode($authToken);
-        //$TESTcodeAuthToken = 'ODkyODk3NTg6dGVzdHBhc3N3b3JkXzd2QXR2TjQ5RThBZDZlNmloTXFJT3ZPSEM2UVY1WUttSVhneGlzTW0wVjdFcQ==';
-        #Test
+        #Test {
+            //$authToken = '89289758:testpassword_7vAtvN49E8Ad6e6ihMqIOvOHC6QV5YKmIXgxisMm0V7Eq';
+            //$codeAuthToken = base64_encode($authToken);
+            //$TESTcodeAuthToken = 'ODkyODk3NTg6dGVzdHBhc3N3b3JkXzd2QXR2TjQ5RThBZDZlNmloTXFJT3ZPSEM2UVY1WUttSVhneGlzTW0wVjdFcQ==';
+        #Test}
         try {
             $client = new Client();
             $response = $client->post($this->urlCreatePayment, [

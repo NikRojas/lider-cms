@@ -31,7 +31,7 @@ class SendReserveToSap implements ShouldQueue
      */
     public function __construct($order)
     {
-        $this->order = $order;
+        $this->order = $order->load('orderDetailsRel.departmentRel','orderDetailsRel.projectRel','customerRel.documentTypeRel');
     }
 
     /**

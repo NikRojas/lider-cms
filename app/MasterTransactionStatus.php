@@ -11,10 +11,12 @@ class MasterTransactionStatus extends Model
 
     public function getNameFormatAttribute()
     {
-        $class = NULL;
+        $class = $style = NULL;
         switch ($this->name) {
             case 'Pendiente':
                 $class = "warning";
+                $style = 'style="color: #373734;
+                background-color: rgb(179 179 179 / 50%);"';
                 break;
 
             case 'Autorizado': 
@@ -27,7 +29,7 @@ class MasterTransactionStatus extends Model
                 $class = "danger";
                 break;
         }
-        $html = "<span class='badge badge-pill badge-lg badge-".$class."'>" . $this->name . "</span>";
+        $html = "<span $style class='badge badge-pill badge-lg badge-".$class."'>" . $this->name . "</span>";
         return $html;
     }
 }

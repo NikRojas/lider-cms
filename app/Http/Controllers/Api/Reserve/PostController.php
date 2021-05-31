@@ -85,12 +85,16 @@ class PostController extends BaseController
             Log::info("Hash coincide");
         }
 
+        Log::info($request);
         #Verificar Disponibilidad
+
+        Log::info($rawKrAnswer->transactions[0]->detailedStatus);
 
         #Transacción
         //Ver que pasa si viene uno de los q no tenga guardado en base de datos
         $transactionsStatus = MasterTransactionStatus::where('value_detailed_status',$rawKrAnswer->transactions[0]->detailedStatus)->first();
         if(!$transactionsStatus){
+            Log::info("TS: FALSE");
             return $this->sendError(trans('custom.title.error'), ['ts' => false], 500);
         }
         try {
@@ -104,6 +108,7 @@ class PostController extends BaseController
             return $this->sendResponse(['success' => true], trans('custom.title.success'), 200);
         }
         catch (\Exception $e) {
+            Log::info($e);
             #Ocurrio crear la transacción
             return $this->sendError(trans('custom.title.error'), ['success '=> false, 'utr' => false], 500);
         }

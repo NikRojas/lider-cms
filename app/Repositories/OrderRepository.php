@@ -57,7 +57,7 @@ class OrderRepository
                 break;
         }
         $elements = $elements->with('customerRel:id,name,lastname,lastname_2')->with('orderDetailsRel.departmentRel')->with('orderDetailsRel.projectRel:id,name_es')
-            ->with('transactionLatestRel.statusRel')
+            ->with('transactionLatestRel.statusRel','transactionLatestRel.orderCycleRel')
             ->orderBy('orders.created_at', 'desc');
         if(count($transactions) > 0){
                 $elements = $elements->get()->filter(function($order) use ( $transactions ){
@@ -88,6 +88,7 @@ class OrderRepository
                 "total" => $el["total_format"],
                 "status" => $el["transactionLatestRel"]["statusRel"]["name_format"],
                 "send" => $sap,
+                "oc" => "<div class='text-uppercase'>".$el["transactionLatestRel"]["orderCycleRel"]["name"]."</div>"
             );
         }
         $elements = $elements->toArray();

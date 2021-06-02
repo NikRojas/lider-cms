@@ -34,10 +34,9 @@ class Kernel extends ConsoleKernel
 
         $schedule
             ->command('sap:get-available-departments')->everyTenMinutes();
-        /*$schedule
-            ->job(new GetThirdPartyCredential)
-            ->everyThirtyMinutes();*/
-            //->cron('*/20 * * * *');
+        //Medianoche
+        $schedule
+            ->command('orders:expired')->daily();
     }
 
     /**

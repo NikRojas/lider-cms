@@ -19,6 +19,7 @@ class TransactionObserver
         $statusTr = MasterTransactionStatus::find($status);
         $order = Order::find($tr->order_id);
         $closedCycle = MasterOrderCycle::where('payment_gateway_value','CLOSED')->first();
+        $delayNotification = now()->addMinutes(1);
         switch ($statusTr->name) {
             case 'Pendiente':
                 $order->customerRel->notify(new OrderReceived($order));
@@ -31,14 +32,14 @@ class TransactionObserver
             case 'Capturado':
             case 'Autorizado':
                 if($tr->order_cycle_id == $closedCycle->id){
-                    $order->customerRel->notify(new OrderPaid($order));
+                    $order->customerRel->notify((new OrderPaid($order))->delay($delayNotification));
                     //SendReserveToSap::dispatch($order);
                 }
                 break;
             case 'Rechazado':
             case 'Error':
                 if($tr->order_cycle_id == $closedCycle->id){
-                    $order->customerRel->notify(new OrderNotPaid($order));
+                    $order->customerRel->notify((new OrderNotPaid($order))->delay($delayNotification));
                 }
                 break;
             default:

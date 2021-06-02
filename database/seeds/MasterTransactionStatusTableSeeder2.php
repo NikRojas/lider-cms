@@ -27,7 +27,7 @@ class MasterTransactionStatusTableSeeder2 extends Seeder
             ],
             [
                 //Pago no terminado en el carrito
-                'name' 	=> 'No Pagado',
+                'name' 	=> 'Expirado',
                 'value_status' => 'UNPAID' ,'value_detailed_status' => 'EXPIRED'
             ],
             [

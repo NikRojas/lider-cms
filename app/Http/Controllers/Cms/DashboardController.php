@@ -19,6 +19,7 @@ use App\Project;
 use App\ProjectTypeDepartment;
 use App\Http\Traits\CmsTrait;
 use App\LeadVideocall;
+use App\Order;
 use App\ProjectQuotation;
 use App\Suscriber;
 
@@ -49,11 +50,13 @@ class DashboardController extends Controller
         $posts = Post::where('published',true)->get()->count();
         $advisors = Advisor::get()->count();
         $banks = Bank::get()->count();
-        $projects = Project::with('tipologiesRel','statusRel')->get();
+        $projects = Project::with('departmentsRel','statusRel')->get();
         $suscribers = Suscriber::get()->count();
+        $customers = Customer::whereMonth('created_at', Carbon::now()->month)->get()->count();
+        $orders = Order::whereMonth('created_at', Carbon::now()->month)->get()->count();
 
         foreach ($projects as $key => $value) {
-            $projects[$key]["tipologiesActive"] = ProjectTypeDepartment::where('project_id',$value->id)->where('available',true)->count();
+            $projects[$key]["departmentsActive"] = Department::where('project_id',$value->id)->where('available',true)->count();
         }
 
         $data = array(
@@ -61,7 +64,9 @@ class DashboardController extends Controller
             "advisors" => $advisors,
             "banks" => $banks,
             "projects" => $projects,
-            "suscribers" => $suscribers
+            "suscribers" => $suscribers,
+            "customers" => $customers,
+            "orders" => $orders
         ); 
         return response()->json($data);  
     }

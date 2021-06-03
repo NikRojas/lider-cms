@@ -3,10 +3,12 @@
 namespace App\Http\Controllers\Cms\OrdersStatistics;
 
 use App\Http\Controllers\Controller;
+use App\MasterOrderCycle;
 use App\MasterTransactionStatus;
 //use App\Http\Traits\CmsTrait;
 use App\Order;
 use App\Project;
+use App\ProjectParentTypeDepartment;
 use App\ProjectTypeDepartment;
 use App\Transaction;
 use Carbon\Carbon;
@@ -26,8 +28,11 @@ class StatisticsController extends Controller
         $totalSales = $this->getTotalSales($request->date, $request->range);
         $totalReserves = $this->getTotalOrders($request->date, $request->range);
         $reservesPerProject = $this->getReservesPerProject($request->date, $request->range);
-        $reservesPerTipology = $this->getReserversPerTipology($request->date, $request->range);
-        $response = ["total_sales" => $totalSales, "total_orders" => $totalReserves, "reservers_per_project" => $reservesPerProject, "reservers_per_tipology" => $reservesPerTipology];
+        $reservesPerTipology = $this->getReserversPerEstate($request->date, $request->range);
+        $reservesPerType = $this->getReserversPerType($request->date, $request->range);
+        $response = [
+            "total_sales" => $totalSales, "total_orders" => $totalReserves, "reservers_per_project" => $reservesPerProject, "reservers_per_tipology" => $reservesPerTipology, "reservers_per_type" => $reservesPerType
+        ];
         return response()->json($response, 200);
     }
 
@@ -43,10 +48,16 @@ class StatisticsController extends Controller
             case 'range':
                 $date = Carbon::parse($valueRange[0]);
                 $date2 = Carbon::parse($valueRange[1]);
-                $max = $date->diffInDays($date2);
+                $max = $date->diffInDays($date2) + 1;
                 if ($max > 90) {
                     $rangeType = "month";
                     $max = intdiv($max, 30);
+                    if($max >= 5){
+                        $max = $max + 2;
+                    }
+                    else{
+                        $max = $max + 1;
+                    }
                     $format = 'MMM YY';
                 } else {
                     $rangeType = "day";
@@ -90,11 +101,12 @@ class StatisticsController extends Controller
                     $dateTemp = $date->addDay();
                     break;
                 case 'range':
-                    /*$dateTemp = $date;
-                    $rows[] = ["date" => $dateTemp->isoFormat($format), "dateValue" => $dateTemp->copy()->startOfDay()->toDateTimeString(), "dateValue2" => $dateTemp->endOfDay()->toDateTimeString()];
-                    $dateTemp = $date->addDay();*/
                     if ($rangeType == 'month') {
-                        $dateTemp = $date->addMonth();
+                        if ($i != 0) {
+                            $dateTemp = $date->addMonth();
+                        } else {
+                            $dateTemp = $date;
+                        }
                         $rows[] = ["date" => $dateTemp->isoFormat($format), "dateValue" => $dateTemp->month, "dateYear" => $dateTemp->year];
                     } else if ($rangeType == 'day') {
                         $dateTemp = $date;
@@ -118,72 +130,205 @@ class StatisticsController extends Controller
         }
         return ["rows" => $rows, "dateSub" => $dateSub, "rangeType" => $rangeType];
     }
-    //Listo salvo fallo
+
+    public function getReserversPerType($date, $range)
+    {
+        $rangeStatistics = $this->getRangeStatistics($date, $range);
+        $rangeType = $rangeStatistics["rangeType"];
+        $parentType = ProjectParentTypeDepartment::get();
+        $statusesPaidId = MasterTransactionStatus::where('value_status', 'PAID')->get();
+        $statusesPaidId = $statusesPaidId->pluck('id');
+        $orderCycleClosed = MasterOrderCycle::where('payment_gateway_value', 'CLOSED')->first()->id;
+        foreach ($parentType as $key => $value) {
+            foreach ($rangeStatistics["rows"] as $key2 => $value2) {
+                switch ($date) {
+                    case 'today':
+                        $temp = Order::whereHas('orderDetailsRel', function ($q) use ($value) {
+                            $q->whereHas('departmentRel', function ($q2) use ($value) {
+                                $q2->whereHas('tipologyRel', function ($q3) use ($value) {
+                                    $q3->where('parent_type_department_id', $value->id);
+                                });
+                            });
+                        })->whereHas('transactionLatestRel', function ($q) use ($statusesPaidId, $orderCycleClosed, $value2) {
+                            $q->whereIn('transaction_status_id', $statusesPaidId)
+                                ->where('order_cycle_id', $orderCycleClosed)
+                                ->whereBetween('transaction_date', [$value2["dateValue"], $value2["dateValue2"]]);
+                        })->get()->count();
+                        break;
+                    case 'range':
+                        if ($rangeType == "day") {
+                            $temp = Order::whereHas('orderDetailsRel', function ($q) use ($value) {
+                                $q->whereHas('departmentRel', function ($q2) use ($value) {
+                                    $q2->whereHas('tipologyRel', function ($q3) use ($value) {
+                                        $q3->where('parent_type_department_id', $value->id);
+                                    });
+                                });
+                            })->whereHas('transactionLatestRel', function ($q) use ($statusesPaidId, $value2, $orderCycleClosed) {
+                                $q->whereIn('transaction_status_id', $statusesPaidId)
+                                    ->where('order_cycle_id', $orderCycleClosed)
+                                    ->whereBetween('transaction_date', [$value2["dateValue"], $value2["dateValue2"]]);
+                            });
+                        } else if ($rangeType == "month") {
+                            $temp = Order::whereHas('orderDetailsRel', function ($q) use ($value) {
+                                $q->whereHas('departmentRel', function ($q2) use ($value) {
+                                    $q2->whereHas('tipologyRel', function ($q3) use ($value) {
+                                        $q3->where('parent_type_department_id', $value->id);
+                                    });
+                                });
+                            })->whereHas('transactionLatestRel', function ($q) use ($statusesPaidId, $value2, $orderCycleClosed) {
+                                $q->whereIn('transaction_status_id', $statusesPaidId)
+                                    ->where('order_cycle_id', $orderCycleClosed)
+                                    ->whereMonth('transaction_date', $value2["dateValue"])->whereYear('transaction_date', $value2["dateYear"]);
+                            });
+                        }
+                        $temp = $temp->get()->count();
+                        break;
+                    case '7':
+                        $temp = Order::whereHas('orderDetailsRel', function ($q) use ($value) {
+                            $q->whereHas('departmentRel', function ($q2) use ($value) {
+                                $q2->whereHas('tipologyRel', function ($q3) use ($value) {
+                                    $q3->where('parent_type_department_id', $value->id);
+                                });
+                            });
+                        })->whereHas('transactionLatestRel', function ($q) use ($statusesPaidId, $orderCycleClosed, $value2) {
+                            $q->whereIn('transaction_status_id', $statusesPaidId)
+                                ->where('order_cycle_id', $orderCycleClosed)
+                                ->whereBetween('transaction_date', [$value2["dateValue"], $value2["dateValue2"]]);
+                        })->get()->count();
+                        break;
+                    case '30':
+                        $temp = Order::whereHas('orderDetailsRel', function ($q) use ($value) {
+                            $q->whereHas('departmentRel', function ($q2) use ($value) {
+                                $q2->whereHas('tipologyRel', function ($q3) use ($value) {
+                                    $q3->where('parent_type_department_id', $value->id);
+                                });
+                            });
+                        })->whereHas('transactionLatestRel', function ($q) use ($statusesPaidId, $orderCycleClosed, $value2) {
+                            $q->whereIn('transaction_status_id', $statusesPaidId)
+                                ->where('order_cycle_id', $orderCycleClosed)
+                                ->whereBetween('transaction_date', [$value2["dateValue"], $value2["dateValue2"]]);
+                        })->get()->count();
+                        break;
+                    case '90':
+                        $temp = Order::whereHas('orderDetailsRel', function ($q) use ($value) {
+                            $q->whereHas('departmentRel', function ($q2) use ($value) {
+                                $q2->whereHas('tipologyRel', function ($q3) use ($value) {
+                                    $q3->where('parent_type_department_id', $value->id);
+                                });
+                            });
+                        })->whereHas('transactionLatestRel', function ($q) use ($statusesPaidId, $orderCycleClosed, $value2) {
+                            $q->whereIn('transaction_status_id', $statusesPaidId)
+                                ->where('order_cycle_id', $orderCycleClosed)
+                                ->whereBetween('transaction_date', [$value2["dateValue"], $value2["dateValue2"]]);
+                        })->get()->count();
+                        break;
+                    case 'this_year':
+                        $temp = Order::whereHas('orderDetailsRel', function ($q) use ($value) {
+                            $q->whereHas('departmentRel', function ($q2) use ($value) {
+                                $q2->whereHas('tipologyRel', function ($q3) use ($value) {
+                                    $q3->where('parent_type_department_id', $value->id);
+                                });
+                            });
+                        })->whereHas('transactionLatestRel', function ($q) use ($statusesPaidId, $orderCycleClosed, $value2) {
+                            $q->whereIn('transaction_status_id', $statusesPaidId)
+                                ->where('order_cycle_id', $orderCycleClosed)
+                                ->whereMonth('transaction_date', $value2["dateValue"])->whereYear('transaction_date', $value2["dateYear"]);
+                        })->get()->count();
+                        break;
+                }
+                $temp2 = null;
+                $rangeStatistics["rows"][$key2]["Valor"] = $temp ?? 0;
+                $temp2 = $rangeStatistics["rows"];
+                $parentType[$key]["value"] = collect($temp2)->sum('Valor') ?? 0;
+            }
+        }
+        $columns = [
+            'name', 'value'
+        ];
+        return ["rows" => $parentType, "columns" => $columns];
+    }
+
     public function getReservesPerProject($date, $range)
     {
         $rangeStatistics = $this->getRangeStatistics($date, $range);
-        $dateSub = $rangeStatistics["dateSub"];
+        $rangeType = $rangeStatistics["rangeType"];
         $projects = Project::select("id", "name_es")->get();
-        $statusPaidId = MasterTransactionStatus::where('name', 'Pagado')->first()->id;
+        $statusesPaidId = MasterTransactionStatus::where('value_status', 'PAID')->get();
+        $statusesPaidId = $statusesPaidId->pluck('id');
+        $orderCycleClosed = MasterOrderCycle::where('payment_gateway_value', 'CLOSED')->first()->id;
         foreach ($projects as $key => $value) {
             foreach ($rangeStatistics["rows"] as $key2 => $value2) {
                 switch ($date) {
                     case 'today':
-                        $projects[$key]["value"] = Order::whereHas('orderDetailsRel', function ($q) use ($value) {
+                        $temp = Order::whereHas('orderDetailsRel', function ($q) use ($value) {
                             $q->where('project_id', $value->id);
-                        })->whereHas('transactionLatestRel', function ($q) use ($statusPaidId, $value2) {
-                            $q->where('transaction_status_id', $statusPaidId)
-                                ->whereDate('transaction_date', $value2["dateValue"]);
+                        })->whereHas('transactionLatestRel', function ($q2) use ($statusesPaidId, $orderCycleClosed, $value2) {
+                            $q2->whereIn('transaction_status_id', $statusesPaidId)
+                                ->where('order_cycle_id', $orderCycleClosed)
+                                ->whereBetween('transaction_date', [$value2["dateValue"], $value2["dateValue2"]]);
                         })->get()->count();
                         break;
-
                     case 'range':
-                        $projects[$key]["value"] = Order::whereHas('orderDetailsRel', function ($q) use ($value) {
-                            $q->where('project_id', $value->id);
-                        })->whereHas('transactionLatestRel', function ($q) use ($statusPaidId, $dateSub) {
-                            $q->where('transaction_status_id', $statusPaidId)
-                                ->whereDate('transaction_date', '>=', $dateSub);
-                        })->get()->count();
+                        if ($rangeType == "day") {
+                            $temp = Order::whereHas('orderDetailsRel', function ($q) use ($value) {
+                                $q->where('project_id', $value->id);
+                            })->whereHas('transactionLatestRel', function ($q) use ($statusesPaidId, $value2, $orderCycleClosed) {
+                                $q->whereIn('transaction_status_id', $statusesPaidId)
+                                    ->where('order_cycle_id', $orderCycleClosed)
+                                    ->whereBetween('transaction_date', [$value2["dateValue"], $value2["dateValue2"]]);
+                            });
+                        } else if ($rangeType == "month") {
+                            $temp = Order::whereHas('orderDetailsRel', function ($q) use ($value) {
+                                $q->where('project_id', $value->id);
+                            })->whereHas('transactionLatestRel', function ($q) use ($statusesPaidId, $value2, $orderCycleClosed) {
+                                $q->whereIn('transaction_status_id', $statusesPaidId)
+                                    ->where('order_cycle_id', $orderCycleClosed)
+                                    ->whereMonth('transaction_date', $value2["dateValue"])->whereYear('transaction_date', $value2["dateYear"]);
+                            });
+                        }
+                        $temp = $temp->get()->count();
                         break;
-
                     case '7':
-                        $projects[$key]["value"] = Order::whereHas('orderDetailsRel', function ($q) use ($value) {
+                        $temp = Order::whereHas('orderDetailsRel', function ($q) use ($value) {
                             $q->where('project_id', $value->id);
-                        })->whereHas('transactionLatestRel', function ($q) use ($statusPaidId, $dateSub) {
-                            $q->where('transaction_status_id', $statusPaidId)
-                                ->whereDate('transaction_date', '>=', $dateSub);
+                        })->whereHas('transactionLatestRel', function ($q) use ($statusesPaidId, $orderCycleClosed, $value2) {
+                            $q->whereIn('transaction_status_id', $statusesPaidId)
+                                ->where('order_cycle_id', $orderCycleClosed)
+                                ->whereBetween('transaction_date', [$value2["dateValue"], $value2["dateValue2"]]);
                         })->get()->count();
-
                         break;
                     case '30':
-                        $projects[$key]["value"] = Order::whereHas('orderDetailsRel', function ($q) use ($value) {
+                        $temp = Order::whereHas('orderDetailsRel', function ($q) use ($value) {
                             $q->where('project_id', $value->id);
-                        })->whereHas('transactionLatestRel', function ($q) use ($statusPaidId, $dateSub) {
-                            $q->where('transaction_status_id', $statusPaidId)
-                                ->whereDate('transaction_date', '>=', $dateSub);
+                        })->whereHas('transactionLatestRel', function ($q) use ($statusesPaidId, $orderCycleClosed, $value2) {
+                            $q->whereIn('transaction_status_id', $statusesPaidId)
+                                ->where('order_cycle_id', $orderCycleClosed)
+                                ->whereBetween('transaction_date', [$value2["dateValue"], $value2["dateValue2"]]);
                         })->get()->count();
-
                         break;
-
                     case '90':
-                        $projects[$key]["value"] = Order::whereHas('orderDetailsRel', function ($q) use ($value) {
+                        $temp = Order::whereHas('orderDetailsRel', function ($q) use ($value) {
                             $q->where('project_id', $value->id);
-                        })->whereHas('transactionLatestRel', function ($q) use ($statusPaidId, $dateSub) {
-                            $q->where('transaction_status_id', $statusPaidId)
-                                ->whereDate('transaction_date', '>=', $dateSub);
+                        })->whereHas('transactionLatestRel', function ($q) use ($statusesPaidId, $orderCycleClosed, $value2) {
+                            $q->whereIn('transaction_status_id', $statusesPaidId)
+                                ->where('order_cycle_id', $orderCycleClosed)
+                                ->whereBetween('transaction_date', [$value2["dateValue"], $value2["dateValue2"]]);
                         })->get()->count();
-
                         break;
-
                     case 'this_year':
-                        $projects[$key]["value"] = Order::whereHas('orderDetailsRel', function ($q) use ($value) {
+                        $temp = Order::whereHas('orderDetailsRel', function ($q) use ($value) {
                             $q->where('project_id', $value->id);
-                        })->whereHas('transactionLatestRel', function ($q) use ($statusPaidId, $dateSub) {
-                            $q->where('transaction_status_id', $statusPaidId)
-                                ->whereDate('transaction_date', '>=', $dateSub);
+                        })->whereHas('transactionLatestRel', function ($q) use ($statusesPaidId, $orderCycleClosed, $value2) {
+                            $q->whereIn('transaction_status_id', $statusesPaidId)
+                                ->where('order_cycle_id', $orderCycleClosed)
+                                ->whereMonth('transaction_date', $value2["dateValue"])->whereYear('transaction_date', $value2["dateYear"]);
                         })->get()->count();
                         break;
                 }
+                $temp2 = null;
+                $rangeStatistics["rows"][$key2]["Valor"] = $temp ?? 0;
+                $temp2 = $rangeStatistics["rows"];
+                $projects[$key]["value"] = collect($temp2)->sum('Valor') ?? 0;
             }
         }
         $columns = [
@@ -192,74 +337,89 @@ class StatisticsController extends Controller
         return ["rows" => $projects, "columns" => $columns];
     }
 
-    public function getReserversPerTipology($date, $range)
+    public function getReserversPerEstate($date, $range)
     {
         $rangeStatistics = $this->getRangeStatistics($date, $range);
         $dateSub = $rangeStatistics["dateSub"];
-        $tipologies = ProjectTypeDepartment::select("id", "name", "project_id")->with('projectRel:id,name_es')->get();
-        $statusPaidId = MasterTransactionStatus::where('name', 'Pagado')->first()->id;
-        foreach ($tipologies as $key => $value) {
-            foreach ($rangeStatistics["rows"] as $key2 => $value2) {
-                switch ($date) {
-                    case 'today':
-                        $tipologies[$key]["value"] = Order::whereHas('orderDetailsRel', function ($q) use ($value) {
-                            $q->where('project_id', $value->id);
-                        })->whereHas('transactionLatestRel', function ($q) use ($statusPaidId, $value2) {
-                            $q->where('transaction_status_id', $statusPaidId)
-                                ->whereDate('transaction_date', $value2["dateValue"]);
-                        })->get()->count();
-                        break;
+        $rangeType = $rangeStatistics["rangeType"];
+        $statusesPaidId = MasterTransactionStatus::where('value_status', 'PAID')->get();
+        $statusesPaidId = $statusesPaidId->pluck('id');
+        $orderCycleClosed = MasterOrderCycle::where('payment_gateway_value', 'CLOSED')->first()->id;
+        $data = [];
+        foreach ($rangeStatistics["rows"] as $key2 => $value2) {
+            switch ($date) {
+                case 'today':
+                    $temp = Order::with('orderDetailsRel.departmentRel.tipologyRel.parentTypeDepartmentRel', 'orderDetailsRel.projectRel')->whereHas('transactionLatestRel', function ($q) use ($statusesPaidId, $orderCycleClosed, $value2) {
+                        $q->whereIn('transaction_status_id', $statusesPaidId)
+                            ->where('order_cycle_id', $orderCycleClosed)
+                            ->whereBetween('transaction_date', [$value2["dateValue"], $value2["dateValue2"]]);
+                    })->get();
 
-                    case 'range':
-                        $tipologies[$key]["value"] = Order::whereHas('orderDetailsRel', function ($q) use ($value) {
-                            $q->where('project_id', $value->id);
-                        })->whereHas('transactionLatestRel', function ($q) use ($statusPaidId, $dateSub) {
-                            $q->where('transaction_status_id', $statusPaidId)
-                                ->whereDate('transaction_date', '>=', $dateSub);
-                        })->get()->count();
-                        break;
-                    case '7':
-                        $tipologies[$key]["value"] = Order::whereHas('orderDetailsRel', function ($q) use ($value) {
-                            $q->where('project_id', $value->id);
-                        })->whereHas('transactionLatestRel', function ($q) use ($statusPaidId, $dateSub) {
-                            $q->where('transaction_status_id', $statusPaidId)
-                                ->whereDate('transaction_date', '>=', $dateSub);
-                        })->get()->count();
-                        break;
-                    case '30':
-                        $tipologies[$key]["value"] = Order::whereHas('orderDetailsRel', function ($q) use ($value) {
-                            $q->where('project_id', $value->id);
-                        })->whereHas('transactionLatestRel', function ($q) use ($statusPaidId, $dateSub) {
-                            $q->where('transaction_status_id', $statusPaidId)
-                                ->whereDate('transaction_date', '>=', $dateSub);
-                        })->get()->count();
-                        break;
+                    break;
 
-                    case '90':
-                        $tipologies[$key]["value"] = Order::whereHas('orderDetailsRel', function ($q) use ($value) {
-                            $q->where('project_id', $value->id);
-                        })->whereHas('transactionLatestRel', function ($q) use ($statusPaidId, $dateSub) {
-                            $q->where('transaction_status_id', $statusPaidId)
-                                ->whereDate('transaction_date', '>=', $dateSub);
-                        })->get()->count();
-                        break;
+                case 'range':
+                    if ($rangeType == "day") {
+                        $temp = Order::with('orderDetailsRel.departmentRel.tipologyRel.parentTypeDepartmentRel', 'orderDetailsRel.projectRel')
+                            ->whereHas('transactionLatestRel', function ($q) use ($statusesPaidId, $value2, $orderCycleClosed) {
+                                $q->whereIn('transaction_status_id', $statusesPaidId)
+                                    ->where('order_cycle_id', $orderCycleClosed)
+                                    ->whereBetween('transaction_date', [$value2["dateValue"], $value2["dateValue2"]]);
+                            });
+                    } else if ($rangeType == "month") {
+                        $temp = Order::with('orderDetailsRel.departmentRel.tipologyRel.parentTypeDepartmentRel', 'orderDetailsRel.projectRel')
+                            ->whereHas('transactionLatestRel', function ($q) use ($statusesPaidId, $value2, $orderCycleClosed) {
+                                $q->whereIn('transaction_status_id', $statusesPaidId)
+                                    ->where('order_cycle_id', $orderCycleClosed)
+                                    ->whereMonth('transaction_date', $value2["dateValue"])->whereYear('transaction_date', $value2["dateYear"]);
+                            });
+                    }
+                    $temp = $temp->get();
+                    break;
 
-                    case 'this_year':
-                        $tipologies[$key]["value"] = Order::whereHas('orderDetailsRel', function ($q) use ($value) {
-                            $q->where('project_id', $value->id);
-                        })->whereHas('transactionLatestRel', function ($q) use ($statusPaidId, $dateSub) {
-                            $q->where('transaction_status_id', $statusPaidId)
-                                ->whereDate('transaction_date', '>=', $dateSub);
-                        })->get()->count();
-                        break;
-                }
+                case '7':
+                    $temp = Order::with('orderDetailsRel.departmentRel.tipologyRel.parentTypeDepartmentRel', 'orderDetailsRel.projectRel')->whereHas('transactionLatestRel', function ($q) use ($statusesPaidId, $orderCycleClosed, $value2) {
+                        $q->whereIn('transaction_status_id', $statusesPaidId)
+                            ->where('order_cycle_id', $orderCycleClosed)
+                            ->whereBetween('transaction_date', [$value2["dateValue"], $value2["dateValue2"]]);;
+                    })->get();
+
+                    break;
+                case '30':
+                    $temp = Order::with('orderDetailsRel.departmentRel.tipologyRel.parentTypeDepartmentRel', 'orderDetailsRel.projectRel')->whereHas('transactionLatestRel', function ($q) use ($statusesPaidId, $orderCycleClosed, $value2) {
+                        $q->whereIn('transaction_status_id', $statusesPaidId)
+                            ->where('order_cycle_id', $orderCycleClosed)
+                            ->whereBetween('transaction_date', [$value2["dateValue"], $value2["dateValue2"]]);
+                    })->get();
+
+                    break;
+
+                case '90':
+                    $temp = Order::with('orderDetailsRel.departmentRel.tipologyRel.parentTypeDepartmentRel', 'orderDetailsRel.projectRel')->whereHas('transactionLatestRel', function ($q) use ($statusesPaidId, $orderCycleClosed, $value2) {
+                        $q->whereIn('transaction_status_id', $statusesPaidId)
+                            ->where('order_cycle_id', $orderCycleClosed)
+                            ->whereBetween('transaction_date', [$value2["dateValue"], $value2["dateValue2"]]);
+                    })->get();
+
+                    break;
+
+                case 'this_year':
+                    $temp = Order::with('orderDetailsRel.departmentRel.tipologyRel.parentTypeDepartmentRel', 'orderDetailsRel.projectRel')->whereHas('transactionLatestRel', function ($q) use ($value2, $statusesPaidId, $orderCycleClosed, $dateSub) {
+                        $q->whereIn('transaction_status_id', $statusesPaidId)
+                            ->where('order_cycle_id', $orderCycleClosed)
+                            ->whereMonth('transaction_date', $value2["dateValue"])->whereYear('transaction_date', $value2["dateYear"]);
+                    })->get();
+                    break;
             }
-            $tipologies[$key]["name_format"] = $value->name . " - " . $value->projectRel["name_es"];
+            $temp2[] = $temp;
         }
-        $columns = [
-            'name_format', 'value'
-        ];
-        return ["rows" => $tipologies, "columns" => $columns];
+        $temp2 =  collect($temp2)->collapse()->unique()->all();
+        foreach ($temp2 as $k => $v) {
+            $data[$k]["name"] = $v->orderDetailsRel[0]->departmentRel->description;
+            $data[$k]["project"] = $v->orderDetailsRel[0]->projectRel->name_es;
+            $data[$k]["tipology"] = $v->orderDetailsRel[0]->departmentRel->tipologyRel->name;
+            $data[$k]["tipo"] = $v->orderDetailsRel[0]->departmentRel->tipologyRel->parentTypeDepartmentRel->name;
+        }
+        return ["rows" => $data];
     }
 
     public function getTotalOrders($date, $range)
@@ -270,42 +430,49 @@ class StatisticsController extends Controller
         $rangeStatisticsTemp = $this->getRangeStatistics($date, $range);
         $rangeStatistics = $rangeStatisticsTemp["rows"];
         $rangeType = $rangeStatisticsTemp["rangeType"];
-        $statusPaidId = MasterTransactionStatus::where('name', 'Pagado')->first()->id;
+        $statusesPaidId = MasterTransactionStatus::where('value_status', 'PAID')->get();
+        $statusesPaidId = $statusesPaidId->pluck('id');
+        $orderCycleClosed = MasterOrderCycle::where('payment_gateway_value', 'CLOSED')->first()->id;
         foreach ($rangeStatistics as $key => $value) {
             switch ($date) {
                 case 'today':
-                    $temp = Order::whereHas('transactionLatestRel', function ($q) use ($statusPaidId, $value) {
-                        $q->where('transaction_status_id', $statusPaidId)
+                    $temp = Order::whereHas('transactionLatestRel', function ($q) use ($statusesPaidId, $value, $orderCycleClosed) {
+                        $q->whereIn('transaction_status_id', $statusesPaidId)
+                            ->where('order_cycle_id', $orderCycleClosed)
                             ->whereBetween('transaction_date', [$value["dateValue"], $value["dateValue2"]]);
                     })->get()->count();
                     $rangeStatistics[$key]["Valor"] = $temp ?? 0;
                     break;
                 case 'range':
                     if ($rangeType == "day") {
-                        $temp = Order::whereHas('transactionLatestRel', function ($q) use ($statusPaidId, $value) {
-                            $q->where('transaction_status_id', $statusPaidId)
+                        $temp = Order::whereHas('transactionLatestRel', function ($q) use ($statusesPaidId, $value, $orderCycleClosed) {
+                            $q->whereIn('transaction_status_id', $statusesPaidId)
+                                ->where('order_cycle_id', $orderCycleClosed)
                                 ->whereBetween('transaction_date', [$value["dateValue"], $value["dateValue2"]]);
                         });
                     } else if ($rangeType == "month") {
-                        $temp = Order::whereHas('transactionLatestRel', function ($q) use ($statusPaidId, $value) {
-                            $q->where('transaction_status_id', $statusPaidId)
-                            ->whereMonth('transaction_date', $value["dateValue"])->whereYear('transaction_date', $value["dateYear"]);
+                        $temp = Order::whereHas('transactionLatestRel', function ($q) use ($statusesPaidId, $value, $orderCycleClosed) {
+                            $q->whereIn('transaction_status_id', $statusesPaidId)
+                                ->where('order_cycle_id', $orderCycleClosed)
+                                ->whereMonth('transaction_date', $value["dateValue"])->whereYear('transaction_date', $value["dateYear"]);
                         });
                     }
                     $temp = $temp->get()->count();
                     $rangeStatistics[$key]["Valor"] = $temp ?? 0;
                     break;
                 case '7':
-                    $temp = Order::whereHas('transactionLatestRel', function ($q) use ($statusPaidId, $value) {
-                        $q->where('transaction_status_id', $statusPaidId)
+                    $temp = Order::whereHas('transactionLatestRel', function ($q) use ($statusesPaidId, $value, $orderCycleClosed) {
+                        $q->whereIn('transaction_status_id', $statusesPaidId)
+                            ->where('order_cycle_id', $orderCycleClosed)
                             ->whereBetween('transaction_date', [$value["dateValue"], $value["dateValue2"]]);
                     })->get()->count();
                     $rangeStatistics[$key]["Valor"] = $temp ?? 0;
                     break;
                 case '30':
 
-                    $temp = Order::whereHas('transactionLatestRel', function ($q) use ($statusPaidId, $value) {
-                        $q->where('transaction_status_id', $statusPaidId)
+                    $temp = Order::whereHas('transactionLatestRel', function ($q) use ($statusesPaidId, $value, $orderCycleClosed) {
+                        $q->whereIn('transaction_status_id', $statusesPaidId)
+                            ->where('order_cycle_id', $orderCycleClosed)
                             ->whereBetween('transaction_date', [$value["dateValue"], $value["dateValue2"]]);
                     })->get()->count();
                     $rangeStatistics[$key]["Valor"] = $temp ?? 0;
@@ -313,16 +480,18 @@ class StatisticsController extends Controller
 
                 case '90':
 
-                    $temp = Order::whereHas('transactionLatestRel', function ($q) use ($statusPaidId, $value) {
-                        $q->where('transaction_status_id', $statusPaidId)
+                    $temp = Order::whereHas('transactionLatestRel', function ($q) use ($statusesPaidId, $value, $orderCycleClosed) {
+                        $q->whereIn('transaction_status_id', $statusesPaidId)
+                            ->where('order_cycle_id', $orderCycleClosed)
                             ->whereBetween('transaction_date', [$value["dateValue"], $value["dateValue2"]]);
                     })->get()->count();
                     $rangeStatistics[$key]["Valor"] = $temp ?? 0;
                     break;
 
                 case 'this_year':
-                    $temp = Order::whereHas('transactionLatestRel', function ($q) use ($statusPaidId, $value) {
-                        $q->where('transaction_status_id', $statusPaidId)
+                    $temp = Order::whereHas('transactionLatestRel', function ($q) use ($statusesPaidId, $value, $orderCycleClosed) {
+                        $q->whereIn('transaction_status_id', $statusesPaidId)
+                            ->where('order_cycle_id', $orderCycleClosed)
                             ->whereMonth('transaction_date', $value["dateValue"])->whereYear('transaction_date', $value["dateYear"]);
                     })->get()->count();
                     $rangeStatistics[$key]["Valor"] = $temp ?? 0;
@@ -342,14 +511,16 @@ class StatisticsController extends Controller
         $rangeStatisticsTemp = $this->getRangeStatistics($date, $range);
         $rangeStatistics = $rangeStatisticsTemp["rows"];
         $rangeType = $rangeStatisticsTemp["rangeType"];
-        $statusPaidId = MasterTransactionStatus::where('name', 'Pagado')->first()->id;
+        $orderCycleClosed = MasterOrderCycle::where('payment_gateway_value', 'CLOSED')->first()->id;
+        $statusesPaidId = MasterTransactionStatus::where('value_status', 'PAID')->get();
+        $statusesPaidId = $statusesPaidId->pluck('id');
         foreach ($rangeStatistics as $key => $value) {
             switch ($date) {
                 case 'today':
-                    $temp = Order::
-                        selectRaw("SUM(transactions.amount) as sum,transactions.transaction_status_id")
+                    $temp = Order::selectRaw("SUM(transactions.amount) as sum,transactions.transaction_status_id")
                         ->join('transactions', 'transactions.order_id', '=', 'orders.id')
-                        ->where('transaction_status_id', $statusPaidId)
+                        ->where('order_cycle_id', $orderCycleClosed)
+                        ->whereIn('transaction_status_id', $statusesPaidId)
                         ->whereBetween('transaction_date', [$value["dateValue"], $value["dateValue2"]])
                         ->groupBy('transactions.transaction_status_id')
                         ->first();
@@ -357,33 +528,33 @@ class StatisticsController extends Controller
                     break;
 
                 case 'range':
-                    $temp = Order::
-                        selectRaw("SUM(transactions.amount) as sum,transactions.transaction_status_id")
+                    $temp = Order::selectRaw("SUM(transactions.amount) as sum,transactions.transaction_status_id")
                         ->join('transactions', 'transactions.order_id', '=', 'orders.id')
-                        ->where('transaction_status_id', $statusPaidId);
+                        ->where('order_cycle_id', $orderCycleClosed)
+                        ->whereIn('transaction_status_id', $statusesPaidId);
                     if ($rangeType == "day") {
                         $temp = $temp->whereBetween('transaction_date', [$value["dateValue"], $value["dateValue2"]]);
                     } else if ($rangeType == "month") {
                         $temp = $temp->whereMonth('transaction_date', $value["dateValue"])->whereYear('transaction_date', $value["dateYear"]);
                     }
-                    $temp = $temp->groupBy('transactions.transaction_status_id')->first();
-                    $rangeStatistics[$key]["Valor"] = $temp["sum"] ?? 0;
+                    $temp = $temp->get();
+                    $rangeStatistics[$key]["Valor"] = $temp->sum('sum') ?? 0;
                     break;
                 case '7':
-                    $temp = Order::
-                        selectRaw("SUM(transactions.amount) as sum,transactions.transaction_status_id")
+                    $temp = Order::selectRaw("SUM(transactions.amount) as sum,transactions.transaction_status_id")
                         ->join('transactions', 'transactions.order_id', '=', 'orders.id')
-                        ->where('transaction_status_id', $statusPaidId)
+                        ->where('order_cycle_id', $orderCycleClosed)
+                        ->whereIn('transaction_status_id', $statusesPaidId)
                         ->whereBetween('transaction_date', [$value["dateValue"], $value["dateValue2"]])
                         ->groupBy('transactions.transaction_status_id')
                         ->first();
                     $rangeStatistics[$key]["Valor"] = $temp["sum"] ?? 0;
                     break;
                 case '30':
-                        $temp = Order::
-                        selectRaw("SUM(transactions.amount) as sum,transactions.transaction_status_id")
+                    $temp = Order::selectRaw("SUM(transactions.amount) as sum,transactions.transaction_status_id")
                         ->join('transactions', 'transactions.order_id', '=', 'orders.id')
-                        ->where('transaction_status_id', $statusPaidId)
+                        ->where('order_cycle_id', $orderCycleClosed)
+                        ->whereIn('transaction_status_id', $statusesPaidId)
                         ->whereBetween('transaction_date', [$value["dateValue"], $value["dateValue2"]])
                         ->groupBy('transactions.transaction_status_id')
                         ->first();
@@ -391,10 +562,10 @@ class StatisticsController extends Controller
                     break;
 
                 case '90':
-                        $temp = Order::
-                        selectRaw("SUM(transactions.amount) as sum,transactions.transaction_status_id")
+                    $temp = Order::selectRaw("SUM(transactions.amount) as sum,transactions.transaction_status_id")
                         ->join('transactions', 'transactions.order_id', '=', 'orders.id')
-                        ->where('transaction_status_id', $statusPaidId)
+                        ->where('order_cycle_id', $orderCycleClosed)
+                        ->whereIn('transaction_status_id', $statusesPaidId)
                         ->whereBetween('transaction_date', [$value["dateValue"], $value["dateValue2"]])
                         ->groupBy('transactions.transaction_status_id')
                         ->first();
@@ -402,10 +573,10 @@ class StatisticsController extends Controller
                     break;
 
                 case 'this_year':
-                        $temp = Order::
-                        selectRaw("SUM(transactions.amount) as sum,transactions.transaction_status_id")
+                    $temp = Order::selectRaw("SUM(transactions.amount) as sum,transactions.transaction_status_id")
                         ->join('transactions', 'transactions.order_id', '=', 'orders.id')
-                        ->where('transaction_status_id', $statusPaidId)
+                        ->where('order_cycle_id', $orderCycleClosed)
+                        ->whereIn('transaction_status_id', $statusesPaidId)
                         ->whereMonth('transaction_date', $value["dateValue"])->whereYear('transaction_date', $value["dateYear"])
                         ->groupBy('transactions.transaction_status_id')
                         ->first();

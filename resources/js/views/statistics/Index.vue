@@ -27,10 +27,10 @@
 
       <div class="row">
         <div class="col-12 col-lg-8 stretch-card  mb-4">
-          <div class="card">
+          <div class="card w-100">
             <div class="card-body">
               <h2 class="text-primary">Ventas Totales</h2>
-              <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolore numquam fuga exercitationem eaque, eum cumque dolor quisquam doloremque ratione voluptatibus. Eum eos, minima porro maxime modi dolorem numquam a quam?</p>
+              <p>Reporte de ventas totales según el rango de fecha seleccionado.</p>
               <skeleton height="350px" v-if="loadingEls"></skeleton>
               <div v-else>
                 <h1>{{ charts.total_sales.value}}</h1>
@@ -46,18 +46,38 @@
             </div>
           </div>
         </div>
+        <div class="col-12 col-lg-4 stretch-card mb-4">
+          <div class="card w-100">
+            <div class="card-body">
+              <h2 class="text-primary">Reservas Totales</h2>
+              <p>Reporte del total de las reservas totales según el rango de fecha seleccionado.</p>
+              <skeleton height="350px" v-if="loadingEls"></skeleton>
+              <div v-else>
+                <h1>{{ charts.total_orders.value}}</h1>
+                <ve-line
+                  :legend-visible="false"
+                  :data="charts.total_orders"
+                  :settings="chartSettings"
+                  :colors="colors"
+                  :loading="loadingEls"
+                  :extend="chartExtend"
+                ></ve-line>
+              </div>
+            </div>
+          </div>
+        </div>
         <div class="col-12 col-lg-4 stretch-card  mb-4">
-          <div class="card">
+          <div class="card w-100">
             <div class="card-body">
               <h2 class="text-primary">Reservas por Proyecto</h2>
-              <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolore numquam fuga exercitationem eaque, eum cumque dolor quisquam doloremque ratione voluptatibus. Eum eos, minima porro maxime modi dolorem numquam a quam?</p>
+              <p>Reporte del total de las reservas por Proyecto según el rango de fecha seleccionado.</p>
               <skeleton height="300px" v-if="loadingEls"></skeleton>
               <div v-else>
                 <div class="card mb-4">
                   <table class="table align-items-center">
                     <thead class="thead-light">
                       <tr>
-                        <th class="border-0">Nombre ES</th>
+                        <th class="border-0">Nombre</th>
                         <th class="border-0">Total</th>
                       </tr>
                     </thead>
@@ -76,67 +96,63 @@
                   :colors="colors"
                   :settings="chartSettingsPie"
                 ></ve-pie>
-                <!--<ve-bar
-                  style="margin-top: -50px;"
-                  :data="charts.reservers_per_project"
-                  :legend="chartLegendPie"
-                  :colors="colors"
-                  :settings="chartSettingsPie"
-                ></ve-bar>-->
               </div>
             </div>
           </div>
         </div>
-        <div class="col-12 col-lg-8 stretch-card mb-4">
-          <div class="card">
+        
+        <div class="col-12 col-lg-8 mb-4">
+          <div class="card w-100 mb-4">
             <div class="card-body">
-              <h2 class="text-primary">Reservas Totales</h2>
-              <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolore numquam fuga exercitationem eaque, eum cumque dolor quisquam doloremque ratione voluptatibus. Eum eos, minima porro maxime modi dolorem numquam a quam?</p>
-              <skeleton height="350px" v-if="loadingEls"></skeleton>
-              <div v-else>
-                <h1>{{ charts.total_orders.value}}</h1>
-                <ve-line
-                  :legend-visible="false"
-                  :data="charts.total_orders"
-                  :settings="chartSettings"
-                  :colors="colors"
-                  :loading="loadingEls"
-                  :extend="chartExtend"
-                ></ve-line>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="col-12 col-lg-4 stretch-card mb-4">
-          <div class="card">
-            <div class="card-body">
-              <h2 class="text-primary">Reservas por Típologias</h2>
-              <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolore numquam fuga exercitationem eaque, eum cumque dolor quisquam doloremque ratione voluptatibus. Eum eos, minima porro maxime modi dolorem numquam a quam?</p>
+              <h2 class="text-primary">Reservas por Inmuebles</h2>
+              <p>Reporte descriptivo de los inmuebles reservados según el rango de fecha seleccionado.</p>
               <skeleton height="300px" v-if="loadingEls"></skeleton>
               <div v-else>
-                <div class="card">
+                <div class="card w-100">
                   <table class="table align-items-center">
                     <thead class="thead-light">
                       <tr>
-                        <th class="border-0">Nombre</th>
-                        <th class="border-0">Total</th>
+                        <th class="border-0">Descripción</th>
+                        <th class="border-0">Proyecto</th>
+                        <th class="border-0">Tipología</th>
+                        <th class="border-0">Tipo</th>
                       </tr>
                     </thead>
                     <tbody>
                       <tr v-for="(el,i) in charts.reservers_per_tipology.rows" :key="i">
-                        <td>{{el.name_format }}</td>
+                        <td>{{el.name }}</td>
+                        <td>{{el.project}}</td>
+                        <td>{{el.tipology}}</td>
+                        <td>{{el.tipo}}</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+           <div class="card w-100">
+            <div class="card-body">
+              <h2 class="text-primary">Reservas por Tipo</h2>
+              <p>Reporte descriptivo de los inmuebles reservados por Tipo según el rango de fecha seleccionado.</p>
+              <skeleton height="300px" v-if="loadingEls"></skeleton>
+              <div v-else>
+                <div class="card w-100">
+                  <table class="table align-items-center">
+                    <thead class="thead-light">
+                      <tr>
+                        <th class="border-0">Nombre</th>
+                        <th class="border-0">Tipo</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr v-for="(el,i) in charts.reservers_per_type.rows" :key="i">
+                        <td>{{el.name }}</td>
                         <td>{{el.value}}</td>
                       </tr>
                     </tbody>
                   </table>
                 </div>
-                <!--<ve-pie
-                    style="margin-top: -50px;"
-                    :data="charts.reservers_per_tipology"
-                    :legend="chartLegendPie"
-                    :colors="colors"
-                    :settings="chartSettingsPie"
-                  ></ve-pie>-->
               </div>
             </div>
           </div>

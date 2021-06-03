@@ -69,8 +69,10 @@ class OrdersExpired extends Command
             ->whereBetween("created_at",[ $last24Hours, $now]);
         })->get();
         foreach ($ordersClosed as $key => $ord) {
-            $updated = null;
-            $updated = Transaction::UpdateOrCreate(["id" => $ord->transactionLatestRel->id],["order_cycle_id" => $masterOrderCycleClosed->id]);
+            if($diff >= 12){
+                $updated = null;
+                $updated = Transaction::UpdateOrCreate(["id" => $ord->transactionLatestRel->id],["order_cycle_id" => $masterOrderCycleClosed->id]);
+            }
         }
     }
 }

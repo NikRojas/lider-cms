@@ -76,9 +76,16 @@ class OrderRepository
                 $sap = '<span>'.$el->sended_code_sap.'</span>';
             }
             else{
-                $sap = '<span class="font-weight-bold text-danger text-uppercase" style="font-size: .65rem !important;">No Enviado</span>';
+                $sap = '<span class="font-weight-bold text-danger text-uppercase" style="font-size: .6rem !important;">No Enviado</span>';
             }
             $reserve .= '<div class="mb-1">Proyecto ' . $el["orderDetailsRel"][0]["projectRel"]["name_es"] . ' <br> Inmueble ' . $el["orderDetailsRel"][0]["departmentRel"]["description"] . '</div>';
+
+            if($el["transactionLatestRel"]["orderCycleRel"]["name"] == 'Cerrado'){
+                $style = "style='background:#1762e6;color:white;font-size: .6rem !important;'";
+            }
+            else{
+                $style = "style='background-color: rgba(23,98,230,.2);color:#1762e6;font-size: .6rem !important;'";
+            }
             $data[] = array(
                 "id" => $el["id"],
                 "code" => '#' . $el["id"],
@@ -88,7 +95,7 @@ class OrderRepository
                 "total" => $el["total_format"],
                 "status" => $el["transactionLatestRel"]["statusRel"]["name_format"],
                 "send" => $sap,
-                "oc" => "<div class='text-uppercase'>".$el["transactionLatestRel"]["orderCycleRel"]["name"]."</div>"
+                "oc" => "<div ".$style." class='text-center d-inline-block font-weight-bold text-uppercase rounded-0 py-1 px-2' >".$el["transactionLatestRel"]["orderCycleRel"]["name"]."</div>"
             );
         }
         $elements = $elements->toArray();

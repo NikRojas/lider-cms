@@ -72,7 +72,7 @@
     @foreach($orders as $key => $el)
     <tr>
       <td style="text-align:center;vertical-align:middle;border: 1px solid black;">{{ $key + 1 }}</td>
-      <td style="text-align:center;vertical-align:middle;border: 1px solid black;">{{ $el->order_date_format_table }}</td>
+      <td style="text-align:center;vertical-align:middle;border: 1px solid black;">{{ $el->order_date_format }}</td>
       <td style="text-align:center;vertical-align:middle;border: 1px solid black;">{{ $el->customerRel["name"] ? $el->customerRel["name"] : 'No registrado' }}</td>
       <td style="text-align:center;vertical-align:middle;border: 1px solid black;">{{ $el->customerRel["lastname"] ? $el->customerRel["lastname"] : 'No registrado' }}</td>
       <td style="text-align:center;vertical-align:middle;border: 1px solid black;">{{ $el->customerRel["lastname_2"] ? $el->customerRel["lastname_2"] : 'No registrado' }}</td>

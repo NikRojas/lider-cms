@@ -8,7 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 class Transaction extends Model
 {
     protected $appends = ['transaction_date_format','amount_format'];
-    
+    protected $fillable = ['order_cycle_id'];
+
     public function statusRel()
     {
         return $this->hasOne('App\MasterTransactionStatus', 'id', 'transaction_status_id');

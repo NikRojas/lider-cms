@@ -33,7 +33,7 @@ class OrdersController extends Controller
     public function getAll(Request $request, OrderRepository $repo)
     {
         $q = $request->q;
-        $headers = ["Id", "Código", "Fecha", "Cliente", "Reserva Detalle", "Total", "Estado de Pago", "Enviado a SAP", "Estado Orden"];
+        $headers = ["Id", "Código", "Fecha", "Cliente", "Reserva Detalle", "Total", "Estado de Pago", "Código SAP", "Estado Orden"];
         $projects = [];
         $transactions = [];
         if($request->projects){

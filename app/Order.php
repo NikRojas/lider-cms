@@ -15,7 +15,9 @@ class Order extends Model
     }
 
     public function getOrderDateFormatTableAttribute() {
-        return (new Carbon($this->order_date))->isoFormat('DD MMM YYYY [a las] h:mm a');
+        $date = (new Carbon($this->order_date));
+        return  $date->isoFormat('DD MMM YYYY').'<br><span style="opacity: .6;">'.$date->isoFormat('h:mm a').'</span>';
+        //return (new Carbon($this->order_date))->isoFormat('DD MMM YYYY [a las] h:mm a');
     }
 
     public function getTotalFormatAttribute()
@@ -41,7 +43,9 @@ class Order extends Model
 
     public function transactionLatestRel()
     {
-        return $this->hasOne('App\Transaction', 'order_id', 'id')->latest();
+        //return $this->hasOne('App\Transaction', 'order_id', 'id')->latest();
+        return $this->hasOne('App\Transaction', 'order_id', 'id')->orderBy('id', 'desc');
+        
     }
 
     public function advisorRel()

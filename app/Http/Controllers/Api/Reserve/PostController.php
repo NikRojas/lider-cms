@@ -34,31 +34,19 @@ class PostController extends BaseController
         $rawKrAnswer = json_decode($request["kr-answer"]);
         $orderId = $rawKrAnswer->orderDetails->orderId;
         $orderCycle = $rawKrAnswer->orderCycle;
-        $order = Order::with('orderDetailsRel')->findOrFail($orderId);
+        $order = Order::with('orderDetailsRel','transactionLatestRel')->findOrFail($orderId);
+        #Si tiene ultima transacción
+        if($order->transactionLatestRel){
+            #Y si esta Cerrada
+            $masterOrderCycleClosed = MasterOrderCycle::where('payment_gateway_value','CLOSED')->first();
+            if($order->transactionLatestRel->order_cycle_id == $masterOrderCycleClosed->id){
+                return $this->sendError(trans('custom.title.error'), ['success '=> false, 'tr_open' => false], 500);
+            }
+        }
         $orderDetails = $order->orderDetailsRel[0];
         $project_id = $orderDetails->project_id;
 
-        #Comenzar la transacción
-        $transactionsStatusPending = MasterTransactionStatus::where('name','Pendiente')->first();
-        $transactionRegistered = Transaction::where('order_id',$orderId)->where('transaction_status_id', $transactionsStatusPending->id)->first();
-        #Si no existe registrarla
-        if(!$transactionRegistered){
-            $masterOrderCycleOpen = MasterOrderCycle::where('payment_gateway_value','OPEN')->first();
-            try {
-                $transaction = new Transaction();
-                $transaction->order_id = $orderId;
-                $transaction->transaction_date = Carbon::now();
-                $transaction->amount = $order->total_price;
-                $transaction->transaction_status_id = $transactionsStatusPending->id;
-                $transaction->order_cycle_id = $masterOrderCycleOpen->id;
-                $transaction->save();
-            }
-            catch (\Exception $e) {
-                #Ocurrio un error al crear la transacción pendiente
-                return $this->sendError(trans('custom.title.error'), ['success '=> false, 'tr_pending' => false], 500);
-            }
-        }
-
+        
         $credentialPayment = CredentialPayment::where('project_id',$project_id)->firstorFail();
         $checkCredentials = $this->checkCredentialsStored($credentialPayment);
         if(!$checkCredentials['active']){
@@ -79,14 +67,7 @@ class PostController extends BaseController
         $client = new LyraClient();
         #Verificar Fraude
         if (!$client->checkHash()) {
-            Log::info("Hash no coincide");
-            //something wrong, probably a fraud ....
-            /*signature_error($formAnswer['kr-answer']['transactions'][0]['uuid'], $hashKey, 
-                            $client->getLastCalculatedHash(), $_POST['kr-hash']);
-            throw new Exception("invalid signature");*/
-        }
-        else{
-            Log::info("Hash coincide");
+            return $this->sendError(trans('custom.title.error'), ['hash' => false], 500);
         }
 
         Log::info($request);
@@ -98,11 +79,9 @@ class PostController extends BaseController
         $transactionsStatus = MasterTransactionStatus::where('value_detailed_status',$rawKrAnswer->transactions[0]->detailedStatus)->first();
         $masterOrderCycle = MasterOrderCycle::where('payment_gateway_value',$orderCycle)->first();
         if(!$transactionsStatus){
-            Log::info("TS: FALSE");
             return $this->sendError(trans('custom.title.error'), ['ts' => false], 500);
         }
         if(!$masterOrderCycle){
-            Log::info("MOC: FALSE");
             return $this->sendError(trans('custom.title.error'), ['moc' => false], 500);
         }
         try {
@@ -149,7 +128,28 @@ class PostController extends BaseController
         if (!$department) {
             return $this->sendError("");
         }
+        $orderId = $request->oi;
         $price_deparment_separation = $department->projectRel->price_separation;
+        #Comenzar la transacción
+        $transactionsStatusPending = MasterTransactionStatus::where('name','Pendiente')->first();
+        $transactionRegistered = Transaction::where('order_id',$orderId)->where('transaction_status_id', $transactionsStatusPending->id)->first();
+        #Si no existe registrarla
+        if(!$transactionRegistered){
+            $masterOrderCycleOpen = MasterOrderCycle::where('payment_gateway_value','OPEN')->first();
+            try {
+                $transaction = new Transaction();
+                $transaction->order_id = $orderId;
+                $transaction->transaction_date = Carbon::now();
+                $transaction->amount = $price_deparment_separation;
+                $transaction->transaction_status_id = $transactionsStatusPending->id;
+                $transaction->order_cycle_id = $masterOrderCycleOpen->id;
+                $transaction->save();
+            }
+            catch (\Exception $e) {
+                #Ocurrio un error al crear la transacción pendiente
+                return $this->sendError(trans('custom.title.error'), ['success '=> false, 'tr_pending' => false], 500);
+            }
+        }
         #Conexión con Pasarela
         $price_deparment_separation_payment_gateway = intval(str_replace(".", "", $price_deparment_separation));
         $body = [

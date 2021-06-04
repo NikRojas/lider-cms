@@ -63,7 +63,7 @@ class OrdersExpired extends Command
                 $transaction->save();
             }
         }   
-        #Las ordenes cuando su estado es refused OPEN pasarlo a ciclo de orden CLOSED
+        #Las ordenes que ya pasaron 24 horas cuando sea cualquier estado y sea OPEN pasarlo a ciclo de orden CLOSED
         $ordersClosed = Order::whereHas('transactionLatestRel', function( $query ) use ( $masterOrderCycleOpen, $now, $last24Hours ){
             $query->where('order_cycle_id', $masterOrderCycleOpen->id)
             ->whereBetween("created_at",[ $last24Hours, $now]);

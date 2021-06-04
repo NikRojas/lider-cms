@@ -17,9 +17,9 @@ class MasterTransactionStatus extends Model
         switch ($this->name) {
             case 'Pendiente':
                 $class = "warning";
-                $dot = "<div style='    margin-bottom: 1px; width:5px;height:5px;border-radius: 50%;background-color: #373734;' class='d-inline-block mr-2'></div>";
-                /*$style = 'style="color: #373734;
-                background-color: rgb(179 179 179 / 50%);"';*/
+                $dot = "<div style='    margin-bottom: 1px; width:5px;height:5px;border-radius: 50%;background-color: #ffe500;' class='d-inline-block mr-2'></div>";
+                $style = 'style="color: #ffe500;
+                background-color: #fdfbfa;border: 1px solid #e9ecef"';
                 break;
 
             case 'Autorizado': 

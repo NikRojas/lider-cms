@@ -22,7 +22,7 @@ class TransactionObserver
         $delayNotification = now()->addMinutes(1);
         switch ($statusTr->name) {
             case 'Pendiente':
-                $order->customerRel->notify(new OrderReceived($order));
+                //$order->customerRel->notify(new OrderReceived($order));
                 break;
             #Cuando la transaccion sea exitosa 
             #Mandar correo de confirmacion al cliente y al asesor

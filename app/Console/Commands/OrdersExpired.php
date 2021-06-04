@@ -8,6 +8,7 @@ use App\Order;
 use App\Transaction;
 use Carbon\Carbon;
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\Log;
 
 class OrdersExpired extends Command
 {
@@ -42,18 +43,24 @@ class OrdersExpired extends Command
      */
     public function handle()
     {
-        //Las ordenes que ya pasaron 24 horas desde su creacion, cuando no tenga estado
+        Log::info("Test Log");
+        //Las ordenes que ya pasaron 24 horas desde su creacion, cuando esten PENDIENTES
         $masterOrderCycleOpen = MasterOrderCycle::where('payment_gateway_value','OPEN')->first();
         $transactionsStatusPending = MasterTransactionStatus::where('name','Pendiente')->first();
         $now = Carbon::now();
-        $last24Hours = Carbon::now()->subDay();
-        $ordersExpired = Order::doesnthave('transactionLatestRel')->whereBetween("created_at",[ $last24Hours, $now])->get();
+        $last48Hours = Carbon::now()->subDay(2);
+        
+        $ordersExpired = Order::whereHas('transactionLatestRel')->whereBetween("created_at",[ $last48Hours, $now])->get();
+        $elements = $ordersExpired->filter(function($order) use ( $masterOrderCycleOpen, $transactionsStatusPending ){
+            return $order->transactionLatestRel->order_cycle_id == $masterOrderCycleOpen->id && in_array($order->transactionLatestRel->transaction_status_id, [$transactionsStatusPending->id]);
+        });
         $masterOrderCycleClosed = MasterOrderCycle::where('payment_gateway_value','CLOSED')->first();
         $transactionsStatus = MasterTransactionStatus::where('value_detailed_status','EXPIRED')->first();
-        foreach ($ordersExpired as $key => $ord) {
+        foreach ($elements as $key => $ord) {
             $diff = NULL;
+            //$diff = $now->diffInHours($ord->transactionLatestRel->created_at);
             $diff = $now->diffInHours($ord->created_at);
-            if($diff >= 12){
+            if($diff >= 24){
                 $transaction = new Transaction();
                 $transaction->order_id = $ord->id;
                 $transaction->transaction_date = Carbon::now();
@@ -63,13 +70,16 @@ class OrdersExpired extends Command
                 $transaction->save();
             }
         }   
-        #Las ordenes que ya pasaron 24 horas cuando sea cualquier estado y sea OPEN pasarlo a ciclo de orden CLOSED
-        $ordersClosed = Order::whereHas('transactionLatestRel', function( $query ) use ( $masterOrderCycleOpen, $now, $last24Hours ){
-            $query->where('order_cycle_id', $masterOrderCycleOpen->id)
-            ->whereBetween("created_at",[ $last24Hours, $now]);
-        })->get();
-        foreach ($ordersClosed as $key => $ord) {
-            if($diff >= 12){
+        $transactionsUnpaid = MasterTransactionStatus::where('name','Pendiente')->orWhere('name','Rechazado')
+        ->orWhere('name','Error')->get();
+        $transactionsUnpaid = $transactionsUnpaid->pluck('id')->toArray();
+        #Las ordenes que ya pasaron 24 horas cuando sea cualquier estado UNPAID y sea OPEN pasarlo a ciclo de orden CLOSED
+        $elementsClosed = $ordersExpired->filter(function($order) use ( $masterOrderCycleOpen, $transactionsUnpaid ){
+            return $order->transactionLatestRel->order_cycle_id == $masterOrderCycleOpen->id && in_array($order->transactionLatestRel->transaction_status_id, $transactionsUnpaid);
+        });
+        foreach ($elementsClosed as $key => $ord) {
+            $diff = $now->diffInHours($ord->transactionLatestRel->transaction_date);
+            if($diff >= 24){
                 $updated = null;
                 $updated = Transaction::UpdateOrCreate(["id" => $ord->transactionLatestRel->id],["order_cycle_id" => $masterOrderCycleClosed->id]);
             }

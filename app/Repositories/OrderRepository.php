@@ -18,7 +18,7 @@ class OrderRepository
             ->where(function($query) use ($q){
                 return $query->where('id', 'like', $q . '%')
                 ->orWhereHas('customerRel', function( $query ) use ( $q ){
-                    $query->where('name', 'like', '%'.$q.'%')->orWhere('lastname', 'like', '%'.$q.'%')->orWhere('lastname_2', 'like', '%'.$q.'%');
+                    $query->where('name', 'like', '%'.$q.'%')->orWhere('document_number', 'like', '%'.$q.'%')->orWhere('lastname', 'like', '%'.$q.'%')->orWhere('lastname_2', 'like', '%'.$q.'%');
                 });;
             });
         } else {
@@ -56,7 +56,7 @@ class OrderRepository
                 $elements->whereYear('created_at', '=', date('Y'));
                 break;
         }
-        $elements = $elements->with('customerRel:id,name,lastname,lastname_2')->with('orderDetailsRel.departmentRel')->with('orderDetailsRel.projectRel:id,name_es')
+        $elements = $elements->with('customerRel:id,name,lastname,lastname_2,document_number,type_document_id','customerRel.documentTypeRel')->with('orderDetailsRel.departmentRel')->with('orderDetailsRel.projectRel:id,name_es')
             ->with('transactionLatestRel.statusRel','transactionLatestRel.orderCycleRel')
             ->orderBy('orders.created_at', 'desc');
         if(count($transactions) > 0){
@@ -78,7 +78,7 @@ class OrderRepository
             else{
                 $sap = '<span class="font-weight-bold text-danger text-uppercase" style="font-size: .6rem !important;">No Enviado</span>';
             }
-            $reserve .= '<div class="mb-1">Proyecto ' . $el["orderDetailsRel"][0]["projectRel"]["name_es"] . ' <br> Inmueble ' . $el["orderDetailsRel"][0]["departmentRel"]["description"] . '</div>';
+            $reserve .= '<div class="mb-1"><b>Proyecto ' . $el["orderDetailsRel"][0]["projectRel"]["name_es"] . '</b> <br>' . $el["orderDetailsRel"][0]["departmentRel"]["description"] . '</div>';
 
             if($el["transactionLatestRel"]["orderCycleRel"]["name"] == 'Cerrado'){
                 $style = "style='background:#1762e6;color:white;font-size: .6rem !important;'";
@@ -90,7 +90,7 @@ class OrderRepository
                 "id" => $el["id"],
                 "code" => '#' . $el["id"],
                 "date" => $el["order_date_format_table"],
-                "customer" => $el["customerRel"]["full_name"],
+                "customer" => '<b>'.$el["customerRel"]["full_name"].'</b><br>'.$el["customerRel"]["documentTypeRel"]["description"].': '.$el["customerRel"]["document_number"],
                 "reserve" => $reserve,
                 "total" => $el["total_format"],
                 "status" => $el["transactionLatestRel"]["statusRel"]["name_format"],

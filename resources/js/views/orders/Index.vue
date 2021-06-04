@@ -15,7 +15,7 @@
     <div class="container-fluid mt--6">
       <DataTable
         :object="elements"
-        placeholder="Nombres, Apellidos o Código de Orden"
+        placeholder="Nombres, Apellidos, Número Documento o Código de Orden"
         :button-update="false"
         :button-read="true"
         :button-delete="false"

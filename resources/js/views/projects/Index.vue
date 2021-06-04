@@ -44,10 +44,11 @@
                 <div class="card">
                   <div class="card-body">
                     <div class="row mb-2">
-                      <div class="col-12 mb-4 mb-lg position-relative">
-                        <div class="text-right">
+                      <div class="col-12 mb-2 mb-lg position-relative">
+                        <div class="text-right position-relative">
                         <img
-                          class=""
+                          class="position-absolute"
+                          style="right: 0"
                           :src="imagesUrl + '/projects/' + el.logo_colour"
                           height="25"
                           :alt="el.name_es"
@@ -55,7 +56,7 @@
                         </div>
                         <img
                           style="max-height: 200px;"
-                          class="img-fluid mx-auto d-block mt-3"
+                          class="img-fluid d-block"
                           :src="imagesUrl + '/projects/' + el.images_format[0]"
                           alt
                         />
@@ -248,17 +249,24 @@
                     <div class="row">
                        <div class="col-12 mb-2">
                          <div class="row">
-                           <div class="col-8">
+                           <div class="col-12">
+                             <a
+                              :href="'proyectos/tipologias/' + el.slug_es"
+                              class="btn btn-sm mb-2 mr-0 btn-inverse-primary btn-block"
+                              >Ir a Tipologias</a
+                            >
+                           </div>
+                           <div class="col-12">
                               <a
                               :href="'proyectos/inmuebles/' + el.slug_es"
                               class="btn btn-sm mb-2 btn-inverse-primary btn-block"
                               >Ir a Inmuebles del Proyecto</a
                             >
                            </div>
-                           <div class="col-4">
+                           <div class="col-12">
 
                              <a  :href="'proyectos/credenciales-pasarela/' + el.slug_es"
-                              class="btn btn-sm mb-2 btn-inverse-primary btn-block">
+                              class="btn btn-sm mb-0 btn-inverse-primary btn-block">
                                Ir a Credenciales Pasarela
                              </a>
                            </div>
@@ -274,11 +282,7 @@
                               >Ir a Banners</a
                             >
 
-                            <a
-                              :href="'proyectos/tipologias/' + el.slug_es"
-                              class="btn btn-sm mb-2 mr-0 btn-outline-primary"
-                              >Ir a Tipologias</a
-                            >
+                            
                             <a
                               :href="'proyectos/documentos/' + el.slug_es"
                               class="btn btn-sm mb-2 mr-0 btn-outline-primary"

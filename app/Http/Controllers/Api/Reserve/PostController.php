@@ -40,18 +40,15 @@ class PostController extends BaseController
             #Y si esta Cerrada
             $masterOrderCycleClosed = MasterOrderCycle::where('payment_gateway_value','CLOSED')->first();
             if($order->transactionLatestRel->order_cycle_id == $masterOrderCycleClosed->id){
-                Log::info("tr_open");
                 return $this->sendError(trans('custom.title.error'), ['success '=> false, 'tr_open' => false], 500);
             }
         }
         $orderDetails = $order->orderDetailsRel[0];
         $project_id = $orderDetails->project_id;
-
         
         $credentialPayment = CredentialPayment::where('project_id',$project_id)->firstorFail();
         $checkCredentials = $this->checkCredentialsStored($credentialPayment);
         if(!$checkCredentials['active']){
-            Log::info("checkCredentials");
             return $this->sendError(trans('custom.title.error'), $checkCredentials, 500);
         }
 
@@ -69,7 +66,6 @@ class PostController extends BaseController
         $client = new LyraClient();
         #Verificar Fraude
         if (!$client->checkHash()) {
-            Log::info("Hash no coincide");
             return $this->sendError(trans('custom.title.error'), ['hash' => false], 500);
         }
 

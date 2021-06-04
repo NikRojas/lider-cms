@@ -40,6 +40,7 @@ class PostController extends BaseController
             #Y si esta Cerrada
             $masterOrderCycleClosed = MasterOrderCycle::where('payment_gateway_value','CLOSED')->first();
             if($order->transactionLatestRel->order_cycle_id == $masterOrderCycleClosed->id){
+                Log::info("tr_open");
                 return $this->sendError(trans('custom.title.error'), ['success '=> false, 'tr_open' => false], 500);
             }
         }
@@ -50,6 +51,7 @@ class PostController extends BaseController
         $credentialPayment = CredentialPayment::where('project_id',$project_id)->firstorFail();
         $checkCredentials = $this->checkCredentialsStored($credentialPayment);
         if(!$checkCredentials['active']){
+            Log::info("checkCredentials");
             return $this->sendError(trans('custom.title.error'), $checkCredentials, 500);
         }
 

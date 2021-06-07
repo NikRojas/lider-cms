@@ -142,7 +142,7 @@
                     <thead class="thead-light">
                       <tr>
                         <th class="border-0">Nombre</th>
-                        <th class="border-0">Tipo</th>
+                        <th class="border-0">Total</th>
                       </tr>
                     </thead>
                     <tbody>

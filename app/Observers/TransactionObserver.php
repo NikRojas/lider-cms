@@ -28,12 +28,12 @@ class TransactionObserver
             #Mandar correo de confirmacion al cliente y al asesor
             #Mandar a SAP los datos de reserva
             #Asignar Asesor con los datos de retorno del SAP
-            case 'Pagado':
-            case 'Capturado':
+            //case 'Pagado':
+            //case 'Capturado':
             case 'Autorizado':
                 if($tr->order_cycle_id == $closedCycle->id){
                     $order->customerRel->notify((new OrderPaid($order))->delay($delayNotification));
-                    //SendReserveToSap::dispatch($order);
+                    SendReserveToSap::dispatch($order);
                 }
                 break;
             case 'Rechazado':

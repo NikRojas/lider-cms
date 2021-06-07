@@ -28,6 +28,27 @@ class PostController extends BaseController
     private $urlCreatePayment = 'https://api.micuentaweb.pe/api-payment/V4/Charge/CreatePayment';
     private $urlIpn = '/api/reserve/payment/ipn';
 
+    #Verificar Credenciales
+    public function checkCredentialsStored($credentialPayment){
+        #Si no esta registrado ninguna credencial
+        if (!$credentialPayment) {
+            return ['active' => false];
+        }
+        #Si esta en modo Test
+        if(!$credentialPayment->active){
+            return ['active' => false, 'mode' => false];
+        }
+        #Si no tiene Password de Producción
+        if(!$credentialPayment->password_prod){
+            return ['active' => false, 'pass' => false];
+        }
+        #Si no tiene Token JS de Producción
+        if(!$credentialPayment->token_js_prod){
+            return ['active' => false, 'js' => false];
+        }
+        return ['active' => true ];
+    }
+
     #Aca se maneja las transacciones de la Order
     public function ipn(Request $request){
         Log::info($request);
@@ -66,7 +87,7 @@ class PostController extends BaseController
         $client = new LyraClient();
         #Verificar Fraude
         if (!$client->checkHash()) {
-            return $this->sendError(trans('custom.title.error'), ['hash' => false], 500);
+            //return $this->sendError(trans('custom.title.error'), ['hash' => false], 500);
         }
 
         #Verificar Disponibilidad
@@ -98,27 +119,6 @@ class PostController extends BaseController
             #Ocurrio crear la transacción
             return $this->sendError(trans('custom.title.error'), ['success '=> false, 'utr' => false], 500);
         }
-    }
-
-    #Verificar Credenciales
-    public function checkCredentialsStored($credentialPayment){
-        #Si no esta registrado ninguna credencial
-        if (!$credentialPayment) {
-            return ['active' => false];
-        }
-        #Si esta en modo Test
-        if(!$credentialPayment->active){
-            return ['active' => false, 'mode' => false];
-        }
-        #Si no tiene Password de Producción
-        if(!$credentialPayment->password_prod){
-            return ['active' => false, 'pass' => false];
-        }
-        #Si no tiene Token JS de Producción
-        if(!$credentialPayment->token_js_prod){
-            return ['active' => false, 'js' => false];
-        }
-        return ['active' => true ];
     }
 
     public function paymentInit(Request $request){
@@ -261,70 +261,4 @@ class PostController extends BaseController
             return $this->sendResponse(["order_id" => $request->id], trans('custom.title.success'), 200);
         }
     }
-    
-    //Esto seria el flujo antes de crear orden o ver si la orden puede ser random
-    /*public function pay(Request $request){
-        $department = Department::where('slug',$request->slug)->with('projectRel')->first();
-        if (!$department) {
-            return $this->sendError("");
-        }
-        //Aca se tiene que ver la disponibilidad del departamento antes de pagar
-
-        //Si no esta disponible mandar error
-
-        //Si esta disponible proceder con el pago
-        $dt = MasterDocumentType::where('description',$request->type_document_id)->first();
-        $r_customer = request(['document_number','name','lastname','lastname_2','email','mobile']);
-        $r_customer = array_merge($r_customer, [ "type_document_id" => $dt->id]);
-        $checkCustomer = Customer::where('document_number',$request->document_number)->first();
-        try {
-            if($checkCustomer){
-                $customer = Customer::UpdateOrCreate(["id" => $checkCustomer->id],$r_customer);
-            }
-            else{
-                $slug = Str::random(20);
-                $customer = Customer::UpdateOrCreate(array_merge($r_customer, ["slug" => $slug]));
-            }
-            //return $this->sendResponse([], trans('custom.title.success'), 200);
-        } catch (\Exception $e) {
-            dd($e);
-            //OCURRIO UN ERROR AL PROCESAR EL PAGO
-            return $this->sendError(trans('custom.title.error'), [], 500);
-        }
-        $advisor = null;
-        $price_deparment_separation = $department->projectRel->price_separation;
-        //Procesar los items con su descuento y su total
-        $r_order = ["customer_id" => $customer->id, "department_id" => $department->id, "total_price" => $price_deparment_separation, "order_date" => Carbon::now()];
-        #Setear Asesor si viene desde la URL de Separacion
-        if($request->adv){
-            $r_advisor = $request->adv;
-            $advisor = Advisor::where('sap_code',$r_advisor)->first();
-            if($advisor){
-                $r_order = array_merge($r_order,["advisor_id" => $advisor->id]);
-            }
-        }
-        try {
-            $order = Order::UpdateOrCreate($r_order);
-        }
-        catch (\Exception $e) {
-            //OCURRIO UN ERROR AL PROCESAR EL PAGO
-            dd($e);
-            return $this->sendError(trans('custom.order.payment'), [], 500);
-        }
-        $r_order_detail = ["order_id" => $order->id, "project_id" => $department->project_id, "quantity" => 1, "department_id" => $department->id, 'price_element' => $price_deparment_separation, 'total_price' => $price_deparment_separation];
-        try {
-            $order_detail = OrderDetail::UpdateOrCreate($r_order_detail);
-            return $this->sendResponse([], trans('custom.title.success'), 200);
-        }
-        catch (\Exception $e) {
-            //OCURRIO UN ERROR AL PROCESAR EL PAGO
-            dd($e);
-            return $this->sendError(trans('custom.order.payment'), [], 500);
-        }
-        //Transaccion con Pasarela segun Proyecto
-        //Si es exitoso
-
-        //Si hay fallo
-        //OCURRIO UN ERROR AL PROCESAR EL PAGO Y MANDAR EL ERROR RESPECTIVO
-    }*/
 }

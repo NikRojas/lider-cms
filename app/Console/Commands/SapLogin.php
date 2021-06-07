@@ -6,12 +6,13 @@ use App\LogSapConnection;
 use App\SapCredential;
 use GuzzleHttp\Client;
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
 
 class SapLogin extends Command
 {
-    private $url = 'https://apps.lider.com.pe:8072/api/seguridad/login';
+    private $url = '/api/seguridad/login';
     private $lscType = 'Login';
     /**
      * The name and signature of the console command.
@@ -44,6 +45,7 @@ class SapLogin extends Command
      */
     public function handle()
     {
+        $this->url = config('services.sap_url').$this->url;
         $getSapCredential = SapCredential::first();
         $slug = Str::random(20);
         try {

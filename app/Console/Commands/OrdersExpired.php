@@ -43,7 +43,7 @@ class OrdersExpired extends Command
      */
     public function handle()
     {
-        Log::info("Test Log");
+        Log::info("Test Log Permiso");
         //Las ordenes que ya pasaron 24 horas desde su creacion, cuando esten PENDIENTES
         $masterOrderCycleOpen = MasterOrderCycle::where('payment_gateway_value','OPEN')->first();
         $transactionsStatusPending = MasterTransactionStatus::where('name','Pendiente')->first();

@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\Log;
 class ConnectionController extends BaseController
 {
     public function sapAvailableEstateUrl($code){
-        $url = 'https://apps.lider.com.pe:8072/api/cliente/inmuebles?codigo='.$code.'&proyecto=';
+        $url = config('services.sap_url').'/api/cliente/inmuebles?codigo='.$code.'&proyecto=';
         return $url;
     }
 

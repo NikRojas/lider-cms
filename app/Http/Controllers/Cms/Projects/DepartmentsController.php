@@ -19,7 +19,7 @@ use GuzzleHttp\Client;
 
 class DepartmentsController extends Controller
 {
-    private $url = 'https://apps.lider.com.pe:8072/api/cliente/inmuebles/proyecto?codigo=';
+    private $url = '/api/cliente/inmuebles/proyecto?codigo=';
     use CmsTrait;
 
     public function index($element)
@@ -43,6 +43,7 @@ class DepartmentsController extends Controller
 
     public function getSap($element)
     {
+        $this->url = config('services.sap_url').$this->url;
         $element = Project::where('slug_es', $element)->firstOrFail();
         $sapCredentials = SapCredential::first();
         if (!$sapCredentials->token) {

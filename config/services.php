@@ -16,6 +16,7 @@ return [
     'web_url' => env('WEB_URL', 'http://127.0.0.1:8000'),
     'images_url' => env('IMAGES_URL', 'http://127.0.0.1:8000/storage/img'),
     'files_url' => env('FILES_URL', 'http://127.0.0.1:8000/storage/files'),
+    'sap_url' => env('SAP_URL', 'https://apps.lider.com.pe:8072'),
 
     'mailgun' => [
         'domain' => env('MAILGUN_DOMAIN'),

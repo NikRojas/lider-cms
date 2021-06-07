@@ -6,5 +6,5 @@ use App\Ubigeo;
 use Carbon\Carbon;
 
 trait SAPTrait {
-    private $urlReserve = 'https://apps.lider.com.pe:8072/api/cliente/inmuebles/reserva';
+    private $urlReserve = config('services.sap_url').'/api/cliente/inmuebles/reserva';
 }

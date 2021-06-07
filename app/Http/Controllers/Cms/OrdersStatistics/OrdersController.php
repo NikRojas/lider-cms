@@ -144,7 +144,7 @@ class OrdersController extends Controller
         }
     }
 
-    //private $url = 'https://apps.lider.com.pe:8072/api/cliente/inmuebles/reserva';
+    //private $url = config('services.sap_url').'/api/cliente/inmuebles/reserva';
     public function sendToSap(Order $element){
         $element = $element->load('customerRel.documentTypeRel')->load('advisorRel')->load('orderDetailsRel.departmentRel');
         $type = 'Reservar Inmueble Manual';

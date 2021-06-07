@@ -3,6 +3,7 @@
 use App\Applicant;
 use App\FinancingOption;
 use App\Lead;
+use App\Order;
 use App\ProjectQuotation;
 
 Route::get('/', 'Cms\Auth\LoginController@showLoginForm')->name('login');
@@ -500,7 +501,13 @@ Route::middleware(['auth'])->namespace('Cms')->name('cms.')->group(function () {
 
 Route::get('send-to-sap/{element}','Cms\OrdersStatistics\OrdersController@sendToSap');
 
-/*Route::get('/mail/user', function () {
+/*
+Route::get('/mail/advisor/reserve', function () {
+    $order = Order::find(100000008);
+    return view('emails.orders.advisor-paid',["order" => $order]);
+});
+
+Route::get('/mail/user', function () {
     return view('emails.user-lead');
 });
 

@@ -16,7 +16,7 @@ use Illuminate\Support\Str;
 
 class SapGetAvailableDepartments extends Command
 {
-    private $url = 'https://apps.lider.com.pe:8072/api/cliente/inmuebles?codigo=&proyecto=';
+    private $url = '/api/cliente/inmuebles?codigo=&proyecto=';
     private $lscType = 'Obtener Inmuebles Disponibilidad';
     /**
      * The name and signature of the console command.
@@ -49,6 +49,7 @@ class SapGetAvailableDepartments extends Command
      */
     public function handle()
     {
+        $this->url = config('services.sap_url').$this->url;
         #Obtener Proyectos con Codigo SAP
         $projects = Project::whereNotNull('sap_code')->get();
         #Obtener Credenciales

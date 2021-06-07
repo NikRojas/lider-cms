@@ -123,6 +123,7 @@ return [
             'order_received' => ':name, Hemos recibido tu solicitud de reserva de tu Depa',
             'order_paid' => ':name, el pago de la reserva de tu Depa ha sido confirmado',
             'order_not_paid' => ':name, No se pudo completar la reserva de tu Depa',
+            'advisor_order_paid' => ':web - :name ha realizado una separación',
         ]
     ]
 ];

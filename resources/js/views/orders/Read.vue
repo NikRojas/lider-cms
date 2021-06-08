@@ -193,7 +193,7 @@
             </div>
           </div>
           <!-- Cuando es rechazado o algun estado que fallo no se muestra --->
-          <div class="card mt-4" v-if="element.advisor_id && element.transaction_latest_rel.status_rel.name == 'Pagado'">
+          <div class="card mt-4" v-if="element.advisor_id && element.transaction_latest_rel.status_rel.name == 'Autorizado'">
             <div class="card-body">
               <h2>Asignado a</h2>
               <div
@@ -202,10 +202,10 @@
               <h3 class="font-weight-normal">Email: {{element.advisor_rel.email}}</h3>
             </div>
           </div>
-          <div class="card mt-4" v-if="element.advisor_id && element.transaction_latest_rel.status_rel.name == 'Pagado'">
+          <div class="card mt-4" v-if="element.advisor_id && element.transaction_latest_rel.status_rel.name == 'Autorizado'">
             <div class="card-body">
               <h2>Conexión SAP</h2>
-              <div v-if="element.transaction_latest_rel.status_rel.name == 'Pagado'">
+              <div v-if="element.transaction_latest_rel.status_rel.name == 'Autorizado'">
                 <div v-if="element.sended_to_sap">
                   <p>
                     La reserva se envío a SAP
@@ -218,12 +218,12 @@
                     <p>
                       La reserva no se pudo enviar a SAP. 
                     </p>
-                      <Button
+                    <!--  <Button
                       @click="sendToSap"
                       :text="'Enviar'"
                       :classes="['btn-inverse-primary']"
                       :request-server="requestSap"
-                    ></Button>
+                    ></Button>-->
                   </div>
                   <div v-if="sap.sended" class="mt-2 " :class="sap.success ? 'text-success' : 'text-danger'">
                     {{ sap.message }}

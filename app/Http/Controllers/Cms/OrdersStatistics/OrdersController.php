@@ -26,7 +26,11 @@ class OrdersController extends Controller
     public function index()
     {
         $projects = Project::select('id','name_es')->orderBy('index')->get();
-        $transactions = MasterTransactionStatus::get();
+        $transactions = MasterTransactionStatus::where('name','!=','Reintegrado')
+        ->where('name','!=','Pagado')
+        ->where('name','!=','Anulado')->where('name','!=','Capturado')
+        ->where('name','!=','Capturado')->where('name','!=','Cancelado')
+        ->where('name','!=','Error')->get();
         return view("pages.sales-statistics.orders.index", compact('projects','transactions'));
     }
 

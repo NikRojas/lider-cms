@@ -7,6 +7,12 @@
     .mx-panel-time .mx-time-list:nth-child(1), .mx-panel-time .mx-time-list:nth-child(2) {
         width: 50% !important;
     }
+    th:nth-child(1){
+        display: none;
+    }
+    tr td:nth-child(1n+1) {
+        display: none;
+    }
 </style>
 @endsection
 @section('content')

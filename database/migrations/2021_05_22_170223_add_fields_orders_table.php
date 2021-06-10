@@ -22,7 +22,6 @@ class AddFieldsOrdersTable extends Migration
             $table->dropColumn('total');
             $table->decimal('total_price',11,2);
         });
-        DB::update("ALTER TABLE orders AUTO_INCREMENT = 100000000;");
     }
    
 

@@ -37,6 +37,7 @@ class DatabaseSeeder extends Seeder
         $this->call(MasterFieldsTableSeeder2::class);
         $this->call(MasterTransactionStatusTableSeeder2::class);
         $this->call(MasterOrderCycleTableSeeder::class);
+        DB::update("ALTER TABLE orders AUTO_INCREMENT = 100000000;");
         #EndPayment
 
         /*$this->call(ComplaintsBookSeeder::class);*/

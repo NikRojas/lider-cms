@@ -127,7 +127,7 @@ class IndexController extends BaseController
                 $data = $data->orderBy('created_at');
                 break;
         }
-        $data = $data->paginate(8);
+        $data = $data->paginate(12);
         return $data;
     }
 

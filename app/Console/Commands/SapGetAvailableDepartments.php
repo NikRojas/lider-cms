@@ -49,6 +49,8 @@ class SapGetAvailableDepartments extends Command
      */
     public function handle()
     {
+        Log::info("Test Log Permiso");
+
         $this->url = config('services.sap_url').$this->url;
         #Obtener Proyectos con Codigo SAP
         $projects = Project::whereNotNull('sap_code')->get();

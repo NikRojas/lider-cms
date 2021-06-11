@@ -10,7 +10,7 @@
     th:nth-child(1){
         display: none;
     }
-    tr td:nth-child(1n+1) {
+    tr td:nth-child(1) {
         display: none;
     }
 </style>

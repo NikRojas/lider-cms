@@ -498,28 +498,45 @@
 
                     <div class="form-group">
                       <p class="mb-0">
-                        Este será el monto que cuesta separar un inmueble en el Proyecto.
+                        Este será el monto que cuesta separar un inmueble en el Proyecto. Aseguresé que las credenciales de la Tienda sean iguales al tipo de moneda ingresado aquí.
                       </p>
-                      <label class="font-weight-bold" for="price_separation"
-                        >Precio de Separación de Inmueble</label
-                      >
-                      <!--<input
-                        type="text"
-                        class="form-control"
-                        v-model="element.price_separation"
-                        id="price_separation"
-                      />-->
-                      <money
-                        class="form-control form-control-lg"
-                        v-model="element.price_separation"
-                        v-bind="moneyLocal"
-                      ></money>
-                      <label
-                        v-if="errors && errors.price_separation"
-                        class="mt-2 text-danger text-sm"
-                        for="price_separation"
-                        >{{ errors.price_separation[0] }}</label
-                      >
+                      <div class="row">
+                        <div class="col-12 col-lg-6">
+                          <div class="form-group">
+                            <label class="font-weight-bold" for="master_currency_id">Tipo Moneda</label>
+                            <select class="form-control form-control-lg" v-model="element.master_currency_id" id="master_currency_id">
+                              <!--<option value="">Seleccionar un Tipo de Moneda</option>-->
+                              <option :value="el.id" v-for="el in currencies" :key="el.name">
+                                {{ el.name }} 
+                              </option>
+                            </select>
+                            <label
+                              v-if="errors && errors.master_currency_id"
+                              class="mt-2 text-danger text-sm"
+                              for="master_currency_id"
+                              >{{ errors.master_currency_id[0] }}</label
+                            >
+                          </div>
+                        </div>
+
+                          <div class="col-12 col-lg-6">
+                            <label class="font-weight-bold" for="price_separation"
+                            >Precio de Separación de Inmueble</label
+                          >
+                          <money
+                            class="form-control form-control-lg"
+                            v-model="element.price_separation"
+                            v-bind="element.master_currency_id == 1 ? moneyLocal : moneyForeign"
+                          ></money>
+                          <label
+                            v-if="errors && errors.price_separation"
+                            class="mt-2 text-danger text-sm"
+                            for="price_separation"
+                            >{{ errors.price_separation[0] }}</label
+                          >
+                          </div>
+                      </div>
+                      
                     </div>
                   </div>
 
@@ -1257,6 +1274,7 @@ export default {
     Textarea,
   },
   props: {
+    currencies: Array,
     appUrl: String,
     imagesUrl: String,
     routeStore: String,
@@ -1306,6 +1324,7 @@ export default {
         },
       },
       element: {
+        master_currency_id: 1,
         send_to_email: true,
         webhook_url_active: false,
         active: true,
@@ -1481,6 +1500,9 @@ export default {
       }
       if (this.element.price_separation) {
         fd.append("price_separation", this.element.price_separation);
+      }
+      if (this.element.master_currency_id) {
+        fd.append("master_currency_id", this.element.master_currency_id);
       }
       if (this.element.schedule_attention_es) {
         fd.append("schedule_attention_es", this.element.schedule_attention_es);

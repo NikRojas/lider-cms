@@ -117,7 +117,11 @@ class Project extends Model
 
     public function getPriceSeparationFormatAttribute()
     {
-        return 'S/ '.number_format($this->price_separation, 0, '.', ',');
+        $symbol = null;
+        if($this->currencyRel){
+            $symbol = $this->currencyRel->symbol;
+        }
+        return $symbol.' '.number_format($this->price_separation, 0, '.', ',');
     }
 
     public function departmentsRel()
@@ -128,6 +132,11 @@ class Project extends Model
     public function getPriceParkingFormatAttribute()
     {
         return 'S/ '.number_format($this->price_parking_sap, 0, '.', ',');
+    }
+
+    public function currencyRel()
+    {
+        return $this->hasOne('App\MasterCurrency', 'id', 'master_currency_id');
     }
 
     public function getPriceParkingForeignFormatAttribute()

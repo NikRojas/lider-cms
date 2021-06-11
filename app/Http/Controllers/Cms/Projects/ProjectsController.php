@@ -8,6 +8,7 @@ use App\Http\Requests\Cms\Project\ProjectRequest;
 use Illuminate\Support\Facades\Storage;
 
 use App\Http\Traits\CmsTrait;
+use App\MasterCurrency;
 use App\Project;
 use App\ProjectQuotation;
 
@@ -22,7 +23,8 @@ class ProjectsController extends Controller
 
     public function create()
     {
-        return view("pages.projects.create");
+        $currencies = MasterCurrency::get();
+        return view("pages.projects.create",compact('currencies'));
     }
 
     public function order(Request $request)
@@ -50,6 +52,7 @@ class ProjectsController extends Controller
 
     public function edit($element)
     {
+        $currencies = MasterCurrency::get();
         $element = Project::where('slug_es', $element)->firstOrFail();
         $element = $element->load('advisorsRel', 'banksRel', 'featuresRel', 'bondsRel');
         $element["financial_entities"] = $element->banksRel->pluck('pivot.bank_id');
@@ -62,13 +65,13 @@ class ProjectsController extends Controller
             $projects_related = json_decode($element->projects_related);
         }
         $element["projects_related"] = $projects_related;
-        return view("pages.projects.edit", compact('element'));
+        return view("pages.projects.edit", compact('element','currencies'));
     }
 
     public function read($element)
     {
         $element = Project::where('slug_es', $element)->firstOrFail();
-        $element = $element->load('advisorsRel', 'banksRel', 'featuresRel', 'ubigeoRel', 'statusRel', 'bondsRel','financingOptionsRel');
+        $element = $element->load('advisorsRel', 'banksRel', 'featuresRel', 'ubigeoRel', 'statusRel', 'bondsRel','financingOptionsRel','currencyRel');
         
         $projects_related = null;
         if ($element->projects_related) {
@@ -84,7 +87,7 @@ class ProjectsController extends Controller
         $project = request(['name_es',"description_en","description_es",'url_video','name_en','slug_en','slug_es',"rooms_es","rooms_en","footage_en","footage_es","url_google_maps","url_waze","text_place_es",
         "text_place_en","project_status_id","location","price_total","price","price_total_foreign","map_indications_es","map_indications_en",
         "sales_room_es","sales_room_en","schedule_attention_es","schedule_attention_en",'active','form_videocall','price_parking','commentary_quotation','condition_quotation','excerpt_quotation',
-        "seo_keywords_es","seo_keywords_en","seo_description_es","seo_description_en","seo_title_es","seo_title_en","webhook_url","webhook_url_active","send_to_email","price_separation",'sap_code']);
+        "seo_keywords_es","seo_keywords_en","seo_description_es","seo_description_en","seo_title_es","seo_title_en","webhook_url","webhook_url_active","send_to_email","price_separation",'sap_code','master_currency_id']);
 
         if ($request->projects_related) {
             $project = array_merge($project, ["projects_related" => $request->projects_related]);
@@ -209,7 +212,7 @@ class ProjectsController extends Controller
         $request_project = request(['name_es',"description_en","url_video","description_es",'name_en','slug_en','slug_es',"rooms_es","rooms_en","footage_en","footage_es","url_google_maps","url_waze","text_place_es",
         "text_place_en","project_status_id","location","price_total","price","price_total_foreign","map_indications_es","map_indications_en",
         "sales_room_es","sales_room_en","schedule_attention_es","schedule_attention_en",'active','form_videocall','price_parking','commentary_quotation','condition_quotation','excerpt_quotation',
-        "seo_keywords_es","seo_keywords_en","seo_description_es","seo_description_en","seo_title_es","seo_title_en","webhook_url","webhook_url_active","send_to_email","price_separation",'sap_code']);
+        "seo_keywords_es","seo_keywords_en","seo_description_es","seo_description_en","seo_title_es","seo_title_en","webhook_url","webhook_url_active","send_to_email","price_separation",'sap_code','master_currency_id']);
 
  
         if ($request->projects_related) {

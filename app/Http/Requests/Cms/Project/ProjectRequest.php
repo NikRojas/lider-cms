@@ -77,6 +77,12 @@ class ProjectRequest extends FormRequest
 
             'price_separation' => 'nullable|max:1000000000|numeric',
         ];
+        if($this->price_separation){
+            $rules = array_merge(
+                $rules,
+                ["master_currency_id" => 'required']
+            );
+        }
         if($this->webhook_url_active){
             $rules = array_merge(
                 $rules,

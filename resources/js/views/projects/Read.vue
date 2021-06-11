@@ -386,14 +386,29 @@
                       <p class="mb-0">
                         Este será el monto que cuesta separar un inmueble en el Proyecto.
                       </p>
-                      <label class="font-weight-bold" for="price_separation"
-                        >Precio de Separación de Inmueble</label
-                      >
+                      <div class="row">
+                        <div class="col-12 col-lg-6">
+                        <label class="font-weight-bold" for="price_separation"
+                            >Tipo de Moneda</label
+                          >
 
-                      <div v-if="element.price_separation">
-                        {{ element.price_separation }}
+                          <div v-if="element.master_currency_id">
+                            {{ element.currency_rel.name }}
+                          </div>
+                          <div v-else>No registrado</div>
+                        </div>
+                        <div class="col-12 col-lg-6">
+                          <label class="font-weight-bold" for="price_separation"
+                            >Precio de Separación de Inmueble</label
+                          >
+
+                          <div v-if="element.price_separation">
+                            {{ element.price_separation }}
+                          </div>
+                          <div v-else>No registrado</div>
+                        </div>
                       </div>
-                      <div v-else>No registrado</div>
+                      
                     </div>
                   </div>
 

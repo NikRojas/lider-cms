@@ -215,7 +215,8 @@ return [
         'link_jobs' => 'link trabaja con nosotros',
         'sap_code' => 'código sap',
         'parent_type_department_id' => 'tipo de inmueble',
-        'user' => 'usuario'
+        'user' => 'usuario',
+        'master_currency_id' => 'tipo de moneda'
     ],
 
 ];

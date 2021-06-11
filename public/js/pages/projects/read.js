@@ -1023,6 +1023,21 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -1976,24 +1991,49 @@ var render = function() {
                           )
                         ]),
                         _vm._v(" "),
-                        _c(
-                          "label",
-                          {
-                            staticClass: "font-weight-bold",
-                            attrs: { for: "price_separation" }
-                          },
-                          [_vm._v("Precio de Separación de Inmueble")]
-                        ),
-                        _vm._v(" "),
-                        _vm.element.price_separation
-                          ? _c("div", [
-                              _vm._v(
-                                "\n                      " +
-                                  _vm._s(_vm.element.price_separation) +
-                                  "\n                    "
-                              )
-                            ])
-                          : _c("div", [_vm._v("No registrado")])
+                        _c("div", { staticClass: "row" }, [
+                          _c("div", { staticClass: "col-12 col-lg-6" }, [
+                            _c(
+                              "label",
+                              {
+                                staticClass: "font-weight-bold",
+                                attrs: { for: "price_separation" }
+                              },
+                              [_vm._v("Tipo de Moneda")]
+                            ),
+                            _vm._v(" "),
+                            _vm.element.master_currency_id
+                              ? _c("div", [
+                                  _vm._v(
+                                    "\n                          " +
+                                      _vm._s(_vm.element.currency_rel.name) +
+                                      "\n                        "
+                                  )
+                                ])
+                              : _c("div", [_vm._v("No registrado")])
+                          ]),
+                          _vm._v(" "),
+                          _c("div", { staticClass: "col-12 col-lg-6" }, [
+                            _c(
+                              "label",
+                              {
+                                staticClass: "font-weight-bold",
+                                attrs: { for: "price_separation" }
+                              },
+                              [_vm._v("Precio de Separación de Inmueble")]
+                            ),
+                            _vm._v(" "),
+                            _vm.element.price_separation
+                              ? _c("div", [
+                                  _vm._v(
+                                    "\n                          " +
+                                      _vm._s(_vm.element.price_separation) +
+                                      "\n                        "
+                                  )
+                                ])
+                              : _c("div", [_vm._v("No registrado")])
+                          ])
+                        ])
                       ])
                     ]),
                     _vm._v(" "),

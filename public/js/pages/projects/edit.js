@@ -1355,6 +1355,22 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 quill__WEBPACK_IMPORTED_MODULE_0___default.a.register("modules/clipboard", _functions_PlainClipboard__WEBPACK_IMPORTED_MODULE_1__["default"], true);
@@ -1402,6 +1418,7 @@ quill__WEBPACK_IMPORTED_MODULE_0___default.a.register("modules/clipboard", _func
     Textarea: _components_form_Textarea__WEBPACK_IMPORTED_MODULE_21__["default"]
   },
   props: {
+    currencies: Array,
     appUrl: String,
     elementParent: Object,
     imagesUrl: String,
@@ -1718,6 +1735,10 @@ quill__WEBPACK_IMPORTED_MODULE_0___default.a.register("modules/clipboard", _func
 
       if (this.element.price_separation) {
         fd.append("price_separation", this.element.price_separation);
+      }
+
+      if (this.element.master_currency_id) {
+        fd.append("master_currency_id", this.element.master_currency_id);
       }
 
       if (this.element.active == true) {
@@ -3309,61 +3330,154 @@ var render = function() {
                           : _vm._e()
                       ]),
                       _vm._v(" "),
-                      _c(
-                        "div",
-                        { staticClass: "form-group" },
-                        [
-                          _c("p", { staticClass: "mb-0" }, [
-                            _vm._v(
-                              "\n                      Este será el monto que cuesta separar un inmueble en el Proyecto.\n                    "
-                            )
+                      _c("div", { staticClass: "form-group" }, [
+                        _c("p", { staticClass: "mb-0" }, [
+                          _vm._v(
+                            "\n                      Este será el monto que cuesta separar un inmueble en el Proyecto. Aseguresé que las credenciales de la Tienda sean iguales al tipo de moneda ingresado aquí.\n                    "
+                          )
+                        ]),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "row" }, [
+                          _c("div", { staticClass: "col-12 col-lg-6" }, [
+                            _c("div", { staticClass: "form-group" }, [
+                              _c(
+                                "label",
+                                {
+                                  staticClass: "font-weight-bold",
+                                  attrs: { for: "master_currency_id" }
+                                },
+                                [_vm._v("Tipo Moneda")]
+                              ),
+                              _vm._v(" "),
+                              _c(
+                                "select",
+                                {
+                                  directives: [
+                                    {
+                                      name: "model",
+                                      rawName: "v-model",
+                                      value: _vm.element.master_currency_id,
+                                      expression: "element.master_currency_id"
+                                    }
+                                  ],
+                                  staticClass: "form-control form-control-lg",
+                                  attrs: { id: "master_currency_id" },
+                                  on: {
+                                    change: function($event) {
+                                      var $$selectedVal = Array.prototype.filter
+                                        .call($event.target.options, function(
+                                          o
+                                        ) {
+                                          return o.selected
+                                        })
+                                        .map(function(o) {
+                                          var val =
+                                            "_value" in o ? o._value : o.value
+                                          return val
+                                        })
+                                      _vm.$set(
+                                        _vm.element,
+                                        "master_currency_id",
+                                        $event.target.multiple
+                                          ? $$selectedVal
+                                          : $$selectedVal[0]
+                                      )
+                                    }
+                                  }
+                                },
+                                _vm._l(_vm.currencies, function(el) {
+                                  return _c(
+                                    "option",
+                                    {
+                                      key: el.name,
+                                      domProps: { value: el.id }
+                                    },
+                                    [
+                                      _vm._v(
+                                        "\n                              " +
+                                          _vm._s(el.name) +
+                                          " \n                            "
+                                      )
+                                    ]
+                                  )
+                                }),
+                                0
+                              ),
+                              _vm._v(" "),
+                              _vm.errors && _vm.errors.master_currency_id
+                                ? _c(
+                                    "label",
+                                    {
+                                      staticClass: "mt-2 text-danger text-sm",
+                                      attrs: { for: "master_currency_id" }
+                                    },
+                                    [
+                                      _vm._v(
+                                        _vm._s(_vm.errors.master_currency_id[0])
+                                      )
+                                    ]
+                                  )
+                                : _vm._e()
+                            ])
                           ]),
                           _vm._v(" "),
                           _c(
-                            "label",
-                            {
-                              staticClass: "font-weight-bold",
-                              attrs: { for: "price_separation" }
-                            },
-                            [_vm._v("Precio de Separación de Inmueble")]
-                          ),
-                          _vm._v(" "),
-                          _c(
-                            "money",
-                            _vm._b(
-                              {
-                                staticClass: "form-control form-control-lg",
-                                model: {
-                                  value: _vm.element.price_separation,
-                                  callback: function($$v) {
-                                    _vm.$set(
-                                      _vm.element,
-                                      "price_separation",
-                                      $$v
-                                    )
-                                  },
-                                  expression: "element.price_separation"
-                                }
-                              },
-                              "money",
-                              _vm.moneyLocal,
-                              false
-                            )
-                          ),
-                          _vm._v(" "),
-                          _vm.errors && _vm.errors.price_separation
-                            ? _c(
+                            "div",
+                            { staticClass: "col-12 col-lg-6" },
+                            [
+                              _c(
                                 "label",
                                 {
-                                  staticClass: "mt-2 text-danger text-sm",
+                                  staticClass: "font-weight-bold",
                                   attrs: { for: "price_separation" }
                                 },
-                                [_vm._v(_vm._s(_vm.errors.price_separation[0]))]
-                              )
-                            : _vm._e()
-                        ],
-                        1
-                      )
+                                [_vm._v("Precio de Separación de Inmueble")]
+                              ),
+                              _vm._v(" "),
+                              _c(
+                                "money",
+                                _vm._b(
+                                  {
+                                    staticClass: "form-control form-control-lg",
+                                    model: {
+                                      value: _vm.element.price_separation,
+                                      callback: function($$v) {
+                                        _vm.$set(
+                                          _vm.element,
+                                          "price_separation",
+                                          $$v
+                                        )
+                                      },
+                                      expression: "element.price_separation"
+                                    }
+                                  },
+                                  "money",
+                                  _vm.element.master_currency_id == 1
+                                    ? _vm.moneyLocal
+                                    : _vm.moneyForeign,
+                                  false
+                                )
+                              ),
+                              _vm._v(" "),
+                              _vm.errors && _vm.errors.price_separation
+                                ? _c(
+                                    "label",
+                                    {
+                                      staticClass: "mt-2 text-danger text-sm",
+                                      attrs: { for: "price_separation" }
+                                    },
+                                    [
+                                      _vm._v(
+                                        _vm._s(_vm.errors.price_separation[0])
+                                      )
+                                    ]
+                                  )
+                                : _vm._e()
+                            ],
+                            1
+                          )
+                        ])
+                      ])
                     ]),
                     _vm._v(" "),
                     _vm._m(3),

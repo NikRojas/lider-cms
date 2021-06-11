@@ -31,7 +31,7 @@
         </style>
 @endsection
 @section('content')
-    <projects-create route-store="{{ route('cms.projects.store') }}" route-return="{{ route('cms.projects.index') }}"
+    <projects-create :currencies="{{ $currencies }}" route-store="{{ route('cms.projects.store') }}" route-return="{{ route('cms.projects.index') }}"
     images-url="{{ config('services.images_url') }}"
     route-advisors-get-all="{{ route('cms.administration.advisors.get-all') }}"
     route-features-get-all="{{ route('cms.administration.features-project.get-all') }}"

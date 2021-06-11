@@ -258,7 +258,7 @@ class PostController extends BaseController
             }
         }
         else{
-            return $this->sendResponse(["order_id" => $request->id], trans('custom.title.success'), 200);
+            return $this->sendResponse(["order_id" => $request->oi], trans('custom.title.success'), 200);
         }
     }
 }

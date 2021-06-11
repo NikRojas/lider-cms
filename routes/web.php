@@ -140,6 +140,7 @@ Route::middleware(['auth'])->namespace('Cms')->name('cms.')->group(function () {
             Route::post('/filter-export', 'OrdersController@filterExport')->name('filter-export');
             Route::post('/sap/{element}', 'OrdersController@sendToSap')->name('send-to-sap');
             Route::post('resend/{element}', 'OrdersController@resendEmail')->name('resend');
+            Route::put('/cancel/{element}', 'OrdersController@cancel')->name('cancel');
             Route::get('/{element}', 'OrdersController@read')->name('read');
         });
         Route::name('statistics.')->prefix('estadisticas')->group(function () {

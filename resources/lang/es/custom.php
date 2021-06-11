@@ -58,6 +58,10 @@ return [
             'success' => 'El email se ha reenviado.',
             'error' => "Lo sentimos. El email no se pudo reenviar debido a un error.",
         ],
+        'resend' => [
+            'success' => 'La orden se ha anulado.',
+            'error' => "Lo sentimos. La orden no se pudo anular debido a un error.",
+        ],
         'create' => [
             'success' => ':name se ha creado.',
             'error' => "Lo sentimos. :name no se pudo crear debido a un error.",

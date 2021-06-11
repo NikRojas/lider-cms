@@ -94,7 +94,7 @@ class OrderRepository
                 "reserve" => $reserve,
                 "total" => $el["total_format"],
                 "status" => $el["transactionLatestRel"]["statusRel"]["name_format"],
-                "send" => $sap,
+                //"send" => $sap,
                 "oc" => "<div ".$style." class='text-center d-inline-block font-weight-bold text-uppercase rounded-0 py-1 px-2' >".$el["transactionLatestRel"]["orderCycleRel"]["name"]."</div>"
             );
         }

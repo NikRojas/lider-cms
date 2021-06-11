@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Cms\Export\RangeExportExcel;
 use App\Http\Traits\CmsTrait;
 use App\LogSapConnection;
+use App\MasterOrderCycle;
 use App\Order;
 use App\MasterTransactionStatus;
 use App\Notifications\OrderNotPaid;
@@ -14,6 +15,7 @@ use App\Notifications\OrderPaid;
 use App\Notifications\OrderReceived;
 use App\Project;
 use App\Repositories\OrderRepository;
+use App\Transaction;
 use Carbon\Carbon;
 use GuzzleHttp\Client;
 use Illuminate\Http\Request;
@@ -26,10 +28,12 @@ class OrdersController extends Controller
     public function index()
     {
         $projects = Project::select('id','name_es')->orderBy('index')->get();
-        $transactions = MasterTransactionStatus::where('name','!=','Reintegrado')
-        ->where('name','!=','Pagado')
-        ->where('name','!=','Anulado')->where('name','!=','Capturado')
-        ->where('name','!=','Capturado')->where('name','!=','Cancelado')
+        $transactions = MasterTransactionStatus::where('name','!=','Pagado')
+        //->where('name','!=','Anulado')
+        ->where('name','!=','Capturado')
+        ->where('name','!=','Capturado')
+        ->where('name','!=','Cancelado')
+        ->where('name','!=','Reintegrado')
         ->where('name','!=','Error')->get();
         return view("pages.sales-statistics.orders.index", compact('projects','transactions'));
     }
@@ -37,7 +41,9 @@ class OrdersController extends Controller
     public function getAll(Request $request, OrderRepository $repo)
     {
         $q = $request->q;
-        $headers = ["Id", "Código", "Fecha", "Cliente", "Reserva Detalle", "Total", "Estado de Pago", "Código SAP", "Estado Orden"];
+        $headers = ["Id", "Código", "Fecha", "Cliente", "Reserva Detalle", "Total", "Estado de Pago"
+        //, "Código SAP"
+        , "Estado Orden"];
         $projects = [];
         $transactions = [];
         if($request->projects){
@@ -226,6 +232,25 @@ class OrdersController extends Controller
         }
         else{
             return response()->json(["success" => false,'message' => 'La reserva no tiene un asesor asignado.'], 500); 
+        }
+    }
+
+    public function cancel(Order $element, Request $request){
+        $transactionsStatusCanceled = MasterTransactionStatus::where('name','Anulado')->first();
+        $masterOrderCycleClosed = MasterOrderCycle::where('payment_gateway_value','CLOSED')->first();
+        try{
+            $transaction = new Transaction();
+            $transaction->order_id = $element->id;
+            $transaction->transaction_date = Carbon::now();
+            $transaction->amount = $element->total_price;
+            $transaction->transaction_status_id = $transactionsStatusCanceled->id;
+            $transaction->order_cycle_id = $masterOrderCycleClosed->id;
+            $transaction->save();
+            $request->session()->flash('success', trans('custom.message.resend.success'));
+            return response()->json(["route" => route('cms.sales-statistics.orders.read',["element" => $element->id])]);
+        } catch (\Exception $e) {
+            $request->session()->flash('error', trans('custom.message.resend.error'));
+            return response()->json(["route" => route('cms.sales-statistics.orders.read',["element" => $element->id])], 500);
         }
     }
 }

@@ -31,7 +31,7 @@
     </div>
     <div class="container-fluid mt--6">
       <div class="row">
-        <div class="col-lg-8">
+        <div class="col-lg-9">
           <div class="row mb-4">
             <div class="col-12">
               <div class="card">
@@ -136,7 +136,7 @@
             </div>
           </div>
         </div>
-        <div class="col-lg-4">
+        <div class="col-lg-3">
           <div class="card mb-4">
             <div class="card-body">
               <div class="mb-2">
@@ -160,9 +160,7 @@
                 <div class="col-6">Total</div>
                 <div class="col-6 text-right">{{ element.total_format}}</div>
               </div>
-              <div class="text-center" v-if="element.transaction_latest_rel.response">
-                <a href="#" class="btn btn-link mx-auto p-0 mt-3 text-sm text-primary" @click.prevent="modalRaw = true">Ver RAW Response Pasarela</a>
-              </div>
+              
             </div>
           </div>
 
@@ -238,9 +236,36 @@
               </div>
             </div>
           </div>
+          <div class="card mt-4">
+            <div class="card-body">
+              <a class="btn btn-link d-block text-primary p-0 text-sm" style="text-decoration: underline;" href="#" @click.prevent="moreActions = !moreActions">Mas Acciones</a>
+              <div v-if="moreActions" class="mt-2">
+                <hr class="my-3">
+                <div v-if="element.transaction_latest_rel.status_rel.name == 'Autorizado' || element.transaction_latest_rel.response">
+                  <a href="#" @click.prevent="cancelOrder" class="btn btn-block text-sm btn-inverse-primary" v-if="element.transaction_latest_rel.status_rel.name != 'Anulado'">
+                  Anular pedido
+                  </a>
+                  <div class="text-center" v-if="element.transaction_latest_rel.response">
+                    <a href="#" class="btn btn-block btn-inverse-primary text-sm" @click.prevent="modalRaw = true">Ver RAW Response Pasarela</a>
+                  </div>
+                </div>
+                <div v-else class="text-center">
+                  No hay acciones disponibles
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
+
+    <CancelOrder
+      @cancel="restoreCancel"
+      :open="modalCancel"
+      @submit="cancelConfirm"
+      :loading-get="loadingCancel"
+      :loading-submit="requestCancel"
+    ></CancelOrder>
 
     <b-modal
     v-model="modalResend"
@@ -303,6 +328,7 @@
   </div>
 </template>
 <script>
+import CancelOrder from "../../components/modals/CancelOrder";
 import "ant-design-vue/lib/timeline/style/css";
 import NoData from "../../components/NoData";
 import BreadCrumb from "../../components/BreadCrumb";
@@ -311,7 +337,8 @@ export default {
   components: {
     BreadCrumb,
     NoData,
-    Button
+    Button,
+    CancelOrder
   },
   props: {
     routeCustomer: String,
@@ -325,12 +352,16 @@ export default {
   data() {
     return {
       modalRaw: false,
+      modalCancel: false,
       element: {
       },
+      requestCancel: false,
+      loadingCancel: false,
       modalResend: false,
       resendElement: {},
       requestSubmit: false,
       requestSap: false,
+      moreActions: false,
       sap: {
         sended: false,
         success: false,
@@ -339,6 +370,33 @@ export default {
     };
   },
   methods:{
+    cancelOrder(){
+      this.modalCancel = true;
+    },
+    cancelConfirm(){
+      this.requestCancel = true;
+      let url;
+      let method;
+      url = this.routeResend+ "/cancel/" + this.element.id;
+      method = "put";
+      axios({
+        method: method,
+        url: url,
+        data: this.element,
+      })
+        .then((response) => {
+          this.requestCancel = false;
+          document.location.href = response.data.route;
+        })
+        .catch((error) => {
+          this.requestCancel = false;
+          if (error.response.status === 422) {
+            this.errors = error.response.data.errors || {};
+            return;
+          }
+          document.location.href = error.response.data.route;
+        });
+    },
     reloadPage(){
       window.location.reload()
     },
@@ -385,6 +443,9 @@ export default {
     resend(value){
       this.resendElement = value;
       this.modalResend = true;
+    },
+    restoreCancel(){
+      this.modalCancel = false;
     },
     restoreResend(){
       this.resendElement = {};

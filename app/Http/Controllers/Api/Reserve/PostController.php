@@ -173,7 +173,7 @@ class PostController extends BaseController
                 "apellido_paterno" => $request->lastname_2,
                 "proyecto" => $department->projectRel->name_es,
                 "inmueble" => $department->description,
-                "slug_inmueble" => $department->slug
+                "cod_inmueble" => $department->sap_code
             ]
         ];
         //Cada Proyecto tiene un usuario y una password diferente;

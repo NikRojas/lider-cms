@@ -167,13 +167,13 @@ class PostController extends BaseController
                     "phoneNumber" => $request->mobile,
                     "identityCode" => $request->document_number
                 ],
-                "metadata" => [
-                    "tipo_documento" => $request->type_document_id,
-                    "apellido_paterno" => $request->lastname_2,
-                    "proyecto" => $department->projectRel->name_es,
-                    "inmueble" => $department->description,
-                    "slug_inmueble" => $department->slug
-                ]
+            ],
+            "metadata" => [
+                "tipo_documento" => $request->type_document_id,
+                "apellido_paterno" => $request->lastname_2,
+                "proyecto" => $department->projectRel->name_es,
+                "inmueble" => $department->description,
+                "slug_inmueble" => $department->slug
             ]
         ];
         //Cada Proyecto tiene un usuario y una password diferente;

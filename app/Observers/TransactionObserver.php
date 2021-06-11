@@ -39,10 +39,10 @@ class TransactionObserver
                 break;
             case 'Rechazado':
             //case 'Error':
-                $order->customerRel->notify(new OrderReceived($order));
+                /*$order->customerRel->notify(new OrderReceived($order));
                 if($tr->order_cycle_id == $closedCycle->id){
                     $order->customerRel->notify((new OrderNotPaid($order))->delay($delayNotification));
-                }
+                }*/
                 break;
             default:
                 # code...

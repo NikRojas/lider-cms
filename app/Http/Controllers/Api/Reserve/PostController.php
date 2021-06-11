@@ -230,7 +230,7 @@ class PostController extends BaseController
             $advisor = null;
             $price_deparment_separation = $department->projectRel->price_separation;
             #Si hubiera descuento se debe procesar aqui antes de guardar en la orden
-            $r_order = ["customer_id" => $customer->id, "department_id" => $department->id, "total_price" => $price_deparment_separation, "order_date" => Carbon::now()];
+            $r_order = ["customer_id" => $customer->id, "department_id" => $department->id, "total_price" => $price_deparment_separation, "order_date" => Carbon::now(),'master_currency_id' => $department->projectRel->master_currency_id];
             #Setear Asesor si viene desde la URL de Separacion
             if($request->adv){
                 $r_advisor = $request->adv;

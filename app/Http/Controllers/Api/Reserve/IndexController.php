@@ -35,7 +35,7 @@ class IndexController extends BaseController
     {
         $ubigeo = $statuses = $rooms = $floors = $projects = $typeDepartments = $range = $views = [];
         $sort = $request->sort_by;
-        $data = Department::with('viewRel', 'tipologyRel.parentTypeDepartmentRel', 'projectRel:id,logo_colour,price_separation,name_es,name_en,code_ubigeo,project_status_id', 'projectRel.ubigeoRel', 'projectRel.statusRel')->where('available', 1);
+        $data = Department::with('viewRel', 'tipologyRel.parentTypeDepartmentRel', 'projectRel:id,logo_colour,price_separation,name_es,name_en,code_ubigeo,project_status_id,master_currency_id', 'projectRel.ubigeoRel', 'projectRel.statusRel')->where('available', 1);
         //Tablas Relacionadas
         if ($request->statuses) {
             $statuses = $request->statuses;
@@ -262,7 +262,7 @@ class IndexController extends BaseController
     }
 
     public function detail(Request $request, $code){
-        $department = Department::where('slug',$code)->with('viewRel', 'tipologyRel.parentTypeDepartmentRel', 'projectRel:id,logo_colour,price_separation,name_es,name_en,code_ubigeo,project_status_id', 'projectRel.ubigeoRel', 'projectRel.statusRel')->first();
+        $department = Department::where('slug',$code)->with('viewRel', 'tipologyRel.parentTypeDepartmentRel', 'projectRel:id,logo_colour,price_separation,name_es,name_en,code_ubigeo,project_status_id,master_currency_id', 'projectRel.ubigeoRel', 'projectRel.statusRel')->first();
         if (!$department) {
             return $this->sendError("");
         }
@@ -284,7 +284,7 @@ class IndexController extends BaseController
 
     public function summary(Request $request, $code)
     {
-        $department = Department::where('slug',$code)->where('available',1)->with('viewRel', 'tipologyRel.parentTypeDepartmentRel', 'projectRel:id,logo_colour,price_separation,name_es,name_en,code_ubigeo,project_status_id', 'projectRel.ubigeoRel', 'projectRel.statusRel')->first();
+        $department = Department::where('slug',$code)->where('available',1)->with('viewRel', 'tipologyRel.parentTypeDepartmentRel', 'projectRel:id,logo_colour,price_separation,name_es,name_en,code_ubigeo,project_status_id,master_currency_id', 'projectRel.ubigeoRel', 'projectRel.statusRel')->first();
         if (!$department) {
             return $this->sendError("");
         }

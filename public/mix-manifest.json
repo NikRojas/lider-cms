@@ -6,7 +6,7 @@
     "/js/components/button-icons.js": "/js/components/button-icons.js",
     "/js/components/button-menu.js": "/js/components/button-menu.js",
     "/js/pages/administration/advisors.js": "/js/pages/administration/advisors.js",
-    "/js/pages/administration/advisors~js/pages/administration/bonds~js/pages/administration/features-proj~b3503724.js": "/js/pages/administration/advisors~js/pages/administration/bonds~js/pages/administration/features-proj~b3503724.js",
+    "/js/pages/administration/advisors~js/pages/administration/bonds~js/pages/administration/features-proj~63a000cd.js": "/js/pages/administration/advisors~js/pages/administration/bonds~js/pages/administration/features-proj~63a000cd.js",
     "/js/pages/administration/advisors~js/pages/administration/bonds~js/pages/administration/features-proj~b5ba959b.js": "/js/pages/administration/advisors~js/pages/administration/bonds~js/pages/administration/features-proj~b5ba959b.js",
     "/js/pages/administration/bonds.js": "/js/pages/administration/bonds.js",
     "/js/pages/administration/exchange.js": "/js/pages/administration/exchange.js",
@@ -73,7 +73,7 @@
     "/js/pages/testimonials.js": "/js/pages/testimonials.js",
     "/js/pages/users.js": "/js/pages/users.js",
     "/vendors~js/pages/administration/advisors~js/pages/administration/bonds~js/pages/administration/excha~6538a116.js": "/vendors~js/pages/administration/advisors~js/pages/administration/bonds~js/pages/administration/excha~6538a116.js",
-    "/vendors~js/pages/administration/advisors~js/pages/administration/bonds~js/pages/administration/excha~9dcf4862.js": "/vendors~js/pages/administration/advisors~js/pages/administration/bonds~js/pages/administration/excha~9dcf4862.js",
+    "/vendors~js/pages/administration/advisors~js/pages/administration/bonds~js/pages/administration/excha~83283c48.js": "/vendors~js/pages/administration/advisors~js/pages/administration/bonds~js/pages/administration/excha~83283c48.js",
     "/vendors~js/pages/administration/advisors~js/pages/administration/bonds~js/pages/administration/featu~c4b5e150.js": "/vendors~js/pages/administration/advisors~js/pages/administration/bonds~js/pages/administration/featu~c4b5e150.js",
     "/vendors~js/pages/administration/status-project~js/pages/administration/types~js/pages/administration~e5b365e0.js": "/vendors~js/pages/administration/status-project~js/pages/administration/types~js/pages/administration~e5b365e0.js",
     "/vendors~js/pages/blog/post/create.js": "/vendors~js/pages/blog/post/create.js",
@@ -84,6 +84,5 @@
     "/vendors~js/pages/cami~js/pages/projects/read.js": "/vendors~js/pages/cami~js/pages/projects/read.js",
     "/vendors~js/pages/dashboard~js/pages/statistics/index.js": "/vendors~js/pages/dashboard~js/pages/statistics/index.js",
     "/vendors~js/pages/orders/read.js": "/vendors~js/pages/orders/read.js",
-    "/vendors~js/pages/statistics/index.js": "/vendors~js/pages/statistics/index.js",
-    "/vendors~js/pages/administration/advisors~js/pages/administration/bonds~js/pages/administration/excha~83283c48.js": "/vendors~js/pages/administration/advisors~js/pages/administration/bonds~js/pages/administration/excha~83283c48.js"
+    "/vendors~js/pages/statistics/index.js": "/vendors~js/pages/statistics/index.js"
 }

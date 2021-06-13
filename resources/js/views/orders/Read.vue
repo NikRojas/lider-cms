@@ -95,7 +95,7 @@
                       <!--Cuando haya descuento, restar el precio del elemento menos precio de descuento -->
                       <div
                         class="col-3 d-flex align-items-center justify-content-center"
-                      >Precio Separación <br> {{ el.total_price_format}}</div>
+                      >Precio Separación <br>{{ element.currency_rel.symbol }} {{ el.total_price}}</div>
                     </div>
                   </div>
                 </div>
@@ -242,7 +242,7 @@
               <div v-if="moreActions" class="mt-2">
                 <hr class="my-3">
                 <div v-if="element.transaction_latest_rel.status_rel.name == 'Autorizado' || element.transaction_latest_rel.response">
-                  <a href="#" @click.prevent="cancelOrder" class="btn btn-block text-sm btn-inverse-primary" v-if="element.transaction_latest_rel.status_rel.name != 'Anulado'">
+                  <a href="#" @click.prevent="cancelOrder" class="mb-3 btn btn-block text-sm btn-inverse-primary" v-if="element.transaction_latest_rel.status_rel.name != 'Anulado'">
                   Anular pedido
                   </a>
                   <div class="text-center" v-if="element.transaction_latest_rel.response">

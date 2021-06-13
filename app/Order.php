@@ -22,7 +22,12 @@ class Order extends Model
 
     public function getTotalFormatAttribute()
     {
-        return 'S/. '.number_format($this->total_price, 2, '.', ',');
+        //return 'S/. '.number_format($this->total_price, 2, '.', ',');
+        $symbol = null;
+        if($this->currencyRel){
+            $symbol = $this->currencyRel->symbol;
+        }
+        return $symbol.' '.number_format($this->total_price, 0, '.', ',');
     }
 
     public function orderDetailsRel()
@@ -57,5 +62,10 @@ class Order extends Model
         if($this->sended_to_sap_date){
             return (new Carbon($this->sended_to_sap_date))->isoFormat('DD MMMM YYYY [a las] h:mm a');
         }
+    }
+
+    public function currencyRel()
+    {
+        return $this->hasOne('App\MasterCurrency', 'id', 'master_currency_id');
     }
 }

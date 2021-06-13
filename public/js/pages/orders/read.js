@@ -1273,7 +1273,11 @@ var render = function() {
                                 [
                                   _vm._v("Precio Separación "),
                                   _c("br"),
-                                  _vm._v(" " + _vm._s(el.total_price_format))
+                                  _vm._v(
+                                    _vm._s(_vm.element.currency_rel.symbol) +
+                                      " " +
+                                      _vm._s(el.total_price)
+                                  )
                                 ]
                               )
                             ])
@@ -1658,7 +1662,7 @@ var render = function() {
                                   "a",
                                   {
                                     staticClass:
-                                      "btn btn-block text-sm btn-inverse-primary",
+                                      "mb-3 btn btn-block text-sm btn-inverse-primary",
                                     attrs: { href: "#" },
                                     on: {
                                       click: function($event) {

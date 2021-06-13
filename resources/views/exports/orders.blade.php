@@ -21,7 +21,7 @@
     <tr>
       <th
         style="background-color:#01C670;color:#FFFFFF;font-size:14px;font-weight:bold;text-align:center;vertical-align:middle;border: 1px solid black;"
-        colspan="2">Cantidad de Ventas</th>
+        colspan="2">Cantidad de Órdenes</th>
       <th style=" font-size:13px;font-weight:bold;text-align:center;vertical-align:middle;border: 1px solid black;">
         {{ count($orders) }}</th>
     </tr>
@@ -62,6 +62,9 @@
         Reserva Inmueble</th>
       <th
         style="background-color:#01C670;color:#FFFFFF;width:20px;font-size:14px;font-weight:bold;text-align:center;vertical-align:middle;border: 1px solid black;">
+        Tipo Moneda</th>
+      <th
+        style="background-color:#01C670;color:#FFFFFF;width:20px;font-size:14px;font-weight:bold;text-align:center;vertical-align:middle;border: 1px solid black;">
         Total</th>
       <th
         style="background-color:#01C670;color:#FFFFFF;width:20px;font-size:14px;font-weight:bold;text-align:center;vertical-align:middle;border: 1px solid black;">
@@ -84,7 +87,8 @@
         {{ $el->orderDetailsRel[0]["projectRel"]["name_es"] }}</td>
       <td style="text-align:center;vertical-align:middle;border: 1px solid black;">
         {{ $el->orderDetailsRel[0]["departmentRel"]["description"] }}</td>
-      <td style="text-align:center;vertical-align:middle;border: 1px solid black;">{{ $el->total_format }}</td>
+      <td style="text-align:center;vertical-align:middle;border: 1px solid black;">{{ $el->currencyRel["abbreviation"] }}</td>
+      <td style="text-align:center;vertical-align:middle;border: 1px solid black;">{{ $el->total_price }}</td>
       <td style="text-align:center;vertical-align:middle;border: 1px solid black;">{{ $el->transactionLatestRel["statusRel"]["name"] }}</td>
     </tr>
     @endforeach

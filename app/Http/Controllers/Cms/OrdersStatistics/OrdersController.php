@@ -117,7 +117,7 @@ class OrdersController extends Controller
     
     public function allExport()
     {
-        $els = Order::has('orderDetailsRel')->has('transactionLatestRel')->with('customerRel:id,name,lastname,document_number,lastname_2,type_document_id','customerRel.documentTypeRel')->with('orderDetailsRel.departmentRel:id,description')->with('orderDetailsRel.projectRel:id,name_es')
+        $els = Order::has('orderDetailsRel')->has('transactionLatestRel')->with('currencyRel','customerRel:id,name,lastname,document_number,lastname_2,type_document_id','customerRel.documentTypeRel')->with('orderDetailsRel.departmentRel:id,description')->with('orderDetailsRel.projectRel:id,name_es')
         ->with('transactionLatestRel.statusRel')->orderBy('created_at', 'asc')->get();
         return new OrderExport(null, null, $els);
     }

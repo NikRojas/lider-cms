@@ -54,7 +54,7 @@ class DepartmentsRepository
                 "id" => $dep["id"],
                 "sap_code" => $dep["sap_code"],
                 "description" => $depHTML,
-                "area" => $dep["area"],
+                "area" => number_format($dep["area"],2),
                 "floor" => $dep["floor"],
                 "vista" => $dep["viewRel"]["name"],
                 "tipology" => $dep["tipologyRel"]["name"].' ('.$dep["tipologyRel"]["room"].' Dormitorios)',

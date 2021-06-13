@@ -9,7 +9,7 @@ use Illuminate\Notifications\Notifiable;
 class Department extends Model
 {
     protected $guarded = [];
-    protected $appends = ['price_foreign_format','price_format','updated_at_format'];
+    protected $appends = ['price_foreign_format','price_format','updated_at_format','area_format'];
 
     public function viewRel()
     {
@@ -38,5 +38,10 @@ class Department extends Model
 
     public function getUpdatedAtFormatAttribute() {
         return (new Carbon($this->updated_at))->format('g:iA d-m-Y');
+    }
+
+    public function getAreaFormatAttribute()
+    {
+        return number_format($this->area, 2);
     }
 }

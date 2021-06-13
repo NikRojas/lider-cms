@@ -56,7 +56,7 @@
                 <span class="btn-inner--icon">
                   <jam-download class="current-color" />
                 </span>
-                <span class="btn-inner--text">Exportar {{ elements.total == 0 ? '(0 Ventas)' : '' }}</span>
+                <span class="btn-inner--text">Exportar {{ elements.total == 0 ? '(0 Órdenes)' : '' }}</span>
               </button>
             </div>
           </div>
@@ -236,7 +236,7 @@ export default {
           );
           const link = document.createElement("a");
           link.href = downloadUrl;
-          link.setAttribute("download", "Líder Ventas.xlsx");
+          link.setAttribute("download", "Líder Órdenes.xlsx");
           document.body.appendChild(link);
           link.click();
           link.remove();
@@ -265,7 +265,7 @@ export default {
           );
           const link = document.createElement("a");
           link.href = downloadUrl;
-          link.setAttribute("download", "Líder Ventas.xlsx");
+          link.setAttribute("download", "Líder Órdenes.xlsx");
           document.body.appendChild(link);
           link.click();
           link.remove();

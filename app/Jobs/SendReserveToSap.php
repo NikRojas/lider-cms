@@ -100,6 +100,8 @@ class SendReserveToSap implements ShouldQueue
                     #Asignacion de Asesor
                     #Obtener el asesor que devuelve el SAP
                     $advisor = Advisor::where('sap_code',$responseData->vendedor)->first();
+                    Log::info("Asesor Retorno desde el SAP");
+                    Log::info($advisor);
                     #Si tiene asesor agregarlo al array de actualizacion
                     if($advisor){
                         $requestOrder = array_merge($requestOrder, [ "advisor_id" => $advisor->id ]);
@@ -108,6 +110,7 @@ class SendReserveToSap implements ShouldQueue
                 $orderUpdate = Order::UpdateOrCreate(["id" => $this->order->id], $requestOrder);
                 #Si no tiene asesor se le asigna
                 if(!$orderUpdate->advisor_id){
+                    Log::info("No tiene asesor");
                     $advisorId = null;
                     $advisors = $this->order->orderDetailsRel[0]->projectRel->advisorsRel;
                     $ifItsFirstRecord = Order::count();

@@ -236,6 +236,8 @@ class PostController extends BaseController
                 $r_advisor = $request->adv;
                 $advisor = Advisor::where('sap_code',$r_advisor)->first();
                 if($advisor){
+                    Log::info("Asesor PaymentInit");
+                    Log::info($advisor);
                     $r_order = array_merge($r_order,["advisor_id" => $advisor->id]);
                 }
             }

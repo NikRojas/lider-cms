@@ -54,7 +54,7 @@ class SendReserveToSap implements ShouldQueue
         $sapCode = $this->order->orderDetailsRel[0]->departmentRel->sap_code;
         $description = 'Inmueble '.$this->order->orderDetailsRel[0]->departmentRel->description.' (Código SAP: '.$sapCode.') Proyecto ' . $this->order->orderDetailsRel[0]->projectRel->name_es;
         try {
-            /*$client = new Client();
+            $client = new Client();
             $responseSap = $client->request('POST', $this->url, ['json' => [
                 'nro_documento' => $this->order->customerRel->document_number, 
                 'nombre' => $this->order->customerRel->name,
@@ -64,13 +64,11 @@ class SendReserveToSap implements ShouldQueue
                 'correo' => $this->order->customerRel->email,
                 'tipo_documento' => $this->order->customerRel->documentTypeRel->sap_value,
                 'inmueble' => $sapCode
-                //Esperar ultima actualizacion de reserva de inmueble
-                //"vendedor": "01000015"
             ]]);
             $status = $responseSap->getStatusCode();
-            $responseData = json_decode($responseSap->getBody());*/
+            $responseData = json_decode($responseSap->getBody());
             #Test {
-                $status = 200;
+                /*$status = 200;
                 Log::info([
                     'nro_documento' => $this->order->customerRel->document_number, 
                     'nombre' => $this->order->customerRel->name,
@@ -87,7 +85,7 @@ class SendReserveToSap implements ShouldQueue
                     "mensaje": "",
                     "vendedor": "01000015"
                 }';
-                $responseData = json_decode($responseSap);
+                $responseData = json_decode($responseSap);*/
             #EndTest }
             if($responseData->exito){
                 #Actualizar Orden con los datos del SAP
@@ -142,7 +140,7 @@ class SendReserveToSap implements ShouldQueue
                 $description = $description.' - Error Retorno SAP.';
             }
             #LogSapConnection
-            //$lsc = LogSapConnection::UpdateOrCreate(["slug" => $slug, "type" => $this->lscType, 'status' => $status, 'description' => $description, "response" => (string) $responseData]);  
+            $lsc = LogSapConnection::UpdateOrCreate(["slug" => $slug, "type" => $this->lscType, 'status' => $status, 'description' => $description, "response" => (string) $responseData]);  
         }
         catch (\GuzzleHttp\Exception\RequestException $e) {
             #Cuando sea cualquier código de error, se enviara un email al correo indicado.

@@ -5,12 +5,16 @@ namespace App\Http\Controllers\Cms\Projects;
 use App\CredentialPayment;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Cms\Project\SendPaymentRequest;
 use App\Http\Requests\Cms\Project\UpdatePaymentCredential;
 use Illuminate\Support\Facades\Storage;
 
 use App\Http\Traits\CmsTrait;
 use App\Project;
+use App\TestValuesPayment;
 use Illuminate\Support\Str;
+use GuzzleHttp\Client;
+use Illuminate\Support\Facades\Log;
 
 class CredentialsController extends Controller
 {
@@ -20,7 +24,8 @@ class CredentialsController extends Controller
     {
         $project = Project::where('slug_es', $element)->firstOrFail();
         $credential = CredentialPayment::where('project_id',$project->id)->first();
-        return view("pages.projects.credentials.index", compact('project','credential'));
+        $values = TestValuesPayment::get();
+        return view("pages.projects.credentials.index", compact('project','credential','values'));
     }
 
     public function updateCredential(UpdatePaymentCredential $request){
@@ -68,6 +73,42 @@ class CredentialsController extends Controller
         catch(\Exception $e){
             $request->session()->flash('error', trans('custom.message.update.error', ['name' => trans('custom.attribute.element')]));
             return response()->json(["route" => route('cms.projects.credentials.index',["element" => $project->slug_es])],500);
+        }
+    }
+
+    private $urlCreatePayment = 'https://api.micuentaweb.pe/api-payment/V4/Charge/CreatePayment';
+
+    public function test(SendPaymentRequest $request){
+        $credentialPayment = CredentialPayment::where('project_id',$request->project_id)->first();
+        if(!$credentialPayment->password_test || !$credentialPayment->user || !$credentialPayment->token_js_prod){
+            return response()->json(['title'=> trans('custom.title.error'), 'message'=> 'Ingrese los datos Test de la Tienda'], 500);
+        }
+        $body = [
+            "amount" => 100,
+            "currency" => "PEN",
+            #URL Notificación
+            "ipnTargetUrl" => "",
+            //Order
+            "orderId" => "ADMIN".Str::random(4),
+            "customer" => [
+                "email" => "test".Str::random(8)."@test.com",
+            ],
+        ];
+        $authToken = $credentialPayment->user.':'.$credentialPayment->password_test;
+        $codeAuthToken = base64_encode($authToken);
+        try {
+            $client = new Client();
+            $response = $client->post($this->urlCreatePayment, [
+                'headers' => ['Content-Type' => 'application/json', 'Authorization' => "Basic ".$codeAuthToken],
+                'body'    => json_encode($body)
+            ]); 
+            $responseData = json_decode($response->getBody()->getContents());
+            Log::info((string) $response->getBody());
+            return response()->json(['title' => trans('custom.title.success'), 'message' => 'Se envio la prueba de venta correctamente.',
+            "token" => $responseData->answer->formToken, 'tokenJs' => $credentialPayment->token_js_test], 200);
+        }
+        catch (\GuzzleHttp\Exception\RequestException $e) {
+            return response()->json(['title'=> trans('custom.title.error'), 'message'=> 'Lo sentimos. Ocurrió un error enviando la prueba de venta.'], 500);
         }
     }
 }

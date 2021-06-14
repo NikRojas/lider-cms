@@ -29,6 +29,42 @@
       </div>
     </div>
     <div class="container-fluid mt--4">
+      <div class="row mb-4" v-if="credentialParent">
+        <div class="col-12 col-lg-2">
+          <h2>Modo</h2>
+          <p>Indique el modo en el que se encuentra el Proyecto (Tienda).</p>
+        </div>
+        <div class="col-12 col-lg-10">
+          <div class="card">
+            <div class="card-body">
+              <p>
+                Al estar en Modo Producción deberá haber ingresado la
+                <b>Contraseña de Producción </b> en el sección Credenciales y el
+                <b>Token Cliente Javascript Producción</b> en la sección Tokens.
+              </p>
+              <div class="ml-2">
+                <b-form-checkbox
+                  size="lg"
+                  v-model="credential.active"
+                  name="check-button"
+                  switch
+                >
+                  Modo {{ !credential.active ? "Test" : "Producción" }}
+                </b-form-checkbox>
+              </div>
+              <div class="text-right">
+                <Button
+                  @click="activate"
+                  :text="'Actualizar Modo'"
+                  :classes="['btn-primary']"
+                  :request-server="requestActive"
+                ></Button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
       <div class="row mb-4">
         <div class="col-12 col-lg-2">
           <h2>Credenciales</h2>
@@ -48,13 +84,17 @@
                 <h3 class="font-weight-normal">
                   <div class="font-weight-bold">Contraseña Test:</div>
                   {{
-                    credential.password_test ? credential.password_test : "No registrado"
+                    credential.password_test
+                      ? credential.password_test
+                      : "No registrado"
                   }}
                 </h3>
                 <h3 class="font-weight-normal">
                   <div class="font-weight-bold">Contraseña Prod:</div>
                   {{
-                    credential.password_prod ? credential.password_prod : "No registrado"
+                    credential.password_prod
+                      ? credential.password_prod
+                      : "No registrado"
                   }}
                 </h3>
                 <div class="text-right">
@@ -141,40 +181,6 @@
 
       <div class="row mb-4" v-if="credentialParent">
         <div class="col-12 col-lg-2">
-          <h2>Modo</h2>
-          <p>Indique el modo en el que se encuentra el Proyecto (Tienda).</p>
-        </div>
-        <div class="col-12 col-lg-10">
-          <div class="card">
-            <div class="card-body">
-                <p>
-                    Al estar en Modo Producción deberá haber ingresado la <b>Contraseña de Producción </b> en el sección superior y el <b>Token Cliente Javascript Producción</b> en la sección inferior.
-                </p>
-                <div class="ml-2">
-                <b-form-checkbox
-                    size="lg"
-                    v-model="credential.active"
-                    name="check-button"
-                    switch
-                >
-                    Modo {{ !credential.active ? "Test" : "Producción" }}
-                </b-form-checkbox>
-              </div>
-              <div class="text-right">
-                <Button
-                  @click="activate"
-                  :text="'Actualizar Modo'"
-                  :classes="['btn-primary']"
-                  :request-server="requestActive"
-                ></Button>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="row mb-4" v-if="credentialParent">
-        <div class="col-12 col-lg-2">
           <h2>Tokens</h2>
           <p>
             Ingresa los tokens del Proyecto (Tienda) de la Pasarela de Izipay.
@@ -204,12 +210,14 @@
                       : "No registrado"
                   }}
                 </h3>
-                <hr class="my-3">
-                <p >Tokens utilizados para calcular/verificar el campo kr-hash cuando se obtiene respuesta de la IPN(URL de notificación instantánea)</p>
+                <hr class="my-3" />
+                <p>
+                  Tokens utilizados para calcular/verificar el campo kr-hash
+                  cuando se obtiene respuesta de la IPN(URL de notificación
+                  instantánea)
+                </p>
                 <h3 class="font-weight-normal">
-                  <div class="font-weight-bold">
-                    Token HMAC-SHA-256 Test:
-                  </div>
+                  <div class="font-weight-bold">Token HMAC-SHA-256 Test:</div>
                   {{
                     credential.token_sha_256_test
                       ? credential.token_sha_256_test
@@ -236,40 +244,6 @@
                 </div>
               </div>
               <div v-else>
-                <!--<div class="form-group">
-                  <label class="font-weight-bold" for="token_test"
-                    >Token API REST Test</label
-                  >
-                  <input
-                    type="text"
-                    class="form-control"
-                    v-model="credential.token_test"
-                    id="token_test"
-                  />
-                  <label
-                    v-if="errors && errors.token_test"
-                    class="mt-2 text-danger text-sm"
-                    for="token_test"
-                    >{{ errors.token_test[0] }}</label
-                  >
-                </div>
-                <div class="form-group">
-                  <label class="font-weight-bold" for="token_prod"
-                    >Token API REST Producción</label
-                  >
-                  <input
-                    type="text"
-                    class="form-control"
-                    v-model="credential.token_prod"
-                    id="token_prod"
-                  />
-                  <label
-                    v-if="errors && errors.token_prod"
-                    class="mt-2 text-danger text-sm"
-                    for="token_prod"
-                    >{{ errors.token_prod[0] }}</label
-                  >
-                </div>-->
                 <div class="form-group">
                   <label class="font-weight-bold" for="token_js_test"
                     >Token Cliente Javascript Test</label
@@ -287,7 +261,7 @@
                     >{{ errors.token_js_test[0] }}</label
                   >
                 </div>
-                
+
                 <div class="form-group">
                   <label class="font-weight-bold" for="token_js_prod"
                     >Token Cliente Javascript Producción</label
@@ -323,7 +297,7 @@
                     >{{ errors.token_sha_256_test[0] }}</label
                   >
                 </div>
-                
+
                 <div class="form-group">
                   <label class="font-weight-bold" for="token_sha_256_prod"
                     >Token HMAC-SHA-256 Producción</label
@@ -341,7 +315,6 @@
                     >{{ errors.token_sha_256_prod[0] }}</label
                   >
                 </div>
-
 
                 <div class="text-right">
                   <Button
@@ -364,31 +337,27 @@
         </div>
       </div>
 
+      <div class="row" v-if="credentialParent">
+        <div class="col-12 text-primary">
+        <h2>Pruebas</h2>
+
+        </div>
+      </div>
       <div class="row mb-4" v-if="credentialParent">
         <div class="col-12 col-lg-2">
-          <h2>Pruebas</h2>
-          <p>
-            Realizar las pruebas, para despues pasar a la etapa de Producción.
-          </p>
+          <h3>Modo Test</h3>
+          <p>Realiza pruebas en Modo Test.</p>
         </div>
         <div class="col-12 col-lg-10">
           <div class="card">
             <div class="card-body">
-              <p>Listado de Tarjetas de Prueba</p>
-              <ul>
-                <li>111111-11111-11111-11111</li>
-                <li>111111-11111-11111-11111</li>
-                <li>111111-11111-11111-11111</li>
-                <li>111111-11111-11111-11111</li>
-              </ul>
-              <div class="text-right">
-                <Button
-                  @click="testCredentials"
-                  :text="'Realizar Test'"
-                  :classes="['btn-primary']"
-                  :request-server="requestTest"
-                ></Button>
-              </div>
+              <p class="mb-1">
+                De click al botón para visualizar el formulario de la Pasarela
+                en Modo Test, para revisar el funcionamiento correcto revise en
+                el apartado de pruebas de la Pasarela la venta el cual tendrá un
+                monto de S/ 1 o $1 según la moneda de la Tienda.
+              </p>
+              <Test :route="routeTest" :project="elementParent"></Test>
             </div>
           </div>
         </div>
@@ -399,22 +368,31 @@
 <script>
 import BreadCrumb from "../../../components/BreadCrumb";
 import Button from "../../../components/Button";
+import Test from "./Test";
 export default {
   components: {
     BreadCrumb,
     Button,
+    Test,
   },
   props: {
+    values: Array,
     elementParent: Object,
     routeReturn: String,
     credentialParent: Object,
     routeUpdate: String,
     routeUpdateTokens: String,
     routeActivate: String,
+    routeTest: String,
     //routeGetAll: String,
   },
   data() {
     return {
+      /*requestTest: false,
+      modalTest: false,
+      orderTest:{
+        id: ''
+      },*/
       updateTokensBlock: false,
       updateCrendialsBlock: false,
       requestTest: false,

@@ -84,5 +84,6 @@
     "/vendors~js/pages/cami~js/pages/projects/read.js": "/vendors~js/pages/cami~js/pages/projects/read.js",
     "/vendors~js/pages/dashboard~js/pages/statistics/index.js": "/vendors~js/pages/dashboard~js/pages/statistics/index.js",
     "/vendors~js/pages/orders/read.js": "/vendors~js/pages/orders/read.js",
-    "/vendors~js/pages/statistics/index.js": "/vendors~js/pages/statistics/index.js"
+    "/vendors~js/pages/statistics/index.js": "/vendors~js/pages/statistics/index.js",
+    "/vendors~js/pages/projects/credentials/index.js": "/vendors~js/pages/projects/credentials/index.js"
 }

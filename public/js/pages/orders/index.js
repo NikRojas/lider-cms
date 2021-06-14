@@ -587,7 +587,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         var downloadUrl = window.URL.createObjectURL(new Blob([response.data]));
         var link = document.createElement("a");
         link.href = downloadUrl;
-        link.setAttribute("download", "Líder Ventas.xlsx");
+        link.setAttribute("download", "Líder Órdenes.xlsx");
         document.body.appendChild(link);
         link.click();
         link.remove();
@@ -617,7 +617,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         var downloadUrl = window.URL.createObjectURL(new Blob([response.data]));
         var link = document.createElement("a");
         link.href = downloadUrl;
-        link.setAttribute("download", "Líder Ventas.xlsx");
+        link.setAttribute("download", "Líder Órdenes.xlsx");
         document.body.appendChild(link);
         link.click();
         link.remove();
@@ -1336,7 +1336,7 @@ var render = function() {
                           _vm._v(
                             "Exportar " +
                               _vm._s(
-                                _vm.elements.total == 0 ? "(0 Ventas)" : ""
+                                _vm.elements.total == 0 ? "(0 Órdenes)" : ""
                               )
                           )
                         ])

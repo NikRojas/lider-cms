@@ -17,8 +17,6 @@ class CreateTestValuesPaymentGatewayTable extends Migration
             $table->bigIncrements('id');
             //Numero Tarjeta Test
             $table->text('value')->nullable();
-            //Ver si falta algo mas creo q se tiene q crear otra tabla con este test y la tabla credentetials internemedia para ver y poner el 
-            //valor ok q se realizo el test
             $table->timestamps();
         });
     }

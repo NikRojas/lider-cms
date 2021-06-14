@@ -54,7 +54,13 @@ class SendReserveToSap implements ShouldQueue
         $sapCode = $this->order->orderDetailsRel[0]->departmentRel->sap_code;
         $description = 'Inmueble '.$this->order->orderDetailsRel[0]->departmentRel->description.' (Código SAP: '.$sapCode.') Proyecto ' . $this->order->orderDetailsRel[0]->projectRel->name_es;
         try {
-            $client = new Client();
+            $headers = [
+                'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer '.$sapCredentials->token,
+            ];
+            $client = new Client([
+                'headers' => $headers
+            ]);
             $responseSap = $client->request('POST', $this->url, ['json' => [
                 'nro_documento' => $this->order->customerRel->document_number, 
                 'nombre' => $this->order->customerRel->name,

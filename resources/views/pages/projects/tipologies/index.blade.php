@@ -43,6 +43,7 @@
     images-url="{{ config('services.images_url') }}"
     route-return="{{ route('cms.projects.index') }}"
     message-order="@lang('custom.message.order')"
+    message-cant-delete="@lang('custom.message.cant_delete_department_project')"
     :element-parent="{{ $element }}"
     :types="{{ json_encode($projectParentTypeDepartments) }}"
     route-order="{{ route('cms.projects.tipologies.order') }}"

@@ -18,7 +18,7 @@ class ProjectTypeDepartment extends Model
 
     public function getCanDeleteAttribute(){
         $value = true;
-        if(count($this->projectQuotationsRel) > 0){
+        if(count($this->projectQuotationsRel) > 0 || count($this->departmentsRel) > 0){
             $value = false;
         }
         return $value;

@@ -91,6 +91,8 @@ return [
         ],
         'order'  => 'Arrastre los elementos en el orden que desee mostrarlos',
         'cant_delete'  => 'No se puede eliminar debido a que está anidado en al menos un proyecto',
+        'cant_delete_department' => 'No se puede eliminar debido a que está anidado al menos un inmueble',
+        'cant_delete_department_project'  => 'No se puede eliminar debido a que está anidado en al menos un proyecto o a un inmueble',
         'cant_delete_post'  => 'No se puede eliminar debido a que está anidado en al menos un Post',
         'sap'    => [
             'no_token' => 'Token SAP no obtenido aún. Por favor, inténtelo de nuevo en unos minutos.',

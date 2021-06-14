@@ -127,7 +127,7 @@
                       v-else
                       class="btn btn-sm btn-secondary"
                       v-b-tooltip.hover
-                      title="No se puede eliminar debido a que está anidado en al menos una cotización de proyecto"
+                      :title="messageCantDelete"
                     >
                       Eliminar
                     </button>
@@ -391,6 +391,7 @@ import draggable from "vuedraggable";
 import { Money } from "v-money";
 export default {
   props: {
+    messageCantDelete: String,
     elementParent: Object,
     messageOrder: String,
     imagesUrl: String,

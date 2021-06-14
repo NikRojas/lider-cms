@@ -275,6 +275,7 @@ Route::middleware(['auth'])->namespace('Cms')->name('cms.')->group(function () {
             Route::post('/updated-credential', 'CredentialsController@updateCredential')->name('update-credential');
             Route::post('/updated-tokens', 'CredentialsController@updateTokens')->name('update-tokens');
             Route::post('/test', 'CredentialsController@test')->name('test');
+            Route::post('/prod', 'CredentialsController@prod')->name('prod');
             Route::post('/activate', 'CredentialsController@activate')->name('activate');
             Route::get('/{element}', 'CredentialsController@index')->name('index');
         });

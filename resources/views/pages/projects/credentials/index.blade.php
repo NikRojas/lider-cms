@@ -35,6 +35,10 @@
         border-radius: .625rem;
         background-size: 50% 50%;
     }
+    .form-check-inline{
+    width: 100%;
+    padding-left: 15px;
+}
 </style>
 <script src="https://static.micuentaweb.pe/static/js/krypton-client/V4.0/ext/classic.js"></script>
 <link rel="stylesheet" href="https://static.micuentaweb.pe/static/js/krypton-client/V4.0/ext/classic-reset.css">
@@ -46,12 +50,14 @@
     route-update="{{ route('cms.projects.credentials.update-credential') }}"
     route-update-tokens="{{ route('cms.projects.credentials.update-tokens') }}"
     route-activate="{{ route('cms.projects.credentials.activate') }}"
-    route-test="{{ route('cms.projects.credentials.test') }}"></projects-credentials-index>
+    route-test="{{ route('cms.projects.credentials.test') }}"
+    route-prod="{{ route('cms.projects.credentials.prod') }}"></projects-credentials-index>
 @else
 <projects-credentials-index route-return="{{ route('cms.projects.index') }}" :element-parent="{{ $project }}"
     route-update-tokens="{{ route('cms.projects.credentials.update-tokens') }}"
     route-update="{{ route('cms.projects.credentials.update-credential') }}"
     route-test="{{ route('cms.projects.credentials.test') }}"
+    route-prod="{{ route('cms.projects.credentials.prod') }}"
     route-activate="{{ route('cms.projects.credentials.activate') }}"></projects-credentials-index>
 @endif
 @endsection

@@ -82,6 +82,10 @@
                   {{ credential.user ? credential.user : "No registrado" }}
                 </h3>
                 <h3 class="font-weight-normal">
+                  <div class="font-weight-bold">Moneda de la Tienda:</div>
+                  {{ credential.type_currency === "" ? 'No registardo' : credential.type_currency ? "Nuevo Sol Peruano" : "Dolar Americano" }}
+                </h3>
+                <h3 class="font-weight-normal">
                   <div class="font-weight-bold">Contraseña Test:</div>
                   {{
                     credential.password_test
@@ -122,6 +126,24 @@
                     class="mt-2 text-danger text-sm"
                     for="user"
                     >{{ errors.user[0] }}</label
+                  >
+                </div>
+                <div class="form-group">
+                  <label class="font-weight-bold" for="type_currency"
+                    >Moneda de la Tienda</label
+                  >
+                   <b-form-radio-group
+                      id="radio-group-1"
+                      v-model="credential.type_currency"
+                      name="radios"
+                      plain
+                      :options="options"
+                    ></b-form-radio-group>
+                  <label
+                    v-if="errors && errors.type_currency"
+                    class="mt-2 text-danger text-sm"
+                    for="type_currency"
+                    >{{ errors.type_currency[0] }}</label
                   >
                 </div>
                 <div class="form-group">
@@ -362,6 +384,25 @@
           </div>
         </div>
       </div>
+      <div class="row mb-4" v-if="credentialParent">
+        <div class="col-12 col-lg-2">
+          <h3>Modo Producción</h3>
+          <p>Realiza pruebas en Modo Producción.</p>
+        </div>
+        <div class="col-12 col-lg-10">
+          <div class="card">
+            <div class="card-body">
+              <p class="mb-1">
+                De click al botón para visualizar el formulario de la Pasarela
+                en Modo Producción, para revisar el funcionamiento correcto revise en
+                el apartado de la Pasarela la venta el cual tendrá un
+                monto de S/ 1 o $1 según la moneda de la Tienda.
+              </p>
+              <Prod :route="routeProd" :project="elementParent"></Prod>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -369,11 +410,13 @@
 import BreadCrumb from "../../../components/BreadCrumb";
 import Button from "../../../components/Button";
 import Test from "./Test";
+import Prod from "./Prod";
 export default {
   components: {
     BreadCrumb,
     Button,
     Test,
+    Prod
   },
   props: {
     values: Array,
@@ -384,6 +427,7 @@ export default {
     routeUpdateTokens: String,
     routeActivate: String,
     routeTest: String,
+    routeProd: String,
     //routeGetAll: String,
   },
   data() {
@@ -393,6 +437,10 @@ export default {
       orderTest:{
         id: ''
       },*/
+      options: [
+        { text: "Nuevo Sol Peruano", value: true },
+        { text: "Dolar Americano", value: false },
+      ],
       updateTokensBlock: false,
       updateCrendialsBlock: false,
       requestTest: false,
@@ -401,6 +449,7 @@ export default {
       credential: {
         user: "",
         password: "",
+        type_currency: '',
       },
       errors: {},
       requestUpdate: false,
@@ -489,28 +538,6 @@ export default {
         })
         .catch((error) => {
           this.requestTokens = false;
-          if (error.response.status === 422) {
-            this.errors = error.response.data.errors || {};
-            return;
-          }
-          document.location.href = error.response.data.route;
-        });
-    },
-    testCredentials() {
-      this.requestTest = true;
-      let credential = {};
-      credential.project = this.elementParent.id;
-      axios({
-        method: "post",
-        url: this.routeTest,
-        data: credential,
-      })
-        .then((response) => {
-          this.requestTest = false;
-          document.location.href = response.data.route;
-        })
-        .catch((error) => {
-          this.requestTest = false;
           if (error.response.status === 422) {
             this.errors = error.response.data.errors || {};
             return;

@@ -16,6 +16,11 @@ class UpdatePaymentCredential extends FormRequest
         return true;
     }
 
+    public function attributes()
+    {
+        return ["type_currency" => 'moneda de la tienda'];
+    }
+
     /**
      * Get the validation rules that apply to the request.
      *
@@ -25,6 +30,7 @@ class UpdatePaymentCredential extends FormRequest
     {
         return [
             'user' => 'required',
+            'type_currency' => 'required',
             'password_test' => 'required',
         ];
     }

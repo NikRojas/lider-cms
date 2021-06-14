@@ -29,7 +29,7 @@ class CredentialsController extends Controller
     }
 
     public function updateCredential(UpdatePaymentCredential $request){
-        $request_element = request(["user","password_test",'password_prod']);
+        $request_element = request(["user","password_test",'password_prod','type_currency']);
         $project = Project::where('id',$request->project)->first();
         $registered = CredentialPayment::where('project_id',$request->project)->first();
         try{
@@ -78,14 +78,20 @@ class CredentialsController extends Controller
 
     private $urlCreatePayment = 'https://api.micuentaweb.pe/api-payment/V4/Charge/CreatePayment';
 
-    public function test(SendPaymentRequest $request){
+    public function test(Request $request){
         $credentialPayment = CredentialPayment::where('project_id',$request->project_id)->first();
-        if(!$credentialPayment->password_test || !$credentialPayment->user || !$credentialPayment->token_js_prod){
-            return response()->json(['title'=> trans('custom.title.error'), 'message'=> 'Ingrese los datos Test de la Tienda'], 500);
+        if(!$credentialPayment->password_test || !$credentialPayment->user || !$credentialPayment->token_js_test){
+            return response()->json(['title'=> trans('custom.title.error'), 'message'=> 'Ingrese los datos de Test de la Tienda.'], 500);
+        }
+        if($credentialPayment->type_currency){
+            $currency = "PEN";
+        }
+        else{
+            $currency = "USD";
         }
         $body = [
             "amount" => 100,
-            "currency" => "PEN",
+            "currency" => $currency,
             #URL Notificación
             "ipnTargetUrl" => "",
             //Order
@@ -103,9 +109,55 @@ class CredentialsController extends Controller
                 'body'    => json_encode($body)
             ]); 
             $responseData = json_decode($response->getBody()->getContents());
-            Log::info((string) $response->getBody());
-            return response()->json(['title' => trans('custom.title.success'), 'message' => 'Se envio la prueba de venta correctamente.',
-            "token" => $responseData->answer->formToken, 'tokenJs' => $credentialPayment->token_js_test], 200);
+            if($responseData->status == "ERROR"){
+                return response()->json(['title'=> trans('custom.title.error'), 'message'=> 'Lo sentimos. Ocurrió un error enviando la prueba de venta. Revise las credenciales respectivas.'], 500);
+            }
+            else if($responseData->status == "SUCCESS"){
+                return response()->json(['title' => trans('custom.title.success'), "token" => $responseData->answer->formToken, 'tokenJs' => $credentialPayment->token_js_test], 200);
+            }
+        }
+        catch (\GuzzleHttp\Exception\RequestException $e) {
+            return response()->json(['title'=> trans('custom.title.error'), 'message'=> 'Lo sentimos. Ocurrió un error enviando la prueba de venta.'], 500);
+        }
+    }
+
+    public function prod(Request $request){
+        $credentialPayment = CredentialPayment::where('project_id',$request->project_id)->first();
+        if(!$credentialPayment->password_prod || !$credentialPayment->user || !$credentialPayment->token_js_prod){
+            return response()->json(['title'=> trans('custom.title.error'), 'message'=> 'Ingrese los datos de Producción de la Tienda.'], 500);
+        }
+        if($credentialPayment->type_currency){
+            $currency = "PEN";
+        }
+        else{
+            $currency = "USD";
+        }
+        $body = [
+            "amount" => 100,
+            "currency" => $currency,
+            #URL Notificación
+            "ipnTargetUrl" => "",
+            //Order
+            "orderId" => "ADMIN".Str::random(4),
+            "customer" => [
+                "email" => "test".Str::random(8)."@test.com",
+            ],
+        ];
+        $authToken = $credentialPayment->user.':'.$credentialPayment->password_prod;
+        $codeAuthToken = base64_encode($authToken);
+        try {
+            $client = new Client();
+            $response = $client->post($this->urlCreatePayment, [
+                'headers' => ['Content-Type' => 'application/json', 'Authorization' => "Basic ".$codeAuthToken],
+                'body'    => json_encode($body)
+            ]); 
+            $responseData = json_decode($response->getBody()->getContents());
+            if($responseData->status == "ERROR"){
+                return response()->json(['title'=> trans('custom.title.error'), 'message'=> 'Lo sentimos. Ocurrió un error enviando la prueba de venta. Revise las credenciales respectivas.'], 500);
+            }
+            else if($responseData->status == "SUCCESS"){
+                return response()->json(['title' => trans('custom.title.success'), "token" => $responseData->answer->formToken, 'tokenJs' => $credentialPayment->token_js_prod], 200);
+            }
         }
         catch (\GuzzleHttp\Exception\RequestException $e) {
             return response()->json(['title'=> trans('custom.title.error'), 'message'=> 'Lo sentimos. Ocurrió un error enviando la prueba de venta.'], 500);

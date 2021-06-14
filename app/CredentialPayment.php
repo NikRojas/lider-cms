@@ -10,5 +10,6 @@ class CredentialPayment extends Model
     protected $guarded = [];
     protected $casts = [
         'active' => 'boolean',
+        'type_currency' => 'boolean'
     ];
 }

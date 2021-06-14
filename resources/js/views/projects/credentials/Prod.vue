@@ -10,11 +10,10 @@
     </div>
     <div v-if="hideButtonSend">
       <p>
-        Seleccione de la barra inferior una tarjeta para realizar la prueba de
-        venta.
+        Ingrese las credenciales de su tarjeta.
       </p>
     </div>
-    <div id="formtest" style="width: 296px; margin: auto"></div>
+    <div id="formprod" style="width: 296px; margin: auto"></div>
     <div v-if="message" class="mt-2 text-center">
       <b> {{ message }}!!! </b>
     </div>
@@ -60,7 +59,7 @@ export default {
             formToken: formToken,
           })
         )
-        .then(({ KR }) => KR.addForm("#formtest"))
+        .then(({ KR }) => KR.addForm("#formprod"))
         .then(({ KR, result }) => KR.showForm(result.formId))
         .then(({ KR }) => KR.onSubmit(this.pay))
         .catch((error) => {

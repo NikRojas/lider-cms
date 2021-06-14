@@ -146,7 +146,7 @@ class SendReserveToSap implements ShouldQueue
                 $description = $description.' - Error Retorno SAP.';
             }
             #LogSapConnection
-            $lsc = LogSapConnection::UpdateOrCreate(["slug" => $slug, "type" => $this->lscType, 'status' => $status, 'description' => $description, "response" => (string) $responseData]);  
+            $lsc = LogSapConnection::UpdateOrCreate(["slug" => $slug, "type" => $this->lscType, 'status' => $status, 'description' => $description, "response" => (string) $responseSap->getBody()]);  
         }
         catch (\GuzzleHttp\Exception\RequestException $e) {
             #Cuando sea cualquier código de error, se enviara un email al correo indicado.

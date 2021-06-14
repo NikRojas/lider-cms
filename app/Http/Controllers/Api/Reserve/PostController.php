@@ -150,9 +150,22 @@ class PostController extends BaseController
         }
         #Conexión con Pasarela
         $price_deparment_separation_payment_gateway = intval(str_replace(".", "", $price_deparment_separation));
+        //Cada Proyecto tiene un usuario y una password diferente;
+        $credentialPayment = CredentialPayment::where('project_id',$department->project_id)->first();
+        $checkCredentials = $this->checkCredentialsStored($credentialPayment);
+        if(!$checkCredentials['active']){
+            return $this->sendError(trans('custom.title.error'), $checkCredentials, 500);
+        }
+        //Tipo de Moneda
+        if($credentialPayment->type_currency){
+            $currency = "PEN";
+        }
+        else{
+            $currency = "USD";
+        }
         $body = [
             "amount" => $price_deparment_separation_payment_gateway,
-            "currency" => "PEN",
+            "currency" => $currency,
             #URL Notificación
             "ipnTargetUrl" => config('app.url').$this->urlIpn,
             //Order
@@ -176,12 +189,6 @@ class PostController extends BaseController
                 "cod_inmueble" => $department->sap_code
             ]
         ];
-        //Cada Proyecto tiene un usuario y una password diferente;
-        $credentialPayment = CredentialPayment::where('project_id',$department->project_id)->first();
-        $checkCredentials = $this->checkCredentialsStored($credentialPayment);
-        if(!$checkCredentials['active']){
-            return $this->sendError(trans('custom.title.error'), $checkCredentials, 500);
-        }
         $authToken = $credentialPayment->user.':'.$credentialPayment->password_prod;
         $codeAuthToken = base64_encode($authToken);
         #Test {

@@ -135,12 +135,12 @@ class SendReserveToSap implements ShouldQueue
                     }
                     $advisorId = $advisorId;
                     $orderUpdateAdvisor = Order::UpdateOrCreate(["id" => $this->order->id], ["advisor_id" => $advisorId]);
-                    $advisorSend = Advisor::where('sap_code',$advisorId)->first();
+                    $advisorSend = Advisor::where('id',$advisorId)->first();
                     Notification::route('mail',$advisorSend->email)->notify(new AdvisorOrderPaid($this->order));  
                 }
                 #Si tiene se le envia la notificacion al asesor
                 else{
-                    $advisorSend = Advisor::where('sap_code',$orderUpdate->advisor_id)->first();
+                    $advisorSend = Advisor::where('id',$orderUpdate->advisor_id)->first();
                     Notification::route('mail',$advisorSend->email)->notify(new AdvisorOrderPaid($this->order));  
                 }
                 #Actualizar Stock del Departamento

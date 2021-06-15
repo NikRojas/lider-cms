@@ -52,7 +52,7 @@ class PostController extends BaseController
     #Aca se maneja las transacciones de la Order
     public function ipn(Request $request){
         Log::info($request);
-        return $this->sendError(trans('custom.title.error'), ['success '=> false, 'no_available' => false], 500);
+        return $this->sendError(trans('custom.title.error'), ['success '=> false, 'no_available' => false], 204);
         $rawKrAnswer = json_decode($request["kr-answer"]);
         $orderId = $rawKrAnswer->orderDetails->orderId;
         $orderCycle = $rawKrAnswer->orderCycle;

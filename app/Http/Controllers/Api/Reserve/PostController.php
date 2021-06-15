@@ -51,7 +51,6 @@ class PostController extends BaseController
 
     #Aca se maneja las transacciones de la Order
     public function ipn(Request $request){
-        Log::info($request);
         $rawKrAnswer = json_decode($request["kr-answer"]);
         $orderId = $rawKrAnswer->orderDetails->orderId;
         $orderCycle = $rawKrAnswer->orderCycle;
@@ -87,12 +86,9 @@ class PostController extends BaseController
         $client = new LyraClient();
         #Verificar Fraude
         if (!$client->checkHash()) {
-            Log::info("Hash fallo");
+            Log::info("Hash Fallo");
             return $this->sendError(trans('custom.title.error'), ['hash' => false], 500);
         }
-
-        #Verificar Disponibilidad
-        Log::info($rawKrAnswer->transactions[0]->detailedStatus);
 
         #Transacción
         //Ver que pasa si viene uno de los q no tenga guardado en base de datos
@@ -116,6 +112,7 @@ class PostController extends BaseController
             return $this->sendResponse(['success' => true], trans('custom.title.success'), 200);
         }
         catch (\Exception $e) {
+            Log::info("Error IPN");
             Log::info($e);
             #Ocurrio crear la transacción
             return $this->sendError(trans('custom.title.error'), ['success '=> false, 'utr' => false], 500);

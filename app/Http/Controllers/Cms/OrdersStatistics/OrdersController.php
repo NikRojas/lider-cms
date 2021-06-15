@@ -154,8 +154,27 @@ class OrdersController extends Controller
         }
     }
 
+    public function cancel(Order $element, Request $request){
+        $transactionsStatusCanceled = MasterTransactionStatus::where('name','Anulado')->first();
+        $masterOrderCycleClosed = MasterOrderCycle::where('payment_gateway_value','CLOSED')->first();
+        try{
+            $transaction = new Transaction();
+            $transaction->order_id = $element->id;
+            $transaction->transaction_date = Carbon::now();
+            $transaction->amount = $element->total_price;
+            $transaction->transaction_status_id = $transactionsStatusCanceled->id;
+            $transaction->order_cycle_id = $masterOrderCycleClosed->id;
+            $transaction->save();
+            $request->session()->flash('success', trans('custom.message.resend.success'));
+            return response()->json(["route" => route('cms.sales-statistics.orders.read',["element" => $element->id])]);
+        } catch (\Exception $e) {
+            $request->session()->flash('error', trans('custom.message.resend.error'));
+            return response()->json(["route" => route('cms.sales-statistics.orders.read',["element" => $element->id])], 500);
+        }
+    }
+
     //private $url = config('services.sap_url').'/api/cliente/inmuebles/reserva';
-    public function sendToSap(Order $element){
+    /*public function sendToSap(Order $element){
         $element = $element->load('customerRel.documentTypeRel')->load('advisorRel')->load('orderDetailsRel.departmentRel');
         $type = 'Reservar Inmueble Manual';
         $estate = $element->orderDetailsRel->first();
@@ -180,7 +199,7 @@ class OrdersController extends Controller
                         ]
                     ]);
                     $status = $responseSap->getStatusCode();
-                    $responseData = json_decode($responseSap->getBody());
+                    $responseData = json_decode($responseSap->getBody());*/
                     /*$status = 200;
                     $responseSap = '{
                         "exito": false,
@@ -188,7 +207,7 @@ class OrdersController extends Controller
                         "mensaje": ""
                     }';
                     $responseData = json_decode($responseSap);*/
-                    if($responseData->exito){
+                    /*if($responseData->exito){
                         $element->sended_to_sap = 1;
                         $element->sended_to_sap_date = Carbon::now();
                         $element->sended_code_sap = $responseData->reserva;
@@ -233,24 +252,5 @@ class OrdersController extends Controller
         else{
             return response()->json(["success" => false,'message' => 'La reserva no tiene un asesor asignado.'], 500); 
         }
-    }
-
-    public function cancel(Order $element, Request $request){
-        $transactionsStatusCanceled = MasterTransactionStatus::where('name','Anulado')->first();
-        $masterOrderCycleClosed = MasterOrderCycle::where('payment_gateway_value','CLOSED')->first();
-        try{
-            $transaction = new Transaction();
-            $transaction->order_id = $element->id;
-            $transaction->transaction_date = Carbon::now();
-            $transaction->amount = $element->total_price;
-            $transaction->transaction_status_id = $transactionsStatusCanceled->id;
-            $transaction->order_cycle_id = $masterOrderCycleClosed->id;
-            $transaction->save();
-            $request->session()->flash('success', trans('custom.message.resend.success'));
-            return response()->json(["route" => route('cms.sales-statistics.orders.read',["element" => $element->id])]);
-        } catch (\Exception $e) {
-            $request->session()->flash('error', trans('custom.message.resend.error'));
-            return response()->json(["route" => route('cms.sales-statistics.orders.read',["element" => $element->id])], 500);
-        }
-    }
+    }*/
 }

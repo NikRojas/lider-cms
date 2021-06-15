@@ -52,6 +52,7 @@ class PostController extends BaseController
     #Aca se maneja las transacciones de la Order
     public function ipn(Request $request){
         $rawKrAnswer = json_decode($request["kr-answer"]);
+        Log::info($rawKrAnswer);
         $orderId = $rawKrAnswer->orderDetails->orderId;
         $orderCycle = $rawKrAnswer->orderCycle;
         $order = Order::with('orderDetailsRel','transactionLatestRel')->findOrFail($orderId);
@@ -89,6 +90,7 @@ class PostController extends BaseController
             Log::info("Hash fallo");
             return $this->sendError(trans('custom.title.error'), ['hash' => false], 500);
         }
+        Log::info("Hash Verificado");
 
         #Transacción
         //Ver que pasa si viene uno de los q no tenga guardado en base de datos

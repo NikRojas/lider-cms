@@ -31,7 +31,7 @@ class TransactionObserver
             //case 'Pagado':
             //case 'Capturado':
             case 'Autorizado':
-                $order->customerRel->notify(new OrderReceived($order));
+                //$order->customerRel->notify(new OrderReceived($order));
                 if($tr->order_cycle_id == $closedCycle->id){
                     $order->customerRel->notify((new OrderPaid($order))->delay($delayNotification));
                     SendReserveToSap::dispatch($order);

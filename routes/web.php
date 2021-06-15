@@ -501,9 +501,20 @@ Route::middleware(['auth'])->namespace('Cms')->name('cms.')->group(function () {
     Route::get('json/select/categories', 'CmsController@getCategories')->name('json.get-categories');
 });
 
+/*
+Route::get('/mail/reserve', function () {
+    $order = Order::find(100000008);
+    return view('emails.orders.paid',["order" => $order]);
+});
+
+Route::get('/mail/user/quotation', function () {
+    $lead = ProjectQuotation::with('projectRel.statusRel','advisorRel','projectTypeDepartmentRel','projectRel.financingOptionsRel')->find(7);
+    $financingOptions = FinancingOption::where('active',true)->orderBy('index','asc')->get();
+    return view('emails.user-quotation',["lead" => $lead, "financingOptions" => $financingOptions]);
+});
+
 Route::get('send-to-sap/{element}','Cms\OrdersStatistics\OrdersController@sendToSap');
 
-/*
 Route::get('/mail/advisor/reserve', function () {
     $order = Order::find(100000008);
     return view('emails.orders.advisor-paid',["order" => $order]);

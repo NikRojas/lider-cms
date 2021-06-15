@@ -51,8 +51,6 @@ class PostController extends BaseController
 
     #Aca se maneja las transacciones de la Order
     public function ipn(Request $request){
-        Log::info($request);
-        return $this->sendError(trans('custom.title.error'), ['success '=> false, 'no_available' => false], 204);
         $rawKrAnswer = json_decode($request["kr-answer"]);
         $orderId = $rawKrAnswer->orderDetails->orderId;
         $orderCycle = $rawKrAnswer->orderCycle;
@@ -88,11 +86,9 @@ class PostController extends BaseController
         $client = new LyraClient();
         #Verificar Fraude
         if (!$client->checkHash()) {
-            //return $this->sendError(trans('custom.title.error'), ['hash' => false], 500);
+            Log::info("Hash fallo");
+            return $this->sendError(trans('custom.title.error'), ['hash' => false], 500);
         }
-
-        #Verificar Disponibilidad
-        Log::info($rawKrAnswer->transactions[0]->detailedStatus);
 
         #Transacción
         //Ver que pasa si viene uno de los q no tenga guardado en base de datos

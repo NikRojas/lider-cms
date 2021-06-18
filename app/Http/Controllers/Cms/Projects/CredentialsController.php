@@ -100,7 +100,7 @@ class CredentialsController extends Controller
                 "email" => "test".Str::random(8)."@test.com",
             ],
         ];
-        Log::info($body);
+        //Log::info($body);
         $authToken = $credentialPayment->user.':'.$credentialPayment->password_test;
         $codeAuthToken = base64_encode($authToken);
         try {
@@ -110,7 +110,7 @@ class CredentialsController extends Controller
                 'body'    => json_encode($body)
             ]); 
             $responseData = json_decode($response->getBody()->getContents());
-            Log::info($response->getBody());
+            //Log::info($response->getBody());
             if($responseData->status == "ERROR"){
                 return response()->json(['title'=> trans('custom.title.error'), 'message'=> 'Lo sentimos. Ocurrió un error enviando la prueba de venta. Revise las credenciales respectivas.'], 500);
             }

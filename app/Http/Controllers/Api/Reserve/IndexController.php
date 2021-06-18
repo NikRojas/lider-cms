@@ -113,6 +113,13 @@ class IndexController extends BaseController
         if ($range && isset($range[1])) {
             $data = $data->where('price', '<=', ($range[1] + 1));
         }
+        $rangeArea =  $request->range_area;
+        if ($rangeArea && $rangeArea[0]) {
+            $data = $data->where('area', '>=', $rangeArea[0]);
+        }
+        if ($rangeArea && isset($rangeArea[1])) {
+            $data = $data->where('area', '<=', ($rangeArea[1]));
+        }
         //$views =  $request->views;
         switch ($sort) {
             case 'low-high':
@@ -141,6 +148,7 @@ class IndexController extends BaseController
         $floors = $this->getFloorsEstates();
         $views = $this->getViewsEstates();
         $prices = $this->getPricesEstates();
+        $areas = $this->getAreas();
         $data = [
             "departments" => $departments,
             "status" => $status,
@@ -150,6 +158,7 @@ class IndexController extends BaseController
             "floors" => $floors,
             "views" => $views,
             "prices" => $prices,
+            "areas" => $areas
         ];
         return $data;
     }
@@ -223,6 +232,25 @@ class IndexController extends BaseController
             "max" => $max,
             "min_format" => 'S/ ' . number_format($min, 0, '.', ','),
             "max_format" => 'S/ ' . number_format($max, 0, '.', ',')
+        ];
+        return $data;
+    }
+
+    public function getAreas()
+    {
+        $min = Department::where('available', true)->min('area');
+        $max = Department::where('available', true)->max('area');
+        $min = floor(floatval($min));
+        $max = ceil(floatval($max));
+        /*if (floor($min) != $min) {
+            $min = floor($min);
+        }
+        if (floor($max) != $max) {
+            $max = floor($max);
+        }*/
+        $data = [
+            "min" => $min,
+            "max" => $max,
         ];
         return $data;
     }

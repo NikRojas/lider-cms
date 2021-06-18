@@ -157,7 +157,7 @@
                 >Imágenes</label
               >
               <div class="mb-3">
-                <small class="mb-0">Resolución Recomendada: 500x500</small
+                <small class="mb-0">Resolución Recomendada: 1680x768px</small
                 ><br />
                 <small class="mb-0">Máximo número de imágenes: 20</small><br />
                 <small class="mb-0">Tamaño Máximo de Imagen: 200kb</small>

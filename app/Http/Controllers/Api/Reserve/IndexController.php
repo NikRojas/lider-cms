@@ -186,7 +186,7 @@ class IndexController extends BaseController
         $data = ProjectTypeDepartment::whereHas('departmentsRel', function ($query2) {
             $query2->where('available', 1);
         })->get();
-        $data = $data->pluck('room')->unique()->flatten()->all();
+        $data = $data->pluck('room')->unique()->flatten()->sort()->values()->all();
         return $data;
     }
 

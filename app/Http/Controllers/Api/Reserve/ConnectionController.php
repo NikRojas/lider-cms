@@ -53,13 +53,13 @@ class ConnectionController extends BaseController
                 $update->price_foreign = $price_foreign;
                 $update->available = true;
                 $update->save();
-                Log::info("En stock");
+                //Log::info("En stock");
             }
             else{
                 $update = Department::find($estateCurrent->id);
                 $update->available = 0;
                 $update->save();
-                Log::info("Sin stock");
+                //Log::info("Sin stock");
             }
             return $this->sendResponse([$update], '');
         } 

@@ -393,10 +393,10 @@ export default {
       }
     },
     to: function () {
-      return this.object.from;
+      return this.object.to;
     },
     from: function () {
-      return this.object.to;
+      return this.object.from;
     },
     total: function () {
       return this.object.total;

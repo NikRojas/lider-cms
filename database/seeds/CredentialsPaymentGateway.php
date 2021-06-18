@@ -13,13 +13,13 @@ class CredentialsPaymentGateway extends Seeder
     {
         DB::table('credentials_payment_gateway')->insert([
         [ 
-            'user' => '55991870',
-            'password_test' => 'testpassword_qDVpksQS5V8IU5c3tdMXTMaJ46EvbXt5OTsgNe9Avz0Je',
-            'password_prod' => 'testpassword_qDVpksQS5V8IU5c3tdMXTMaJ46EvbXt5OTsgNe9Avz0Je',
-            'token_js_test' => '55991870:testpublickey_6rABS8CI1N5PHtUR5zvUeQg1XYhysUOk6A9YjtvS80qli',
-            'token_js_prod' => '55991870:testpublickey_6rABS8CI1N5PHtUR5zvUeQg1XYhysUOk6A9YjtvS80qli',
-            'token_sha_256_test' => 'aCrr58VZ5yA3dRFL0STlff5HYmEEflqn6TeRhBldE8I9f',
-            'token_sha_256_prod' => 'aCrr58VZ5yA3dRFL0STlff5HYmEEflqn6TeRhBldE8I9f',
+            'user' => '92410563',
+            'password_test' => 'testpassword_Mx8dGirjHUqWbNls5WN2IQDKh875Va6QWoewH55xmy1bm',
+            'password_prod' => 'prodpassword_amezlbSRnl89AtIVvKaq0K38rRo91c1D15tXQ7XRzzWIR',
+            'token_js_test' => '92410563:testpublickey_VkzHiGLN851tL4CvXqccf0Sd47U8wN3kOXcwoWE3SYOYx',
+            'token_js_prod' => '92410563:publickey_PfjDyRQbVoPFkAlBDBSRCYaby61LGQwpqebzTTr05oihK',
+            'token_sha_256_test' => 'A2RatUAivG9Thu9nG35rOIPonLswPIA98Iq6SE6NKBj12',
+            'token_sha_256_prod' => '6FD9qdxAkS04Hwu8CljB7FhlIwplb3KDbgl3d0QWQ33Nq',
             'active' => false,
             'project_id' => 5,
             'type_currency' => 0

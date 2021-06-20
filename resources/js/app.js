@@ -29,6 +29,8 @@ const app = new Vue({
 
         'users': () => import('./views/configuration/Users.vue' /* webpackChunkName: "js/pages/users" */),
 
+        'advisory-system-general-information': () => import('./views/advisory-system/GeneralInformation.vue' /* webpackChunkName: "js/pages/advisory-system/general-information" */),
+
         'content-general-information': () => import('./views/content/GeneralInformation.vue' /* webpackChunkName: "js/pages/content/general-information" */),
         'content-members': () => import('./views/content/Members.vue' /* webpackChunkName: "js/pages/content/members" */),
         'content-social-networks': () => import('./views/content/SocialNetworks.vue' /* webpackChunkName: "js/pages/content/social-networks" */),

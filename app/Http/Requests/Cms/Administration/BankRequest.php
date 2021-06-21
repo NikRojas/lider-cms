@@ -27,18 +27,18 @@ class BankRequest extends FormRequest
             'name' => 'required|max:100',
         ];
         switch ($this->method()) {
-            case 'POST':   
+            case 'POST':
                 $rules = array_merge(
                     $rules,
-                    ['logo' => 'required']
+                    ['logo' => 'required', 'logo_advisory' => 'required']
                 );
-            break;
-            case 'PUT':   
+                break;
+            case 'PUT':
                 $rules = array_merge(
                     $rules,
-                    ['logo' => 'sometimes|required']
+                    ['logo' => 'sometimes|required', 'logo_advisory' => 'sometimes|required']
                 );
-            break;
+                break;
         }
         return $rules;
     }

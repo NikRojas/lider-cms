@@ -27,18 +27,18 @@ class CertificationRequest extends FormRequest
             'name' => 'required|max:100'
         ];
         switch ($this->method()) {
-            case 'POST':   
+            case 'POST':
                 $rules = array_merge(
                     $rules,
-                    ['image' => 'required']
+                    ['image' => 'required', 'image_advisory' => 'required']
                 );
-            break;
-            case 'PUT':   
+                break;
+            case 'PUT':
                 $rules = array_merge(
                     $rules,
-                    ['image' => 'sometimes|required']
+                    ['image' => 'sometimes|required', 'image_advisory' => 'sometimes|required']
                 );
-            break;
+                break;
         }
         return $rules;
     }

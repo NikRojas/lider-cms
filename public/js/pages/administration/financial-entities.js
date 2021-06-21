@@ -365,6 +365,114 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -493,6 +601,10 @@ __webpack_require__.r(__webpack_exports__);
         fd.append("logo", this.$refs.ref_image.dropzone.files[0]);
       }
 
+      if (this.$refs.ref_image_advisory.dropzone.files[0]) {
+        fd.append("logo_advisory", this.$refs.ref_image_advisory.dropzone.files[0]);
+      }
+
       axios({
         method: method,
         url: url,
@@ -588,7 +700,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.vue-dropzone-dark .dz-image{\r\n  padding: .5rem;\r\n  background: black;\n}\r\n", ""]);
+exports.push([module.i, "\n.vue-dropzone-dark .dz-image {\r\n  padding: 0.5rem;\r\n  background: black;\n}\r\n", ""]);
 
 // exports
 
@@ -916,6 +1028,13 @@ var render = function() {
                               _c("div", { staticClass: "card-body" }, [
                                 _c("div", { staticClass: "mb-3" }, [
                                   _c(
+                                    "span",
+                                    { staticClass: "font-weight-normal" },
+                                    [_vm._v("Imagen:")]
+                                  ),
+                                  _c("br"),
+                                  _vm._v(" "),
+                                  _c(
                                     "div",
                                     {
                                       staticClass: "d-inline-block bg-dark p-3"
@@ -925,6 +1044,34 @@ var render = function() {
                                         attrs: {
                                           src:
                                             _vm.imagesUrl + "/banks/" + el.logo,
+                                          height: "30",
+                                          alt: el.name
+                                        }
+                                      })
+                                    ]
+                                  )
+                                ]),
+                                _vm._v(" "),
+                                _c("div", { staticClass: "mb-3" }, [
+                                  _c(
+                                    "span",
+                                    { staticClass: "font-weight-normal" },
+                                    [_vm._v("Imagen sistema de asesores:")]
+                                  ),
+                                  _c("br"),
+                                  _vm._v(" "),
+                                  _c(
+                                    "div",
+                                    {
+                                      staticClass: "d-inline-block bg-dark p-3"
+                                    },
+                                    [
+                                      _c("img", {
+                                        attrs: {
+                                          src:
+                                            _vm.imagesUrl +
+                                            "/banks/" +
+                                            el.logo_advisory,
                                           height: "30",
                                           alt: el.name
                                         }
@@ -962,7 +1109,11 @@ var render = function() {
                                         }
                                       }
                                     },
-                                    [_vm._v("Editar")]
+                                    [
+                                      _vm._v(
+                                        "\n                  Editar\n                "
+                                      )
+                                    ]
                                   ),
                                   _vm._v(" "),
                                   el.can_delete
@@ -977,7 +1128,11 @@ var render = function() {
                                             }
                                           }
                                         },
-                                        [_vm._v("Eliminar")]
+                                        [
+                                          _vm._v(
+                                            "\n                  Eliminar\n                "
+                                          )
+                                        ]
                                       )
                                     : _c(
                                         "button",
@@ -995,7 +1150,11 @@ var render = function() {
                                             title: _vm.messageCantDelete
                                           }
                                         },
-                                        [_vm._v("Eliminar")]
+                                        [
+                                          _vm._v(
+                                            "\n                  Eliminar\n                "
+                                          )
+                                        ]
                                       )
                                 ])
                               ])
@@ -1044,7 +1203,7 @@ var render = function() {
                       attrs: { type: "button" },
                       on: { click: _vm.restoreEl }
                     },
-                    [_vm._v("Cancelar")]
+                    [_vm._v("\n        Cancelar\n      ")]
                   )
                 ]
               }
@@ -1176,7 +1335,7 @@ var render = function() {
                                           },
                                           [
                                             _vm._v(
-                                              "Suelte los archivos aquí o haga click para cargarlos."
+                                              "\n                        Suelte los archivos aquí o haga click para cargarlos.\n                      "
                                             )
                                           ]
                                         )
@@ -1198,6 +1357,116 @@ var render = function() {
                                   attrs: { for: "image" }
                                 },
                                 [_vm._v(_vm._s(_vm.errors.logo[0]))]
+                              )
+                            : _vm._e()
+                        ])
+                      ]),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "col-12" }, [
+                        _c("div", { staticClass: "form-group" }, [
+                          _c(
+                            "label",
+                            {
+                              staticClass: "font-weight-bold",
+                              attrs: { for: "image" }
+                            },
+                            [_vm._v("Imagen Sistema de Asesores:")]
+                          ),
+                          _vm._v(" "),
+                          _c("small", { staticClass: "d-block mb-0 lh-1" }, [
+                            _vm._v("Resolución recomendada: 150x80px")
+                          ]),
+                          _vm._v(" "),
+                          _c("small", { staticClass: "d-block mb-0 lh-1" }, [
+                            _vm._v("Formato: PNG")
+                          ]),
+                          _vm._v(" "),
+                          _c("small", { staticClass: "d-block mb-2 lh-1" }, [
+                            _vm._v("Tamaño recomendado: No mayor a 100KB")
+                          ]),
+                          _vm._v(" "),
+                          _c("div", { staticClass: "row" }, [
+                            _vm.element.logo_advisory
+                              ? _c("div", { staticClass: "col text-center" }, [
+                                  _c("div", { staticClass: "bg-dark p-3" }, [
+                                    _c("img", {
+                                      attrs: {
+                                        src:
+                                          _vm.imagesUrl +
+                                          "/banks/" +
+                                          _vm.element.logo_advisory,
+                                        height: "30",
+                                        alt: _vm.element.name
+                                      }
+                                    })
+                                  ])
+                                ])
+                              : _vm._e(),
+                            _vm._v(" "),
+                            _c(
+                              "div",
+                              { staticClass: "col vue-dropzone-dark" },
+                              [
+                                _c(
+                                  "vue-dropzone",
+                                  {
+                                    ref: "ref_image_advisory",
+                                    staticClass: "text-center",
+                                    attrs: {
+                                      id: "image_advisory",
+                                      options: _vm.dropzoneOptions,
+                                      duplicateCheck: true,
+                                      useCustomSlot: true
+                                    },
+                                    on: {
+                                      "vdropzone-file-added": function($event) {
+                                        return _vm.$validateImageDropzone(
+                                          $event,
+                                          _vm.$refs.ref_image_advisory.dropzone,
+                                          1,
+                                          110000,
+                                          "100kb"
+                                        )
+                                      }
+                                    }
+                                  },
+                                  [
+                                    _c(
+                                      "div",
+                                      {
+                                        staticClass: "dropzone-custom-content"
+                                      },
+                                      [
+                                        _c(
+                                          "h5",
+                                          {
+                                            staticClass:
+                                              "dropzone-custom-title text-primary"
+                                          },
+                                          [
+                                            _vm._v(
+                                              "\n                        Suelte los archivos aquí o haga click para cargarlos.\n                      "
+                                            )
+                                          ]
+                                        )
+                                      ]
+                                    )
+                                  ]
+                                )
+                              ],
+                              1
+                            )
+                          ]),
+                          _vm._v(" "),
+                          _vm.errors && _vm.errors.logo_advisory
+                            ? _c(
+                                "label",
+                                {
+                                  staticClass:
+                                    "text-danger text-sm d-block mt-2",
+                                  attrs: { for: "image" }
+                                },
+                                [_vm._v(_vm._s(_vm.errors.logo_advisory[0]))]
                               )
                             : _vm._e()
                         ])

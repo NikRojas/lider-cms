@@ -155,6 +155,75 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -184,7 +253,8 @@ __webpack_require__.r(__webpack_exports__);
       elements: {},
       element: {
         name: "",
-        image: ""
+        image: "",
+        image_advisory: ""
       },
       title: "",
       dropzoneOptions: {
@@ -226,6 +296,10 @@ __webpack_require__.r(__webpack_exports__);
 
       if (this.$refs.ref_image.dropzone.files[0]) {
         fd.append("image", this.$refs.ref_image.dropzone.files[0]);
+      }
+
+      if (this.$refs.ref_image_advisory.dropzone.files[0]) {
+        fd.append("image_advisory", this.$refs.ref_image_advisory.dropzone.files[0]);
       }
 
       axios({
@@ -273,7 +347,8 @@ __webpack_require__.r(__webpack_exports__);
       this.requestSubmit = this.modalCreateUpdate = this.modalDestroy = false;
       this.element = {
         name: "",
-        image: ""
+        image: "",
+        image_advisory: ""
       };
     },
     restore: function restore() {
@@ -282,7 +357,8 @@ __webpack_require__.r(__webpack_exports__);
       this.requestSubmit = this.modalCreateUpdate = this.modalDestroy = false;
       this.element = {
         name: "",
-        image: ""
+        image: "",
+        image_advisory: ""
       };
       this.getEls();
     },
@@ -326,7 +402,7 @@ __webpack_require__.r(__webpack_exports__);
       var _this3 = this;
 
       this.requestSubmit = true;
-      axios["delete"](this.route + '/' + this.element.id).then(function (response) {
+      axios["delete"](this.route + "/" + this.element.id).then(function (response) {
         _this3.restore();
 
         Swal.fire({
@@ -531,7 +607,7 @@ var render = function() {
                       attrs: { type: "button" },
                       on: { click: _vm.restoreEl }
                     },
-                    [_vm._v("Cancelar")]
+                    [_vm._v("\n        Cancelar\n      ")]
                   )
                 ]
               }
@@ -697,7 +773,7 @@ var render = function() {
                                           },
                                           [
                                             _vm._v(
-                                              "Suelte los archivos aquí o haga click para cargarlos."
+                                              "\n                        Suelte los archivos aquí o haga click para cargarlos.\n                      "
                                             )
                                           ]
                                         )
@@ -719,6 +795,100 @@ var render = function() {
                                   attrs: { for: "image" }
                                 },
                                 [_vm._v(_vm._s(_vm.errors.image[0]))]
+                              )
+                            : _vm._e()
+                        ]),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "form-group" }, [
+                          _c(
+                            "label",
+                            {
+                              staticClass: "font-weight-bold",
+                              attrs: { for: "image" }
+                            },
+                            [_vm._v("Imagen Sistema de Asesores:")]
+                          ),
+                          _vm._v(" "),
+                          _c("div", { staticClass: "row" }, [
+                            _vm.element.image_advisory
+                              ? _c("div", { staticClass: "col text-center" }, [
+                                  _c("img", {
+                                    attrs: {
+                                      src:
+                                        _vm.imagesUrl +
+                                        "/members/" +
+                                        _vm.element.image_advisory,
+                                      height: "75",
+                                      alt: _vm.element.name_es
+                                    }
+                                  })
+                                ])
+                              : _vm._e(),
+                            _vm._v(" "),
+                            _c(
+                              "div",
+                              { staticClass: "col" },
+                              [
+                                _c(
+                                  "vue-dropzone",
+                                  {
+                                    ref: "ref_image_advisory",
+                                    staticClass: "text-center",
+                                    attrs: {
+                                      id: "image_advisory",
+                                      options: _vm.dropzoneOptions,
+                                      duplicateCheck: true,
+                                      useCustomSlot: true
+                                    },
+                                    on: {
+                                      "vdropzone-file-added": function($event) {
+                                        return _vm.$validateImageDropzone(
+                                          $event,
+                                          _vm.$refs.ref_image_advisory.dropzone,
+                                          1,
+                                          51200,
+                                          "50kb"
+                                        )
+                                      }
+                                    }
+                                  },
+                                  [
+                                    _c(
+                                      "div",
+                                      {
+                                        staticClass: "dropzone-custom-content"
+                                      },
+                                      [
+                                        _c(
+                                          "h5",
+                                          {
+                                            staticClass:
+                                              "dropzone-custom-title text-primary"
+                                          },
+                                          [
+                                            _vm._v(
+                                              "\n                        Suelte los archivos aquí o haga click para cargarlos.\n                      "
+                                            )
+                                          ]
+                                        )
+                                      ]
+                                    )
+                                  ]
+                                )
+                              ],
+                              1
+                            )
+                          ]),
+                          _vm._v(" "),
+                          _vm.errors && _vm.errors.image_advisory
+                            ? _c(
+                                "label",
+                                {
+                                  staticClass:
+                                    "text-danger text-sm d-block mt-2",
+                                  attrs: { for: "image_advisory" }
+                                },
+                                [_vm._v(_vm._s(_vm.errors.image_advisory[0]))]
                               )
                             : _vm._e()
                         ])

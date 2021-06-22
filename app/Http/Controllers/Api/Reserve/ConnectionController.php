@@ -36,7 +36,9 @@ class ConnectionController extends BaseController
             ]);
             $status = $responseSap->getStatusCode();
             #LogSapConnection
-            $lsc = LogSapConnection::UpdateOrCreate(["slug" => $slug, "type" => $type, 'response' => ["sap_code" => $estateCurrent->sap_code, "project_id" => $estateCurrent->id] , 'status' => $status, 'description' =>  (string) $description.'Error.']);
+            
+            //$lsc = LogSapConnection::UpdateOrCreate(["slug" => $slug, "type" => $type, 'response' => ["sap_code" => $estateCurrent->sap_code, "project_id" => $estateCurrent->id] , 'status' => $status, 'description' =>  (string) $description.'Éxito.']);
+            $lsc = LogSapConnection::UpdateOrCreate(["slug" => $slug, "type" => $type, 'response' => (string) $responseSap->getBody() , 'status' => $status, 'description' =>  (string) $description.'Éxito.']);
             #EndLogSapConnection
             $responseData = json_decode($responseSap->getBody());
             $checkIfIsInStock = count($responseData->inmuebles);

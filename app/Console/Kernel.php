@@ -38,7 +38,7 @@ class Kernel extends ConsoleKernel
         $schedule
             ->command('orders:expired')->daily();
         $schedule
-            ->command('sap:clear-log')->everyTenMinutes();
+            ->command('sap:clear-log')->daily();
     }
 
     /**

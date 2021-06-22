@@ -46,23 +46,22 @@
                     <div class="row mb-2">
                       <div class="col-12 mb-2 mb-lg position-relative">
                         <div class="text-right position-relative">
-                        <img
-                          class="position-absolute"
-                          style="right: 0"
-                          :src="imagesUrl + '/projects/' + el.logo_colour"
-                          height="25"
-                          :alt="el.name_es"
-                        />
+                          <img
+                            class="position-absolute"
+                            style="right: 0"
+                            :src="imagesUrl + '/projects/' + el.logo_colour"
+                            height="25"
+                            :alt="el.name_es"
+                          />
                         </div>
                         <img
-                          style="max-height: 200px;"
+                          style="max-height: 200px"
                           class="img-fluid d-block"
                           :src="imagesUrl + '/projects/' + el.images_format[0]"
                           alt
                         />
                       </div>
                       <div class="col-12">
-                        
                         <div class="row mt-2">
                           <div class="col-12 mb-2">
                             <div class>
@@ -84,9 +83,11 @@
                         </div>
                         <div class="row">
                           <div class="col-12">
-                            <span class="badge text-white badge-md" style="background-color: black">{{
-                              el.status_rel.name_es
-                            }}</span>
+                            <span
+                              class="badge text-white badge-md"
+                              style="background-color: black"
+                              >{{ el.status_rel.name_es }}</span
+                            >
 
                             <h1 class="mt-1">{{ el.name_es }}</h1>
 
@@ -100,10 +101,12 @@
                                         ? 'font-weight-bold text-success'
                                         : 'font-weight-bold text-danger'
                                     "
-                                    >{{ el.active ? "Habilitado" : "Deshabilitado" }}</span
+                                    >{{
+                                      el.active ? "Habilitado" : "Deshabilitado"
+                                    }}</span
                                   >
                                 </div>
-                                
+
                                 <div class="col-12">
                                   <div>
                                     <h3
@@ -111,27 +114,32 @@
                                     >
                                       Código SAP:
                                     </h3>
-                                    <h3 class="d-inline-block  mb-0" v-if="el.sap_code">
+                                    <h3
+                                      class="d-inline-block mb-0"
+                                      v-if="el.sap_code"
+                                    >
                                       {{ el.sap_code }}
                                     </h3>
-                                    <h3 class="d-inline-block  mb-0" v-else>
+                                    <h3 class="d-inline-block mb-0" v-else>
                                       No registrado
                                     </h3>
                                   </div>
                                   <div>
                                     <h3
-                                      class="d-inline-block font-weight-normal  mb-0"
+                                      class="d-inline-block font-weight-normal mb-0"
                                     >
                                       Precio Separación Inmueble:
                                     </h3>
-                                    <h3 class="d-inline-block  mb-0" v-if="el.price_separation">
+                                    <h3
+                                      class="d-inline-block mb-0"
+                                      v-if="el.price_separation"
+                                    >
                                       {{ el.price_separation_format }}
                                     </h3>
-                                    <h3 class="d-inline-block  mb-0" v-else>
+                                    <h3 class="d-inline-block mb-0" v-else>
                                       No registrado
                                     </h3>
                                   </div>
-
 
                                   <div>
                                     <h3
@@ -153,16 +161,13 @@
                                       {{ el.departments_rel_count }}
                                     </h3>
                                   </div>
-
                                 </div>
 
-                                  <div class="col-12">
-                                    <hr class="mt-2 mb-2">
-
-                                  </div>
+                                <div class="col-12">
+                                  <hr class="mt-2 mb-2" />
+                                </div>
 
                                 <div class="col-12">
-                                  
                                   <div>
                                     <h4
                                       class="d-inline-block mb-0 font-weight-normal"
@@ -218,26 +223,36 @@
                                     </div>
                                   </div>
                                 </div>
-                                <div class="col-12 h4 font-weight-normal  mb-0">
-                                  Envio de Información de Cotizaciones al email de los asesores:
+                                <div class="col-12 h4 font-weight-normal mb-0">
+                                  Envio de Información de Cotizaciones al email
+                                  de los asesores:
                                   <span
                                     :class="
                                       el.send_to_email
                                         ? 'font-weight-bold text-success'
                                         : 'font-weight-bold text-danger'
                                     "
-                                    >{{ el.send_to_email ? "Habilitado" : "Deshabilitado" }}</span
+                                    >{{
+                                      el.send_to_email
+                                        ? "Habilitado"
+                                        : "Deshabilitado"
+                                    }}</span
                                   >
                                 </div>
-                                <div class="col-12 h4 font-weight-normal ">
-                                  Envio de Información de Cotizaciones por Webhook:
+                                <div class="col-12 h4 font-weight-normal">
+                                  Envio de Información de Cotizaciones por
+                                  Webhook:
                                   <span
                                     :class="
                                       el.webhook_url_active
                                         ? 'font-weight-bold text-success'
                                         : 'font-weight-bold text-danger'
                                     "
-                                    >{{ el.webhook_url_active ? "Habilitado" : "Deshabilitado" }}</span
+                                    >{{
+                                      el.webhook_url_active
+                                        ? "Habilitado"
+                                        : "Deshabilitado"
+                                    }}</span
                                   >
                                 </div>
                               </div>
@@ -247,64 +262,78 @@
                       </div>
                     </div>
                     <div class="row">
-                       <div class="col-12 mb-2">
-                         <div class="row">
-                           <div class="col-12">
-                             <a
+                      <div class="col-12 mb-2">
+                        <div class="row">
+                          <div class="col-12">
+                            <a
                               :href="'proyectos/tipologias/' + el.slug_es"
                               class="btn btn-sm mb-2 mr-0 btn-inverse-primary btn-block"
                               >Ir a Tipologias</a
                             >
-                           </div>
-                           <div class="col-12">
-                              <a
+                          </div>
+                          <div class="col-12">
+                            <a
                               :href="'proyectos/inmuebles/' + el.slug_es"
                               class="btn btn-sm mb-2 btn-inverse-primary btn-block"
                               >Ir a Inmuebles del Proyecto</a
                             >
-                           </div>
-                           <div class="col-12">
-
-                             <a  :href="'proyectos/credenciales-pasarela/' + el.slug_es"
-                              class="btn btn-sm mb-0 btn-inverse-primary btn-block">
-                               Ir a Credenciales Pasarela
-                             </a>
-                           </div>
-                         </div>
-                            
+                          </div>
+                          <div class="col-12">
+                            <a
+                              :href="
+                                'proyectos/credenciales-pasarela/' + el.slug_es
+                              "
+                              class="btn btn-sm mb-0 btn-inverse-primary btn-block"
+                            >
+                              Ir a Credenciales Pasarela
+                            </a>
+                          </div>
                         </div>
+                      </div>
                       <div class="col-12">
-                        <div class="d-flex" style="flex-flow: row wrap;
-    justify-content: space-around;">
+                        <div
+                          class="d-flex"
+                          style="
+                            flex-flow: row wrap;
+                            justify-content: space-around;
+                          "
+                        >
                           <a
-                              :href="'proyectos/banners/' + el.slug_es"
-                              class="btn btn-sm mb-2 mr-0 btn-outline-primary"
-                              >Ir a Banners</a
-                            >
+                            :href="'proyectos/banners/' + el.slug_es"
+                            class="btn btn-sm mb-2 mr-0 btn-outline-primary"
+                            >Ir a Banners</a
+                          >
 
-                            
-                            <a
-                              :href="'proyectos/documentos/' + el.slug_es"
-                              class="btn btn-sm mb-2 mr-0 btn-outline-primary"
-                              >Ir a Documentos</a
-                            >
-                            <a
-                              :href="'proyectos/galeria/' + el.slug_es"
-                              class="btn btn-sm mb-2 mr-0 btn-outline-primary"
-                              >Ir a Galeria</a
-                            >
-                            <a
-                              :href="'proyectos/tour-virtual/' + el.slug_es"
-                              class="btn btn-sm mb-2 mr-0 btn-outline-primary"
-                              >Ir a Tour Virtual</a
-                            >
-                            <a
-                              :href="'proyectos/cotizaciones/' + el.slug_es"
-                              class="btn btn-sm mb-2 mr-0 btn-outline-primary"
-                              >Ir a Cotizaciones</a
-                            >
+                          <a
+                            :href="'proyectos/documentos/' + el.slug_es"
+                            class="btn btn-sm mb-2 mr-0 btn-outline-primary"
+                            >Ir a Documentos</a
+                          >
+                          <a
+                            :href="'proyectos/galeria/' + el.slug_es"
+                            class="btn btn-sm mb-2 mr-0 btn-outline-primary"
+                            >Ir a Galería</a
+                          >
+                          <a
+                            :href="'proyectos/tour-virtual/' + el.slug_es"
+                            class="btn btn-sm mb-2 mr-0 btn-outline-primary"
+                            >Ir a Tour Virtual</a
+                          >
+                          <a
+                            :href="'proyectos/cotizaciones/' + el.slug_es"
+                            class="btn btn-sm mb-2 mr-0 btn-outline-primary"
+                            >Ir a Cotizaciones</a
+                          >
+                          <a
+                            :href="
+                              'proyectos/informacion-plataforma-comercial/' +
+                              el.slug_es
+                            "
+                            class="btn btn-sm mb-2 mr-0 btn-outline-primary"
+                            >Ir a Información Plataforma Comercial</a
+                          >
                         </div>
-                         
+
                         <div class="d-flex">
                           <div class="ml-auto d-inline">
                             <a

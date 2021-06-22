@@ -279,6 +279,30 @@ Route::middleware(['auth'])->namespace('Cms')->name('cms.')->group(function () {
             Route::post('/activate', 'CredentialsController@activate')->name('activate');
             Route::get('/{element}', 'CredentialsController@index')->name('index');
         });
+
+        Route::prefix('informacion-plataforma-comercial')->name('platform-general-information.')->group(function () {
+            Route::get('/{element}', 'TpsGeneralInformationController@index')->name('index');
+            Route::post('/', 'TpsGeneralInformationController@store')->name('store');
+            Route::get('/json/get', 'TpsGeneralInformationController@get')->name('get');
+        });
+
+        Route::prefix('ubicacion-plataforma-comercial')->name('tps-location.')->group(function () {
+            Route::post('/', 'TpsLocationController@store')->name('store');
+            Route::get('/json/get-all', 'TpsLocationController@getAll')->name('get-all');
+            Route::get('/json/get/{element}', 'TpsLocationController@get')->name('get');
+            Route::delete('/{element}', 'TpsLocationController@destroy')->name('destroy');
+            Route::put('/order', 'TpsLocationController@order')->name('order');
+            Route::put('/{element}', 'TpsLocationController@update')->name('update');
+        });
+
+        Route::prefix('promocion-plataforma-comercial')->name('tps-promotion.')->group(function () {
+            Route::post('/', 'TpsPromotionController@store')->name('store');
+            Route::get('/json/get-all', 'TpsPromotionController@getAll')->name('get-all');
+            Route::get('/json/get/{element}', 'TpsPromotionController@get')->name('get');
+            Route::delete('/{element}', 'TpsPromotionController@destroy')->name('destroy');
+            Route::put('/order', 'TpsPromotionController@order')->name('order');
+            Route::put('/{element}', 'TpsPromotionController@update')->name('update');
+        });
     });
 
     Route::namespace('AdvisorySystem')->prefix('sistema-asesores')->name('advisory-system.')->group(function () {

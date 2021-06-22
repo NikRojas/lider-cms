@@ -348,6 +348,35 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -732,7 +761,7 @@ var render = function() {
                                                               "h3",
                                                               {
                                                                 staticClass:
-                                                                  "d-inline-block  mb-0"
+                                                                  "d-inline-block mb-0"
                                                               },
                                                               [
                                                                 _vm._v(
@@ -748,7 +777,7 @@ var render = function() {
                                                               "h3",
                                                               {
                                                                 staticClass:
-                                                                  "d-inline-block  mb-0"
+                                                                  "d-inline-block mb-0"
                                                               },
                                                               [
                                                                 _vm._v(
@@ -763,7 +792,7 @@ var render = function() {
                                                           "h3",
                                                           {
                                                             staticClass:
-                                                              "d-inline-block font-weight-normal  mb-0"
+                                                              "d-inline-block font-weight-normal mb-0"
                                                           },
                                                           [
                                                             _vm._v(
@@ -777,7 +806,7 @@ var render = function() {
                                                               "h3",
                                                               {
                                                                 staticClass:
-                                                                  "d-inline-block  mb-0"
+                                                                  "d-inline-block mb-0"
                                                               },
                                                               [
                                                                 _vm._v(
@@ -793,7 +822,7 @@ var render = function() {
                                                               "h3",
                                                               {
                                                                 staticClass:
-                                                                  "d-inline-block  mb-0"
+                                                                  "d-inline-block mb-0"
                                                               },
                                                               [
                                                                 _vm._v(
@@ -1061,11 +1090,11 @@ var render = function() {
                                                     "div",
                                                     {
                                                       staticClass:
-                                                        "col-12 h4 font-weight-normal  mb-0"
+                                                        "col-12 h4 font-weight-normal mb-0"
                                                     },
                                                     [
                                                       _vm._v(
-                                                        "\n                                Envio de Información de Cotizaciones al email de los asesores:\n                                "
+                                                        "\n                                Envio de Información de Cotizaciones al email\n                                de los asesores:\n                                "
                                                       ),
                                                       _c(
                                                         "span",
@@ -1091,11 +1120,11 @@ var render = function() {
                                                     "div",
                                                     {
                                                       staticClass:
-                                                        "col-12 h4 font-weight-normal "
+                                                        "col-12 h4 font-weight-normal"
                                                     },
                                                     [
                                                       _vm._v(
-                                                        "\n                                Envio de Información de Cotizaciones por Webhook:\n                                "
+                                                        "\n                                Envio de Información de Cotizaciones por\n                                Webhook:\n                                "
                                                       ),
                                                       _c(
                                                         "span",
@@ -1191,7 +1220,7 @@ var render = function() {
                                                   },
                                                   [
                                                     _vm._v(
-                                                      "\n                             Ir a Credenciales Pasarela\n                           "
+                                                      "\n                            Ir a Credenciales Pasarela\n                          "
                                                     )
                                                   ]
                                                 )
@@ -1251,7 +1280,7 @@ var render = function() {
                                                     el.slug_es
                                                 }
                                               },
-                                              [_vm._v("Ir a Galeria")]
+                                              [_vm._v("Ir a Galería")]
                                             ),
                                             _vm._v(" "),
                                             _c(
@@ -1280,6 +1309,24 @@ var render = function() {
                                                 }
                                               },
                                               [_vm._v("Ir a Cotizaciones")]
+                                            ),
+                                            _vm._v(" "),
+                                            _c(
+                                              "a",
+                                              {
+                                                staticClass:
+                                                  "btn btn-sm mb-2 mr-0 btn-outline-primary",
+                                                attrs: {
+                                                  href:
+                                                    "proyectos/informacion-plataforma-comercial/" +
+                                                    el.slug_es
+                                                }
+                                              },
+                                              [
+                                                _vm._v(
+                                                  "Ir a Información Plataforma Comercial"
+                                                )
+                                              ]
                                             )
                                           ]
                                         ),

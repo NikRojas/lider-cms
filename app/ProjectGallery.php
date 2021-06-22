@@ -11,11 +11,16 @@ class ProjectGallery extends Model
 
     public function projectRel()
     {
-        return $this->belongsTo('App\Project','project_id','id');
+        return $this->belongsTo('App\Project', 'project_id', 'id');
     }
 
     public function typeGalleryRel()
     {
-        return $this->hasOne('App\MasterTypeGallery','id','master_type_gallery_id');
+        return $this->hasOne('App\MasterTypeGallery', 'id', 'master_type_gallery_id');
+    }
+
+    public function materialsGalleryRel()
+    {
+        return $this->hasMany('App\TpsMaterialsGallery', 'project_gallery_id', 'id');
     }
 }

@@ -22,7 +22,7 @@
     "/js/pages/blog/category.js": "/js/pages/blog/category.js",
     "/js/pages/blog/post.js": "/js/pages/blog/post.js",
     "/js/pages/blog/post/create.js": "/js/pages/blog/post/create.js",
-    "/js/pages/blog/post/create~js/pages/cami~js/pages/cami-projects~js/pages/content/about~js/pages/conte~1f45d4e4.js": "/js/pages/blog/post/create~js/pages/cami~js/pages/cami-projects~js/pages/content/about~js/pages/conte~1f45d4e4.js",
+    "/js/pages/blog/post/create~js/pages/cami~js/pages/cami-projects~js/pages/content/about~js/pages/conte~dd36a4a3.js": "/js/pages/blog/post/create~js/pages/cami~js/pages/cami-projects~js/pages/content/about~js/pages/conte~dd36a4a3.js",
     "/js/pages/blog/post/create~js/pages/content/seo~js/pages/projects/create~js/pages/projects/edit.js": "/js/pages/blog/post/create~js/pages/content/seo~js/pages/projects/create~js/pages/projects/edit.js",
     "/js/pages/cami.js": "/js/pages/cami.js",
     "/js/pages/cami-projects.js": "/js/pages/cami-projects.js",
@@ -80,7 +80,7 @@
     "/vendors~js/pages/administration/status-project~js/pages/administration/types~js/pages/administration~8ac1b42c.js": "/vendors~js/pages/administration/status-project~js/pages/administration/types~js/pages/administration~8ac1b42c.js",
     "/vendors~js/pages/advisory-system/general-information~js/pages/blog/post/create~js/pages/cami~js/page~6a920634.js": "/vendors~js/pages/advisory-system/general-information~js/pages/blog/post/create~js/pages/cami~js/page~6a920634.js",
     "/vendors~js/pages/blog/post/create.js": "/vendors~js/pages/blog/post/create.js",
-    "/vendors~js/pages/blog/post/create~js/pages/cami~js/pages/cami-projects~js/pages/content/about~js/pag~1617d3c2.js": "/vendors~js/pages/blog/post/create~js/pages/cami~js/pages/cami-projects~js/pages/content/about~js/pag~1617d3c2.js",
+    "/vendors~js/pages/blog/post/create~js/pages/cami~js/pages/cami-projects~js/pages/content/about~js/pag~63cfe7a6.js": "/vendors~js/pages/blog/post/create~js/pages/cami~js/pages/cami-projects~js/pages/content/about~js/pag~63cfe7a6.js",
     "/vendors~js/pages/blog/post/create~js/pages/complaints-book~js/pages/customers/index~js/pages/dashboa~ab682b3c.js": "/vendors~js/pages/blog/post/create~js/pages/complaints-book~js/pages/customers/index~js/pages/dashboa~ab682b3c.js",
     "/vendors~js/pages/cami~js/pages/cami-projects~js/pages/configuration/general~js/pages/content/about~j~f5b56aac.js": "/vendors~js/pages/cami~js/pages/cami-projects~js/pages/configuration/general~js/pages/content/about~j~f5b56aac.js",
     "/vendors~js/pages/cami~js/pages/projects/read.js": "/vendors~js/pages/cami~js/pages/projects/read.js",
@@ -88,12 +88,6 @@
     "/vendors~js/pages/orders/read.js": "/vendors~js/pages/orders/read.js",
     "/vendors~js/pages/projects/credentials/index.js": "/vendors~js/pages/projects/credentials/index.js",
     "/vendors~js/pages/statistics/index.js": "/vendors~js/pages/statistics/index.js",
-    "/js/pages/administration/advisors~js/pages/administration/bonds~js/pages/administration/features-proj~63a000cd.js": "/js/pages/administration/advisors~js/pages/administration/bonds~js/pages/administration/features-proj~63a000cd.js",
-    "/js/pages/administration/advisors~js/pages/administration/bonds~js/pages/administration/features-proj~b5ba959b.js": "/js/pages/administration/advisors~js/pages/administration/bonds~js/pages/administration/features-proj~b5ba959b.js",
-    "/js/pages/configuration/general~js/pages/content/about~js/pages/content/certifications~js/pages/conte~594627b9.js": "/js/pages/configuration/general~js/pages/content/about~js/pages/content/certifications~js/pages/conte~594627b9.js",
-    "/vendors~js/pages/administration/advisors~js/pages/administration/bonds~js/pages/administration/featu~c4b5e150.js": "/vendors~js/pages/administration/advisors~js/pages/administration/bonds~js/pages/administration/featu~c4b5e150.js",
-    "/vendors~js/pages/administration/status-project~js/pages/administration/types~js/pages/administration~e5b365e0.js": "/vendors~js/pages/administration/status-project~js/pages/administration/types~js/pages/administration~e5b365e0.js",
-    "/vendors~js/pages/cami~js/pages/cami-projects~js/pages/configuration/general~js/pages/content/about~j~1d374cb4.js": "/vendors~js/pages/cami~js/pages/cami-projects~js/pages/configuration/general~js/pages/content/about~j~1d374cb4.js",
-    "/js/pages/blog/post/create~js/pages/cami~js/pages/cami-projects~js/pages/content/about~js/pages/conte~dd36a4a3.js": "/js/pages/blog/post/create~js/pages/cami~js/pages/cami-projects~js/pages/content/about~js/pages/conte~dd36a4a3.js",
-    "/vendors~js/pages/blog/post/create~js/pages/cami~js/pages/cami-projects~js/pages/content/about~js/pag~63cfe7a6.js": "/vendors~js/pages/blog/post/create~js/pages/cami~js/pages/cami-projects~js/pages/content/about~js/pag~63cfe7a6.js"
+    "/js/pages/configuration/general~js/pages/content/about~js/pages/content/certifications~js/pages/conte~7af803fd.js": "/js/pages/configuration/general~js/pages/content/about~js/pages/content/certifications~js/pages/conte~7af803fd.js",
+    "/vendors~js/pages/administration/status-project~js/pages/administration/types~js/pages/administration~76074d6d.js": "/vendors~js/pages/administration/status-project~js/pages/administration/types~js/pages/administration~76074d6d.js"
 }

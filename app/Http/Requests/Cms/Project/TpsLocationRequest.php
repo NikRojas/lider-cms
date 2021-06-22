@@ -23,9 +23,7 @@ class TpsLocationRequest extends FormRequest
      */
     public function rules()
     {
-        $rules = [
-            'position' => 'required|max:200',
-        ];
+        $rules = [];
         switch ($this->method()) {
             case 'POST':
                 $rules = array_merge(

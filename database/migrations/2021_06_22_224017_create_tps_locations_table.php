@@ -16,7 +16,6 @@ class CreateTpsLocationsTable extends Migration
         Schema::create('tps_locations', function (Blueprint $table) {
             $table->bigIncrements('id');
 
-            $table->string('position');
             $table->string('image', 100);
             $table->bigInteger('index');
             $table->bigInteger('project_id')->unsigned();

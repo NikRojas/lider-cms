@@ -741,22 +741,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 
 
@@ -821,10 +805,6 @@ __webpack_require__.r(__webpack_exports__);
         url = this.routeLocation + "/" + this.element.id;
         method = "post";
         fd.append("_method", "put");
-      }
-
-      if (this.element.position) {
-        fd.append("position", this.element.position);
       }
 
       if (this.$refs.ref_image.dropzone.files[0]) {
@@ -1151,22 +1131,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 
 
@@ -1231,10 +1195,6 @@ __webpack_require__.r(__webpack_exports__);
         url = this.routePromotion + "/" + this.element.id;
         method = "post";
         fd.append("_method", "put");
-      }
-
-      if (this.element.position) {
-        fd.append("position", this.element.position);
       }
 
       if (this.$refs.ref_image.dropzone.files[0]) {
@@ -2291,54 +2251,6 @@ var render = function() {
                             "label",
                             {
                               staticClass: "font-weight-bold",
-                              attrs: { for: "position" }
-                            },
-                            [_vm._v("Posición")]
-                          ),
-                          _vm._v(" "),
-                          _c("input", {
-                            directives: [
-                              {
-                                name: "model",
-                                rawName: "v-model",
-                                value: _vm.element.position,
-                                expression: "element.position"
-                              }
-                            ],
-                            staticClass: "form-control",
-                            attrs: { type: "text", id: "position" },
-                            domProps: { value: _vm.element.position },
-                            on: {
-                              input: function($event) {
-                                if ($event.target.composing) {
-                                  return
-                                }
-                                _vm.$set(
-                                  _vm.element,
-                                  "position",
-                                  $event.target.value
-                                )
-                              }
-                            }
-                          }),
-                          _vm._v(" "),
-                          _vm.errors && _vm.errors.position
-                            ? _c(
-                                "label",
-                                {
-                                  staticClass: "mt-2 text-danger text-sm",
-                                  attrs: { for: "position" }
-                                },
-                                [_vm._v(_vm._s(_vm.errors.position[0]))]
-                              )
-                            : _vm._e()
-                        ]),
-                        _vm._v(" "),
-                        _c("div", { staticClass: "form-group" }, [
-                          _c(
-                            "label",
-                            {
-                              staticClass: "font-weight-bold",
                               attrs: { for: "image" }
                             },
                             [_vm._v("Imagen:")]
@@ -2634,54 +2546,6 @@ var render = function() {
                   [
                     _c("div", { staticClass: "row" }, [
                       _c("div", { staticClass: "col-12" }, [
-                        _c("div", { staticClass: "form-group" }, [
-                          _c(
-                            "label",
-                            {
-                              staticClass: "font-weight-bold",
-                              attrs: { for: "position" }
-                            },
-                            [_vm._v("Posición")]
-                          ),
-                          _vm._v(" "),
-                          _c("input", {
-                            directives: [
-                              {
-                                name: "model",
-                                rawName: "v-model",
-                                value: _vm.element.position,
-                                expression: "element.position"
-                              }
-                            ],
-                            staticClass: "form-control",
-                            attrs: { type: "text", id: "position" },
-                            domProps: { value: _vm.element.position },
-                            on: {
-                              input: function($event) {
-                                if ($event.target.composing) {
-                                  return
-                                }
-                                _vm.$set(
-                                  _vm.element,
-                                  "position",
-                                  $event.target.value
-                                )
-                              }
-                            }
-                          }),
-                          _vm._v(" "),
-                          _vm.errors && _vm.errors.position
-                            ? _c(
-                                "label",
-                                {
-                                  staticClass: "mt-2 text-danger text-sm",
-                                  attrs: { for: "position" }
-                                },
-                                [_vm._v(_vm._s(_vm.errors.position[0]))]
-                              )
-                            : _vm._e()
-                        ]),
-                        _vm._v(" "),
                         _c("div", { staticClass: "form-group" }, [
                           _c(
                             "label",

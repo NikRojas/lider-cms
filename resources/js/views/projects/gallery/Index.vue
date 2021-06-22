@@ -5,10 +5,18 @@
         <div class="header-body">
           <div class="row align-items-center pt-0 pt-md-2 pb-3">
             <div class="col-6 col-md-7">
-              <BreadCrumb :title="'Galeria Proyecto '+project.name_es" parent active="Proyectos"></BreadCrumb>
+              <BreadCrumb
+                :title="'Galeria Proyecto ' + project.name_es"
+                parent
+                active="Proyectos"
+              ></BreadCrumb>
             </div>
             <div class="col-6 col-md text-right">
-              <a href="#" class="btn btn-icon btn-inverse-primary" @click.prevent="newEl">
+              <a
+                href="#"
+                class="btn btn-icon btn-inverse-primary"
+                @click.prevent="newEl"
+              >
                 <span class="btn-inner--icon">
                   <jam-picture class="current-color" />
                 </span>
@@ -18,14 +26,16 @@
           </div>
           <div class="row mb-3">
             <div class="col-6 col-md-5">
-              <a :href="routeReturn" class="btn btn-icon btn-sm btn-inverse-light">
+              <a
+                :href="routeReturn"
+                class="btn btn-icon btn-sm btn-inverse-light"
+              >
                 <span class="btn-inner--icon">
                   <jam-arrow-left class="current-color" />
                 </span>
                 <span class="btn-inner--text">Regresar</span>
               </a>
             </div>
-            
           </div>
         </div>
       </div>
@@ -43,29 +53,65 @@
       </div>
       <div v-else>
         <div v-if="Object.entries(elements).length !== 0">
-          <div class="row" v-for="(el,i) in elements" :key="i">
+          <div class="row" v-for="(el, i) in elements" :key="i">
             <div class="col-12">
-              <h2 class="mb-3">{{i}}</h2>
+              <h2 class="mb-3">{{ i }}</h2>
             </div>
             <div class="col-12">
               <p>{{ messageOrder }}</p>
-              <draggable class="row" v-model="elements[i]" @change="handleChange">
-                <div class="col-12 col-lg-3 mb-4 text-center" v-for="el2 in el" :key="el2.id">
+              <draggable
+                class="row"
+                v-model="elements[i]"
+                @change="handleChange"
+              >
+                <div
+                  class="col-12 col-lg-3 mb-4 text-center"
+                  v-for="el2 in el"
+                  :key="el2.id"
+                >
                   <div class="card">
                     <div class="card-body">
-                    <img :src="imagesUrl + '/projects/gallery/' + el2.image" alt class="img-fluid" />
-                    <h3 class="mb-1 mt-2">
-                      <span class="font-weight-normal">Nombre ES:</span>
-                      {{ el2.title_es }}
-                    </h3>
-                    <h3>
-                      <span class="font-weight-normal">Nombre EN:</span>
-                      {{ el2.title_en }}
-                    </h3>
-                    <div class="mt-4 text-center">
-                      <button @click="editEl(el2.id)" class="btn btn-inverse-info btn-sm">Editar</button>
-                      <button @click="deleteEl(el2.id)" class="btn btn-inverse-danger btn-sm">Eliminar</button>
-                    </div>
+                      <img
+                        :src="imagesUrl + '/projects/gallery/' + el2.image"
+                        alt
+                        class="img-fluid"
+                      />
+                      <h3 class="mb-1 mt-2">
+                        <span class="font-weight-normal">Nombre ES:</span>
+                        {{ el2.title_es }}
+                      </h3>
+                      <h3>
+                        <span class="font-weight-normal">Nombre EN:</span>
+                        {{ el2.title_en }}
+                      </h3>
+                      <h3>
+                        <span class="font-weight-normal"
+                          >Materiales registrados:</span
+                        >
+                        {{ el2.materials_gallery_rel_count }}
+                      </h3>
+                      <div class="mt-4 text-center">
+                        <button
+                          @click="editEl(el2.id)"
+                          class="btn btn-inverse-info btn-sm"
+                        >
+                          Editar
+                        </button>
+
+                        <button
+                          @click="deleteEl(el2.id)"
+                          class="btn btn-inverse-danger btn-sm"
+                          v-if="el2.materials_gallery_rel_count == 0"
+                        >
+                          Eliminar
+                        </button>
+                        <button
+                          @click="materialsEl(el2.id)"
+                          class="btn btn-inverse-info btn-sm"
+                        >
+                          PC - Materiales
+                        </button>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -102,13 +148,17 @@
             <div class="col-12">
               <div class="form-group">
                 <label class="font-weight-bold" for="image">Imagen:</label>
-                 <small class="d-block mb-0 lh-1">Resolución recomendada: 1050x600px</small> 
-                  <small class="d-block mb-0 lh-1">Formato: JPG</small> 
-                  <small class="d-block mb-2 lh-1">Tamaño recomendado: No mayor a 300KB</small>
+                <small class="d-block mb-0 lh-1"
+                  >Resolución recomendada: 1050x600px</small
+                >
+                <small class="d-block mb-0 lh-1">Formato: JPG</small>
+                <small class="d-block mb-2 lh-1"
+                  >Tamaño recomendado: No mayor a 300KB</small
+                >
                 <div class="row">
                   <div class="col text-center" v-if="element.image">
                     <img
-                      :src="imagesUrl + '/projects/gallery/' +element.image"
+                      :src="imagesUrl + '/projects/gallery/' + element.image"
                       class="img-fluid"
                       :alt="element.title_es"
                     />
@@ -117,16 +167,24 @@
                     <vue-dropzone
                       ref="ref_image"
                       class="text-center"
-                      @vdropzone-file-added="$validateImageDropzone($event,$refs.ref_image.dropzone,1,310000,'300kb')"
+                      @vdropzone-file-added="
+                        $validateImageDropzone(
+                          $event,
+                          $refs.ref_image.dropzone,
+                          1,
+                          310000,
+                          '300kb'
+                        )
+                      "
                       id="image"
                       :options="dropzoneOptions"
                       :duplicateCheck="true"
                       :useCustomSlot="true"
                     >
                       <div class="dropzone-custom-content">
-                        <h5
-                          class="dropzone-custom-title text-primary"
-                        >Suelte los archivos aquí o haga click para cargarlos.</h5>
+                        <h5 class="dropzone-custom-title text-primary">
+                          Suelte los archivos aquí o haga click para cargarlos.
+                        </h5>
                       </div>
                     </vue-dropzone>
                   </div>
@@ -136,7 +194,8 @@
                   v-if="errors && errors.image"
                   class="text-danger text-sm d-block mt-2"
                   for="image"
-                >{{ errors.image[0] }}</label>
+                  >{{ errors.image[0] }}</label
+                >
               </div>
             </div>
             <div class="col-12">
@@ -152,19 +211,24 @@
             </div>
 
             <div class="col-12">
-              <label class="font-weight-bold" id="master_type_gallery_id">Tipo:</label>
+              <label class="font-weight-bold" id="master_type_gallery_id"
+                >Tipo:</label
+              >
               <select
                 class="form-control"
                 id="master_type_gallery_id"
                 v-model="element.master_type_gallery_id"
               >
-                <option :value="el.id" v-for="(el,i) in types" :key="i">{{ el.name }}</option>
+                <option :value="el.id" v-for="(el, i) in types" :key="i">
+                  {{ el.name }}
+                </option>
               </select>
               <label
                 v-if="errors && errors.master_type_gallery_id"
                 class="mt-2 text-danger text-sm"
                 for="master_type_gallery_id"
-              >{{ errors.master_type_gallery_id[0] }}</label>
+                >{{ errors.master_type_gallery_id[0] }}</label
+              >
             </div>
           </div>
         </form>
@@ -176,7 +240,45 @@
           @click="submit"
           :request-server="requestSubmit"
         ></Button>
-        <button type="button" class="btn btn-secondary" @click="restoreEl">Cancelar</button>
+        <button type="button" class="btn btn-secondary" @click="restoreEl">
+          Cancelar
+        </button>
+      </template>
+    </b-modal>
+
+    <b-modal
+      v-model="modalMaterials"
+      @close="restore"
+      no-close-on-esc
+      no-close-on-backdrop
+      centered
+      size="lg"
+      footer-class="border-0 pt-0"
+      body-class="pt-0"
+    >
+      <template slot="modal-title">
+        <div class="text-primary h2">Plataforma Comercial - Materiales</div>
+      </template>
+      <template slot="modal-header-close">
+        <button type="button" class="btn p-0 bg-transparent" @click="restore">
+          <jam-close></jam-close>
+        </button>
+      </template>
+
+      <div>
+        <Materials
+          :routeMaterials="routeMaterials"
+          :project_gallery_id="project_gallery_id"
+          :routeGetAllMaterials="routeGetAllMaterials"
+          :routeOrderMaterials="routeOrderMaterials"
+          :messageOrderMaterials="messageOrder"
+          :imagesUrlMaterials="imagesUrl"
+        />
+      </div>
+      <template v-slot:modal-footer="{ ok }">
+        <button type="button" class="btn btn-secondary" @click="restore">
+          Cerrar
+        </button>
       </template>
     </b-modal>
 
@@ -191,6 +293,7 @@
   </div>
 </template>
 <script>
+import Materials from "./Materials";
 import SkeletonForm from "../../../components/skeleton/form";
 import vue2Dropzone from "vue2-dropzone";
 import BreadCrumb from "../../../components/BreadCrumb";
@@ -210,8 +313,13 @@ export default {
     routeOrder: String,
     route: String,
     types: Array,
+
+    routeGetAllMaterials: String,
+    routeOrderMaterials: String,
+    routeMaterials: String,
   },
   components: {
+    Materials,
     SkeletonForm,
     vueDropzone: vue2Dropzone,
     Button,
@@ -224,6 +332,7 @@ export default {
   },
   data() {
     return {
+      project_gallery_id: null,
       errors: {},
       loadingEls: false,
       elements: {},
@@ -245,13 +354,21 @@ export default {
         addRemoveLinks: true,
         dictRemoveFile: "Remover",
       },
+
+      //materials
+      modalMaterials: false,
+      loadingElsMaterials: false,
+      elementsMaterials: {},
     };
   },
   methods: {
-    handleChange(event){
-        axios
-        .put(this.routeOrder, this.elements[event.moved.element.type_gallery_rel.name])
-        .then(response => {
+    handleChange(event) {
+      axios
+        .put(
+          this.routeOrder,
+          this.elements[event.moved.element.type_gallery_rel.name]
+        )
+        .then((response) => {
           this.restore();
           Swal.fire({
             title: response.data.title,
@@ -260,11 +377,11 @@ export default {
             confirmButtonText: "OK",
             buttonsStyling: false,
             customClass: {
-              confirmButton: "btn btn-primary"
-            }
+              confirmButton: "btn btn-primary",
+            },
           });
         })
-        .catch(error => {
+        .catch((error) => {
           Swal.fire({
             title: error.response.data.title,
             text: error.response.data.message,
@@ -272,11 +389,10 @@ export default {
             confirmButtonText: "OK",
             buttonsStyling: false,
             customClass: {
-              confirmButton: "btn btn-primary"
-            }
+              confirmButton: "btn btn-primary",
+            },
           });
         });
-      
     },
     submit() {
       this.requestSubmit = true;
@@ -345,15 +461,16 @@ export default {
           this.restoreEl();
         });
     },
-    deleteEl(id){
+    deleteEl(id) {
       this.modalDestroy = true;
       this.getEl(id);
     },
     restore() {
+      this.modalMaterials = false;
       (this.element = {
         image: "",
       }),
-        (this.modalCreateUpdate  = this.requestSubmit = this.modalDestroy = false);
+        (this.modalCreateUpdate = this.requestSubmit = this.modalDestroy = false);
       this.getEls();
       this.errors = {};
     },
@@ -374,10 +491,15 @@ export default {
       this.modalCreateUpdate = true;
       this.getEl(id);
     },
+    materialsEl(id) {
+      this.modalMaterials = true;
+      this.project_gallery_id = id;
+      //this.getElsMaterials(id);
+    },
     destroyConfirm() {
       this.requestSubmit = true;
       axios
-        .delete(this.route + '/' + this.element.id)
+        .delete(this.route + "/" + this.element.id)
         .then((response) => {
           this.requestSubmit = false;
           this.restore();
@@ -417,6 +539,20 @@ export default {
         .then((response) => {
           this.elements = response.data;
           this.loadingEls = false;
+        })
+        .catch((error) => {});
+    },
+    getElsMaterials(id) {
+      this.loadingElsMaterials = true;
+      axios
+        .get(this.routeGetAllMaterials, {
+          params: {
+            project_gallery_id: id,
+          },
+        })
+        .then((response) => {
+          this.elementsMaterials = response.data;
+          this.loadingElsMaterials = false;
         })
         .catch((error) => {});
     },

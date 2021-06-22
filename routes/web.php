@@ -303,6 +303,15 @@ Route::middleware(['auth'])->namespace('Cms')->name('cms.')->group(function () {
             Route::put('/order', 'TpsPromotionController@order')->name('order');
             Route::put('/{element}', 'TpsPromotionController@update')->name('update');
         });
+
+        Route::prefix('materiales-galeria')->name('tps-gallery-materials.')->group(function () {
+            Route::post('/', 'TpsMaterialsGalleryController@store')->name('store');
+            Route::get('/json/get-all', 'TpsMaterialsGalleryController@getAll')->name('get-all');
+            Route::get('/json/get/{element}', 'TpsMaterialsGalleryController@get')->name('get');
+            Route::delete('/{element}', 'TpsMaterialsGalleryController@destroy')->name('destroy');
+            Route::put('/order', 'TpsMaterialsGalleryController@order')->name('order');
+            Route::put('/{element}', 'TpsMaterialsGalleryController@update')->name('update');
+        });
     });
 
     Route::namespace('AdvisorySystem')->prefix('sistema-asesores')->name('advisory-system.')->group(function () {

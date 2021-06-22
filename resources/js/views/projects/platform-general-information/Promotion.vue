@@ -53,22 +53,6 @@
           <div class="row">
             <div class="col-12">
               <div class="form-group">
-                <label class="font-weight-bold" for="position">Posición</label>
-                <input
-                  type="text"
-                  class="form-control"
-                  v-model="element.position"
-                  id="position"
-                />
-                <label
-                  v-if="errors && errors.position"
-                  class="mt-2 text-danger text-sm"
-                  for="position"
-                  >{{ errors.position[0] }}</label
-                >
-              </div>
-
-              <div class="form-group">
                 <label class="font-weight-bold" for="image">Imagen:</label>
                 <small class="d-block mb-0 lh-1"
                   >Resolución recomendada: 700x420px</small
@@ -212,9 +196,6 @@ export default {
         url = this.routePromotion + "/" + this.element.id;
         method = "post";
         fd.append("_method", "put");
-      }
-      if (this.element.position) {
-        fd.append("position", this.element.position);
       }
       if (this.$refs.ref_image.dropzone.files[0]) {
         fd.append("image", this.$refs.ref_image.dropzone.files[0]);

@@ -27,7 +27,6 @@ class TpsPromotionController extends Controller
       $image = config('services.images_url') . "/projects/tps-promotion/" . $el["image"];
       $data[] = array(
         "id" => $el["id"],
-        "position" => $el["position"],
         "image" => "<img src=" . $image . " class='mr-3 p-2' height='50' width='auto' alt='About Third " . $el["index"] . "'/><a class='btn btn-outline-info btn-sm' href=" . $image . " target='_blank'>Ver Imagen</a>",
       );
     }
@@ -35,7 +34,7 @@ class TpsPromotionController extends Controller
       $elements["data"] = '';
       $elements["data"] = $data;
     }
-    $headers = ["Id", "Posición", "Imagen"];
+    $headers = ["Id", "Imagen"];
     $elements["headers"] = $headers;
     return response()->json($elements);
   }
@@ -74,7 +73,7 @@ class TpsPromotionController extends Controller
 
   public function store(TpsPromotionRequest $request)
   {
-    $element = request(["position", "project_id"]);
+    $element = request(["project_id"]);
     if ($request->hasFile('image')) {
       $imageName = $this->setFileName('i-', $request->file('image'));
       $storeImage = Storage::disk('public')->putFileAs('img/projects/tps-promotion', $request->file('image'), $imageName);
@@ -95,7 +94,7 @@ class TpsPromotionController extends Controller
 
   public function update(TpsPromotion $element, TpsPromotionRequest $request)
   {
-    $request_element = request(["position", "project_id"]);;
+    $request_element = request(["project_id"]);;
     if ($request->hasFile('image')) {
       $fileName = $this->setFileName('i-', $request->file('image'));
       Storage::disk('public')->putFileAs('img/projects/tps-promotion', $request->file('image'), $fileName);

@@ -9,7 +9,7 @@
     body-class="pt-0"
   >
     <template slot="modal-title">
-      <div class="text-primary h2">Anular Pedido</div>
+      <div class="text-primary h2">Anular Orden</div>
     </template>
     <template slot="modal-header-close">
       <button type="button" class="btn p-0 bg-transparent" @click="cancelCustom">
@@ -26,9 +26,9 @@
       </div>
     </div>
     <div v-else>
-      <p>Esta apunto de cancelar un pedido, una vez que realice esta acción no se puede deshacer.</p>
+      <p>Esta apunto de cancelar una orden, una vez que realice esta acción no se puede deshacer.</p>
       <p>
-        Al anular el pedido el monto se procesará como negativo, para hacer el reembolso comuníquese con la pasarela o continue el proceso interno.
+        Al anular la orden no aparecerá en el apartado de estadísticas, para hacer el reembolso comuníquese con la pasarela o continue el proceso interno.
       </p>
       <p class="mb-2">
         Escribe

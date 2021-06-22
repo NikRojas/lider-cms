@@ -162,14 +162,20 @@ class IndexController extends BaseController
         return $data;
     }
 
-    public function getProjects($statuses = false, $rooms = false)
+    public function getProjects($statuses = false, $rooms = false, $floors = false, $views = false)
     {
-        $data = Project::select('id', 'name_es', 'name_en', 'slug_es', 'slug_en')->with('departmentsRel')->whereHas('departmentsRel', function ($query) use ($rooms) {
+        $data = Project::select('id', 'name_es', 'name_en', 'slug_es', 'slug_en')->with('departmentsRel')->whereHas('departmentsRel', function ($query) use ($rooms, $floors, $views) {
             $query->where('available', 1);
+            if($views){
+                $query->whereIn('view_id', $views);
+            }
             if ($rooms) {
                 $query->whereHas('tipologyRel', function ($query) use ($rooms) {
                     $query->whereIn('room', $rooms);
                 });
+            }
+            if($floors){
+                $query->whereIn('floor', $floors);
             }
         })->where('active', 1)->orderBy('index');
         if ($statuses) {
@@ -179,37 +185,40 @@ class IndexController extends BaseController
         return $data;
     }
 
-    public function getStatusEstates($projects = false, $rooms = false)
+    public function getStatusEstates($projects = false, $rooms = false, $floors = false, $views = false)
     {
-        /*$data = ProjectStatus::select('id', 'name_es', 'name_en', 'slug_es', 'slug_en')->whereHas('projectsRel', function ($query) {
-            $query->whereHas('departmentsRel', function ($query2) {
-                $query2->where('available', 1);
-            });
-        })->get();*/
-        $data = ProjectStatus::whereHas('projectsRel', function ($query) use ($projects, $rooms) {
+        $data = ProjectStatus::whereHas('projectsRel', function ($query) use ($projects, $rooms, $floors, $views) {
             $query->where('active', 1);
             if ($projects) {
                 $query->whereIn('id', $projects);
             }
-            $query->whereHas('departmentsRel', function ($query2) use ($rooms) {
+            $query->whereHas('departmentsRel', function ($query2) use ($rooms, $floors, $views) {
                 $query2->where('available', 1);
+                if($views){
+                    $query2->whereIn('view_id', $views);
+                }
                 if ($rooms) {
                     $query2->whereHas('tipologyRel', function ($query3) use ($rooms) {
                         $query3->whereIn('room', $rooms);
                     });
+                }
+                if($floors){
+                    $query2->whereIn('floor', $floors);
                 }
             });
         })->get();
         return $data;
     }
 
-    public function getRoomsEstates($statuses = false, $projects = false)
+    public function getRoomsEstates($statuses = false, $projects = false, $floors = false, $views = false)
     {
-        /*$data = ProjectTypeDepartment::whereHas('departmentsRel', function ($query2) {
-            $query2->where('available', 1);
-        })->get();
-        $data = $data->pluck('room')->unique()->flatten()->all();*/
-        $data = ProjectTypeDepartment::whereHas('departmentsRel', function ($query2) use ($statuses, $projects) {
+        $data = ProjectTypeDepartment::whereHas('departmentsRel', function ($query2) use ($statuses, $projects, $floors, $views) {
+            if($views){
+                $query2->whereIn('view_id', $views);
+            }
+            if($floors){
+                $query2->whereIn('floor', $floors);
+            }
             $query2->where('available', 1)->whereHas('projectRel', function ($query3) use ($statuses, $projects) {
                 $query3->where('active', 1);
                 if ($statuses) {
@@ -224,16 +233,14 @@ class IndexController extends BaseController
         return $data;
     }
 
-    public function getTypeEstates($statuses = false, $projects = false, $rooms = false)
+    public function getTypeEstates($statuses = false, $projects = false, $rooms = false, $floors = false)
     {
-        /*$data = ProjectParentTypeDepartment::select('id', 'name', 'slug')->whereHas('tipologyRel', function ($query) {
-            $query->whereHas('departmentsRel', function ($query2) {
+        $data = ProjectParentTypeDepartment::select('id', 'name', 'slug')->whereHas('tipologyRel', function ($query) use ($statuses, $projects, $rooms, $floors) {
+            $query->whereHas('departmentsRel', function ($query2) use ($statuses, $projects, $rooms, $floors) {
                 $query2->where('available', 1);
-            });
-        })->get();*/
-        $data = ProjectParentTypeDepartment::select('id', 'name', 'slug')->whereHas('tipologyRel', function ($query) use ($statuses, $projects, $rooms) {
-            $query->whereHas('departmentsRel', function ($query2) use ($statuses, $projects, $rooms) {
-                $query2->where('available', 1);
+                if($floors){
+                    $query2->whereIn('floor', $floors);
+                }
                 $query2->whereHas('projectRel', function ($query3) use ($statuses, $projects, $rooms) {
                     $query3->where('active', 1);
                     if ($statuses) {
@@ -277,12 +284,12 @@ class IndexController extends BaseController
         return $data;
     }
 
-    public function getViewsEstates($statuses = false, $projects = false, $rooms = false)
+    public function getViewsEstates($statuses = false, $projects = false, $rooms = false, $floors = false)
     {
-        /*$data = ProjectView::with('departmentsRel:id,sap_code,available,view_id')->whereHas('departmentsRel', function ($query) {
-            $query->where('available', 1);
-        })->orderBy('name')->get();*/
-        $data = ProjectView::with('departmentsRel')->whereHas('departmentsRel', function ($query) use ($statuses, $projects, $rooms) {
+        $data = ProjectView::with('departmentsRel')->whereHas('departmentsRel', function ($query) use ($statuses, $projects, $rooms, $floors) {
+            if($floors){
+                $query->whereIn('floor', $floors);
+            }
             if ($rooms) {
                 $query->whereHas('tipologyRel', function ($query2) use ($rooms) {
                     $query2->whereIn('room', $rooms);
@@ -301,11 +308,12 @@ class IndexController extends BaseController
         return $data;
     }
 
-    public function getPricesEstates($statuses = false, $projects = false, $rooms = false)
+    public function getPricesEstates($statuses = false, $projects = false, $rooms = false, $floors = false)
     {
-        /*$min = Department::where('available', true)->min('price');
-        $max = Department::where('available', true)->max('price');*/
         $min = Department::where('available', true);
+        if($floors){
+            $min = $min->whereIn('floor', $floors);
+        }
         if ($rooms) {
             $min = $min->whereHas('tipologyRel', function ($query) use ($rooms) {
                 $query->whereIn('room', $rooms);
@@ -321,6 +329,9 @@ class IndexController extends BaseController
             }
         });
         $max = Department::where('available', true);
+        if($floors){
+            $max = $max->whereIn('floor', $floors);
+        }
         if ($rooms) {
             $max = $max->whereHas('tipologyRel', function ($query) use ($rooms) {
                 $query->whereIn('room', $rooms);
@@ -354,11 +365,12 @@ class IndexController extends BaseController
         return $data;
     }
 
-    public function getAreas($statuses = false, $projects = false, $rooms = false)
+    public function getAreas($statuses = false, $projects = false, $rooms = false, $floors = false)
     {
-        /*$min = Department::where('available', true)->min('area');
-        $max = Department::where('available', true)->max('area');*/
         $min = Department::where('available', true);
+        if($floors){
+            $min = $min->whereIn('floor', $floors);
+        }
         if ($rooms) {
             $min = $min->whereHas('tipologyRel', function ($query) use ($rooms) {
                 $query->whereIn('room', $rooms);
@@ -374,6 +386,9 @@ class IndexController extends BaseController
             }
         });
         $max = Department::where('available', true);
+        if($floors){
+            $max = $max->whereIn('floor', $floors);
+        }
         if ($rooms) {
             $max = $max->whereHas('tipologyRel', function ($query) use ($rooms) {
                 $query->whereIn('room', $rooms);
@@ -399,17 +414,10 @@ class IndexController extends BaseController
         return $data;
     }
 
-    public function getUbigeoEstates($statuses = false, $projects = false, $rooms = false)
+    public function getUbigeoEstates($statuses = false, $projects = false, $rooms = false, $floors = false, $views = false)
     {
-        /*$departments = Ubigeo::select('code_ubigeo', 'code_department', 'department', 'code_district')->distinct('code_department')
-            ->whereHas('projectsRel', function ($query) {
-                $query->where('active', 1)->whereHas('departmentsRel', function ($query2) {
-                    $query2->where('available', 1);
-                });
-            })
-            ->orderBy('code_ubigeo', 'DESC')->groupBy('code_department')->get();*/
         $departments = Ubigeo::select('code_ubigeo', 'code_department', 'department', 'code_district')->distinct('code_department')
-            ->whereHas('projectsRel', function ($query) use ($statuses, $projects, $rooms) {
+            ->whereHas('projectsRel', function ($query) use ($statuses, $projects, $rooms, $floors, $views) {
                 $query->where('active', 1);
                 if ($statuses) {
                     $query->whereIn('project_status_id', $statuses);
@@ -417,28 +425,25 @@ class IndexController extends BaseController
                 if ($projects) {
                     $query->whereIn('id', $projects);
                 }
-                $query->whereHas('departmentsRel', function ($query2) use ($rooms) {
+                $query->whereHas('departmentsRel', function ($query2) use ($rooms, $floors, $views) {
                     $query2->where('available', 1);
                     if ($rooms) {
                         $query2->whereHas('tipologyRel', function ($query3) use ($rooms) {
                             $query3->whereIn('room', $rooms);
                         });
                     }
+                    if($floors){
+                        $query2->whereIn('floor', $floors);
+                    }
+                    if($views){
+                        $query2->whereIn('view_id', $views);
+                    }
                 });
-                /*if (!$statuses) {
-                    $query->where('active', 1)->whereHas('departmentsRel', function ($query2) {
-                        $query2->where('available', 1);
-                    });
-                } else {
-                    $query->where('active', 1)->whereIn('project_status_id', $statuses)->whereHas('departmentsRel', function ($query2) {
-                        $query2->where('available', 1);
-                    });
-                }*/
             })
             ->orderBy('code_ubigeo', 'DESC')->groupBy('code_department')->get();
         $districtsTemp = null;
         foreach ($departments as $key => $value) {
-            $districtsTemp[] = $this->getDistricts($value->code_department, $statuses, $projects, $rooms);
+            $districtsTemp[] = $this->getDistricts($value->code_department, $statuses, $projects, $rooms, $floors, $views);
         }
         $districtsTemp2 = collect($districtsTemp);
         $districtsTemp3 = $districtsTemp2->flatten();
@@ -449,26 +454,10 @@ class IndexController extends BaseController
         return $data;
     }
 
-    public function getDistricts($code, $statuses = false, $projects = false, $rooms = false)
+    public function getDistricts($code, $statuses = false, $projects = false, $rooms = false, $floors = false, $views = false)
     {
-        /*$data = Ubigeo::select('code_district', 'district', 'code_ubigeo', 'code_department')->distinct()->where('code_department', $code)
-            ->whereHas('projectsRel', function ($query) {
-                $query->where('active', 1)->whereHas('departmentsRel', function ($query2) {
-                    $query2->where('available', 1);
-                });
-            })
-            ->where('code_district', '!=', '00')->orderBy('district')->get();*/
         $data = Ubigeo::select('code_district', 'district', 'code_ubigeo', 'code_department')->distinct()->where('code_department', $code)
-            ->whereHas('projectsRel', function ($query) use ($statuses, $projects, $rooms) {
-                /*if (!$statuses) {
-                    $query->where('active', 1)->whereHas('departmentsRel', function ($query2) {
-                        $query2->where('available', 1);
-                    });
-                } else {
-                    $query->where('active', 1)->whereIn('project_status_id', $statuses)->whereHas('departmentsRel', function ($query2) {
-                        $query2->where('available', 1);
-                    });
-                }*/
+            ->whereHas('projectsRel', function ($query) use ($statuses, $projects, $rooms, $floors, $views) {
                 $query->where('active', 1);
                 if ($statuses) {
                     $query->whereIn('project_status_id', $statuses);
@@ -476,17 +465,57 @@ class IndexController extends BaseController
                 if ($projects) {
                     $query->whereIn('id', $projects);
                 }
-                $query->whereHas('departmentsRel', function ($query2) use ($rooms) {
+                $query->whereHas('departmentsRel', function ($query2) use ($rooms, $floors, $views) {
                     $query2->where('available', 1);
+                    if($views){
+                        $query2->whereIn('view_id', $views);
+                    }
                     if ($rooms) {
                         $query2->whereHas('tipologyRel', function ($query3) use ($rooms) {
                             $query3->whereIn('room', $rooms);
                         });
                     }
+                    if($floors){
+                        $query2->whereIn('floor', $floors);
+                    }
                 });
             })
             ->where('code_district', '!=', '00')->orderBy('district')->get();
         return $data;
+    }
+
+    public function updateFilters(Request $request)
+    {
+        $rStatuses = $request->statuses;
+        $rProjects = $request->projects;
+        $rTypes = $request->types;
+        $rRooms = $request->rooms;
+        $rFloors = $request->floors;
+        $rViews = $request->views;
+
+        $projects = $this->getProjects($rStatuses, $rRooms, $rFloors, $rViews);
+        $departments = $this->getUbigeoEstates($rStatuses, $rProjects, $rRooms, $rFloors, $rViews);
+        $status = $this->getStatusEstates($rProjects, $rRooms, $rFloors, $rViews);
+        $rooms = $this->getRoomsEstates($rStatuses, $rProjects, $rFloors, $rViews);
+        $typeDepartments = $this->getTypeEstates($rStatuses, $rProjects, $rRooms, $rFloors);
+        $floors = $this->getFloorsEstates($rStatuses, $rProjects, $rRooms);
+        $views = $this->getViewsEstates($rStatuses, $rProjects, $rRooms, $rFloors);
+        $prices = $this->getPricesEstates($rStatuses, $rProjects, $rRooms, $rFloors);
+        $areas = $this->getAreas($rStatuses, $rProjects, $rRooms, $rFloors);
+        $data = array(
+            "filters" => [
+                "departments" => $departments,
+                "status" => $status,
+                "rooms" => $rooms,
+                "typeDepartments" => $typeDepartments,
+                "projects" => $projects,
+                "floors" => $floors,
+                "views" => $views,
+                "prices" => $prices,
+                "areas" => $areas
+            ]
+        );
+        return $this->sendResponse($data, '');
     }
 
     public function detail(Request $request, $code)
@@ -523,38 +552,6 @@ class IndexController extends BaseController
             "page" => $page,
             "content" => $content,
             "department" => $department
-        );
-        return $this->sendResponse($data, '');
-    }
-
-    public function updateFilters(Request $request)
-    {
-        $rStatuses = $request->statuses;
-        $rProjects = $request->projects;
-        $rTypes = $request->types;
-        $rRooms = $request->rooms;
-
-        $projects = $this->getProjects($rStatuses, $rRooms);
-        $departments = $this->getUbigeoEstates($rStatuses, $rProjects, $rRooms);
-        $status = $this->getStatusEstates($rProjects, $rRooms);
-        $rooms = $this->getRoomsEstates($rStatuses, $rProjects);
-        $typeDepartments = $this->getTypeEstates($rStatuses, $rProjects, $rRooms);
-        $floors = $this->getFloorsEstates($rStatuses, $rProjects, $rRooms);
-        $views = $this->getViewsEstates($rStatuses, $rProjects, $rRooms);
-        $prices = $this->getPricesEstates($rStatuses, $rProjects, $rRooms);
-        $areas = $this->getAreas($rStatuses, $rProjects, $rRooms);
-        $data = array(
-            "filters" => [
-                "departments" => $departments,
-                "status" => $status,
-                "rooms" => $rooms,
-                "typeDepartments" => $typeDepartments,
-                "projects" => $projects,
-                "floors" => $floors,
-                "views" => $views,
-                "prices" => $prices,
-                "areas" => $areas
-            ]
         );
         return $this->sendResponse($data, '');
     }

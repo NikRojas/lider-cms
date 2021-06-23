@@ -36,7 +36,9 @@ class ConnectionController extends BaseController
             ]);
             $status = $responseSap->getStatusCode();
             #LogSapConnection
-            $lsc = LogSapConnection::UpdateOrCreate(["slug" => $slug, "type" => $type, 'response' => ["sap_code" => $estateCurrent->sap_code, "project_id" => $estateCurrent->id] , 'status' => $status, 'description' =>  (string) $description.'Error.']);
+            
+            //$lsc = LogSapConnection::UpdateOrCreate(["slug" => $slug, "type" => $type, 'response' => ["sap_code" => $estateCurrent->sap_code, "project_id" => $estateCurrent->id] , 'status' => $status, 'description' =>  (string) $description.'Éxito.']);
+            $lsc = LogSapConnection::UpdateOrCreate(["slug" => $slug, "type" => $type, 'response' => (string) $responseSap->getBody() , 'status' => $status, 'description' =>  (string) $description.'Éxito.']);
             #EndLogSapConnection
             $responseData = json_decode($responseSap->getBody());
             $checkIfIsInStock = count($responseData->inmuebles);
@@ -53,13 +55,13 @@ class ConnectionController extends BaseController
                 $update->price_foreign = $price_foreign;
                 $update->available = true;
                 $update->save();
-                Log::info("En stock");
+                //Log::info("En stock");
             }
             else{
                 $update = Department::find($estateCurrent->id);
                 $update->available = 0;
                 $update->save();
-                Log::info("Sin stock");
+                //Log::info("Sin stock");
             }
             return $this->sendResponse([$update], '');
         } 

@@ -64,6 +64,7 @@ Route::namespace('Api')->group(function() {
         Route::get('reserve/{code}', 'Reserve\IndexController@detail');
     });
     Route::prefix('reserve')->group(function() { 
+        Route::get('filters', 'Reserve\IndexController@updateFilters');
         Route::post('customer', 'Reserve\PostController@customer');
         Route::get('available/{code}', 'Reserve\ConnectionController@availableSap');
         Route::prefix('payment')->group(function() { 

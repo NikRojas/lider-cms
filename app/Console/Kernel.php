@@ -2,8 +2,6 @@
 
 namespace App\Console;
 
-use App\Jobs\GetThirdPartyCredential;
-use App\SapCredential;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
@@ -18,7 +16,9 @@ class Kernel extends ConsoleKernel
         //Commands\SapLogin::class,
         //Commands\SapGetAvailableDepartments::class,
         'App\Console\Commands\SapLogin',
-        'App\Console\Commands\SapGetAvailableDepartments'
+        'App\Console\Commands\SapGetAvailableDepartments',
+        'App\Console\Commands\ClearLogSapConnection',
+        'App\Console\Commands\OrdersExpired'
     ];
 
     /**
@@ -37,6 +37,8 @@ class Kernel extends ConsoleKernel
         //Medianoche
         $schedule
             ->command('orders:expired')->daily();
+        $schedule
+            ->command('sap:clear-log')->daily();
     }
 
     /**

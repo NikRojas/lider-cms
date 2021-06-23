@@ -165,7 +165,7 @@
       </div>
       <div class="row mt-4" v-if="!loading">
         <div class="col-6 pt-2">
-          <small class v-if="to && from">Mostrando {{ to }} de {{ from }} de {{ total }} entradas</small>
+          <small class v-if="to && from">Mostrando {{ from }} de {{ to }} de {{ total }} entradas</small>
           <small v-else>
             <span v-if="to">{{ total }} entradas</span>
           </small>

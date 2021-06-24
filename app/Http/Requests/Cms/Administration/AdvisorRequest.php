@@ -27,7 +27,7 @@ class AdvisorRequest extends FormRequest
         $rules = [
             'name' => 'required|max:100',
             'mobile' => 'required|digits:9',
-            'email' => 'required|max:100',
+            'email' => ['required',Rule::unique('advisors')->ignore($this->id),'max:100'],
             'avatar' => 'sometimes|required',
             'sap_code' => ['nullable',Rule::unique('advisors')->ignore($this->id),'max:100']
         ];

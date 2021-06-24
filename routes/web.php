@@ -157,7 +157,7 @@ Route::middleware(['auth'])->namespace('Cms')->name('cms.')->group(function () {
         Route::post('/filter-export', 'CustomersController@filterExport')->name('filter-export');
         Route::get('/{element}', 'CustomersController@read')->name('read');
     });
- 
+
     #Complaints Book
     Route::prefix('libro-de-reclamaciones')->name('complaints-book.')->group(function () {
         Route::get('/', 'ComplaintsBookController@index')->name('index');
@@ -177,7 +177,7 @@ Route::middleware(['auth'])->namespace('Cms')->name('cms.')->group(function () {
         Route::get('export/{from?}/{to?}', 'SuscribersController@exportFile')->name('export-file');
     });
 
-    
+
 
     #Projects
     Route::namespace('Projects')->prefix('proyectos')->name('projects.')->group(function () {
@@ -279,6 +279,48 @@ Route::middleware(['auth'])->namespace('Cms')->name('cms.')->group(function () {
             Route::post('/activate', 'CredentialsController@activate')->name('activate');
             Route::get('/{element}', 'CredentialsController@index')->name('index');
         });
+
+        Route::prefix('informacion-plataforma-comercial')->name('platform-general-information.')->group(function () {
+            Route::get('/{element}', 'TpsGeneralInformationController@index')->name('index');
+            Route::post('/', 'TpsGeneralInformationController@store')->name('store');
+            Route::get('/json/get', 'TpsGeneralInformationController@get')->name('get');
+        });
+
+        Route::prefix('ubicacion-plataforma-comercial')->name('tps-location.')->group(function () {
+            Route::post('/', 'TpsLocationController@store')->name('store');
+            Route::get('/json/get-all', 'TpsLocationController@getAll')->name('get-all');
+            Route::get('/json/get/{element}', 'TpsLocationController@get')->name('get');
+            Route::delete('/{element}', 'TpsLocationController@destroy')->name('destroy');
+            Route::put('/order', 'TpsLocationController@order')->name('order');
+            Route::put('/{element}', 'TpsLocationController@update')->name('update');
+        });
+
+        Route::prefix('promocion-plataforma-comercial')->name('tps-promotion.')->group(function () {
+            Route::post('/', 'TpsPromotionController@store')->name('store');
+            Route::get('/json/get-all', 'TpsPromotionController@getAll')->name('get-all');
+            Route::get('/json/get/{element}', 'TpsPromotionController@get')->name('get');
+            Route::delete('/{element}', 'TpsPromotionController@destroy')->name('destroy');
+            Route::put('/order', 'TpsPromotionController@order')->name('order');
+            Route::put('/{element}', 'TpsPromotionController@update')->name('update');
+        });
+
+        Route::prefix('materiales-galeria')->name('tps-gallery-materials.')->group(function () {
+            Route::post('/', 'TpsMaterialsGalleryController@store')->name('store');
+            Route::get('/json/get-all', 'TpsMaterialsGalleryController@getAll')->name('get-all');
+            Route::get('/json/get/{element}', 'TpsMaterialsGalleryController@get')->name('get');
+            Route::delete('/{element}', 'TpsMaterialsGalleryController@destroy')->name('destroy');
+            Route::put('/order', 'TpsMaterialsGalleryController@order')->name('order');
+            Route::put('/{element}', 'TpsMaterialsGalleryController@update')->name('update');
+        });
+    });
+
+    Route::namespace('AdvisorySystem')->prefix('sistema-asesores')->name('advisory-system.')->group(function () {
+        Route::name('general-information.')->prefix('sobre-lider')->group(function () {
+            #General Information
+            Route::get('/', 'GeneralInformationController@index')->name('index');
+            Route::post('/', 'GeneralInformationController@store')->name('store');
+            Route::get('/json/get', 'GeneralInformationController@get')->name('get');
+        });
     });
 
     Route::namespace('Content')->prefix('contenido')->name('content.')->group(function () {
@@ -290,7 +332,7 @@ Route::middleware(['auth'])->namespace('Cms')->name('cms.')->group(function () {
             Route::get('/json/get/section/{section}', 'GeneralContentController@getPageSectionFields')->name('get-page-sections-fields');
             Route::post('/image', 'GeneralContentController@storeImage')->name('store-image');
         });
-        
+
         #Social Networks
         Route::name('social-networks.')->prefix('redes-sociales')->group(function () {
             Route::get('/', 'SocialController@index')->name('index');
@@ -343,7 +385,7 @@ Route::middleware(['auth'])->namespace('Cms')->name('cms.')->group(function () {
             Route::delete('/projects/{element}', 'CamiController@elementsDestroy')->name('projects.destroy');
             Route::put('/projects/{element}', 'CamiController@elementsUpdate')->name('projects.update');
         });
-    
+
         Route::prefix('testimoniales')->name('testimonials.')->group(function () {
             Route::get('/', 'TestimonialsController@index')->name('index');
             Route::post('/', 'TestimonialsController@store')->name('store');
@@ -415,7 +457,7 @@ Route::middleware(['auth'])->namespace('Cms')->name('cms.')->group(function () {
             });
         });
     });
- 
+
     Route::namespace('Blog')->prefix('blog')->name('blog.')->group(function () {
         Route::name('category.')->prefix('categorias')->group(function () {
             Route::get('/', 'CategoriesController@index')->name('index');
@@ -445,7 +487,7 @@ Route::middleware(['auth'])->namespace('Cms')->name('cms.')->group(function () {
             Route::get('/json/get-all', 'LeadTraditionalController@getAll')->name('get-all');
             Route::delete('/{element}', 'LeadTraditionalController@destroy')->name('destroy');
             Route::get('/json/get/{element}', 'LeadTraditionalController@get')->name('get');
-            
+
             Route::put('/', 'LeadTraditionalController@update')->name('update');
             Route::get('/get-email-destination', 'LeadTraditionalController@getEmailDestination')->name('get-email-destination');
 
@@ -458,7 +500,7 @@ Route::middleware(['auth'])->namespace('Cms')->name('cms.')->group(function () {
             Route::get('/json/get-all', 'LeadOnlineController@getAll')->name('get-all');
             Route::delete('/{element}', 'LeadOnlineController@destroy')->name('destroy');
             Route::get('/json/get/{element}', 'LeadOnlineController@get')->name('get');
-            
+
             Route::put('/', 'LeadOnlineController@update')->name('update');
             Route::get('/get-email-destination', 'LeadOnlineController@getEmailDestination')->name('get-email-destination');
 
@@ -468,13 +510,13 @@ Route::middleware(['auth'])->namespace('Cms')->name('cms.')->group(function () {
             Route::get('/webhook', 'LeadOnlineController@getWebhook')->name('get.webhook');
             Route::put('/webhook', 'LeadOnlineController@updateWebhook')->name('update.webhook');
         });
-        
+
         Route::name('land-sale.')->prefix('venta-terreno')->group(function () {
             Route::get('/', 'LeadLandSaleController@index')->name('index');
             Route::get('/json/get-all', 'LeadLandSaleController@getAll')->name('get-all');
             Route::delete('/{element}', 'LeadLandSaleController@destroy')->name('destroy');
             Route::get('/json/get/{element}', 'LeadLandSaleController@get')->name('get');
-            
+
             Route::put('/', 'LeadLandSaleController@update')->name('update');
             Route::get('/get-email-destination', 'LeadLandSaleController@getEmailDestination')->name('get-email-destination');
 

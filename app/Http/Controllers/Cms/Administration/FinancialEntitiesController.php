@@ -14,66 +14,89 @@ class FinancialEntitiesController extends Controller
 {
     use CmsTrait;
 
-    public function index(){
-        return view ("pages.administration.financial-entities");    
+    public function index()
+    {
+        return view("pages.administration.financial-entities");
     }
 
-    public function store(BankRequest $request){
-        $element = request(["name","cci","number_account"]);
-        $imageName = $this->setFileName('b-',$request->file('logo'));
-        $storeImage = Storage::disk('public')->putFileAs('img/banks/',$request->file('logo'),$imageName);
-        if(!$storeImage){
-            return response()->json(['title'=> trans('custom.title.error'), 'message'=> trans('custom.errors.image') ],500);    
+    public function store(BankRequest $request)
+    {
+        $element = request(["name", "cci", "number_account"]);
+        $imageName = $this->setFileName('b-', $request->file('logo'));
+        $storeImage = Storage::disk('public')->putFileAs('img/banks/', $request->file('logo'), $imageName);
+        if (!$storeImage) {
+            return response()->json(['title' => trans('custom.title.error'), 'message' => trans('custom.errors.image')], 500);
         }
-        $element = array_merge($element,["logo"=>$imageName]);
-        try{
-            $element = Bank::UpdateOrCreate($element); 
-            return response()->json(['title'=> trans('custom.title.success'), 'message'=> trans('custom.message.create.success', ['name' => trans('custom.attribute.bank')]) ],200);
+        $element = array_merge($element, ["logo" => $imageName]);
+
+        $imageNameAdvisory = $this->setFileName('b-', $request->file('logo_advisory'));
+        $storeImageAdvisory = Storage::disk('public')->putFileAs('img/banks/', $request->file('logo_advisory'), $imageNameAdvisory);
+        if (!$storeImageAdvisory) {
+            return response()->json(['title' => trans('custom.title.error'), 'message' => trans('custom.errors.image')], 500);
         }
-        catch(\Exception $e){
-            return response()->json(['title'=> trans('custom.title.error'), 'message'=> trans('custom.message.create.error', ['name' => trans('custom.attribute.bank')]) ],500);
+        $element = array_merge($element, ["logo_advisory" => $imageNameAdvisory]);
+
+        try {
+            $element = Bank::UpdateOrCreate($element);
+            return response()->json(['title' => trans('custom.title.success'), 'message' => trans('custom.message.create.success', ['name' => trans('custom.attribute.bank')])], 200);
+        } catch (\Exception $e) {
+            return response()->json(['title' => trans('custom.title.error'), 'message' => trans('custom.message.create.error', ['name' => trans('custom.attribute.bank')])], 500);
         }
     }
 
-    public function getAll(){
+    public function getAll()
+    {
         $elements = Bank::with('projectsRel')->get();
-        return response()->json($elements); 
+        return response()->json($elements);
     }
 
-    public function get(Bank $element){
+    public function get(Bank $element)
+    {
         return response()->json($element);
     }
 
-    public function update(Bank $element,BankRequest $request){
-        $request_element = request(["name","cci","number_account"]);;
-        if($request->hasFile('logo')){
-            $fileName = $this->setFileName('b-',$request->file('logo'));
-            Storage::disk('public')->putFileAs('img/banks',$request->file('logo'),$fileName);
-            $request_element = array_merge($request_element,["logo" => $fileName]);
+    public function update(Bank $element, BankRequest $request)
+    {
+        $request_element = request(["name", "cci", "number_account"]);;
+        if ($request->hasFile('logo')) {
+            $fileName = $this->setFileName('b-', $request->file('logo'));
+            Storage::disk('public')->putFileAs('img/banks', $request->file('logo'), $fileName);
+            $request_element = array_merge($request_element, ["logo" => $fileName]);
         }
-        if($request->hasFile('logo') && $element->logo){
-            Storage::disk('public')->delete('img/banks/'.$element->logo);
+        if ($request->hasFile('logo') && $element->logo) {
+            Storage::disk('public')->delete('img/banks/' . $element->logo);
         }
-        try{
-            $element = Bank::UpdateOrCreate(["id"=>$element->id],$request_element); 
-            return response()->json(['title'=> trans('custom.title.success'), 'message'=> trans('custom.message.update.success', ['name' => trans('custom.attribute.bank')]) ],200);
+
+        if ($request->hasFile('logo_advisory')) {
+            $fileNameAdvisory = $this->setFileName('b-', $request->file('logo_advisory'));
+            Storage::disk('public')->putFileAs('img/banks', $request->file('logo_advisory'), $fileNameAdvisory);
+            $request_element = array_merge($request_element, ["logo_advisory" => $fileNameAdvisory]);
         }
-        catch(\Exception $e){
-            return response()->json(['title'=> trans('custom.title.error'), 'message'=> trans('custom.message.update.error', ['name' => trans('custom.attribute.bank')]) ],500);
+        if ($request->hasFile('logo_advisory') && $element->logo_advisory) {
+            Storage::disk('public')->delete('img/banks/' . $element->logo_advisory);
+        }
+
+        try {
+            $element = Bank::UpdateOrCreate(["id" => $element->id], $request_element);
+            return response()->json(['title' => trans('custom.title.success'), 'message' => trans('custom.message.update.success', ['name' => trans('custom.attribute.bank')])], 200);
+        } catch (\Exception $e) {
+            return response()->json(['title' => trans('custom.title.error'), 'message' => trans('custom.message.update.error', ['name' => trans('custom.attribute.bank')])], 500);
         }
     }
 
-    public function destroy(Bank $element){
+    public function destroy(Bank $element)
+    {
         $image = $element->logo;
+        $image_advisory = $element->logo_advisory;
         try {
             $destroy = $element->delete();
-            if($destroy){
-                Storage::disk('public')->delete('img/banks/'.$image);   
+            if ($destroy) {
+                Storage::disk('public')->delete('img/banks/' . $image);
+                Storage::disk('public')->delete('img/banks/' . $image_advisory);
             }
-            return response()->json(['title'=> trans('custom.title.success'), 'message'=> trans('custom.message.delete.success', ['name' => trans('custom.attribute.bank')]) ],200);
-        } 
-        catch (\Exception $e){
-            return response()->json(['title'=> trans('custom.title.error'), 'message'=> trans('custom.message.delete.error', ['name' => trans('custom.attribute.bank')]) ],500);
+            return response()->json(['title' => trans('custom.title.success'), 'message' => trans('custom.message.delete.success', ['name' => trans('custom.attribute.bank')])], 200);
+        } catch (\Exception $e) {
+            return response()->json(['title' => trans('custom.title.error'), 'message' => trans('custom.message.delete.error', ['name' => trans('custom.attribute.bank')])], 500);
         }
     }
 }

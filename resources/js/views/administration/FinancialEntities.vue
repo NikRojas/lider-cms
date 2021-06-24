@@ -12,7 +12,11 @@
               ></BreadCrumb>
             </div>
             <div class="col-6 col-md-5 text-right">
-              <a href="#" class="btn btn-icon btn-inverse-primary" @click.prevent="newEl">
+              <a
+                href="#"
+                class="btn btn-icon btn-inverse-primary"
+                @click.prevent="newEl"
+              >
                 <span class="btn-inner--icon">
                   <jam-magic class="current-color" />
                 </span>
@@ -31,12 +35,38 @@
       </div>
       <div v-else>
         <div class="row" v-if="elements.length">
-          <div class="col-12 col-md-6 col-lg-3 mb-4" v-for="(el,i) in elements" :key="el.id">
+          <div
+            class="col-12 col-md-6 col-lg-3 mb-4"
+            v-for="(el, i) in elements"
+            :key="el.id"
+          >
             <div class="card">
               <div class="card-body">
                 <div class="mb-3">
+                  <span class="font-weight-normal">Imagen:</span><br />
                   <div class="d-inline-block bg-dark p-3">
-                  <img :src="imagesUrl+'/banks/'+el.logo" height="30" :alt="el.name" />
+                    <img
+                      :src="imagesUrl + '/banks/' + el.logo"
+                      height="40"
+                      :alt="el.name"
+                    />
+                  </div>
+                </div>
+
+                <div class="mb-3">
+                  <span class="font-weight-normal"
+                    >Imagen Sistema de Asesores:</span
+                  ><br />
+                  <div class="d-inline-block " v-if="el.logo_advisory">
+                    <img
+                      
+                      :src="imagesUrl + '/banks/' + el.logo_advisory"
+                      height="40"
+                      :alt="el.name"
+                    />
+                  </div>
+                  <div v-else>
+                    <b>No registrado</b>
                   </div>
                 </div>
                 <h3 class="mb-1 font-weight-bold">
@@ -52,24 +82,33 @@
                   {{ el.cci ? el.cci : 'No registrado' }}
                 </h3>-->
                 <div class="mt-4 text-right">
-                  <button @click="editEl(el.id)" class="btn btn-inverse-info btn-sm">Editar</button>
+                  <button
+                    @click="editEl(el.id)"
+                    class="btn btn-inverse-info btn-sm"
+                  >
+                    Editar
+                  </button>
                   <button
                     @click="deleteEl(el.id)"
                     class="btn btn-inverse-danger btn-sm"
                     v-if="el.can_delete"
-                  >Eliminar</button>
+                  >
+                    Eliminar
+                  </button>
                   <button
                     v-else
                     class="btn btn-sm btn-secondary"
                     v-b-tooltip.hover
                     :title="messageCantDelete"
-                  >Eliminar</button>
+                  >
+                    Eliminar
+                  </button>
                 </div>
               </div>
             </div>
           </div>
         </div>
-        <NoData v-else/>
+        <NoData v-else />
       </div>
     </div>
 
@@ -99,34 +138,45 @@
             <div class="col-12">
               <div class="form-group">
                 <label class="font-weight-bold" for="image">Imagen:</label>
-                <small class="d-block mb-0 lh-1">Resolución recomendada: 150x80px</small> 
-                  <small class="d-block mb-0 lh-1">Formato: PNG</small> 
-                  <small class="d-block mb-2 lh-1">Tamaño recomendado: No mayor a 100KB</small>
+                <small class="d-block mb-0 lh-1"
+                  >Resolución recomendada: 150x80px</small
+                >
+                <small class="d-block mb-0 lh-1">Formato: PNG</small>
+                <small class="d-block mb-2 lh-1"
+                  >Tamaño recomendado: No mayor a 100KB</small
+                >
                 <div class="row">
                   <div class="col text-center" v-if="element.logo">
                     <div class="bg-dark p-3">
-                    <img
-                      :src="imagesUrl+'/banks/'+element.logo"
-                      height="30"
-                      :alt="element.name"
-                    />
+                      <img
+                        :src="imagesUrl + '/banks/' + element.logo"
+                        height="30"
+                        :alt="element.name"
+                      />
                     </div>
                   </div>
                   <div class="col vue-dropzone-dark">
                     <vue-dropzone
                       ref="ref_image"
                       class="text-center"
-                      @vdropzone-file-added="$validateImageDropzone($event,$refs.ref_image.dropzone,1,110000,
-                          '100kb')"
+                      @vdropzone-file-added="
+                        $validateImageDropzone(
+                          $event,
+                          $refs.ref_image.dropzone,
+                          1,
+                          110000,
+                          '100kb'
+                        )
+                      "
                       id="image"
                       :options="dropzoneOptions"
                       :duplicateCheck="true"
                       :useCustomSlot="true"
                     >
                       <div class="dropzone-custom-content">
-                        <h5
-                          class="dropzone-custom-title text-primary"
-                        >Suelte los archivos aquí o haga click para cargarlos.</h5>
+                        <h5 class="dropzone-custom-title text-primary">
+                          Suelte los archivos aquí o haga click para cargarlos.
+                        </h5>
                       </div>
                     </vue-dropzone>
                   </div>
@@ -136,9 +186,69 @@
                   v-if="errors && errors.logo"
                   class="text-danger text-sm d-block mt-2"
                   for="image"
-                >{{ errors.logo[0] }}</label>
+                  >{{ errors.logo[0] }}</label
+                >
               </div>
             </div>
+
+            <div class="col-12">
+              <div class="form-group">
+                <label class="font-weight-bold" for="image"
+                  >Imagen Sistema de Asesores:</label
+                >
+                <small class="d-block mb-0 lh-1"
+                  >Resolución recomendada: 150x80px</small
+                >
+                <small class="d-block mb-0 lh-1">Formato: PNG</small>
+                <small class="d-block mb-2 lh-1"
+                  >Tamaño recomendado: No mayor a 100KB</small
+                >
+                <div class="row">
+                  <div class="col text-center" v-if="element.logo_advisory">
+                    <div class="bg-dark p-3">
+                      <img
+                        :src="imagesUrl + '/banks/' + element.logo_advisory"
+                        height="30"
+                        :alt="element.name"
+                      />
+                    </div>
+                  </div>
+                  <div class="col vue-dropzone-dark">
+                    <vue-dropzone
+                      ref="ref_image_advisory"
+                      class="text-center"
+                      @vdropzone-file-added="
+                        $validateImageDropzone(
+                          $event,
+                          $refs.ref_image_advisory.dropzone,
+                          1,
+                          110000,
+                          '100kb'
+                        )
+                      "
+                      id="image_advisory"
+                      :options="dropzoneOptions"
+                      :duplicateCheck="true"
+                      :useCustomSlot="true"
+                    >
+                      <div class="dropzone-custom-content">
+                        <h5 class="dropzone-custom-title text-primary">
+                          Suelte los archivos aquí o haga click para cargarlos.
+                        </h5>
+                      </div>
+                    </vue-dropzone>
+                  </div>
+                </div>
+
+                <label
+                  v-if="errors && errors.logo_advisory"
+                  class="text-danger text-sm d-block mt-2"
+                  for="image"
+                  >{{ errors.logo_advisory[0] }}</label
+                >
+              </div>
+            </div>
+
             <div class="col-12">
               <div class="form-group">
                 <label class="font-weight-bold" for="name">Nombre</label>
@@ -152,10 +262,10 @@
                   v-if="errors && errors.name"
                   class="mt-2 text-danger text-sm"
                   for="name"
-                >{{ errors.name[0] }}</label>
+                  >{{ errors.name[0] }}</label
+                >
               </div>
             </div>
-            
           </div>
         </form>
       </div>
@@ -166,7 +276,9 @@
           @click="submit"
           :request-server="requestSubmit"
         ></Button>
-        <button type="button" class="btn btn-secondary" @click="restoreEl">Cancelar</button>
+        <button type="button" class="btn btn-secondary" @click="restoreEl">
+          Cancelar
+        </button>
       </template>
     </b-modal>
     <destroy
@@ -180,8 +292,8 @@
   </div>
 </template>
 <style>
-.vue-dropzone-dark .dz-image{
-  padding: .5rem;
+.vue-dropzone-dark .dz-image {
+  padding: 0.5rem;
   background: black;
 }
 </style>
@@ -203,7 +315,7 @@ export default {
     vueDropzone: vue2Dropzone,
     Skeleton,
     SkeletonForm,
-    NoData
+    NoData,
   },
   props: {
     route: String,
@@ -303,6 +415,12 @@ export default {
       }
       if (this.$refs.ref_image.dropzone.files[0]) {
         fd.append("logo", this.$refs.ref_image.dropzone.files[0]);
+      }
+      if (this.$refs.ref_image_advisory.dropzone.files[0]) {
+        fd.append(
+          "logo_advisory",
+          this.$refs.ref_image_advisory.dropzone.files[0]
+        );
       }
       axios({
         method: method,

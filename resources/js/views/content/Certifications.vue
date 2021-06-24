@@ -5,10 +5,18 @@
         <div class="header-body">
           <div class="row align-items-center pt-0 pt-md-2 pb-4">
             <div class="col-6 col-md-7">
-              <BreadCrumb title="Certificados" parent="Contenido" active="Información General"></BreadCrumb>
+              <BreadCrumb
+                title="Certificados"
+                parent="Contenido"
+                active="Información General"
+              ></BreadCrumb>
             </div>
             <div class="col-6 col-md-5 text-right">
-              <a href="#" class="btn btn-icon btn-inverse-primary" @click.prevent="newEl">
+              <a
+                href="#"
+                class="btn btn-icon btn-inverse-primary"
+                @click.prevent="newEl"
+              >
                 <span class="btn-inner--icon">
                   <jam-info class="current-color" />
                 </span>
@@ -62,7 +70,9 @@
           <div class="row">
             <div class="col-12">
               <div class="form-group">
-                <label class="font-weight-bold d-block" for="name">Nombre</label>
+                <label class="font-weight-bold d-block" for="name"
+                  >Nombre</label
+                >
                 <input
                   type="text"
                   class="form-control"
@@ -73,7 +83,8 @@
                   v-if="errors && errors.name"
                   class="mt-2 text-danger text-sm"
                   for="name"
-                >{{ errors.name[0] }}</label>
+                  >{{ errors.name[0] }}</label
+                >
               </div>
 
               <div class="form-group">
@@ -81,7 +92,7 @@
                 <div class="row">
                   <div class="col text-center" v-if="element.image">
                     <img
-                      :src="imagesUrl+'/certifications/'+element.image"
+                      :src="imagesUrl + '/certifications/' + element.image"
                       height="75"
                       :alt="element.name_es"
                     />
@@ -89,7 +100,15 @@
                   <div class="col">
                     <vue-dropzone
                       ref="ref_image"
-                      @vdropzone-file-added="$validateImageDropzone($event,$refs.ref_image.dropzone,1,51200,'50kb')"
+                      @vdropzone-file-added="
+                        $validateImageDropzone(
+                          $event,
+                          $refs.ref_image.dropzone,
+                          1,
+                          51200,
+                          '50kb'
+                        )
+                      "
                       id="image"
                       class="text-center"
                       :options="dropzoneOptions"
@@ -97,9 +116,9 @@
                       :useCustomSlot="true"
                     >
                       <div class="dropzone-custom-content">
-                        <h5
-                          class="dropzone-custom-title text-primary"
-                        >Suelte los archivos aquí o haga click para cargarlos.</h5>
+                        <h5 class="dropzone-custom-title text-primary">
+                          Suelte los archivos aquí o haga click para cargarlos.
+                        </h5>
                       </div>
                     </vue-dropzone>
                   </div>
@@ -109,7 +128,55 @@
                   v-if="errors && errors.image"
                   class="text-danger text-sm d-block mt-2"
                   for="image"
-                >{{ errors.image[0] }}</label>
+                  >{{ errors.image[0] }}</label
+                >
+              </div>
+
+              <div class="form-group">
+                <label class="font-weight-bold" for="image"
+                  >Imagen Sistema de Asesores:</label
+                >
+                <div class="row">
+                  <div class="col text-center" v-if="element.image_advisory">
+                    <img
+                      :src="imagesUrl + '/members/' + element.image_advisory"
+                      height="75"
+                      :alt="element.name_es"
+                    />
+                  </div>
+                  <div class="col">
+                    <vue-dropzone
+                      ref="ref_image_advisory"
+                      @vdropzone-file-added="
+                        $validateImageDropzone(
+                          $event,
+                          $refs.ref_image_advisory.dropzone,
+                          1,
+                          51200,
+                          '50kb'
+                        )
+                      "
+                      id="image_advisory"
+                      class="text-center"
+                      :options="dropzoneOptions"
+                      :duplicateCheck="true"
+                      :useCustomSlot="true"
+                    >
+                      <div class="dropzone-custom-content">
+                        <h5 class="dropzone-custom-title text-primary">
+                          Suelte los archivos aquí o haga click para cargarlos.
+                        </h5>
+                      </div>
+                    </vue-dropzone>
+                  </div>
+                </div>
+
+                <label
+                  v-if="errors && errors.image_advisory"
+                  class="text-danger text-sm d-block mt-2"
+                  for="image_advisory"
+                  >{{ errors.image_advisory[0] }}</label
+                >
               </div>
             </div>
           </div>
@@ -122,7 +189,9 @@
           @click="submit"
           :request-server="requestSubmit"
         ></Button>
-        <button type="button" class="btn btn-secondary" @click="restoreEl">Cancelar</button>
+        <button type="button" class="btn btn-secondary" @click="restoreEl">
+          Cancelar
+        </button>
       </template>
     </b-modal>
 
@@ -168,6 +237,7 @@ export default {
       element: {
         name: "",
         image: "",
+        image_advisory: "",
       },
       title: "",
       dropzoneOptions: {
@@ -204,6 +274,12 @@ export default {
       }
       if (this.$refs.ref_image.dropzone.files[0]) {
         fd.append("image", this.$refs.ref_image.dropzone.files[0]);
+      }
+      if (this.$refs.ref_image_advisory.dropzone.files[0]) {
+        fd.append(
+          "image_advisory",
+          this.$refs.ref_image_advisory.dropzone.files[0]
+        );
       }
       axios({
         method: method,
@@ -249,6 +325,7 @@ export default {
       this.element = {
         name: "",
         image: "",
+        image_advisory: "",
       };
     },
     restore() {
@@ -258,6 +335,7 @@ export default {
       this.element = {
         name: "",
         image: "",
+        image_advisory: "",
       };
       this.getEls();
     },
@@ -299,7 +377,7 @@ export default {
     destroyConfirm() {
       this.requestSubmit = true;
       axios
-        .delete(this.route + '/' + this.element.id)
+        .delete(this.route + "/" + this.element.id)
         .then((response) => {
           this.restore();
           Swal.fire({

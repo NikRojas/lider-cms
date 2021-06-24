@@ -36,7 +36,7 @@
                     <span style="font-size: 2.5rem; font-weight:medium;" v-else>{{ el.avatar_initials }}</span>
                   </span>
                 </div>
-                <h3 class="mb-1">
+                <h3 >
                   <span class="font-weight-normal">Nombre:</span>
                   {{ el.name }}
                 </h3>
@@ -44,13 +44,17 @@
                   <span class="font-weight-normal">Email:</span>
                   {{ el.email }}
                 </h3>
-                <h3 class="mb-1">
+                <h3 >
                   <span class="font-weight-normal">Móvil:</span>
                   {{ el.mobile_masked }}
                 </h3>
                 <h3>
                   <span class="font-weight-normal">Código SAP:</span>
                   {{ el.sap_code ? el.sap_code : 'No registrado' }}
+                </h3>
+                <h3 >
+                  <span class="font-weight-normal">Tiene acceso al Sistema de Asesores:</span>
+                  {{ el.tps_status ? 'Sí' : 'No' }}
                 </h3>
                 <div class="mt-4 text-center">
                   <button @click="editEl(el.id)" class="btn btn-inverse-info btn-sm">Editar</button>
@@ -65,6 +69,7 @@
                     v-b-tooltip.hover
                     :title="messageCantDelete"
                   >Eliminar</button>
+                  <button @click="editCredentials(el.id)" class="btn btn-inverse-primary btn-sm">Credenciales S. Asesores</button>
                 </div>
               </div>
             </div>
@@ -73,6 +78,72 @@
         <NoData v-else/>
       </div>
     </div>
+
+    <b-modal
+      v-model="modalCredentials"
+      @close="restoreEl"
+      no-close-on-esc
+      no-close-on-backdrop
+      centered
+      footer-class="border-0 pt-0"
+      body-class="pt-0"
+    >
+      <template slot="modal-title">
+        <div class="text-primary h2">Credenciales Asesor</div>
+      </template>
+      <template slot="modal-header-close">
+        <button type="button" class="btn p-0 bg-transparent" @click="restoreEl">
+          <jam-close></jam-close>
+        </button>
+      </template>
+      <div v-if="loadingGet">
+        <SkeletonForm></SkeletonForm>
+      </div>
+      <div v-else>
+        <form @submit.prevent="submitCredentials">
+          <div class="row">
+            
+            <div class="col-12">
+              <div class="form-group">
+                <label class="font-weight-bold" for="email">Email</label>
+                <input type="text" class="form-control" v-model="element.email" disabled id="email" />
+              </div>
+            </div>
+            <div class="col-12">
+              <div class="form-group">
+                <label class="font-weight-bold" for="tps_password">Contraseña</label>
+                <input type="password" class="form-control" v-model="element.tps_password" id="tps_password" />
+                <small class="form-text d-block" style="opacity: 0.7;">Mínimo de longitud 8 caracteres</small>
+                <label
+                  v-if="errors && errors.tps_password"
+                  class="mt-2 text-danger text-sm"
+                  for="tps_password"
+                >{{ errors.tps_password[0] }}</label>
+              </div>
+            </div>
+            <div class="col-12">
+              <b-form-checkbox
+                size="lg"
+                v-model="element.tps_status"
+                name="check-button"
+                switch
+              >
+                Puede acceder al Sistema de Asesores
+              </b-form-checkbox>
+            </div>
+          </div>
+        </form>
+      </div>
+      <template v-slot:modal-footer="{ ok }">
+        <Button
+          :classes="['btn-inverse-primary']"
+          text="Actualizar"
+          @click="submitCredentials"
+          :request-server="requestSubmit"
+        ></Button>
+        <button type="button" class="btn btn-secondary" @click="restoreEl">Cancelar</button>
+      </template>
+    </b-modal>
 
     <b-modal
       v-model="modalCreateUpdate"
@@ -255,6 +326,7 @@ export default {
         addRemoveLinks: true,
         dictRemoveFile: "Remover",
       },
+      modalCredentials: false,
     };
   },
   methods: {
@@ -375,6 +447,7 @@ export default {
         (this.modalCreateUpdate = this.modalDestroy = false);
       this.getEls();
       this.errors = {};
+      this.modalCredentials = false;
     },
     deleteEl(id) {
       this.modalDestroy = true;
@@ -386,6 +459,7 @@ export default {
       }),
         (this.modalCreateUpdate = this.modalDestroy = false);
       this.errors = {};
+      this.modalCredentials = false;
     },
     getEls() {
       this.loadingEls = true;
@@ -407,6 +481,50 @@ export default {
         })
         .catch((error) => {});
     },
+    editCredentials(id){
+      this.modalCredentials = true;
+      this.getEl(id);
+    },
+    submitCredentials(){
+      this.requestSubmit = true;
+      axios({
+        method: 'PUT',
+        url: this.route + "/credentials/" + this.element.id,
+        data: this.element,
+      })
+        .then((response) => {
+          this.requestSubmit = false;
+          Swal.fire({
+            title: response.data.title,
+            text: response.data.message,
+            type: "success",
+            confirmButtonText: "OK",
+            buttonsStyling: false,
+            customClass: {
+              confirmButton: "btn btn-inverse-primary",
+            },
+          });
+          this.restore();
+        })
+        .catch((error) => {
+          this.requestSubmit = false;
+          if (error.response.status === 422) {
+            this.errors = error.response.data.errors || {};
+            return;
+          }
+          Swal.fire({
+            title: error.response.data.title,
+            text: error.response.data.message,
+            type: "error",
+            confirmButtonText: "OK",
+            buttonsStyling: false,
+            customClass: {
+              confirmButton: "btn btn-inverse-primary",
+            },
+          });
+          this.restoreEl();
+        });
+    }
   },
   created() {
     this.getEls();

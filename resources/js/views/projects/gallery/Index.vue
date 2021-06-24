@@ -113,9 +113,9 @@
                         >Eliminar</button>
                         <button
                           @click="materialsEl(el2.id)"
-                          class="btn btn-inverse-info btn-sm"
+                          class="btn btn-inverse-primary btn-sm"
                         >
-                          PC - Materiales
+                          S. Asesores - Materiales
                         </button>
                       </div>
                     </div>

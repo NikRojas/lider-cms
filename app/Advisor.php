@@ -8,6 +8,12 @@ class Advisor extends Model
 {
     protected $guarded = [];
     protected $appends = ['can_delete','mobile_masked','avatar_initials'];
+    protected $casts = [
+        'tps_status' => 'boolean',
+    ];
+    protected $hidden = [
+        'tps_password'
+    ];
 
     public function projectsRel()
     {

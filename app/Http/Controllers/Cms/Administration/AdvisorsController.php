@@ -6,9 +6,11 @@ use App\Advisor;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Cms\Administration\AdvisorRequest;
+use App\Http\Requests\Cms\Administration\TPSAdvisorRequest;
 use App\Http\Traits\CmsTrait;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Hash;
 
 class AdvisorsController extends Controller
 {
@@ -76,6 +78,19 @@ class AdvisorsController extends Controller
         } 
         catch (\Exception $e){
             return response()->json(['title'=> trans('custom.title.error'), 'message'=> trans('custom.message.delete.error', ['name' => trans('custom.attribute.advisor')]) ],500);
+        }
+    }
+
+    public function credentials(Advisor $element,TPSAdvisorRequest $request){
+        $request_adv = request(['tps_status']);
+        if ($request->filled('tps_password')) {
+            $request_adv = array_merge($request_adv, ['tps_password' => Hash::make($request->tps_password) ]);
+        }
+        try {
+            $adv = Advisor::UpdateOrCreate(['id' => $element->id], $request_adv);
+            return response()->json(['title'=> trans('custom.title.success'), 'message'=> trans('custom.message.update.success', ['name' => trans('custom.attribute.advisor')])]);
+        } catch (\Exception $e) {
+            return response()->json(['title'=> trans('custom.title.error'), 'message'=> trans('custom.message.update.error', ['name' => trans('custom.attribute.advisor')]) ], 500);
         }
     }
 }

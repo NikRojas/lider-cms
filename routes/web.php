@@ -91,6 +91,7 @@ Route::middleware(['auth'])->namespace('Cms')->name('cms.')->group(function () {
         Route::name('advisors.')->prefix('asesores')->group(function () {
             Route::get('/', 'AdvisorsController@index')->name('index');
             Route::post('/', 'AdvisorsController@store')->name('store');
+            Route::put('/credentials/{element}', 'AdvisorsController@credentials')->name('credentials');
             Route::put('/{element}', 'AdvisorsController@update')->name('update');
             Route::delete('/{element}', 'AdvisorsController@destroy')->name('destroy');
             Route::get('/json/get-all', 'AdvisorsController@getAll')->name('get-all');

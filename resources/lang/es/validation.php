@@ -216,7 +216,8 @@ return [
         'sap_code' => 'código sap',
         'parent_type_department_id' => 'tipo de inmueble',
         'user' => 'usuario',
-        'master_currency_id' => 'tipo de moneda'
+        'master_currency_id' => 'tipo de moneda',
+        'tps_password' => 'contraseña'
     ],
 
 ];

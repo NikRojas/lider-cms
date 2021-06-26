@@ -61,6 +61,36 @@ class SendReserveToSap implements ShouldQueue
             $client = new Client([
                 'headers' => $headers
             ]);
+            if(!$this->order->advisor_id){
+                Log::info("No tiene asesor");
+                $advisorId = null;
+                $advisors = $this->order->orderDetailsRel[0]->projectRel->advisorsRel;
+                $ifItsFirstRecord = Order::count();
+                //Is First Record
+                if($ifItsFirstRecord == 1){
+                    $advisorId = $advisors->first()->id;
+                }
+                else{
+                    $advisorsTotal = $advisors->count() - 1;
+                    $lastOrders = Order::orderBy('created_at','desc')->skip(1)->take($advisorsTotal)->get();
+                    $pluckAdvisors = $advisors->pluck('id');
+                    $pluckAdvisorsLastOrders = $lastOrders->pluck('advisor_id');
+
+                    $diff = $pluckAdvisors->diff($pluckAdvisorsLastOrders);
+                    $diff = $diff->all();
+                    if(!$diff){
+                        $advisorId = $advisors->first()->id;
+                    }
+                    else{
+                        $advisorId = array_pop($diff);
+                    }
+                }
+                $advisorId = $advisorId;
+                $advisorSend = Advisor::where('id',$advisorId)->first();
+            }
+            else{
+                $advisorSend = Advisor::where('id',$this->order->advisor_id)->first();
+            }
             $responseSap = $client->request('POST', $this->url, ['json' => [
                 'nro_documento' => $this->order->customerRel->document_number, 
                 'nombre' => $this->order->customerRel->name,
@@ -69,79 +99,32 @@ class SendReserveToSap implements ShouldQueue
                 'telefono' => $this->order->customerRel->mobile,
                 'correo' => $this->order->customerRel->email,
                 'tipo_documento' => $this->order->customerRel->documentTypeRel->sap_value,
-                'inmueble' => $sapCode
+                'inmueble' => $sapCode,
+                "vendedor" => $advisorSend->sap_code
             ]]);
+            Log::info($advisorSend->sap_code);
+            Log::info((string) $responseSap->getBody());
             $status = $responseSap->getStatusCode();
             $responseData = json_decode($responseSap->getBody());
-            #Test {
-                /*$status = 200;
-                Log::info([
-                    'nro_documento' => $this->order->customerRel->document_number, 
-                    'nombre' => $this->order->customerRel->name,
-                    'apellido_paterno' => $this->order->customerRel->lastname,
-                    'apellido_materno' => $this->order->customerRel->lastname_2,
-                    'telefono' => $this->order->customerRel->mobile,
-                    'correo' => $this->order->customerRel->email,
-                    'tipo_documento' => $this->order->customerRel->documentTypeRel->sap_value,
-                    'inmueble' => $sapCode
-                ]);
-                $responseSap = '{
-                    "exito": true,
-                    "reserva": "0040000200",
-                    "mensaje": "",
-                    "vendedor": "01000015"
-                }';
-                $responseData = json_decode($responseSap);*/
-            #EndTest }
             if($responseData->exito){
                 #Actualizar Orden con los datos del SAP
                 $requestOrder = [ "sended_to_sap" => 1, "sended_to_sap_date" => Carbon::now(), "sended_code_sap" => $responseData->reserva ];
-                if(isset($responseData->vendedor)){
-                    #Asignacion de Asesor
-                    #Obtener el asesor que devuelve el SAP
-                    $advisor = Advisor::where('sap_code',$responseData->vendedor)->first();
-                    Log::info("Asesor Retorno desde el SAP");
-                    Log::info($advisor);
-                    #Si tiene asesor agregarlo al array de actualizacion
-                    if($advisor){
-                        $requestOrder = array_merge($requestOrder, [ "advisor_id" => $advisor->id ]);
-                    }
-                }
                 $orderUpdate = Order::UpdateOrCreate(["id" => $this->order->id], $requestOrder);
-                #Si no tiene asesor se le asigna
-                if(!$orderUpdate->advisor_id){
-                    Log::info("No tiene asesor");
-                    $advisorId = null;
-                    $advisors = $this->order->orderDetailsRel[0]->projectRel->advisorsRel;
-                    $ifItsFirstRecord = Order::count();
-                    //Is First Record
-                    if($ifItsFirstRecord == 1){
-                        $advisorId = $advisors->first()->id;
+                if(isset($responseData->vendedor)){
+                    Log::info("Asesor Retorno desde el SAP");
+                    if($advisorSend->sap_code != $responseData->vendedor){
+                        #Asignacion de Asesor
+                        #Obtener el asesor que devuelve el SAP
+                        $advisorReturned = Advisor::where('sap_code',$responseData->vendedor)->first();
+                        Log::info($advisorReturned);
+                        if($advisorReturned){
+                            $orderUpdateAdvisor = Order::UpdateOrCreate(["id" => $this->order->id], ["advisor_id" => $advisorReturned->id]);
+                            Notification::route('mail',$advisorReturned->email)->notify(new AdvisorOrderPaid($this->order));  
+                        }
                     }
                     else{
-                        $advisorsTotal = $advisors->count() - 1;
-                        $lastOrders = Order::orderBy('created_at','desc')->skip(1)->take($advisorsTotal)->get();
-                        $pluckAdvisors = $advisors->pluck('id');
-                        $pluckAdvisorsLastOrders = $lastOrders->pluck('advisor_id');
-
-                        $diff = $pluckAdvisors->diff($pluckAdvisorsLastOrders);
-                        $diff = $diff->all();
-                        if(!$diff){
-                            $advisorId = $advisors->first()->id;
-                        }
-                        else{
-                            $advisorId = array_pop($diff);
-                        }
+                        Notification::route('mail',$advisorSend->email)->notify(new AdvisorOrderPaid($this->order));  
                     }
-                    $advisorId = $advisorId;
-                    $orderUpdateAdvisor = Order::UpdateOrCreate(["id" => $this->order->id], ["advisor_id" => $advisorId]);
-                    $advisorSend = Advisor::where('id',$advisorId)->first();
-                    Notification::route('mail',$advisorSend->email)->notify(new AdvisorOrderPaid($this->order));  
-                }
-                #Si tiene se le envia la notificacion al asesor
-                else{
-                    $advisorSend = Advisor::where('id',$orderUpdate->advisor_id)->first();
-                    Notification::route('mail',$advisorSend->email)->notify(new AdvisorOrderPaid($this->order));  
                 }
                 #Actualizar Stock del Departamento
                 $departmentUpdate = Department::UpdateOrCreate(["id" => $this->order->orderDetailsRel[0]->departmentRel->id], ["available" => false]);

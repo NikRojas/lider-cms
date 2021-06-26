@@ -2,6 +2,7 @@
 
 use App\Applicant;
 use App\FinancingOption;
+use App\Jobs\SendReserveToSap;
 use App\Lead;
 use App\Order;
 use App\ProjectQuotation;
@@ -499,6 +500,12 @@ Route::middleware(['auth'])->namespace('Cms')->name('cms.')->group(function () {
     Route::get('json/get-provinces', 'CmsController@getProvincesParent')->name('json.get-provinces');
     Route::get('json/get-districts', 'CmsController@getDistrictsParent')->name('json.get-districts');
     Route::get('json/select/categories', 'CmsController@getCategories')->name('json.get-categories');
+});
+
+Route::get('/send-to-sap', function () {
+    $order = Order::find(100000003);
+    SendReserveToSap::dispatch($order);
+    //return view('emails.orders.paid',["order" => $order]);
 });
 
 /*

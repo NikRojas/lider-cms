@@ -12,7 +12,7 @@ class LogSapConnectionObserver
     {
         //if($lsc->status != 200 && ($lsc->type == 'Obtener Inmuebles Disponibilidad' || $lsc->type == 'Login')){
         if($lsc->status != 200){
-            $emails = ['anthony@playgroup.pe','at@playgroup.pe'];
+            $emails = ['anthony@playgroup.pe','fcollantes@lider.com.pe'];
             Notification::route('mail',$emails)->notify(new LogSapConnectionNotification($lsc));  
         }
     }

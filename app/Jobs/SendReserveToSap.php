@@ -105,7 +105,17 @@ class SendReserveToSap implements ShouldQueue
                 'inmueble' => $sapCode,
                 "vendedor" => $advisorSend->sap_code
             ]]);
-            //Log::info($advisorSend->sap_code);
+            Log::info([
+                'nro_documento' => $this->order->customerRel->document_number, 
+                'nombre' => $this->order->customerRel->name,
+                'apellido_paterno' => $this->order->customerRel->lastname,
+                'apellido_materno' => $this->order->customerRel->lastname_2,
+                'telefono' => $this->order->customerRel->mobile,
+                'correo' => $this->order->customerRel->email,
+                'tipo_documento' => $this->order->customerRel->documentTypeRel->sap_value,
+                'inmueble' => $sapCode,
+                "vendedor" => $advisorSend->sap_code
+            ]);
             //Log::info((string) $responseSap->getBody());
             $status = $responseSap->getStatusCode();
             $responseData = json_decode($responseSap->getBody());
@@ -139,6 +149,7 @@ class SendReserveToSap implements ShouldQueue
                 $description = $description.' - Éxito.';
             }
             else{
+                $status = 500;
                 $description = $description.' - Error Retorno SAP.';
             }
             #LogSapConnection

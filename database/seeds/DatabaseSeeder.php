@@ -29,7 +29,7 @@ class DatabaseSeeder extends Seeder
         $this->call(MasterFieldsTableSeeder::class);*/
 
         #Payment
-        $this->call(ProjectsParentTypeDepartmentsTableSeeder::class);
+        /*$this->call(ProjectsParentTypeDepartmentsTableSeeder::class);
         $this->call(ProjectsViewsTableSeeder::class);
         $this->call(MasterModulesTableSeeder2::class);
         $this->call(MasterDocumentTypeSeeder2::class);
@@ -40,7 +40,8 @@ class DatabaseSeeder extends Seeder
         DB::update("ALTER TABLE orders AUTO_INCREMENT = 100000000;");
         $this->call(AdvisorUpdateTableSeeder::class);
         $this->call(CredentialsPaymentGateway::class);
-        $this->call(UpdateSAPCodeProjectsTableSeeder::class);
+        $this->call(UpdateSAPCodeProjectsTableSeeder::class);*/
+        $this->call(AdvisorUpdateTableSeeder::class);
         #EndPayment
 
         /*$this->call(ComplaintsBookSeeder::class);*/

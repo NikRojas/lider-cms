@@ -502,11 +502,11 @@ Route::middleware(['auth'])->namespace('Cms')->name('cms.')->group(function () {
     Route::get('json/select/categories', 'CmsController@getCategories')->name('json.get-categories');
 });
 
-Route::get('/send-to-sap', function () {
+/*Route::get('/send-to-sap', function () {
     $order = Order::find(100000000);
     SendReserveToSap::dispatch($order);
     //return view('emails.orders.paid',["order" => $order]);
-});
+});*/
 
 /*
 Route::get('/mail/reserve', function () {

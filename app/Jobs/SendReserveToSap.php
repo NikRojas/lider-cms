@@ -54,15 +54,7 @@ class SendReserveToSap implements ShouldQueue
         $sapCode = $this->order->orderDetailsRel[0]->departmentRel->sap_code;
         $description = 'Inmueble '.$this->order->orderDetailsRel[0]->departmentRel->description.' (Código SAP: '.$sapCode.') Proyecto ' . $this->order->orderDetailsRel[0]->projectRel->name_es;
         try {
-            $headers = [
-                'Content-Type' => 'application/json',
-                'Authorization' => 'Bearer '.$sapCredentials->token,
-            ];
-            $client = new Client([
-                'headers' => $headers
-            ]);
             if(!$this->order->advisor_id){
-                Log::info("No tiene asesor");
                 $advisorId = null;
                 $advisors = $this->order->orderDetailsRel[0]->projectRel->advisorsRel;
                 $ifItsFirstRecord = Order::count();
@@ -87,10 +79,21 @@ class SendReserveToSap implements ShouldQueue
                 }
                 $advisorId = $advisorId;
                 $advisorSend = Advisor::where('id',$advisorId)->first();
+                //Log::info("Asesor asignado");
+                //Log::info($advisorSend);
             }
             else{
                 $advisorSend = Advisor::where('id',$this->order->advisor_id)->first();
+                //Log::info("Asesor asignado desde la web");
+                //Log::info($advisorSend);
             }
+            $headers = [
+                'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer '.$sapCredentials->token,
+            ];
+            $client = new Client([
+                'headers' => $headers
+            ]);
             $responseSap = $client->request('POST', $this->url, ['json' => [
                 'nro_documento' => $this->order->customerRel->document_number, 
                 'nombre' => $this->order->customerRel->name,
@@ -102,8 +105,8 @@ class SendReserveToSap implements ShouldQueue
                 'inmueble' => $sapCode,
                 "vendedor" => $advisorSend->sap_code
             ]]);
-            Log::info($advisorSend->sap_code);
-            Log::info((string) $responseSap->getBody());
+            //Log::info($advisorSend->sap_code);
+            //Log::info((string) $responseSap->getBody());
             $status = $responseSap->getStatusCode();
             $responseData = json_decode($responseSap->getBody());
             if($responseData->exito){
@@ -111,20 +114,25 @@ class SendReserveToSap implements ShouldQueue
                 $requestOrder = [ "sended_to_sap" => 1, "sended_to_sap_date" => Carbon::now(), "sended_code_sap" => $responseData->reserva ];
                 $orderUpdate = Order::UpdateOrCreate(["id" => $this->order->id], $requestOrder);
                 if(isset($responseData->vendedor)){
-                    Log::info("Asesor Retorno desde el SAP");
+                    //Log::info("Asesor Retorno desde el SAP");
                     if($advisorSend->sap_code != $responseData->vendedor){
                         #Asignacion de Asesor
                         #Obtener el asesor que devuelve el SAP
                         $advisorReturned = Advisor::where('sap_code',$responseData->vendedor)->first();
-                        Log::info($advisorReturned);
+                        //Log::info($advisorReturned);
                         if($advisorReturned){
                             $orderUpdateAdvisor = Order::UpdateOrCreate(["id" => $this->order->id], ["advisor_id" => $advisorReturned->id]);
                             Notification::route('mail',$advisorReturned->email)->notify(new AdvisorOrderPaid($this->order));  
                         }
                     }
                     else{
+                        $orderUpdateAdvisor = Order::UpdateOrCreate(["id" => $this->order->id], ["advisor_id" => $advisorSend->id]);
                         Notification::route('mail',$advisorSend->email)->notify(new AdvisorOrderPaid($this->order));  
                     }
+                }
+                else{
+                    $orderUpdateAdvisor = Order::UpdateOrCreate(["id" => $this->order->id], ["advisor_id" => $advisorSend->id]);
+                    Notification::route('mail',$advisorSend->email)->notify(new AdvisorOrderPaid($this->order));
                 }
                 #Actualizar Stock del Departamento
                 $departmentUpdate = Department::UpdateOrCreate(["id" => $this->order->orderDetailsRel[0]->departmentRel->id], ["available" => false]);

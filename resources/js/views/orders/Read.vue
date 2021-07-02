@@ -48,11 +48,13 @@
                           <div class="col-12">
                             <img
                               v-if="el.department_rel.image"
-                              height="50"
+                              height="100"
                               class="ml-md-0 ml-3 d-block d-md-inline"
                               :src="imagesUrl + '/projects/estates/'+el.department_rel.image"
                               alt
                             />
+                            <img height="100"
+                              class="ml-md-0 ml-3 d-block d-md-inline" :src="imagesUrl + '/projects/tipologies/'+el.department_rel.tipology_rel.image" v-else-if="el.department_rel.tipology_rel.image" alt="">
                             <div class="ml-md-0 ml-3 mt-1">
                               <a
                                 style="text-decoration: underline;"

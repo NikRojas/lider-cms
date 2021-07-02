@@ -2,9 +2,11 @@
 
 use App\Applicant;
 use App\FinancingOption;
+use App\Jobs\SendReserveToSap;
 use App\Lead;
 use App\Order;
 use App\ProjectQuotation;
+use App\ProjectTypeDepartment;
 
 Route::get('/', 'Cms\Auth\LoginController@showLoginForm')->name('login');
 Route::post('login', 'Cms\Auth\LoginController@login')->name('login.post');
@@ -544,9 +546,31 @@ Route::middleware(['auth'])->namespace('Cms')->name('cms.')->group(function () {
     Route::get('json/select/categories', 'CmsController@getCategories')->name('json.get-categories');
 });
 
+/*Route::get('/get-tipologies', function () {
+    $els = ProjectTypeDepartment::with('projectRel')->get();
+    $html = "<table>";
+    foreach ($els as $key => $value) {
+            $html.= "<tr>";
+            $html.= "<td>".$value["id"]."</td>";
+            $html.= "<td>".$value["projectRel"]["name_es"]."</td>";
+            $html.= "<td>".$value["name"]."</td>";
+            $html.= "<td>".$value["area"]."</td>";
+            $html.= "<td>".$value["slug"]."</td>";
+            $html.= "</tr>";
+    }
+    $html.= "</table>";
+    return $html;
+});*/
+
+/*Route::get('/send-to-sap', function () {
+    $order = Order::find(100000000);
+    SendReserveToSap::dispatch($order);
+    //return view('emails.orders.paid',["order" => $order]);
+});*/
+
 /*
 Route::get('/mail/reserve', function () {
-    $order = Order::find(100000008);
+    $order = Order::find(100000001);
     return view('emails.orders.paid',["order" => $order]);
 });
 

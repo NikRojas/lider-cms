@@ -231,6 +231,8 @@
                                                                     <center style="min-width:490px;width:100%">
                                                                         @if($order->orderDetailsRel[0]["departmentRel"]["image"])
                                                                         <img src="{{ asset('storage/img/projects/estates/'.$order->orderDetailsRel[0]["departmentRel"]["image"])}}" height="350" alt align="center" class="float-center" style="-ms-interpolation-mode:bicubic;Margin:0 auto;clear:both;display:block;float:none;margin:0 auto;max-width:100%;outline:0;text-align:center;text-decoration:none;width:auto">
+                                                                        @elseif($order->orderDetailsRel[0]["departmentRel"]["tipologyRel"]["image"])
+                                                                        <img src="{{ asset('storage/img/projects/tipologies/'.$order->orderDetailsRel[0]["departmentRel"]["tipologyRel"]["image"])}}" height="350" alt align="center" class="float-center" style="-ms-interpolation-mode:bicubic;Margin:0 auto;clear:both;display:block;float:none;margin:0 auto;max-width:100%;outline:0;text-align:center;text-decoration:none;width:auto">
                                                                         @else
                                                                         <img src="{{ asset('storage/img/p-no-data.png')}}" height="350" alt align="center" class="float-center" style="-ms-interpolation-mode:bicubic;Margin:0 auto;clear:both;display:block;float:none;margin:0 auto;max-width:100%;outline:0;text-align:center;text-decoration:none;width:auto">
                                                                         @endif

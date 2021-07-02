@@ -135,6 +135,14 @@
                               alt
                             />
                             </div>
+                            <div class="col-12 col-lg-3"  v-else-if="el2.department_rel.tipology_rel.image">
+                               <img
+                              class="d-block img-fluid"
+                             
+                              :src="imagesUrl + '/projects/tipologies/'+el2.department_rel.tipology_rel.image"
+                              alt
+                            />
+                            </div>
                             <div class="col">
                               <div class="ml-md-0 ml-3 mt-1">
                               <a

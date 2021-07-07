@@ -41,7 +41,7 @@ class DatabaseSeeder extends Seeder
         $this->call(AdvisorUpdateTableSeeder::class);
         $this->call(CredentialsPaymentGateway::class);
         $this->call(UpdateSAPCodeProjectsTableSeeder::class);*/
-        $this->call(AdvisorUpdateTableSeeder::class);
+        //$this->call(AdvisorUpdateTableSeeder::class);
         #EndPayment
 
         /*$this->call(ComplaintsBookSeeder::class);*/

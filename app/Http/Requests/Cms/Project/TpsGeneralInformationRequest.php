@@ -28,6 +28,7 @@ class TpsGeneralInformationRequest extends FormRequest
             'tps_latitude' => 'nullable|max:200',
             'tps_longitude' => 'nullable|max:200',
             'tps_location_description' => 'nullable',
+            'tps_base_dsct_ci' => 'nullable|integer',
             'id' => 'required',
         ];
     }

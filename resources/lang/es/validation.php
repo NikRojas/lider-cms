@@ -217,7 +217,8 @@ return [
         'parent_type_department_id' => 'tipo de inmueble',
         'user' => 'usuario',
         'master_currency_id' => 'tipo de moneda',
-        'tps_password' => 'contraseña'
+        'tps_password' => 'contraseña',
+        'tps_base_dsct_ci' => 'base dscto ci'
     ],
 
 ];

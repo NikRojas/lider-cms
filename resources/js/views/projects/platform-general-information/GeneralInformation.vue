@@ -22,12 +22,22 @@
           <div class="card mb-4" v-if="startBlock">
             <div class="card-body" v-if="!loadingGetText">
               <div class="row">
-                <div class="col-12 col-md-6 col-lg-6">
+                <div class="col-12 ">
                   <div class="form-group">
                     <label class="font-weight-bold">Título principal:</label>
                     <p v-if="elText.tps_principal_title">
                       {{ elText.tps_principal_title }}
                     </p>
+                    <p v-else>No registrado</p>
+                  </div>
+                </div>
+                <div class="col-12 ">
+                  <div class="form-group">
+                    <label class="font-weight-bold">Descripción:</label>
+                    <p
+                      v-if="elText.tps_location_description"
+                      v-html="elText.tps_location_description"
+                    ></p>
                     <p v-else>No registrado</p>
                   </div>
                 </div>
@@ -49,13 +59,13 @@
                     <p v-else>No registrado</p>
                   </div>
                 </div>
-                <div class="col-12 col-md-6 col-lg-6">
+
+                <div class="col-12 ">
                   <div class="form-group">
-                    <label class="font-weight-bold">Descripción:</label>
-                    <p
-                      v-if="elText.tps_location_description"
-                      v-html="elText.tps_location_description"
-                    ></p>
+                    <label class="font-weight-bold">Base Dscto CI(%):</label>
+                    <p v-if="elText.tps_base_dsct_ci">
+                      {{ elText.tps_base_dsct_ci }}
+                    </p>
                     <p v-else>No registrado</p>
                   </div>
                 </div>
@@ -82,7 +92,7 @@
             <div class="card-body">
               <form @submit.prevent="updateText">
                 <div class="row">
-                  <div class="col-12 col-md-6 col-lg-6">
+                  <div class="col-12 ">
                     <div class="form-group">
                       <label class="font-weight-bold" for="tps_principal_title"
                         >Título Principal</label
@@ -94,10 +104,33 @@
                         id="tps_principal_title"
                       />
                       <label
-                        v-if="errors && errors.tps_principal_title"
+                        v-if="errorsText && errorsText.tps_principal_title"
                         class="mt-2 text-danger text-sm"
                         for="tps_principal_title"
-                        >{{ errors.tps_principal_title[0] }}</label
+                        >{{ errorsText.tps_principal_title[0] }}</label
+                      >
+                    </div>
+                  </div>
+
+                  <div class="col-12">
+                    <div class="form-group">
+                      <label
+                        class="font-weight-bold"
+                        for="tps_location_description"
+                        >Descripción</label
+                      >
+                      <quill-Editor
+                        @keydown.enter.prevent
+                        v-model="elText.tps_location_description"
+                        :options="editorOptions"
+                        class="ql-height-10"
+                        ref="ref_content"
+                      ></quill-Editor>
+                      <label
+                        v-if="errorsText && errorsText.tps_location_description"
+                        class="mt-2 text-danger text-sm"
+                        for="tps_location_description"
+                        >{{ errorsText.tps_location_description[0] }}</label
                       >
                     </div>
                   </div>
@@ -114,10 +147,10 @@
                         id="tps_latitude"
                       />
                       <label
-                        v-if="errors && errors.tps_latitude"
+                        v-if="errorsText && errorsText.tps_latitude"
                         class="mt-2 text-danger text-sm"
                         for="tps_latitude"
-                        >{{ errors.tps_latitude[0] }}</label
+                        >{{ errorsText.tps_latitude[0] }}</label
                       >
                     </div>
                   </div>
@@ -133,33 +166,30 @@
                         id="tps_longitude"
                       />
                       <label
-                        v-if="errors && errors.tps_longitude"
+                        v-if="errorsText && errorsText.tps_longitude"
                         class="mt-2 text-danger text-sm"
                         for="tps_longitude"
-                        >{{ errors.tps_longitude[0] }}</label
+                        >{{ errorsText.tps_longitude[0] }}</label
                       >
                     </div>
                   </div>
 
-                  <div class="col-12 col-md-6 col-lg-6">
+                  <div class="col-12">
                     <div class="form-group">
-                      <label
-                        class="font-weight-bold"
-                        for="tps_location_description"
-                        >Descripción</label
+                      <label class="font-weight-bold" for="tps_base_dsct_ci"
+                        >Base Dscto CI(%)</label
                       >
-                      <quill-Editor
-                        @keydown.enter.prevent
-                        v-model="elText.tps_location_description"
-                        :options="editorOptions"
-                        class="ql-height-10"
-                        ref="ref_content"
-                      ></quill-Editor>
+                      <input
+                        type="text"
+                        class="form-control"
+                        v-model="elText.tps_base_dsct_ci"
+                        id="tps_base_dsct_ci"
+                      />
                       <label
-                        v-if="errors && errors.tps_location_description"
+                        v-if="errorsText && errorsText.tps_base_dsct_ci"
                         class="mt-2 text-danger text-sm"
-                        for="tps_location_description"
-                        >{{ errors.tps_location_description[0] }}</label
+                        for="tps_base_dsct_ci"
+                        >{{ errorsText.tps_base_dsct_ci[0] }}</label
                       >
                     </div>
                   </div>

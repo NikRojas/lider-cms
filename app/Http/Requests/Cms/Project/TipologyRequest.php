@@ -24,8 +24,11 @@ class TipologyRequest extends FormRequest
      */
     public function rules()
     {
+        $request = $this;
         $rules = [
-            'name' => ['required',Rule::unique('project_type_departments')->ignore($this->id),'max:100'],
+            'name' => ['required',Rule::unique('project_type_departments')->where(function ($query) use ($request){
+                return $query->where('project_id',$request->project_id);
+            })->ignore($this->id),'max:100'],
             //'url'  => 'required|url'
             'sap_code' => ['nullable',Rule::unique('project_type_departments')->ignore($this->id),'max:100'],
             'parent_type_department_id' => 'required',

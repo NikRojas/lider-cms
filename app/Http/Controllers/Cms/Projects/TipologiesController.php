@@ -72,7 +72,7 @@ class TipologiesController extends Controller
       $element = array_merge($element, ["image" => $imageName]);
     }
     $index = $this->getMaxIndex(ProjectTypeDepartment::selectRaw('MAX(id),MAX(`index`) as "index"')->where('project_id', $request->project_id)->get());
-    $element = array_merge($element, ["index" => $index, "slug" => Str::slug($request->name, '-')]);
+    $element = array_merge($element, ["index" => $index, "slug" => Str::random(20)]);
     try {
       $element = ProjectTypeDepartment::UpdateOrCreate($element);
       $request->session()->flash('success', trans('custom.message.create.success', ['name' => trans('custom.attribute.tipology')]));

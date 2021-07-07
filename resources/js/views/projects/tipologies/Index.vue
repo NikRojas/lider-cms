@@ -420,8 +420,8 @@ export default {
         { text: "Dólares", value: false },
       ],
       moneyLocal: {
-        decimal: ",",
-        thousands: ".",
+        thousands: ",",
+        decimal: ".",
         //prefix: "S/ ",
         //suffix: ' #',
         precision: 2,

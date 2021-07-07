@@ -47,7 +47,7 @@ class AppServiceProvider extends ServiceProvider
         view()->composer('layouts.dashboard',function($view){
             $menu = [];
             //$modules = Module::where('name','!=','Ventas y Estad.')->where('name','!=','Clientes')->where('name','!=','Postulantes')->where('name','!=','Libro de Reclamaciones')->get();
-            $modules = Module::where('name','!=','Postulantes')->get();
+            $modules = Module::where('name','!=','Postulantes')->where('name','!=','Libro de Reclamaciones')->get();
             foreach( $modules as $i => $module){
                 if(!$module->parent){  
                     $menu[$i]["id"] = $module->id;

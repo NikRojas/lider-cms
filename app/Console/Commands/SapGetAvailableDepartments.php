@@ -5,6 +5,7 @@ namespace App\Console\Commands;
 use App\Department;
 use App\LogSapConnection;
 use App\Project;
+use App\ProjectTypeDepartment;
 use App\SapCredential;
 use GuzzleHttp\Client;
 use Illuminate\Console\Command;
@@ -87,9 +88,11 @@ class SapGetAvailableDepartments extends Command
                     $estates = $responseData->inmuebles;
                     #Si existe el Departmento en el response del SAP, actualizar sus datos, sino existe ponerlo como no disponible
                     $departments = Department::where('project_id',$value->id)->get();
+                    $estatesExist = [];
                     foreach ($departments as $key => $dep) {
                         foreach ($estates as $key2 => $value2) {
                             if($dep->sap_code == $value2->codigo ){
+                                array_push($estatesExist,  $dep->id);
                                 $price = $price_foreign = null;
                                 if($value2->precio_pen){
                                     $price = $value2->precio_pen;
@@ -101,6 +104,49 @@ class SapGetAvailableDepartments extends Command
                             }
                         }
                     }
+                    if(count($estatesExist) > 0){
+                        #Tipologias Registradas
+                        $typeDepartments = ProjectTypeDepartment::where('project_id',$value->id)->get();
+                        #Obtener Departamento Actualizado por ID
+                        $estates_temp = [];
+                        foreach ($estatesExist as $keyEstatesExist => $valueEstatesExist) {
+                            $estates_temp[] = Department::where('id',$valueEstatesExist)->first();
+                        }
+                        #Agrupar por Departamentos por Tipologia
+                        $estatesByTypeDepartment = collect($estates_temp)->groupBy('type_department_id');
+                        $typeDepartmentIdsAvailable = [];
+                        #keyEstatesByTypeDepartment es el Id de la Tipologia y valueEstatesByTypeDepartment los Departamentos que se recibieron
+                        foreach ($estatesByTypeDepartment as $keyEstatesByTypeDepartment => $valueEstatesByTypeDepartment) {
+                            //Log::info("Id Tipologia". $keyEstatesByTypeDepartment);
+                            //Log::info($valueEstatesByTypeDepartment);
+                            $typeDepartmentIdsAvailable[] = $keyEstatesByTypeDepartment;
+                            $minArea = $valueEstatesByTypeDepartment->min('area');
+                            $minPrice = $valueEstatesByTypeDepartment->min('price');
+                            $minPriceForeign = $valueEstatesByTypeDepartment->min('price_foreign');
+                            $updateTypeDepartmentTemp = [];
+                            if($minArea){
+                                $updateTypeDepartmentTemp = array_merge($updateTypeDepartmentTemp, ["area" => $minArea]);
+                            }
+                            #Si esta lleno Precio Soles y Vacio Precio Dolares
+                            if($minPrice && !$minPriceForeign){
+                                $updateTypeDepartmentTemp = array_merge($updateTypeDepartmentTemp, ["price" => $minPrice, "type_currency" => 1]);
+                            }
+                            #Si esta lleno Precio Dolares y Vacio Precio Soles
+                            if(!$minPrice && $minPriceForeign){
+                                $updateTypeDepartmentTemp = array_merge($updateTypeDepartmentTemp, ["price" => $minPriceForeign, "type_currency" => 0]);
+                            }
+                            $updateTypeDepartment = ProjectTypeDepartment::UpdateOrCreate(["id" => $keyEstatesByTypeDepartment ], $updateTypeDepartmentTemp);
+                        }
+                        $typeDepartmentsIds = $typeDepartments->pluck('id')->toArray();
+                        foreach ($typeDepartmentIdsAvailable as $keyEstateAvailable => $valueEstateAvailable) {
+                            ProjectTypeDepartment::UpdateOrCreate(["id" => $valueEstateAvailable ], ["available" => true]);
+                        }
+                        $typeDepartmentsUnavailable = array_diff($typeDepartmentsIds, $typeDepartmentIdsAvailable);
+                        foreach ($typeDepartmentsUnavailable as $keyEstateUnavailable => $valueEstateUnavailable) {
+                            ProjectTypeDepartment::UpdateOrCreate(["id" => $valueEstateUnavailable ], ["available" => false]);
+                        }
+                    }
+                    
                     #Actualizar Departamentos que no hay en el response a no disponible
                     $estatestArray = collect($estates);
                     $estatesCodigoSapPlucked = $estatestArray->pluck('codigo');

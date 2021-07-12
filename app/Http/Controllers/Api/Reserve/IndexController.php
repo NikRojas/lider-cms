@@ -180,7 +180,7 @@ class IndexController extends BaseController
             if ($floors) {
                 $query->whereIn('floor', $floors);
             }
-        })->where('active', 1)->orderBy('index');
+        })->where('active', 1)->orderBy('name_es');
         if ($statuses) {
             $data = $data->whereIn('project_status_id', $statuses);
         }

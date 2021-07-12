@@ -58,7 +58,7 @@ return [
             'success' => 'El email se ha reenviado.',
             'error' => "Lo sentimos. El email no se pudo reenviar debido a un error.",
         ],
-        'resend' => [
+        'cancel' => [
             'success' => 'La orden se ha anulado.',
             'error' => "Lo sentimos. La orden no se pudo anular debido a un error.",
         ],

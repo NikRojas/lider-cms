@@ -165,10 +165,10 @@ class OrdersController extends Controller
             $transaction->transaction_status_id = $transactionsStatusCanceled->id;
             $transaction->order_cycle_id = $masterOrderCycleClosed->id;
             $transaction->save();
-            $request->session()->flash('success', trans('custom.message.resend.success'));
+            $request->session()->flash('success', trans('custom.message.cancel.success'));
             return response()->json(["route" => route('cms.sales-statistics.orders.read',["element" => $element->id])]);
         } catch (\Exception $e) {
-            $request->session()->flash('error', trans('custom.message.resend.error'));
+            $request->session()->flash('error', trans('custom.message.cancel.error'));
             return response()->json(["route" => route('cms.sales-statistics.orders.read',["element" => $element->id])], 500);
         }
     }

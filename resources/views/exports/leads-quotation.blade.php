@@ -59,6 +59,21 @@
     <th
     style="background-color:#01C670;color:#FFFFFF;width:20px;font-size:14px;font-weight:bold;text-align:center;vertical-align:middle;border: 1px solid black;">
     Asesor</th>
+    <th
+    style="background-color:#01C670;color:#FFFFFF;width:20px;font-size:14px;font-weight:bold;text-align:center;vertical-align:middle;border: 1px solid black;">
+    UTM Source</th>
+    <th
+    style="background-color:#01C670;color:#FFFFFF;width:20px;font-size:14px;font-weight:bold;text-align:center;vertical-align:middle;border: 1px solid black;">
+    UTM Medium</th>
+    <th
+    style="background-color:#01C670;color:#FFFFFF;width:20px;font-size:14px;font-weight:bold;text-align:center;vertical-align:middle;border: 1px solid black;">
+    UTM Campaign</th>
+    <th
+    style="background-color:#01C670;color:#FFFFFF;width:20px;font-size:14px;font-weight:bold;text-align:center;vertical-align:middle;border: 1px solid black;">
+    UTM Term</th>
+    <th
+    style="background-color:#01C670;color:#FFFFFF;width:20px;font-size:14px;font-weight:bold;text-align:center;vertical-align:middle;border: 1px solid black;">
+    UTM Content</th>
    <th
     style="background-color:#01C670;color:#FFFFFF;width:30px;font-size:14px;font-weight:bold;text-align:center;vertical-align:middle;border: 1px solid black;">
     Registrado el</th>
@@ -75,6 +90,11 @@
    <td style="text-align:center;vertical-align:middle;border: 1px solid black;">{{ $lead->projectRel->name_es }}</td>
    <td style="text-align:center;vertical-align:middle;border: 1px solid black;">{{ $lead->projectTypeDepartmentRel->name }}</td>
    <td style="text-align:center;vertical-align:middle;border: 1px solid black;">{{ $lead->advisor_id ? $lead->advisorRel->name : 'No Asignado' }}</td>
+   <td style="text-align:center;vertical-align:middle;border: 1px solid black;">{{ $lead->utm_source ? $lead->utm_source : 'No registrado' }}</td>
+   <td style="text-align:center;vertical-align:middle;border: 1px solid black;">{{ $lead->utm_medium ? $lead->utm_medium : 'No registrado' }}</td>
+   <td style="text-align:center;vertical-align:middle;border: 1px solid black;">{{ $lead->utm_campaign ? $lead->utm_campaign : 'No registrado' }}</td>
+   <td style="text-align:center;vertical-align:middle;border: 1px solid black;">{{ $lead->utm_term ? $lead->utm_term : 'No registrado' }}</td>
+   <td style="text-align:center;vertical-align:middle;border: 1px solid black;">{{ $lead->utm_content ? $lead->utm_content : 'No registrado' }}</td>
    <td style="text-align:center;vertical-align:middle;border: 1px solid black;">{{ $lead->created_at_format }}</td>
   </tr>
   @endforeach

@@ -22,7 +22,7 @@ class Advisor extends Model
 
     public function getCanDeleteAttribute(){
         $value = true;
-        if(count($this->projectsRel) > 0){
+        if($this->projectsRel()->exists()){
             $value = false;
         }
         return $value;

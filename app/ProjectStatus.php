@@ -17,7 +17,7 @@ class ProjectStatus extends Model
 
     public function getCanDeleteAttribute(){
         $value = true;
-        if(count($this->projectsRel)){
+        if($this->projectsRel()->exists()){    
             $value = false;
         }
         return $value;

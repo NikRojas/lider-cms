@@ -17,7 +17,7 @@ class ProjectView extends Model
 
     public function getCanDeleteAttribute(){
         $value = true;
-        if(count($this->departmentsRel)){
+        if($this->departmentsRel()->exists()){
             $value = false;
         }
         return $value;

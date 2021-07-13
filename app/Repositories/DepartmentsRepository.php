@@ -9,10 +9,10 @@ class DepartmentsRepository
     public function datatable($id, $items_per_page,$q = false){
         if($q){
             $deps = Department::
-            where('sap_code','like','%'.$q.'%')
-            ->orWhere('description','like','%'.$q.'%')
-            ->whereHas('tipologyRel', function ($query) use ($id) {
-                return $query->where('project_id', $id);
+            where('project_id', $id)
+            ->where(function($query) use ($q) {
+                $query->where('sap_code','like', '%'.$q.'%')
+                  ->orWhere('description','like', '%'.$q.'%');
             })
             ->with('viewRel')
             ->with('tipologyRel.parentTypeDepartmentRel')
@@ -22,9 +22,7 @@ class DepartmentsRepository
         }
         else{
             $deps = Department::
-            whereHas('tipologyRel', function ($query) use ($id) {
-                    return $query->where('project_id', $id);
-            })
+            where('project_id', $id)
             ->with('viewRel')
             ->with('tipologyRel.parentTypeDepartmentRel')
             ->orderBy('available','desc')

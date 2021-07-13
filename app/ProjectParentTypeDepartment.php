@@ -17,7 +17,7 @@ class ProjectParentTypeDepartment extends Model
 
     public function getCanDeleteAttribute(){
         $value = true;
-        if(count($this->tipologyRel)){
+        if($this->tipologyRel()->exists()){
             $value = false;
         }
         return $value;

@@ -18,7 +18,7 @@ class ProjectTypeDepartment extends Model
 
     public function getCanDeleteAttribute(){
         $value = true;
-        if(count($this->projectQuotationsRel) > 0 || count($this->departmentsRel) > 0){
+        if($this->projectQuotationsRel()->exists() || $this->departmentsRel()->exists()){
             $value = false;
         }
         return $value;
@@ -50,7 +50,6 @@ class ProjectTypeDepartment extends Model
     {
         return $this->belongsTo('App\Project', 'project_id', 'id');
     }
-
 
     public function parentTypeDepartmentRel()
     {

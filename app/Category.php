@@ -18,7 +18,7 @@ class Category extends Model
 
     public function getCanDeleteAttribute(){
         $value = true;
-        if(count($this->post)){
+        if($this->post()->exists()){    
             $value = false;
         }
         return $value;

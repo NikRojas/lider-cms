@@ -26,6 +26,7 @@ class SendReserveToSap implements ShouldQueue
     private $order;
     private $url = "/api/cliente/inmuebles/reserva";
     private $lscType = 'Reservar Inmueble';
+    public $tries = 1;
 
     /**
      * Create a new job instance.

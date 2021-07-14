@@ -376,8 +376,8 @@
                       <label class="font-weight-bold" for="sap_code"
                         >Código SAP</label
                       >
-                      <div v-if="element.code_sap">
-                        {{ element.code_sap }}
+                      <div v-if="element.sap_code">
+                        {{ element.sap_code }}
                       </div>
                       <div v-else>No registrado</div>
                     </div>

@@ -71,6 +71,7 @@
           <div class="row">
             <div class="col-12">
               <DataTable
+                :orderDepartments="true"
                 :object="elements"
                 placeholder="Código SAP, Descripción"
                 :button-update="false"
@@ -80,6 +81,7 @@
                 @get="getEls"
                 @delete="deleteEl"
                 :entries-prop.sync="elementsPerPage"
+                @order="orderGetEls"
               ></DataTable>
             </div>
           </div>
@@ -232,12 +234,26 @@ export default {
           this.requestServerSincronization = false;
         });
     },
-    getEls(page, itemsPerPage, q = null) {
+    orderGetEls(order, search = false){
+      if(search){
+        this.getEls(1, this.elementsPerPage, search, order.by, order.type);
+      }
+      else{
+        this.getEls(1, this.elementsPerPage, null, order.by, order.type);
+      }
+    },
+    getEls(page, itemsPerPage, q = null, by = null, type = null) {
       this.loadingEls = true;
       let url =
         this.routeGetAll + "?page=" + page + "&itemsPerPage=" + itemsPerPage;
       if (q) {
         url = url + "&q=" + q;
+      }
+      if(by){
+        url = url + "&order_by=" + by;
+      }
+      if(type){
+        url = url + "&order_type=" + type;
       }
       axios
         .get(url, {

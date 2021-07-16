@@ -31,11 +31,26 @@ class DepartmentsController extends Controller
     public function getAll(Request $request, DepartmentsRepository $repo)
     {
         $q = $request->q;
+        $orderBy = null;
+        if($request->order_by){
+            switch ($request->order_by) {
+                case 'Código SAP':
+                    $orderBy = 'sap_code';
+                    break;
+                    case 'Descripción':
+                        $orderBy = 'description';
+                        break;
+                        case 'Tipología':
+                            $orderBy = 'type_department_id';
+                        break;
+            }
+        }
+        $orderType = $request->order_type;
         $headers = ["Id", "Código SAP", "Descripción", "Área (m2)", "Piso", "Vista", "Tipología", "Tipo", "Stock", "Precio S/", "Precio $",'Actualizado el'];
         if ($q) {
-            $elements = $repo->datatable($request->project_id, $request->itemsPerPage, $q);
+            $elements = $repo->datatable($request->project_id, $request->itemsPerPage, $q, $orderBy, $orderType);
         } else {
-            $elements = $repo->datatable($request->project_id, $request->itemsPerPage);
+            $elements = $repo->datatable($request->project_id, $request->itemsPerPage, null, $orderBy, $orderType);
         }
         $elements["headers"] = $headers;
         return response()->json($elements);

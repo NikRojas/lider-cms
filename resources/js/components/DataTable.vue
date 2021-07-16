@@ -65,7 +65,19 @@
               <thead class="thead-light">
                 <tr>
                   <th class="border-0" width="3%">#</th>
-                  <th class="border-0" v-for="(el,index) in headers" :key="index">{{ el }}</th>
+                  <th class="border-0" v-for="(el,index) in headers" :key="index">
+                    {{ el }}
+                    <template  v-if="orderDepartments && (el == 'Código SAP' || el == 'Descripción' || el == 'Tipología')">
+                      <button class="ml-1 p-0 btn" style="background: transparent;line-height: 0;" v-if="order.by == el" 
+                      @click="handleOrder(el)">
+                        <jam-arrow-down style="margin-top: -3px;" height="14" width="14"  v-if="order.type == 'desc'"></jam-arrow-down>
+                        <jam-arrow-up style="margin-top: -3px;" height="14" width="14"  v-if="order.type == 'asc'"></jam-arrow-up>
+                      </button>
+                      <button class="ml-1 p-0 btn" style="background: transparent;line-height: 0;" v-else @click="handleOrder(el)">
+                        <jam-arrows-v style="margin-top: -2px; fill: #b1b1b1" height="14" width="14"></jam-arrows-v>
+                      </button>
+                    </template>
+                  </th>
                   <slot name="header_action"></slot>
                   <th class="border-0">Acciones</th>
                 </tr>
@@ -263,6 +275,10 @@ export default {
       required: true,
     },
     messageCantDelete: String,
+    orderDepartments: {
+      type: Boolean,
+      default: false
+    }
   },
   data() {
     return {
@@ -271,6 +287,10 @@ export default {
       pageActive: 1,
       search: "",
       loading: true,
+      order:{
+        by: 'Código SAP',
+        type: 'asc'
+      }
     };
   },
   components: {
@@ -280,6 +300,26 @@ export default {
     NoData
   },
   methods: {
+    handleOrder(el){
+      if(el == this.order.by){
+        if(this.order.type == "asc"){
+          this.order.type = "desc"
+        }
+        else{
+          this.order.type = "asc"
+        }
+      }
+      else{
+        this.order.by = el; 
+        this.order.type == "asc"
+      }
+      if (this.search) {
+        this.$emit("order", this.order, this.search);
+      } else {
+        this.$emit("order", this.order );
+      }
+      this.loading = true;
+    },
     clickDisable(id) {
       this.$emit("disable", id);
     },
@@ -293,34 +333,70 @@ export default {
       this.$emit("update", id);
     },
     clickNextPage() {
-      if (this.search) {
-        this.$emit("get", this.currentPage + 1, this.entries, this.search);
-      } else {
-        this.$emit("get", this.currentPage + 1, this.entries);
+      if(this.orderDepartments){
+        if (this.search) {
+          this.$emit("get", this.currentPage + 1, this.entries, this.search, this.order.by, this.order.type);
+        } else {
+          this.$emit("get", this.currentPage + 1, this.entries, null, this.order.by, this.order.type);
+        }
+      }
+      else{
+        if (this.search) {
+          this.$emit("get", this.currentPage + 1, this.entries, this.search);
+        } else {
+          this.$emit("get", this.currentPage + 1, this.entries);
+        }
       }
       this.loading = true;
     },
     clickPrevPage() {
-      if (this.search) {
-        this.$emit("get", this.currentPage - 1, this.entries, this.search);
-      } else {
-        this.$emit("get", this.currentPage - 1, this.entries);
+      if(this.orderDepartments){
+        if (this.search) {
+          this.$emit("get", this.currentPage - 1, this.entries, this.search, this.order.by, this.order.type);
+        } else {
+          this.$emit("get", this.currentPage - 1, this.entries, null, this.order.by, this.order.type);
+        }
+      }
+      else{
+        if (this.search) {
+          this.$emit("get", this.currentPage - 1, this.entries, this.search);
+        } else {
+          this.$emit("get", this.currentPage - 1, this.entries);
+        }
       }
       this.loading = true;
     },
     clickPage(page) {
-      if (this.search) {
+      if(this.orderDepartments){
+         if (this.search) {
+          this.$emit("get", page, this.entries, this.search, this.order.by, this.order.type);
+        } else {
+          this.$emit("get", page, this.entries, null, this.order.by, this.order.type);
+        }
+      }
+      else{
+        if (this.search) {
         this.$emit("get", page, this.entries, this.search);
-      } else {
-        this.$emit("get", page, this.entries);
+        } else {
+          this.$emit("get", page, this.entries);
+        }
       }
       this.loading = true;
     },
     changePagination() {
-      if (this.search) {
-        this.$emit("get", 1, this.entries, this.search);
-      } else {
-        this.$emit("get", 1, this.entries);
+      if(this.orderDepartments){
+        if (this.search) {
+          this.$emit("get", 1, this.entries, this.search, this.order.by, this.order.type);
+        } else {
+          this.$emit("get", 1, this.entries, null, this.order.by, this.order.type);
+        }
+      }
+      else{
+        if (this.search) {
+          this.$emit("get", 1, this.entries, this.search);
+        } else {
+          this.$emit("get", 1, this.entries);
+        }
       }
       this.loading = true;
     },
@@ -332,7 +408,12 @@ export default {
       }
     },
     search: function (newValue, oldValue) {
-      this.$emit("get", 1, this.entries, newValue);
+      if(this.orderDepartments){
+        this.$emit("get", 1, this.entries, newValue, this.order.by, this.order.type);
+      }
+      else{
+        this.$emit("get", 1, this.entries, newValue);
+      }
       this.$emit("update:searchProp", String(newValue));
       this.loading = true;
     },

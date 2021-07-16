@@ -33,7 +33,7 @@ class Department extends Model
 
     public function getPriceForeignFormatAttribute()
     {
-        return '$/ '.number_format($this->price_foreign, 2, '.', ',');
+        return '$ '.number_format($this->price_foreign, 2, '.', ',');
     }
 
     public function getUpdatedAtFormatAttribute() {

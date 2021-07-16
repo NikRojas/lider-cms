@@ -6,28 +6,46 @@ use Carbon\Carbon;
 
 class DepartmentsRepository 
 {
-    public function datatable($id, $items_per_page,$q = false){
+    public function datatable($id, $items_per_page,$q = false, $orderBy = false, $orderType = false){
+        $orderDefault = 'sap_code';
+        $orderTypeDefault = 'asc';
+        if($orderBy){
+            $orderDefault = $orderBy;
+        }
+        if($orderType){
+            $orderTypeDefault = $orderType;
+        }
         if($q){
             $deps = Department::
-            where('project_id', $id)
+            where('departments.project_id', $id)
             ->where(function($query) use ($q) {
-                $query->where('sap_code','like', '%'.$q.'%')
-                  ->orWhere('description','like', '%'.$q.'%');
+                $query->where('departments.sap_code','like', '%'.$q.'%')
+                  ->orWhere('departments.description','like', '%'.$q.'%');
             })
-            ->with('viewRel')
-            ->with('tipologyRel.parentTypeDepartmentRel')
-            ->orderBy('created_at','desc')
-            ->orderBy('available','desc')
-            ->paginate($items_per_page);
+            ->with('viewRel');
+            if($orderDefault == "type_department_id"){
+                $deps = $deps->join('project_type_departments', 'departments.type_department_id', '=', 'project_type_departments.id')
+                ->orderBy('project_type_departments.name',$orderTypeDefault)
+                ->select('departments.*','project_type_departments.name');
+            }
+            else{
+                $deps = $deps->with('tipologyRel.parentTypeDepartmentRel')->orderBy($orderDefault, $orderTypeDefault);
+            }
+            $deps = $deps->paginate($items_per_page);
         }
         else{
             $deps = Department::
-            where('project_id', $id)
-            ->with('viewRel')
-            ->with('tipologyRel.parentTypeDepartmentRel')
-            ->orderBy('available','desc')
-            ->orderBy('created_at','desc')
-            ->paginate($items_per_page);
+            where('departments.project_id', $id)
+            ->with('viewRel');
+            if($orderDefault == "type_department_id"){
+                $deps = $deps->join('project_type_departments', 'departments.type_department_id', '=', 'project_type_departments.id')
+                ->orderBy('project_type_departments.name',$orderTypeDefault)
+                ->select('departments.*','project_type_departments.name');
+            }
+            else{
+                $deps = $deps->with('tipologyRel.parentTypeDepartmentRel')->orderBy($orderDefault, $orderTypeDefault);
+            }
+            $deps = $deps->paginate($items_per_page);
         }   
         foreach($deps as $dep){
             if(is_null($dep->available)){

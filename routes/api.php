@@ -72,6 +72,16 @@ Route::namespace('Api')->group(function() {
             Route::post('ipn', 'Reserve\PostController@ipn');
         });
     });
+    Route::prefix('chat')->group(function() { 
+        Route::prefix('get')->group(function() { 
+            Route::get('departments', 'Chat\GetController@departments');
+            Route::get('districts', 'Chat\GetController@districts');
+            Route::get('projects', 'Chat\GetController@projects');
+        });
+        Route::prefix('post')->group(function() { 
+            Route::post('qualification', 'Chat\PostController@qualification');
+        });
+    });
 });
 
 

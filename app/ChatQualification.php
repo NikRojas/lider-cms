@@ -10,6 +10,6 @@ class ChatQualification extends Model
     protected $table = 'chat_qualification';
     protected $guarded = [];
     protected $casts = [
-        'response' => 'object',
+        'response' => 'array',
     ];
 }

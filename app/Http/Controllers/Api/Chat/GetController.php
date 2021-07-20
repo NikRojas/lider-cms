@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api\Chat;
 
 use App\ChatContactMedium;
+use App\ChatQualification;
 use App\ChatSchedules;
 use App\Department;
 use App\Http\Controllers\Api\BaseController;

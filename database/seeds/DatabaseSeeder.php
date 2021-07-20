@@ -44,23 +44,12 @@ class DatabaseSeeder extends Seeder
         //$this->call(AdvisorUpdateTableSeeder::class);
         #EndPayment
 
-        /*$this->call(ComplaintsBookSeeder::class);*/
-        /**/
-        //$this->call(SuscribersTableSeeder::class);
-        #Need Projects & TipeDepartments
-        /*$this->call(CustomersTableSeeder::class);
-        $this->call(OrdersTableSeeder::class);
-        $this->call(OrderDetailsTableSeeder::class);
-        $this->call(TransactionsTableSeeder::class);*/
-
-        //Leads
-        //$this->call(LeadsTableSeeder::class);
-        /*$this->call(LeadsSalesLandTableSeeder::class);
-        $this->call(LeadsVideocallTableSeeder::class);
-        $this->call(ProjectQuotationsTableSeeder::class);*/
-
         #sistema de asesores
-        $this->call(MasterModulesTableSeeder3::class);
+        //$this->call(MasterModulesTableSeeder3::class);
         #fin sistema de asesores
+
+        #Chat
+        $this->call(ChatSchedulesTableSeeder::class);
+        $this->call(ChatContactMediumTableSeeder::class);
     }
 }

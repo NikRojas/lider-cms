@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\Api\Chat;
 
+use App\ChatContactMedium;
+use App\ChatSchedules;
 use App\Department;
 use App\Http\Controllers\Api\BaseController;
 use App\Project;
@@ -88,6 +90,33 @@ class GetController extends BaseController
             ];
         }
         $customPayload['carousel'] = $carousel;
+        return $this->sendResponse($customPayload, '');
+    }
+
+    public function contactMedium(Request $request)
+    {
+        $name = $request->name;
+        $data = ChatContactMedium::orderBy('index','asc')->get();
+        $customPayload = [];
+        $customPayload['text'] = "Gracias". ($name ? " ".$name : "" ).", por qué medio te gustaría que te contactemos?";
+        $customPayload['type'] = "buttons";
+        foreach ($data as $key => $value) {
+            $buttons[] = ["text" => $value->description];
+        }
+        $customPayload['buttons'] = $buttons;
+        return $this->sendResponse($customPayload, '');
+    }
+
+    public function contactSchedules(Request $request)
+    {
+        $data = ChatSchedules::orderBy('index','asc')->get();
+        $customPayload = [];
+        $customPayload['text'] = "Por último, en qué horario te gustaría que te contactemos?";
+        $customPayload['type'] = "buttons";
+        foreach ($data as $key => $value) {
+            $buttons[] = ["text" => $value->description];
+        }
+        $customPayload['buttons'] = $buttons;
         return $this->sendResponse($customPayload, '');
     }
 }

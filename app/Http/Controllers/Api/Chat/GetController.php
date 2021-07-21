@@ -161,7 +161,7 @@ class GetController extends BaseController
         $project = Project::where('name_es',$name_es)->first();
         $countDeps = Department::where('project_id',$project->id)->where('available',true)->count();
         $customPayload = [];
-        $firstText = "Buena elección ".$name.", en el proyecto ".$name_es." tenemos ".$countDeps." de inmuebles en stock";
+        $firstText = "Buena elección ".$name.", en el proyecto ".$name_es." tenemos ".$countDeps." inmuebles en stock";
         if($project->stock_parking){
             $firstText .= " y ".$project->stock_parking." cocheras.";
         }
@@ -189,7 +189,7 @@ class GetController extends BaseController
         ];
         $customPayload['type'] = "buttons";
         $customPayload['text'] = $firstText.'<br>'.$secondText;
-        $customPayload['text_above'] = "¿Cómo puedo ayudarte con el proyecto ".$name_es;
+        $customPayload['text_above'] = "¿Cómo puedo ayudarte con el proyecto ".$name_es."?";
         $customPayload['buttons'] = [
             ["text" => "Quiero saber qué bonos tiene el proyecto?"],
             ["text" => "Quiero saber si hay promociones vigentes?"],
@@ -197,6 +197,23 @@ class GetController extends BaseController
             ["text" => "Quiero que un asesor me contacte"],
             ["text" => "Quiero separar mi inmueble"]
         ];
+        return $this->sendResponse($customPayload, '');
+    }
+
+    public function getProjectBonds(Request $request){
+        $project = Project::where('name_es',$request->name_project)->first();
+        $bonds = $project->load('bondsRel');
+        $customPayload = [];
+        $customPayload['type'] = "buttons";
+        $customPayload["buttons"] = [
+            ["text" => "Quiero saber qué bonos tiene el proyecto?"],
+            ["text" => "Quiero saber si hay promociones vigentes?"]
+        ];
+        $texts = [ "El proyecto ".$request->name_project." cuenta con los siguientes bonos:" ];
+        foreach ($bonds->bondsRel as $key => $value) {
+            $texts[] = $value["name"].": Lorem ipsum dolor";
+        }
+        $customPayload['texts'] = $texts;
         return $this->sendResponse($customPayload, '');
     }
 }

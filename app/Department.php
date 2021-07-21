@@ -28,12 +28,12 @@ class Department extends Model
 
     public function getPriceFormatAttribute()
     {
-        return 'S/ '.number_format($this->price, 2, '.', ',');
+        return 'S/ '.number_format($this->price, 0, '.', ',');
     }
 
     public function getPriceForeignFormatAttribute()
     {
-        return '$ '.number_format($this->price_foreign, 2, '.', ',');
+        return '$ '.number_format($this->price_foreign, 0, '.', ',');
     }
 
     public function getUpdatedAtFormatAttribute() {

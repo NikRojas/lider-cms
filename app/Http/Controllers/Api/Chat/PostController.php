@@ -23,5 +23,17 @@ class PostController extends BaseController
             return $this->sendError(trans('custom.title.error'), [], 500);
         }
     }
+
+    public function advisoryContact(Request $request)
+    {
+        $el = request(['name','email','project','medium','schedules','host']);
+        //Log::info($el);
+        /*try {
+            $el = ChatQualification::UpdateOrCreate(array_merge($el, ["slug" => Str::random(10)]));
+            return $this->sendResponse([], trans('custom.title.success'), 200);;
+        } catch (\Exception $e) {
+            return $this->sendError(trans('custom.title.error'), [], 500);
+        }*/
+    }
     
 }

@@ -27,7 +27,41 @@ class GetController extends BaseController
             })
             ->orderBy('department', 'ASC')->groupBy('code_department')->get();
         $customPayload = [];
-        $customPayload['text'] = "Elige el departamento";
+        $deparmentsPluck = $data->pluck('department');
+        $lengthdeparmentsPluck = count($deparmentsPluck);
+        $departmentsText = null;
+        foreach($deparmentsPluck as $key => $a){ 
+            if($lengthdeparmentsPluck == 1){
+                $departmentsText .= $a;
+            }
+            else if($lengthdeparmentsPluck == 2){
+                if($key + 1 === $lengthdeparmentsPluck) {
+                    $departmentsText .= " o ".$a;
+                }
+                else{
+                    $departmentsText .= $a;
+                }
+            }
+            else{
+                if($key + 1 === $lengthdeparmentsPluck) {
+                    $departmentsText .= " o ".$a;
+                }
+                else{
+                    if($key + 1 == $lengthdeparmentsPluck - 1){
+                        $departmentsText .= $a."";
+                    }
+                    else{
+                        $departmentsText .= $a.", ";
+                    }
+                }
+            }
+        }
+        if($request->name){
+            $customPayload['text'] = $request->name." estás interesado en ".$departmentsText;
+        }
+        else{
+            $customPayload['text'] = "Estás interesado en ".$departmentsText;
+        }
         $customPayload['type'] = "buttons";
         foreach ($data as $key => $value) {
             $buttons[] = ["text" => $value->department];
@@ -118,6 +152,49 @@ class GetController extends BaseController
             $buttons[] = ["text" => $value->description];
         }
         $customPayload['buttons'] = $buttons;
+        return $this->sendResponse($customPayload, '');
+    }
+
+    public function getProject(Request $request){
+        $name = $request->name;
+        $name_es = $request->name_project;
+        $project = Project::where('name_es',$name_es)->first();
+        $countDeps = Department::where('project_id',$project->id)->where('available',true)->count();
+        $customPayload = [];
+        $firstText = "Buena elección ".$name.", en el proyecto ".$name_es." tenemos ".$countDeps." de inmuebles en stock";
+        if($project->stock_parking){
+            $firstText .= " y ".$project->stock_parking." cocheras";
+        }
+        $currency = $project->master_currency_id;
+        if($currency == 1){
+            //Sol
+            $column_name = 'price';
+            $symbol = 'S/ ';
+        }
+        else if($currency == 2){
+            $column_name = 'price_foreign';
+            $symbol = '$ ';
+        }
+        $min = Department::where('project_id',$project->id)->where('available',true)->min($column_name);
+        $max = Department::where('project_id',$project->id)->where('available',true)->max($column_name);
+        $secondText = "Los precios de los inmuebles van desde ".$symbol.number_format($min, 0, '.', ',')." hasta ".$symbol.number_format($max, 0, '.', ',');
+        $customPayload['route'] = [
+            "name" => 'project',
+            "params" => [
+                "project" => $project->slug_es
+            ]
+        ];
+        $customPayload['text_above'] = $firstText;
+        $customPayload['text_above_2'] = $secondText;
+        $customPayload['type'] = "buttons";
+        $customPayload['text'] = "¿Cómo puedo ayudarte con el proyecto ".$name_es;
+        $customPayload['buttons'] = [
+            "Quiero saber qué bonos tiene el proyecto?",
+            "Quiero saber si hay promociones vigentes?",
+            "Quiero cotizar un departamento",
+            "Quiero que un asesor me contacte",
+            "Quiero separar mi inmueble",
+        ];
         return $this->sendResponse($customPayload, '');
     }
 }

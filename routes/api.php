@@ -77,11 +77,13 @@ Route::namespace('Api')->group(function() {
             Route::get('departments', 'Chat\GetController@departments');
             Route::get('districts', 'Chat\GetController@districts');
             Route::get('projects', 'Chat\GetController@projects');
+            Route::get('project', 'Chat\GetController@getProject');
             Route::get('contact-medium', 'Chat\GetController@contactMedium');
             Route::get('contact-schedules', 'Chat\GetController@contactSchedules');
         });
         Route::prefix('post')->group(function() { 
             Route::post('qualification', 'Chat\PostController@qualification');
+            Route::post('advisory-contact', 'Chat\PostController@advisoryContact');
         });
     });
 });

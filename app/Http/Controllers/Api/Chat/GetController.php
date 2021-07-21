@@ -163,7 +163,10 @@ class GetController extends BaseController
         $customPayload = [];
         $firstText = "Buena elección ".$name.", en el proyecto ".$name_es." tenemos ".$countDeps." de inmuebles en stock";
         if($project->stock_parking){
-            $firstText .= " y ".$project->stock_parking." cocheras";
+            $firstText .= " y ".$project->stock_parking." cocheras.";
+        }
+        else{
+            $firstText .= ".";
         }
         $currency = $project->master_currency_id;
         if($currency == 1){
@@ -184,16 +187,15 @@ class GetController extends BaseController
                 "project" => $project->slug_es
             ]
         ];
-        $customPayload['text_above'] = $firstText;
-        $customPayload['text_above_2'] = $secondText;
         $customPayload['type'] = "buttons";
-        $customPayload['text'] = "¿Cómo puedo ayudarte con el proyecto ".$name_es;
+        $customPayload['text'] = $firstText.'<br>'.$secondText;
+        $customPayload['text_above'] = "¿Cómo puedo ayudarte con el proyecto ".$name_es;
         $customPayload['buttons'] = [
-            "Quiero saber qué bonos tiene el proyecto?",
-            "Quiero saber si hay promociones vigentes?",
-            "Quiero cotizar un departamento",
-            "Quiero que un asesor me contacte",
-            "Quiero separar mi inmueble",
+            ["text" => "Quiero saber qué bonos tiene el proyecto?"],
+            ["text" => "Quiero saber si hay promociones vigentes?"],
+            ["text" => "Quiero cotizar un departamento"],
+            ["text" => "Quiero que un asesor me contacte"],
+            ["text" => "Quiero separar mi inmueble"]
         ];
         return $this->sendResponse($customPayload, '');
     }

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api\Chat;
 
+use App\Bond;
 use App\ChatContactMedium;
 use App\ChatQualification;
 use App\ChatSchedules;
@@ -9,6 +10,7 @@ use App\Department;
 use App\Http\Controllers\Api\BaseController;
 use App\Project;
 use App\ProjectParentTypeDepartment;
+use App\TpsPromotion;
 use App\Ubigeo;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -190,30 +192,127 @@ class GetController extends BaseController
         $customPayload['type'] = "buttons";
         $customPayload['text'] = $firstText.'<br>'.$secondText;
         $customPayload['text_above'] = "¿Cómo puedo ayudarte con el proyecto ".$name_es."?";
-        $customPayload['buttons'] = [
-            ["text" => "Quiero saber qué bonos tiene el proyecto?"],
-            ["text" => "Quiero saber si hay promociones vigentes?"],
-            ["text" => "Quiero cotizar un departamento"],
-            ["text" => "Quiero que un asesor me contacte"],
-            ["text" => "Quiero separar mi inmueble"]
-        ];
+        $bonds = $project->load('bondsRel');
+        $buttons = $this->getButtonsFlow1($project->id, $bonds, false, false);
+        $customPayload['buttons'] = $buttons;
+        return $this->sendResponse($customPayload, '');
+    }
+    
+    public function getProjectPromos(Request $request){
+        $project = Project::where('name_es',$request->name_project)->first();
+        $customPayload = [];
+        $customPayload['type'] = "buttons";
+        $bonds = $project->load('bondsRel');
+        $buttons = $this->getButtonsFlow1($project->id, $bonds, "Quiero saber si hay promociones vigentes?", true);
+        $customPayload['buttons'] = $buttons;
+        $promos = TpsPromotion::where('project_id', $project->id)->orderBy('index', 'asc')->get();
+        $gallery = [];
+        foreach ($promos as $key => $value) {
+            $gallery[] = ["src" => asset('storage/img/projects/tps-promotion/'.$value["image"])];
+        }
+        $customPayload['text'] = "El proyecto ".$request->name_project." cuenta con los siguientes promociones:";
+        $customPayload['gallery'] = $gallery;
         return $this->sendResponse($customPayload, '');
     }
 
     public function getProjectBonds(Request $request){
         $project = Project::where('name_es',$request->name_project)->first();
-        $bonds = $project->load('bondsRel');
         $customPayload = [];
         $customPayload['type'] = "buttons";
-        $customPayload["buttons"] = [
-            ["text" => "Quiero saber qué bonos tiene el proyecto?"],
-            ["text" => "Quiero saber si hay promociones vigentes?"]
-        ];
+        $bonds = $project->load('bondsRel');
+        $buttons = $this->getButtonsFlow1($project->id, $bonds, "Quiero saber qué bonos tiene el proyecto?", true);
+        $customPayload['buttons'] = $buttons;
         $texts = [ "El proyecto ".$request->name_project." cuenta con los siguientes bonos:" ];
         foreach ($bonds->bondsRel as $key => $value) {
             $texts[] = $value["name"].": Lorem ipsum dolor";
         }
         $customPayload['texts'] = $texts;
         return $this->sendResponse($customPayload, '');
+    }
+
+    public function getProjectQuotation(Request $request){
+        $project = Project::where('name_es',$request->name_project)->first();
+        $customPayload = [];
+        $customPayload['type'] = "buttons";
+        $bonds = $project->load('bondsRel');
+        $buttons = $this->getButtonsFlow1($project->id, $bonds, "Quiero cotizar un departamento", true);
+        $customPayload['buttons'] = $buttons;
+        $customPayload['route_section'] = "#cotizar";
+        $customPayload['text'] = "En esta sección podrás elegir un departamento, llenar tus datos y te llegará una cotización a tu correo";
+        return $this->sendResponse($customPayload, '');
+    }
+
+    /*public function getProjectContact(Request $request){
+        $project = Project::where('name_es',$request->name_project)->first();
+        $customPayload = [];
+        $customPayload['type'] = "buttons";
+        $bonds = $project->load('bondsRel');
+        $buttons = $this->getButtonsFlow1($project->id, $bonds, "Quiero que un asesor me contacte", true);
+        $customPayload['buttons'] = $buttons;
+        //$customPayload['text'] = "En esta sección podrás elegir un departamento, llenar tus datos y te llegará una cotización a tu correo";
+        return $this->sendResponse($customPayload, '');
+    }*/
+
+    public function getProjectReserve(Request $request){
+        $project = Project::where('name_es',$request->name_project)->first();
+        $customPayload = [];
+        $customPayload['type'] = "buttons";
+        $bonds = $project->load('bondsRel');
+        $buttons = $this->getButtonsFlow1($project->id, $bonds, "Quiero separar mi inmueble", true);
+        $customPayload['buttons'] = $buttons;
+        $customPayload['text_above'] = "Elige dentro de las opciones el inmueble que deseas separar";
+        $customPayload['text'] = "En esta sección podrás realizar la separación de tu inmueble en el proyecto ".$request->name_project;
+        $customPayload['route'] = [
+            "name" => 'reserve'
+        ];
+        $customPayload['text'] = "En esta sección podrás elegir un departamento, llenar tus datos y te llegará una cotización a tu correo";
+        return $this->sendResponse($customPayload, '');
+    }
+
+    /*public function getProjectOtherProjects(Request $request){
+        $project = Project::where('name_es',$request->name_project)->first();
+        $customPayload = [];
+        $customPayload['type'] = "buttons";
+        $bonds = $project->load('bondsRel');
+        $buttons = $this->getButtonsFlow1($project->id, $bonds, "Quiero separar mi inmueble", true);
+        $customPayload['buttons'] = $buttons;
+        $customPayload['text_above'] = "Elige dentro de las opciones el inmueble que deseas separar";
+        $customPayload['text'] = "En esta sección podrás realizar la separación de tu inmueble en el proyecto ".$request->name_project;
+        $customPayload['route'] = [
+            "name" => 'reserve'
+        ];
+        $customPayload['text'] = "En esta sección podrás elegir un departamento, llenar tus datos y te llegará una cotización a tu correo";
+        return $this->sendResponse($customPayload, '');
+    }*/
+
+    public function getButtonsFlow1($id, $bonds, $textButton = false, $additionalQuestions = false){
+        $countPromos = $this->getCountPromos($id);
+        $countBonds = $bonds->bondsRel->count();
+        $buttons = [];
+        if($countPromos && $textButton != "Quiero saber si hay promociones vigentes?"){
+            $buttons = array_merge($buttons,[["text" => "Quiero saber si hay promociones vigentes?"]]);
+        }
+        if($countBonds && $textButton != "Quiero saber qué bonos tiene el proyecto?"){
+            $buttons = array_merge($buttons,[["text" => "Quiero saber qué bonos tiene el proyecto?"]]);
+        }
+        if($textButton != "Quiero cotizar un departamento"){
+            $buttons = array_merge($buttons,[["text" => "Quiero cotizar un departamento"]]);
+        }
+        if($textButton != "Quiero que un asesor me contacte"){
+            $buttons = array_merge($buttons,[["text" => "Quiero que un asesor me contacte"]]);
+        }
+        if($textButton != "Quiero separar mi inmueble"){
+            $buttons = array_merge($buttons,[["text" => "Quiero separar mi inmueble"]]);
+        }
+        if($additionalQuestions){
+            $buttons = array_merge($buttons,[["text" => "Quiero ver otros proyectos similares"],
+            ["text" => "Ya no tengo más dudas"]]);
+        }
+        return $buttons;
+    }
+
+    public function getCountPromos($id){
+        $promos = TpsPromotion::where('project_id', $id)->get()->count();
+        return $promos;
     }
 }

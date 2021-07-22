@@ -79,6 +79,11 @@ Route::namespace('Api')->group(function() {
             Route::get('projects', 'Chat\GetController@projects');
             Route::get('project', 'Chat\GetController@getProject');
             Route::get('project-bonds', 'Chat\GetController@getProjectBonds');
+            Route::get('project-promos', 'Chat\GetController@getProjectPromos');
+            Route::get('project-quotation', 'Chat\GetController@getProjectQuotation');
+            //Route::get('project-contact', 'Chat\GetController@getProjectContact');
+            Route::get('project-reserve', 'Chat\GetController@getProjectReserve');
+            Route::get('project-other-projects', 'Chat\GetController@getProjectOtherProjects');
             Route::get('contact-medium', 'Chat\GetController@contactMedium');
             Route::get('contact-schedules', 'Chat\GetController@contactSchedules');
         });

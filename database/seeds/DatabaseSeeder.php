@@ -49,7 +49,8 @@ class DatabaseSeeder extends Seeder
         #fin sistema de asesores
 
         #Chat
-        $this->call(ChatSchedulesTableSeeder::class);
-        $this->call(ChatContactMediumTableSeeder::class);
+        /*$this->call(ChatSchedulesTableSeeder::class);
+        $this->call(ChatContactMediumTableSeeder::class);*/
+        $this->call(MasterModulesTableSeeder4::class);
     }
 }

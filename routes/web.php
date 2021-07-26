@@ -538,6 +538,12 @@ Route::middleware(['auth'])->namespace('Cms')->name('cms.')->group(function () {
         Route::get('/get-email-destination', 'ApplicantsController@getEmailDestination')->name('get-email-destination');
     });
 
+    Route::prefix('chatbot')->name('chatbot.')->group(function () {
+        Route::get('/', 'ChatbotController@index')->name('index');
+        Route::get('/leads/json/get-all', 'ChatbotController@leadsGetAll')->name('leads-get-all');
+        Route::get('/qualification/json/get-all', 'ChatbotController@qualificationGet')->name('qualification-get');
+    });
+
     #Misc
     Route::get('files/{folder}/{subfolder}/{file}', 'CmsController@getFile')->name('get-file');
     Route::get('json/get-departments', 'CmsController@getDepartmentsParent')->name('json.get-departments');

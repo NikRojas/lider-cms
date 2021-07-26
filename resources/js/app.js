@@ -105,6 +105,8 @@ const app = new Vue({
 
         'projects-departments-index': () => import('./views/projects/departments/Index.vue' /* webpackChunkName: "js/pages/projects/departments/index" */),
         'configuration-logs-sap': () => import('./views/configuration/LogsSap.vue' /* webpackChunkName: "js/pages/configuration/logs-sap" */),
+
+        'chatbot': () => import('./views/Chatbot.vue' /* webpackChunkName: "js/pages/chatbot" */),
     }
 });
 import Validation from './functions/validation.js'

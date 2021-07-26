@@ -90,6 +90,7 @@ Route::namespace('Api')->group(function() {
         Route::prefix('post')->group(function() { 
             Route::post('qualification', 'Chat\PostController@qualification');
             Route::post('advisory-contact', 'Chat\PostController@advisoryContact');
+            Route::post('project-advisory-contact', 'Chat\PostController@projectAdvisoryContact');
         });
     });
 });

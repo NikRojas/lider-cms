@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api\Chat;
 
+use App\ChatLead;
 use App\ChatQualification;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Api\BaseController;
@@ -34,6 +35,17 @@ class PostController extends BaseController
         } catch (\Exception $e) {
             return $this->sendError(trans('custom.title.error'), [], 500);
         }*/
+    }
+
+    public function projectAdvisoryContact(Request $request)
+    {
+        $el = request(['name','email','project','mobile','host']);
+        try {
+            $el = ChatLead::UpdateOrCreate(array_merge($el, ["slug" => Str::random(10)]));
+            return $this->sendResponse([], trans('custom.title.success'), 200);;
+        } catch (\Exception $e) {
+            return $this->sendError(trans('custom.title.error'), [], 500);
+        }
     }
     
 }

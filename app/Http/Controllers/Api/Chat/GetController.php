@@ -269,21 +269,28 @@ class GetController extends BaseController
         return $this->sendResponse($customPayload, '');
     }
 
-    /*public function getProjectOtherProjects(Request $request){
+    public function getProjectOtherProjects(Request $request){
         $project = Project::where('name_es',$request->name_project)->first();
         $customPayload = [];
         $customPayload['type'] = "buttons";
         $bonds = $project->load('bondsRel');
-        $buttons = $this->getButtonsFlow1($project->id, $bonds, "Quiero separar mi inmueble", true);
+        $buttons = $this->getButtonsFlow1($project->id, $bonds, "Quiero ver otros proyectos similares", true);
         $customPayload['buttons'] = $buttons;
-        $customPayload['text_above'] = "Elige dentro de las opciones el inmueble que deseas separar";
-        $customPayload['text'] = "En esta sección podrás realizar la separación de tu inmueble en el proyecto ".$request->name_project;
-        $customPayload['route'] = [
-            "name" => 'reserve'
-        ];
-        $customPayload['text'] = "En esta sección podrás elegir un departamento, llenar tus datos y te llegará una cotización a tu correo";
+        $projects_related = [];
+        if ($project->projects_related) {
+            foreach (json_decode($project->projects_related) as $key => $value) {
+                $projectTemp = Project::select('id', 'images', 'name_es','slug_es')->where('id', $value)->first();
+                $projects_related[] = [
+                    "title" => $projectTemp['name_es'],
+                    "button" => $projectTemp['name_es'],
+                    "image" => asset('storage/img/projects/'.$projectTemp["images_format"][0])
+                ];
+            }
+        }
+        $customPayload['carousel'] = $projects_related;
+        $customPayload['text'] = "Tenemos disponibles los siguientes proyectos similares al proyecto ".$request->name_project;
         return $this->sendResponse($customPayload, '');
-    }*/
+    }
 
     public function getButtonsFlow1($id, $bonds, $textButton = false, $additionalQuestions = false){
         $countPromos = $this->getCountPromos($id);
@@ -305,8 +312,10 @@ class GetController extends BaseController
             $buttons = array_merge($buttons,[["text" => "Quiero separar mi inmueble"]]);
         }
         if($additionalQuestions){
-            $buttons = array_merge($buttons,[["text" => "Quiero ver otros proyectos similares"],
-            ["text" => "Ya no tengo más dudas"]]);
+            if($textButton != "Quiero ver otros proyectos similares"){
+                $buttons = array_merge($buttons,[["text" => "Quiero ver otros proyectos similares"]]);
+            }
+            $buttons = array_merge($buttons,[["text" => "Ya no tengo más dudas"]]);
         }
         return $buttons;
     }

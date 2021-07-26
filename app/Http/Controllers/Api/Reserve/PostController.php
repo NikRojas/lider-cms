@@ -201,7 +201,7 @@ class PostController extends BaseController
                 'body'    => json_encode($body)
             ]); 
             $responseData = json_decode($response->getBody()->getContents());
-            return $this->sendResponse(['success' => true, "t" => $responseData->answer->formToken, 'j' => $credentialPayment->token_js_prod], trans('custom.title.success'), 200);
+            return $this->sendResponse(['success' => true, "t" => $responseData->answer->formToken, 'j' => $credentialPayment->token_js_prod, 'currency' => $currency], trans('custom.title.success'), 200);
         }
         catch (\GuzzleHttp\Exception\RequestException $e) {
             return $this->sendError(trans('custom.title.error'), ['success' => false], 500);

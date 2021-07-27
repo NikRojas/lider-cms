@@ -540,7 +540,11 @@ Route::middleware(['auth'])->namespace('Cms')->name('cms.')->group(function () {
 
     Route::prefix('chatbot')->name('chatbot.')->group(function () {
         Route::get('/', 'ChatbotController@index')->name('index');
+        Route::delete('/leads/{element}', 'ChatbotController@leadsDestroy')->name('leads-destroy');
         Route::get('/leads/json/get-all', 'ChatbotController@leadsGetAll')->name('leads-get-all');
+        Route::get('/leads/json/get/{element}', 'ChatbotController@leadsGet')->name('leads-get');
+        Route::get('/leads/all-export', 'ChatbotController@leadsAllExport')->name('all-export');
+        Route::post('/leads/filter-export', 'ChatbotController@leadsFilterExport')->name('filter-export');
         Route::get('/qualification/json/get-all', 'ChatbotController@qualificationGet')->name('qualification-get');
     });
 

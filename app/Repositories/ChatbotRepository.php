@@ -31,7 +31,7 @@ class ChatbotRepository
                 "mobile" => $lead["mobile_format"],
                 "email" => $lead["email"],
                 "project" => $lead["project"] ? $lead["project"] : 'No registrado',
-                "host" => $lead["host"] ? $lead["host"] : 'No registrado',
+                "host" => $lead["host"] ? '<p class="mb-0">'.$lead["host"].'</p>' : 'No registrado',
                 "created_at" => $lead["created_at_format"],
             );
         }

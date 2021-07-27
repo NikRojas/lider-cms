@@ -50,7 +50,7 @@
                 :button-read="false"
                 :button-delete="true"
                 @get="getLeads"
-                @delete="deleteEl"
+                @delete="deleteLead"
                 :entries-prop.sync="elementsPerPage"
               ></DataTable>
             </div>
@@ -103,6 +103,177 @@
         </b-tab>
       </b-tabs>
     </div>
+
+    <destroy
+      element="lead"
+      @cancel="restoreLeads"
+      :open="modalDestroy"
+      @submit="destroyLeadConfirm"
+      :loading-get="loadingLead"
+      :loading-submit="requestLead"
+    ></destroy>
+
+     <b-modal
+      v-model="modalExport"
+      @close="restoreEl"
+      no-close-on-esc
+      no-close-on-backdrop
+      centered
+      size="md"
+      footer-class="border-0 pt-0"
+      body-class="pt-0"
+    >
+      <template slot="modal-title">
+        <div class="text-primary h2">Exportar Leads</div>
+      </template>
+      <template slot="modal-header-close">
+        <button type="button" class="btn p-0 bg-transparent" @click="restoreEl">
+          <jam-close></jam-close>
+        </button>
+      </template>
+      <div class="row">
+        <div class="col-12">
+          <div class="form-group">
+            <label class="font-weight-bold" for="from">Desde</label>
+            <date-picker
+              :input-attr="{ id: 'from' }"
+              value-type="format"
+              v-model="element_form.from"
+              format="HH:mm DD-MM-YYYY"
+              type="datetime"
+              :time-picker-options="{
+                start: '06:00',
+                step: '00:05',
+                end: '24:00',
+              }"
+              :first-day-of-week="1"
+              lang="es"
+              input-class="form-control"
+              width="100%"
+            >
+              <jam-calendar></jam-calendar>
+            </date-picker>
+            <label
+              v-if="errors_form && errors_form.from"
+              class="mt-2 text-danger text-sm"
+              for="from"
+              >{{ errors_form.from[0] }}</label
+            >
+          </div>
+        </div>
+
+        <div class="col-12">
+          <div class="form-group">
+            <label class="font-weight-bold" for="to">Hasta</label>
+            <date-picker
+              :input-attr="{ id: 'to' }"
+              value-type="format"
+              v-model="element_form.to"
+              format="HH:mm DD-MM-YYYY"
+              type="datetime"
+              :time-picker-options="{
+                start: '06:00',
+                step: '00:05',
+                end: '24:00',
+              }"
+              :first-day-of-week="1"
+              lang="es"
+              input-class="form-control"
+              width="100%"
+            >
+              <jam-calendar></jam-calendar>
+            </date-picker>
+            <label
+              v-if="errors_form && errors_form.to"
+              class="mt-2 text-danger text-sm"
+              for="to"
+              >{{ errors_form.to[0] }}</label
+            >
+          </div>
+        </div>
+      </div>
+      <template v-slot:modal-footer="{ ok }">
+        <button
+          type="button"
+          class="btn btn-inverse-primary"
+          @click="allExportFunction"
+          :disabled="request_todo"
+        >
+          <span v-if="request_todo">
+            Cargando
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="20"
+              height="20"
+              viewBox="0 0 40 40"
+              class="ml-1 loading-svg"
+            >
+              <g fill="none" fill-rule="evenodd">
+                <g transform="translate(1 1)" stroke-width="3">
+                  <circle stroke-opacity="1" cx="0" cy="0" r="0" />
+                  <path
+                    d="M36 18c0-9.94-8.06-18-18-18"
+                    transform="rotate(83.9974 18 18)"
+                  >
+                    <animateTransform
+                      attributeName="transform"
+                      type="rotate"
+                      from="0 18 18"
+                      to="360 18 18"
+                      dur="1s"
+                      repeatCount="indefinite"
+                    />
+                  </path>
+                </g>
+              </g>
+            </svg>
+          </span>
+          <span v-else>Todo</span>
+        </button>
+
+        <button
+          type="button"
+          class="btn btn-inverse-info"
+          @click="filterExportFunction"
+          :disabled="request_filter"
+        >
+          <span v-if="request_filter">
+            Cargando
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="20"
+              height="20"
+              viewBox="0 0 40 40"
+              class="ml-1 loading-svg"
+            >
+              <g fill="none" fill-rule="evenodd">
+                <g transform="translate(1 1)" stroke-width="3">
+                  <circle stroke-opacity="1" cx="0" cy="0" r="0" />
+                  <path
+                    d="M36 18c0-9.94-8.06-18-18-18"
+                    transform="rotate(83.9974 18 18)"
+                  >
+                    <animateTransform
+                      attributeName="transform"
+                      type="rotate"
+                      from="0 18 18"
+                      to="360 18 18"
+                      dur="1s"
+                      repeatCount="indefinite"
+                    />
+                  </path>
+                </g>
+              </g>
+            </svg>
+          </span>
+          <span v-else>Con Filtros</span>
+        </button>
+
+        <button type="button" class="btn btn-inverse-light" @click="restoreEl">
+          Cerrar
+        </button>
+      </template>
+    </b-modal>
   </div>
 </template>
 
@@ -118,6 +289,7 @@ import BreadCrumb from "../components/BreadCrumb";
 import DataTable from "../components/DataTable";
 import Button from "../components/Button";
 import FilterDateRange from "../components/filters/DateRange";
+import Destroy from "../components/modals/Destroy";
 //import Destroy from "../components/modals/Destroy";
 import DatePicker from "vue2-datepicker";
 export default {
@@ -128,6 +300,7 @@ export default {
     Skeleton,
     DatePicker,
     FilterDateRange,
+    Destroy
   },
   props: {
     routeLeadsGetAll: String,
@@ -138,6 +311,10 @@ export default {
   },
   data() {
     return {
+      modalDestroy: false, 
+      loadingLead: false,
+      requestLead: false,
+
       request_todo: false,
       request_filter: false,
       errors_form: {},
@@ -158,8 +335,136 @@ export default {
     };
   },
   methods: {
-    deleteEl() {},
-    openModalExport() {},
+    restoreLeads(){
+      this.lead = {};
+      this.modalDestroy = false;
+      this.getLeads(1, this.elementsPerPage);
+    },
+    destroyLeadConfirm(){
+      this.requestLead = true;
+      axios
+        .delete("/chatbot/leads/" + this.lead.id)
+        .then((response) => {
+          this.requestLead = false;
+          this.restoreLeads();
+          Swal.fire({
+            title: response.data.title,
+            text: response.data.message,
+            type: "success",
+            confirmButtonText: "OK",
+            buttonsStyling: false,
+            customClass: {
+              confirmButton: "btn btn-inverse-primary",
+            },
+          });
+        })
+        .catch((error) => {
+          Swal.fire({
+            title: error.response.data.title,
+            text: error.response.data.message,
+            type: "error",
+            confirmButtonText: "OK",
+            buttonsStyling: false,
+            customClass: {
+              confirmButton: "btn btn-inverse-primary",
+            },
+          });
+          this.restoreEl();
+        });
+    },
+    openModalExport() {
+      this.modalExport = true;
+    },
+    restoreEl(){
+      this.lead = {};
+      this.modalDestroy = false;
+      this.modalExport = false;
+    },
+    allExportFunction() {
+      this.request_todo = true;
+      axios
+        .get('/chatbot/leads/all-export', {
+          headers: {
+            "Content-Disposition": "attachment; filename=template.xlsx", //no es tan necesario, lo quité y siguio funcionando
+            "Content-Type":
+              "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", //no es tan necesario, lo quité y siguio funcionando
+          },
+          responseType: "arraybuffer", //necesaario
+        })
+        .then((response) => {
+          const downloadUrl = window.URL.createObjectURL(
+            new Blob([response.data])
+          );
+          const link = document.createElement("a");
+          link.href = downloadUrl;
+          link.setAttribute("download", "Líder Leads Chatbot.xlsx");
+          document.body.appendChild(link);
+          link.click();
+          link.remove();
+          this.request_todo = false;
+          this.restoreEl();
+        })
+        .catch((error) => {
+          this.request_todo = false;
+          if (error.response.status === 422) {
+            this.errors_form = error.response.data.errors || {};
+            return;
+          }
+        });
+    },
+    filterExportFunction() {
+      this.request_filter = true;
+      const fd = new FormData();
+      if (this.element_form.from) {
+        fd.append("from", this.element_form.from);
+      }
+      if (this.element_form.to) {
+        fd.append("to", this.element_form.to);
+      }
+      axios
+        .post('/chatbot/leads/filter-export', fd, {
+          headers: {
+            "Content-Disposition": "attachment; filename=template.xlsx", //no es tan necesario, lo quité y siguio funcionando
+            "Content-Type":
+              "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", //no es tan necesario, lo quité y siguio funcionando
+          },
+          responseType: "arraybuffer", //necesaario
+        })
+        .then((response) => {
+          const downloadUrl = window.URL.createObjectURL(
+            new Blob([response.data])
+          );
+          const link = document.createElement("a");
+          link.href = downloadUrl;
+          link.setAttribute("download", "Líder Leads Chatbot.xlsx");
+          document.body.appendChild(link);
+          link.click();
+          link.remove();
+          this.request_filter = false;
+          this.restoreEl();
+        })
+        .catch((error) => {
+          this.request_filter = false;
+          if (error.response.status === 422) {
+            this.errors_form = {
+              from: [],
+              to: [],
+            };
+            if (
+              this.element_form.from == "" ||
+              this.element_form.from == null
+            ) {
+              this.errors_form.from = ["El campo desde es requerido"];
+            }
+
+            if (this.element_form.to == "" || this.element_form.to == null) {
+              this.errors_form.to = ["El campo hasta es requerido"];
+            }
+            console.log(this.errors_form);
+            return;
+          }
+        });
+    },
     getLeads(page, itemsPerPage, q = null) {
       let url =
         this.routeLeadsGetAll +
@@ -191,6 +496,20 @@ export default {
         .then((response) => {
           this.qualification = response.data;
           this.loadingQualification = false;
+        })
+        .catch((error) => {});
+    },
+    deleteLead(id) {
+      this.modalDestroy = true;
+      this.getLead(id);
+    },
+    getLead(id) {
+      this.loadingGet = true;
+      axios
+        .get(this.route + "/leads/json/get/" + id)
+        .then((response) => {
+          this.lead = response.data;
+          this.loadingGet = false;
         })
         .catch((error) => {});
     },

@@ -272,10 +272,7 @@ class GetController extends BaseController
     public function getProjectOtherProjects(Request $request){
         $project = Project::where('name_es',$request->name_project)->first();
         $customPayload = [];
-        $customPayload['type'] = "buttons";
-        $bonds = $project->load('bondsRel');
-        $buttons = $this->getButtonsFlow1($project->id, $bonds, "Quiero ver otros proyectos similares", true);
-        $customPayload['buttons'] = $buttons;
+        $customPayload['type'] = "carousel";
         $projects_related = [];
         if ($project->projects_related) {
             foreach (json_decode($project->projects_related) as $key => $value) {
@@ -284,6 +281,17 @@ class GetController extends BaseController
                     "title" => $projectTemp['name_es'],
                     "button" => $projectTemp['name_es'],
                     "image" => asset('storage/img/projects/'.$projectTemp["images_format"][0])
+                ];
+            }
+        }
+        else{
+            $projects_related_temp = Project::select('id', 'project_status_id', 'logo','logo_colour', 'slug_es', 'images', 'code_ubigeo', 'name_es', 'rooms_es', 'footage_es', 'price_total', 'price_total_foreign')
+            ->where('id','!=',$project->id)->with('statusRel', 'ubigeoRel')->where('active', 1)->inRandomOrder()->limit(4)->get();
+            foreach ($projects_related_temp as $key => $value) {
+                $projects_related[] = [
+                    "title" => $value->name_es,
+                    "button" => $value->name_es,
+                    "image" => asset('storage/img/projects/'.$value["images_format"][0])
                 ];
             }
         }

@@ -192,7 +192,7 @@ class GetController extends BaseController
         $customPayload['type'] = "buttons";
         //$customPayload['text'] = $firstText.'<br>'.$secondText;
         $customPayload['texts'] = [$firstText,$secondText];
-        $customPayload['text_above'] = "¿Cómo puedo ayudarte con el proyecto ".$name_es."?";
+        $customPayload['text_below'] = "¿Cómo puedo ayudarte con el proyecto ".$name_es."?";
         $bonds = $project->load('bondsRel');
         $buttons = $this->getButtonsFlow1($project->id, $bonds, false, false);
         $customPayload['buttons'] = $buttons;

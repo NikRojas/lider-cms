@@ -54,24 +54,10 @@ class IndexController extends BaseController
                     $districts[] = $value;
                 }
             }
-            if (count($departments) > 0 && count($districts) == 0) {
-                $data = $data->whereHas('projectRel', function ($query) use ($departments) {
-                    $query->whereHas('ubigeoRel', function ($query2) use ($departments) {
-                        return $query2->whereIn('code_department', $departments);
-                    });
-                });
-            }
-            if (count($districts) > 0  && count($departments) == 0) {
+            if (count($districts) > 0) {
                 $data = $data->whereHas('projectRel', function ($query) use ($districts) {
                     $query->whereHas('ubigeoRel', function ($query2) use ($districts) {
                         return $query2->whereIn('code_ubigeo', $districts);
-                    });
-                });
-            }
-            if (count($districts) > 0  && count($departments) > 0) {
-                $data = $data->whereHas('projectRel', function ($query) use ($departments, $districts) {
-                    $query->whereHas('ubigeoRel', function ($query2) use ($departments, $districts) {
-                        return $query2->whereIn('code_ubigeo', $districts)->orWhereIn('code_department', $departments);
                     });
                 });
             }
@@ -194,19 +180,9 @@ class IndexController extends BaseController
                     $districts[] = $value;
                 }
             }
-            if (count($departments) > 0 && count($districts) == 0) {
-                $data = $data->whereHas('ubigeoRel', function ($query2) use ($departments) {
-                        return $query2->whereIn('code_department', $departments);
-                });
-            }
-            if (count($districts) > 0  && count($departments) == 0) {
+            if (count($districts) > 0) {
                 $data = $data->whereHas('ubigeoRel', function ($query2) use ($districts) {
                         return $query2->whereIn('code_ubigeo', $districts);
-                });
-            }
-            if (count($districts) > 0  && count($departments) > 0) {
-                $data = $data->whereHas('ubigeoRel', function ($query2) use ($departments, $districts) {
-                        return $query2->whereIn('code_ubigeo', $districts)->orWhereIn('code_department', $departments);
                 });
             }
         }
@@ -228,19 +204,9 @@ class IndexController extends BaseController
                         $districts[] = $value;
                     }
                 }
-                if (count($departments) > 0 && count($districts) == 0) {
-                    $query->whereHas('ubigeoRel', function ($query2) use ($departments) {
-                            return $query2->whereIn('code_department', $departments);
-                    });
-                }
-                if (count($districts) > 0  && count($departments) == 0) {
+                if (count($districts) > 0) {
                     $query->whereHas('ubigeoRel', function ($query2) use ($districts) {
                             return $query2->whereIn('code_ubigeo', $districts);
-                    });
-                }
-                if (count($districts) > 0  && count($departments) > 0) {
-                    $query->whereHas('ubigeoRel', function ($query2) use ($departments, $districts) {
-                            return $query2->whereIn('code_ubigeo', $districts)->orWhereIn('code_department', $departments);
                     });
                 }
             }
@@ -294,19 +260,9 @@ class IndexController extends BaseController
                             $districts[] = $value;
                         }
                     }
-                    if (count($departments) > 0 && count($districts) == 0) {
-                        $query3->whereHas('ubigeoRel', function ($query4) use ($departments) {
-                                return $query4->whereIn('code_department', $departments);
-                        });
-                    }
-                    if (count($districts) > 0  && count($departments) == 0) {
+                    if (count($districts) > 0 ) {
                         $query3->whereHas('ubigeoRel', function ($query4) use ($districts) {
                                 return $query4->whereIn('code_ubigeo', $districts);
-                        });
-                    }
-                    if (count($districts) > 0  && count($departments) > 0) {
-                        $query3->whereHas('ubigeoRel', function ($query4) use ($departments, $districts) {
-                                return $query4->whereIn('code_ubigeo', $districts)->orWhereIn('code_department', $departments);
                         });
                     }
                 }
@@ -345,19 +301,9 @@ class IndexController extends BaseController
                                 $districts[] = $value;
                             }
                         }
-                        if (count($departments) > 0 && count($districts) == 0) {
-                            $query3->whereHas('ubigeoRel', function ($query4) use ($departments) {
-                                    return $query4->whereIn('code_department', $departments);
-                            });
-                        }
-                        if (count($districts) > 0  && count($departments) == 0) {
+                        if (count($districts) > 0) {
                             $query3->whereHas('ubigeoRel', function ($query4) use ($districts) {
                                     return $query4->whereIn('code_ubigeo', $districts);
-                            });
-                        }
-                        if (count($districts) > 0  && count($departments) > 0) {
-                            $query3->whereHas('ubigeoRel', function ($query4) use ($departments, $districts) {
-                                    return $query4->whereIn('code_ubigeo', $districts)->orWhereIn('code_department', $departments);
                             });
                         }
                     }
@@ -393,19 +339,9 @@ class IndexController extends BaseController
                         $districts[] = $value;
                     }
                 }
-                if (count($departments) > 0 && count($districts) == 0) {
-                    $query->whereHas('ubigeoRel', function ($query4) use ($departments) {
-                            return $query4->whereIn('code_department', $departments);
-                    });
-                }
-                if (count($districts) > 0  && count($departments) == 0) {
+                if (count($districts) > 0) {
                     $query->whereHas('ubigeoRel', function ($query4) use ($districts) {
                             return $query4->whereIn('code_ubigeo', $districts);
-                    });
-                }
-                if (count($districts) > 0  && count($departments) > 0) {
-                    $query->whereHas('ubigeoRel', function ($query4) use ($departments, $districts) {
-                            return $query4->whereIn('code_ubigeo', $districts)->orWhereIn('code_department', $departments);
                     });
                 }
             }
@@ -458,19 +394,9 @@ class IndexController extends BaseController
                             $districts[] = $value;
                         }
                     }
-                    if (count($departments) > 0 && count($districts) == 0) {
-                        $query2->whereHas('ubigeoRel', function ($query4) use ($departments) {
-                                return $query4->whereIn('code_department', $departments);
-                        });
-                    }
-                    if (count($districts) > 0  && count($departments) == 0) {
+                    if (count($districts) > 0 ) {
                         $query2->whereHas('ubigeoRel', function ($query4) use ($districts) {
                                 return $query4->whereIn('code_ubigeo', $districts);
-                        });
-                    }
-                    if (count($districts) > 0  && count($departments) > 0) {
-                        $query2->whereHas('ubigeoRel', function ($query4) use ($departments, $districts) {
-                                return $query4->whereIn('code_ubigeo', $districts)->orWhereIn('code_department', $departments);
                         });
                     }
                 }
@@ -514,19 +440,9 @@ class IndexController extends BaseController
                         $districts[] = $value;
                     }
                 }
-                if (count($departments) > 0 && count($districts) == 0) {
-                    $query->whereHas('ubigeoRel', function ($query4) use ($departments) {
-                            return $query4->whereIn('code_department', $departments);
-                    });
-                }
-                if (count($districts) > 0  && count($departments) == 0) {
+                if (count($districts) > 0) {
                     $query->whereHas('ubigeoRel', function ($query4) use ($districts) {
                             return $query4->whereIn('code_ubigeo', $districts);
-                    });
-                }
-                if (count($districts) > 0  && count($departments) > 0) {
-                    $query->whereHas('ubigeoRel', function ($query4) use ($departments, $districts) {
-                            return $query4->whereIn('code_ubigeo', $districts)->orWhereIn('code_department', $departments);
                     });
                 }
             }
@@ -564,19 +480,9 @@ class IndexController extends BaseController
                         $districts[] = $value;
                     }
                 }
-                if (count($departments) > 0 && count($districts) == 0) {
-                    $query->whereHas('ubigeoRel', function ($query4) use ($departments) {
-                            return $query4->whereIn('code_department', $departments);
-                    });
-                }
-                if (count($districts) > 0  && count($departments) == 0) {
+                if (count($districts) > 0 ) {
                     $query->whereHas('ubigeoRel', function ($query4) use ($districts) {
                             return $query4->whereIn('code_ubigeo', $districts);
-                    });
-                }
-                if (count($districts) > 0  && count($departments) > 0) {
-                    $query->whereHas('ubigeoRel', function ($query4) use ($departments, $districts) {
-                            return $query4->whereIn('code_ubigeo', $districts)->orWhereIn('code_department', $departments);
                     });
                 }
             }
@@ -635,19 +541,9 @@ class IndexController extends BaseController
                         $districts[] = $value;
                     }
                 }
-                if (count($departments) > 0 && count($districts) == 0) {
-                    $query->whereHas('ubigeoRel', function ($query4) use ($departments) {
-                            return $query4->whereIn('code_department', $departments);
-                    });
-                }
-                if (count($districts) > 0  && count($departments) == 0) {
+                if (count($districts) > 0) {
                     $query->whereHas('ubigeoRel', function ($query4) use ($districts) {
                             return $query4->whereIn('code_ubigeo', $districts);
-                    });
-                }
-                if (count($districts) > 0  && count($departments) > 0) {
-                    $query->whereHas('ubigeoRel', function ($query4) use ($departments, $districts) {
-                            return $query4->whereIn('code_ubigeo', $districts)->orWhereIn('code_department', $departments);
                     });
                 }
             }
@@ -685,19 +581,9 @@ class IndexController extends BaseController
                         $districts[] = $value;
                     }
                 }
-                if (count($departments) > 0 && count($districts) == 0) {
-                    $query->whereHas('ubigeoRel', function ($query4) use ($departments) {
-                            return $query4->whereIn('code_department', $departments);
-                    });
-                }
-                if (count($districts) > 0  && count($departments) == 0) {
+                if (count($districts) > 0 ) {
                     $query->whereHas('ubigeoRel', function ($query4) use ($districts) {
                             return $query4->whereIn('code_ubigeo', $districts);
-                    });
-                }
-                if (count($districts) > 0  && count($departments) > 0) {
-                    $query->whereHas('ubigeoRel', function ($query4) use ($departments, $districts) {
-                            return $query4->whereIn('code_ubigeo', $districts)->orWhereIn('code_department', $departments);
                     });
                 }
             }
@@ -732,11 +618,6 @@ class IndexController extends BaseController
                 }
                 $query->whereHas('departmentsRel', function ($query2) use ($rooms, $floors, $views, $types) {
                     $query2->where('available', 1);
-                    /*if ($rooms) {
-                        $query2->whereHas('tipologyRel', function ($query3) use ($rooms) {
-                            $query3->whereIn('room', $rooms);
-                        });
-                    }*/
                     $query2->whereHas('tipologyRel', function ($query3) use ($rooms, $types) {
                         if ($rooms) {
                             $query3->whereIn('room', $rooms);
@@ -755,6 +636,9 @@ class IndexController extends BaseController
                 });
             })
             ->orderBy('code_ubigeo', 'DESC')->groupBy('code_department')->get();
+        foreach ($departments as $key => $value) {
+            $departments[$key]["is_department"] = true;
+        }
         $districtsTemp = null;
         foreach ($departments as $key => $value) {
             $districtsTemp[] = $this->getDistricts($value->code_department, $statuses, $projects, $rooms, $floors, $views, $types);

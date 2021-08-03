@@ -43,6 +43,12 @@
                   <span class="font-weight-normal">Nombre:</span>
                   {{ el.name }}
                 </h3>
+                <h3 class="mb-1">
+                  <span class="font-weight-normal">Descripción:</span>
+                  <p v-if="el.description" v-html="el.description">
+                  </p>
+                  <p v-else>No registrado</p>
+                </h3>
                 <div class="mt-4 text-right">
                   <button @click="editEl(el.id)" class="btn btn-inverse-info btn-sm">Editar</button>
                   <button
@@ -145,6 +151,15 @@
                   for="name"
                 >{{ errors.name[0] }}</label>
               </div>
+              <div class="form-group">
+                <label class="font-weight-bold" for="description">Descripción</label>
+                <textarea
+                  type="text"
+                  class="form-control"
+                  v-model="element.description"
+                  id="description"
+                ></textarea>
+              </div>
             </div>
             
           </div>
@@ -185,6 +200,7 @@ import { Skeleton } from "vue-loading-skeleton";
 import Destroy from "../../components/modals/Destroy";
 import SkeletonForm from "../../components/skeleton/form";
 import NoData from "../../components/NoData";
+import Textarea from '../../components/form/Textarea.vue';
 export default {
   components: {
     BreadCrumb,
@@ -194,7 +210,8 @@ export default {
     vueDropzone: vue2Dropzone,
     Skeleton,
     SkeletonForm,
-    NoData
+    NoData,
+    Textarea
   },
   props: {
     route: String,
@@ -285,6 +302,9 @@ export default {
       }
       if (this.element.name) {
         fd.append("name", this.element.name);
+      }
+      if (this.element.description) {
+        fd.append("description", this.element.description);
       }
       if (this.$refs.ref_image.dropzone.files[0]) {
         fd.append("logo", this.$refs.ref_image.dropzone.files[0]);

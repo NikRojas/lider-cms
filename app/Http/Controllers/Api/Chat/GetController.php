@@ -225,7 +225,12 @@ class GetController extends BaseController
         $customPayload['buttons'] = $buttons;
         $texts = [ "El proyecto ".$request->name_project." cuenta con los siguientes bonos:" ];
         foreach ($bonds->bondsRel as $key => $value) {
-            $texts[] = $value["name"].": Lorem ipsum dolor";
+            //$texts[] = $value["name"].": Lorem ipsum dolor";
+            $tempValue = $value["name"];
+            if($value["description"]){
+                $tempValue = $tempValue.': '.$value["description"];
+            }
+            $texts[] = $tempValue;
         }
         $customPayload['texts'] = $texts;
         return $this->sendResponse($customPayload, '');

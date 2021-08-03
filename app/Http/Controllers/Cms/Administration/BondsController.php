@@ -19,7 +19,7 @@ class BondsController extends Controller
     }
 
     public function store(BondRequest $request){
-        $element = request(["name","cci","number_account"]);
+        $element = request(["name","description"]);
         $imageName = $this->setFileName('b-',$request->file('logo'));
         $storeImage = Storage::disk('public')->putFileAs('img/bonds/',$request->file('logo'),$imageName);
         if(!$storeImage){
@@ -45,7 +45,13 @@ class BondsController extends Controller
     }
 
     public function update(Bond $element,BondRequest $request){
-        $request_element = request(["name","cci","number_account"]);;
+        $request_element = request(["name"]);
+        if($request->description){
+            $request_element = array_merge($request_element, ["description" => $request->description]);
+        }
+        else{
+            $request_element = array_merge($request_element, ["description" => NULL]);
+        }
         if($request->hasFile('logo')){
             $fileName = $this->setFileName('b-',$request->file('logo'));
             Storage::disk('public')->putFileAs('img/bonds',$request->file('logo'),$fileName);

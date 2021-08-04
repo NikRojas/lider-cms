@@ -74,6 +74,7 @@ Route::namespace('Api')->group(function() {
     });
     Route::prefix('chat')->group(function() { 
         Route::prefix('get')->group(function() { 
+            Route::get('faq', 'Chat\GetController@getFaq');
             Route::get('departments', 'Chat\GetController@departments');
             Route::get('districts', 'Chat\GetController@districts');
             Route::get('projects', 'Chat\GetController@projects');

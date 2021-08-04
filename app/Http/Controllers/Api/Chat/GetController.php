@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api\Chat;
 
 use App\Bond;
 use App\ChatContactMedium;
+use App\ChatFaq;
 use App\ChatQualification;
 use App\ChatSchedules;
 use App\Department;
@@ -337,5 +338,10 @@ class GetController extends BaseController
     public function getCountPromos($id){
         $promos = TpsPromotion::where('project_id', $id)->get()->count();
         return $promos;
+    }
+
+    public function getFaqs(){
+        $elements = ChatFaq::orderBy('index', 'asc')->get();
+        return response()->json($elements);
     }
 }

@@ -546,6 +546,13 @@ Route::middleware(['auth'])->namespace('Cms')->name('cms.')->group(function () {
         Route::get('/leads/all-export', 'ChatbotController@leadsAllExport')->name('all-export');
         Route::post('/leads/filter-export', 'ChatbotController@leadsFilterExport')->name('filter-export');
         Route::get('/qualification/json/get-all', 'ChatbotController@qualificationGet')->name('qualification-get');
+        Route::get('/faq/json/get-all', 'ChatbotController@faqGetAll')->name('faq-get-all');
+        Route::post('/faq', 'ChatbotController@faqStore')->name('faq-store');
+        Route::put('/faq/order', 'ChatbotController@faqOrder')->name('faq-order');
+        Route::get('/faq/json/get/{element}', 'ChatbotController@faqGet')->name('faq-get');
+        Route::post('/faq/image/image', 'ChatbotController@faqStoreImage')->name('faq-store-image');
+        Route::delete('/faq/delete/{element}', 'ChatbotController@faqDestroy')->name('faq-destroy');
+        Route::put('/faq/{element}', 'ChatbotController@faqUpdate')->name('faq-update');
     });
 
     #Misc

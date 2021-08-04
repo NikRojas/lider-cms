@@ -71,38 +71,223 @@
                 </div>
                 <div class="card-body">
                   <div class="row">
-                      <div class="col-12">
-                           <FilterDateRange
-                            :active.sync="filterDate.active"
-                            :range.sync="filterDate.range"
-                            @get="getQualification()"
-                            />
-                            <div class="mt-4">
-                                
-                                <div style="width:300px;display:inline-block;" v-if="loadingQualification">
-                                    <skeleton height="320px"></skeleton>
-                                </div>
-                                <table class="table table-bordered" style="width:300px;" v-else>
-                                    <tr v-for="el in qualification" :key="el.name">
-                                        <td style="background: #fdfbfa">
-                                            <strong>{{ el.name }}</strong>
-                                        </td>
-                                        <td class="text-center">
-                                            {{ el.count }}
-                                        </td>
-                                    </tr>
-                                </table>
-                            </div>
+                    <div class="col-12">
+                      <FilterDateRange
+                        :active.sync="filterDate.active"
+                        :range.sync="filterDate.range"
+                        @get="getQualification()"
+                      />
+                      <div class="mt-4">
+                        <div
+                          style="width: 300px; display: inline-block"
+                          v-if="loadingQualification"
+                        >
+                          <skeleton height="320px"></skeleton>
+                        </div>
+                        <table
+                          class="table table-bordered"
+                          style="width: 300px"
+                          v-else
+                        >
+                          <tr v-for="el in qualification" :key="el.name">
+                            <td style="background: #fdfbfa">
+                              <strong>{{ el.name }}</strong>
+                            </td>
+                            <td class="text-center">
+                              {{ el.count }}
+                            </td>
+                          </tr>
+                        </table>
                       </div>
-                   
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
           </div>
         </b-tab>
+        <b-tab
+          title="FAQ"
+          title-link-class="border-0 shadow-none bg-white py-3"
+          title-item-class="pr-0 my-0"
+        >
+          <div class="row">
+            <div class="col-6 col-md-7">
+              <h2 class="text-uppercase text-primary">FAQ</h2>
+            </div>
+            <div class="text-right col-6 col-md-5">
+              <a
+                href="#"
+                class="btn btn-icon btn-inverse-primary"
+                @click.prevent="newFaq"
+              >
+                <span class="btn-inner--icon">
+                  <jam-info class="current-color" />
+                </span>
+                <span class="btn-inner--text">Nueva Pregunta</span>
+              </a>
+            </div>
+            <div class="col-12" v-if="faqs.length">
+              <div class="row mb-4 mt-4">
+                <div class="col-8">
+                  <p class="mb-0">
+                    Arrastre los elementos en el orden que desee mostrarlos
+                  </p>
+                </div>
+                <div class="col-4">
+                  <div class="text-right">{{ faqs.length }} registrado(s)</div>
+                </div>
+              </div>
+              <div class="mt-4">
+                <draggable v-model="faqs" @change="handleChangeFaq">
+                  <div class="card mb-4" v-for="el in faqs" :key="el.id">
+                    <div class="card-body">
+                      <div class="form-group">
+                        <span class="font-weight-bold d-block">Pregunta</span>
+                        <p>
+                          {{ el.question }}
+                        </p>
+                      </div>
+                      <div class="form-group mb-0">
+                        <div v-show="el.seen" class="mb-4">
+                          <label class="form-control-label d-block"
+                            >Respuesta</label
+                          >
+                          <div
+                            class="content-body"
+                            v-if="el.answer"
+                            v-html="el.answer"
+                          ></div>
+                        </div>
+                        <div>
+                          <button
+                            class="btn btn-link text-primary"
+                            style="padding: 0; text-decoration: underline"
+                            @click="el.seen = !el.seen"
+                          >
+                            {{ el.seen ? "Ocultar" : "Mostrar" }} Respuesta
+                          </button>
+                        </div>
+                      </div>
+                      <div class="col-12 mt-4 text-center">
+                        <button
+                          @click="editFaq(el.id)"
+                          class="btn btn-inverse-info btn-sm"
+                        >
+                          Editar
+                        </button>
+                        <button
+                          @click="deleteFaq(el.id)"
+                          class="btn btn-inverse-danger btn-sm"
+                        >
+                          Eliminar
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </draggable>
+              </div>
+            </div>
+            <div v-else class="col-12 mt-4">
+              <NoData />
+            </div>
+          </div>
+        </b-tab>
       </b-tabs>
     </div>
+
+    <b-modal
+      v-model="modalCreateUpdateFaq"
+      @close="restoreEl"
+      no-close-on-esc
+      no-close-on-backdrop
+      centered
+      size="lg"
+      footer-class="border-0 pt-0"
+      body-class="pt-0"
+    >
+      <template slot="modal-title">
+        <div class="text-primary h2">{{ titleFaq }} Pregunta</div>
+      </template>
+      <template slot="modal-header-close">
+        <button
+          type="button"
+          class="btn p-0 bg-transparent"
+          @click="restoreElFaq"
+        >
+          <jam-close></jam-close>
+        </button>
+      </template>
+      <div v-if="loadingGetFaq">
+        <SkeletonForm></SkeletonForm>
+      </div>
+      <div v-else>
+        <form @submit.prevent="submitFaq">
+          <div class="row">
+            <div class="col-12">
+              <div class="form-group">
+                <label class="font-weight-bold" for="question">Pregunta</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  v-model="faqElement.question"
+                  id="question"
+                />
+                <label
+                  v-if="errorsFaq && errorsFaq.question"
+                  class="mt-2 text-danger text-sm"
+                  for="question"
+                  >{{ errorsFaq.question[0] }}</label
+                >
+              </div>
+              <div class="form-group">
+                <label class="font-weight-bold" for="answer">Respuesta</label>
+                <!--<textarea
+                  type="text"
+                  class="form-control"
+                  v-model="faqElement.answer"
+                  id="answer"
+                ></textarea>-->
+                <quill-Editor
+                    @keydown.enter.prevent
+                    v-model="faqElement.answer"
+                    :options="editorOptions"
+                    class="ql-height-50"
+                    ref="ref_content"
+                  ></quill-Editor>
+                  <file-upload
+                    extensions="jpg,jpeg,png"
+                    accept="image/png, image/jpeg, image/jpg"
+                    class="d-none"
+                    :drop="false"
+                    :multiple="true"
+                    @input-filter="$uploadImageUploadComponent($event,$refs.ref_content,250000,'250kb','/chatbot/faq/image')"
+                    ref="ref_content_f"
+                    input-id="id_content_images"
+                  ></file-upload>
+                <label
+                  v-if="errorsFaq && errorsFaq.answer"
+                  class="mt-2 text-danger text-sm"
+                  for="answer"
+                  >{{ errorsFaq.answer[0] }}</label
+                >
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+      <template v-slot:modal-footer="{ ok }">
+        <Button
+          :classes="['btn-inverse-primary']"
+          :text="titleFaq == 'Nueva' ? 'Crear' : 'Actualizar'"
+          @click="submitFaq"
+          :request-server="requestSubmitFaq"
+        ></Button>
+        <button type="button" class="btn btn-secondary" @click="restoreElFaq">
+          Cancelar
+        </button>
+      </template>
+    </b-modal>
 
     <destroy
       element="lead"
@@ -113,7 +298,16 @@
       :loading-submit="requestLead"
     ></destroy>
 
-     <b-modal
+    <destroy
+      element="pregunta"
+      @cancel="restoreElFaq"
+      :open="modalDestroyFaq"
+      @submit="destroyFaqConfirm"
+      :loading-get="loadingGetFaq"
+      :loading-submit="requestSubmitFaq"
+    ></destroy>
+
+    <b-modal
       v-model="modalExport"
       @close="restoreEl"
       no-close-on-esc
@@ -282,6 +476,9 @@
   border-left: 4px solid #1762e6 !important;
   background-color: #fdfbfa !important;
 }
+.ql-tooltip.ql-editing{
+  left: 0 !important;
+}
 </style>
 <script>
 import { Skeleton } from "vue-loading-skeleton";
@@ -291,27 +488,41 @@ import Button from "../components/Button";
 import FilterDateRange from "../components/filters/DateRange";
 import Destroy from "../components/modals/Destroy";
 //import Destroy from "../components/modals/Destroy";
+import NoData from "../components/NoData";
 import DatePicker from "vue2-datepicker";
+import SkeletonForm from "../components/skeleton/form";
+import draggable from "vuedraggable";
+import Quill from "quill";
+import PlainClipboard from "../functions/PlainClipboard";
+Quill.register("modules/clipboard", PlainClipboard, true);
+import { quillEditor } from "vue-quill-editor";
+import FileUpload from "vue-upload-component";
 export default {
   components: {
+    draggable,
     DataTable,
     Button,
     BreadCrumb,
     Skeleton,
     DatePicker,
     FilterDateRange,
-    Destroy
+    Destroy,
+    NoData,
+    SkeletonForm,
+    quillEditor,
+    FileUpload
   },
   props: {
     routeLeadsGetAll: String,
     routeQualificationGetAll: String,
     route: String,
+    routeFaqGetAll: String,
     //allExport: String,
     //filterExport: String,
   },
   data() {
     return {
-      modalDestroy: false, 
+      modalDestroy: false,
       loadingLead: false,
       requestLead: false,
 
@@ -331,16 +542,50 @@ export default {
         active: {},
         range: null,
       },
-      qualification: []
+      qualification: [],
+      faqs: [],
+      titleFaq: "",
+      modalCreateUpdateFaq: false,
+      faqElement: {},
+      loadingGetFaq: false,
+      requestSubmitFaq: false,
+      errorsFaq: {},
+      modalDestroyFaq: false,
+      editorOptions: {
+        placeholder: "",
+        modules: {
+          toolbar: {
+            handlers: {
+              image: function (value) {
+                document.getElementById("id_content_images").click();
+              },
+            },
+            container: [
+              ["bold", "italic", "underline", "strike"],
+              ["blockquote"],
+              [{ header: 1 }, { header: 2 }],
+              [{ list: "ordered" }, { list: "bullet" }],
+              [{ indent: "-1" }, { indent: "+1" }],
+              //[{ size: [false] }],
+              [{ header: [1, 2, 3, 4, 5, false] }],
+              //[{ font: [false] }],
+              [{ color: [] }, { background: [] }],
+              [{ align: [] }],
+              //['clean'],
+              ["link", "video", 'image'],
+            ],
+          },
+        },
+      },
     };
   },
   methods: {
-    restoreLeads(){
+    restoreLeads() {
       this.lead = {};
       this.modalDestroy = false;
       this.getLeads(1, this.elementsPerPage);
     },
-    destroyLeadConfirm(){
+    destroyLeadConfirm() {
       this.requestLead = true;
       axios
         .delete("/chatbot/leads/" + this.lead.id)
@@ -375,7 +620,7 @@ export default {
     openModalExport() {
       this.modalExport = true;
     },
-    restoreEl(){
+    restoreEl() {
       this.lead = {};
       this.modalDestroy = false;
       this.modalExport = false;
@@ -383,7 +628,7 @@ export default {
     allExportFunction() {
       this.request_todo = true;
       axios
-        .get('/chatbot/leads/all-export', {
+        .get("/chatbot/leads/all-export", {
           headers: {
             "Content-Disposition": "attachment; filename=template.xlsx", //no es tan necesario, lo quité y siguio funcionando
             "Content-Type":
@@ -422,7 +667,7 @@ export default {
         fd.append("to", this.element_form.to);
       }
       axios
-        .post('/chatbot/leads/filter-export', fd, {
+        .post("/chatbot/leads/filter-export", fd, {
           headers: {
             "Content-Disposition": "attachment; filename=template.xlsx", //no es tan necesario, lo quité y siguio funcionando
             "Content-Type":
@@ -483,9 +728,8 @@ export default {
         .catch((error) => {});
     },
     getQualification() {
-        this.loadingQualification = true;
-      let url =
-        this.routeQualificationGetAll;
+      this.loadingQualification = true;
+      let url = this.routeQualificationGetAll;
       axios
         .get(url, {
           params: {
@@ -513,10 +757,178 @@ export default {
         })
         .catch((error) => {});
     },
+    getFaqs() {
+      this.loadingFaq = true;
+      let url = this.routeFaqGetAll;
+      axios
+        .get(url)
+        .then((response) => {
+          this.faqs = response.data;
+          this.loadingFaq = false;
+        })
+        .catch((error) => {});
+    },
+    newFaq() {
+      this.titleFaq = "Nueva";
+      this.modalCreateUpdateFaq = true;
+    },
+    submitFaq() {
+      this.requestSubmitFaq = true;
+      let url;
+      let method;
+      const fd = new FormData();
+      if (this.titleFaq == "Nueva") {
+        url = "/chatbot/faq";
+        method = "post";
+      } else {
+        url = "/chatbot/faq" + "/" + this.faqElement.id;
+        method = "post";
+        fd.append("_method", "put");
+      }
+      if (this.faqElement.question) {
+        fd.append("question", this.faqElement.question);
+      }
+      if (this.faqElement.answer) {
+        fd.append("answer", this.faqElement.answer);
+      }
+      axios({
+        method: method,
+        url: url,
+        data: fd,
+      })
+        .then((response) => {
+          this.requestSubmitFaq = false;
+          Swal.fire({
+            title: response.data.title,
+            text: response.data.message,
+            type: "success",
+            confirmButtonText: "OK",
+            buttonsStyling: false,
+            customClass: {
+              confirmButton: "btn btn-inverse-primary",
+            },
+          });
+          this.restoreFaq();
+        })
+        .catch((error) => {
+          this.requestSubmitFaq = false;
+          if (error.response.status === 422) {
+            this.errorsFaq = error.response.data.errors || {};
+            return;
+          }
+          Swal.fire({
+            title: error.response.data.title,
+            text: error.response.data.message,
+            type: "error",
+            confirmButtonText: "OK",
+            buttonsStyling: false,
+            customClass: {
+              confirmButton: "btn btn-inverse-primary",
+            },
+          });
+          this.restoreElFaq();
+        });
+    },
+    restoreElFaq() {
+      this.faqElement = {};
+      this.errorsFaq = {};
+      this.modalDestroyFaq = false;
+      this.modalCreateUpdateFaq = false;
+    },
+    restoreFaq() {
+      this.requestSubmitFaq = false;
+      this.loadingGetFaq = false;
+      this.errorsFaq = {};
+      this.faqElement = {};
+      this.modalCreateUpdateFaq = false;
+      this.modalDestroyFaq = false;
+      this.getFaqs();
+    },
+    editFaq(id) {
+      this.title = "Actualizar";
+      this.modalCreateUpdateFaq = true;
+      this.getFaq(id);
+    },
+    getFaq(id) {
+      this.loadingGetFaq = true;
+      axios
+        .get("/chatbot/faq/json/get/" + id)
+        .then((response) => {
+          this.faqElement = response.data;
+          this.loadingGetFaq = false;
+        })
+        .catch((error) => {});
+    },
+    deleteFaq(id) {
+      this.modalDestroyFaq = true;
+      this.getFaq(id);
+    },
+    destroyFaqConfirm() {
+      this.requestSubmitFaq = true;
+      axios
+        .delete("/chatbot/faq/delete/" + this.faqElement.id)
+        .then((response) => {
+          this.requestSubmitFaq = false;
+          this.restoreFaq();
+          Swal.fire({
+            title: response.data.title,
+            text: response.data.message,
+            type: "success",
+            confirmButtonText: "OK",
+            buttonsStyling: false,
+            customClass: {
+              confirmButton: "btn btn-inverse-primary",
+            },
+          });
+        })
+        .catch((error) => {
+          Swal.fire({
+            title: error.response.data.title,
+            text: error.response.data.message,
+            type: "error",
+            confirmButtonText: "OK",
+            buttonsStyling: false,
+            customClass: {
+              confirmButton: "btn btn-inverse-primary",
+            },
+          });
+          this.restoreElFaq();
+        });
+    },
+    handleChangeFaq(){
+      axios
+        .put("/chatbot/faq/order", this.faqs)
+        .then((response) => {
+          this.restoreFaq();
+          Swal.fire({
+            title: response.data.title,
+            text: response.data.message,
+            type: "success",
+            confirmButtonText: "OK",
+            buttonsStyling: false,
+            customClass: {
+              confirmButton: "btn btn-primary",
+            },
+          });
+        })
+        .catch((error) => {
+          Swal.fire({
+            title: error.response.data.title,
+            text: error.response.data.message,
+            type: "error",
+            confirmButtonText: "OK",
+            buttonsStyling: false,
+            customClass: {
+              confirmButton: "btn btn-primary",
+            },
+          });
+        });
+    }
   },
   created() {
     this.getLeads(1, this.elementsPerPage);
-    this.getQualification()
+    this.getQualification();
+    this.getFaqs();
   },
 };
 </script>

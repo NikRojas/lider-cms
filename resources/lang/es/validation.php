@@ -218,7 +218,9 @@ return [
         'user' => 'usuario',
         'master_currency_id' => 'tipo de moneda',
         'tps_password' => 'contraseña',
-        'tps_base_dsct_ci' => 'base dscto ci'
+        'tps_base_dsct_ci' => 'base dscto ci',
+        'question' => 'pregunta',
+        'answer' => 'respuesta'
     ],
 
 ];

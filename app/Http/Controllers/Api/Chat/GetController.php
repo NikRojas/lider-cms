@@ -67,7 +67,7 @@ class GetController extends BaseController
         }
         $customPayload['type'] = "buttons";
         foreach ($data as $key => $value) {
-            $buttons[] = ["text" => $value->department];
+            $buttons[] = ["text" => $value->department,"classes" => "chat_link_button_departamente_distrito"];
         }
         $customPayload['buttons'] = $buttons;
         return $this->sendResponse($customPayload, '');
@@ -90,7 +90,7 @@ class GetController extends BaseController
         $customPayload['type'] = "buttons";
         $buttons = [];
         foreach ($data as $key => $value) {
-            $buttons[] = ["text" => $value['district']];
+            $buttons[] = ["text" => $value['district'], "classes" => "chat_link_button_departamente_distrito"];
         }
         $customPayload['buttons'] = $buttons;
         return $this->sendResponse($customPayload, '');
@@ -99,7 +99,7 @@ class GetController extends BaseController
     public function projects(Request $request){
         $department = $request->department;
         $district = $request->district;
-        $data = Project::select('id', 'images','name_es', 'name_en', 'slug_es', 'slug_en')
+        $data = Project::select('id', 'images','name_es', 'name_en', 'slug_es', 'slug_en','rooms_es','footage_es')
         ->whereHas('departmentsRel', function ($query){
             $query->where('available', 1);
         })->where('active', 1)->orderBy('name_es');
@@ -124,6 +124,7 @@ class GetController extends BaseController
             $carousel[] = [
                 "title" => $value['name_es'],
                 "button" => $value['name_es'],
+                "description" => '<div>'.$value['rooms_es'].'<br>'.$value['footage_es'].'</div>',
                 "image" => asset('storage/img/projects/'.$value["images_format"][0])
             ];
         }

@@ -340,7 +340,7 @@ class GetController extends BaseController
         return $promos;
     }
 
-    public function getFaqs(){
+    public function getFaq(){
         $elements = ChatFaq::orderBy('index', 'asc')->get();
         return response()->json($elements);
     }

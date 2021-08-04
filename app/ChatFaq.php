@@ -12,7 +12,7 @@ class ChatFaq extends Model
     protected $casts = [
         //'response' => 'array',
     ];
-    protected $appends = ["created_at_format",'seen'];
+    protected $appends = ["created_at_format",'seen','answer_format'];
 
     public function getCreatedAtFormatAttribute(  ) {
         return (new Carbon($this->created_at))->format('g:iA d-m-Y');
@@ -20,5 +20,20 @@ class ChatFaq extends Model
 
     public function getSeenAttribute() {
         return false;
+    }
+
+    public function getAnswerFormatAttribute(){
+        $content =  strip_tags($this->answer);
+        $content2 = str_replace("&nbsp;", " ", $content);
+        $content6 = str_replace(":", " ", $content2);
+        $pos = strpos($content6, '.');
+        if($pos === false) {
+            $da = $content6;
+            return substr($da, 0, 90).'...';
+        }
+        else {
+            $da = substr($content6, 0, $pos+1);;
+            return substr($da, 0, 90).'...';
+        }
     }
 }

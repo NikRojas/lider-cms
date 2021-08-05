@@ -124,7 +124,7 @@ class GetController extends BaseController
             $carousel[] = [
                 "title" => $value['name_es'],
                 "button" => $value['name_es'],
-                "logo" => $value['logo'],
+                "logo" => asset('storage/img/projects/'.$value['logo']),
                 "description" => '<div>'.$value['rooms_es'].'<br>'.$value['footage_es'].'</div>',
                 "image" => asset('storage/img/projects/'.$value["images_format"][0])
             ];
@@ -289,7 +289,7 @@ class GetController extends BaseController
                 $projects_related[] = [
                     "title" => $projectTemp['name_es'],
                     "button" => $projectTemp['name_es'],
-                    "logo" => $projectTemp['logo'],
+                    "logo" => asset('storage/img/projects/'.$projectTemp['logo']),
                     "description" => '<div>'.$value['rooms_es'].'<br>'.$value['footage_es'].'</div>',
                     "image" => asset('storage/img/projects/'.$projectTemp["images_format"][0])
                 ];
@@ -302,7 +302,7 @@ class GetController extends BaseController
                 $projects_related[] = [
                     "title" => $value->name_es,
                     "button" => $value->name_es,
-                    "logo" => $value->logo,
+                    "logo" => asset('storage/img/projects/'.$value->logo),
                     "description" => '<div>'.$value['rooms_es'].'<br>'.$value['footage_es'].'</div>',
                     "image" => asset('storage/img/projects/'.$value["images_format"][0])
                 ];

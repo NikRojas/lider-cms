@@ -290,7 +290,7 @@ class GetController extends BaseController
                     "title" => $projectTemp['name_es'],
                     "button" => $projectTemp['name_es'],
                     "logo" => asset('storage/img/projects/'.$projectTemp['logo']),
-                    "description" => '<div>'.$value['rooms_es'].'<br>'.$value['footage_es'].'</div>',
+                    "description" => '<div>'.$projectTemp['rooms_es'].'<br>'.$projectTemp['footage_es'].'</div>',
                     "image" => asset('storage/img/projects/'.$projectTemp["images_format"][0])
                 ];
             }
@@ -303,7 +303,7 @@ class GetController extends BaseController
                     "title" => $value->name_es,
                     "button" => $value->name_es,
                     "logo" => asset('storage/img/projects/'.$value->logo),
-                    "description" => '<div>'.$value['rooms_es'].'<br>'.$value['footage_es'].'</div>',
+                    "description" => '<div>'.$value->rooms_es.'<br>'.$value->footage_es.'</div>',
                     "image" => asset('storage/img/projects/'.$value["images_format"][0])
                 ];
             }

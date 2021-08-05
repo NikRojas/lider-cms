@@ -99,7 +99,7 @@ class GetController extends BaseController
     public function projects(Request $request){
         $department = $request->department;
         $district = $request->district;
-        $data = Project::select('id', 'images','name_es', 'name_en', 'slug_es', 'slug_en','rooms_es','footage_es')
+        $data = Project::select('id', 'images','name_es', 'name_en', 'slug_es', 'slug_en','rooms_es','footage_es','logo')
         ->whereHas('departmentsRel', function ($query){
             $query->where('available', 1);
         })->where('active', 1)->orderBy('name_es');
@@ -124,6 +124,7 @@ class GetController extends BaseController
             $carousel[] = [
                 "title" => $value['name_es'],
                 "button" => $value['name_es'],
+                "logo" => $value['logo'],
                 "description" => '<div>'.$value['rooms_es'].'<br>'.$value['footage_es'].'</div>',
                 "image" => asset('storage/img/projects/'.$value["images_format"][0])
             ];
@@ -284,10 +285,11 @@ class GetController extends BaseController
         $projects_related = [];
         if ($project->projects_related) {
             foreach (json_decode($project->projects_related) as $key => $value) {
-                $projectTemp = Project::select('id', 'images', 'name_es','slug_es', 'rooms_es', 'footage_es')->where('id', $value)->first();
+                $projectTemp = Project::select('id', 'images', 'name_es','slug_es', 'rooms_es', 'footage_es','logo')->where('id', $value)->first();
                 $projects_related[] = [
                     "title" => $projectTemp['name_es'],
                     "button" => $projectTemp['name_es'],
+                    "logo" => $projectTemp['logo'],
                     "description" => '<div>'.$value['rooms_es'].'<br>'.$value['footage_es'].'</div>',
                     "image" => asset('storage/img/projects/'.$projectTemp["images_format"][0])
                 ];
@@ -300,6 +302,7 @@ class GetController extends BaseController
                 $projects_related[] = [
                     "title" => $value->name_es,
                     "button" => $value->name_es,
+                    "logo" => $value->logo,
                     "description" => '<div>'.$value['rooms_es'].'<br>'.$value['footage_es'].'</div>',
                     "image" => asset('storage/img/projects/'.$value["images_format"][0])
                 ];

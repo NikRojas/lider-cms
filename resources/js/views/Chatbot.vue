@@ -832,6 +832,7 @@ export default {
     restoreElFaq() {
       this.faqElement = {};
       this.errorsFaq = {};
+      this.titleFaq = "";
       this.modalDestroyFaq = false;
       this.modalCreateUpdateFaq = false;
     },
@@ -839,13 +840,14 @@ export default {
       this.requestSubmitFaq = false;
       this.loadingGetFaq = false;
       this.errorsFaq = {};
+      this.titleFaq = "";
       this.faqElement = {};
       this.modalCreateUpdateFaq = false;
       this.modalDestroyFaq = false;
       this.getFaqs();
     },
     editFaq(id) {
-      this.title = "Actualizar";
+      this.titleFaq = "Actualizar";
       this.modalCreateUpdateFaq = true;
       this.getFaq(id);
     },

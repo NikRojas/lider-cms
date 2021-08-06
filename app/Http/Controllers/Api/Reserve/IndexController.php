@@ -21,12 +21,12 @@ class IndexController extends BaseController
         $page = $this->getSeoPage('reserve-your-department', $request->locale);
         $departments = $this->paginateDepartments($request);
         $content = $this->getContentPage('reserve-your-department');
-        //$filters = $this->getFilters();
+        $filters = $this->getFilters();
         $data = array(
             "page" => $page,
             "departments" => $departments,
             "content" => $content,
-            //"filters" => $filters
+            "filters" => $filters
         );
         return $this->sendResponse($data, '');
     }

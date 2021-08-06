@@ -152,6 +152,10 @@ class SendReserveToSap implements ShouldQueue
             else{
                 $status = 500;
                 $description = $description.' - Error Retorno SAP.';
+                $orderUpdateAdvisor = Order::UpdateOrCreate(["id" => $this->order->id], ["advisor_id" => $advisorSend->id]);
+                Notification::route('mail',$advisorSend->email)->notify(new AdvisorOrderPaid($this->order));
+                #Actualizar Stock del Departamento
+                $departmentUpdate = Department::UpdateOrCreate(["id" => $this->order->orderDetailsRel[0]->departmentRel->id], ["available" => false]);
             }
             #LogSapConnection
             $lsc = LogSapConnection::UpdateOrCreate(["slug" => $slug, "type" => $this->lscType, 'status' => $status, 'description' => $description, "response" => (string) $responseSap->getBody()]);  

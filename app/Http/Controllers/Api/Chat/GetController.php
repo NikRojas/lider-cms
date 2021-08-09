@@ -255,13 +255,22 @@ class GetController extends BaseController
         $project = Project::where('name_es',$request->name_project)->first();
         $customPayload = [];
         $customPayload['type'] = "buttons";
-        $customPayload['text'] = "Mediante el siguiente link podrás programar tu cita con uno de nuestros asesores <nuxt-link :to=\"localePath({name: 'online-appointment',query: { project: '".$project->slug_es."', email: '".$request->email."', mobile: '".$request->mobile."' }})\">Link</nuxt-link>";
+        //$customPayload['text'] = "Mediante el siguiente link podrás programar tu cita con uno de nuestros asesores <nuxt-link :to=\"localePath({name: 'online-appointment',query: { project: '".$project->slug_es."', email: '".$request->email."', mobile: '".$request->mobile."' }})\">Link</nuxt-link>";
+        $customPayload['text'] = "En la siguiente sección podrás programar tu cita con uno de nuestros asesores.";
         $customPayload['text_above'] = "Tienes alguna duda adicional?";
         $buttons = [
             ["text" => "Quiero conocer los proyectos en venta"],
             ["text" => "Quiero separar un departamento"],
             ["text" => "Quiero contactarme con Servicio al Cliente"],
             ["text" => "No tengo más dudas"]
+        ];
+        $customPayload['route'] = [
+            "name" => 'online-appointment',
+            "query" => [
+                "project" => $project->slug_es,
+                "email"   => $request->email,
+                "mobile"  => $request->mobile
+            ]
         ];
         $customPayload['buttons'] = $buttons;
         return $this->sendResponse($customPayload, '');

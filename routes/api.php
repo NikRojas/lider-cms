@@ -82,11 +82,11 @@ Route::namespace('Api')->group(function() {
             Route::get('project-bonds', 'Chat\GetController@getProjectBonds');
             Route::get('project-promos', 'Chat\GetController@getProjectPromos');
             Route::get('project-quotation', 'Chat\GetController@getProjectQuotation');
-            //Route::get('project-contact', 'Chat\GetController@getProjectContact');
+            Route::get('contact-link', 'Chat\GetController@getContactLink');
             Route::get('project-reserve', 'Chat\GetController@getProjectReserve');
             Route::get('project-other-projects', 'Chat\GetController@getProjectOtherProjects');
-            Route::get('contact-medium', 'Chat\GetController@contactMedium');
-            Route::get('contact-schedules', 'Chat\GetController@contactSchedules');
+            //Route::get('contact-medium', 'Chat\GetController@contactMedium');
+            //Route::get('contact-schedules', 'Chat\GetController@contactSchedules');
         });
         Route::prefix('post')->group(function() { 
             Route::post('qualification', 'Chat\PostController@qualification');

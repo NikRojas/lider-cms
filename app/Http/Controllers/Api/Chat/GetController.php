@@ -251,16 +251,21 @@ class GetController extends BaseController
         return $this->sendResponse($customPayload, '');
     }
 
-    /*public function getProjectContact(Request $request){
+    public function getContactLink(Request $request){
         $project = Project::where('name_es',$request->name_project)->first();
         $customPayload = [];
         $customPayload['type'] = "buttons";
-        $bonds = $project->load('bondsRel');
-        $buttons = $this->getButtonsFlow1($project->id, $bonds, "Quiero que un asesor me contacte", true);
+        $customPayload['text'] = "Mediante el siguiente link podrás programar tu cita con uno de nuestros asesores <nuxt-link :to='localePath({name: 'online-appointment',query: { project: ".$project->slug_es.", email: ".$request->email.", mobile: ".$request->mobile." }})'>Link</nuxt-link>";
+        $customPayload['text_above'] = "Tienes alguna duda adicional?";
+        $buttons = [
+            ["text" => "Quiero conocer los proyectos en venta"],
+            ["text" => "Quiero separar un departamento"],
+            ["text" => "Quiero contactarme con Servicio al Cliente"],
+            ["text" => "No tengo más dudas"]
+        ];
         $customPayload['buttons'] = $buttons;
-        //$customPayload['text'] = "En esta sección podrás elegir un departamento, llenar tus datos y te llegará una cotización a tu correo";
         return $this->sendResponse($customPayload, '');
-    }*/
+    }
 
     public function getProjectReserve(Request $request){
         $project = Project::where('name_es',$request->name_project)->first();

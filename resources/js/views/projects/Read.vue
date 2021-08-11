@@ -366,7 +366,7 @@
             <div class="card">
               <div class="card-body">
                 <div class="row">
-                  <div class="col-12 mb-3">
+                  <div class="col-12 mb-0">
                     <div class="form-group">
                       <p class="mb-0">
                         El código SAP será utilizado para realizar la conexión
@@ -412,8 +412,51 @@
                     </div>
                   </div>
 
+
+                  <div class="col-12 col-lg-6 mb-2">
+                    <div class="form-group">
+                      <label class="font-weight-bold" 
+                        >El proyecto se vende en combo?</label
+                      >
+                      <div class="">
+                        {{ element.reservation_in_package ? 'Sí' : 'No' }}
+                      </div>
+                      
+                    </div>
+                  </div>
+
+                  <div class="col-12 col-lg-6">
+                    <div class="form-group">
+                      <label class="font-weight-bold" for="package_description"
+                        >Descripción del combo</label
+                      >
+                      <div v-if="element.package_description" v-html="element.package_description">
+
+                      </div>
+                      <div v-else>No registrado</div>
+                    </div>
+                  </div>
+
                   <div class="col-12">
                     <p class="mb-0">Estos campos se actualizaran automaticamente cuando se obtenga la Disponibilidad de los Inmuebles del Proyecto</p>
+                  </div>
+
+
+                  <div class="col-12 col-lg-6">
+                    <div class="form-group">
+                      <label class="font-weight-bold"
+                        >El proyecto cuenta con estacionamientos?</label
+                      >
+                      <div>{{ element.has_parking ? 'Sí' : 'No' }}</div>
+                    </div>
+                  </div>
+                  <div class="col-12 col-lg-6">
+                    <div class="form-group">
+                      <label class="font-weight-bold"
+                        >El proyecto cuenta con depósito?</label
+                      >
+                      <div>{{ element.has_warehouse ? 'Sí' : 'No' }}</div>
+                    </div>
                   </div>
 
                   <div class="col-12 col-lg-4 ">
@@ -449,6 +492,46 @@
                       >
                        <div v-if="element.price_parking_foreign_sap">
                         {{ element.price_parking_foreign_format }}
+                      </div>
+                      <div v-else>No registrado</div>
+                    </div>
+                  </div>
+
+
+
+                  <div class="col-12 col-lg-4 ">
+                    <div class="form-group">
+                      <label class="font-weight-bold" for="stock_warehouse"
+                        >Stock Depósito</label
+                      >
+                      <div v-if="element.stock_warehouse !== null && element.stock_warehouse !== ''">
+                        {{ element.stock_warehouse }}
+                      </div>
+                      <div v-else>No registrado</div>
+                    </div>
+                  </div>
+
+                  <div class="col-12 col-lg-4 ">
+                    <div class="form-group">
+                      <label class="font-weight-bold" for="price_warehouse_sap"
+                        >Precio Depósito Soles</label
+                      >
+                      <div v-if="element.price_warehouse_sap">
+                        {{ element.price_warehouse_sap_format }}
+                      </div>
+                      <div v-else>No registrado</div>
+                    </div>
+                  </div>
+
+                  <div class="col-12 col-lg-4 ">
+                    <div class="form-group">
+                      <label
+                        class="font-weight-bold"
+                        for="price_warehouse_foreign_sap"
+                        >Precio Depósito Dólares </label
+                      >
+                       <div v-if="element.price_warehouse_foreign_sap">
+                        {{ element.price_warehouse_foreign_sap_format }}
                       </div>
                       <div v-else>No registrado</div>
                     </div>

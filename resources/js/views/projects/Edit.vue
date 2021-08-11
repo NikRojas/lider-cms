@@ -561,7 +561,7 @@
             <div class="card">
               <div class="card-body">
                 <div class="row">
-                  <div class="col-12 mb-3">
+                  <div class="col-12 mb-4 mb-lg-0">
                     <div class="form-group">
                       <p class="mb-0">
                         El código SAP será utilizado para realizar la conexión
@@ -628,8 +628,78 @@
                     </div>
                   </div>
 
+                  <div class="col-12 col-lg-6 mb-2">
+                    <div class="form-group">
+                      <label class="font-weight-bold" 
+                        >El proyecto se vende en combo?</label
+                      >
+                      <div class="ml-2">
+                        <b-form-checkbox
+                        size="lg"
+                        v-model="element.reservation_in_package"
+                        name="check-button"
+                        switch
+                      >
+                      {{ element.reservation_in_package ? 'Sí' : 'No'  }}
+                      </b-form-checkbox>
+                      </div>
+                      
+                    </div>
+                  </div>
+
+                  <div class="col-12 col-lg-6">
+                    <div class="form-group">
+                      <label class="font-weight-bold" for="package_description"
+                        >Descripción del combo</label
+                      >
+                      <quill-Editor
+                        @keydown.enter.prevent
+                        v-model="element.package_description"
+                        :options="editorOptions"
+                        class="ql-height-5"
+                        ref="ref_package_description"
+                      ></quill-Editor>
+                      <label
+                        v-if="errors && errors.package_description"
+                        class="mt-2 text-danger text-sm"
+                        for="package_description"
+                        >{{ errors.package_description[0] }}</label
+                      >
+                    </div>
+                  </div>
+
                   <div class="col-12">
                     <p class="mb-0">Estos campos se actualizaran automaticamente cuando se obtenga la Disponibilidad de los Inmuebles del Proyecto</p>
+                  </div>
+
+                  <div class="col-12 col-lg-6">
+                    <div class="form-group">
+                      <label class="font-weight-bold"
+                        >El proyecto cuenta con estacionamientos?</label
+                      >
+                      <input
+                        type="text"
+                        class="form-control"
+                        :value="element.has_parking !== null ? element.has_parking ? 'Sí' : 'No' : ''"
+                        id="has_parking"
+                        disabled
+                      />
+                    </div>
+                  </div>
+
+                  <div class="col-12 col-lg-6">
+                    <div class="form-group">
+                      <label class="font-weight-bold"
+                        >El proyecto cuenta con depósito?</label
+                      >
+                      <input
+                        type="text"
+                        class="form-control"
+                        :value="element.has_warehouse !== null ? element.has_warehouse ? 'Sí' : 'No' : ''"
+                        id="has_warehouse"
+                        disabled
+                      />
+                    </div>
                   </div>
 
                   <div class="col-12 col-lg-4 ">
@@ -684,6 +754,61 @@
                       />
                     </div>
                   </div>
+
+                  <div class="col-12 col-lg-4 ">
+                    <div class="form-group">
+                      <label class="font-weight-bold" for="stock_parking"
+                        >Stock Depósito</label
+                      >
+                      <input
+                        type="text"
+                        class="form-control"
+                        :value="element.stock_warehouse !== null && element.stock_warehouse !== '' ? element.stock_warehouse : ''"
+                        id="stock_warehouse"
+                        disabled
+                      />
+                      <label
+                        v-if="errors && errors.stock_warehouse"
+                        class="mt-2 text-danger text-sm"
+                        for="stock_warehouse"
+                        >{{ errors.stock_warehouse[0] }}</label
+                      >
+                    </div>
+                  </div>
+
+                  <div class="col-12 col-lg-4 ">
+                    <div class="form-group">
+                      <label class="font-weight-bold" for="price_warehouse_sap"
+                        >Precio Depósito Soles</label
+                      >
+                      <input
+                        type="text"
+                        class="form-control"
+                        :value="element.price_warehouse_sap ? element.price_warehouse_sap_format : ''"
+                        id="price_warehouse_sap"
+                        disabled
+                      />
+                    </div>
+                  </div>
+
+                  <div class="col-12 col-lg-4 ">
+                    <div class="form-group">
+                      <label
+                        class="font-weight-bold"
+                        for="price_parking_foreign_sap"
+                        >Precio Depósito Dólares </label
+                      >
+                      <input
+                        type="text"
+                        class="form-control"
+                        :value="element.price_parking_foreign_sap ? element.price_parking_foreign_format : ''"
+                        id="price_parking_foreign_sap"
+                        disabled
+                      />
+                    </div>
+                  </div>
+
+
                 </div>
               </div>
             </div>
@@ -1725,6 +1850,14 @@ export default {
       }
       if (this.element.webhook_url) {
         fd.append("webhook_url", this.element.webhook_url);
+      }
+       if (this.element.reservation_in_package == true) {
+        fd.append("reservation_in_package", 1);
+      } else {
+        fd.append("reservation_in_package", 0);
+      }
+      if (this.element.package_description) {
+        fd.append("package_description", this.element.package_description);
       }
       fd.append("_method", "put");
       axios

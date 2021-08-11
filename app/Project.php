@@ -13,9 +13,11 @@ class Project extends Model
         'webhook_url_active' => 'boolean',
         'send_to_email' => 'boolean',
         'projects_related' => 'array',
-        'form_videocall' => 'boolean'
+        'form_videocall' => 'boolean',
+        'reservation_in_package' => 'boolean',
     ];
-    protected $appends = ['images_format','price_total_format','price_total_foreign_format','price_format','id_video','price_separation_format','price_parking_format','price_parking_foreign_format'];
+    protected $appends = ['images_format','price_total_format','price_total_foreign_format','price_format','id_video','price_separation_format','price_parking_format','price_parking_foreign_format',
+    'price_warehouse_sap_format','price_warehouse_foreign_sap_format'];
 
     public function galleryRel()
     {
@@ -141,6 +143,16 @@ class Project extends Model
 
     public function getPriceParkingForeignFormatAttribute()
     {
-        return '$ '.number_format($this->price_parking_foreign_sap, 0, '.', ',');
+        return '$ '.number_format($this->price_warehouse_foreign_sap, 0, '.', ',');
+    }
+
+    public function getPriceWarehouseForeignSapFormatAttribute()
+    {
+        return '$ '.number_format($this->price_warehouse_foreign_sap, 0, '.', ',');
+    }
+
+    public function getPriceWarehouseSapFormatAttribute()
+    {
+        return 'S/ '.number_format($this->price_warehouse_sap, 0, '.', ',');
     }
 }

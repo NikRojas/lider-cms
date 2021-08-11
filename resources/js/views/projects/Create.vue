@@ -472,7 +472,7 @@
             <div class="card">
               <div class="card-body">
                 <div class="row">
-                  <div class="col-12 mb-3">
+                  <div class="col-12 mb-4 mb-lg-0">
                     <div class="form-group">
                       <p class="mb-0">
                         El código SAP será utilizado para realizar la conexión
@@ -496,7 +496,7 @@
                       >
                     </div>
 
-                    <div class="form-group">
+                    <div class="form-group mb-0">
                       <p class="mb-0">
                         Este será el monto que cuesta separar un inmueble en el Proyecto. Aseguresé que las credenciales de la Tienda sean iguales al tipo de moneda ingresado aquí.
                       </p>
@@ -535,13 +535,84 @@
                             >{{ errors.price_separation[0] }}</label
                           >
                           </div>
+
+
                       </div>
                       
                     </div>
                   </div>
 
+                  <div class="col-12 col-lg-6 mb-2">
+                    <div class="form-group">
+                      <label class="font-weight-bold" 
+                        >El proyecto se vende en combo?</label
+                      >
+                      <div class="ml-2">
+                        <b-form-checkbox
+                        size="lg"
+                        v-model="element.reservation_in_package"
+                        name="check-button"
+                        switch
+                      >
+                      {{ element.reservation_in_package ? 'Sí' : 'No'  }}
+                      </b-form-checkbox>
+                      </div>
+                      
+                    </div>
+                  </div>
+
+                  <div class="col-12 col-lg-6" >
+                    <div class="form-group">
+                      <label class="font-weight-bold" for="package_description"
+                        >Descripción del combo</label
+                      >
+                      <quill-Editor
+                        @keydown.enter.prevent
+                        v-model="element.package_description"
+                        :options="editorOptions"
+                        class="ql-height-5"
+                        ref="ref_package_description"
+                      ></quill-Editor>
+                      <label
+                        v-if="errors && errors.package_description"
+                        class="mt-2 text-danger text-sm"
+                        for="package_description"
+                        >{{ errors.package_description[0] }}</label
+                      >
+                    </div>
+                  </div>
+
                   <div class="col-12">
                     <p class="mb-0">Estos campos se actualizaran automaticamente cuando se obtenga la Disponibilidad de los Inmuebles del Proyecto</p>
+                  </div>
+
+                  <div class="col-12 col-lg-6">
+                    <div class="form-group">
+                      <label class="font-weight-bold"
+                        >El proyecto cuenta con estacionamientos?</label
+                      >
+                      <input
+                        type="text"
+                        class="form-control"
+                        v-model="element.has_parking"
+                        id="has_parking"
+                        disabled
+                      />
+                    </div>
+                  </div>
+                  <div class="col-12 col-lg-6">
+                    <div class="form-group">
+                      <label class="font-weight-bold"
+                        >El proyecto cuenta con depósito?</label
+                      >
+                      <input
+                        type="text"
+                        class="form-control"
+                        v-model="element.has_warehouse"
+                        id="has_warehouse"
+                        disabled
+                      />
+                    </div>
                   </div>
 
                   <div class="col-12 col-lg-4 ">
@@ -605,6 +676,72 @@
                         class="mt-2 text-danger text-sm"
                         for="price_parking_foreign_sap"
                         >{{ errors.price_parking_foreign_sap[0] }}</label
+                      >
+                    </div>
+                  </div>
+
+
+                  <div class="col-12 col-lg-4 ">
+                    <div class="form-group">
+                      <label class="font-weight-bold" for="stock_warehouse"
+                        >Stock Depósito</label
+                      >
+                      <input
+                        type="text"
+                        class="form-control"
+                        v-model="element.stock_warehouse"
+                        id="stock_warehouse"
+                        disabled
+                      />
+                      <label
+                        v-if="errors && errors.stock_warehouse"
+                        class="mt-2 text-danger text-sm"
+                        for="stock_warehouse"
+                        >{{ errors.stock_warehouse[0] }}</label
+                      >
+                    </div>
+                  </div>
+
+                  <div class="col-12 col-lg-4 ">
+                    <div class="form-group">
+                      <label class="font-weight-bold" for="price_parking_sap"
+                        >Precio Depósito Soles</label
+                      >
+                      <input
+                        type="text"
+                        class="form-control"
+                        v-model="element.price_warehouse_sap"
+                        id="price_warehouse_sap"
+                        disabled
+                      />
+                      <label
+                        v-if="errors && errors.price_warehouse_sap"
+                        class="mt-2 text-danger text-sm"
+                        for="price_warehouse_sap"
+                        >{{ errors.price_warehouse_sap[0] }}</label
+                      >
+                    </div>
+                  </div>
+
+                  <div class="col-12 col-lg-4 ">
+                    <div class="form-group">
+                      <label
+                        class="font-weight-bold"
+                        for="price_warehouse_foreign_sap"
+                        >Precio Depósito Dólares </label
+                      >
+                      <input
+                        type="text"
+                        class="form-control"
+                        v-model="element.price_warehouse_foreign_sap"
+                        id="price_warehouse_foreign_sap"
+                        disabled
+                      />
+                      <label
+                        v-if="errors && errors.price_warehouse_foreign_sap"
+                        class="mt-2 text-danger text-sm"
+                        for="price_warehouse_foreign_sap"
+                        >{{ errors.price_warehouse_foreign_sap[0] }}</label
                       >
                     </div>
                   </div>
@@ -1332,6 +1469,7 @@ export default {
         financing_options: [],
         form_videocall: true,
         projects_related: [],
+        reservation_in_package: false
       },
       elementsQuotation: [
         { text: "Sí", value: true },
@@ -1617,6 +1755,14 @@ export default {
       }
       if (this.element.webhook_url) {
         fd.append("webhook_url", this.element.webhook_url);
+      }
+      if (this.element.reservation_in_package == true) {
+        fd.append("reservation_in_package", 1);
+      } else {
+        fd.append("reservation_in_package", 0);
+      }
+      if (this.element.package_description) {
+        fd.append("package_description", this.element.package_description);
       }
       axios
         .post(this.routeStore, fd)

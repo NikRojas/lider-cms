@@ -60,7 +60,7 @@ class GetController extends BaseController
             }
         }
         if($request->name){
-            $customPayload['text'] = $request->name." estás interesado en ".$departmentsText;
+            $customPayload['text'] = $request->name.", contamos con proyectos en ".$departmentsText." <strong>¿en cuál estás interesado?</strong>";
         }
         else{
             $customPayload['text'] = "Estás interesado en ".$departmentsText;
@@ -86,7 +86,7 @@ class GetController extends BaseController
             ->where('code_district', '!=', '00')->orderBy('district')->get();
         $data->push(["district" => 'Todos']);
         $customPayload = [];
-        $customPayload['text'] = "¿En qué distrito te gustaría vivir?";
+        $customPayload['text'] = "¿En qué distrito te <strong>gustaría</strong> vivir? 😁";
         $customPayload['type'] = "buttons";
         $buttons = [];
         foreach ($data as $key => $value) {
@@ -117,7 +117,7 @@ class GetController extends BaseController
         }
         $data = $data->get();
         $customPayload = [];
-        $customPayload['text'] = "Tenemos disponibles estos proyectos.";
+        $customPayload['text'] = "Tenemos estos proyectos disponibles 👇";
         $customPayload['type'] = "carousel";
         $carousel = [];
         foreach ($data as $key => $value) {
@@ -166,9 +166,9 @@ class GetController extends BaseController
         $project = Project::where('name_es',$name_es)->first();
         $countDeps = Department::where('project_id',$project->id)->where('available',true)->count();
         $customPayload = [];
-        $firstText = "Buena elección ".$name.", en el proyecto ".$name_es." tenemos ".$countDeps." inmuebles en stock";
+        $firstText = "Buena elección <strong>".$name."</strong>. 👌 En el proyecto <strong>".$name_es."</strong> tenemos 🏢 <strong>".$countDeps." inmuebles en stock </strong>";
         if($project->stock_parking){
-            $firstText .= " y ".$project->stock_parking." cocheras.";
+            $firstText .= " y <strong>".$project->stock_parking." estacionamientos</strong>.";
         }
         else{
             $firstText .= ".";
@@ -185,7 +185,7 @@ class GetController extends BaseController
         }
         $min = Department::where('project_id',$project->id)->where('available',true)->min($column_name);
         $max = Department::where('project_id',$project->id)->where('available',true)->max($column_name);
-        $secondText = "Los precios de los inmuebles van desde ".$symbol.number_format($min, 0, '.', ',')." hasta ".$symbol.number_format($max, 0, '.', ',');
+        $secondText = "💳 Los precios de los inmuebles van desde <strong>".$symbol.number_format($min, 0, '.', ',')."</strong> hasta <strong>".$symbol.number_format($max, 0, '.', ',')."</strong>";
         $customPayload['route'] = [
             "name" => 'project',
             "params" => [
@@ -195,7 +195,7 @@ class GetController extends BaseController
         $customPayload['type'] = "buttons";
         //$customPayload['text'] = $firstText.'<br>'.$secondText;
         $customPayload['texts'] = [$firstText,$secondText];
-        $customPayload['text_above'] = "¿Cómo puedo ayudarte con el proyecto ".$name_es."?";
+        $customPayload['text_above'] = "¿Cómo puedo ayudarte con el proyecto <strong>".$name_es."</strong>? 😊";
         $bonds = $project->load('bondsRel');
         $buttons = $this->getButtonsFlow1($project->id, $bonds, false, false);
         $customPayload['buttons'] = $buttons;
@@ -214,7 +214,7 @@ class GetController extends BaseController
         foreach ($promos as $key => $value) {
             $gallery[] = ["src" => asset('storage/img/projects/tps-promotion/'.$value["image"])];
         }
-        $customPayload['text'] = "El proyecto ".$request->name_project." cuenta con los siguientes promociones:";
+        $customPayload['text'] = "El proyecto <strong>".$request->name_project."</strong> cuenta con los siguientes promociones 👇";
         $customPayload['gallery'] = $gallery;
         return $this->sendResponse($customPayload, '');
     }
@@ -226,10 +226,9 @@ class GetController extends BaseController
         $bonds = $project->load('bondsRel');
         $buttons = $this->getButtonsFlow1($project->id, $bonds, "Quiero saber qué bonos tiene el proyecto?", true);
         $customPayload['buttons'] = $buttons;
-        $texts = [ "El proyecto ".$request->name_project." cuenta con los siguientes bonos:" ];
+        $texts = [ "El proyecto <strong>".$request->name_project."</strong> cuenta con los siguientes bonos 👇" ];
         foreach ($bonds->bondsRel as $key => $value) {
-            //$texts[] = $value["name"].": Lorem ipsum dolor";
-            $tempValue = $value["name"];
+            $tempValue = "<strong>".$value["name"]."</strong>";
             if($value["description"]){
                 $tempValue = $tempValue.': '.$value["description"];
             }
@@ -247,7 +246,7 @@ class GetController extends BaseController
         $buttons = $this->getButtonsFlow1($project->id, $bonds, "Quiero cotizar un departamento", true);
         $customPayload['buttons'] = $buttons;
         $customPayload['route_section'] = "#cotizar";
-        $customPayload['text'] = "En esta sección podrás elegir un departamento, llenar tus datos y te llegará una cotización a tu correo";
+        $customPayload['text'] = "👈 En esta sección podrás elegir un departamento, llenar tus datos y te llegará una cotización a tu correo";
         return $this->sendResponse($customPayload, '');
     }
 
@@ -284,7 +283,7 @@ class GetController extends BaseController
         $buttons = $this->getButtonsFlow1($project->id, $bonds, "Quiero separar mi inmueble", true);
         $customPayload['buttons'] = $buttons;
         $customPayload['text_above'] = "Elige dentro de las opciones el inmueble que deseas separar";
-        $customPayload['text'] = "En esta sección podrás realizar la separación de tu inmueble en el proyecto ".$request->name_project;
+        $customPayload['text'] = "En esta sección podrás realizar la separación de tu inmueble en el proyecto <strong>".$request->name_project."</strong>";
         $customPayload['route'] = [
             "name" => 'reserve'
         ];
@@ -323,7 +322,7 @@ class GetController extends BaseController
             }
         }
         $customPayload['carousel'] = $projects_related;
-        $customPayload['text'] = "Tenemos disponibles los siguientes proyectos similares al proyecto ".$request->name_project;
+        $customPayload['text'] = "Tenemos disponibles los siguientes proyectos similares al proyecto <strong>".$request->name_project."</strong>";
         return $this->sendResponse($customPayload, '');
     }
 

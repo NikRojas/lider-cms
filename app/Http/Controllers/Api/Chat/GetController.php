@@ -283,11 +283,10 @@ class GetController extends BaseController
         $buttons = $this->getButtonsFlow1($project->id, $bonds, "Quiero separar mi inmueble", true);
         $customPayload['buttons'] = $buttons;
         $customPayload['text_above'] = "Elige dentro de las opciones el inmueble que deseas separar";
-        $customPayload['text'] = "En esta sección podrás realizar la separación de tu inmueble en el proyecto <strong>".$request->name_project."</strong>";
+        $customPayload['text'] = "En esta sección podrás realizar la separación de tu inmueble en el proyecto <strong>".$request->name_project."</strong>. 😊";
         $customPayload['route'] = [
             "name" => 'reserve'
         ];
-        $customPayload['text'] = "En esta sección podrás elegir un departamento, llenar tus datos y te llegará una cotización a tu correo";
         return $this->sendResponse($customPayload, '');
     }
 

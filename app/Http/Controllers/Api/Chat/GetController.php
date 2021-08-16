@@ -383,7 +383,7 @@ class GetController extends BaseController
             ["text" => "Quiero separar un departamento"],
             ["text" => "Quiero contactarme con Servicio al Cliente"]
         ];
-        return response()->json($customPayload);
+        return $this->sendResponse($customPayload, '');
     }
 
     public function getProjectContact(Request $request){

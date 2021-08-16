@@ -85,13 +85,14 @@ Route::namespace('Api')->group(function() {
             Route::get('contact-link', 'Chat\GetController@getContactLink');
             Route::get('project-reserve', 'Chat\GetController@getProjectReserve');
             Route::get('project-other-projects', 'Chat\GetController@getProjectOtherProjects');
+            Route::get('no-doubt', 'Chat\GetController@getNoDoubts');
+            Route::get('project-contact', 'Chat\GetController@getProjectContact');
             //Route::get('contact-medium', 'Chat\GetController@contactMedium');
             //Route::get('contact-schedules', 'Chat\GetController@contactSchedules');
         });
         Route::prefix('post')->group(function() { 
             Route::post('qualification', 'Chat\PostController@qualification');
-            Route::post('advisory-contact', 'Chat\PostController@advisoryContact');
-            Route::post('project-advisory-contact', 'Chat\PostController@projectAdvisoryContact');
+            //Route::post('project-advisory-contact', 'Chat\PostController@projectAdvisoryContact');
         });
     });
 });

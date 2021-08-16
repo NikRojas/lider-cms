@@ -9,6 +9,7 @@ use App\ChatQualification;
 use App\ChatSchedules;
 use App\Department;
 use App\Http\Controllers\Api\BaseController;
+use App\Information;
 use App\Project;
 use App\ProjectParentTypeDepartment;
 use App\TpsPromotion;
@@ -102,7 +103,7 @@ class GetController extends BaseController
         $data = Project::select('id', 'images','name_es', 'name_en', 'slug_es', 'slug_en','rooms_es','footage_es','logo')
         ->whereHas('departmentsRel', function ($query){
             $query->where('available', 1);
-        })->where('active', 1)->orderBy('name_es');
+        })->where('active', 1)->orderBy('id','asc');
         if($district == 'Todos'){
             $codeDepartment = Ubigeo::where('department',$department)->first();
             $data = $data->whereHas('ubigeoRel', function ($query2) use ($codeDepartment) {
@@ -133,7 +134,7 @@ class GetController extends BaseController
         return $this->sendResponse($customPayload, '');
     }
 
-    public function contactMedium(Request $request)
+    /*public function contactMedium(Request $request)
     {
         $name = $request->name;
         $data = ChatContactMedium::orderBy('index','asc')->get();
@@ -158,7 +159,7 @@ class GetController extends BaseController
         }
         $customPayload['buttons'] = $buttons;
         return $this->sendResponse($customPayload, '');
-    }
+    }*/
 
     public function getProject(Request $request){
         $name = $request->name;
@@ -254,7 +255,6 @@ class GetController extends BaseController
         $project = Project::where('name_es',$request->name_project)->first();
         $customPayload = [];
         $customPayload['type'] = "buttons";
-        //$customPayload['text'] = "Mediante el siguiente link podrás programar tu cita con uno de nuestros asesores <nuxt-link :to=\"localePath({name: 'online-appointment',query: { project: '".$project->slug_es."', email: '".$request->email."', mobile: '".$request->mobile."' }})\">Link</nuxt-link>";
         $customPayload['text'] = "En esta sección podrás agendar una cita en el horario de tu preferencia 👈";
         $customPayload['text_above'] = "Tienes alguna duda adicional?";
         $buttons = [
@@ -361,5 +361,35 @@ class GetController extends BaseController
     public function getFaq(){
         $elements = ChatFaq::orderBy('index', 'asc')->get();
         return response()->json($elements);
+    }
+
+    public function getNoDoubts(Request $request){
+        $information = Information::first();
+        $customPayload = [];
+        $firstText = "Gracias por calificar mi atención, ".$request->name."!";
+        $customPayload['texts'] = [$firstText];
+        return response()->json($customPayload);
+    }
+
+    public function getProjectContact(Request $request){
+        $project = Project::where('name_es',$request->name_project)->first();
+        $customPayload = [];
+        $customPayload['type'] = "buttons";
+        $customPayload['text'] = "En esta sección podrás agendar una cita en el horario de tu preferencia 👈";
+        $customPayload['text_above'] = "Tienes alguna duda adicional?";
+        $buttons = [
+            ["text" => "Quiero ver otros proyectos similares"],
+            ["text" => "Ya no tengo más dudas"],
+        ];
+        $customPayload['route'] = [
+            "name" => 'online-appointment',
+            "query" => [
+                "project" => $project->slug_es,
+                //"email"   => $request->email,
+                //"mobile"  => $request->mobile
+            ]
+        ];
+        $customPayload['buttons'] = $buttons;
+        return $this->sendResponse($customPayload, '');
     }
 }

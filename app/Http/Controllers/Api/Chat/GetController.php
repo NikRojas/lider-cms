@@ -375,7 +375,7 @@ class GetController extends BaseController
         if($information->main_office){
             $customPayload['texts'] = array_merge($customPayload['texts'], ["<br><strong>📞 Oficina principal: </strong><a href='tel:01'".$information->main_office.">".$information->main_office_formatted."</a>"]);
         }
-        $customPayload['texts'] = ["No olvides que estaré aquí para ayudarte 🤖"];
+        $customPayload['texts'] = array_merge($customPayload['texts'], ["No olvides que estaré aquí para ayudarte 🤖"]);
         $customPayload['type'] = "buttons";
         $customPayload['buttons'] = [
             ["text" => "Quiero conocer los proyectos en venta"],

@@ -19,7 +19,7 @@
         nav-class="border bg-white py-2"
         content-class="col-12 col-lg-9 col-xl-10"
       >
-        <b-tab
+        <!--<b-tab
           title="Leads"
           active
           title-link-class="border-0 shadow-none bg-white py-3"
@@ -55,7 +55,7 @@
               ></DataTable>
             </div>
           </div>
-        </b-tab>
+        </b-tab>-->
         <b-tab
           title="Calificaciones"
           title-link-class="border-0 shadow-none bg-white py-3"
@@ -928,7 +928,7 @@ export default {
     }
   },
   created() {
-    this.getLeads(1, this.elementsPerPage);
+    //this.getLeads(1, this.elementsPerPage);
     this.getQualification();
     this.getFaqs();
   },

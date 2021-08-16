@@ -255,7 +255,7 @@ class GetController extends BaseController
         $customPayload = [];
         $customPayload['type'] = "buttons";
         //$customPayload['text'] = "Mediante el siguiente link podrás programar tu cita con uno de nuestros asesores <nuxt-link :to=\"localePath({name: 'online-appointment',query: { project: '".$project->slug_es."', email: '".$request->email."', mobile: '".$request->mobile."' }})\">Link</nuxt-link>";
-        $customPayload['text'] = "👈 En esta sección podrás agendar una cita en el horario de tu preferencia";
+        $customPayload['text'] = "En esta sección podrás agendar una cita en el horario de tu preferencia 👈";
         $customPayload['text_above'] = "Tienes alguna duda adicional?";
         $buttons = [
             ["text" => "Quiero conocer los proyectos en venta"],

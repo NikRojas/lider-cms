@@ -267,8 +267,8 @@ class GetController extends BaseController
             "name" => 'online-appointment',
             "query" => [
                 "project" => $project->slug_es,
-                "email"   => $request->email,
-                "mobile"  => $request->mobile
+                //"email"   => $request->email,
+                //"mobile"  => $request->mobile
             ]
         ];
         $customPayload['buttons'] = $buttons;

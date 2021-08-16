@@ -61,7 +61,7 @@ class GetController extends BaseController
             }
         }
         if($request->name){
-            $customPayload['text'] = $request->name.", contamos con proyectos en ".$departmentsText." <strong>¿en cuál estás interesado?</strong>";
+            $customPayload['text'] = $request->name.", contamos con proyectos en ".$departmentsText." <strong>¿En qué ciudad estás interesado?</strong>";
         }
         else{
             $customPayload['text'] = "Estás interesado en ".$departmentsText;
@@ -186,7 +186,7 @@ class GetController extends BaseController
         }
         $min = Department::where('project_id',$project->id)->where('available',true)->min($column_name);
         $max = Department::where('project_id',$project->id)->where('available',true)->max($column_name);
-        $secondText = "💳 Los precios de los inmuebles van desde <strong>".$symbol.number_format($min, 0, '.', ',')."</strong> hasta <strong>".$symbol.number_format($max, 0, '.', ',')."</strong>";
+        $secondText = "Los precios de los inmuebles van desde <strong>".$symbol.number_format($min, 0, '.', ',')."</strong> hasta <strong>".$symbol.number_format($max, 0, '.', ',')."</strong>";
         $customPayload['route'] = [
             "name" => 'project',
             "params" => [
@@ -280,10 +280,10 @@ class GetController extends BaseController
         $customPayload = [];
         $customPayload['type'] = "buttons";
         $bonds = $project->load('bondsRel');
-        $buttons = $this->getButtonsFlow1($project->id, $bonds, "Quiero separar mi inmueble", true);
+        $buttons = $this->getButtonsFlow1($project->id, $bonds, "Quiero separar un inmueble", true);
         $customPayload['buttons'] = $buttons;
-        $customPayload['text_above'] = "Elige dentro de las opciones el inmueble que deseas separar";
-        $customPayload['text'] = "En esta sección podrás realizar la separación de tu inmueble en el proyecto <strong>".$request->name_project."</strong>. 😊";
+        //$customPayload['text_above'] = "Elige dentro de las opciones el inmueble que deseas separar";
+        $customPayload['text'] = "En esta sección podrás realizar la separación de tu inmueble en el proyecto <strong>".$request->name_project."</strong>. 😄";
         $customPayload['route'] = [
             "name" => 'reserve'
         ];
@@ -321,7 +321,7 @@ class GetController extends BaseController
             }
         }
         $customPayload['carousel'] = $projects_related;
-        $customPayload['text'] = "Tenemos disponibles los siguientes proyectos similares al proyecto <strong>".$request->name_project."</strong>";
+        $customPayload['text'] = "Tenemos disponibles los siguientes proyectos similares";
         return $this->sendResponse($customPayload, '');
     }
 
@@ -341,8 +341,8 @@ class GetController extends BaseController
         if($textButton != "Quiero que un asesor me contacte"){
             $buttons = array_merge($buttons,[["text" => "Quiero que un asesor me contacte"]]);
         }
-        if($textButton != "Quiero separar mi inmueble"){
-            $buttons = array_merge($buttons,[["text" => "Quiero separar mi inmueble"]]);
+        if($textButton != "Quiero separar un inmueble"){
+            $buttons = array_merge($buttons,[["text" => "Quiero separar un inmueble"]]);
         }
         if($additionalQuestions){
             if($textButton != "Quiero ver otros proyectos similares"){

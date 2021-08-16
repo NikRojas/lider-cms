@@ -369,12 +369,15 @@ class GetController extends BaseController
         $firstText = "Gracias por calificar mi atención ".$request->name."!";
         $customPayload['texts'] = [$firstText, 
         "<strong>¿Tienes una duda adicional?</strong> También contamos con la sección de <strong>Preguntas Frecuentes</strong> 👆"];
-        if($information->central_phone){
-            $customPayload['texts'] = array_merge($customPayload['texts'], ["Si no llegamos a resolverlas aquí te dejamos nuestros números de contacto: <br> <strong>📞 Central de ventas: </strong><a href='tel:01'".$information->central_phone.">".$information->central_phone_formatted."</a>"]);
+        $customPayload['texts'] = array_merge($customPayload['texts'], [
+            "Si no llegamos a resolverlas aquí te dejamos nuestros números de contacto: 
+            <br> <strong>📞 Central de ventas: </strong><a href='tel:01'".$information->central_phone.">".$information->central_phone_formatted."</a>
+            <br><strong>📞 Oficina principal: </strong><a href='tel:01'".$information->main_office.">".$information->main_office_formatted."</a>"]);
+        /*if($information->central_phone){
         }
         if($information->main_office){
             $customPayload['texts'] = array_merge($customPayload['texts'], ["<br><strong>📞 Oficina principal: </strong><a href='tel:01'".$information->main_office.">".$information->main_office_formatted."</a>"]);
-        }
+        }*/
         $customPayload['texts'] = array_merge($customPayload['texts'], ["No olvides que estaré aquí para ayudarte 🤖"]);
         $customPayload['type'] = "buttons";
         $customPayload['buttons'] = [

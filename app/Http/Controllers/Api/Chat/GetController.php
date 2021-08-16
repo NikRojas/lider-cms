@@ -256,6 +256,7 @@ class GetController extends BaseController
         $customPayload = [];
         $customPayload['type'] = "buttons";
         $customPayload['text'] = "En esta sección podrás agendar una cita en el horario de tu preferencia 👈";
+        $customPayload['text'] = "notification";
         $customPayload['text_above'] = "Tienes alguna duda adicional?";
         $buttons = [
             ["text" => "Quiero conocer los proyectos en venta"],
@@ -284,6 +285,7 @@ class GetController extends BaseController
         $customPayload['buttons'] = $buttons;
         //$customPayload['text_above'] = "Elige dentro de las opciones el inmueble que deseas separar";
         $customPayload['text'] = "En esta sección podrás realizar la separación de tu inmueble en el proyecto <strong>".$request->name_project."</strong>. 😄";
+        $customPayload['notification'] = "En esta sección podrás realizar la separación de tu inmueble en el proyecto <strong>".$request->name_project."</strong>. 😄";
         $customPayload['route'] = [
             "name" => 'reserve'
         ];
@@ -394,6 +396,7 @@ class GetController extends BaseController
         $customPayload = [];
         $customPayload['type'] = "buttons";
         $customPayload['text'] = "En esta sección podrás agendar una cita en el horario de tu preferencia 👈";
+        $customPayload['notification'] = "En esta sección podrás agendar una cita en el horario de tu preferencia 👈";
         $customPayload['text_above'] = "Tienes alguna duda adicional?";
         $buttons = [
             ["text" => "Quiero ver otros proyectos similares"],

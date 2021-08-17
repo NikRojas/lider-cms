@@ -62,7 +62,7 @@ class CustomerRequest extends FormRequest
                 ['document_number' => ['required','digits:8']
             ]);
         }
-        else if($this->type_document_id == $pas->name || $this->type_document_id == $ce->name){
+        else if($this->type_document_id == $pas->name || $this->type_document_id == $ce->description){
             $rules = array_merge($rules, ['document_number' => ['required','digits:12']]);
         }
         return $rules;

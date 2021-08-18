@@ -56,7 +56,7 @@
                 >
                 <small class="d-block mb-0 lh-1">Formato: JPG</small>
                 <small class="d-block mb-2 lh-1"
-                  >Tamaño recomendado: No mayor a 200KB</small
+                  >Tamaño recomendado: No mayor a 400KB</small
                 >
                 <div class="row">
                   <div class="col text-center" v-if="element.image">

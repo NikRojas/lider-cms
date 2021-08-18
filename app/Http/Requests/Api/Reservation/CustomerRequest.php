@@ -25,8 +25,7 @@ class CustomerRequest extends FormRequest
         'lastname_2.required' => 'Por favor ingrese su apellido materno.',
         'required' => 'Por favor ingrese su :attribute.',
         'document_number.required' => 'Por favor ingrese su número de documento.',
-        'digits_between' => 'Debe ingresar un número de teléfono o celular entre :min y :max dígitos.',
-        'mobile.required' => 'Por favor ingrese su teléfono o celular.',
+        'digits_between' => 'Debe ingresar un número de documento entre :min y :max dígitos.',
         'mobile.required' => 'Por favor ingrese su teléfono o celular.',
         'accepted.accepted' => 'Debe aceptar nuestros términos y condiciones.',
         'digits' => 'Debe ingresar un número de :digits dígitos.',
@@ -63,7 +62,7 @@ class CustomerRequest extends FormRequest
             ]);
         }
         else if($this->type_document_id == $pas->name || $this->type_document_id == $ce->description){
-            $rules = array_merge($rules, ['document_number' => ['required','digits:12']]);
+            $rules = array_merge($rules, ['document_number' => ['required','digits_between:8,12']]);
         }
         return $rules;
 

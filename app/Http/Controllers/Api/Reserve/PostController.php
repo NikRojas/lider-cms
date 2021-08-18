@@ -181,7 +181,7 @@ class PostController extends BaseController
             ],
             "metadata" => [
                 "tipo_documento" => $request->type_document_id,
-                "apellido_paterno" => $request->lastname_2,
+                "apellido_materno" => $request->lastname_2,
                 "proyecto" => $department->projectRel->name_es,
                 "inmueble" => $department->description,
                 "cod_inmueble" => $department->sap_code

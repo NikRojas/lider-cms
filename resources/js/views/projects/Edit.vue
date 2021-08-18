@@ -1564,8 +1564,8 @@ export default {
         card_hover: "",
       },
       moneyLocal: {
-        decimal: ",",
-        thousands: ".",
+        thousands: ",",
+        decimal: ".",
         prefix: "S/ ",
         //suffix: ' #',
         precision: 2,
@@ -1576,8 +1576,8 @@ export default {
         { text: "No", value: false },
       ],
       moneyForeign: {
-        decimal: ",",
-        thousands: ".",
+        thousands: ",",
+        decimal: ".",
         prefix: "$ ",
         //suffix: ' #',
         precision: 2,

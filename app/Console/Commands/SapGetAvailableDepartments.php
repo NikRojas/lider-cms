@@ -171,7 +171,20 @@ class SapGetAvailableDepartments extends Command
                 if($parking[0]->precio_usd > 0){
                     $price_foreign_parking = $parking[0]->precio_usd;
                 }
-                $updateProject = $value->update(['stock_parking' => $stock, 'price_parking_sap' => $price_parking, 'price_parking_foreign_sap' => $price_foreign_parking]);
+                #Obtener Stock y Precio de Depositos en Soles y Dolares
+                $stockWarehouse = $price_warehouse = $price_foreign_warehouse = null;
+                $warehouse = $responseData->depositos;
+                if(!is_null($warehouse[0]->cantidad)){
+                    $stockWarehouse = $warehouse[0]->cantidad;
+                }
+                if($warehouse[0]->precio_pen > 0){
+                    $price_warehouse = $warehouse[0]->precio_pen;
+                }   
+                if($warehouse[0]->precio_usd > 0){
+                    $price_foreign_warehouse = $warehouse[0]->precio_usd;
+                }
+                $updateProject = $value->update(['stock_parking' => $stock, 'price_parking_sap' => $price_parking, 'price_parking_foreign_sap' => $price_foreign_parking,
+                'stock_warehouse' => $stockWarehouse, 'price_warehouse_sap' => $price_warehouse, 'price_warehouse_foreign_sap' => $price_foreign_warehouse]);
             }
             catch (\GuzzleHttp\Exception\RequestException $e) {
                 #Cuando sea cualquier código de error, se enviara un email al correo indicado.

@@ -60,7 +60,7 @@
                   </div>
                 </div>
 
-                <div class="col-12 ">
+                <div class="col-12 col-lg-6">
                   <div class="form-group">
                     <label class="font-weight-bold">Base Dscto CI(%):</label>
                     <p v-if="elText.tps_base_dsct_ci">
@@ -69,6 +69,27 @@
                     <p v-else>No registrado</p>
                   </div>
                 </div>
+
+                <div class="col-12 col-lg-6">
+                  <div class="form-group">
+                    <label class="font-weight-bold">Monto a Firma de la Minuta:</label>
+                    <p v-if="elText.price_bill">
+                       {{ elementParent.currency_rel.symbol }} {{ elText.price_bill_format }}
+                    </p>
+                    <p v-else>No registrado</p>
+                  </div>
+                </div>
+
+                <div class="col-12 col-lg-6">
+                  <div class="form-group">
+                    <label class="font-weight-bold">Texto Cotización:</label>
+                    <p v-if="elText.tps_quotation_text">
+                      {{ elText.tps_quotation_text }}
+                    </p>
+                    <p v-else>No registrado</p>
+                  </div>
+                </div>
+
               </div>
             </div>
             <div class="card-body" v-else>
@@ -174,7 +195,7 @@
                     </div>
                   </div>
 
-                  <div class="col-12">
+                  <div class="col-12 col-lg-6">
                     <div class="form-group">
                       <label class="font-weight-bold" for="tps_base_dsct_ci"
                         >Base Dscto CI(%)</label
@@ -190,6 +211,38 @@
                         class="mt-2 text-danger text-sm"
                         for="tps_base_dsct_ci"
                         >{{ errorsText.tps_base_dsct_ci[0] }}</label
+                      >
+                    </div>
+                  </div>
+
+                  <div class="col-12 col-lg-6">
+                     <label class="font-weight-bold" for="price_bill"
+                        >Monto a Firma de la Minuta {{ elementParent.currency_rel.symbol }}</label
+                      >
+                       <money
+                        class="form-control"
+                        v-model="elText.price_bill"
+                        v-bind="money"
+                      ></money>
+                      <small>El tipo de moneda sera igual al del monto de separación del Proyecto</small>
+                  </div>
+
+                  <div class="col-12  mb-2">
+                    <div class="form-group">
+                      <label class="font-weight-bold" for="tps_quotation_text"
+                        >Texto Cotización</label
+                      >
+                      <input
+                        type="text"
+                        class="form-control"
+                        v-model="elText.tps_quotation_text"
+                        id="tps_quotation_text"
+                      />
+                      <label
+                        v-if="errorsText && errorsText.tps_quotation_text"
+                        class="mt-2 text-danger text-sm"
+                        for="tps_quotation_text"
+                        >{{ errorsText.tps_quotation_text[0] }}</label
                       >
                     </div>
                   </div>
@@ -230,6 +283,7 @@ import PlainClipboard from "../../../functions/PlainClipboard";
 Quill.register("modules/clipboard", PlainClipboard, true);
 import { quillEditor } from "vue-quill-editor";
 
+import { Money } from "v-money";
 export default {
   props: {
     elementParent: Object,
@@ -243,9 +297,16 @@ export default {
     Input,
     Skeleton,
     quillEditor,
+    Money
   },
   data() {
     return {
+      money:{
+        thousands: ",",
+        decimal: ".",
+        precision: 2,
+        masked: false,
+      },
       editorOptions: {
         placeholder: "",
         modules: {

@@ -17,7 +17,7 @@ class Project extends Model
         'reservation_in_package' => 'boolean',
     ];
     protected $appends = ['images_format','price_total_format','price_total_foreign_format','price_format','id_video','price_separation_format','price_parking_format','price_parking_foreign_format',
-    'price_warehouse_sap_format','price_warehouse_foreign_sap_format'];
+    'price_warehouse_sap_format','price_warehouse_foreign_sap_format','price_bill_format'];
 
     public function galleryRel()
     {
@@ -154,5 +154,10 @@ class Project extends Model
     public function getPriceWarehouseSapFormatAttribute()
     {
         return 'S/ '.number_format($this->price_warehouse_sap, 0, '.', ',');
+    }
+
+    public function getPriceBillFormatAttribute()
+    {
+        return number_format($this->price_bill, 0, '.', ',');
     }
 }

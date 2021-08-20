@@ -344,7 +344,7 @@ var render = function() {
                     return null
                   }
                   $event.preventDefault()
-                  return _vm.getSlug($event)
+                  return _vm.getSlug.apply(null, arguments)
                 },
                 input: function($event) {
                   if ($event.target.composing) {

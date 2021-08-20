@@ -28,12 +28,12 @@ class ChatFaq extends Model
         $content6 = str_replace(":", " ", $content2);
         $pos = strpos($content6, '.');
         if($pos === false) {
-            $da = $content6;
-            return substr($da, 0, 90).'...';
+            $da = $content2;
+            return mb_substr($da, 0, 90).'...';
         }
         else {
-            $da = substr($content6, 0, $pos+1);;
-            return substr($da, 0, 90).'...';
+            $da = substr($content2, 0, $pos+1);
+            return mb_substr($da, 0, 90).'...';
         }
     }
 }

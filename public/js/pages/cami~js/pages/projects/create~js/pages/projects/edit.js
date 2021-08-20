@@ -468,7 +468,7 @@ var render = function() {
           on: {
             click: function($event) {
               $event.preventDefault()
-              return _vm.add($event)
+              return _vm.add.apply(null, arguments)
             }
           }
         },

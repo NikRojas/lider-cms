@@ -91,6 +91,13 @@ class DepartmentsController extends Controller
             $notValidatedViews = null;
             $registeredCount = 0;
             $countEstates = count($responseData->inmuebles);
+            $hasWarehouse = $hasParking = false;
+            if(isset($responseData->depositos)){
+                $hasWarehouse = $responseData->depositos;
+            }
+            if(isset($responseData->estacionamientos)){
+                $hasParking = $responseData->estacionamientos;
+            }
             #Array Inmuebles verificar si tiene objetos
             if ($countEstates > 0) {
                 try {
@@ -136,6 +143,7 @@ class DepartmentsController extends Controller
                         $str = implode(", ", $notValidatedTipologies);
                         $message = $message . '<br> <b class="text-danger">Error Tipología:</b> No se pudieron registrar/actualizar ' . $notValidatedTipologiesCount . ' inmueble(s) debido a que el Código de Tipología de SAP no esta registrado en el mantenimiento de Tipologías de este Proyecto (' . $str . ').';
                     }
+                    $projectUpdated = Project::UpdateOrCreate(["id" => $element->id],["has_warehouse" => $hasWarehouse, "has_parking" => $hasParking] );
                     return response()->json(['title' => trans('custom.title.success'), 'message' => $message], 200);
                 } catch (\Exception $e) {
                     return response()->json(['title' => trans('custom.title.error'), 'message' => trans('custom.message.sap.get_departments.error')], 500);

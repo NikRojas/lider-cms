@@ -44,16 +44,16 @@
         >
           <div class="row mb-4">
             <div class="col-12 col-lg-2">
-              <h2>Sincronizar Inmuebles</h2>
-              <p>Realiza la sincronización de inmuebles con SAP.</p>
+              <h2>Sincronizar de Proyectos e Inmuebles</h2>
+              <p>Realiza la sincronización del proyecto y los inmuebles con los que cuenta SAP.</p>
             </div>
             <div class="col-12 col-lg-10">
               <div class="card">
                 <div class="card-body">
                   <p>
-                    De click al botón "Obtener Inmuebles" para obtener el
-                    listado de inmuebles del Proyecto registrado en SAP, la
-                    disponibilidad de los mismos se actualizara automáticamente
+                    De click al botón "Obtener Inmuebles" para obtener si el Proyecto cuenta con <b>Estacionamiento</b> y <b>Depósito</b>, además del
+                    <b>listado de inmuebles</b> del Proyecto registrado en <b>SAP</b>, la
+                    <b>disponibilidad</b> de tanto de estacionamientos y depósitos como del listado de inmuebles se actualizara automáticamente
                     cada 10 minutos.
                   </p>
                   <div class="text-right">

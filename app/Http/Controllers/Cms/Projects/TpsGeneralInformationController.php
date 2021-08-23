@@ -21,7 +21,7 @@ class TpsGeneralInformationController extends Controller
 
   public function store(TpsGeneralInformationRequest $request)
   {
-    $request_information = request(["tps_principal_title", "tps_latitude", "tps_longitude", "tps_location_description",'tps_base_dsct_ci','price_bill']);
+    $request_information = request(["tps_principal_title", "tps_latitude", "tps_longitude", "tps_location_description",'tps_base_dsct_ci','price_bill','tps_quotation_text']);
     try {
       $information = Project::UpdateOrCreate(["id" => $request->id], $request_information);
 
@@ -33,7 +33,7 @@ class TpsGeneralInformationController extends Controller
 
   public function get(Request $request)
   {
-    $informacion = Project::select("id", "tps_principal_title",'price_bill', "tps_latitude", "tps_longitude", "tps_location_description",'tps_base_dsct_ci')->where('id', $request->project_id)->orderBy('created_at', 'desc')->first();
+    $informacion = Project::select("id", "tps_principal_title",'price_bill', "tps_latitude", "tps_longitude", "tps_location_description",'tps_base_dsct_ci','tps_quotation_text')->where('id', $request->project_id)->orderBy('created_at', 'desc')->first();
     return response()->json($informacion);
   }
 }

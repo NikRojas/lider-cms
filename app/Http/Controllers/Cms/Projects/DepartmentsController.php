@@ -93,10 +93,14 @@ class DepartmentsController extends Controller
             $countEstates = count($responseData->inmuebles);
             $hasWarehouse = $hasParking = false;
             if(isset($responseData->depositos)){
-                $hasWarehouse = $responseData->depositos;
+                if($responseData->depositos){
+                    $hasWarehouse = true;
+                }
             }
             if(isset($responseData->estacionamientos)){
-                $hasParking = $responseData->estacionamientos;
+                if($responseData->estacionamientos){
+                    $hasParking = true;
+                }
             }
             #Array Inmuebles verificar si tiene objetos
             if ($countEstates > 0) {

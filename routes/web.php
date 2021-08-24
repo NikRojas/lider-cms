@@ -583,13 +583,13 @@ Route::middleware(['auth'])->namespace('Cms')->name('cms.')->group(function () {
     $order = Order::find(100000000);
     SendReserveToSap::dispatch($order);
     //return view('emails.orders.paid',["order" => $order]);
-});*/
+});
 
 
 Route::get('/mail/reserve', function () {
     $order = Order::find(100000001);
     return view('emails.orders.paid',["order" => $order]);
-});
+});*/
 /*
 Route::get('/mail/user/quotation', function () {
     $lead = ProjectQuotation::with('projectRel.statusRel','advisorRel','projectTypeDepartmentRel','projectRel.financingOptionsRel')->find(7);

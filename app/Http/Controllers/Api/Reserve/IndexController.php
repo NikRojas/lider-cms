@@ -35,7 +35,7 @@ class IndexController extends BaseController
     {
         $ubigeo = $statuses = $rooms = $floors = $projects = $typeDepartments = $range = $views = [];
         $sort = $request->sort_by;
-        $data = Department::with('viewRel', 'tipologyRel.parentTypeDepartmentRel', 'projectRel:id,logo_colour,price_separation,name_es,name_en,code_ubigeo,project_status_id,master_currency_id', 'projectRel.ubigeoRel', 'projectRel.statusRel')->where('available', 1);
+        $data = Department::with('viewRel', 'tipologyRel.parentTypeDepartmentRel', 'projectRel:id,logo_colour,price_separation,name_es,name_en,code_ubigeo,project_status_id,master_currency_id,reservation_in_package,package_description', 'projectRel.ubigeoRel', 'projectRel.statusRel')->where('available', 1);
         //Tablas Relacionadas
         if ($request->statuses) {
             $statuses = $request->statuses;

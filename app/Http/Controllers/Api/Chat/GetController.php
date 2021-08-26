@@ -373,8 +373,7 @@ class GetController extends BaseController
         "<strong>¿Tienes una duda adicional?</strong> También contamos con la sección de <strong>Preguntas Frecuentes</strong> 👆"];
         $customPayload['texts'] = array_merge($customPayload['texts'], [
             "Si no llegamos a resolverlas aquí te dejamos nuestros números de contacto: 
-            <br> <strong>📞 Central de ventas: </strong><a href='tel:01'".$information->central_phone.">".$information->central_phone_formatted."</a>
-            <br><strong>📞 Oficina principal: </strong><a href='tel:01'".$information->main_office.">".$information->main_office_formatted."</a>"]);
+            <br> <strong>📞 Central de ventas: </strong><a href='tel:01'".$information->central_phone.">".$information->central_phone_formatted."</a>"]);
         /*if($information->central_phone){
         }
         if($information->main_office){

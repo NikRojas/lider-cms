@@ -29,7 +29,7 @@ class GetController extends BaseController
                     $query2->where('available', 1);
                 });
             })
-            ->orderBy('department', 'ASC')->groupBy('code_department')->get();
+            ->orderBy('department', 'desc')->groupBy('code_department')->get();
         $customPayload = [];
         $deparmentsPluck = $data->pluck('department');
         $lengthdeparmentsPluck = count($deparmentsPluck);
@@ -260,7 +260,7 @@ class GetController extends BaseController
         $customPayload['text_above'] = "Tienes alguna duda adicional?";
         $buttons = [
             ["text" => "Quiero conocer los proyectos en venta"],
-            ["text" => "Quiero separar un departamento"],
+            ["text" => "Quiero separar un inmueble"],
             ["text" => "Quiero contactarme con Servicio al Cliente"],
             ["text" => "No tengo más dudas"]
         ];
@@ -384,7 +384,7 @@ class GetController extends BaseController
         $customPayload['buttons'] = [
             ["text" => "Quiero conocer los proyectos en venta"],
             ["text" => "Quiero que un asesor me contacte"],
-            ["text" => "Quiero separar un departamento"],
+            ["text" => "Quiero separar un inmueble"],
             ["text" => "Quiero contactarme con Servicio al Cliente"]
         ];
         return $this->sendResponse($customPayload, '');

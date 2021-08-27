@@ -110,13 +110,13 @@ class GetController extends BaseController
         $data = Project::select('id', 'images','name_es', 'name_en', 'slug_es', 'slug_en','rooms_es','footage_es','logo')
         ->whereHas('departmentsRel', function ($query){
             $query->where('available', 1);
-        })->where('active', 1)->orderBy('id','asc');
+        })->where('active', 1);
         if($district == 'Todos'){
             if($department != "Ambos"){
                 $codeDepartment = Ubigeo::where('department',$department)->first();
                 $data = $data->whereHas('ubigeoRel', function ($query2) use ($codeDepartment) {
                     return $query2->whereIn('code_department', $codeDepartment);
-                });
+                })->orderBy('id','asc');
             }
             else{
                 $codeDepartments = Ubigeo::whereHas('projectsRel', function ($query) {
@@ -128,14 +128,14 @@ class GetController extends BaseController
                 ->where('code_district', '!=', '00')->get();
                 $data = $data->whereHas('ubigeoRel', function ($query2) use ($codeDepartments) {
                     return $query2->whereIn('code_ubigeo', $codeDepartments->pluck('code_ubigeo'));
-                });
+                })->orderBy('index');
             }
         }
         else{
             $ubigeo = Ubigeo::whereHas('projectsRel')->where('district',$district)->first();
             $data = $data->whereHas('ubigeoRel', function ($query2) use ($ubigeo) {
                 return $query2->where('code_ubigeo', $ubigeo->code_ubigeo);
-            });
+            })->orderBy('id','asc');
         }
         $data = $data->get();
         $customPayload = [];

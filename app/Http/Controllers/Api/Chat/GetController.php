@@ -411,7 +411,8 @@ class GetController extends BaseController
             ["text" => "Quiero conocer los proyectos en venta"],
             ["text" => "Quiero que un asesor me contacte"],
             ["text" => "Quiero separar un inmueble"],
-            ["text" => "Quiero contactarme con Servicio al Cliente"]
+            ["text" => "Quiero contactarme con Servicio al Cliente"],
+            ["text" => "Cerrar Chat"],
         ];
         return $this->sendResponse($customPayload, '');
     }

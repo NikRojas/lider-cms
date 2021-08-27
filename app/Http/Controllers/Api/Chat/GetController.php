@@ -70,15 +70,22 @@ class GetController extends BaseController
         foreach ($data as $key => $value) {
             $buttons[] = ["text" => $value->department,"classes" => "chat_link_button_departamente_distrito"];
         }
+        $buttons[] = ["text" => 'Ambos',"classes" => "chat_link_button_departamente_distrito"];
         $customPayload['buttons'] = $buttons;
         return $this->sendResponse($customPayload, '');
     }
 
     public function districts(Request $request)
     {
-        $department = Ubigeo::where('department',$request->department)->first();
-        $data = Ubigeo::select('code_district', 'district', 'code_ubigeo', 'code_department')->distinct()->where('code_department', $department->code_department)
-            ->whereHas('projectsRel', function ($query) {
+        if($request->department != 'Ambos'){
+            $department = Ubigeo::where('department',$request->department)->first();
+        }
+        //$data = Ubigeo::select('code_district', 'district', 'code_ubigeo', 'code_department')->distinct()->where('code_department', $department->code_department)
+        $data = Ubigeo::select('code_district', 'district', 'code_ubigeo', 'code_department')->distinct();
+        if($request->department != 'Ambos'){
+            $data = $data->where('code_department', $department->code_department);
+        }
+        $data = $data->whereHas('projectsRel', function ($query) {
                 $query->where('active', 1);
                 $query->whereHas('departmentsRel', function ($query2) {
                     $query2->where('available', 1);
@@ -105,13 +112,27 @@ class GetController extends BaseController
             $query->where('available', 1);
         })->where('active', 1)->orderBy('id','asc');
         if($district == 'Todos'){
-            $codeDepartment = Ubigeo::where('department',$department)->first();
-            $data = $data->whereHas('ubigeoRel', function ($query2) use ($codeDepartment) {
-                return $query2->whereIn('code_department', $codeDepartment);
-            });
+            if($department != "Ambos"){
+                $codeDepartment = Ubigeo::where('department',$department)->first();
+                $data = $data->whereHas('ubigeoRel', function ($query2) use ($codeDepartment) {
+                    return $query2->whereIn('code_department', $codeDepartment);
+                });
+            }
+            else{
+                $codeDepartments = Ubigeo::whereHas('projectsRel', function ($query) {
+                    $query->where('active', 1);
+                    $query->whereHas('departmentsRel', function ($query2) {
+                        $query2->where('available', 1);
+                    });
+                })
+                ->where('code_district', '!=', '00')->get();
+                $data = $data->whereHas('ubigeoRel', function ($query2) use ($codeDepartments) {
+                    return $query2->whereIn('code_ubigeo', $codeDepartments->pluck('code_ubigeo'));
+                });
+            }
         }
         else{
-            $ubigeo = Ubigeo::where('department',$department)->where('district',$district)->first();
+            $ubigeo = Ubigeo::whereHas('projectsRel')->where('district',$district)->first();
             $data = $data->whereHas('ubigeoRel', function ($query2) use ($ubigeo) {
                 return $query2->where('code_ubigeo', $ubigeo->code_ubigeo);
             });

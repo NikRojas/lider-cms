@@ -273,7 +273,6 @@ class GetController extends BaseController
     }
 
     public function getContactLink(Request $request){
-        $project = Project::where('name_es',$request->name_project)->first();
         $customPayload = [];
         $customPayload['type'] = "buttons";
         $customPayload['text'] = "En esta sección podrás agendar una cita en el horario de tu preferencia 👈";
@@ -285,14 +284,20 @@ class GetController extends BaseController
             ["text" => "Quiero contactarme con Servicio al Cliente"],
             ["text" => "No tengo más dudas"]
         ];
-        $customPayload['route'] = [
-            "name" => 'online-appointment',
-            "query" => [
-                "project" => $project->slug_es,
-                //"email"   => $request->email,
-                //"mobile"  => $request->mobile
-            ]
-        ];
+        if($request->name_project){
+            $project = Project::where('name_es',$request->name_project)->first();
+            $customPayload['route'] = [
+                "name" => 'online-appointment',
+                "query" => [
+                    "project" => $project->slug_es
+                ]
+            ];
+        }
+        else{
+            $customPayload['route'] = [
+                "name" => 'online-appointment'
+            ];
+        }
         $customPayload['buttons'] = $buttons;
         return $this->sendResponse($customPayload, '');
     }

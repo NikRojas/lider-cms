@@ -50,7 +50,7 @@ class ConnectionController extends BaseController
                 if($responseData->inmuebles[0]->precio_usd > 0){
                     $price_foreign = $responseData->inmuebles[0]->precio_usd;   
                 }
-                $update = Department::find($estateCurrent->id);
+                $update = Department::find($estateCurrent->id)->with('projectRel:id,logo_colour,price_separation,name_es,name_en,code_ubigeo,project_status_id,master_currency_id,reservation_in_package,package_description');
                 $update->price = $price;
                 $update->price_foreign = $price_foreign;
                 $update->available = true;
@@ -58,12 +58,12 @@ class ConnectionController extends BaseController
                 //Log::info("En stock");
             }
             else{
-                $update = Department::find($estateCurrent->id);
+                $update = Department::find($estateCurrent->id)->with('projectRel:id,logo_colour,price_separation,name_es,name_en,code_ubigeo,project_status_id,master_currency_id,reservation_in_package,package_description');
                 $update->available = 0;
                 $update->save();
                 //Log::info("Sin stock");
             }
-            return $this->sendResponse([$update->with('projectRel:id,logo_colour,price_separation,name_es,name_en,code_ubigeo,project_status_id,master_currency_id,reservation_in_package,package_description')], '');
+            return $this->sendResponse([$update], '');
         } 
         catch (\GuzzleHttp\Exception\RequestException $e) {
             #Cuando sea cualquier código de error, se enviara un email al correo indicado.

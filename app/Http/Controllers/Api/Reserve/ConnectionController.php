@@ -63,7 +63,7 @@ class ConnectionController extends BaseController
                 $update->save();
                 //Log::info("Sin stock");
             }
-            return $this->sendResponse([$update], '');
+            return $this->sendResponse([$update->with('projectRel:id,logo_colour,price_separation,name_es,name_en,code_ubigeo,project_status_id,master_currency_id,reservation_in_package,package_description')], '');
         } 
         catch (\GuzzleHttp\Exception\RequestException $e) {
             #Cuando sea cualquier código de error, se enviara un email al correo indicado.

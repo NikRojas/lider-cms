@@ -70,15 +70,22 @@ class GetController extends BaseController
         foreach ($data as $key => $value) {
             $buttons[] = ["text" => $value->department,"classes" => "chat_link_button_departamente_distrito"];
         }
+        $buttons[] = ["text" => 'Ambos',"classes" => "chat_link_button_departamente_distrito"];
         $customPayload['buttons'] = $buttons;
         return $this->sendResponse($customPayload, '');
     }
 
     public function districts(Request $request)
     {
-        $department = Ubigeo::where('department',$request->department)->first();
-        $data = Ubigeo::select('code_district', 'district', 'code_ubigeo', 'code_department')->distinct()->where('code_department', $department->code_department)
-            ->whereHas('projectsRel', function ($query) {
+        if($request->department != 'Ambos'){
+            $department = Ubigeo::where('department',$request->department)->first();
+        }
+        //$data = Ubigeo::select('code_district', 'district', 'code_ubigeo', 'code_department')->distinct()->where('code_department', $department->code_department)
+        $data = Ubigeo::select('code_district', 'district', 'code_ubigeo', 'code_department')->distinct();
+        if($request->department != 'Ambos'){
+            $data = $data->where('code_department', $department->code_department);
+        }
+        $data = $data->whereHas('projectsRel', function ($query) {
                 $query->where('active', 1);
                 $query->whereHas('departmentsRel', function ($query2) {
                     $query2->where('available', 1);
@@ -103,18 +110,32 @@ class GetController extends BaseController
         $data = Project::select('id', 'images','name_es', 'name_en', 'slug_es', 'slug_en','rooms_es','footage_es','logo')
         ->whereHas('departmentsRel', function ($query){
             $query->where('available', 1);
-        })->where('active', 1)->orderBy('id','asc');
+        })->where('active', 1);
         if($district == 'Todos'){
-            $codeDepartment = Ubigeo::where('department',$department)->first();
-            $data = $data->whereHas('ubigeoRel', function ($query2) use ($codeDepartment) {
-                return $query2->whereIn('code_department', $codeDepartment);
-            });
+            if($department != "Ambos"){
+                $codeDepartment = Ubigeo::where('department',$department)->first();
+                $data = $data->whereHas('ubigeoRel', function ($query2) use ($codeDepartment) {
+                    return $query2->whereIn('code_department', $codeDepartment);
+                })->orderBy('id','asc');
+            }
+            else{
+                $codeDepartments = Ubigeo::whereHas('projectsRel', function ($query) {
+                    $query->where('active', 1);
+                    $query->whereHas('departmentsRel', function ($query2) {
+                        $query2->where('available', 1);
+                    });
+                })
+                ->where('code_district', '!=', '00')->get();
+                $data = $data->whereHas('ubigeoRel', function ($query2) use ($codeDepartments) {
+                    return $query2->whereIn('code_ubigeo', $codeDepartments->pluck('code_ubigeo'));
+                })->orderBy('index');
+            }
         }
         else{
-            $ubigeo = Ubigeo::where('department',$department)->where('district',$district)->first();
+            $ubigeo = Ubigeo::whereHas('projectsRel')->where('district',$district)->first();
             $data = $data->whereHas('ubigeoRel', function ($query2) use ($ubigeo) {
                 return $query2->where('code_ubigeo', $ubigeo->code_ubigeo);
-            });
+            })->orderBy('id','asc');
         }
         $data = $data->get();
         $customPayload = [];
@@ -167,7 +188,8 @@ class GetController extends BaseController
         $project = Project::where('name_es',$name_es)->first();
         $countDeps = Department::where('project_id',$project->id)->where('available',true)->count();
         $customPayload = [];
-        $firstText = "Buena elección <strong>".$name."</strong>. 👌 En el proyecto <strong>".$name_es."</strong> tenemos 🏢 <strong>".$countDeps." inmuebles en stock </strong>";
+        $prependText = "Buena elección <strong>".$name."</strong> 👌. Te redirecciono al proyecto.";
+        $firstText = "En el proyecto <strong>".$name_es."</strong> tenemos 🏢 <strong>".$countDeps." inmuebles en stock </strong>";
         if($project->stock_parking){
             $firstText .= " y <strong>".$project->stock_parking." estacionamientos</strong>.";
         }
@@ -194,8 +216,7 @@ class GetController extends BaseController
             ]
         ];
         $customPayload['type'] = "buttons";
-        //$customPayload['text'] = $firstText.'<br>'.$secondText;
-        $customPayload['texts'] = [$firstText,$secondText];
+        $customPayload['texts'] = [$prependText, $firstText,$secondText];
         $customPayload['text_above'] = "¿Cómo puedo ayudarte con el proyecto <strong>".$name_es."</strong>? 😊";
         $bonds = $project->load('bondsRel');
         $buttons = $this->getButtonsFlow1($project->id, $bonds, false, false);
@@ -252,7 +273,6 @@ class GetController extends BaseController
     }
 
     public function getContactLink(Request $request){
-        $project = Project::where('name_es',$request->name_project)->first();
         $customPayload = [];
         $customPayload['type'] = "buttons";
         $customPayload['text'] = "En esta sección podrás agendar una cita en el horario de tu preferencia 👈";
@@ -264,14 +284,20 @@ class GetController extends BaseController
             ["text" => "Quiero contactarme con Servicio al Cliente"],
             ["text" => "No tengo más dudas"]
         ];
-        $customPayload['route'] = [
-            "name" => 'online-appointment',
-            "query" => [
-                "project" => $project->slug_es,
-                //"email"   => $request->email,
-                //"mobile"  => $request->mobile
-            ]
-        ];
+        if($request->name_project){
+            $project = Project::where('name_es',$request->name_project)->first();
+            $customPayload['route'] = [
+                "name" => 'online-appointment',
+                "query" => [
+                    "project" => $project->slug_es
+                ]
+            ];
+        }
+        else{
+            $customPayload['route'] = [
+                "name" => 'online-appointment'
+            ];
+        }
         $customPayload['buttons'] = $buttons;
         return $this->sendResponse($customPayload, '');
     }
@@ -385,7 +411,8 @@ class GetController extends BaseController
             ["text" => "Quiero conocer los proyectos en venta"],
             ["text" => "Quiero que un asesor me contacte"],
             ["text" => "Quiero separar un inmueble"],
-            ["text" => "Quiero contactarme con Servicio al Cliente"]
+            ["text" => "Quiero contactarme con Servicio al Cliente"],
+            ["text" => "Cerrar Chat"],
         ];
         return $this->sendResponse($customPayload, '');
     }

@@ -63,7 +63,7 @@ class ConnectionController extends BaseController
                 $update->save();
                 //Log::info("Sin stock");
             }
-            $sendToView = Department::find($$update->id)->with('projectRel:id,logo_colour,price_separation,name_es,name_en,code_ubigeo,project_status_id,master_currency_id,reservation_in_package,package_description');
+            $sendToView = Department::find($update->id)->with('projectRel:id,logo_colour,price_separation,name_es,name_en,code_ubigeo,project_status_id,master_currency_id,reservation_in_package,package_description');
             return $this->sendResponse([$sendToView], '');
         } 
         catch (\GuzzleHttp\Exception\RequestException $e) {

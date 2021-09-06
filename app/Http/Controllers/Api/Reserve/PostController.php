@@ -180,14 +180,14 @@ class PostController extends BaseController
                 ],
             ],
             "metadata" => [
-                "Tipo Documento" => $request->type_document_id,
-                "Nombres" => $request->name,
-                "Número de Documento" => $request->document_number,
-                "Apellido Paterno" => $request->lastname,
-                "Apellido Materno" => $request->lastname_2,
                 "Proyecto" => $department->projectRel->name_es,
-                "Inmueble" => $department->description,
-                "Código Inmueble" => $department->sap_code
+                "Código Inmueble" => $department->sap_code,
+                "Descripción del Inmueble" => $department->description,
+                "Tipo de Documento" => $request->type_document_id,
+                "Número de Documento" => $request->document_number,
+                "Nombres" => $request->name,
+                "Apellido Paterno" => $request->lastname,
+                "Apellido Materno" => $request->lastname_2
             ]
         ];
         $authToken = $credentialPayment->user.':'.$credentialPayment->password_prod;

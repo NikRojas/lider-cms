@@ -559,10 +559,9 @@
                                                                                     </tbody>
                                                                                 </table>
                                                                                 <strong>
-                                                                                    @if($order->orderDetailsRel[0]["departmentRel"]["price_foreign"])
+                                                                                    @if($order->orderDetailsRel[0]["departmentRel"]["projectRel"]["master_currency_id"] == 0)
                                                                                         {{$order->orderDetailsRel[0]["departmentRel"]["price_foreign_format"]}}
-                                                                                    @endif
-                                                                                    @if(!$order->orderDetailsRel[0]["departmentRel"]["price_foreign"] && $order->orderDetailsRel[0]["departmentRel"]["price"])
+                                                                                    @else
                                                                                         {{$order->orderDetailsRel[0]["departmentRel"]["price_format"]}}
                                                                                     @endif
                                                                                 </strong>

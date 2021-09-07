@@ -587,7 +587,7 @@ Route::middleware(['auth'])->namespace('Cms')->name('cms.')->group(function () {
 
 
 Route::get('/mail/reserve', function () {
-    $order = Order::find(100000001);
+    $order = Order::find(100000013);
     return view('emails.orders.paid',["order" => $order]);
 });*/
 /*

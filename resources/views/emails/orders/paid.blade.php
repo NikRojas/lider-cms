@@ -559,10 +559,10 @@
                                                                                     </tbody>
                                                                                 </table>
                                                                                 <strong>
-                                                                                    @if($order->orderDetailsRel[0]["projectRel"]["master_currency_id"] == 0)
-                                                                                        {{$order->orderDetailsRel[0]["departmentRel"]["price_foreign_format"]}}
-                                                                                    @else
+                                                                                    @if($order->orderDetailsRel[0]["projectRel"]["master_currency_id"] == 1)
                                                                                         {{$order->orderDetailsRel[0]["departmentRel"]["price_format"]}}
+                                                                                    @elseif($order->orderDetailsRel[0]["projectRel"]["master_currency_id"] == 2)
+                                                                                        {{$order->orderDetailsRel[0]["departmentRel"]["price_foreign_format"]}}
                                                                                     @endif
                                                                                 </strong>
                                                                                 <table class="spacer" style="border-collapse:collapse;border-spacing:0;padding-bottom:0;padding-left:0;padding-right:0;padding-top:0;text-align:left;vertical-align:top;width:100%">

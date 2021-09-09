@@ -197,18 +197,22 @@ class GetController extends BaseController
             $firstText .= ".";
         }
         $currency = $project->master_currency_id;
+        
         if($currency == 1){
             //Sol
             $column_name = 'price';
             $symbol = 'S/ ';
+            $min = Department::where('project_id',$project->id)->where('available',true)->min($column_name);
+            $max = Department::where('project_id',$project->id)->where('available',true)->max($column_name);
+            $secondText = "Los precios de los inmuebles van desde <strong>".number_format($min, 0, '.', ',')." nuevos soles</strong> hasta <strong>".number_format($max, 0, '.', ',')." nuevos soles</strong>";
         }
         else if($currency == 2){
             $column_name = 'price_foreign';
             $symbol = '$ ';
+            $min = Department::where('project_id',$project->id)->where('available',true)->min($column_name);
+            $max = Department::where('project_id',$project->id)->where('available',true)->max($column_name);
+            $secondText = "Los precios de los inmuebles van desde <strong>".$symbol.number_format($min, 0, '.', ',')."</strong> hasta <strong>".$symbol.number_format($max, 0, '.', ',')."</strong>";
         }
-        $min = Department::where('project_id',$project->id)->where('available',true)->min($column_name);
-        $max = Department::where('project_id',$project->id)->where('available',true)->max($column_name);
-        $secondText = "Los precios de los inmuebles van desde <strong>".$symbol.number_format($min, 0, '.', ',')."</strong> hasta <strong>".$symbol.number_format($max, 0, '.', ',')."</strong>";
         $customPayload['route'] = [
             "name" => 'project',
             "params" => [

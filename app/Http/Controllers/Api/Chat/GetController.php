@@ -233,7 +233,7 @@ class GetController extends BaseController
         $customPayload = [];
         $customPayload['type'] = "buttons";
         $bonds = $project->load('bondsRel');
-        $buttons = $this->getButtonsFlow1($project->id, $bonds, "Quiero saber si hay promociones vigentes?", true);
+        $buttons = $this->getButtonsFlow1($project->id, $bonds, "Quiero saber si hay promociones vigentes", true);
         $customPayload['buttons'] = $buttons;
         $promos = TpsPromotion::where('project_id', $project->id)->orderBy('index', 'asc')->get();
         $gallery = [];
@@ -250,7 +250,7 @@ class GetController extends BaseController
         $customPayload = [];
         $customPayload['type'] = "buttons";
         $bonds = $project->load('bondsRel');
-        $buttons = $this->getButtonsFlow1($project->id, $bonds, "Quiero saber qué bonos tiene el proyecto?", true);
+        $buttons = $this->getButtonsFlow1($project->id, $bonds, "Quiero saber qué bonos tiene el proyecto", true);
         $customPayload['buttons'] = $buttons;
         $texts = [ "El proyecto <strong>".$request->name_project."</strong> cuenta con los siguientes bonos 👇" ];
         foreach ($bonds->bondsRel as $key => $value) {
@@ -361,11 +361,11 @@ class GetController extends BaseController
         $countPromos = $this->getCountPromos($id);
         $countBonds = $bonds->bondsRel->count();
         $buttons = [];
-        if($countPromos && $textButton != "Quiero saber si hay promociones vigentes?"){
-            $buttons = array_merge($buttons,[["text" => "Quiero saber si hay promociones vigentes?"]]);
+        if($countPromos && $textButton != "Quiero saber si hay promociones vigentes"){
+            $buttons = array_merge($buttons,[["text" => "Quiero saber si hay promociones vigentes"]]);
         }
-        if($countBonds && $textButton != "Quiero saber qué bonos tiene el proyecto?"){
-            $buttons = array_merge($buttons,[["text" => "Quiero saber qué bonos tiene el proyecto?"]]);
+        if($countBonds && $textButton != "Quiero saber qué bonos tiene el proyecto"){
+            $buttons = array_merge($buttons,[["text" => "Quiero saber qué bonos tiene el proyecto"]]);
         }
         if($textButton != "Quiero cotizar un departamento"){
             $buttons = array_merge($buttons,[["text" => "Quiero cotizar un departamento"]]);

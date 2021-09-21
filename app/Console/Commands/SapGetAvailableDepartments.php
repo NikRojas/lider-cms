@@ -115,27 +115,31 @@ class SapGetAvailableDepartments extends Command
                         #Agrupar por Departamentos por Tipologia
                         $estatesByTypeDepartment = collect($estates_temp)->groupBy('type_department_id');
                         $typeDepartmentIdsAvailable = [];
-                        #keyEstatesByTypeDepartment es el Id de la Tipologia y valueEstatesByTypeDepartment los Departamentos que se recibieron
-                        foreach ($estatesByTypeDepartment as $keyEstatesByTypeDepartment => $valueEstatesByTypeDepartment) {
-                            //Log::info("Id Tipologia". $keyEstatesByTypeDepartment);
-                            //Log::info($valueEstatesByTypeDepartment);
-                            $typeDepartmentIdsAvailable[] = $keyEstatesByTypeDepartment;
-                            $minArea = $valueEstatesByTypeDepartment->min('area');
-                            $minPrice = $valueEstatesByTypeDepartment->min('price');
-                            $minPriceForeign = $valueEstatesByTypeDepartment->min('price_foreign');
-                            $updateTypeDepartmentTemp = [];
-                            if($minArea){
-                                $updateTypeDepartmentTemp = array_merge($updateTypeDepartmentTemp, ["area" => $minArea]);
+                        #No actualizar precio en tipologias de Namua y Flow
+                        if($value->id != '4' && $value->id != '10'){
+                            //Log::info($value->name_es);
+                            #keyEstatesByTypeDepartment es el Id de la Tipologia y valueEstatesByTypeDepartment los Departamentos que se recibieron
+                            foreach ($estatesByTypeDepartment as $keyEstatesByTypeDepartment => $valueEstatesByTypeDepartment) {
+                                //Log::info("Id Tipologia". $keyEstatesByTypeDepartment);
+                                //Log::info($valueEstatesByTypeDepartment);
+                                $typeDepartmentIdsAvailable[] = $keyEstatesByTypeDepartment;
+                                $minArea = $valueEstatesByTypeDepartment->min('area');
+                                $minPrice = $valueEstatesByTypeDepartment->min('price');
+                                $minPriceForeign = $valueEstatesByTypeDepartment->min('price_foreign');
+                                $updateTypeDepartmentTemp = [];
+                                if($minArea){
+                                    $updateTypeDepartmentTemp = array_merge($updateTypeDepartmentTemp, ["area" => $minArea]);
+                                }
+                                #Si esta lleno Precio Soles y Vacio Precio Dolares
+                                if($minPrice && !$minPriceForeign){
+                                    $updateTypeDepartmentTemp = array_merge($updateTypeDepartmentTemp, ["price" => $minPrice, "type_currency" => 1]);
+                                }
+                                #Si esta lleno Precio Dolares y Vacio Precio Soles
+                                if(!$minPrice && $minPriceForeign){
+                                    $updateTypeDepartmentTemp = array_merge($updateTypeDepartmentTemp, ["price" => $minPriceForeign, "type_currency" => 0]);
+                                }
+                                $updateTypeDepartment = ProjectTypeDepartment::UpdateOrCreate(["id" => $keyEstatesByTypeDepartment ], $updateTypeDepartmentTemp);
                             }
-                            #Si esta lleno Precio Soles y Vacio Precio Dolares
-                            if($minPrice && !$minPriceForeign){
-                                $updateTypeDepartmentTemp = array_merge($updateTypeDepartmentTemp, ["price" => $minPrice, "type_currency" => 1]);
-                            }
-                            #Si esta lleno Precio Dolares y Vacio Precio Soles
-                            if(!$minPrice && $minPriceForeign){
-                                $updateTypeDepartmentTemp = array_merge($updateTypeDepartmentTemp, ["price" => $minPriceForeign, "type_currency" => 0]);
-                            }
-                            $updateTypeDepartment = ProjectTypeDepartment::UpdateOrCreate(["id" => $keyEstatesByTypeDepartment ], $updateTypeDepartmentTemp);
                         }
                         $typeDepartmentsIds = $typeDepartments->pluck('id')->toArray();
                         foreach ($typeDepartmentIdsAvailable as $keyEstateAvailable => $valueEstateAvailable) {

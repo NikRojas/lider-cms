@@ -115,8 +115,6 @@ class SapGetAvailableDepartments extends Command
                         #Agrupar por Departamentos por Tipologia
                         $estatesByTypeDepartment = collect($estates_temp)->groupBy('type_department_id');
                         $typeDepartmentIdsAvailable = [];
-                        #No actualizar precio en tipologias de Namua y Flow
-                        if($value->id != '4' && $value->id != '10'){
                             //Log::info($value->name_es);
                             #keyEstatesByTypeDepartment es el Id de la Tipologia y valueEstatesByTypeDepartment los Departamentos que se recibieron
                             foreach ($estatesByTypeDepartment as $keyEstatesByTypeDepartment => $valueEstatesByTypeDepartment) {
@@ -138,9 +136,11 @@ class SapGetAvailableDepartments extends Command
                                 if(!$minPrice && $minPriceForeign){
                                     $updateTypeDepartmentTemp = array_merge($updateTypeDepartmentTemp, ["price" => $minPriceForeign, "type_currency" => 0]);
                                 }
-                                $updateTypeDepartment = ProjectTypeDepartment::UpdateOrCreate(["id" => $keyEstatesByTypeDepartment ], $updateTypeDepartmentTemp);
+                                #No actualizar precio en tipologias de Namua y Flow
+                                if($value->id != '4' && $value->id != '10'){
+                                    $updateTypeDepartment = ProjectTypeDepartment::UpdateOrCreate(["id" => $keyEstatesByTypeDepartment ], $updateTypeDepartmentTemp);
+                                }
                             }
-                        }
                         $typeDepartmentsIds = $typeDepartments->pluck('id')->toArray();
                         foreach ($typeDepartmentIdsAvailable as $keyEstateAvailable => $valueEstateAvailable) {
                             ProjectTypeDepartment::UpdateOrCreate(["id" => $valueEstateAvailable ], ["available" => true]);

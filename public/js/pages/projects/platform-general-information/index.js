@@ -608,7 +608,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _GeneralInformation__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./GeneralInformation */ "./resources/js/views/projects/platform-general-information/GeneralInformation.vue");
 /* harmony import */ var _Location__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Location */ "./resources/js/views/projects/platform-general-information/Location.vue");
 /* harmony import */ var _Promotion__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Promotion */ "./resources/js/views/projects/platform-general-information/Promotion.vue");
-/* harmony import */ var _Pins__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./Pins */ "./resources/js/views/projects/platform-general-information/Pins.vue");
+/* harmony import */ var _Pins__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Pins */ "./resources/js/views/projects/platform-general-information/Pins.vue");
 /* harmony import */ var _components_BreadCrumb__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../../components/BreadCrumb */ "./resources/js/components/BreadCrumb.vue");
 //
 //
@@ -707,7 +707,7 @@ __webpack_require__.r(__webpack_exports__);
     GeneralInformation: _GeneralInformation__WEBPACK_IMPORTED_MODULE_0__["default"],
     Location: _Location__WEBPACK_IMPORTED_MODULE_1__["default"],
     Promotion: _Promotion__WEBPACK_IMPORTED_MODULE_2__["default"],
-    Pins: _Pins__WEBPACK_IMPORTED_MODULE_5__["default"]
+    Pins: _Pins__WEBPACK_IMPORTED_MODULE_3__["default"]
   },
   data: function data() {
     return {
@@ -2184,6 +2184,42 @@ var render = function() {
                           ])
                         ]),
                         _vm._v(" "),
+                        _c("div", { staticClass: "col-12 col-md-6 col-lg-6" }, [
+                          _c("div", { staticClass: "form-group" }, [
+                            _c("label", { staticClass: "font-weight-bold" }, [
+                              _vm._v("Latitud:")
+                            ]),
+                            _vm._v(" "),
+                            _vm.elText.tps_latitude
+                              ? _c("p", [
+                                  _vm._v(
+                                    "\n                    " +
+                                      _vm._s(_vm.elText.tps_latitude) +
+                                      "\n                  "
+                                  )
+                                ])
+                              : _c("p", [_vm._v("No registrado")])
+                          ])
+                        ]),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "col-12 col-md-6 col-lg-6" }, [
+                          _c("div", { staticClass: "form-group" }, [
+                            _c("label", { staticClass: "font-weight-bold" }, [
+                              _vm._v("Longitud:")
+                            ]),
+                            _vm._v(" "),
+                            _vm.elText.tps_longitude
+                              ? _c("p", [
+                                  _vm._v(
+                                    "\n                    " +
+                                      _vm._s(_vm.elText.tps_longitude) +
+                                      "\n                  "
+                                  )
+                                ])
+                              : _c("p", [_vm._v("No registrado")])
+                          ])
+                        ]),
+                        _vm._v(" "),
                         _c("div", { staticClass: "col-12" }, [
                           _c("div", { staticClass: "form-group" }, [
                             _c("label", { staticClass: "font-weight-bold" }, [
@@ -2453,6 +2489,114 @@ var render = function() {
                             ],
                             1
                           )
+                        ]),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "col-12 col-md-6 col-lg-6" }, [
+                          _c("div", { staticClass: "form-group" }, [
+                            _c(
+                              "label",
+                              {
+                                staticClass: "font-weight-bold",
+                                attrs: { for: "tps_latitude" }
+                              },
+                              [_vm._v("Latitud")]
+                            ),
+                            _vm._v(" "),
+                            _c("input", {
+                              directives: [
+                                {
+                                  name: "model",
+                                  rawName: "v-model",
+                                  value: _vm.elText.tps_latitude,
+                                  expression: "elText.tps_latitude"
+                                }
+                              ],
+                              staticClass: "form-control",
+                              attrs: { type: "text", id: "tps_latitude" },
+                              domProps: { value: _vm.elText.tps_latitude },
+                              on: {
+                                input: function($event) {
+                                  if ($event.target.composing) {
+                                    return
+                                  }
+                                  _vm.$set(
+                                    _vm.elText,
+                                    "tps_latitude",
+                                    $event.target.value
+                                  )
+                                }
+                              }
+                            }),
+                            _vm._v(" "),
+                            _vm.errorsText && _vm.errorsText.tps_latitude
+                              ? _c(
+                                  "label",
+                                  {
+                                    staticClass: "mt-2 text-danger text-sm",
+                                    attrs: { for: "tps_latitude" }
+                                  },
+                                  [
+                                    _vm._v(
+                                      _vm._s(_vm.errorsText.tps_latitude[0])
+                                    )
+                                  ]
+                                )
+                              : _vm._e()
+                          ])
+                        ]),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "col-12 col-md-6 col-lg-6" }, [
+                          _c("div", { staticClass: "form-group" }, [
+                            _c(
+                              "label",
+                              {
+                                staticClass: "font-weight-bold",
+                                attrs: { for: "tps_longitude" }
+                              },
+                              [_vm._v("Longitud")]
+                            ),
+                            _vm._v(" "),
+                            _c("input", {
+                              directives: [
+                                {
+                                  name: "model",
+                                  rawName: "v-model",
+                                  value: _vm.elText.tps_longitude,
+                                  expression: "elText.tps_longitude"
+                                }
+                              ],
+                              staticClass: "form-control",
+                              attrs: { type: "text", id: "tps_longitude" },
+                              domProps: { value: _vm.elText.tps_longitude },
+                              on: {
+                                input: function($event) {
+                                  if ($event.target.composing) {
+                                    return
+                                  }
+                                  _vm.$set(
+                                    _vm.elText,
+                                    "tps_longitude",
+                                    $event.target.value
+                                  )
+                                }
+                              }
+                            }),
+                            _vm._v(" "),
+                            _vm.errorsText && _vm.errorsText.tps_longitude
+                              ? _c(
+                                  "label",
+                                  {
+                                    staticClass: "mt-2 text-danger text-sm",
+                                    attrs: { for: "tps_longitude" }
+                                  },
+                                  [
+                                    _vm._v(
+                                      _vm._s(_vm.errorsText.tps_longitude[0])
+                                    )
+                                  ]
+                                )
+                              : _vm._e()
+                          ])
                         ]),
                         _vm._v(" "),
                         _c("div", { staticClass: "col-12" }, [

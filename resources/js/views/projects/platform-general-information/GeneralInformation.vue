@@ -41,7 +41,7 @@
                     <p v-else>No registrado</p>
                   </div>
                 </div>
-                <!--<div class="col-12 col-md-6 col-lg-6">
+                <div class="col-12 col-md-6 col-lg-6">
                   <div class="form-group">
                     <label class="font-weight-bold">Latitud:</label>
                     <p v-if="elText.tps_latitude">
@@ -58,7 +58,7 @@
                     </p>
                     <p v-else>No registrado</p>
                   </div>
-                </div>-->
+                </div>
 
                 
 
@@ -168,7 +168,7 @@
                     </div>
                   </div>
 
-                  <!--<div class="col-12 col-md-6 col-lg-6">
+                  <div class="col-12 col-md-6 col-lg-6">
                     <div class="form-group">
                       <label class="font-weight-bold" for="tps_latitude"
                         >Latitud</label
@@ -205,7 +205,7 @@
                         >{{ errorsText.tps_longitude[0] }}</label
                       >
                     </div>
-                  </div>-->
+                  </div>
 
 
                   <div class="col-12">

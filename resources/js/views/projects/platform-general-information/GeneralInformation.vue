@@ -41,7 +41,7 @@
                     <p v-else>No registrado</p>
                   </div>
                 </div>
-                <div class="col-12 col-md-6 col-lg-6">
+                <!--<div class="col-12 col-md-6 col-lg-6">
                   <div class="form-group">
                     <label class="font-weight-bold">Latitud:</label>
                     <p v-if="elText.tps_latitude">
@@ -56,6 +56,18 @@
                     <p v-if="elText.tps_longitude">
                       {{ elText.tps_longitude }}
                     </p>
+                    <p v-else>No registrado</p>
+                  </div>
+                </div>-->
+
+                
+
+                <div class="col-12">
+                  <div class="form-group">
+                    <label class="font-weight-bold">URL Modelado del Proyecto:</label>
+                    <a class="d-block text-primary" style="text-decoration: underline;" target="_blank" :href="elText.tps_url_model" v-if="elText.tps_url_model">
+                      {{ elText.tps_url_model }}
+                    </a>
                     <p v-else>No registrado</p>
                   </div>
                 </div>
@@ -156,7 +168,7 @@
                     </div>
                   </div>
 
-                  <div class="col-12 col-md-6 col-lg-6">
+                  <!--<div class="col-12 col-md-6 col-lg-6">
                     <div class="form-group">
                       <label class="font-weight-bold" for="tps_latitude"
                         >Latitud</label
@@ -191,6 +203,27 @@
                         class="mt-2 text-danger text-sm"
                         for="tps_longitude"
                         >{{ errorsText.tps_longitude[0] }}</label
+                      >
+                    </div>
+                  </div>-->
+
+
+                  <div class="col-12">
+                    <div class="form-group">
+                      <label class="font-weight-bold" for="tps_url_model"
+                        >URL Modelado del Proyecto</label
+                      >
+                      <input
+                        type="text"
+                        class="form-control"
+                        v-model="elText.tps_url_model"
+                        id="tps_url_model"
+                      />
+                      <label
+                        v-if="errorsText && errorsText.tps_url_model"
+                        class="mt-2 text-danger text-sm"
+                        for="tps_url_model"
+                        >{{ errorsText.tps_url_model[0] }}</label
                       >
                     </div>
                   </div>

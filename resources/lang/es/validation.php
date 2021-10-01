@@ -220,7 +220,10 @@ return [
         'tps_password' => 'contraseña',
         'tps_base_dsct_ci' => 'base dscto ci',
         'question' => 'pregunta',
-        'answer' => 'respuesta'
+        'answer' => 'respuesta',
+        'tps_url_model' => 'url modelado del proyecto',
+        'latitude' => 'latitud',
+        'longitude' => 'longitud',
     ],
 
 ];

@@ -1,7 +1,7 @@
 <template>
   <div class="row mb-5">
     <div class="col-12 col-lg-3">
-      <h2>Promoción</h2>
+      <h2>Promociones</h2>
     </div>
     <div class="col-12 col-lg-9">
       <div class="text-right mb-3">

@@ -1,7 +1,7 @@
 <template>
   <div class="row mb-5">
     <div class="col-12 col-lg-3">
-      <h2>Ubicación</h2>
+      <h2>Slider de Ubicación</h2>
     </div>
     <div class="col-12 col-lg-9">
       <div class="text-right mb-3">
@@ -13,7 +13,7 @@
           <span class="btn-inner--icon">
             <jam-plus class="current-color"></jam-plus>
           </span>
-          <span class="btn-inner--text">Nueva Ubicación</span>
+          <span class="btn-inner--text">Nuevo Slide de Ubicación</span>
         </a>
       </div>
       <DataTableDraggable
@@ -38,7 +38,7 @@
       body-class="pt-0"
     >
       <template slot="modal-title">
-        <div class="text-primary h2">{{ title }} Ubicación</div>
+        <div class="text-primary h2">{{ title }} Slide de Ubicación</div>
       </template>
       <template slot="modal-header-close">
         <button type="button" class="btn p-0 bg-transparent" @click="restoreEl">
@@ -113,7 +113,7 @@
       <template v-slot:modal-footer="{ ok }">
         <Button
           :classes="['btn-inverse-primary']"
-          :text="title == 'Nueva' ? 'Crear' : 'Actualizar'"
+          :text="title == 'Nuevo' ? 'Crear' : 'Actualizar'"
           @click="submit"
           :request-server="requestSubmit"
         ></Button>
@@ -189,7 +189,7 @@ export default {
       let url;
       let method;
       const fd = new FormData();
-      if (this.title == "Nueva") {
+      if (this.title == "Nuevo") {
         url = this.routeLocation;
         method = "post";
       } else {
@@ -332,7 +332,7 @@ export default {
         .catch((error) => {});
     },
     newEl() {
-      this.title = "Nueva";
+      this.title = "Nuevo";
       this.modalCreateUpdate = true;
     },
     getEls() {

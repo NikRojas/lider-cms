@@ -315,6 +315,14 @@ Route::middleware(['auth'])->namespace('Cms')->name('cms.')->group(function () {
             Route::put('/order', 'TpsMaterialsGalleryController@order')->name('order');
             Route::put('/{element}', 'TpsMaterialsGalleryController@update')->name('update');
         });
+
+        Route::prefix('pines-plataforma-comercial')->name('tps-pins.')->group(function () {
+            Route::post('/', 'TpsPinsController@store')->name('store');
+            Route::get('/json/get-all', 'TpsPinsController@getAll')->name('get-all');
+            Route::get('/json/get/{element}', 'TpsPinsController@get')->name('get');
+            Route::delete('/{element}', 'TpsPinsController@destroy')->name('destroy');
+            Route::put('/{element}', 'TpsPinsController@update')->name('update');
+        });
     });
 
     Route::namespace('AdvisorySystem')->prefix('sistema-asesores')->name('advisory-system.')->group(function () {

@@ -43,7 +43,7 @@
                 </div>
                 <div class="col-12 col-md-6 col-lg-6">
                   <div class="form-group">
-                    <label class="font-weight-bold">Latitud:</label>
+                    <label class="font-weight-bold">Latitud Centrar Mapa:</label>
                     <p v-if="elText.tps_latitude">
                       {{ elText.tps_latitude }}
                     </p>
@@ -52,7 +52,7 @@
                 </div>
                 <div class="col-12 col-md-6 col-lg-6">
                   <div class="form-group">
-                    <label class="font-weight-bold">Longitud:</label>
+                    <label class="font-weight-bold">Longitud Centrar Mapa:</label>
                     <p v-if="elText.tps_longitude">
                       {{ elText.tps_longitude }}
                     </p>
@@ -171,7 +171,7 @@
                   <div class="col-12 col-md-6 col-lg-6">
                     <div class="form-group">
                       <label class="font-weight-bold" for="tps_latitude"
-                        >Latitud</label
+                        >Latitud Centrar Mapa</label
                       >
                       <input
                         type="text"
@@ -190,7 +190,7 @@
                   <div class="col-12 col-md-6 col-lg-6">
                     <div class="form-group">
                       <label class="font-weight-bold" for="tps_longitude"
-                        >Longitud</label
+                        >Longitud Centrar Mapa</label
                       >
                       <input
                         type="text"

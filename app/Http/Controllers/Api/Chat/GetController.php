@@ -70,19 +70,19 @@ class GetController extends BaseController
         foreach ($data as $key => $value) {
             $buttons[] = ["text" => $value->department,"classes" => "chat_link_button_departamente_distrito"];
         }
-        $buttons[] = ["text" => 'Ambos',"classes" => "chat_link_button_departamente_distrito"];
+        $buttons[] = ["text" => 'Ambas',"classes" => "chat_link_button_departamente_distrito"];
         $customPayload['buttons'] = $buttons;
         return $this->sendResponse($customPayload, '');
     }
 
     public function districts(Request $request)
     {
-        if($request->department != 'Ambos'){
+        if($request->department != 'Ambas'){
             $department = Ubigeo::where('department',$request->department)->first();
         }
         //$data = Ubigeo::select('code_district', 'district', 'code_ubigeo', 'code_department')->distinct()->where('code_department', $department->code_department)
         $data = Ubigeo::select('code_district', 'district', 'code_ubigeo', 'code_department')->distinct();
-        if($request->department != 'Ambos'){
+        if($request->department != 'Ambas'){
             $data = $data->where('code_department', $department->code_department);
         }
         $data = $data->whereHas('projectsRel', function ($query) {
@@ -107,12 +107,12 @@ class GetController extends BaseController
     public function projects(Request $request){
         $department = $request->department;
         $district = $request->district;
-        $data = Project::select('id', 'images','name_es', 'name_en', 'slug_es', 'slug_en','rooms_es','footage_es','logo')
+        $data = Project::select('id', 'images','name_es', 'name_en', 'slug_es', 'slug_en','rooms_es','footage_es','logo','code_ubigeo')
         ->whereHas('departmentsRel', function ($query){
             $query->where('available', 1);
         })->where('active', 1);
         if($district == 'Todos'){
-            if($department != "Ambos"){
+            if($department != "Ambas"){
                 $codeDepartment = Ubigeo::where('department',$department)->first();
                 $data = $data->whereHas('ubigeoRel', function ($query2) use ($codeDepartment) {
                     return $query2->whereIn('code_department', $codeDepartment);
@@ -137,17 +137,24 @@ class GetController extends BaseController
                 return $query2->where('code_ubigeo', $ubigeo->code_ubigeo);
             })->orderBy('id','asc');
         }
-        $data = $data->get();
+        $data = $data->with('ubigeoRel')->get();
         $customPayload = [];
         $customPayload['text'] = "Tenemos estos proyectos disponibles 👇";
         $customPayload['type'] = "carousel";
         $carousel = [];
         foreach ($data as $key => $value) {
+            $desc = NULL;
+            if($request->district == "Todos"){
+                $desc = '<div>'.$value['ubigeoRel']['district'].'</div><br><div>'.$value['rooms_es'].'<br>'.$value['footage_es'].'</div>';
+            }
+            else{
+                $desc = '<div>'.$value['rooms_es'].'<br>'.$value['footage_es'].'</div>';
+            }
             $carousel[] = [
                 "title" => $value['name_es'],
                 "button" => $value['name_es'],
                 "logo" => asset('storage/img/projects/'.$value['logo']),
-                "description" => '<div>'.$value['rooms_es'].'<br>'.$value['footage_es'].'</div>',
+                "description" => $desc,
                 "image" => asset('storage/img/projects/'.$value["images_format"][0])
             ];
         }
@@ -189,6 +196,7 @@ class GetController extends BaseController
         $countDeps = Department::where('project_id',$project->id)->where('available',true)->count();
         $customPayload = [];
         $prependText = "Buena elección <strong>".$name."</strong> 👌. Te redirecciono al proyecto.";
+        $customPayload['notification'] = "Buena elección <strong>".$name."</strong> 👌. Te redirecciono al proyecto.";
         $firstText = "En el proyecto <strong>".$name_es."</strong> tenemos 🏢 <strong>".$countDeps." inmuebles en stock </strong>";
         if($project->stock_parking){
             $firstText .= " y <strong>".$project->stock_parking." estacionamientos</strong>.";
@@ -272,6 +280,7 @@ class GetController extends BaseController
         $buttons = $this->getButtonsFlow1($project->id, $bonds, "Quiero cotizar un departamento", true);
         $customPayload['buttons'] = $buttons;
         $customPayload['route_section'] = "#cotizar";
+        $customPayload['notification'] = "👈 En esta sección podrás elegir un departamento, llenar tus datos y te llegará una cotización a tu correo";
         $customPayload['text'] = "👈 En esta sección podrás elegir un departamento, llenar tus datos y te llegará una cotización a tu correo";
         return $this->sendResponse($customPayload, '');
     }

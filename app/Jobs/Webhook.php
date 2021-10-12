@@ -63,6 +63,7 @@ class Webhook implements ShouldQueue
             $leadToSend["price_total"] = $this->lead->projectTypeDepartmentRel->price_format;
             $leadToSend["area"] = $this->lead->projectTypeDepartmentRel->area;
             $leadToSend["asesor"] = $this->advisor;
+            $leadToSend["dormitorios"] = $this->lead->projectTypeDepartmentRel->room;
             $leadToSend["type"] = "Cotización";
         }
         else{

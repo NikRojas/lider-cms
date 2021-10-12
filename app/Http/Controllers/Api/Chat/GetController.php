@@ -145,7 +145,7 @@ class GetController extends BaseController
         foreach ($data as $key => $value) {
             $desc = NULL;
             if($request->district == "Todos"){
-                $desc = '<div>'.$value['ubigeoRel']['district'].'</div><br><div>'.$value['rooms_es'].'<br>'.$value['footage_es'].'</div>';
+                $desc = '<div>'.$value['ubigeoRel']['district'].'</div><div>'.$value['rooms_es'].'<br>'.$value['footage_es'].'</div>';
             }
             else{
                 $desc = '<div>'.$value['rooms_es'].'<br>'.$value['footage_es'].'</div>';

@@ -81,7 +81,7 @@ class Webhook implements ShouldQueue
             $leadToSend["utm_term"] = $this->lead->utm_term;
             $leadToSend["utm_content"] = $this->lead->utm_content;
             $leadToSend["creation_date"] = (new Carbon($this->lead->created_at))->toDateTimeString();
-            $leadToSend["asesor"] = $this->advisor;
+            //$leadToSend["asesor"] = $this->advisor;
         }
         $client = new Client();
         $response = $client->request('POST', $this->webhook_url, ['json' => $leadToSend]);

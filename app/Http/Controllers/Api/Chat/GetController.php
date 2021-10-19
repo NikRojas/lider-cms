@@ -391,6 +391,7 @@ class GetController extends BaseController
             }
             $buttons = array_merge($buttons,[["text" => "Ya no tengo más dudas"]]);
         }
+        $buttons = array_merge($buttons, [["text" => 'Menú Inicio']]);
         return $buttons;
     }
 

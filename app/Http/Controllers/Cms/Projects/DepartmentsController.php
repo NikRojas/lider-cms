@@ -16,6 +16,8 @@ use App\Repositories\DepartmentsRepository;
 use App\SapCredential;
 use Illuminate\Support\Str;
 use GuzzleHttp\Client;
+use App\ProjectSector;
+use Illuminate\Support\Facades\Log;
 
 class DepartmentsController extends Controller
 {
@@ -46,7 +48,7 @@ class DepartmentsController extends Controller
             }
         }
         $orderType = $request->order_type;
-        $headers = ["Id", "Código SAP", "Descripción", "Área (m2)", "Piso", "Vista", "Tipología", "Tipo", "Stock", "Precio S/", "Precio $",'Actualizado el'];
+        $headers = ["Id", "Código SAP", "Tipo Inmueble", "Descripción", "Área (m2)", "Piso", "Vista", "Tipología", "Tipo", "Stock", "Precio S/", "Precio $",'Actualizado el'];
         if ($q) {
             $elements = $repo->datatable($request->project_id, $request->itemsPerPage, $q, $orderBy, $orderType);
         } else {
@@ -106,33 +108,54 @@ class DepartmentsController extends Controller
             if ($countEstates > 0) {
                 try {
                     foreach ($responseData->inmuebles as $key => $value) {
-                        $checkTipology = ProjectTypeDepartment::where('sap_code', $value->tipologia)->where('project_id', $element->id)->first();
-                        #Verificar que Tipologia este registrado en la BD y sea el mismo proyecto
-                        if (!$checkTipology) {
-                            $notValidatedTipologiesCount++;
-                            $notValidatedTipologies[] = $value->codigo;
-                        }
-                        #Verificar que Vista esta registrado en la BD
-                        $checkView = ProjectView::where('sap_code', $value->vista)->first();
-                        if (!$checkView) {
-                            $notValidatedViewsCount++;
-                            $notValidatedViews[] = $value->codigo;
-                        }
-                        #Solo si la tipologia y la vista existe en la BD
-                        if ($checkTipology && $checkView) {
-                            $findDepartment = Department::where("sap_code", $value->codigo)->first();
-                            #Verificar si existe ya el Inmueble en la BD
-                            if ($findDepartment) {
-                                $updateDeparment = Department::UpdateOrCreate(["id" => $findDepartment->id], ["description" => $value->descripcion, "area" => $value->area, "floor" => $value->piso, "view_id" => $checkView->id, "type_department_id" => $checkTipology->id]);
-                                if ($updateDeparment) {
-                                    $registeredCount++;
-                                }
-                            } else {
-                                $createDeparment = Department::UpdateOrCreate(["slug" => Str::random(20), "sap_code" => $value->codigo, "description" => $value->descripcion, "area" => $value->area, "floor" => $value->piso, "view_id" => $checkView->id, "type_department_id" => $checkTipology->id, "project_id" => $element->id]);
-                                if ($createDeparment) {
-                                    $registeredCount++;
+                        $sector = NULL;
+                        $sector = ProjectSector::where('sap_code',$value->sector)->first();
+                        if($sector->name == "Departamento" && $sector->name == "Casa"){
+                            $checkTipology = ProjectTypeDepartment::where('sap_code', $value->tipologia)->where('project_id', $element->id)->first();
+                            #Verificar que Tipologia este registrado en la BD y sea el mismo proyecto
+                            if (!$checkTipology) {
+                                $notValidatedTipologiesCount++;
+                                $notValidatedTipologies[] = $value->codigo;
+                            }
+                            #Verificar que Vista esta registrado en la BD
+                            $checkView = ProjectView::where('sap_code', $value->vista)->first();
+                            if (!$checkView) {
+                                $notValidatedViewsCount++;
+                                $notValidatedViews[] = $value->codigo;
+                            }
+                            #Solo si la tipologia y la vista existe en la BD
+                            if ($checkTipology && $checkView) {
+                                $findDepartment = Department::where("sap_code", $value->codigo)->first();
+                                Log::info($sector->id);
+                                #Verificar si existe ya el Inmueble en la BD
+                                if ($findDepartment) {
+                                    $updateDeparment = Department::UpdateOrCreate(["id" => $findDepartment->id], ["description" => $value->descripcion, "area" => $value->area, "floor" => $value->piso, "view_id" => $checkView->id, "type_department_id" => $checkTipology->id, "sector_id" => $sector->id]);
+                                    if ($updateDeparment) {
+                                        $registeredCount++;
+                                    }
+                                } else {
+                                    $createDeparment = Department::UpdateOrCreate(["slug" => Str::random(20), "sap_code" => $value->codigo, "description" => $value->descripcion, "area" => $value->area, "floor" => $value->piso, "view_id" => $checkView->id, "type_department_id" => $checkTipology->id, "project_id" => $element->id, "sector_id" => $sector->id]);
+                                    if ($createDeparment) {
+                                        $registeredCount++;
+                                    }
                                 }
                             }
+                        }
+                        #Estacionamiento o Deposito
+                        else{
+                            $findDepartment = Department::where("sap_code", $value->codigo)->first();
+                                #Verificar si existe ya el Inmueble en la BD
+                                if ($findDepartment) {
+                                    $updateDeparment = Department::UpdateOrCreate(["id" => $findDepartment->id], ["description" => $value->descripcion, "area" => $value->area, "sector_id" => $sector->id]);
+                                    if ($updateDeparment) {
+                                        $registeredCount++;
+                                    }
+                                } else {
+                                    $createDeparment = Department::UpdateOrCreate(["slug" => Str::random(20), "sap_code" => $value->codigo, "description" => $value->descripcion, "area" => $value->area, "project_id" => $element->id, "sector_id" => $sector->id]);
+                                    if ($createDeparment) {
+                                        $registeredCount++;
+                                    }
+                                }  
                         }
                     }
                     $message = trans('custom.message.sap.get_departments.success', ['total' => $countEstates]);
@@ -150,6 +173,7 @@ class DepartmentsController extends Controller
                     $projectUpdated = Project::UpdateOrCreate(["id" => $element->id],["has_warehouse" => $hasWarehouse, "has_parking" => $hasParking] );
                     return response()->json(['title' => trans('custom.title.success'), 'message' => $message], 200);
                 } catch (\Exception $e) {
+                    dd($e);
                     return response()->json(['title' => trans('custom.title.error'), 'message' => trans('custom.message.sap.get_departments.error')], 500);
                 }
             } else {

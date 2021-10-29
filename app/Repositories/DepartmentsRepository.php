@@ -36,7 +36,7 @@ class DepartmentsRepository
         else{
             $deps = Department::
             where('departments.project_id', $id)
-            ->with('viewRel');
+            ->with('viewRel')->with('sectorRel');
             if($orderDefault == "type_department_id"){
                 $deps = $deps->join('project_type_departments', 'departments.type_department_id', '=', 'project_type_departments.id')
                 ->orderBy('project_type_departments.name',$orderTypeDefault)
@@ -69,11 +69,12 @@ class DepartmentsRepository
             $data[] = array(
                 "id" => $dep["id"],
                 "sap_code" => $dep["sap_code"],
+                "sector" => $dep["sectorRel"] ? $dep["sectorRel"]["name"] : "No registrado",
                 "description" => $depHTML,
                 "area" => number_format($dep["area"],2),
-                "floor" => $dep["floor"],
-                "vista" => $dep["viewRel"]["name"],
-                "tipology" => $dep["tipologyRel"]["name"].' ('.$dep["tipologyRel"]["room"].' Dormitorios)',
+                "floor" => $dep["floor"] ? $dep["floor"] : 'No registrado' ,
+                "vista" => $dep["viewRel"] ? $dep["viewRel"]["name"] : 'No registrado',
+                "tipology" => $dep["tipologyRel"] ? $dep["tipologyRel"]["name"].' ('.$dep["tipologyRel"]["room"].' Dormitorios)' : 'No registrado',
                 "type" => $dep["tipologyRel"]["parentTypeDepartmentRel"] ? $dep["tipologyRel"]["parentTypeDepartmentRel"]["name"] : 'No registrado',
                 "available" => $stock,
                 "price" => $dep["price"] ? $dep['price_format'] : 'No registrado',

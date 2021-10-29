@@ -21,6 +21,11 @@ class Department extends Model
         return $this->belongsTo('App\Project', 'project_id', 'id');
     }
 
+    public function sectorRel()
+    {
+        return $this->belongsTo('App\ProjectSector', 'sector_id', 'id');
+    }
+
     public function tipologyRel()
     {
         return $this->belongsTo('App\ProjectTypeDepartment','type_department_id','id');

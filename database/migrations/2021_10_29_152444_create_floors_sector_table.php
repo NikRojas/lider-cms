@@ -22,6 +22,7 @@ class CreateFloorsSectorTable extends Migration
             $table->foreign('sector_id')->references('id')->on('project_sector_departments');
             $table->bigInteger('project_id')->unsigned();
             $table->foreign('project_id')->references('id')->on('projects');
+            $table->bigInteger('index');
             $table->timestamps();
         });
     }

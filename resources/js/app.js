@@ -107,6 +107,8 @@ const app = new Vue({
         'configuration-logs-sap': () => import('./views/configuration/LogsSap.vue' /* webpackChunkName: "js/pages/configuration/logs-sap" */),
 
         'chatbot': () => import('./views/Chatbot.vue' /* webpackChunkName: "js/pages/chatbot" */),
+
+        'projects-floors-parking': () => import('./views/projects/floors/Parking.vue' /* webpackChunkName: "js/pages/projects/floors/parking" */),
     }
 });
 import Validation from './functions/validation.js'

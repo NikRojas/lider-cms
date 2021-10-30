@@ -274,6 +274,16 @@ Route::middleware(['auth'])->namespace('Cms')->name('cms.')->group(function () {
             Route::get('/json/get-all', 'DepartmentsController@getAll')->name('get-all');
         });
 
+        Route::prefix('pisos-estacionamientos-depositos')->name('floors.')->group(function () {
+            Route::get('/{element}', 'ParkingWarehouseController@index')->name('index');
+            Route::post('/', 'ParkingWarehouseController@store')->name('store');
+            Route::get('/json/get-all', 'ParkingWarehouseController@getAll')->name('get-all');
+            Route::get('/json/get/{element}', 'ParkingWarehouseController@get')->name('get');
+            Route::delete('/{element}', 'ParkingWarehouseController@destroy')->name('destroy');
+            Route::put('/order', 'ParkingWarehouseController@order')->name('order');
+            Route::put('/{element}', 'ParkingWarehouseController@update')->name('update');
+        });
+
         Route::prefix('credenciales-pasarela')->name('credentials.')->group(function () {
             Route::post('/updated-credential', 'CredentialsController@updateCredential')->name('update-credential');
             Route::post('/updated-tokens', 'CredentialsController@updateTokens')->name('update-tokens');

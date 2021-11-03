@@ -586,7 +586,8 @@ __webpack_require__.r(__webpack_exports__);
       project: {
         id: null,
         master_currency_id: 1
-      }
+      },
+      totalPrice: 0
     };
   },
   methods: {
@@ -616,6 +617,17 @@ __webpack_require__.r(__webpack_exports__);
         this.element.warehouses = [];
         this.element.parkings = [];
         this.element.departments = [];
+      }
+    },
+    "element.parkings": {
+      handler: function handler(newValue) {}
+    },
+    "element.warehouses": {
+      handler: function handler(newValue) {}
+    },
+    "element.departments": {
+      handler: function handler(newValue) {
+        console.log(newValue);
       }
     }
   }
@@ -1305,20 +1317,13 @@ var render = function() {
                             _vm._b(
                               {
                                 staticClass: "form-control form-control-lg",
-                                attrs: {
-                                  disabled:
-                                    _vm.project && _vm.project.id ? false : true
-                                },
+                                attrs: { disabled: true },
                                 model: {
-                                  value: _vm.element.price_separation,
+                                  value: _vm.totalPrice,
                                   callback: function($$v) {
-                                    _vm.$set(
-                                      _vm.element,
-                                      "price_separation",
-                                      $$v
-                                    )
+                                    _vm.totalPrice = $$v
                                   },
-                                  expression: "element.price_separation"
+                                  expression: "totalPrice"
                                 }
                               },
                               "money",

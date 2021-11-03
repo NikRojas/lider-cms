@@ -163,9 +163,9 @@
                         >Precio Total del Combo</label
                       >
                       <money
-                        :disabled="project && project.id ? false : true"
+                        :disabled="true"
                         class="form-control form-control-lg"
-                        v-model="element.price_separation"
+                        v-model="totalPrice"
                         v-bind="
                           project && project.master_currency_id == 1
                             ? moneyLocal
@@ -464,6 +464,7 @@ export default {
         id: null,
         master_currency_id: 1,
       },
+      totalPrice: 0
     };
   },
   methods: {
@@ -494,6 +495,21 @@ export default {
         this.element.departments = [];
       },
     },
+    "element.parkings":{
+      handler: function (newValue) {
+
+      }
+    },
+    "element.warehouses":{
+      handler: function (newValue) {
+        
+      }
+    },
+    "element.departments":{
+      handler: function (newValue) {
+        console.log(newValue);
+      }
+    }
   },
 };
 </script>

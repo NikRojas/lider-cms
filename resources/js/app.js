@@ -110,6 +110,9 @@ const app = new Vue({
 
         'projects-floors-parking': () => import('./views/projects/floors/Parking.vue' /* webpackChunkName: "js/pages/projects/floors/parking" */),
         'projects-floors-warehouse': () => import('./views/projects/floors/Warehouse.vue' /* webpackChunkName: "js/pages/projects/floors/warehouse" */),
+
+        'combos-index': () => import('./views/combos/Index.vue' /* webpackChunkName: "js/pages/combos/index" */),
+        'combos-create': () => import('./views/combos/Create.vue' /* webpackChunkName: "js/pages/combos/create" */),
     }
 });
 import Validation from './functions/validation.js'

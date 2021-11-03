@@ -335,6 +335,20 @@ Route::middleware(['auth'])->namespace('Cms')->name('cms.')->group(function () {
         });
     });
 
+    #Combos
+    Route::namespace('Combos')->prefix('combos')->name('combos.')->group(function () {
+        Route::get('/', 'IndexController@index')->name('index');
+        Route::get('/nuevo', 'IndexController@create')->name('create');
+        Route::put('/order', 'IndexController@order')->name('order');
+        Route::get('/editar/{element}', 'IndexController@edit')->name('edit');
+        Route::post('/', 'IndexController@store')->name('store');
+        Route::get('/combos/json/get-all', 'IndexController@getAllDepartments')->name('departments.get-all');
+        Route::get('/json/get-all', 'IndexController@getAll')->name('get-all');
+        Route::get('/json/get/{element}', 'IndexController@get')->name('get');
+        Route::get('/{element}', 'IndexController@read')->name('read');
+        Route::put('/{element}', 'IndexController@update')->name('update');
+    });
+
     Route::namespace('AdvisorySystem')->prefix('sistema-asesores')->name('advisory-system.')->group(function () {
         Route::name('general-information.')->prefix('sobre-lider')->group(function () {
             #General Information

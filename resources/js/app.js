@@ -109,6 +109,7 @@ const app = new Vue({
         'chatbot': () => import('./views/Chatbot.vue' /* webpackChunkName: "js/pages/chatbot" */),
 
         'projects-floors-parking': () => import('./views/projects/floors/Parking.vue' /* webpackChunkName: "js/pages/projects/floors/parking" */),
+        'projects-floors-warehouse': () => import('./views/projects/floors/Warehouse.vue' /* webpackChunkName: "js/pages/projects/floors/warehouse" */),
     }
 });
 import Validation from './functions/validation.js'

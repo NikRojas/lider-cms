@@ -9,6 +9,7 @@
 </style>
 @endsection
 @section('content')
+<div class="mb-4">
 <projects-floors-parking 
     route="{{ route('cms.projects.floors.store') }}" 
     images-url="{{ config('services.images_url') }}"
@@ -19,4 +20,16 @@
     route-order="{{ route('cms.projects.floors.order') }}"
     route-get-all="{{ route('cms.projects.floors.get-all') }}"
     ></projects-floors-parking>
+    </div>
+
+    <projects-floors-warehouse 
+    route="{{ route('cms.projects.floors.store') }}" 
+    images-url="{{ config('services.images_url') }}"
+    route-return="{{ route('cms.projects.index') }}"
+    message-order="@lang('custom.message.order')"
+    :element-parent="{{ $element }}"
+    :estates="{{ json_encode($estates) }}"
+    route-order="{{ route('cms.projects.floors.order') }}"
+    route-get-all="{{ route('cms.projects.floors.get-all') }}"
+    ></projects-floors-warehouse>
 @endsection

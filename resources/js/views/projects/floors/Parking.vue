@@ -171,6 +171,14 @@
         </button>
       </template>
     </b-modal>
+    <destroy
+      element="piso"
+      @cancel="restoreEl"
+      :open="modalDestroy"
+      @submit="destroyConfirm"
+      :loading-get="loadingGet"
+      :loading-submit="requestSubmit"
+    ></destroy>
   </div>
 </template>
 <script>
@@ -343,7 +351,42 @@ export default {
           });
         });
     },
-    deleteEl() {},
+    deleteEl(id) {
+      this.modalDestroy = true;
+      this.getEl(id);
+    },
+    destroyConfirm(){
+      this.requestSubmit = true;
+      axios
+        .delete(this.route + "/" + this.element.id)
+        .then((response) => {
+          this.requestSubmit = false;
+          this.restore();
+          Swal.fire({
+            title: response.data.title,
+            text: response.data.message,
+            type: "success",
+            confirmButtonText: "OK",
+            buttonsStyling: false,
+            customClass: {
+              confirmButton: "btn btn-inverse-primary",
+            },
+          });
+        })
+        .catch((error) => {
+          Swal.fire({
+            title: error.response.data.title,
+            text: error.response.data.message,
+            type: "error",
+            confirmButtonText: "OK",
+            buttonsStyling: false,
+            customClass: {
+              confirmButton: "btn btn-inverse-primary",
+            },
+          });
+          this.restoreEl();
+        });
+    },
     getEl(id){
       this.loadingGet = true;
       axios

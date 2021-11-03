@@ -173,7 +173,7 @@ class DepartmentsController extends Controller
                     $projectUpdated = Project::UpdateOrCreate(["id" => $element->id],["has_warehouse" => $hasWarehouse, "has_parking" => $hasParking] );
                     return response()->json(['title' => trans('custom.title.success'), 'message' => $message], 200);
                 } catch (\Exception $e) {
-                    dd($e);
+                    //dd($e);
                     return response()->json(['title' => trans('custom.title.error'), 'message' => trans('custom.message.sap.get_departments.error')], 500);
                 }
             } else {

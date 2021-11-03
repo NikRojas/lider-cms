@@ -10,7 +10,7 @@
       <input
         v-model="search"
         class="form-control"
-        placeholder="Buscar por descripción"
+        placeholder="Buscar por descripción, código sap"
         type="text"
       />
     </div>
@@ -49,7 +49,14 @@
                     </div>
                   </td>
                   <td>
-                    <label class="mb-0" style="cursor:pointer;" :for="'items' + element.id">{{ element.description }}</label>
+                    <label class="mb-0" style="cursor:pointer;" :for="'items' + element.id">
+                      {{ element.description }} <br>
+                      {{ element.sap_code}}  
+                      <div>
+                        <span class="font-weight-bold text-success badge badge-success" style="color: rgb(45, 198, 27) !important; background-color: rgb(204 255 230);" v-if="element.available">En Stock</span>
+                        <span class="font-weight-bold text-danger badge badge-danger" v-else>Sin Stock</span>
+                      </div>
+                    </label>
                   </td>
                   <td>{{ element.area }} m2</td>
                 </tr>
@@ -112,6 +119,10 @@ export default {
         .replace(/[\u0300-\u036f]/g, "");
       return this.elements.filter((el) => {
         return el.description
+          .toLowerCase()
+          .normalize("NFD")
+          .replace(/[\u0300-\u036f]/g, "")
+          .includes(search) || el.sap_code
           .toLowerCase()
           .normalize("NFD")
           .replace(/[\u0300-\u036f]/g, "")

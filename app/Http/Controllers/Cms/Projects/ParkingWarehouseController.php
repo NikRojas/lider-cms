@@ -68,6 +68,7 @@ class ParkingWarehouseController extends Controller
   public function destroy(FloorSector $element){
     $image = $element->image;
     try {
+        $element->departmentsRel()->sync([]);
         $destroy = $element->delete();
         if($destroy){
             Storage::disk('public')->delete('img/projects/floors/'.$image);   
@@ -81,12 +82,6 @@ class ParkingWarehouseController extends Controller
 
   public function order(Request $request){
     $elements = $request->all();
-    /*if($type == "parking"){
-      $type = 2;
-    }
-    else{
-      $type = 3;
-    }*/
     try{
         for ($i=0; $i < count($elements); $i++) { 
             $element = FloorSector::UpdateOrCreate(["id"=>$elements[$i]["id"]],["index"=>$i + 1]);

@@ -13,6 +13,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue_loading_skeleton__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vue-loading-skeleton */ "./node_modules/vue-loading-skeleton/dist/vue-loading-skeleton.esm.js");
 /* harmony import */ var _components_NoData__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../components/NoData */ "./resources/js/components/NoData.vue");
 /* harmony import */ var _components_DataTable__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../components/DataTable */ "./resources/js/components/DataTable.vue");
+/* harmony import */ var _components_modals_Destroy__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../components/modals/Destroy */ "./resources/js/components/modals/Destroy.vue");
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
 //
@@ -53,6 +54,16 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
 
 
 
@@ -62,7 +73,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     BreadCrumb: _components_BreadCrumb__WEBPACK_IMPORTED_MODULE_0__["default"],
     Skeleton: vue_loading_skeleton__WEBPACK_IMPORTED_MODULE_1__["Skeleton"],
     NoData: _components_NoData__WEBPACK_IMPORTED_MODULE_2__["default"],
-    DataTable: _components_DataTable__WEBPACK_IMPORTED_MODULE_3__["default"]
+    DataTable: _components_DataTable__WEBPACK_IMPORTED_MODULE_3__["default"],
+    Destroy: _components_modals_Destroy__WEBPACK_IMPORTED_MODULE_4__["default"]
   },
   props: {
     routeCreate: String,
@@ -109,6 +121,64 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         _this.elements = response.data;
         _this.loadingGetAll = false;
       })["catch"](function (error) {});
+    },
+    restoreEl: function restoreEl() {
+      this.modalCreateUpdate = this.modalDestroy = false;
+      this.element = {};
+    },
+    restore: function restore() {
+      this.element = {}, this.requestSubmit = this.modalDestroy = false;
+      this.getEls(1, this.elementsPerPage);
+    },
+    deleteEl: function deleteEl(id) {
+      this.modalDestroy = true;
+      this.getEl(id);
+    },
+    getEl: function getEl(id) {
+      var _this2 = this;
+
+      this.loadingGet = true;
+      axios.get(this.route + "/json/get/" + id).then(function (response) {
+        _this2.element = response.data;
+        _this2.loadingGet = false;
+      })["catch"](function (error) {});
+    },
+    editEl: function editEl(id) {
+      window.location.href = this.route + '/editar/' + id;
+    },
+    destroyConfirm: function destroyConfirm() {
+      var _this3 = this;
+
+      this.requestSubmit = true;
+      axios["delete"](this.route + "/" + this.element.slug).then(function (response) {
+        _this3.requestSubmit = false;
+
+        _this3.restore();
+
+        Swal.fire({
+          title: response.data.title,
+          text: response.data.message,
+          type: "success",
+          confirmButtonText: "OK",
+          buttonsStyling: false,
+          customClass: {
+            confirmButton: "btn btn-inverse-primary"
+          }
+        });
+      })["catch"](function (error) {
+        Swal.fire({
+          title: error.response.data.title,
+          text: error.response.data.message,
+          type: "error",
+          confirmButtonText: "OK",
+          buttonsStyling: false,
+          customClass: {
+            confirmButton: "btn btn-inverse-primary"
+          }
+        });
+
+        _this3.restoreEl();
+      });
     }
   },
   created: function created() {
@@ -133,82 +203,97 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", [
-    _c("div", { staticClass: "header pb-6" }, [
-      _c("div", { staticClass: "container-fluid" }, [
-        _c("div", { staticClass: "header-body" }, [
-          _c(
-            "div",
-            { staticClass: "row align-items-center pt-0 pt-md-2 pb-4" },
-            [
-              _c(
-                "div",
-                { staticClass: "col-6 col-md-7" },
-                [
-                  _c("BreadCrumb", {
-                    attrs: { title: "Combos", parent: "", active: "Combos" }
-                  })
-                ],
-                1
-              ),
-              _vm._v(" "),
-              _c("div", { staticClass: "col-6 col-md-5 text-right" }, [
+  return _c(
+    "div",
+    [
+      _c("div", { staticClass: "header pb-6" }, [
+        _c("div", { staticClass: "container-fluid" }, [
+          _c("div", { staticClass: "header-body" }, [
+            _c(
+              "div",
+              { staticClass: "row align-items-center pt-0 pt-md-2 pb-4" },
+              [
                 _c(
-                  "a",
-                  {
-                    staticClass: "btn btn-icon btn-inverse-primary",
-                    attrs: { href: _vm.routeCreate }
-                  },
+                  "div",
+                  { staticClass: "col-6 col-md-7" },
                   [
-                    _c(
-                      "span",
-                      { staticClass: "btn-inner--icon" },
-                      [_c("jam-tag", { staticClass: "current-color" })],
-                      1
-                    ),
-                    _vm._v(" "),
-                    _c("span", { staticClass: "btn-inner--text" }, [
-                      _vm._v("Nuevo Combo")
-                    ])
-                  ]
-                )
-              ])
-            ]
-          )
+                    _c("BreadCrumb", {
+                      attrs: { title: "Combos", parent: "", active: "Combos" }
+                    })
+                  ],
+                  1
+                ),
+                _vm._v(" "),
+                _c("div", { staticClass: "col-6 col-md-5 text-right" }, [
+                  _c(
+                    "a",
+                    {
+                      staticClass: "btn btn-icon btn-inverse-primary",
+                      attrs: { href: _vm.routeCreate }
+                    },
+                    [
+                      _c(
+                        "span",
+                        { staticClass: "btn-inner--icon" },
+                        [_c("jam-tag", { staticClass: "current-color" })],
+                        1
+                      ),
+                      _vm._v(" "),
+                      _c("span", { staticClass: "btn-inner--text" }, [
+                        _vm._v("Nuevo Combo")
+                      ])
+                    ]
+                  )
+                ])
+              ]
+            )
+          ])
         ])
-      ])
-    ]),
-    _vm._v(" "),
-    _c(
-      "div",
-      { staticClass: "container-fluid mt--6" },
-      [
-        _c("DataTable", {
-          attrs: {
-            object: _vm.elements,
-            placeholder: "Nombre, Apellido, Número Documento",
-            "button-update": false,
-            "button-read": true,
-            "button-delete": false,
-            "button-disable": false,
-            "loading-prop": _vm.loadingGetAll,
-            "entries-prop": _vm.elementsPerPage
-          },
-          on: {
-            read: _vm.showEl,
-            get: _vm.getEls,
-            "update:entriesProp": function($event) {
-              _vm.elementsPerPage = $event
+      ]),
+      _vm._v(" "),
+      _c(
+        "div",
+        { staticClass: "container-fluid mt--6" },
+        [
+          _c("DataTable", {
+            attrs: {
+              object: _vm.elements,
+              placeholder: "Descripción",
+              "button-update": true,
+              "button-read": false,
+              "button-delete": true,
+              "loading-prop": _vm.loadingGetAll,
+              "entries-prop": _vm.elementsPerPage
             },
-            "update:entries-prop": function($event) {
-              _vm.elementsPerPage = $event
+            on: {
+              read: _vm.showEl,
+              update: _vm.editEl,
+              get: _vm.getEls,
+              delete: _vm.deleteEl,
+              "update:entriesProp": function($event) {
+                _vm.elementsPerPage = $event
+              },
+              "update:entries-prop": function($event) {
+                _vm.elementsPerPage = $event
+              }
             }
-          }
-        })
-      ],
-      1
-    )
-  ])
+          })
+        ],
+        1
+      ),
+      _vm._v(" "),
+      _c("destroy", {
+        attrs: {
+          element: "combo",
+          open: _vm.modalDestroy,
+          "loading-get": _vm.loadingGet,
+          "loading-submit": _vm.requestSubmit
+        },
+        on: { cancel: _vm.restoreEl, submit: _vm.destroyConfirm }
+      })
+    ],
+    1
+  )
 }
 var staticRenderFns = []
 render._withStripped = true

@@ -517,6 +517,40 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -573,6 +607,7 @@ __webpack_require__.r(__webpack_exports__);
       },
       element: {
         project_id: "",
+        status: true,
         warehouses: [],
         parkings: [],
         departments: []
@@ -587,13 +622,63 @@ __webpack_require__.r(__webpack_exports__);
         id: null,
         master_currency_id: 1
       },
+      totalPriceDep: 0,
+      totalPriceWar: 0,
+      totalPricePark: 0,
       totalPrice: 0
     };
   },
   methods: {
-    submit: function submit() {},
-    getDepartments: function getDepartments(id) {
+    submit: function submit() {
       var _this = this;
+
+      this.requestServer = true;
+      var fd = new FormData();
+
+      if (this.element.description) {
+        fd.append("description", this.element.description);
+      }
+
+      if (this.element.project_id) {
+        fd.append("project_id", this.element.project_id);
+      }
+
+      if (this.element.status == true) {
+        fd.append("status", 1);
+      } else {
+        fd.append("status", 0);
+      }
+
+      if (this.element.price_separation) {
+        fd.append("price_separation", this.element.price_separation);
+      }
+
+      if (this.$refs.ref_image.dropzone.files[0]) {
+        fd.append("image", this.$refs.ref_image.dropzone.files[0]);
+      }
+
+      var combined = this.element.departments.concat(this.element.parkings, this.element.warehouses);
+
+      if (combined.length) {
+        fd.append("real_states", JSON.stringify(combined));
+      }
+
+      axios.post(this.routeStore, fd).then(function (response) {
+        _this.requestServer = false;
+        document.location.href = response.data.route;
+      })["catch"](function (error) {
+        _this.requestServer = false;
+
+        if (error.response.status === 422) {
+          _this.errors = error.response.data.errors || {};
+          return;
+        }
+
+        document.location.href = error.response.data.route;
+      });
+    },
+    getDepartments: function getDepartments(id) {
+      var _this2 = this;
 
       this.loadingDepartments = true;
       axios.get(this.routeDepartmentsGetAll, {
@@ -601,9 +686,12 @@ __webpack_require__.r(__webpack_exports__);
           project: id
         }
       }).then(function (response) {
-        _this.realStates = response.data;
-        _this.loadingDepartments = false;
+        _this2.realStates = response.data;
+        _this2.loadingDepartments = false;
       })["catch"](function (error) {});
+    },
+    calculateTotal: function calculateTotal() {
+      this.totalPrice = this.totalPriceDep + this.totalPriceWar + this.totalPricePark;
     }
   },
   watch: {
@@ -617,17 +705,70 @@ __webpack_require__.r(__webpack_exports__);
         this.element.warehouses = [];
         this.element.parkings = [];
         this.element.departments = [];
+        this.totalPriceDep = this.totalPriceWar = this.totalPricePark = this.totalPrice = 0;
       }
     },
     "element.parkings": {
-      handler: function handler(newValue) {}
+      handler: function handler(newValue) {
+        if (this.project && this.project.id) {
+          var filterPark = this.realStates.parkings.filter(function (item) {
+            return newValue.includes(item.id);
+          });
+
+          if (this.project.master_currency_id == 1) {
+            this.totalPricePark = filterPark.reduce(function (total, item) {
+              return total + Number(item.price);
+            }, 0);
+          } else {
+            this.totalPricePark = filterPark.reduce(function (total, item) {
+              return total + Number(item.price_foreign);
+            }, 0);
+          }
+
+          this.calculateTotal();
+        }
+      }
     },
     "element.warehouses": {
-      handler: function handler(newValue) {}
+      handler: function handler(newValue) {
+        if (this.project && this.project.id) {
+          var filterWarehouses = this.realStates.warehouses.filter(function (item) {
+            return newValue.includes(item.id);
+          });
+
+          if (this.project.master_currency_id == 1) {
+            this.totalPriceWar = filterWarehouses.reduce(function (total, item) {
+              return total + Number(item.price);
+            }, 0);
+          } else {
+            this.totalPriceWar = filterWarehouses.reduce(function (total, item) {
+              return total + Number(item.price_foreign);
+            }, 0);
+          }
+
+          this.calculateTotal();
+        }
+      }
     },
     "element.departments": {
       handler: function handler(newValue) {
-        console.log(newValue);
+        if (this.project && this.project.id) {
+          var filterDepartments = this.realStates.departments.filter(function (item) {
+            return newValue.includes(item.id);
+          });
+
+          if (this.project.master_currency_id == 1) {
+            this.totalPriceDep = filterDepartments.reduce(function (total, item) {
+              return total + Number(item.price);
+            }, 0);
+          } else {
+            this.totalPriceDep = filterDepartments.reduce(function (total, item) {
+              return total + Number(item.price_foreign);
+            }, 0);
+          }
+
+          this.calculateTotal();
+        }
       }
     }
   }
@@ -1056,6 +1197,30 @@ var render = function() {
         ]),
         _vm._v(" "),
         _c("div", { staticClass: "container-fluid mt--6" }, [
+          _c("div", { staticClass: "row mb-3" }, [
+            _c(
+              "div",
+              { staticClass: "col-12 text-right" },
+              [
+                _c(
+                  "b-form-checkbox",
+                  {
+                    attrs: { size: "lg", name: "check-button", switch: "" },
+                    model: {
+                      value: _vm.element.status,
+                      callback: function($$v) {
+                        _vm.$set(_vm.element, "status", $$v)
+                      },
+                      expression: "element.status"
+                    }
+                  },
+                  [_vm._v("\n            Mostrar Combo en la Web\n          ")]
+                )
+              ],
+              1
+            )
+          ]),
+          _vm._v(" "),
           _c("div", { staticClass: "row mb-4" }, [
             _vm._m(0),
             _vm._v(" "),
@@ -1173,7 +1338,18 @@ var render = function() {
                               )
                             }
                           }
-                        })
+                        }),
+                        _vm._v(" "),
+                        _vm.errors && _vm.errors.description
+                          ? _c(
+                              "label",
+                              {
+                                staticClass: "mt-2 text-danger text-sm",
+                                attrs: { for: "description" }
+                              },
+                              [_vm._v(_vm._s(_vm.errors.description[0]))]
+                            )
+                          : _vm._e()
                       ])
                     ]),
                     _vm._v(" "),
@@ -1230,7 +1406,17 @@ var render = function() {
                             )
                           }),
                           0
-                        )
+                        ),
+                        _vm._v(" "),
+                        _vm.errors && _vm.errors.project_id
+                          ? _c(
+                              "label",
+                              {
+                                staticClass: "text-danger text-sm d-block mt-2"
+                              },
+                              [_vm._v(_vm._s(_vm.errors.project_id[0]))]
+                            )
+                          : _vm._e()
                       ])
                     ]),
                     _vm._v(" "),
@@ -1332,21 +1518,22 @@ var render = function() {
                                 : _vm.moneyForeign,
                               false
                             )
-                          ),
-                          _vm._v(" "),
-                          _vm.errors && _vm.errors.price_separation
-                            ? _c(
-                                "label",
-                                {
-                                  staticClass: "mt-2 text-danger text-sm",
-                                  attrs: { for: "price_separation" }
-                                },
-                                [_vm._v(_vm._s(_vm.errors.price_separation[0]))]
-                              )
-                            : _vm._e()
+                          )
                         ],
                         1
                       )
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "col-12" }, [
+                      _vm.errors && _vm.errors.real_states
+                        ? _c(
+                            "label",
+                            {
+                              staticClass: "text-danger text-sm d-block  mb-2"
+                            },
+                            [_vm._v(_vm._s(_vm.errors.real_states[0]))]
+                          )
+                        : _vm._e()
                     ]),
                     _vm._v(" "),
                     _c("div", { staticClass: "col-4" }, [
@@ -1397,7 +1584,13 @@ var render = function() {
                                             "div",
                                             {
                                               key: "dep" + el.id,
-                                              staticClass: "mb-2 d-flex"
+                                              staticClass:
+                                                "mb-2 d-flex position-relative",
+                                              style: [
+                                                el.package_rel.length
+                                                  ? { opacity: ".50" }
+                                                  : {}
+                                              ]
                                             },
                                             [
                                               _c("div", [
@@ -1426,6 +1619,10 @@ var render = function() {
                                                       staticClass:
                                                         "custom-control-input",
                                                       attrs: {
+                                                        disabled: el.package_rel
+                                                          .length
+                                                          ? true
+                                                          : false,
                                                         id:
                                                           "departments" + el.id,
                                                         type: "checkbox"
@@ -1526,6 +1723,16 @@ var render = function() {
                                                     }
                                                   },
                                                   [
+                                                    _c("div", [
+                                                      _vm._v(
+                                                        _vm._s(
+                                                          el.package_rel.length
+                                                            ? "(Ya se encuentra en otro combo)"
+                                                            : ""
+                                                        )
+                                                      )
+                                                    ]),
+                                                    _vm._v(" "),
                                                     _c("b", [
                                                       _vm._v(
                                                         _vm._s(el.description)
@@ -1621,7 +1828,13 @@ var render = function() {
                                           "div",
                                           {
                                             key: "par" + el.id,
-                                            staticClass: "mb-2 d-flex"
+                                            staticClass:
+                                              "mb-2 d-flex position-relative",
+                                            style: [
+                                              el.package_rel.length
+                                                ? { opacity: ".50" }
+                                                : {}
+                                            ]
                                           },
                                           [
                                             _c("div", [
@@ -1649,6 +1862,10 @@ var render = function() {
                                                     staticClass:
                                                       "custom-control-input",
                                                     attrs: {
+                                                      disabled: el.package_rel
+                                                        .length
+                                                        ? true
+                                                        : false,
                                                       id: "parking" + el.id,
                                                       type: "checkbox"
                                                     },
@@ -1739,6 +1956,16 @@ var render = function() {
                                                   }
                                                 },
                                                 [
+                                                  _c("div", [
+                                                    _vm._v(
+                                                      _vm._s(
+                                                        el.package_rel.length
+                                                          ? "(Ya se encuentra en otro combo)"
+                                                          : ""
+                                                      )
+                                                    )
+                                                  ]),
+                                                  _vm._v(" "),
                                                   _c("b", [
                                                     _vm._v(
                                                       _vm._s(el.description)
@@ -1833,7 +2060,13 @@ var render = function() {
                                             "div",
                                             {
                                               key: "war" + el.id,
-                                              staticClass: "mb-2 d-flex"
+                                              staticClass:
+                                                "mb-2 d-flex position-relative",
+                                              style: [
+                                                el.package_rel.length
+                                                  ? { opacity: ".50" }
+                                                  : {}
+                                              ]
                                             },
                                             [
                                               _c("div", [
@@ -1862,6 +2095,10 @@ var render = function() {
                                                       staticClass:
                                                         "custom-control-input",
                                                       attrs: {
+                                                        disabled: el.package_rel
+                                                          .length
+                                                          ? true
+                                                          : false,
                                                         id:
                                                           "warehouses" + el.id,
                                                         type: "checkbox"
@@ -1961,6 +2198,16 @@ var render = function() {
                                                     }
                                                   },
                                                   [
+                                                    _c("div", [
+                                                      _vm._v(
+                                                        _vm._s(
+                                                          el.package_rel.length
+                                                            ? "(Ya se encuentra en otro combo)"
+                                                            : ""
+                                                        )
+                                                      )
+                                                    ]),
+                                                    _vm._v(" "),
                                                     _c("b", [
                                                       _vm._v(
                                                         _vm._s(el.description)
@@ -2033,9 +2280,9 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "col-12 col-lg-2" }, [
-      _c("h2", [_vm._v("Datos Principales")]),
+      _c("h2", [_vm._v("Datos de Inmuebles")]),
       _vm._v(" "),
-      _c("p", [_vm._v("Indica los datos principales del Combo")])
+      _c("p", [_vm._v("Indica los inmuebles del Combo")])
     ])
   }
 ]

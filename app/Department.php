@@ -49,4 +49,9 @@ class Department extends Model
     {
         return number_format($this->area, 2);
     }
+
+    public function packageRel()
+    {
+        return $this->belongsToMany('App\RealStatePackage', 'real_state_package_departments', 'department_id', 'real_state_package_id');
+    }
 }

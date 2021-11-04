@@ -113,6 +113,7 @@ const app = new Vue({
 
         'combos-index': () => import('./views/combos/Index.vue' /* webpackChunkName: "js/pages/combos/index" */),
         'combos-create': () => import('./views/combos/Create.vue' /* webpackChunkName: "js/pages/combos/create" */),
+        'combos-edit': () => import('./views/combos/Edit.vue' /* webpackChunkName: "js/pages/combos/edit" */),
     }
 });
 import Validation from './functions/validation.js'

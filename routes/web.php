@@ -345,6 +345,7 @@ Route::middleware(['auth'])->namespace('Cms')->name('cms.')->group(function () {
         Route::get('/combos/json/get-all', 'IndexController@getAllDepartments')->name('departments.get-all');
         Route::get('/json/get-all', 'IndexController@getAll')->name('get-all');
         Route::get('/json/get/{element}', 'IndexController@get')->name('get');
+        Route::delete('/{element}', 'IndexController@destroy')->name('destroy');
         Route::get('/{element}', 'IndexController@read')->name('read');
         Route::put('/{element}', 'IndexController@update')->name('update');
     });

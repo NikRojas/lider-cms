@@ -36,6 +36,18 @@
         </div>
       </div>
       <div class="container-fluid mt--6">
+        <div class="row mb-3">
+          <div class="col-12 text-right">
+            <b-form-checkbox
+              size="lg"
+              v-model="element.status"
+              name="check-button"
+              switch
+            >
+              Mostrar Combo en la Web
+            </b-form-checkbox>
+          </div>
+        </div>
         <div class="row mb-4">
           <div class="col-12 col-lg-2">
             <h2>Datos Principales</h2>
@@ -95,6 +107,12 @@
                         v-model="element.description"
                         id="description"
                       ></textarea>
+                      <label
+                        v-if="errors && errors.description"
+                        class="mt-2 text-danger text-sm"
+                        for="description"
+                        >{{ errors.description[0] }}</label
+                      >
                     </div>
                   </div>
                   <div class="col-12">
@@ -119,6 +137,11 @@
                           </b-form-radio>
                         </div>
                       </div>
+                      <label
+                        v-if="errors && errors.project_id"
+                        class="text-danger text-sm d-block mt-2"
+                        >{{ errors.project_id[0] }}</label
+                      >
                     </div>
                   </div>
 
@@ -150,8 +173,8 @@
         </div>
         <div class="row mb-4">
           <div class="col-12 col-lg-2">
-            <h2>Datos Principales</h2>
-            <p>Indica los datos principales del Combo</p>
+            <h2>Datos de Inmuebles</h2>
+            <p>Indica los inmuebles del Combo</p>
           </div>
           <div class="col-12 col-lg-10">
             <div class="card">
@@ -172,13 +195,15 @@
                             : moneyForeign
                         "
                       ></money>
-                      <label
-                        v-if="errors && errors.price_separation"
-                        class="mt-2 text-danger text-sm"
-                        for="price_separation"
-                        >{{ errors.price_separation[0] }}</label
-                      >
+                      
                     </div>
+                  </div>
+                  <div class="col-12">
+                    <label
+                        v-if="errors && errors.real_states"
+                        class="text-danger text-sm d-block  mb-2"
+                        >{{ errors.real_states[0] }}</label
+                      >
                   </div>
                   <div class="col-4">
                     <label class="font-weight-bold" for="description"
@@ -202,7 +227,8 @@
                           <div
                             v-for="el in realStates.departments"
                             :key="'dep' + el.id"
-                            class="mb-2 d-flex"
+                            class="mb-2 d-flex position-relative"
+                            :style="[el.package_rel.length ? { opacity: '.50'} : {}]"
                           >
                             <div>
                               <div
@@ -210,6 +236,7 @@
                                 style="margin-top: -10px"
                               >
                                 <input
+                                  :disabled="el.package_rel.length ? true : false"
                                   class="custom-control-input"
                                   :value="el.id"
                                   :id="'departments' + el.id"
@@ -229,6 +256,7 @@
                                 style="cursor: pointer"
                                 :for="'departments' + el.id"
                               >
+                                <div>{{ el.package_rel.length ? '(Ya se encuentra en otro combo)' : '' }}</div>
                                 <b>{{ el.description }}</b> <br />
                                 {{ el.sap_code }} <br />
                                 {{ el.area }}m2
@@ -266,7 +294,8 @@
                           <div
                             v-for="el in realStates.parkings"
                             :key="'par' + el.id"
-                            class="mb-2 d-flex"
+                            class="mb-2 d-flex position-relative"
+                            :style="[el.package_rel.length ? { opacity: '.50'} : {}]"
                           >
                             <div>
                               <div
@@ -276,6 +305,7 @@
                                 <input
                                   class="custom-control-input"
                                   :value="el.id"
+                                  :disabled="el.package_rel.length ? true : false"
                                   :id="'parking' + el.id"
                                   type="checkbox"
                                   v-model="element.parkings"
@@ -293,6 +323,7 @@
                                 style="cursor: pointer"
                                 :for="'parking' + el.id"
                               >
+                                <div>{{ el.package_rel.length ? '(Ya se encuentra en otro combo)' : '' }}</div>
                                 <b>{{ el.description }}</b> <br />
                                 {{ el.sap_code }} <br />
                                 {{ el.area }}m2
@@ -333,7 +364,8 @@
                           <div
                             v-for="el in realStates.warehouses"
                             :key="'war' + el.id"
-                            class="mb-2 d-flex"
+                            class="mb-2 d-flex position-relative"
+                            :style="[el.package_rel.length ? { opacity: '.50'} : {}]"
                           >
                             <div>
                               <div
@@ -343,6 +375,7 @@
                                 <input
                                   class="custom-control-input"
                                   :value="el.id"
+                                  :disabled="el.package_rel.length ? true : false"
                                   :id="'warehouses' + el.id"
                                   type="checkbox"
                                   v-model="element.warehouses"
@@ -360,6 +393,7 @@
                                 style="cursor: pointer"
                                 :for="'warehouses' + el.id"
                               >
+                                <div>{{ el.package_rel.length ? '(Ya se encuentra en otro combo)' : '' }}</div>
                                 <b>{{ el.description }}</b> <br />
                                 {{ el.sap_code }} <br />
                                 {{ el.area }}m2
@@ -450,6 +484,7 @@ export default {
       },
       element: {
         project_id: "",
+        status: true,
         warehouses: [],
         parkings: [],
         departments: [],
@@ -464,11 +499,55 @@ export default {
         id: null,
         master_currency_id: 1,
       },
+      totalPriceDep: 0,
+      totalPriceWar: 0,
+      totalPricePark: 0,
       totalPrice: 0
     };
   },
   methods: {
-    submit() {},
+    submit() {
+      this.requestServer = true;
+      const fd = new FormData();
+      if (this.element.description) {
+        fd.append("description", this.element.description);
+      }
+      if (this.element.project_id) {
+        fd.append("project_id", this.element.project_id);
+      }
+      if (this.element.status == true) {
+        fd.append("status", 1);
+      } else {
+        fd.append("status", 0);
+      }
+      if (this.element.price_separation) {
+        fd.append("price_separation", this.element.price_separation);
+      }
+      if (this.$refs.ref_image.dropzone.files[0]) {
+        fd.append("image", this.$refs.ref_image.dropzone.files[0]);
+      }
+      let combined = this.element.departments.concat(this.element.parkings, this.element.warehouses);
+      if (combined.length) {
+        fd.append(
+          "real_states",
+          JSON.stringify(combined)
+        );
+      }
+      axios
+        .post(this.routeStore, fd)
+        .then((response) => {
+          this.requestServer = false;
+          document.location.href = response.data.route;
+        })
+        .catch((error) => {
+          this.requestServer = false;
+          if (error.response.status === 422) {
+            this.errors = error.response.data.errors || {};
+            return;
+          }
+          document.location.href = error.response.data.route;
+        });
+    },
     getDepartments(id) {
       this.loadingDepartments = true;
       axios
@@ -483,6 +562,9 @@ export default {
         })
         .catch((error) => {});
     },
+    calculateTotal(){
+      this.totalPrice = this.totalPriceDep + this.totalPriceWar + this.totalPricePark;
+    }
   },
   watch: {
     "element.project_id": {
@@ -493,23 +575,72 @@ export default {
         this.element.warehouses = [];
         this.element.parkings = [];
         this.element.departments = [];
+        this.totalPriceDep = this.totalPriceWar = this.totalPricePark = this.totalPrice = 0;
       },
     },
-    "element.parkings":{
+    "element.parkings": {
       handler: function (newValue) {
-
-      }
+        if (this.project && this.project.id) {
+          let filterPark = this.realStates.parkings.filter((item) =>
+            newValue.includes(item.id)
+          );
+          if (this.project.master_currency_id == 1) {
+            this.totalPricePark = filterPark.reduce(
+              (total, item) => total + Number(item.price),
+              0
+            );
+          } else {
+            this.totalPricePark = filterPark.reduce(
+              (total, item) => total + Number(item.price_foreign),
+              0
+            );
+          }
+          this.calculateTotal()
+        }
+      },
     },
-    "element.warehouses":{
+    "element.warehouses": {
       handler: function (newValue) {
-        
-      }
+        if (this.project && this.project.id) {
+          let filterWarehouses = this.realStates.warehouses.filter((item) =>
+            newValue.includes(item.id)
+          );
+          if (this.project.master_currency_id == 1) {
+            this.totalPriceWar = filterWarehouses.reduce(
+              (total, item) => total + Number(item.price),
+              0
+            );
+          } else {
+            this.totalPriceWar = filterWarehouses.reduce(
+              (total, item) => total + Number(item.price_foreign),
+              0
+            );
+          }
+          this.calculateTotal()
+        }
+      },
     },
-    "element.departments":{
+    "element.departments": {
       handler: function (newValue) {
-        console.log(newValue);
-      }
-    }
+        if (this.project && this.project.id) {
+          let filterDepartments = this.realStates.departments.filter((item) =>
+            newValue.includes(item.id)
+          );
+          if (this.project.master_currency_id == 1) {
+            this.totalPriceDep = filterDepartments.reduce(
+              (total, item) => total + Number(item.price),
+              0
+            );
+          } else {
+            this.totalPriceDep = filterDepartments.reduce(
+              (total, item) => total + Number(item.price_foreign),
+              0
+            );
+          }
+          this.calculateTotal()
+        }
+      },
+    },
   },
 };
 </script>

@@ -53,7 +53,7 @@ class DepartmentsRepository
             }
             else{
                 if($dep->available){
-                    $stock = '<span class="font-weight-bold text-success badge badge-success" style="color: #26ff0c !important; background-color: rgb(204 255 230);">En Stock</span>';
+                    $stock = '<span class="font-weight-bold text-success badge badge-success" style="color: #2ee119 !important; background-color: rgb(204 255 230);">En Stock</span>';
                 }
                 else{
                     $stock = '<span class="font-weight-bold text-danger badge badge-danger">Sin Stock</span>';

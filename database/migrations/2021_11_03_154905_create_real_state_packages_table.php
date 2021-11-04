@@ -20,9 +20,10 @@ class CreateRealStatePackagesTable extends Migration
             $table->decimal('price_separation',11,2)->nullable();
             $table->bigInteger('project_id')->unsigned();
             $table->foreign('project_id')->references('id')->on('projects');
-            $table->bigInteger('index');
+            //$table->bigInteger('index');
             $table->string('slug',20)->nullable();
             $table->boolean('status')->default(true);
+            $table->boolean('stock')->default(true);
             $table->timestamps();
         });
     }

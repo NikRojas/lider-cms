@@ -22,18 +22,27 @@
     <div class="container-fluid mt--6">
       <DataTable
         :object="elements"
-        placeholder="Nombre, Apellido, Número Documento"
-        :button-update="false"
-        :button-read="true"
-        :button-delete="false"
-        :button-disable="false"
+        placeholder="Descripción"
+        :button-update="true"
+        :button-read="false"
+        :button-delete="true"
         :loading-prop="loadingGetAll"
         @read="showEl"
+        @update="editEl"
         @get="getEls"
+        @delete="deleteEl"
         :entries-prop.sync="elementsPerPage"
       >
       </DataTable>
     </div>
+    <destroy
+      element="combo"
+      @cancel="restoreEl"
+      :open="modalDestroy"
+      @submit="destroyConfirm"
+      :loading-get="loadingGet"
+      :loading-submit="requestSubmit"
+    ></destroy>
   </div>
 </template> 
 <script>
@@ -41,12 +50,14 @@ import BreadCrumb from "../../components/BreadCrumb";
 import { Skeleton } from "vue-loading-skeleton";
 import NoData from "../../components/NoData";
 import DataTable from "../../components/DataTable";
+import Destroy from "../../components/modals/Destroy";
 export default {
   components: {
     BreadCrumb,
     Skeleton,
     NoData,
-    DataTable
+    DataTable,
+    Destroy
   },
   props: {
     routeCreate: String,
@@ -93,6 +104,66 @@ export default {
            this.loadingGetAll = false;
         })
         .catch((error) => {});
+    },
+    restoreEl() {
+      this.modalCreateUpdate = this.modalDestroy = false;
+      this.element = {
+      };
+    },
+    restore(){
+      (this.element = {
+      }),
+        (this.requestSubmit = this.modalDestroy = false);
+      this.getEls(1, this.elementsPerPage);
+    },
+    deleteEl(id) {
+      this.modalDestroy = true;
+      this.getEl(id);
+    },
+    getEl(id){
+      this.loadingGet = true;
+      axios
+        .get(this.route + "/json/get/" + id)
+        .then((response) => {
+          this.element = response.data;
+          this.loadingGet = false;
+        })
+        .catch((error) => {});
+    },
+    editEl(id){
+      window.location.href = this.route + '/editar/' + id;
+    },
+    destroyConfirm(){
+      this.requestSubmit = true;
+      axios
+        .delete(this.route + "/" + this.element.slug)
+        .then((response) => {
+          this.requestSubmit = false;
+          this.restore();
+          Swal.fire({
+            title: response.data.title,
+            text: response.data.message,
+            type: "success",
+            confirmButtonText: "OK",
+            buttonsStyling: false,
+            customClass: {
+              confirmButton: "btn btn-inverse-primary",
+            },
+          });
+        })
+        .catch((error) => {
+          Swal.fire({
+            title: error.response.data.title,
+            text: error.response.data.message,
+            type: "error",
+            confirmButtonText: "OK",
+            buttonsStyling: false,
+            customClass: {
+              confirmButton: "btn btn-inverse-primary",
+            },
+          });
+          this.restoreEl();
+        });
     },
   },
   created() {

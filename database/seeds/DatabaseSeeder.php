@@ -54,7 +54,7 @@ class DatabaseSeeder extends Seeder
         //$this->call(MasterModulesTableSeeder4::class);
 
         #Octubre
-        $this->call(ProjectSectorDepartmentsSeeder::class);
+        //$this->call(ProjectSectorDepartmentsSeeder::class);
         $this->call(MasterModulesOctuberTableSeeder::class);
     }
 }

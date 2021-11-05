@@ -44,7 +44,7 @@ class CombosRepository
                 "realStates" => $de,
                 "status" => $element->status ? 'Sí' : 'No',
                 "stock" => $stock,
-                "precio_sep" => $element["price_separation_format"],
+                "precio_sep" => $element["projectRel"]["price_separation_format"],
                 "precio" => $element->projectRel->currencyRel->symbol.' '.number_format($price->sum(), 0, '.', ',')
             );
         }

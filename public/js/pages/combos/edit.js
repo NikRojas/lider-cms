@@ -1067,7 +1067,7 @@ var render = function() {
                             staticClass: "font-weight-bold",
                             attrs: { for: "image" }
                           },
-                          [_vm._v("Imagen:")]
+                          [_vm._v("Imagen (Opcional):")]
                         ),
                         _vm._v(" "),
                         _c("div", { staticClass: "row" }, [
@@ -1204,57 +1204,65 @@ var render = function() {
                       ])
                     ]),
                     _vm._v(" "),
-                    _c(
-                      "div",
-                      { staticClass: "col-12" },
-                      [
-                        _c(
-                          "label",
-                          {
-                            staticClass: "font-weight-bold",
-                            attrs: { for: "price_separation" }
-                          },
-                          [_vm._v("Precio de Separación de Combo")]
-                        ),
-                        _vm._v(" "),
-                        _c(
-                          "money",
-                          _vm._b(
-                            {
-                              staticClass: "form-control form-control-lg",
-                              attrs: {
-                                disabled:
-                                  _vm.project && _vm.project.id ? false : true
-                              },
-                              model: {
-                                value: _vm.element.price_separation,
-                                callback: function($$v) {
-                                  _vm.$set(_vm.element, "price_separation", $$v)
-                                },
-                                expression: "element.price_separation"
-                              }
-                            },
-                            "money",
-                            _vm.project && _vm.project.master_currency_id == 1
-                              ? _vm.moneyLocal
-                              : _vm.moneyForeign,
-                            false
-                          )
-                        ),
-                        _vm._v(" "),
-                        _vm.errors && _vm.errors.price_separation
-                          ? _c(
+                    _vm.project && _vm.project.price_separation
+                      ? _c(
+                          "div",
+                          { staticClass: "col-12" },
+                          [
+                            _c(
                               "label",
                               {
-                                staticClass: "mt-2 text-danger text-sm",
+                                staticClass: "font-weight-bold",
                                 attrs: { for: "price_separation" }
                               },
-                              [_vm._v(_vm._s(_vm.errors.price_separation[0]))]
-                            )
-                          : _vm._e()
-                      ],
-                      1
-                    )
+                              [_vm._v("Precio de Separación de Combo")]
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "money",
+                              _vm._b(
+                                {
+                                  staticClass: "form-control form-control-lg",
+                                  attrs: { disabled: "" },
+                                  model: {
+                                    value: _vm.project.price_separation,
+                                    callback: function($$v) {
+                                      _vm.$set(
+                                        _vm.project,
+                                        "price_separation",
+                                        $$v
+                                      )
+                                    },
+                                    expression: "project.price_separation"
+                                  }
+                                },
+                                "money",
+                                _vm.project &&
+                                  _vm.project.master_currency_id == 1
+                                  ? _vm.moneyLocal
+                                  : _vm.moneyForeign,
+                                false
+                              )
+                            ),
+                            _vm._v(" "),
+                            _vm.errors && _vm.errors.price_separation
+                              ? _c(
+                                  "label",
+                                  {
+                                    staticClass: "mt-2 text-danger text-sm",
+                                    attrs: { for: "price_separation" }
+                                  },
+                                  [
+                                    _vm._v(
+                                      _vm._s(_vm.errors.price_separation[0])
+                                    )
+                                  ]
+                                )
+                              : _vm._e()
+                          ],
+                          1
+                        )
+                      : _vm._e()
                   ])
                 ])
               ])

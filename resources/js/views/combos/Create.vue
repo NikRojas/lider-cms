@@ -60,7 +60,7 @@
                   <div class="col-12">
                     <div class="form-group">
                       <label class="font-weight-bold" for="image"
-                        >Imagen:</label
+                        >Imagen (Opcional):</label
                       >
 
                       <vue-dropzone
@@ -145,14 +145,14 @@
                     </div>
                   </div>
 
-                  <div class="col-12">
+                  <div class="col-12" v-if="project && project.price_separation">
                     <label class="font-weight-bold" for="price_separation"
                       >Precio de Separación de Combo</label
                     >
                     <money
-                      :disabled="project && project.id ? false : true"
+                      disabled
                       class="form-control form-control-lg"
-                      v-model="element.price_separation"
+                      v-model="project.price_separation"
                       v-bind="
                         project && project.master_currency_id == 1
                           ? moneyLocal
@@ -497,6 +497,7 @@ export default {
       },
       project: {
         id: null,
+        price_separation: 0,
         master_currency_id: 1,
       },
       totalPriceDep: 0,

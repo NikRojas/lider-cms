@@ -37,10 +37,16 @@ class CombosRepository
             foreach ($detailedRS as $key => $value) {
                 $de .= "<div>".$value."</div>"; 
             }
+            if($element->image){
+                $img = '<a class="d-block" style="text-decoration: underline;" href="'.asset('storage/img/projects/combos/'.$element["image"]).'" target="_blank">Ver imagen</a><img class="d-block mb-1" height="auto" width="40" src='.asset('storage/img/projects/combos/'.$element["image"]).'>'.'<div>'.$element["description"].'</div>';
+            }
+            else{
+                $img = $element["description"];
+            }
             $data[] = array(
                 "id" => $element["slug"],
                 "project" => $element["projectRel"]["name_es"],
-                "descr" => $element["description"],
+                "descr" => $img,
                 "realStates" => $de,
                 "status" => $element->status ? 'Sí' : 'No',
                 "stock" => $stock,

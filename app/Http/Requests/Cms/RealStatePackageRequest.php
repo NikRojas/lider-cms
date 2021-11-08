@@ -33,7 +33,7 @@ class RealStatePackageRequest extends FormRequest
         $rules = [
             'description' => 'required',
             'project_id' => 'required',
-            'price_separation' => 'required',
+            //'price_separation' => 'required',
             //'real_states' => 'required'
         ];
         switch ($this->method()) {

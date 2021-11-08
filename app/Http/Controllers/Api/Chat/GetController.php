@@ -370,9 +370,9 @@ class GetController extends BaseController
         if($textButton != "Quiero cotizar un departamento"){
             $buttons = array_merge($buttons,[["text" => "Quiero cotizar un departamento"]]);
         }
-        if($textButton != "Quiero que un asesor me contacte"){
+        /*if($textButton != "Quiero que un asesor me contacte"){
             $buttons = array_merge($buttons,[["text" => "Quiero que un asesor me contacte"]]);
-        }
+        }*/
         if($textButton != "Quiero separar un inmueble"){
             $buttons = array_merge($buttons,[["text" => "Quiero separar un inmueble"]]);
         }
@@ -413,7 +413,7 @@ class GetController extends BaseController
         $customPayload['type'] = "buttons";
         $customPayload['buttons'] = [
             ["text" => "Quiero conocer los proyectos en venta"],
-            ["text" => "Quiero que un asesor me contacte"],
+            //["text" => "Quiero que un asesor me contacte"],
             ["text" => "Quiero separar un inmueble"],
             ["text" => "Quiero contactarme con Servicio al Cliente"],
             ["text" => "Cerrar Chat"],

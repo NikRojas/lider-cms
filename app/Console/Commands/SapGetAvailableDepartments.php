@@ -136,8 +136,8 @@ class SapGetAvailableDepartments extends Command
                                 if(!$minPrice && $minPriceForeign){
                                     $updateTypeDepartmentTemp = array_merge($updateTypeDepartmentTemp, ["price" => $minPriceForeign, "type_currency" => 0]);
                                 }
-                                #No actualizar precio en tipologias de Namua y Flow
-                                if($value->id != '4' && $value->id != '10'){
+                                #No actualizar precio en tipologias de Namua e Infinitum
+                                if($value->id != '4' && $value->id != '5'){
                                     $updateTypeDepartment = ProjectTypeDepartment::UpdateOrCreate(["id" => $keyEstatesByTypeDepartment ], $updateTypeDepartmentTemp);
                                 }
                             }

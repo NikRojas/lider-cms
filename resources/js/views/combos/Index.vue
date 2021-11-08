@@ -32,6 +32,7 @@
         @get="getEls"
         @delete="deleteEl"
         :entries-prop.sync="elementsPerPage"
+        messageCantDelete="No se puede eliminar debido a que ya ha sido adquirido por un cliente"
       >
       </DataTable>
     </div>

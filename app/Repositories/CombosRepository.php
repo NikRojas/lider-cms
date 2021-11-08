@@ -51,7 +51,8 @@ class CombosRepository
                 "status" => $element->status ? 'Sí' : 'No',
                 "stock" => $stock,
                 "precio_sep" => $element["projectRel"]["price_separation_format"],
-                "precio" => $element->projectRel->currencyRel->symbol.' '.number_format($price->sum(), 0, '.', ',')
+                "precio" => $element->projectRel->currencyRel->symbol.' '.number_format($price->sum(), 0, '.', ','),
+                "can_delete" => $element["can_delete"]
             );
         }
         $elements = $elements->toArray();

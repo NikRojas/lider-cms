@@ -14,7 +14,7 @@ class LeadVideocallObserver
 {
     public function created(LeadVideocall $lead)
     {
-        $advisorId = null;
+        /*$advisorId = null;
         $advisors = $lead->projectRel->advisorsRel;
         $ifItsFirstRecord = LeadVideocall::count();
         //Is First Record
@@ -40,11 +40,12 @@ class LeadVideocallObserver
         $lead->save();
         $advisor = Advisor::find($advisorId);
         Notification::route('mail',$advisor->email)->notify(new LeadVideocallNotification($lead));  
-        Notification::route('mail',$lead->email)->notify(new UserLeadVideocallNotification($lead));  
+        Notification::route('mail',$lead->email)->notify(new UserLeadVideocallNotification($lead)); */ 
 
         $config = ConfigLead::where('project_id',$lead->project_id)->first();
         if($config && $config->webhook_url_active){
-            Webhook::dispatch($lead,$config->webhook_url,$advisor->name,0);
+            //Webhook::dispatch($lead,$config->webhook_url,$advisor->name,0);
+            Webhook::dispatch($lead,$config->webhook_url,false,0);
         } 
     }
 }

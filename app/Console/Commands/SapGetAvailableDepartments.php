@@ -152,11 +152,11 @@ class SapGetAvailableDepartments extends Command
                                 }
                             $typeDepartmentsIds = $typeDepartments->pluck('id')->toArray();
                             foreach ($typeDepartmentIdsAvailable as $keyEstateAvailable => $valueEstateAvailable) {
-                                ProjectTypeDepartment::UpdateOrCreate(["id" => $valueEstateAvailable ], ["available" => true]);
+                                ProjectTypeDepartment::UpdateOrCreate(["id" => $valueEstateAvailable ], ["available" => true, "project_id" => $value->id]);
                             }
                             $typeDepartmentsUnavailable = array_diff($typeDepartmentsIds, $typeDepartmentIdsAvailable);
                             foreach ($typeDepartmentsUnavailable as $keyEstateUnavailable => $valueEstateUnavailable) {
-                                ProjectTypeDepartment::UpdateOrCreate(["id" => $valueEstateUnavailable ], ["available" => false]);
+                                ProjectTypeDepartment::UpdateOrCreate(["id" => $valueEstateUnavailable ], ["available" => false, "project_id" => $value->id]);
                             }
                         }
                     }

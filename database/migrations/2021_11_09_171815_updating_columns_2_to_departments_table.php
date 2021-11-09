@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class UpdatingColumnsToDepartmentsTable extends Migration
+class UpdatingColumns2ToDepartmentsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -15,9 +15,9 @@ class UpdatingColumnsToDepartmentsTable extends Migration
     {
         Schema::table('departments', function (Blueprint $table) {
             $table->bigInteger('view_id')->nullable()->unsigned()->change();
-            //$table->foreign('view_id')->references('id')->on('projects_views');
+            $table->foreign('view_id')->references('id')->on('projects_views');
             $table->bigInteger('type_department_id')->nullable()->unsigned()->change();
-            //$table->foreign('type_department_id')->references('id')->on('project_type_departments');
+            $table->foreign('type_department_id')->references('id')->on('project_type_departments');
         });
     }
 

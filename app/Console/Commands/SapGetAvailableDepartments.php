@@ -146,16 +146,17 @@ class SapGetAvailableDepartments extends Command
                                     }
                                     #No actualizar precio en tipologias de Namua e Infinitum
                                     if($value->id != '4' && $value->id != '5'){
-                                        $updateTypeDepartment = ProjectTypeDepartment::UpdateOrCreate(["id" => $keyEstatesByTypeDepartment ], $updateTypeDepartmentTemp);
+                                        Log::info("Proyecto: ".$value->id);
+                                        $updateTypeDepartment = ProjectTypeDepartment::UpdateOrCreate(["id" => $keyEstatesByTypeDepartment ], array_merge($updateTypeDepartmentTemp, ["project_id" => $value->id]));
                                     }
                                 }
                             $typeDepartmentsIds = $typeDepartments->pluck('id')->toArray();
                             foreach ($typeDepartmentIdsAvailable as $keyEstateAvailable => $valueEstateAvailable) {
-                                ProjectTypeDepartment::UpdateOrCreate(["id" => $valueEstateAvailable ], ["available" => true]);
+                                ProjectTypeDepartment::UpdateOrCreate(["id" => $valueEstateAvailable ], ["available" => true, "project_id" => $value->id]);
                             }
                             $typeDepartmentsUnavailable = array_diff($typeDepartmentsIds, $typeDepartmentIdsAvailable);
                             foreach ($typeDepartmentsUnavailable as $keyEstateUnavailable => $valueEstateUnavailable) {
-                                ProjectTypeDepartment::UpdateOrCreate(["id" => $valueEstateUnavailable ], ["available" => false]);
+                                ProjectTypeDepartment::UpdateOrCreate(["id" => $valueEstateUnavailable ], ["available" => false, "project_id" => $value->id]);
                             }
                         }
                     }

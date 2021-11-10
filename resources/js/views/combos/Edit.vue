@@ -60,7 +60,7 @@
                   <div class="col-12">
                     <div class="form-group">
                       <label class="font-weight-bold" for="image"
-                        >Imagen:</label
+                        >Imagen (Opcional):</label
                       >
                       <div class="row">
                         <div class="col-lg-4 mb-3 mb-lg-0">
@@ -129,14 +129,14 @@
                     </div>
                   </div>
 
-                  <div class="col-12">
+                  <div class="col-12" v-if="project && project.price_separation">
                     <label class="font-weight-bold" for="price_separation"
                       >Precio de Separación de Combo</label
                     >
                     <money
-                      :disabled="project && project.id ? false : true"
+                      disabled
                       class="form-control form-control-lg"
-                      v-model="element.price_separation"
+                      v-model="project.price_separation"
                       v-bind="
                         project && project.master_currency_id == 1
                           ? moneyLocal
@@ -341,19 +341,12 @@ export default {
       if (this.$refs.ref_image.dropzone.files[0]) {
         fd.append("image", this.$refs.ref_image.dropzone.files[0]);
       }
-      /*let combined = this.element.departments.concat(
-        this.element.parkings,
-        this.element.warehouses
-      );
-      if (combined.length) {
-        fd.append("real_states", JSON.stringify(combined));
-      }*/
       fd.append("_method", "put");
       axios
         .post(this.routeUpdate + "/" + this.element.slug, fd)
         .then((response) => {
           this.requestServer = false;
-          //document.location.href = response.data.route;
+          document.location.href = response.data.route;
         })
         .catch((error) => {
           this.requestServer = false;
@@ -361,33 +354,14 @@ export default {
             this.errors = error.response.data.errors || {};
             return;
           }
-          //document.location.href = error.response.data.route;
+          document.location.href = error.response.data.route;
         });
     },
-    /*getDepartments(id) {
-      this.loadingDepartments = true;
-      axios
-        .get(this.routeDepartmentsGetAll, {
-          params: {
-            project: id,
-          },
-        })
-        .then((response) => {
-          this.realStates = response.data;
-          this.loadingDepartments = false;
-        })
-        .catch((error) => {});
-    },
-    calculateTotal() {
-      this.totalPrice =
-        this.totalPriceDep + this.totalPriceWar + this.totalPricePark;
-    },*/
   },
   watch: {
     elementParent: {
       immediate: true,
       handler: function (newValue) {
-        //this.element = Object.assign({}, newValue);
         this.element = newValue;
         this.element.departments = newValue.departmentsEdited;
         this.element.parkings = newValue.parkingsEdited;
@@ -397,77 +371,7 @@ export default {
     "element.project_id": {
       immediate: true,
       handler: function (newValue, oldValue) {
-        //this.getDepartments(newValue);
         this.project = this.projects.find((el) => el.id == newValue);
-        /*if(newValue && oldValue){
-          this.element.warehouses = [];
-          this.element.parkings = [];
-          this.element.departments = [];
-          this.totalPriceDep = this.totalPriceWar = this.totalPricePark = this.totalPrice = 0;
-        }*/
-      },
-    },
-    "element.parkings": {
-      handler: function (newValue) {
-        /*if (this.project && this.project.id) {
-          let filterPark = this.realStates.parkings.filter((item) =>
-            newValue.includes(item.id)
-          );
-          if (this.project.master_currency_id == 1) {
-            this.totalPricePark = filterPark.reduce(
-              (total, item) => total + Number(item.price),
-              0
-            );
-          } else {
-            this.totalPricePark = filterPark.reduce(
-              (total, item) => total + Number(item.price_foreign),
-              0
-            );
-          }
-          this.calculateTotal()
-        }*/
-      },
-    },
-    "element.warehouses": {
-      handler: function (newValue) {
-        /*if (this.project && this.project.id) {
-          let filterWarehouses = this.realStates.warehouses.filter((item) =>
-            newValue.includes(item.id)
-          );
-          if (this.project.master_currency_id == 1) {
-            this.totalPriceWar = filterWarehouses.reduce(
-              (total, item) => total + Number(item.price),
-              0
-            );
-          } else {
-            this.totalPriceWar = filterWarehouses.reduce(
-              (total, item) => total + Number(item.price_foreign),
-              0
-            );
-          }
-          this.calculateTotal()
-        }*/
-      },
-    },
-    "element.departments": {
-      handler: function (newValue) {
-        /*if (this.project && this.project.id) {
-          let filterDepartments = this.realStates.departments.filter((item) =>
-            newValue.includes(item.id)
-          );
-          if (this.project.master_currency_id == 1) {
-            this.totalPriceDep = filterDepartments.reduce(
-              (total, item) => total + Number(item.price),
-              0
-            );
-          } else {
-            this.totalPriceDep = filterDepartments.reduce(
-              (total, item) => total + Number(item.price_foreign),
-              0
-            );
-          }
-          this.calculateTotal()
-        }*/
       },
     },
   },

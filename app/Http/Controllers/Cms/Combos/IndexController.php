@@ -25,7 +25,7 @@ class IndexController extends Controller
 
     public function getAll(Request $request, CombosRepository $repo){
         $q = $request->q;
-        $headers = ["Id", "Proyecto", "Descripción", "Inmuebles","Mostrar en la Web", "Estado",'Precio Separación','Precio'];
+        $headers = ["Id", "Proyecto", "Descripción", "Inmuebles","Mostrar en la Web", "Estado",'Precio Separación','Precio del Combo'];
         if($q){
             $elements = $repo->datatable($request->itemsPerPage,$q);
         }
@@ -43,7 +43,7 @@ class IndexController extends Controller
     }
 
     public function getAllDepartments(Request $request){
-        $parkings = Department::where('project_id', $request->project)->where('available',1)->whereNotNull('sector_id')->where(function ($q) {
+        /*$parkings = Department::where('project_id', $request->project)->where('available',1)->whereNotNull('sector_id')->where(function ($q) {
             $q->where('sector_id', 2);
           })->with('packageRel')->get();
         $warehouses = Department::where('project_id', $request->project)->where('available',1)->whereNotNull('sector_id')->where(function ($q) {
@@ -51,12 +51,22 @@ class IndexController extends Controller
           })->with('packageRel')->get();
         $departments = Department::where('project_id', $request->project)->where('available',1)->whereNotNull('sector_id')->where(function ($q) {
             $q->whereIn('sector_id', [1,4]);
+          })->with('packageRel')->get();*/
+          $parkings = Department::where('project_id', $request->project)->whereNotNull('sector_id')->where(function ($q) {
+            $q->where('sector_id', 2);
+          })->with('packageRel')->get();
+        $warehouses = Department::where('project_id', $request->project)->whereNotNull('sector_id')->where(function ($q) {
+            $q->where('sector_id', 3);
+          })->with('packageRel')->get();
+        $departments = Department::where('project_id', $request->project)->whereNotNull('sector_id')->where(function ($q) {
+            $q->whereIn('sector_id', [1,4]);
           })->with('packageRel')->get();
         return response()->json(["parkings" => $parkings, "departments" => $departments, "warehouses" => $warehouses]);
     }
 
     public function store(RealStatePackageRequest $request){
-        $p_request = request(["project_id","description",'price_separation','status']);
+        $p_request = request(["project_id","description",'status']);
+        $imageName = NULL;
         if ($request->hasFile('image')) {
             $imageName = $this->setFileName('ci-', $request->file('image'));
             $storeImage = Storage::disk('public')->putFileAs('img/projects/combos/', $request->file('image'), $imageName);
@@ -77,6 +87,7 @@ class IndexController extends Controller
             $request->session()->flash('success', trans('custom.message.create.success', ['name' => trans('custom.attribute.element')]));
             return response()->json(["route" => route('cms.combos.index')], 200);
         } catch (\Exception $e) {
+            dd($e);
             if($imageName){
                 Storage::disk('public')->delete('img/projects/combos/'.$imageName);
             }
@@ -87,7 +98,7 @@ class IndexController extends Controller
 
     public function update(RealStatePackageRequest $request, $element){
         $elementR = RealStatePackage::where('slug', $element)->firstOrFail();
-        $p_request = request(["project_id","description",'price_separation','status']);
+        $p_request = request(["project_id","description",'status']);
         if ($request->hasFile('image')) {
             $imageName = $this->setFileName('ci-', $request->file('image'));
             $storeImage = Storage::disk('public')->putFileAs('img/projects/combos/', $request->file('image'), $imageName);
@@ -108,6 +119,7 @@ class IndexController extends Controller
             $request->session()->flash('success', trans('custom.message.update.success', ['name' => trans('custom.attribute.element')]));
             return response()->json(["route" => route('cms.combos.index')], 200);
         } catch (\Exception $e) {
+            dd($e);
             $request->session()->flash('error', trans('custom.message.update.error', ['name' => trans('custom.attribute.element')]));
             return response()->json(["route" => route('cms.combos.index')], 500);
         }

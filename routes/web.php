@@ -346,7 +346,6 @@ Route::middleware(['auth'])->namespace('Cms')->name('cms.')->group(function () {
         Route::get('/json/get-all', 'IndexController@getAll')->name('get-all');
         Route::get('/json/get/{element}', 'IndexController@get')->name('get');
         Route::delete('/{element}', 'IndexController@destroy')->name('destroy');
-        Route::get('/{element}', 'IndexController@read')->name('read');
         Route::put('/{element}', 'IndexController@update')->name('update');
     });
 
@@ -618,11 +617,11 @@ Route::middleware(['auth'])->namespace('Cms')->name('cms.')->group(function () {
     //return view('emails.orders.paid',["order" => $order]);
 });
 
-*/
+*//*
 Route::get('/mail/reserve', function () {
     $order = Order::find(100000013);
     return view('emails.orders.paid',["order" => $order]);
-});
+});*/
 /*
 Route::get('/mail/user/quotation', function () {
     $lead = ProjectQuotation::with('projectRel.statusRel','advisorRel','projectTypeDepartmentRel','projectRel.financingOptionsRel')->find(7);

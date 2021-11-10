@@ -562,9 +562,41 @@ class IndexController extends BaseController
 
     public function detail(Request $request, $code)
     {
-        $department = Department::where('slug', $code)->with('viewRel', 'tipologyRel.parentTypeDepartmentRel', 'projectRel:id,logo_colour,price_separation,name_es,name_en,code_ubigeo,project_status_id,master_currency_id,has_warehouse,has_parking,stock_warehouse,stock_parking,reservation_in_package,package_description', 'projectRel.ubigeoRel', 'projectRel.statusRel')->first();
+        $department = Department::where('slug', $code)->with('viewRel', 'tipologyRel.parentTypeDepartmentRel', 'projectRel:id,logo_colour,price_separation,name_es,name_en,code_ubigeo,project_status_id,master_currency_id,has_warehouse,has_parking,stock_warehouse,stock_parking,reservation_in_package,package_description', 'projectRel.ubigeoRel', 'projectRel.statusRel','packageRel')->first();
         if (!$department) {
             return $this->sendError("");
+        }
+        $isPackage = false;
+        if(count($department["packageRel"]) > 0){
+            $isPackage = true;
+            $packageTemp = $packageInfo = NULL;
+            $packageTemp = $department->packageRel()->first();
+            $packageTempId = $packageTemp["pivot"]["real_state_package_id"];
+            $packageInfo = RealStatePackage::where('id',$packageTempId)->first();
+            $packageInfo = RealStatePackage::where('id',$packageTemp["pivot"]["real_state_package_id"])->first();
+            $packageInfo = $packageInfo->load('departmentsRel');
+            $areaTotal = number_format($packageInfo->departmentsRel->pluck('area')->sum(),2);
+            $department["data_package"] = $packageInfo;
+            $department["departmentsPluck"] = $packageInfo->departmentsRel->pluck('id');
+            $department["area_format_package"] = $areaTotal;
+            if($packageInfo){
+                $packageInfo = $packageInfo->load('departmentsRel');
+                $areaTotal = number_format($packageInfo->departmentsRel->pluck('area')->sum(),2);
+                if($department->projectRel->master_currency_id == 1){
+                    $priceFormat = $packageInfo->departmentsRel->pluck('price');
+                    $sumPrice = $priceFormat->sum();
+                    $priceFormat = $department->projectRel->currencyRel->symbol.' '.number_format($sumPrice, 0, '.', ',');
+                    $department["price_package"] = $sumPrice;
+                    $department["price_package_format"] = $priceFormat;
+                }
+                else{
+                    $priceFormatForeign = $packageInfo->departmentsRel->pluck('price_foreign');
+                    $sumPrice = $priceFormatForeign->sum();
+                    $priceFormatForeign = $department->projectRel->currencyRel->symbol.' '.number_format($sumPrice, 0, '.', ',');
+                    $department["price_foreign_package"] = $sumPrice;
+                    $department["price_foreign_package_format"] = $priceFormatForeign;
+                }
+            }
         }
         $page = $this->getSeoPage('reserve-your-department', $request->locale);
         $content = $this->getContentPage('reserve-your-department');
@@ -577,23 +609,57 @@ class IndexController extends BaseController
             "content" => $content,
             "typeDocuments" => $typeDocuments,
             "terms" => $terms,
-            "privacy" => $privacy
+            "privacy" => $privacy,
+            "isPackage" => $isPackage
         );
         return $this->sendResponse($data, '');
     }
 
     public function summary(Request $request, $code)
     {
-        $department = Department::where('slug', $code)->where('available', 1)->with('viewRel', 'tipologyRel.parentTypeDepartmentRel', 'projectRel:id,logo_colour,price_separation,name_es,name_en,code_ubigeo,project_status_id,master_currency_id,has_warehouse,has_parking,stock_warehouse,stock_parking,reservation_in_package,package_description', 'projectRel.ubigeoRel', 'projectRel.statusRel')->first();
+        $department = Department::where('slug', $code)->where('available', 1)->with('viewRel', 'tipologyRel.parentTypeDepartmentRel', 'projectRel:id,logo_colour,price_separation,name_es,name_en,code_ubigeo,project_status_id,master_currency_id,has_warehouse,has_parking,stock_warehouse,stock_parking,reservation_in_package,package_description', 'projectRel.ubigeoRel', 'projectRel.statusRel','packageRel')->first();
         if (!$department) {
             return $this->sendError("");
+        }
+        $isPackage = false;
+        if(count($department["packageRel"]) > 0){
+            $isPackage = true;
+            $packageTemp = $packageInfo = NULL;
+            $packageTemp = $department->packageRel()->first();
+            $packageTempId = $packageTemp["pivot"]["real_state_package_id"];
+            $packageInfo = RealStatePackage::where('id',$packageTempId)->first();
+            $packageInfo = RealStatePackage::where('id',$packageTemp["pivot"]["real_state_package_id"])->first();
+            $packageInfo = $packageInfo->load('departmentsRel');
+            $areaTotal = number_format($packageInfo->departmentsRel->pluck('area')->sum(),2);
+            $department["data_package"] = $packageInfo;
+            $department["departmentsPluck"] = $packageInfo->departmentsRel->pluck('id');
+            $department["area_format_package"] = $areaTotal;
+            if($packageInfo){
+                $packageInfo = $packageInfo->load('departmentsRel');
+                $areaTotal = number_format($packageInfo->departmentsRel->pluck('area')->sum(),2);
+                if($department->projectRel->master_currency_id == 1){
+                    $priceFormat = $packageInfo->departmentsRel->pluck('price');
+                    $sumPrice = $priceFormat->sum();
+                    $priceFormat = $department->projectRel->currencyRel->symbol.' '.number_format($sumPrice, 0, '.', ',');
+                    $department["price_package"] = $sumPrice;
+                    $department["price_package_format"] = $priceFormat;
+                }
+                else{
+                    $priceFormatForeign = $packageInfo->departmentsRel->pluck('price_foreign');
+                    $sumPrice = $priceFormatForeign->sum();
+                    $priceFormatForeign = $department->projectRel->currencyRel->symbol.' '.number_format($sumPrice, 0, '.', ',');
+                    $department["price_foreign_package"] = $sumPrice;
+                    $department["price_foreign_package_format"] = $priceFormatForeign;
+                }
+            }
         }
         $page = $this->getSeoPage('reserve-your-department', $request->locale);
         $content = $this->getContentPage('reserve-your-department');
         $data = array(
             "page" => $page,
             "content" => $content,
-            "department" => $department
+            "department" => $department,
+            "isPackage" => $isPackage
         );
         return $this->sendResponse($data, '');
     }

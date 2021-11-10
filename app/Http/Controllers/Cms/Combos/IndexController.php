@@ -109,8 +109,8 @@ class IndexController extends Controller
         } else {
             $p_request = array_merge($p_request, ["image" => $elementR->image]);
         }
-        if ($request->hasFile('image') && $element->image) {
-            Storage::disk('public')->delete('img/projects/combos'.$element->image);
+        if ($request->hasFile('image') && $elementR->image) {
+            Storage::disk('public')->delete('img/projects/combos'.$elementR->image);
         }
         try {
             DB::transaction(function () use ($p_request, $elementR) {
@@ -119,7 +119,6 @@ class IndexController extends Controller
             $request->session()->flash('success', trans('custom.message.update.success', ['name' => trans('custom.attribute.element')]));
             return response()->json(["route" => route('cms.combos.index')], 200);
         } catch (\Exception $e) {
-            dd($e);
             $request->session()->flash('error', trans('custom.message.update.error', ['name' => trans('custom.attribute.element')]));
             return response()->json(["route" => route('cms.combos.index')], 500);
         }

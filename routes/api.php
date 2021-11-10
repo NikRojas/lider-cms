@@ -12,19 +12,10 @@ use Illuminate\Http\Request;
 |
 */
 
-/*Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
-});*/
-
 Route::namespace('Api')->group(function() { 
-    /*Route::get('notify','Orders\OrdersController@test'); 
-    Route::get('notify2','Orders\OrdersController@test2'); 
-    Route::get('notify3','Orders\OrdersController@test3'); */
     Route::get('layout', 'BaseController@layout');
-
     Route::get('sitemap-blog', 'BaseController@sitemapBlog');
     Route::get('sitemap-projects', 'BaseController@sitemapProjects');
-
     Route::get('filters', 'BaseController@getFiltersSpecific');
     Route::prefix('paginate')->group(function() { 
         Route::get('projects', 'BaseController@paginateProjects');
@@ -64,6 +55,7 @@ Route::namespace('Api')->group(function() {
         Route::get('reserve/{code}', 'Reserve\IndexController@detail');
     });
     Route::prefix('reserve')->group(function() { 
+        Route::get('get-all', 'Reserve\IndexController@getDepartmentsWithCombos');
         Route::get('filters', 'Reserve\IndexController@updateFilters');
         Route::post('customer', 'Reserve\PostController@customer');
         Route::get('available/{code}', 'Reserve\ConnectionController@availableSap');

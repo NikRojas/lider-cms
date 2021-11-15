@@ -159,7 +159,7 @@
               <div class="mb-3">
                 <small class="mb-0">Resolución Recomendada: 1300x760px</small
                 ><br />
-                <small class="mb-0">Máximo número de imágenes: 20</small><br />
+                <small class="mb-0">Máximo número de imágenes: 500</small><br />
                 <small class="mb-0">Tamaño Máximo de Imagen: 200kb</small>
               </div>
               <vue-dropzone
@@ -168,7 +168,7 @@
                   $validateImageDropzone(
                     $event,
                     $refs.ref_images.dropzone,
-                    20,
+                    500,
                     208000,
                     '200kb'
                   )
@@ -257,7 +257,7 @@ export default {
       requestDelete: false,
       dropzoneOptions: {
         url: "/",
-        maxFiles: 20,
+        maxFiles: 500,
         acceptedFiles: "image/png,image/jpeg,image/jpg",
         autoProcessQueue: false,
         thumbnailWidth: 150,

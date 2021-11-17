@@ -92,7 +92,6 @@ class PostController extends BaseController
         }
 
         #Transacción
-        //Ver que pasa si viene uno de los q no tenga guardado en base de datos
         $transactionsStatus = MasterTransactionStatus::where('value_detailed_status',$rawKrAnswer->transactions[0]->detailedStatus)->first();
         $masterOrderCycle = MasterOrderCycle::where('payment_gateway_value',$orderCycle)->first();
         if(!$transactionsStatus){
@@ -121,6 +120,12 @@ class PostController extends BaseController
     }
 
     public function paymentInit(Request $request){
+        if($request->is_package){
+            $package = RealStatePackage::where('id',$request->real_state_package_id)->first();
+            if (!$package) {
+                return $this->sendError("");
+            }
+        }
         $department = Department::where('slug',$request->slug)->with('projectRel')->first();
         if (!$department) {
             return $this->sendError("");
@@ -162,6 +167,36 @@ class PostController extends BaseController
         else{
             $currency = "USD";
         }
+        if($request->is_package){
+            $departments = $package->load('departmentsRel');
+            $departmentsDescripton = $departments->departmentsRel->pluck('description')->values()->all();
+            $departmentsSapCodes = $departments->departmentsRel->pluck('sap_code')->values()->all();
+            $metadata = [
+                "Proyecto" => $department->projectRel->name_es,
+                "Código Inmueble" => implode(', ', $departmentsSapCodes),
+                "Descripción del Inmueble" => implode(', ', $departmentsDescripton),
+                "Tipo de Documento" => $request->type_document_id,
+                "Número de Documento" => $request->document_number,
+                "Nombres" => $request->name,
+                "Apellido Paterno" => $request->lastname,
+                "Apellido Materno" => $request->lastname_2,
+                "Combo"            => 1,
+                "Código Combo"     => $package->slug
+            ];
+        }
+        else{
+            $metadata = [
+                "Proyecto" => $department->projectRel->name_es,
+                "Código Inmueble" => $department->sap_code,
+                "Descripción del Inmueble" => $department->description,
+                "Tipo de Documento" => $request->type_document_id,
+                "Número de Documento" => $request->document_number,
+                "Nombres" => $request->name,
+                "Apellido Paterno" => $request->lastname,
+                "Apellido Materno" => $request->lastname_2,
+                "Combo"            => 0
+            ];
+        }
         $body = [
             "amount" => $price_deparment_separation_payment_gateway,
             "currency" => $currency,
@@ -180,16 +215,7 @@ class PostController extends BaseController
                     "identityCode" => $request->document_number
                 ],
             ],
-            "metadata" => [
-                "Proyecto" => $department->projectRel->name_es,
-                "Código Inmueble" => $department->sap_code,
-                "Descripción del Inmueble" => $department->description,
-                "Tipo de Documento" => $request->type_document_id,
-                "Número de Documento" => $request->document_number,
-                "Nombres" => $request->name,
-                "Apellido Paterno" => $request->lastname,
-                "Apellido Materno" => $request->lastname_2
-            ]
+            "metadata" => $metadata
         ];
         $authToken = $credentialPayment->user.':'.$credentialPayment->password_prod;
         $codeAuthToken = base64_encode($authToken);

@@ -52,8 +52,20 @@ class SendReserveToSap implements ShouldQueue
             $lsc = LogSapConnection::UpdateOrCreate(["type" => $this->lscType, 'description' =>  trans('custom.message.sap.no_token')]);
         }
         $slug = Str::random(20);
-        $sapCode = $this->order->orderDetailsRel[0]->departmentRel->sap_code;
-        $description = 'Inmueble '.$this->order->orderDetailsRel[0]->departmentRel->description.' (Código SAP: '.$sapCode.') Proyecto ' . $this->order->orderDetailsRel[0]->projectRel->name_es;
+        /*$sapCode = $this->order->orderDetailsRel[0]->departmentRel->sap_code;
+        $description = 'Inmueble '.$this->order->orderDetailsRel[0]->departmentRel->description.' (Código SAP: '.$sapCode.') Proyecto ' . $this->order->orderDetailsRel[0]->projectRel->name_es;*/
+        if($this->order->department_id){
+            $sapCode = $this->order->orderDetailsRel[0]->departmentRel->sap_code;
+            $description = 'Inmueble '.$this->order->orderDetailsRel[0]->departmentRel->description.' (Código SAP: '.$sapCode.') Proyecto ' . $this->order->orderDetailsRel[0]->projectRel->name_es;
+        }
+        #Es Combo
+        else{
+            //$departments = $this->orderDetailsRel->pluck('departmentRel.description');
+            $departmentsId = $this->orderDetailsRel->pluck('department_id')->pluck();
+            $descriptions = $this->orderDetailsRel->pluck('departmentRel.description')->pluck()->values()->all();
+            $sapCodes = $this->orderDetailsRel->pluck('departmentRel.sap_code')->pluck()->values()->all();
+            $description = 'Inmuebles '.implode(", ", $descriptions).' (Códigos SAP: '.implode(", ", $sapCodes).') Proyecto ' . $this->order->orderDetailsRel[0]->projectRel->name_es;
+        }
         try {
             if(!$this->order->advisor_id){
                 $advisorId = null;
@@ -95,6 +107,10 @@ class SendReserveToSap implements ShouldQueue
             $client = new Client([
                 'headers' => $headers
             ]);
+            $sapCodesApi = [];
+            foreach ($sapCodes as $key => $value) {
+                $sapCodesApi[] = (object) ["codigo" => $value];
+            }
             $responseSap = $client->request('POST', $this->url, ['json' => [
                 'nro_documento' => $this->order->customerRel->document_number, 
                 'nombre' => $this->order->customerRel->name,
@@ -103,7 +119,8 @@ class SendReserveToSap implements ShouldQueue
                 'telefono' => $this->order->customerRel->mobile,
                 'correo' => $this->order->customerRel->email,
                 'tipo_documento' => $this->order->customerRel->documentTypeRel->sap_value,
-                'inmueble' => $sapCode,
+                //'inmueble' => $sapCode,
+                "inmuebles" => $sapCodesApi,
                 "vendedor" => $advisorSend->sap_code
             ]]);
             Log::info([
@@ -114,7 +131,8 @@ class SendReserveToSap implements ShouldQueue
                 'telefono' => $this->order->customerRel->mobile,
                 'correo' => $this->order->customerRel->email,
                 'tipo_documento' => $this->order->customerRel->documentTypeRel->sap_value,
-                'inmueble' => $sapCode,
+                //'inmueble' => $sapCode,
+                "inmuebles" => $sapCodesApi,
                 "vendedor" => $advisorSend->sap_code
             ]);
             //Log::info((string) $responseSap->getBody());
@@ -146,7 +164,7 @@ class SendReserveToSap implements ShouldQueue
                     Notification::route('mail',$advisorSend->email)->notify(new AdvisorOrderPaid($this->order));
                 }
                 #Actualizar Stock del Departamento
-                $departmentUpdate = Department::UpdateOrCreate(["id" => $this->order->orderDetailsRel[0]->departmentRel->id], ["available" => false]);
+                //$departmentUpdate = Department::UpdateOrCreate(["id" => $this->order->orderDetailsRel[0]->departmentRel->id], ["available" => false]);
                 $description = $description.' - Éxito.';
             }
             else{
@@ -155,7 +173,10 @@ class SendReserveToSap implements ShouldQueue
                 $orderUpdateAdvisor = Order::UpdateOrCreate(["id" => $this->order->id], ["advisor_id" => $advisorSend->id]);
                 Notification::route('mail',$advisorSend->email)->notify(new AdvisorOrderPaid($this->order));
                 #Actualizar Stock del Departamento
-                $departmentUpdate = Department::UpdateOrCreate(["id" => $this->order->orderDetailsRel[0]->departmentRel->id], ["available" => false]);
+                //$departmentUpdate = Department::UpdateOrCreate(["id" => $this->order->orderDetailsRel[0]->departmentRel->id], ["available" => false]);
+            }
+            foreach ($departmentsId as $key => $value) {
+                $departmentUpdate = Department::UpdateOrCreate(["id" => $value->id], ["available" => false]);
             }
             #LogSapConnection
             $lsc = LogSapConnection::UpdateOrCreate(["slug" => $slug, "type" => $this->lscType, 'status' => $status, 'description' => $description, "response" => (string) $responseSap->getBody()]);  

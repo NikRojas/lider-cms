@@ -35,7 +35,7 @@ class CustomersController extends Controller
     public function read(Customer $element){
         $element = $element->load(['ordersRel' => function ($query) {
             #Ordenes solo que tienen transacciones
-            $query->has('transactionsRel')->with('transactionLatestRel.statusRel','orderDetailsRel.projectRel:id,name_es,slug_es','orderDetailsRel.departmentRel.viewRel'
+            $query->has('transactionsRel')->with('transactionLatestRel.statusRel','packageRel','departmentRel','orderDetailsRel.projectRel:id,name_es,slug_es','orderDetailsRel.departmentRel.viewRel'
             ,'orderDetailsRel.departmentRel.tipologyRel');
         }])
         ->load('documentTypeRel');

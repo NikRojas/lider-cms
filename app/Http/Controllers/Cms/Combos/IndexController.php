@@ -87,7 +87,6 @@ class IndexController extends Controller
             $request->session()->flash('success', trans('custom.message.create.success', ['name' => trans('custom.attribute.element')]));
             return response()->json(["route" => route('cms.combos.index')], 200);
         } catch (\Exception $e) {
-            dd($e);
             if($imageName){
                 Storage::disk('public')->delete('img/projects/combos/'.$imageName);
             }

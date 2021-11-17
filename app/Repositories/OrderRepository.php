@@ -78,7 +78,11 @@ class OrderRepository
             else{
                 $sap = '<span class="font-weight-bold text-danger text-uppercase" style="font-size: .6rem !important;">No Enviado</span>';
             }
-            $reserve .= '<div class="mb-1"><b>Proyecto ' . $el["orderDetailsRel"][0]["projectRel"]["name_es"] . '</b> <br>' . $el["orderDetailsRel"][0]["departmentRel"]["description"] . '</div>';
+            $reserve .= '<div class="mb-1"><b>Proyecto '. $el["orderDetailsRel"][0]["projectRel"]["name_es"] .'</b>';
+            foreach ( $el["orderDetailsRel"] as $key => $value) {
+                $reserve .= '<div>'.$value["departmentRel"]["description"] .'</div>';
+            }
+            $reserve .= '</div>';
 
             if($el["transactionLatestRel"]["orderCycleRel"]["name"] == 'Cerrado'){
                 $style = "style='background:#1762e6;color:white;font-size: .6rem !important;'";

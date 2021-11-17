@@ -13,6 +13,7 @@ use App\MasterOrderCycle;
 use App\MasterTransactionStatus;
 use App\Order;
 use App\OrderDetail;
+use App\RealStatePackage;
 use App\Transaction;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -238,7 +239,13 @@ class PostController extends BaseController
             $advisor = null;
             $price_deparment_separation = $department->projectRel->price_separation;
             #Si hubiera descuento se debe procesar aqui antes de guardar en la orden
-            $r_order = ["customer_id" => $customer->id, "department_id" => $department->id, "total_price" => $price_deparment_separation, "order_date" => Carbon::now(),'master_currency_id' => $department->projectRel->master_currency_id];
+            //$r_order = ["customer_id" => $customer->id, "department_id" => $department->id, "total_price" => $price_deparment_separation, "order_date" => Carbon::now(),'master_currency_id' => $department->projectRel->master_currency_id];
+            if($request->is_package){
+                $r_order = ["customer_id" => $customer->id, "real_state_package_id" => $request->real_state_package_id, "total_price" => $price_deparment_separation, "order_date" => Carbon::now(),'master_currency_id' => $department->projectRel->master_currency_id];
+            }
+            else{
+                $r_order = ["customer_id" => $customer->id, "department_id" => $department->id, "total_price" => $price_deparment_separation, "order_date" => Carbon::now(),'master_currency_id' => $department->projectRel->master_currency_id]; 
+            }
             #Setear Asesor si viene desde la URL de Separacion
             if($request->adv){
                 $r_advisor = $request->adv;
@@ -257,9 +264,20 @@ class PostController extends BaseController
                 return $this->sendError(trans('custom.order.payment'), ['success '=> false, 'or' => false], 500);
             }
             #Si hubiar descuento del item se debe procesar aqui
-            $r_order_detail = ["order_id" => $order->id, "project_id" => $department->project_id, "quantity" => 1, "department_id" => $department->id, 'price_element' => $price_deparment_separation, 'total_price' => $price_deparment_separation];
+            //$r_order_detail = ["order_id" => $order->id, "project_id" => $department->project_id, "quantity" => 1, "department_id" => $department->id, 'price_element' => $price_deparment_separation, 'total_price' => $price_deparment_separation];
             try {
-                $order_detail = OrderDetail::UpdateOrCreate($r_order_detail);
+                if($request->is_package){
+                    $departments = RealStatePackage::where('id',$request->real_state_package_id)->first();
+                    $departments = $departments->load('departmentsRel');
+                    foreach ($departments->departmentsRel as $key => $value) {
+                        $r_order_detail = ["order_id" => $order->id, "project_id" => $department->project_id, "quantity" => 1, "department_id" => $value->id, 'price_element' => $price_deparment_separation, 'total_price' => $price_deparment_separation];
+                        $order_detail = OrderDetail::UpdateOrCreate($r_order_detail);
+                    }
+                }
+                else{
+                    $r_order_detail = ["order_id" => $order->id, "project_id" => $department->project_id, "quantity" => 1, "department_id" => $department->id, 'price_element' => $price_deparment_separation, 'total_price' => $price_deparment_separation];
+                    $order_detail = OrderDetail::UpdateOrCreate($r_order_detail);
+                }
                 return $this->sendResponse(["order_id" => $order->id], trans('custom.title.success'), 200);
             }
             catch (\Exception $e) {

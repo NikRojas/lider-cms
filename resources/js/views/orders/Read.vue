@@ -38,14 +38,21 @@
                 <div class="card-body">
                   <div class="row">
                     <div class="col-12 mb-2">
-                      <h2 class>Detalle de Reserva</h2>
+                      <h2 class>Detalle de Reserva:</h2>
                     </div>
+                  </div>
+                  <div v-if="element.package_rel">
+                    <h3><b>Combo: {{ element.package_rel.description }}</b>
+                    <!--<br>
+                    Precio: {{ element.pricePackage }} <br>
+                    Área: {{ element.areaPackage}}m2-->
+                    </h3>
                   </div>
                   <div class="card mb-4" v-for="el in element.order_details_rel" :key="el.id">
                     <div class="row p-2 p-md-3">
                       <div class="col-9 d-flex align-items-center">
                         <div class="row w-100">
-                          <div class="col-12">
+                          <div class="col-12" v-if="el.department_rel.sector_id == 4 || el.department_rel.sector_id == 1">
                             <img
                               v-if="el.department_rel.image"
                               height="100"
@@ -60,7 +67,7 @@
                                 style="text-decoration: underline;"
                                 :href="routeProject+'/'+el.project_rel.slug_es"
                                 class="h3 text-primary"
-                              >Projecto {{ el.project_rel.name_es}}</a>
+                              >Proyecto {{ el.project_rel.name_es}}</a>
                               <div class="mt-2">
                                 <h3 class="font-weight-normal">
                                   Inmueble:
@@ -89,15 +96,29 @@
                               </div>
                             </div>
                           </div>
+                          <div v-else class="col-12">
+                            <h3 class="font-weight-normal">
+                                  Inmueble:
+                                  <span class="font-weight-bold">{{ el.department_rel.description}}</span>
+                                </h3>
+                                <h3 class="font-weight-normal">
+                                  Área:
+                                  <span class="font-weight-bold">{{ el.department_rel.area}}m2</span>
+                                </h3>
+                                <h3 class="font-weight-normal">
+                                  Tipo:
+                                  <span class="font-weight-bold">{{ el.department_rel.sector_id == 2 ? 'Estacionamiento' : 'Depósito'}}</span>
+                                </h3>
+                          </div>
                           <!--<div
                             class="col-6 d-flex align-items-center justify-content-center"
                           >{{el.price_element_format}} <span v-if="el.discount_price"> - {{ el.discount_price_format }}</span></div>-->
                         </div>
                       </div>
-                      <!--Cuando haya descuento, restar el precio del elemento menos precio de descuento -->
+                      <!--Cuando haya descuento, restar el precio del elemento menos precio de descuento 
                       <div
                         class="col-3 d-flex align-items-center justify-content-center"
-                      >Precio Separación <br>{{ element.currency_rel.symbol }} {{ el.total_price}}</div>
+                      >Precio Separación <br>{{ element.currency_rel.symbol }} {{ el.total_price}}</div>-->
                     </div>
                   </div>
                 </div>

@@ -63,9 +63,24 @@ class OrdersController extends Controller
 
     public function read(Order $element)
     {
-        $element = $element->load('currencyRel','advisorRel','customerRel.documentTypeRel', 'orderDetailsRel.projectRel:id,name_es,slug_es,price_separation'
+        $element = $element->load('departmentRel.projectRel','packageRel.projectRel','packageRel.departmentsRel','currencyRel','advisorRel','customerRel.documentTypeRel', 'orderDetailsRel.projectRel:id,name_es,slug_es,price_separation'
         , 'orderDetailsRel.departmentRel.viewRel', 'orderDetailsRel.departmentRel.tipologyRel', 'transactionsRel.statusRel', 'transactionLatestRel.statusRel');
         $element["type"] = "Reserve Created";
+        if($element->packageRel){
+            $element["areaPackage"] = number_format($element->packageRel->departmentsRel->pluck('area')->sum(),2);
+            if($element->packageRel->projectRel->master_currency_id == 1){
+                $priceFormat = $element->packageRel->departmentsRel->pluck('price');
+                $sumPrice = $priceFormat->sum();
+                $priceFormat = $element->packageRel->projectRel->currencyRel->symbol.' '.number_format($sumPrice, 0, '.', ',');
+                $element["pricePackage"] = $priceFormat;
+            }
+            else{
+                $priceFormatForeign = $element->packageRel->departmentsRel->pluck('price_foreign');
+                $sumPrice = $priceFormatForeign->sum();
+                $priceFormatForeign = $element->packageRel->projectRel->currencyRel->symbol.' '.number_format($sumPrice, 0, '.', ',');
+                $element["pricePackage"] = $priceFormatForeign;
+            }
+        }
         $timelineTemp = [];
         $timelineTempGroup = [];
         $timeline = [];

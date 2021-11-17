@@ -509,6 +509,27 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -1031,6 +1052,19 @@ var render = function() {
                     [
                       _vm._m(0),
                       _vm._v(" "),
+                      _vm.element.package_rel
+                        ? _c("div", [
+                            _c("h3", [
+                              _c("b", [
+                                _vm._v(
+                                  "Combo: " +
+                                    _vm._s(_vm.element.package_rel.description)
+                                )
+                              ])
+                            ])
+                          ])
+                        : _vm._e(),
+                      _vm._v(" "),
                       _vm._l(_vm.element.order_details_rel, function(el) {
                         return _c(
                           "div",
@@ -1044,256 +1078,343 @@ var render = function() {
                                 },
                                 [
                                   _c("div", { staticClass: "row w-100" }, [
-                                    _c("div", { staticClass: "col-12" }, [
-                                      el.department_rel.image
-                                        ? _c("img", {
-                                            staticClass:
-                                              "ml-md-0 ml-3 d-block d-md-inline",
-                                            attrs: {
-                                              height: "100",
-                                              src:
-                                                _vm.imagesUrl +
-                                                "/projects/estates/" +
-                                                el.department_rel.image,
-                                              alt: ""
-                                            }
-                                          })
-                                        : el.department_rel.tipology_rel.image
-                                        ? _c("img", {
-                                            staticClass:
-                                              "ml-md-0 ml-3 d-block d-md-inline",
-                                            attrs: {
-                                              height: "100",
-                                              src:
-                                                _vm.imagesUrl +
-                                                "/projects/tipologies/" +
-                                                el.department_rel.tipology_rel
-                                                  .image,
-                                              alt: ""
-                                            }
-                                          })
-                                        : _vm._e(),
-                                      _vm._v(" "),
-                                      _c(
-                                        "div",
-                                        { staticClass: "ml-md-0 ml-3 mt-1" },
-                                        [
+                                    el.department_rel.sector_id == 4 ||
+                                    el.department_rel.sector_id == 1
+                                      ? _c("div", { staticClass: "col-12" }, [
+                                          el.department_rel.image
+                                            ? _c("img", {
+                                                staticClass:
+                                                  "ml-md-0 ml-3 d-block d-md-inline",
+                                                attrs: {
+                                                  height: "100",
+                                                  src:
+                                                    _vm.imagesUrl +
+                                                    "/projects/estates/" +
+                                                    el.department_rel.image,
+                                                  alt: ""
+                                                }
+                                              })
+                                            : el.department_rel.tipology_rel
+                                                .image
+                                            ? _c("img", {
+                                                staticClass:
+                                                  "ml-md-0 ml-3 d-block d-md-inline",
+                                                attrs: {
+                                                  height: "100",
+                                                  src:
+                                                    _vm.imagesUrl +
+                                                    "/projects/tipologies/" +
+                                                    el.department_rel
+                                                      .tipology_rel.image,
+                                                  alt: ""
+                                                }
+                                              })
+                                            : _vm._e(),
+                                          _vm._v(" "),
                                           _c(
-                                            "a",
+                                            "div",
                                             {
-                                              staticClass: "h3 text-primary",
-                                              staticStyle: {
-                                                "text-decoration": "underline"
-                                              },
-                                              attrs: {
-                                                href:
-                                                  _vm.routeProject +
-                                                  "/" +
-                                                  el.project_rel.slug_es
-                                              }
+                                              staticClass: "ml-md-0 ml-3 mt-1"
+                                            },
+                                            [
+                                              _c(
+                                                "a",
+                                                {
+                                                  staticClass:
+                                                    "h3 text-primary",
+                                                  staticStyle: {
+                                                    "text-decoration":
+                                                      "underline"
+                                                  },
+                                                  attrs: {
+                                                    href:
+                                                      _vm.routeProject +
+                                                      "/" +
+                                                      el.project_rel.slug_es
+                                                  }
+                                                },
+                                                [
+                                                  _vm._v(
+                                                    "Proyecto " +
+                                                      _vm._s(
+                                                        el.project_rel.name_es
+                                                      )
+                                                  )
+                                                ]
+                                              ),
+                                              _vm._v(" "),
+                                              _c(
+                                                "div",
+                                                { staticClass: "mt-2" },
+                                                [
+                                                  _c(
+                                                    "h3",
+                                                    {
+                                                      staticClass:
+                                                        "font-weight-normal"
+                                                    },
+                                                    [
+                                                      _vm._v(
+                                                        "\n                                Inmueble:\n                                "
+                                                      ),
+                                                      _c(
+                                                        "span",
+                                                        {
+                                                          staticClass:
+                                                            "font-weight-bold"
+                                                        },
+                                                        [
+                                                          _vm._v(
+                                                            _vm._s(
+                                                              el.department_rel
+                                                                .description
+                                                            )
+                                                          )
+                                                        ]
+                                                      )
+                                                    ]
+                                                  ),
+                                                  _vm._v(" "),
+                                                  el.department_rel
+                                                    .type_department_id
+                                                    ? _c(
+                                                        "h3",
+                                                        {
+                                                          staticClass:
+                                                            "font-weight-normal"
+                                                        },
+                                                        [
+                                                          _vm._v(
+                                                            "\n                                Tipología:\n                                "
+                                                          ),
+                                                          _c(
+                                                            "span",
+                                                            {
+                                                              staticClass:
+                                                                "font-weight-bold"
+                                                            },
+                                                            [
+                                                              _vm._v(
+                                                                _vm._s(
+                                                                  el
+                                                                    .department_rel
+                                                                    .tipology_rel
+                                                                    .name
+                                                                )
+                                                              )
+                                                            ]
+                                                          )
+                                                        ]
+                                                      )
+                                                    : _vm._e(),
+                                                  _vm._v(" "),
+                                                  el.department_rel
+                                                    .type_department_id &&
+                                                  el.department_rel.tipology_rel
+                                                    .room
+                                                    ? _c(
+                                                        "h3",
+                                                        {
+                                                          staticClass:
+                                                            "font-weight-normal"
+                                                        },
+                                                        [
+                                                          _vm._v(
+                                                            "\n                                Dormitorios:\n                                "
+                                                          ),
+                                                          _c(
+                                                            "span",
+                                                            {
+                                                              staticClass:
+                                                                "font-weight-bold"
+                                                            },
+                                                            [
+                                                              _vm._v(
+                                                                _vm._s(
+                                                                  el
+                                                                    .department_rel
+                                                                    .tipology_rel
+                                                                    .room
+                                                                )
+                                                              )
+                                                            ]
+                                                          )
+                                                        ]
+                                                      )
+                                                    : _vm._e(),
+                                                  _vm._v(" "),
+                                                  _c(
+                                                    "h3",
+                                                    {
+                                                      staticClass:
+                                                        "font-weight-normal"
+                                                    },
+                                                    [
+                                                      _vm._v(
+                                                        "\n                                Vista:\n                                "
+                                                      ),
+                                                      _c(
+                                                        "span",
+                                                        {
+                                                          staticClass:
+                                                            "font-weight-bold"
+                                                        },
+                                                        [
+                                                          _vm._v(
+                                                            _vm._s(
+                                                              el.department_rel
+                                                                .view_rel.name
+                                                            )
+                                                          )
+                                                        ]
+                                                      )
+                                                    ]
+                                                  ),
+                                                  _vm._v(" "),
+                                                  _c(
+                                                    "h3",
+                                                    {
+                                                      staticClass:
+                                                        "font-weight-normal"
+                                                    },
+                                                    [
+                                                      _vm._v(
+                                                        "\n                                Piso:\n                                "
+                                                      ),
+                                                      _c(
+                                                        "span",
+                                                        {
+                                                          staticClass:
+                                                            "font-weight-bold"
+                                                        },
+                                                        [
+                                                          _vm._v(
+                                                            _vm._s(
+                                                              el.department_rel
+                                                                .floor
+                                                            )
+                                                          )
+                                                        ]
+                                                      )
+                                                    ]
+                                                  ),
+                                                  _vm._v(" "),
+                                                  _c(
+                                                    "h3",
+                                                    {
+                                                      staticClass:
+                                                        "font-weight-normal"
+                                                    },
+                                                    [
+                                                      _vm._v(
+                                                        "\n                                Área:\n                                "
+                                                      ),
+                                                      _c(
+                                                        "span",
+                                                        {
+                                                          staticClass:
+                                                            "font-weight-bold"
+                                                        },
+                                                        [
+                                                          _vm._v(
+                                                            _vm._s(
+                                                              el.department_rel
+                                                                .area
+                                                            ) + "m2"
+                                                          )
+                                                        ]
+                                                      )
+                                                    ]
+                                                  )
+                                                ]
+                                              )
+                                            ]
+                                          )
+                                        ])
+                                      : _c("div", { staticClass: "col-12" }, [
+                                          _c(
+                                            "h3",
+                                            {
+                                              staticClass: "font-weight-normal"
                                             },
                                             [
                                               _vm._v(
-                                                "Projecto " +
-                                                  _vm._s(el.project_rel.name_es)
+                                                "\n                                Inmueble:\n                                "
+                                              ),
+                                              _c(
+                                                "span",
+                                                {
+                                                  staticClass:
+                                                    "font-weight-bold"
+                                                },
+                                                [
+                                                  _vm._v(
+                                                    _vm._s(
+                                                      el.department_rel
+                                                        .description
+                                                    )
+                                                  )
+                                                ]
                                               )
                                             ]
                                           ),
                                           _vm._v(" "),
-                                          _c("div", { staticClass: "mt-2" }, [
-                                            _c(
-                                              "h3",
-                                              {
-                                                staticClass:
-                                                  "font-weight-normal"
-                                              },
-                                              [
-                                                _vm._v(
-                                                  "\n                                Inmueble:\n                                "
-                                                ),
-                                                _c(
-                                                  "span",
-                                                  {
-                                                    staticClass:
-                                                      "font-weight-bold"
-                                                  },
-                                                  [
-                                                    _vm._v(
-                                                      _vm._s(
-                                                        el.department_rel
-                                                          .description
-                                                      )
+                                          _c(
+                                            "h3",
+                                            {
+                                              staticClass: "font-weight-normal"
+                                            },
+                                            [
+                                              _vm._v(
+                                                "\n                                Área:\n                                "
+                                              ),
+                                              _c(
+                                                "span",
+                                                {
+                                                  staticClass:
+                                                    "font-weight-bold"
+                                                },
+                                                [
+                                                  _vm._v(
+                                                    _vm._s(
+                                                      el.department_rel.area
+                                                    ) + "m2"
+                                                  )
+                                                ]
+                                              )
+                                            ]
+                                          ),
+                                          _vm._v(" "),
+                                          _c(
+                                            "h3",
+                                            {
+                                              staticClass: "font-weight-normal"
+                                            },
+                                            [
+                                              _vm._v(
+                                                "\n                                Tipo:\n                                "
+                                              ),
+                                              _c(
+                                                "span",
+                                                {
+                                                  staticClass:
+                                                    "font-weight-bold"
+                                                },
+                                                [
+                                                  _vm._v(
+                                                    _vm._s(
+                                                      el.department_rel
+                                                        .sector_id == 2
+                                                        ? "Estacionamiento"
+                                                        : "Depósito"
                                                     )
-                                                  ]
-                                                )
-                                              ]
-                                            ),
-                                            _vm._v(" "),
-                                            el.department_rel.type_department_id
-                                              ? _c(
-                                                  "h3",
-                                                  {
-                                                    staticClass:
-                                                      "font-weight-normal"
-                                                  },
-                                                  [
-                                                    _vm._v(
-                                                      "\n                                Tipología:\n                                "
-                                                    ),
-                                                    _c(
-                                                      "span",
-                                                      {
-                                                        staticClass:
-                                                          "font-weight-bold"
-                                                      },
-                                                      [
-                                                        _vm._v(
-                                                          _vm._s(
-                                                            el.department_rel
-                                                              .tipology_rel.name
-                                                          )
-                                                        )
-                                                      ]
-                                                    )
-                                                  ]
-                                                )
-                                              : _vm._e(),
-                                            _vm._v(" "),
-                                            el.department_rel
-                                              .type_department_id &&
-                                            el.department_rel.tipology_rel.room
-                                              ? _c(
-                                                  "h3",
-                                                  {
-                                                    staticClass:
-                                                      "font-weight-normal"
-                                                  },
-                                                  [
-                                                    _vm._v(
-                                                      "\n                                Dormitorios:\n                                "
-                                                    ),
-                                                    _c(
-                                                      "span",
-                                                      {
-                                                        staticClass:
-                                                          "font-weight-bold"
-                                                      },
-                                                      [
-                                                        _vm._v(
-                                                          _vm._s(
-                                                            el.department_rel
-                                                              .tipology_rel.room
-                                                          )
-                                                        )
-                                                      ]
-                                                    )
-                                                  ]
-                                                )
-                                              : _vm._e(),
-                                            _vm._v(" "),
-                                            _c(
-                                              "h3",
-                                              {
-                                                staticClass:
-                                                  "font-weight-normal"
-                                              },
-                                              [
-                                                _vm._v(
-                                                  "\n                                Vista:\n                                "
-                                                ),
-                                                _c(
-                                                  "span",
-                                                  {
-                                                    staticClass:
-                                                      "font-weight-bold"
-                                                  },
-                                                  [
-                                                    _vm._v(
-                                                      _vm._s(
-                                                        el.department_rel
-                                                          .view_rel.name
-                                                      )
-                                                    )
-                                                  ]
-                                                )
-                                              ]
-                                            ),
-                                            _vm._v(" "),
-                                            _c(
-                                              "h3",
-                                              {
-                                                staticClass:
-                                                  "font-weight-normal"
-                                              },
-                                              [
-                                                _vm._v(
-                                                  "\n                                Piso:\n                                "
-                                                ),
-                                                _c(
-                                                  "span",
-                                                  {
-                                                    staticClass:
-                                                      "font-weight-bold"
-                                                  },
-                                                  [
-                                                    _vm._v(
-                                                      _vm._s(
-                                                        el.department_rel.floor
-                                                      )
-                                                    )
-                                                  ]
-                                                )
-                                              ]
-                                            ),
-                                            _vm._v(" "),
-                                            _c(
-                                              "h3",
-                                              {
-                                                staticClass:
-                                                  "font-weight-normal"
-                                              },
-                                              [
-                                                _vm._v(
-                                                  "\n                                Área:\n                                "
-                                                ),
-                                                _c(
-                                                  "span",
-                                                  {
-                                                    staticClass:
-                                                      "font-weight-bold"
-                                                  },
-                                                  [
-                                                    _vm._v(
-                                                      _vm._s(
-                                                        el.department_rel.area
-                                                      ) + "m2"
-                                                    )
-                                                  ]
-                                                )
-                                              ]
-                                            )
-                                          ])
-                                        ]
-                                      )
-                                    ])
+                                                  )
+                                                ]
+                                              )
+                                            ]
+                                          )
+                                        ])
                                   ])
-                                ]
-                              ),
-                              _vm._v(" "),
-                              _c(
-                                "div",
-                                {
-                                  staticClass:
-                                    "col-3 d-flex align-items-center justify-content-center"
-                                },
-                                [
-                                  _vm._v("Precio Separación "),
-                                  _c("br"),
-                                  _vm._v(
-                                    _vm._s(_vm.element.currency_rel.symbol) +
-                                      " " +
-                                      _vm._s(el.total_price)
-                                  )
                                 ]
                               )
                             ])
@@ -1899,7 +2020,7 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "row" }, [
       _c("div", { staticClass: "col-12 mb-2" }, [
-        _c("h2", {}, [_vm._v("Detalle de Reserva")])
+        _c("h2", {}, [_vm._v("Detalle de Reserva:")])
       ])
     ])
   }

@@ -26,6 +26,7 @@
         :button-update="true"
         :button-read="false"
         :button-delete="true"
+        :is-combo="true"
         :loading-prop="loadingGetAll"
         @read="showEl"
         @update="editEl"

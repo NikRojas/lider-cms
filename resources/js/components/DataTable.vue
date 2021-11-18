@@ -98,14 +98,46 @@
                     >
                       <jam-eye class="current-color" height="18" width="18" />
                     </a>
-                    <a
+                    <!--<a
                       v-if="buttonUpdate == true"
                       href="#"
                       @click.prevent="clickUpdate(element.id)"
                       class="btn btn-sm btn-icon-only rounded-circle btn-inverse-info"
                     >
                       <jam-pencil class="current-color" height="18" width="18" />
-                    </a>
+                    </a>-->
+                    <template v-if="buttonUpdate == true">
+                      <template v-if="!isCombo">
+                        <a
+                          href="#"
+                          @click.prevent="clickUpdate(element.id)"
+                          class="btn btn-sm btn-icon-only rounded-circle btn-inverse-info"
+                        >
+                          <jam-pencil class="current-color" height="18" width="18" />
+                        </a>
+                      </template>
+                      <template v-else>
+                        <template v-if="typeof element.can_delete == 'undefined'">
+                         <a
+                          href="#"
+                          @click.prevent="clickUpdate(element.id)"
+                          class="btn btn-sm btn-icon-only rounded-circle btn-inverse-info"
+                        >
+                          <jam-pencil class="current-color" height="18" width="18" />
+                        </a>
+                        </template>
+                        <template v-else>
+                          <a
+                            href="#"
+                            v-if="element.can_delete"
+                            @click.prevent="clickUpdate(element.id)"
+                            class="btn btn-sm btn-icon-only rounded-circle btn-inverse-info"
+                          >
+                            <jam-pencil class="current-color" height="18" width="18" />
+                          </a>
+                        </template>
+                      </template>
+                    </template>
                     <a
                       v-if="buttonDisable == true"
                       href="#"
@@ -233,6 +265,10 @@ import "simplebar/dist/simplebar.min.css";
 import NoData from "../components/NoData";
 export default {
   props: {
+    isCombo:{
+      type: Boolean,
+      default: false
+    },
     qProp: {
       type: String,
       required: false,

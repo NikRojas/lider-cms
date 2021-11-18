@@ -56,7 +56,7 @@ class OrderRepository
                 $elements->whereYear('created_at', '=', date('Y'));
                 break;
         }
-        $elements = $elements->with('customerRel:id,name,lastname,lastname_2,document_number,type_document_id','customerRel.documentTypeRel')->with('orderDetailsRel.departmentRel')->with('orderDetailsRel.projectRel:id,name_es')
+        $elements = $elements->with('packageRel','customerRel:id,name,lastname,lastname_2,document_number,type_document_id','customerRel.documentTypeRel')->with('orderDetailsRel.departmentRel')->with('orderDetailsRel.projectRel:id,name_es')
             ->with('transactionLatestRel.statusRel','transactionLatestRel.orderCycleRel')
             ->orderBy('orders.created_at', 'desc');
         if(count($transactions) > 0){
@@ -78,7 +78,10 @@ class OrderRepository
             else{
                 $sap = '<span class="font-weight-bold text-danger text-uppercase" style="font-size: .6rem !important;">No Enviado</span>';
             }
-            $reserve .= '<div class="mb-1"><b>Proyecto '. $el["orderDetailsRel"][0]["projectRel"]["name_es"] .'</b>';
+            $reserve .= '<div class="mb-1"><b class="">Proyecto '. $el["orderDetailsRel"][0]["projectRel"]["name_es"] .'</b>';
+            if($el->real_state_package_id){
+                $reserve .= '<div><b><i>'.$el->packageRel->description.'</i></b></div>';
+            }
             foreach ( $el["orderDetailsRel"] as $key => $value) {
                 $reserve .= '<div>'.$value["departmentRel"]["description"] .'</div>';
             }

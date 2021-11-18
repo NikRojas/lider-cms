@@ -56,10 +56,13 @@
       <th
         style="background-color:#01C670;color:#FFFFFF;width:30px;font-size:14px;font-weight:bold;text-align:center;vertical-align:middle;border: 1px solid black;">
         Reserva Proyecto</th>
-
+      <th
+        style="background-color:#01C670;color:#FFFFFF;width:30px;font-size:14px;font-weight:bold;text-align:center;vertical-align:middle;border: 1px solid black;">
+        Combo</th>
       <th
         style="background-color:#01C670;color:#FFFFFF;width:30px;font-size:14px;font-weight:bold;text-align:center;vertical-align:middle;border: 1px solid black;">
         Reserva Inmueble</th>
+      
       <th
         style="background-color:#01C670;color:#FFFFFF;width:20px;font-size:14px;font-weight:bold;text-align:center;vertical-align:middle;border: 1px solid black;">
         Tipo Moneda</th>
@@ -85,8 +88,12 @@
         {{ $el->customerRel["document_number"] ? $el->customerRel["document_number"] : 'No registrado' }}</td>
       <td style="text-align:center;vertical-align:middle;border: 1px solid black;">
         {{ $el->orderDetailsRel[0]["projectRel"]["name_es"] }}</td>
+      <td style="text-align:center;vertical-align:middle;border: 1px solid black;">{{ $el->real_state_package_id ? 'Sí' : 'No' }}</td>
       <td style="text-align:center;vertical-align:middle;border: 1px solid black;">
-        {{ $el->orderDetailsRel[0]["departmentRel"]["description"] }}</td>
+          @for ($i = 0; $i < count($el->orderDetailsRel); $i++)
+                    {{ $el['orderDetailsRel'][$i]["departmentRel"]["description"] }}@if($i < count($el->orderDetailsRel) - 1),@endif
+                @endfor
+      </td>
       <td style="text-align:center;vertical-align:middle;border: 1px solid black;">{{ $el->currencyRel["abbreviation"] }}</td>
       <td style="text-align:center;vertical-align:middle;border: 1px solid black;">{{ $el->total_price }}</td>
       <td style="text-align:center;vertical-align:middle;border: 1px solid black;">{{ $el->transactionLatestRel["statusRel"]["name"] }}</td>

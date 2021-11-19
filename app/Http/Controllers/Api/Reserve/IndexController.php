@@ -300,6 +300,7 @@ class IndexController extends BaseController
         if ($projects) {
             $data = $data->whereIn('project_id', $projects);
         }
+        $data = $data->whereNotNull('tipologyRel.room');
         $data = $data->pluck('tipologyRel.room')->unique()->flatten()->sort()->values()->all();
         return $data;
     }
@@ -327,6 +328,7 @@ class IndexController extends BaseController
         if ($rooms) {
             $data = $data->whereIn('tipologyRel.room', $rooms);
         }
+        $data = $data->whereNotNull('tipologyRel.parentTypeDepartmentRel');
         $data = $data->pluck('tipologyRel.parentTypeDepartmentRel')->unique('name')->flatten()->sort()->values()->all();
         return $data;
     }
@@ -354,6 +356,7 @@ class IndexController extends BaseController
         if ($types) {
             $data = $data->whereIn('tipologyRel.parent_type_department_id', $types);
         }
+        $data = $data->whereNotNull('floor');
         $data = $data->sortBy('floor');
         $data = $data->pluck('floor')->unique()->flatten()->all();
         return $data;
@@ -382,6 +385,7 @@ class IndexController extends BaseController
         if ($projects) {
             $data = $data->whereIn('project_id', $projects);
         }
+        $data = $data->whereNotNull('view_id');
         $data = $data->pluck('viewRel')->unique('name')->flatten()->sortBy('name')->values()->all();
         return $data;
     }

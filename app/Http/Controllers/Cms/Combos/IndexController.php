@@ -58,7 +58,7 @@ class IndexController extends Controller
         $warehouses = Department::where('project_id', $request->project)->whereNotNull('sector_id')->where(function ($q) {
             $q->where('sector_id', 3);
           })->with('packageRel')->get();
-        $departments = Department::where('project_id', $request->project)->whereNotNull('sector_id')->where(function ($q) {
+        $departments = Department::whereNotNull('view_id')->whereNotNull('floor')->whereNotNull('type_department_id')->where('project_id', $request->project)->whereNotNull('sector_id')->where(function ($q) {
             $q->whereIn('sector_id', [1,4]);
           })->with('packageRel')->get();
         return response()->json(["parkings" => $parkings, "departments" => $departments, "warehouses" => $warehouses]);

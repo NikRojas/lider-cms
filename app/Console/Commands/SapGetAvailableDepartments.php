@@ -147,16 +147,28 @@ class SapGetAvailableDepartments extends Command
                                     #No actualizar precio en tipologias de Namua e Infinitum
                                     if($value->id != '4' && $value->id != '5'){
                                         Log::info("Proyecto: ".$value->id);
-                                        $updateTypeDepartment = ProjectTypeDepartment::UpdateOrCreate(["id" => $keyEstatesByTypeDepartment ], array_merge($updateTypeDepartmentTemp, ["project_id" => $value->id]));
+                                        //$updateTypeDepartment = ProjectTypeDepartment::UpdateOrCreate(["id" => $keyEstatesByTypeDepartment ], array_merge($updateTypeDepartmentTemp, ["project_id" => $value->id]));
+                                        $checkIfTipologyExist = ProjectTypeDepartment::where('id',$keyEstatesByTypeDepartment)->first();
+                                        if($checkIfTipologyExist){
+                                            $updateTypeDepartment = ProjectTypeDepartment::UpdateOrCreate(["id" => $keyEstatesByTypeDepartment ], array_merge($updateTypeDepartmentTemp, ["project_id" => $value->id]));
+                                        }
                                     }
                                 }
                             $typeDepartmentsIds = $typeDepartments->pluck('id')->toArray();
                             foreach ($typeDepartmentIdsAvailable as $keyEstateAvailable => $valueEstateAvailable) {
-                                ProjectTypeDepartment::UpdateOrCreate(["id" => $valueEstateAvailable ], ["available" => true, "project_id" => $value->id]);
+                                //ProjectTypeDepartment::UpdateOrCreate(["id" => $valueEstateAvailable ], ["available" => true, "project_id" => $value->id]);
+                                $checkIfTipologyExist = ProjectTypeDepartment::where('id',$valueEstateAvailable)->first();
+                                if($checkIfTipologyExist){
+                                    ProjectTypeDepartment::UpdateOrCreate(["id" => $valueEstateAvailable ], ["available" => true, "project_id" => $value->id]);
+                                }
                             }
                             $typeDepartmentsUnavailable = array_diff($typeDepartmentsIds, $typeDepartmentIdsAvailable);
                             foreach ($typeDepartmentsUnavailable as $keyEstateUnavailable => $valueEstateUnavailable) {
-                                ProjectTypeDepartment::UpdateOrCreate(["id" => $valueEstateUnavailable ], ["available" => false, "project_id" => $value->id]);
+                                //ProjectTypeDepartment::UpdateOrCreate(["id" => $valueEstateUnavailable ], ["available" => false, "project_id" => $value->id]);
+                                $checkIfTipologyExist = ProjectTypeDepartment::where('id',$valueEstateUnavailable)->first();
+                                if($checkIfTipologyExist){
+                                    ProjectTypeDepartment::UpdateOrCreate(["id" => $valueEstateUnavailable ], ["available" => false, "project_id" => $value->id]);
+                                }
                             }
                         }
                     }

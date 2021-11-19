@@ -36,6 +36,9 @@ class IndexController extends BaseController
     public function getDepartmentsWithCombos(){
         $departments = Department::selectRaw('id,slug,description,available,price,price_foreign,area,floor,view_id,type_department_id,project_id,image,sap_code,sector_id')->with('viewRel:id,name', 'tipologyRel:id,name,room,parent_type_department_id,image','tipologyRel.parentTypeDepartmentRel:id,room,name', 'projectRel:id,logo_colour,price_separation,name_es,name_en,code_ubigeo,project_status_id,master_currency_id,reservation_in_package,package_description', 'projectRel.ubigeoRel', 'projectRel.statusRel:id,name_es,name_en','projectRel.currencyRel:id,name,abbreviation,symbol')
         ->where('available', 1)
+        ->whereNotNull('view_id')
+        ->whereNotNull('floor')
+        ->whereNotNull('type_department_id')
         ->doesnthave('packageRel')
         ->whereIn('sector_id', [1,4])->get();
 

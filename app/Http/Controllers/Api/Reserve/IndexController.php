@@ -34,19 +34,21 @@ class IndexController extends BaseController
     }
 
     public function getDepartmentsWithCombos(){
-        $departments = Department::selectRaw('id,slug,description,available,price,price_foreign,area,floor,view_id,type_department_id,project_id,image,sap_code')->with('viewRel:id,name', 'tipologyRel:id,name,room,parent_type_department_id,image','tipologyRel.parentTypeDepartmentRel:id,room,name', 'projectRel:id,logo_colour,price_separation,name_es,name_en,code_ubigeo,project_status_id,master_currency_id,reservation_in_package,package_description', 'projectRel.ubigeoRel', 'projectRel.statusRel:id,name_es,name_en','projectRel.currencyRel:id,name,abbreviation,symbol')
+        $departments = Department::selectRaw('id,slug,description,available,price,price_foreign,area,floor,view_id,type_department_id,project_id,image,sap_code,sector_id')->with('viewRel:id,name', 'tipologyRel:id,name,room,parent_type_department_id,image','tipologyRel.parentTypeDepartmentRel:id,room,name', 'projectRel:id,logo_colour,price_separation,name_es,name_en,code_ubigeo,project_status_id,master_currency_id,reservation_in_package,package_description', 'projectRel.ubigeoRel', 'projectRel.statusRel:id,name_es,name_en','projectRel.currencyRel:id,name,abbreviation,symbol')
         ->where('available', 1)
         ->doesnthave('packageRel')
         ->whereIn('sector_id', [1,4])->get();
 
         $combos = RealStatePackage::where('stock', 1)->where('status', 1)->
-        with('departmentsRel:id,slug,description,available,price,price_foreign,area,floor,view_id,type_department_id,project_id,image,sap_code','departmentsRel.viewRel:id,name','departmentsRel.tipologyRel:id,name,room,parent_type_department_id,image','departmentsRel.tipologyRel.parentTypeDepartmentRel:id,room,name','projectRel:id,logo_colour,price_separation,name_es,name_en,code_ubigeo,project_status_id,master_currency_id,reservation_in_package,package_description', 'projectRel.ubigeoRel', 'projectRel.statusRel:id,name_es,name_en','projectRel.currencyRel:id,name,abbreviation,symbol')
+        with('departmentsRel:id,slug,description,available,price,price_foreign,area,floor,view_id,type_department_id,project_id,image,sap_code,sector_id','departmentsRel.viewRel:id,name','departmentsRel.tipologyRel:id,name,room,parent_type_department_id,image','departmentsRel.tipologyRel.parentTypeDepartmentRel:id,room,name','projectRel:id,logo_colour,price_separation,name_es,name_en,code_ubigeo,project_status_id,master_currency_id,reservation_in_package,package_description', 'projectRel.ubigeoRel', 'projectRel.statusRel:id,name_es,name_en','projectRel.currencyRel:id,name,abbreviation,symbol')
         ->get();
 
         $combosArray = [];
         if(count($combos)){
             foreach ($combos as $key => $value) {
                 $department = $value->departmentsRel()->where('sector_id',1)->orWhere('sector_id',4)->first();  
+                $parkings = $value->departmentsRel()->where('sector_id',2)->get(); 
+                $warehouses = $value->departmentsRel()->where('sector_id',3)->get(); 
                 $priceFormat = $value->departmentsRel->pluck('price');
                 $sumPrice = $priceFormat->sum();
                 $priceFormat = $value->projectRel->currencyRel->symbol.' '.number_format($sumPrice, 0, '.', ',');
@@ -71,8 +73,10 @@ class IndexController extends BaseController
                     "price_format" => $priceFormat,
                     "price_foreign" => $sumPriceForeign,
                     "price_foreign_format" => $priceFormatForeign,
-                    "area" => $areaTotal,
-                    "area_format" => $areaTotalFormat,
+                    /*"area" => $areaTotal,
+                    "area_format" => $areaTotalFormat,*/
+                    "area" => $department->area,
+                    "area_format" => $department->area_format,
                     "floor" => $department->floor,
                     "view_id" => $department->view_id,
                     "type_department_id" => $department->type_department_id,
@@ -95,7 +99,9 @@ class IndexController extends BaseController
                     "mainDepartment" => $department,
                     "package_rel" => $package,
                     "package_id" => $value->id,
-                    "created_at" => $value->created_at
+                    "created_at" => $value->created_at,
+                    "warehouses" => $warehouses,
+                    "parkings" => $parkings
                 ];
             }
             $departments = $departments->concat(collect($combosArray));
@@ -578,7 +584,15 @@ class IndexController extends BaseController
             $areaTotal = number_format($packageInfo->departmentsRel->pluck('area')->sum(),2);
             $department["data_package"] = $packageInfo;
             $department["departmentsPluck"] = $packageInfo->departmentsRel->pluck('id');
-            $department["area_format_package"] = $areaTotal;
+            //$department["area_format_package"] = $areaTotal;
+            $department["area_format_package"] = $department->area_format;
+
+            $parkings = $packageInfo->departmentsRel()->where('sector_id',2)->get(); 
+            $warehouses = $packageInfo->departmentsRel()->where('sector_id',3)->get(); 
+
+            $department["parkings"] = $parkings;
+            $department["warehouses"] = $warehouses;
+
             if($packageInfo){
                 $packageInfo = $packageInfo->load('departmentsRel');
                 $areaTotal = number_format($packageInfo->departmentsRel->pluck('area')->sum(),2);
@@ -617,7 +631,8 @@ class IndexController extends BaseController
 
     public function summary(Request $request, $code)
     {
-        $department = Department::where('slug', $code)->where('available', 1)->with('viewRel', 'tipologyRel.parentTypeDepartmentRel', 'projectRel:id,logo_colour,price_separation,name_es,name_en,code_ubigeo,project_status_id,master_currency_id,has_warehouse,has_parking,stock_warehouse,stock_parking,reservation_in_package,package_description', 'projectRel.ubigeoRel', 'projectRel.statusRel','packageRel')->first();
+        //$department = Department::where('slug', $code)->where('available', 1)->with('viewRel', 'tipologyRel.parentTypeDepartmentRel', 'projectRel:id,logo_colour,price_separation,name_es,name_en,code_ubigeo,project_status_id,master_currency_id,has_warehouse,has_parking,stock_warehouse,stock_parking,reservation_in_package,package_description', 'projectRel.ubigeoRel', 'projectRel.statusRel','packageRel')->first();
+        $department = Department::where('slug', $code)->with('viewRel', 'tipologyRel.parentTypeDepartmentRel', 'projectRel:id,logo_colour,price_separation,name_es,name_en,code_ubigeo,project_status_id,master_currency_id,has_warehouse,has_parking,stock_warehouse,stock_parking,reservation_in_package,package_description', 'projectRel.ubigeoRel', 'projectRel.statusRel','packageRel')->first();
         if (!$department) {
             return $this->sendError("");
         }
@@ -633,9 +648,16 @@ class IndexController extends BaseController
             $areaTotal = number_format($packageInfo->departmentsRel->pluck('area')->sum(),2);
             $department["data_package"] = $packageInfo;
             $department["departmentsPluck"] = $packageInfo->departmentsRel->pluck('id');
-            $department["area_format_package"] = $areaTotal;
+            //$department["area_format_package"] = $areaTotal;
+            $department["area_format_package"] = $department->area_format;
+
+            $parkings = $packageInfo->departmentsRel()->where('sector_id',2)->get(); 
+            $warehouses = $packageInfo->departmentsRel()->where('sector_id',3)->get(); 
+
+            $department["parkings"] = $parkings;
+            $department["warehouses"] = $warehouses;
             if($packageInfo){
-                $packageInfo = $packageInfo->load('departmentsRel');
+                //$packageInfo = $packageInfo->load('departmentsRel');
                 $areaTotal = number_format($packageInfo->departmentsRel->pluck('area')->sum(),2);
                 if($department->projectRel->master_currency_id == 1){
                     $priceFormat = $packageInfo->departmentsRel->pluck('price');

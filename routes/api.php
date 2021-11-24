@@ -59,11 +59,16 @@ Route::namespace('Api')->group(function() {
         Route::get('get-all', 'Reserve\IndexController@getDepartmentsWithCombos');
         Route::get('filters', 'Reserve\IndexController@updateFilters');
         Route::post('customer', 'Reserve\PostController@customer');
+        #PLATAFORMA ASESORES
+        Route::post('platform-commercial/customer', 'Reserve\PostController@customerPlatformCommercial');
         Route::get('available/{code}', 'Reserve\ConnectionController@availableSap');
-        Route::get('reserve-departments', 'Reserve\ConnectionController@getReserveDepartments');
+        #PLATAFORMA ASESORES
+        Route::get('reserve-departments/{code}', 'Reserve\ConnectionController@getReserveDepartments');
         Route::prefix('payment')->group(function() { 
             Route::post('init', 'Reserve\PostController@paymentInit');
             Route::post('ipn', 'Reserve\PostController@ipn');
+            Route::post('platform-commercial/init', 'Reserve\PostController@paymentInitPlatformCommercial');
+            //Route::post('platform-commercial/ipn', 'Reserve\PostController@customerPlatformCommercial');
         });
     });
     Route::prefix('chat')->group(function() { 

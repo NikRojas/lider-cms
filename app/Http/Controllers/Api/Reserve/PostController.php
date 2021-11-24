@@ -315,4 +315,164 @@ class PostController extends BaseController
             return $this->sendResponse(["order_id" => $request->oi], trans('custom.title.success'), 200);
         }
     }
+
+    #PLATAFORMA COMERCIAL
+
+    public function customerPlatformCommercial(CustomerRequest $request){
+        /*$department = Department::where('slug',$request->slug)->with('projectRel')->first();
+        if (!$department) {
+            return $this->sendError("");
+        }*/
+        #Ver si se OBTIENE OTRA VEZ EL ESTADO DE LA RESERVA Y VER SI CADUCO
+        #Crear Cliente
+        $dt = MasterDocumentType::where('description',$request->type_document_id)->first();
+        $r_customer = request(['document_number','name','lastname','lastname_2','email','mobile']);
+        $r_customer = array_merge($r_customer, [ "type_document_id" => $dt->id]);
+        $checkCustomer = Customer::where('document_number',$request->document_number)->first();
+        try {
+            if($checkCustomer){
+                $customer = Customer::UpdateOrCreate(["id" => $checkCustomer->id],$r_customer);
+            }
+            else{
+                $slug = Str::random(20);
+                $customer = Customer::UpdateOrCreate(array_merge($r_customer, ["slug" => $slug]));
+            }
+        } catch (\Exception $e) {
+            #Ocurrio un error al crear el cliente
+            return $this->sendError(trans('custom.title.error'), ['success '=> false, 'cu' => false], 500);
+        }
+        #Crear Orden solo si no existe la orden creada
+        if(!$request->oi){
+            $advisor = null;
+            $project = Project::where('id',$request->project_id)->first();
+            $price_deparment_separation = $project->price_separation;
+            $codeReserve = $request->code_reserve;
+            //DECODIFICAR
+            $r_order = ["sended_code_sap" => $codeReserve, "customer_id" => $customer->id, "total_price" => $price_deparment_separation, "order_date" => Carbon::now(),'master_currency_id' => $project->master_currency_id]; 
+            #Setear Asesor si viene desde la URL de Separacion
+            try {
+                $order = Order::UpdateOrCreate($r_order);
+            }
+            catch (\Exception $e) {
+                #Ocurrio un error al crear la orden
+                return $this->sendError(trans('custom.order.payment'), ['success '=> false, 'or' => false], 500);
+            }
+            try {
+                $allEstates = [];
+                foreach ($request->allEstates as $key => $value) {
+                    $r_order_detail = ["order_id" => $order->id, "project_id" => $request->project_id, "quantity" => 1, "department_id" => $value->id, 'price_element' => $price_deparment_separation, 'total_price' => $price_deparment_separation];
+                    $order_detail = OrderDetail::UpdateOrCreate($r_order_detail);
+                }
+                return $this->sendResponse(["order_id" => $order->id], trans('custom.title.success'), 200);
+            }
+            catch (\Exception $e) {
+                #Ocurrio un error al crear el Detalle de la Orden
+                return $this->sendError(trans('custom.order.payment'), ['success '=> false, 'ord' => false], 500);
+            }
+        }
+        else{
+            return $this->sendResponse(["order_id" => $request->oi], trans('custom.title.success'), 200);
+        }
+    }
+
+    public function paymentInitPlatformCommercial(Request $request){
+        #Ver si se retorna otra vez la disponibilidad de la reserva
+        /*$department = Department::where('slug',$request->slug)->with('projectRel')->first();
+        if (!$department) {
+            return $this->sendError("");
+        }*/
+        $orderId = $request->oi;
+        $project = Project::where('id',$request->project_id)->first();
+        $price_deparment_separation = $project->price_separation;
+        #Comenzar la transacción
+        $transactionsStatusPending = MasterTransactionStatus::where('name','Pendiente')->first();
+        $transactionRegistered = Transaction::where('order_id',$orderId)->where('transaction_status_id', $transactionsStatusPending->id)->first();
+        #Si no existe registrarla
+        if(!$transactionRegistered){
+            $masterOrderCycleOpen = MasterOrderCycle::where('payment_gateway_value','OPEN')->first();
+            try {
+                $transaction = new Transaction();
+                $transaction->order_id = $orderId;
+                $transaction->transaction_date = Carbon::now();
+                $transaction->amount = $price_deparment_separation;
+                $transaction->transaction_status_id = $transactionsStatusPending->id;
+                $transaction->order_cycle_id = $masterOrderCycleOpen->id;
+                $transaction->save();
+            }
+            catch (\Exception $e) {
+                #Ocurrio un error al crear la transacción pendiente
+                return $this->sendError(trans('custom.title.error'), ['success '=> false, 'tr_pending' => false], 500);
+            }
+        }
+        #Conexión con Pasarela
+        $price_deparment_separation_payment_gateway = intval(str_replace(".", "", $price_deparment_separation));
+        //Cada Proyecto tiene un usuario y una password diferente;
+        $credentialPayment = CredentialPayment::where('project_id',$department->project_id)->first();
+        $checkCredentials = $this->checkCredentialsStored($credentialPayment);
+        if(!$checkCredentials['active']){
+            return $this->sendError(trans('custom.title.error'), $checkCredentials, 500);
+        }
+        //Tipo de Moneda
+        if($credentialPayment->type_currency){
+            $currency = "PEN";
+        }
+        else{
+            $currency = "USD";
+        }
+        //PONER TODOS LOS INMUEBLES
+            $departments = $package->load('departmentsRel');
+            $departmentsDescripton = $departments->departmentsRel->pluck('description')->values()->all();
+            $departmentsSapCodes = $departments->departmentsRel->pluck('sap_code')->values()->all();
+            $metadata = [
+                "Proyecto" => $department->projectRel->name_es,
+                "Código Inmueble" => implode(', ', $departmentsSapCodes),
+                "Descripción del Inmueble" => implode(', ', $departmentsDescripton),
+                "Tipo de Documento" => $request->type_document_id,
+                "Número de Documento" => $request->document_number,
+                "Nombres" => $request->name,
+                "Apellido Paterno" => $request->lastname,
+                "Apellido Materno" => $request->lastname_2,
+                "Combo"            => 1,
+                "Código Combo"     => $package->slug
+            ];
+        $body = [
+            "amount" => $price_deparment_separation_payment_gateway,
+            "currency" => $currency,
+            #URL Notificación
+            "ipnTargetUrl" => config('app.url').$this->urlIpn,
+            //Order
+            //"orderId" => "myOrderId-999999",
+            //"orderId" => $order->id,
+            "orderId" => $request->oi,
+            "customer" => [
+                "email" => $request->email,
+                "billingDetails" => [
+                    "firstName" => $request->name,
+                    "lastName" => $request->lastname,
+                    "phoneNumber" => $request->mobile,
+                    "identityCode" => $request->document_number
+                ],
+            ],
+            "metadata" => $metadata
+        ];
+        $authToken = $credentialPayment->user.':'.$credentialPayment->password_prod;
+        $codeAuthToken = base64_encode($authToken);
+        #Test {
+            //$authToken = '89289758:testpassword_7vAtvN49E8Ad6e6ihMqIOvOHC6QV5YKmIXgxisMm0V7Eq';
+            //$codeAuthToken = base64_encode($authToken);
+            //$TESTcodeAuthToken = 'ODkyODk3NTg6dGVzdHBhc3N3b3JkXzd2QXR2TjQ5RThBZDZlNmloTXFJT3ZPSEM2UVY1WUttSVhneGlzTW0wVjdFcQ==';
+        #Test}
+        try {
+            $client = new Client();
+            $response = $client->post($this->urlCreatePayment, [
+                'headers' => ['Content-Type' => 'application/json', 'Authorization' => "Basic ".$codeAuthToken],
+                'body'    => json_encode($body)
+            ]); 
+            $responseData = json_decode($response->getBody()->getContents());
+            return $this->sendResponse(['success' => true, "t" => $responseData->answer->formToken, 'j' => $credentialPayment->token_js_prod, 'currency' => $currency], trans('custom.title.success'), 200);
+        }
+        catch (\GuzzleHttp\Exception\RequestException $e) {
+            return $this->sendError(trans('custom.title.error'), ['success' => false], 500);
+        }
+    }
 }

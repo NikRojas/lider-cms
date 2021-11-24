@@ -117,6 +117,7 @@ class ConnectionController extends BaseController
                 $estatesToView = NULL;
                 $parkingsToView = [];
                 $warehousesToView = [];
+                $allEstates = [];
                 //foreach ($estates as $key => $value) {
                 #Test
                 foreach ($testInmuebles as $key => $value) {
@@ -131,6 +132,7 @@ class ConnectionController extends BaseController
                         else if($depTemp->sector_id == 3){
                             $warehousesToView[] = $depTemp;
                         }  
+                        $allEstates[] = $depTemp;
                     }
                 }
                 //if(count($estatesToView) > 0){
@@ -158,20 +160,39 @@ class ConnectionController extends BaseController
                             }
                         }
                     }
+
+                    if($estatesToView->projectRel->master_currency_id == 1){
+                        $priceFormat = collect($allEstates)->pluck('price');
+                        $sumPrice = $priceFormat->sum();
+                        $priceFormat = $estatesToView->projectRel->currencyRel->symbol.' '.number_format($sumPrice, 0, '.', ',');
+                        $estatesToView["price"] = $sumPrice;
+                        $estatesToView["price_format"] = $priceFormat;
+                    }
+                    else{
+                        $priceFormatForeign = collect($allEstates)->pluck('price_foreign');
+                        $sumPrice = $priceFormatForeign->sum();
+                        $priceFormatForeign = $estatesToView->projectRel->currencyRel->symbol.' '.number_format($sumPrice, 0, '.', ',');
+                        $estatesToView["price_foreign"] = $sumPrice;
+                        $estatesToView["price_foreign_format"] = $priceFormatForeign;
+                    }
+
+
                     $toView = [
+                        "available" => true,
                         "isPackage" => false,
                         "deps" => $estatesToView,
                         "parkings" => $parkingsToView,
-                        "warehouses" => $warehousesToView
+                        "warehouses" => $warehousesToView,
+                        "allEstates" => $allEstates
                     ];
                     return $this->sendResponse($toView, 'Reserva disponible');
                 }
                 else{
-                    return $this->sendResponse([], 'Departamento no disponible');   
+                    return $this->sendResponse(["available" => false], 'Departamento no disponible');   
                 }
             }
             else{
-                return $this->sendResponse([], 'Ext. Reserva no disponible');
+                return $this->sendResponse(["available" => false], 'Ext. Reserva no disponible');
             }
         /*}
         catch (\GuzzleHttp\Exception\RequestException $e) {

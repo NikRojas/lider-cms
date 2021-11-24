@@ -699,11 +699,13 @@ class IndexController extends BaseController
         $content = $this->getContentPage('reserve-your-department');
         $terms = $this->getContentPage('terms-conditions');
         $privacy = $this->getContentPage('privacy-policies');
+        $typeDocuments = MasterDocumentType::select('id', 'name', 'description')->get();
         $data = array(
             "page" => $page,
             "content" => $content,
             "terms" => $terms,
             "privacy" => $privacy,
+            "typeDocuments" => $typeDocuments
         );
         return $this->sendResponse($data, '');
     }

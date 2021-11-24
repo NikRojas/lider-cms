@@ -692,4 +692,19 @@ class IndexController extends BaseController
         );
         return $this->sendResponse($data, '');
     }
+
+    public function indexAdvisor(Request $request)
+    {
+        $page = $this->getSeoPage('reserve-your-department', $request->locale);
+        $content = $this->getContentPage('reserve-your-department');
+        $terms = $this->getContentPage('terms-conditions');
+        $privacy = $this->getContentPage('privacy-policies');
+        $data = array(
+            "page" => $page,
+            "content" => $content,
+            "terms" => $terms,
+            "privacy" => $privacy,
+        );
+        return $this->sendResponse($data, '');
+    }
 }

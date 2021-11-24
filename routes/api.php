@@ -52,6 +52,7 @@ Route::namespace('Api')->group(function() {
         Route::get('quotation', 'PageController@quotation');
         Route::get('reserve', 'Reserve\IndexController@index');
         Route::get('reserve/summary/{code}', 'Reserve\IndexController@summary');
+        Route::get('reserve/advisor', 'Reserve\IndexController@indexAdvisor');
         Route::get('reserve/{code}', 'Reserve\IndexController@detail');
     });
     Route::prefix('reserve')->group(function() { 
@@ -59,6 +60,7 @@ Route::namespace('Api')->group(function() {
         Route::get('filters', 'Reserve\IndexController@updateFilters');
         Route::post('customer', 'Reserve\PostController@customer');
         Route::get('available/{code}', 'Reserve\ConnectionController@availableSap');
+        Route::get('reserve-departments', 'Reserve\ConnectionController@getReserveDepartments');
         Route::prefix('payment')->group(function() { 
             Route::post('init', 'Reserve\PostController@paymentInit');
             Route::post('ipn', 'Reserve\PostController@ipn');

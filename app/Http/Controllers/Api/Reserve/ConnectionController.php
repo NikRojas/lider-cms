@@ -3,12 +3,16 @@
 namespace App\Http\Controllers\Api\Reserve;
 
 use App\Department;
+use App\FloorSector;
 use App\Http\Controllers\Api\BaseController;
 use Illuminate\Support\Str;
 use App\LogSapConnection;
+use App\Project;
 use App\SapCredential;
 use GuzzleHttp\Client;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class ConnectionController extends BaseController
 {
@@ -73,5 +77,108 @@ class ConnectionController extends BaseController
             Log::info("Error obteniendo stock");
             return $this->sendError(trans('custom.title.error'), [], 500);
         }
+    }
+
+    public function sapAvailableReserve($code){
+        $url = config('services.sap_url').'/api/cliente/reserva?codigo='.$code;
+        return $url;
+    }
+
+    public function getReserveDepartments(Request $request){
+        $type = 'Obtener Reserva Disponibilidad';
+        $sapCredentials = SapCredential::first();
+        if (!$sapCredentials->token) {
+            $lsc = LogSapConnection::UpdateOrCreate(["type" => $type, 'description' =>  trans('custom.message.sap.no_token')]);
+        }
+        $codeReserve = $request->code;
+        $description = 'Código de Reserva '.$codeReserve.' - ';
+        $slug = Str::random(20);
+        //try {
+            /*$client = new Client();
+            $responseSap = $client->request('GET', $this->sapAvailableReserve($codeReserve), [
+                'headers' => ['Content-Type' => 'application/json', 'Authorization' => $sapCredentials->token]
+            ]);
+            $responseData = json_decode($responseSap->getBody());
+            $status = $responseSap->getStatusCode();
+            #LogSapConnection
+            $lsc = LogSapConnection::UpdateOrCreate(["slug" => $slug, "type" => $type, 'response' => (string) $responseSap->getBody() , 'status' => $status, 'description' =>  (string) $description.'Éxito.']);
+            $checkIfHasAtleast1 = count($responseData->inmuebles);*/
+            #Test
+            $testInmuebles = [
+                (object) ["codigo" => "NAM1E40501"],
+                (object) ["codigo" => "NAM1C081"],
+                (object) ["codigo" => "NAM1D023"],
+            ];
+            $checkIfHasAtleast1  = count($testInmuebles);
+            if($checkIfHasAtleast1){
+                //$estates = $responseData->inmuebles;
+                #Test;
+                $testInmuebles = $testInmuebles;
+                $estatesToView = NULL;
+                $parkingsToView = [];
+                $warehousesToView = [];
+                //foreach ($estates as $key => $value) {
+                #Test
+                foreach ($testInmuebles as $key => $value) {
+                    $depTemp = Department::where('sap_code',$value->codigo)->first();
+                    if($depTemp){
+                        if($depTemp->sector_id == 1 || $depTemp->sector_id == 4){
+                            $estatesToView = $depTemp->load('projectRel.ubigeoRel','projectRel.statusRel','viewRel','tipologyRel.parentTypeDepartmentRel');
+                        }
+                        else if($depTemp->sector_id == 2){
+                            $parkingsToView[] = $depTemp;
+                        }
+                        else if($depTemp->sector_id == 3){
+                            $warehousesToView[] = $depTemp;
+                        }  
+                    }
+                }
+                //if(count($estatesToView) > 0){
+                if($estatesToView){
+                    //$projectId = $estatesToView[0]->project_id;
+                    if(count($parkingsToView)){
+                        foreach ($parkingsToView as $keyDep => $valueDep) {
+                            $parkingOnFloor = DB::table('floors_sector_departments')->where('department_id',$valueDep->id)->first();
+                            if($parkingOnFloor){
+                                $valueDep["floorView"] = FloorSector::find($parkingOnFloor->floor_id);
+                            }
+                            else{
+                                $valueDep["floorView"] = NULL;
+                            }
+                        }
+                    }
+                    if(count($warehousesToView)){
+                        foreach ($warehousesToView as $keyDep => $valueDep) {
+                            $warehouseOnFloor = DB::table('floors_sector_departments')->where('department_id',$valueDep->id)->first();
+                            if($warehouseOnFloor){
+                                $valueDep["floorView"] = FloorSector::find($warehouseOnFloor->floor_id);
+                            }
+                            else{
+                                $valueDep["floorView"] = NULL;
+                            }
+                        }
+                    }
+                    $toView = [
+                        "isPackage" => false,
+                        "deps" => $estatesToView,
+                        "parkings" => $parkingsToView,
+                        "warehouses" => $warehousesToView
+                    ];
+                    return $this->sendResponse($toView, 'Reserva disponible');
+                }
+                else{
+                    return $this->sendResponse([], 'Departamento no disponible');   
+                }
+            }
+            else{
+                return $this->sendResponse([], 'Ext. Reserva no disponible');
+            }
+        /*}
+        catch (\GuzzleHttp\Exception\RequestException $e) {
+            $status = $e->getResponse()->getStatusCode();
+            $lsc = LogSapConnection::UpdateOrCreate(["slug" => $slug, "type" => $type, 'status' => $status, 'description' =>  (string) $description.'Error.']);
+            Log::info("Error obteniendo stock");
+            return $this->sendError(trans('custom.title.error'), [], 500);
+        }*/
     }
 }

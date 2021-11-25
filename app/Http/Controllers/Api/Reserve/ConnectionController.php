@@ -179,7 +179,7 @@ class ConnectionController extends BaseController
 
                     $toView = [
                         "available" => true,
-                        "isPackage" => false,
+                        //"isPackage" => false,
                         "deps" => $estatesToView,
                         "parkings" => $parkingsToView,
                         "warehouses" => $warehousesToView,

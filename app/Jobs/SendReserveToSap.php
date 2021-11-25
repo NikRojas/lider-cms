@@ -172,6 +172,7 @@ class SendReserveToSap implements ShouldQueue
                 //Notification::route('mail',$advisorSend->email)->notify(new AdvisorOrderPaid($this->order));
             }
             #Actualizar Stock del Departamento
+            /*Comentado por test
             foreach ($departmentsId as $key => $value) {
                 $departmentUpdate = Department::UpdateOrCreate(["id" => $value], ["available" => false]);
             }
@@ -180,7 +181,7 @@ class SendReserveToSap implements ShouldQueue
                 $package->status = 0;
                 $package->stock = 0;
                 $package->save();
-            }
+            }*/
             #LogSapConnection
             $lsc = LogSapConnection::UpdateOrCreate(["slug" => $slug, "type" => $this->lscType, 'status' => $status, 'description' => $description, "response" => (string) $responseSap->getBody()]);  
         }

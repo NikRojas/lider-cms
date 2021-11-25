@@ -13,6 +13,7 @@ use App\MasterOrderCycle;
 use App\MasterTransactionStatus;
 use App\Order;
 use App\OrderDetail;
+use App\Project;
 use App\RealStatePackage;
 use App\Transaction;
 use Carbon\Carbon;
@@ -360,7 +361,7 @@ class PostController extends BaseController
             try {
                 $allEstates = [];
                 foreach ($request->allEstates as $key => $value) {
-                    $r_order_detail = ["order_id" => $order->id, "project_id" => $request->project_id, "quantity" => 1, "department_id" => $value->id, 'price_element' => $price_deparment_separation, 'total_price' => $price_deparment_separation];
+                    $r_order_detail = ["order_id" => $order->id, "project_id" => $request->project_id, "quantity" => 1, "department_id" => $value["id"], 'price_element' => $price_deparment_separation, 'total_price' => $price_deparment_separation];
                     $order_detail = OrderDetail::UpdateOrCreate($r_order_detail);
                 }
                 return $this->sendResponse(["order_id" => $order->id], trans('custom.title.success'), 200);
@@ -374,6 +375,8 @@ class PostController extends BaseController
             return $this->sendResponse(["order_id" => $request->oi], trans('custom.title.success'), 200);
         }
     }
+
+    private $urlIpnPlatformCommercial = '/api/reserve/payment/platform-commercial/ipn';
 
     public function paymentInitPlatformCommercial(Request $request){
         #Ver si se retorna otra vez la disponibilidad de la reserva
@@ -407,7 +410,7 @@ class PostController extends BaseController
         #Conexión con Pasarela
         $price_deparment_separation_payment_gateway = intval(str_replace(".", "", $price_deparment_separation));
         //Cada Proyecto tiene un usuario y una password diferente;
-        $credentialPayment = CredentialPayment::where('project_id',$department->project_id)->first();
+        $credentialPayment = CredentialPayment::where('project_id',$project->id)->first();
         $checkCredentials = $this->checkCredentialsStored($credentialPayment);
         if(!$checkCredentials['active']){
             return $this->sendError(trans('custom.title.error'), $checkCredentials, 500);
@@ -419,30 +422,26 @@ class PostController extends BaseController
         else{
             $currency = "USD";
         }
-        //PONER TODOS LOS INMUEBLES
-            $departments = $package->load('departmentsRel');
-            $departmentsDescripton = $departments->departmentsRel->pluck('description')->values()->all();
-            $departmentsSapCodes = $departments->departmentsRel->pluck('sap_code')->values()->all();
-            $metadata = [
-                "Proyecto" => $department->projectRel->name_es,
-                "Código Inmueble" => implode(', ', $departmentsSapCodes),
-                "Descripción del Inmueble" => implode(', ', $departmentsDescripton),
-                "Tipo de Documento" => $request->type_document_id,
-                "Número de Documento" => $request->document_number,
-                "Nombres" => $request->name,
-                "Apellido Paterno" => $request->lastname,
-                "Apellido Materno" => $request->lastname_2,
-                "Combo"            => 1,
-                "Código Combo"     => $package->slug
-            ];
+        $allEstates = $request->department["allEstates"];
+        $departments = collect($allEstates);
+        $departmentsDescripton = $departments->pluck('description')->values()->all();
+        $departmentsSapCodes = $departments->pluck('sap_code')->values()->all();
+        $metadata = [
+            "Proyecto" => $project->name_es,
+            "Código Inmueble" => implode(', ', $departmentsSapCodes),
+            "Descripción del Inmueble" => implode(', ', $departmentsDescripton),
+            "Tipo de Documento" => $request->type_document_id,
+            "Número de Documento" => $request->document_number,
+            "Nombres" => $request->name,
+            "Apellido Paterno" => $request->lastname,
+            "Apellido Materno" => $request->lastname_2
+        ];
         $body = [
             "amount" => $price_deparment_separation_payment_gateway,
             "currency" => $currency,
             #URL Notificación
-            "ipnTargetUrl" => config('app.url').$this->urlIpn,
+            "ipnTargetUrl" => config('app.url').$this->urlIpnPlatformCommercial,
             //Order
-            //"orderId" => "myOrderId-999999",
-            //"orderId" => $order->id,
             "orderId" => $request->oi,
             "customer" => [
                 "email" => $request->email,

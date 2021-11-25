@@ -68,7 +68,7 @@ Route::namespace('Api')->group(function() {
             Route::post('init', 'Reserve\PostController@paymentInit');
             Route::post('ipn', 'Reserve\PostController@ipn');
             Route::post('platform-commercial/init', 'Reserve\PostController@paymentInitPlatformCommercial');
-            Route::post('platform-commercial/ipn', 'Reserve\PostController@customerPlatformCommercial');
+            Route::post('platform-commercial/ipn', 'Reserve\PostController@ipnPlatformCommercial');
         });
     });
     Route::prefix('chat')->group(function() { 

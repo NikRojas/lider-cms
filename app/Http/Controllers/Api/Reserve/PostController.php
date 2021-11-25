@@ -320,11 +320,8 @@ class PostController extends BaseController
     #PLATAFORMA COMERCIAL
 
     public function customerPlatformCommercial(CustomerRequest $request){
-        /*$department = Department::where('slug',$request->slug)->with('projectRel')->first();
-        if (!$department) {
-            return $this->sendError("");
-        }*/
-        #Ver si se OBTIENE OTRA VEZ EL ESTADO DE LA RESERVA Y VER SI CADUCO
+        #Si se desea hacer alguna verificación adicional antes de pasar al Summary se hace aqui como si la reserva caduco
+        #return $this->sendError("");
         #Crear Cliente
         $dt = MasterDocumentType::where('description',$request->type_document_id)->first();
         $r_customer = request(['document_number','name','lastname','lastname_2','email','mobile']);
@@ -344,12 +341,17 @@ class PostController extends BaseController
         }
         #Crear Orden solo si no existe la orden creada
         if(!$request->oi){
-            $advisor = null;
+            $advisorSAP = $request->advisor_id;
+            $advisor = Advisor::where('sap_code',$advisorSAP)->first();
+            $advisorId = NULL;
+            if($advisor){
+                $advisorId = $advisor->id;
+            }
             $project = Project::where('id',$request->project_id)->first();
             $price_deparment_separation = $project->price_separation;
             $codeReserve = $request->code_reserve;
-            //DECODIFICAR
-            $r_order = ["sended_code_sap" => $codeReserve, "customer_id" => $customer->id, "total_price" => $price_deparment_separation, "order_date" => Carbon::now(),'master_currency_id' => $project->master_currency_id]; 
+            //DECODIFICAR CODE RESERVE
+            $r_order = ["advisor_id" => $advisorId,"sended_code_sap" => $codeReserve, "customer_id" => $customer->id, "total_price" => $price_deparment_separation, "order_date" => Carbon::now(),'master_currency_id' => $project->master_currency_id]; 
             #Setear Asesor si viene desde la URL de Separacion
             try {
                 $order = Order::UpdateOrCreate($r_order);
@@ -379,11 +381,8 @@ class PostController extends BaseController
     private $urlIpnPlatformCommercial = '/api/reserve/payment/platform-commercial/ipn';
 
     public function paymentInitPlatformCommercial(Request $request){
-        #Ver si se retorna otra vez la disponibilidad de la reserva
-        /*$department = Department::where('slug',$request->slug)->with('projectRel')->first();
-        if (!$department) {
-            return $this->sendError("");
-        }*/
+        #Si se desea hacer alguna verificación adicional antes de pasar al Summary se hace aqui como si la reserva caduco
+        #return $this->sendError("");
         $orderId = $request->oi;
         $project = Project::where('id',$request->project_id)->first();
         $price_deparment_separation = $project->price_separation;
@@ -472,6 +471,84 @@ class PostController extends BaseController
         }
         catch (\GuzzleHttp\Exception\RequestException $e) {
             return $this->sendError(trans('custom.title.error'), ['success' => false], 500);
+        }
+    }
+
+    public function ipnPlatformCommercial(Request $request){
+        /*$rawKrAnswer = json_decode($request["kr-answer"]);
+        $orderId = $rawKrAnswer->orderDetails->orderId;
+        $orderCycle = $rawKrAnswer->orderCycle;*/
+        #{Test
+            $orderId = 100000022;
+        #}
+        $order = Order::with('orderDetailsRel','transactionLatestRel')->findOrFail($orderId);
+        #Si tiene ultima transacción
+        if($order->transactionLatestRel){
+            #Y si esta Cerrada
+            $masterOrderCycleClosed = MasterOrderCycle::where('payment_gateway_value','CLOSED')->first();
+            if($order->transactionLatestRel->order_cycle_id == $masterOrderCycleClosed->id){
+                return $this->sendError(trans('custom.title.error'), ['success '=> false, 'tr_open' => false], 500);
+            }
+        }
+        $orderDetails = $order->orderDetailsRel[0];
+        $project_id = $orderDetails->project_id;
+        
+        $credentialPayment = CredentialPayment::where('project_id',$project_id)->firstorFail();
+        $checkCredentials = $this->checkCredentialsStored($credentialPayment);
+        if(!$checkCredentials['active']){
+            return $this->sendError(trans('custom.title.error'), $checkCredentials, 500);
+        }
+        
+        /* Username, password and endpoint used for server to server web-service calls */
+        /*LyraClient::setDefaultUsername($credentialPayment->user);
+        LyraClient::setDefaultPassword($credentialPayment->password_prod);
+        LyraClient::setDefaultEndpoint("https://api.micuentaweb.pe");*/
+
+        /* publicKey and used by the javascript client */
+        //LyraClient::setDefaultPublicKey($credentialPayment->token_js_prod);
+
+        /* SHA256 key */
+        //LyraClient::setDefaultSHA256Key($credentialPayment->token_sha_256_prod);
+        
+        /*$client = new LyraClient();
+        #Verificar Fraude
+        if (!$client->checkHash()) {
+            Log::info("Hash Fallo");
+            return $this->sendError(trans('custom.title.error'), ['hash' => false], 500);
+        }*/
+
+        #{Test
+            $orderCycle = "CLOSED";
+            $detailedStatus = "AUTHORISED";
+            $transactionsStatus = MasterTransactionStatus::where('value_detailed_status',$detailedStatus)->first();
+            $masterOrderCycle = MasterOrderCycle::where('payment_gateway_value',$orderCycle)->first();
+        #}
+
+        #Transacción
+        /*$transactionsStatus = MasterTransactionStatus::where('value_detailed_status',$rawKrAnswer->transactions[0]->detailedStatus)->first();
+        $masterOrderCycle = MasterOrderCycle::where('payment_gateway_value',$orderCycle)->first();*/
+        if(!$transactionsStatus){
+            return $this->sendError(trans('custom.title.error'), ['ts' => false], 500);
+        }
+        if(!$masterOrderCycle){
+            return $this->sendError(trans('custom.title.error'), ['moc' => false], 500);
+        }
+        try {
+            $transaction2 = new Transaction();
+            $transaction2->order_id = $orderId;
+            $transaction2->transaction_date = Carbon::now();
+            $transaction2->amount = $order->total_price;
+            $transaction2->transaction_status_id = $transactionsStatus->id;
+            $transaction2->response = $request["kr-answer"];
+            $transaction2->order_cycle_id = $masterOrderCycle->id;
+            $transaction2->save();
+            return $this->sendResponse(['success' => true], trans('custom.title.success'), 200);
+        }
+        catch (\Exception $e) {
+            Log::info("Error IPN");
+            Log::info($e);
+            #Ocurrio crear la transacción
+            return $this->sendError(trans('custom.title.error'), ['success '=> false, 'utr' => false], 500);
         }
     }
 }

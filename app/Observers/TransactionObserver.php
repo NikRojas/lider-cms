@@ -2,6 +2,7 @@
 
 namespace App\Observers;
 
+use App\Jobs\SendPayConfirmationToAdvisor;
 use App\Jobs\SendReserveToSap;
 use App\MasterOrderCycle;
 use App\MasterTransactionStatus;
@@ -31,10 +32,15 @@ class TransactionObserver
             //case 'Pagado':
             //case 'Capturado':
             case 'Autorizado':
-                //$order->customerRel->notify(new OrderReceived($order));
                 if($tr->order_cycle_id == $closedCycle->id){
                     $order->customerRel->notify((new OrderPaid($order))->delay($delayNotification));
-                    SendReserveToSap::dispatch($order);
+                    #Reserva que vino desde la plataforma de Asesores
+                    if($order->real_state_package_id == NULL && $order->department_id == NULL){
+                        SendPayConfirmationToAdvisor::dispatch($order);
+                    }
+                    if($order->real_state_package_id || $order->department_id){
+                        SendReserveToSap::dispatch($order);
+                    }
                 }
                 break;
             case 'Rechazado':

@@ -480,11 +480,11 @@ class PostController extends BaseController
     }
 
     public function ipnPlatformCommercial(Request $request){
-        /*$rawKrAnswer = json_decode($request["kr-answer"]);
+        $rawKrAnswer = json_decode($request["kr-answer"]);
         $orderId = $rawKrAnswer->orderDetails->orderId;
-        $orderCycle = $rawKrAnswer->orderCycle;*/
+        $orderCycle = $rawKrAnswer->orderCycle;
         #{Test
-            $orderId = 100000022;
+            //$orderId = 100000022;
         #}
         $order = Order::with('orderDetailsRel','transactionLatestRel')->findOrFail($orderId);
         #Si tiene ultima transacción
@@ -505,33 +505,33 @@ class PostController extends BaseController
         }
         
         /* Username, password and endpoint used for server to server web-service calls */
-        /*LyraClient::setDefaultUsername($credentialPayment->user);
+        LyraClient::setDefaultUsername($credentialPayment->user);
         LyraClient::setDefaultPassword($credentialPayment->password_prod);
-        LyraClient::setDefaultEndpoint("https://api.micuentaweb.pe");*/
+        LyraClient::setDefaultEndpoint("https://api.micuentaweb.pe");
 
         /* publicKey and used by the javascript client */
         //LyraClient::setDefaultPublicKey($credentialPayment->token_js_prod);
 
         /* SHA256 key */
-        //LyraClient::setDefaultSHA256Key($credentialPayment->token_sha_256_prod);
+        LyraClient::setDefaultSHA256Key($credentialPayment->token_sha_256_prod);
         
-        /*$client = new LyraClient();
+        $client = new LyraClient();
         #Verificar Fraude
         if (!$client->checkHash()) {
             Log::info("Hash Fallo");
             return $this->sendError(trans('custom.title.error'), ['hash' => false], 500);
-        }*/
+        }
 
         #{Test
-            $orderCycle = "CLOSED";
+            /*$orderCycle = "CLOSED";
             $detailedStatus = "AUTHORISED";
             $transactionsStatus = MasterTransactionStatus::where('value_detailed_status',$detailedStatus)->first();
-            $masterOrderCycle = MasterOrderCycle::where('payment_gateway_value',$orderCycle)->first();
+            $masterOrderCycle = MasterOrderCycle::where('payment_gateway_value',$orderCycle)->first();*/
         #}
 
         #Transacción
-        /*$transactionsStatus = MasterTransactionStatus::where('value_detailed_status',$rawKrAnswer->transactions[0]->detailedStatus)->first();
-        $masterOrderCycle = MasterOrderCycle::where('payment_gateway_value',$orderCycle)->first();*/
+        $transactionsStatus = MasterTransactionStatus::where('value_detailed_status',$rawKrAnswer->transactions[0]->detailedStatus)->first();
+        $masterOrderCycle = MasterOrderCycle::where('payment_gateway_value',$orderCycle)->first();
         if(!$transactionsStatus){
             return $this->sendError(trans('custom.title.error'), ['ts' => false], 500);
         }

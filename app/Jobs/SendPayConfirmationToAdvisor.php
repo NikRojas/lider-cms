@@ -85,7 +85,7 @@ class SendPayConfirmationToAdvisor implements ShouldQueue
             if($this->order->advisor_id){
                 $advisorSend = Advisor::where('id',$this->order->advisor_id)->first();
                 //EMAIL QUE SEA PLANTILLA QUE TIENE VARIOS DEPARTAMENTOS
-                //Notification::route('mail',$advisorSend->email)->notify(new AdvisorOrderPaid($this->order));
+                Notification::route('mail',$advisorSend->email)->notify(new AdvisorOrderPaid($this->order));
             }
             #LogSapConnection
             //$lsc = LogSapConnection::UpdateOrCreate(["slug" => $slug, "type" => $this->lscType, 'status' => $status, 'description' => $description, "response" => (string) $responseSap->getBody()]);  

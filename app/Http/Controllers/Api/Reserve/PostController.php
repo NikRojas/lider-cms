@@ -341,11 +341,9 @@ class PostController extends BaseController
         }
         #Crear Orden solo si no existe la orden creada
         if(!$request->oi){
-            $advisorSAP = $request->advisor_id;
-            $advisor = Advisor::where('sap_code',$advisorSAP)->first();
             $advisorId = NULL;
-            if($advisor){
-                $advisorId = $advisor->id;
+            if($request->advisor_id){
+                $advisorId = $request->advisor_id;
             }
             $project = Project::where('id',$request->project_id)->first();
             $price_deparment_separation = $project->price_separation;

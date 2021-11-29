@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers\Api\Reserve;
 
+use App\Advisor;
 use App\Department;
 use App\FloorSector;
 use App\Http\Controllers\Api\BaseController;
 use Illuminate\Support\Str;
 use App\LogSapConnection;
+use App\MasterDocumentType;
 use App\Project;
 use App\SapCredential;
 use GuzzleHttp\Client;
@@ -80,21 +82,25 @@ class ConnectionController extends BaseController
     }
 
     public function sapAvailableReserve($code){
-        $url = config('services.sap_url').'/api/cliente/reserva?codigo='.$code;
+        $url = config('services.sap_url').'/api/cliente/inmuebles/reserva/'.$code;
         return $url;
     }
 
-    public function getReserveDepartments(Request $request){
+    public function getReserveDepartments(Request $request, $code){
         $type = 'Obtener Reserva Disponibilidad';
         $sapCredentials = SapCredential::first();
         if (!$sapCredentials->token) {
             $lsc = LogSapConnection::UpdateOrCreate(["type" => $type, 'description' =>  trans('custom.message.sap.no_token')]);
         }
-        $codeReserve = $request->code;
+        $codeReserveTemp = $code;
+        //DECODIFICAR CODE RESERVE
+        $passDecrypt = "LiderAsesores2021";
+        $encrypted_string = $codeReserveTemp;
+        $codeReserve=openssl_decrypt($encrypted_string,"AES-128-ECB",$passDecrypt);
         $description = 'Código de Reserva '.$codeReserve.' - ';
         $slug = Str::random(20);
-        //try {
-            /*$client = new Client();
+        try {
+            $client = new Client();
             $responseSap = $client->request('GET', $this->sapAvailableReserve($codeReserve), [
                 'headers' => ['Content-Type' => 'application/json', 'Authorization' => $sapCredentials->token]
             ]);
@@ -102,25 +108,51 @@ class ConnectionController extends BaseController
             $status = $responseSap->getStatusCode();
             #LogSapConnection
             $lsc = LogSapConnection::UpdateOrCreate(["slug" => $slug, "type" => $type, 'response' => (string) $responseSap->getBody() , 'status' => $status, 'description' =>  (string) $description.'Éxito.']);
-            $checkIfHasAtleast1 = count($responseData->inmuebles);*/
+            $checkIfHasAtleast1 = count($responseData->cliente->inmuebles);
             #Test
-            $testInmuebles = [
+            /*$testInmuebles = [
                 (object) ["codigo" => "NAM1E40501"],
                 (object) ["codigo" => "NAM1C081"],
                 (object) ["codigo" => "NAM1D023"],
             ];
             $checkIfHasAtleast1  = count($testInmuebles);
+            $advisor = Advisor::where('sap_code','01000101')->first();
+            $dt = MasterDocumentType::where('sap_value',"D")->first();
+            $customer = [
+                "type_document_id" => $dt->description,
+                "document_number" => "77665544",
+                "name" => "CLIENTE",
+                "lastname" => "APELLIDO",
+                "lastname_2" => "2DO APELLIDO",
+                "mobile" => "776666666",
+                "email" => "abazo@lider.com.pe",
+            ];
+            #Test
+            */
+            $advisor = Advisor::where('sap_code',$responseData->cliente->vendedor)->first();
+            $dt = MasterDocumentType::where('sap_value',$responseData->cliente->tipo_documento)->first();
+            $customer = [
+                "type_document_id" => $dt->description,
+                "document_number" => $responseData->cliente->nro_documento,
+                "name" => $responseData->cliente->nombre,
+                "lastname" => $responseData->cliente->apellido_paterno,
+                "lastname_2" => $responseData->cliente->apellido_materno,
+                "mobile" => $responseData->cliente->telefono,
+                "email" => $responseData->cliente->correo,
+            ];
             if($checkIfHasAtleast1){
-                //$estates = $responseData->inmuebles;
+                $estates = $responseData->cliente->inmuebles;
                 #Test;
-                $testInmuebles = $testInmuebles;
+                //$testInmuebles = $testInmuebles;
+                #Test
                 $estatesToView = NULL;
                 $parkingsToView = [];
                 $warehousesToView = [];
                 $allEstates = [];
-                //foreach ($estates as $key => $value) {
+                foreach ($estates as $key => $value) {
                 #Test
-                foreach ($testInmuebles as $key => $value) {
+                //foreach ($testInmuebles as $key => $value) {
+                #Test
                     $depTemp = Department::where('sap_code',$value->codigo)->first();
                     if($depTemp){
                         if($depTemp->sector_id == 1 || $depTemp->sector_id == 4){
@@ -179,27 +211,28 @@ class ConnectionController extends BaseController
 
                     $toView = [
                         "available" => true,
-                        //"isPackage" => false,
                         "deps" => $estatesToView,
                         "parkings" => $parkingsToView,
                         "warehouses" => $warehousesToView,
-                        "allEstates" => $allEstates
+                        "allEstates" => $allEstates,
+                        "advisor" => $advisor, 
+                        "customer" => $customer
                     ];
                     return $this->sendResponse($toView, 'Reserva disponible');
                 }
                 else{
-                    return $this->sendResponse(["available" => false], 'Departamento no disponible');   
+                    return $this->sendResponse(["available" => false, "advisor" => $advisor, "customer" => $customer], 'Departamento no disponible');   
                 }
             }
             else{
-                return $this->sendResponse(["available" => false], 'Ext. Reserva no disponible');
+                return $this->sendResponse(["available" => false, "advisor" => $advisor, "customer" => $customer], 'Ext. Reserva no disponible');
             }
-        /*}
+        }
         catch (\GuzzleHttp\Exception\RequestException $e) {
             $status = $e->getResponse()->getStatusCode();
             $lsc = LogSapConnection::UpdateOrCreate(["slug" => $slug, "type" => $type, 'status' => $status, 'description' =>  (string) $description.'Error.']);
-            Log::info("Error obteniendo stock");
+            Log::info("Error obteniendo stock reserva plataforma comercial");
             return $this->sendError(trans('custom.title.error'), [], 500);
-        }*/
+        }
     }
 }

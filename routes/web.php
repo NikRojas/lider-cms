@@ -2,11 +2,14 @@
 
 use App\Applicant;
 use App\FinancingOption;
+use App\FloorSector;
 use App\Jobs\SendReserveToSap;
 use App\Lead;
 use App\Order;
+use App\OrderDetail;
 use App\ProjectQuotation;
 use App\ProjectTypeDepartment;
+use Illuminate\Support\Facades\DB;
 
 Route::get('/', 'Cms\Auth\LoginController@showLoginForm')->name('login');
 Route::post('login', 'Cms\Auth\LoginController@login')->name('login.post');
@@ -617,11 +620,55 @@ Route::middleware(['auth'])->namespace('Cms')->name('cms.')->group(function () {
     //return view('emails.orders.paid',["order" => $order]);
 });
 
-*//*
+*/
+/*
 Route::get('/mail/reserve', function () {
-    $order = Order::find(100000013);
-    return view('emails.orders.paid',["order" => $order]);
-});*/
+    //$order = Order::find(100000013);
+    //$order = Order::find(100000022);
+    $order = Order::find(100000017);
+    $order = $order->load('orderDetailsRel.departmentRel.projectRel.ubigeoRel','orderDetailsRel.departmentRel.tipologyRel.parentTypeDepartmentRel','orderDetailsRel.departmentRel.viewRel');
+    $deparment = $order->orderDetailsRel->filter(function ($item) {
+        return $item->departmentRel->sector_id == 1 || $item->departmentRel->sector_id == 4;
+    });
+    $deparment = $deparment[0]->departmentRel;
+    $warehouses = [];
+    $parkings = [];
+    if(count($order->orderDetailsRel) > 1){
+        $estates = $order->orderDetailsRel->pluck('departmentRel');
+        $parkings = $estates->filter(function ($item) {
+            return $item->sector_id == 2;
+        });
+        if(count($parkings)){
+            foreach ($parkings as $keyDep => $valueDep) {
+                $parkingOnFloor = DB::table('floors_sector_departments')->where('department_id',$valueDep->id)->first();
+                if($parkingOnFloor){
+                    $valueDep["floorView"] = FloorSector::find($parkingOnFloor->floor_id);
+                }
+                else{
+                    $valueDep["floorView"] = NULL;
+                }
+            }
+        }
+        $parkings = $parkings->values()->all();
+        $warehouses = $estates->filter(function ($item) {
+            return $item->sector_id == 3;
+        });
+        if(count($warehouses)){
+            foreach ($warehouses as $keyDep => $valueDep) {
+                $warehouseOnFloor = DB::table('floors_sector_departments')->where('department_id',$valueDep->id)->first();
+                if($warehouseOnFloor){
+                    $valueDep["floorView"] = FloorSector::find($warehouseOnFloor->floor_id);
+                }
+                else{
+                    $valueDep["floorView"] = NULL;
+                }
+            }
+        }
+        $warehouses = $warehouses->values()->all();
+    }
+    return view('emails.orders.paid',["order" => $order,"department" => $deparment, "warehouses" => $warehouses, "parkings" => $parkings]);
+});
+*/
 /*
 Route::get('/mail/user/quotation', function () {
     $lead = ProjectQuotation::with('projectRel.statusRel','advisorRel','projectTypeDepartmentRel','projectRel.financingOptionsRel')->find(7);
@@ -630,12 +677,52 @@ Route::get('/mail/user/quotation', function () {
 });
 
 Route::get('send-to-sap/{element}','Cms\OrdersStatistics\OrdersController@sendToSap');
-
 Route::get('/mail/advisor/reserve', function () {
-    $order = Order::find(100000008);
-    return view('emails.orders.advisor-paid',["order" => $order]);
+    //$order = Order::find(100000008);
+    //$order = Order::find(100000017);
+    $order = Order::find(100000022);
+    $order = $order->load('orderDetailsRel.departmentRel.projectRel.ubigeoRel','orderDetailsRel.departmentRel.tipologyRel.parentTypeDepartmentRel','orderDetailsRel.departmentRel.viewRel');
+    $deparment = $order->orderDetailsRel->filter(function ($item) {
+        return $item->departmentRel->sector_id == 1 || $item->departmentRel->sector_id == 4;
+    });
+    $deparment = $deparment[0]->departmentRel;
+    $warehouses = [];
+    $parkings = [];
+    if(count($order->orderDetailsRel) > 1){
+        $estates = $order->orderDetailsRel->pluck('departmentRel');
+        $parkings = $estates->filter(function ($item) {
+            return $item->sector_id == 2;
+        });
+        if(count($parkings)){
+            foreach ($parkings as $keyDep => $valueDep) {
+                $parkingOnFloor = DB::table('floors_sector_departments')->where('department_id',$valueDep->id)->first();
+                if($parkingOnFloor){
+                    $valueDep["floorView"] = FloorSector::find($parkingOnFloor->floor_id);
+                }
+                else{
+                    $valueDep["floorView"] = NULL;
+                }
+            }
+        }
+        $parkings = $parkings->values()->all();
+        $warehouses = $estates->filter(function ($item) {
+            return $item->sector_id == 3;
+        });
+        if(count($warehouses)){
+            foreach ($warehouses as $keyDep => $valueDep) {
+                $warehouseOnFloor = DB::table('floors_sector_departments')->where('department_id',$valueDep->id)->first();
+                if($warehouseOnFloor){
+                    $valueDep["floorView"] = FloorSector::find($warehouseOnFloor->floor_id);
+                }
+                else{
+                    $valueDep["floorView"] = NULL;
+                }
+            }
+        }
+        $warehouses = $warehouses->values()->all();
+    }
+    return view('emails.orders.advisor-paid',["order" => $order,"department" => $deparment, "warehouses" => $warehouses, "parkings" => $parkings]);
 });
-
 Route::get('/mail/user', function () {
     return view('emails.user-lead');
 });

@@ -151,17 +151,17 @@ class SendReserveToSap implements ShouldQueue
                         //Log::info($advisorReturned);
                         if($advisorReturned){
                             $orderUpdateAdvisor = Order::UpdateOrCreate(["id" => $this->order->id], ["advisor_id" => $advisorReturned->id]);
-                            //Notification::route('mail',$advisorReturned->email)->notify(new AdvisorOrderPaid($this->order));  
+                            Notification::route('mail',$advisorReturned->email)->notify(new AdvisorOrderPaid($this->order));  
                         }
                     }
                     else{
                         $orderUpdateAdvisor = Order::UpdateOrCreate(["id" => $this->order->id], ["advisor_id" => $advisorSend->id]);
-                        //Notification::route('mail',$advisorSend->email)->notify(new AdvisorOrderPaid($this->order));  
+                        Notification::route('mail',$advisorSend->email)->notify(new AdvisorOrderPaid($this->order));  
                     }
                 }
                 else{
                     $orderUpdateAdvisor = Order::UpdateOrCreate(["id" => $this->order->id], ["advisor_id" => $advisorSend->id]);
-                    //Notification::route('mail',$advisorSend->email)->notify(new AdvisorOrderPaid($this->order));
+                    Notification::route('mail',$advisorSend->email)->notify(new AdvisorOrderPaid($this->order));
                 }
                 $description = $description.' - Éxito.';
             }
@@ -169,7 +169,7 @@ class SendReserveToSap implements ShouldQueue
                 $status = 500;
                 $description = $description.' - Error Retorno SAP.';
                 $orderUpdateAdvisor = Order::UpdateOrCreate(["id" => $this->order->id], ["advisor_id" => $advisorSend->id]);
-                //Notification::route('mail',$advisorSend->email)->notify(new AdvisorOrderPaid($this->order));
+                Notification::route('mail',$advisorSend->email)->notify(new AdvisorOrderPaid($this->order));
             }
             #Actualizar Stock del Departamento
             foreach ($departmentsId as $key => $value) {

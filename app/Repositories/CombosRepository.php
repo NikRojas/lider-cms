@@ -20,7 +20,7 @@ class CombosRepository
             ->orderBy('created_at', 'desc')
             ->paginate($items_per_page);
         foreach ($elements as $element) {
-            if($element->stock){
+            if($element->status_calculate){
                 $stock = '<span class="font-weight-bold text-success badge badge-success" style="color: #2ee119 !important; background-color: rgb(204 255 230);">Disponible</span>';
             }
             else{
@@ -32,10 +32,17 @@ class CombosRepository
             else{
                 $price = $element->departmentsRel->pluck('price_foreign');
             }
-            $detailedRS = $element->departmentsRel->pluck('description');
+            //$detailedRS = $element->departmentsRel->pluck('description');
+            $detailedRS = $element->departmentsRel;
             $de = "";
             foreach ($detailedRS as $key => $value) {
-                $de .= "<div>".$value."</div>"; 
+                if($value["available"]){
+                    $stockSt = '<span class="ml-2 font-weight-bold text-success badge badge-success" style="color: #2ee119 !important; background-color: rgb(204 255 230);">Disponible</span>';
+                }
+                else{
+                    $stockSt = '<span class="ml-2 font-weight-bold text-danger badge badge-danger">No Disponible</span>';
+                }
+                $de .= "<div class='mb-1'>".$value->description." ".$stockSt."</div>"; 
             }
             if($element->image){
                 $img = '<a class="d-block" style="text-decoration: underline;" href="'.asset('storage/img/projects/combos/'.$element["image"]).'" target="_blank">Ver imagen</a><img class="d-block mb-1" height="auto" width="40" src='.asset('storage/img/projects/combos/'.$element["image"]).'>'.'<div>'.$element["description"].'</div>';

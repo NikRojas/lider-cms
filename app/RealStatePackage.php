@@ -13,7 +13,7 @@ class RealStatePackage extends Model
         'status' => 'boolean',
         'stock' => 'boolean',
     ];
-    protected $appends = ['can_delete'];
+    protected $appends = ['can_delete','status_calculate'];
 
     public function projectRel()
     {
@@ -26,10 +26,22 @@ class RealStatePackage extends Model
     }
 
     public function getCanDeleteAttribute(){
-        $value = true;
+        /*$value = true;
         if(!$this->stock){    
             $value = false;
         }
+        return $value;*/
+        return true;
+    }
+
+    public function getStatusCalculateAttribute(){
+        $value = true;
+        foreach($this->departmentsRel as $value){
+            if(!$value->available){
+                $value = false;
+                break;
+            }
+        }   
         return $value;
     }
 

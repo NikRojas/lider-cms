@@ -42,9 +42,15 @@ class IndexController extends BaseController
         ->doesnthave('packageRel')
         ->whereIn('sector_id', [1,4])->get();
 
-        $combos = RealStatePackage::where('stock', 1)->where('status', 1)->
+        //$combos = RealStatePackage::where('stock', 1)->where('status', 1)->
+        $combos = RealStatePackage::where('status', 1)->
         with('departmentsRel:id,slug,description,available,price,price_foreign,area,floor,view_id,type_department_id,project_id,image,sap_code,sector_id','departmentsRel.viewRel:id,name','departmentsRel.tipologyRel:id,name,room,parent_type_department_id,image','departmentsRel.tipologyRel.parentTypeDepartmentRel:id,room,name','projectRel:id,logo_colour,price_separation,name_es,name_en,code_ubigeo,project_status_id,master_currency_id,reservation_in_package,package_description', 'projectRel.ubigeoRel', 'projectRel.statusRel:id,name_es,name_en','projectRel.currencyRel:id,name,abbreviation,symbol')
         ->get();
+
+        $combosTemp = collect($combos);
+        $combos = $combosTemp->filter(function($dep){
+            return $dep["status_calculate"] == true;
+        });
 
         $combosArray = [];
         if(count($combos)){

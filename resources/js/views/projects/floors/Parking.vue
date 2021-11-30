@@ -103,7 +103,7 @@
                 >
                 <small class="d-block mb-0 lh-1">Formato: JPG</small>
                 <small class="d-block mb-2 lh-1"
-                  >Tamaño recomendado: No mayor a 100KB</small
+                  >Tamaño recomendado: No mayor a 250KB</small
                 >
                 <div class="row">
                   <div class="col text-center" v-if="element.image">
@@ -120,8 +120,8 @@
                           $event,
                           $refs.ref_image.dropzone,
                           1,
-                          110000,
-                          '100kb'
+                          270000,
+                          '250kb'
                         )
                       "
                       id="image"

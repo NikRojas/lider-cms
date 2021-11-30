@@ -231,7 +231,7 @@
                   <p>
                     La reserva se envío a SAP
                   </p>
-                  <h3 class="font-weight-normal">Fecha: {{ element.sended_sap_date_format}}</h3>
+                  <h3 class="font-weight-normal" v-if="sended_sap_date">Fecha: {{ element.sended_sap_date_format}}</h3>
                   <h3 class="font-weight-normal">Código: {{element.sended_code_sap}}</h3>
                 </div>
                 <div v-else>

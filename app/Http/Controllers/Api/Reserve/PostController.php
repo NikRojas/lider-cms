@@ -353,7 +353,7 @@ class PostController extends BaseController
             //DECODIFICAR CODE RESERVE
             $passDecrypt = "LiderAsesores2021";
             $encrypted_string = $codeReserve;
-            $decrypted_string=openssl_decrypt($encrypted_string,"AES-128-ECB",$passDecrypt);
+            $decrypted_string=openssl_decrypt(base64_decode($encrypted_string),"AES-128-ECB",$passDecrypt);
             $r_order = ["advisor_id" => $advisorId,"sended_code_sap" => $decrypted_string,'sended_to_sap' => 1, "customer_id" => $customer->id, "total_price" => $price_deparment_separation, "order_date" => Carbon::now(),'master_currency_id' => $project->master_currency_id]; 
             #Setear Asesor si viene desde la URL de Separacion
             try {

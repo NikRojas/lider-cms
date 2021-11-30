@@ -96,7 +96,7 @@ class ConnectionController extends BaseController
         //DECODIFICAR CODE RESERVE
         $passDecrypt = "LiderAsesores2021";
         $encrypted_string = $codeReserveTemp;
-        $codeReserve=openssl_decrypt($encrypted_string,"AES-128-ECB",$passDecrypt);
+        $codeReserve=openssl_decrypt(base64_decode($encrypted_string),"AES-128-ECB",$passDecrypt);
         $description = 'Código de Reserva '.$codeReserve.' - ';
         $slug = Str::random(20);
         try {

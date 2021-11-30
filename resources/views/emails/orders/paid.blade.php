@@ -412,7 +412,7 @@
                                                                                     </tbody>
                                                                                 </table>Precio del Estacionamiento(s): <br>
                                                                                 @foreach($parkings as $i => $park )
-                                                                                <strong style="color:#0a0a0a">@if($department->projectRel["master_currency_id"] == 1) S/ {{ number_format($park->price, 0, '.', ',') }} @elseif($department->projectRel["master_currency_id"] == 2) $ {{ number_format($park->price_foreign, 0, '.', ',') }} @endif</strong>@if($i < count($parkings) - 1),<br>@endif
+                                                                                <strong style="color:#0a0a0a">@if($department->projectRel["master_currency_id"] == 1) S/ {{ number_format($park->price, 0, '.', ',') }}@elseif($department->projectRel["master_currency_id"] == 2) $ {{ number_format($park->price_foreign, 0, '.', ',') }}@endif</strong>@if($i < count($parkings) - 1),<br>@endif
                                                                                 @endforeach
                                                                                 <table class="spacer" style="border-collapse:collapse;border-spacing:0;padding-bottom:0;padding-left:0;padding-right:0;padding-top:0;text-align:left;vertical-align:top;width:100%">
                                                                                     <tbody>

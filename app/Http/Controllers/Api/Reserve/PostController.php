@@ -181,8 +181,8 @@ class PostController extends BaseController
                 "Nombres" => $request->name,
                 "Apellido Paterno" => $request->lastname,
                 "Apellido Materno" => $request->lastname_2,
-                "Combo"            => 1,
-                "Código Combo"     => $package->slug
+                /*"Combo"            => 1,
+                "Código Combo"     => $package->slug*/
             ];
         }
         else{
@@ -195,7 +195,7 @@ class PostController extends BaseController
                 "Nombres" => $request->name,
                 "Apellido Paterno" => $request->lastname,
                 "Apellido Materno" => $request->lastname_2,
-                "Combo"            => 0
+                //"Combo"            => 0
             ];
         }
         $body = [

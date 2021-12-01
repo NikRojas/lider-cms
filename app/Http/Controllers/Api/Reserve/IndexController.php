@@ -15,6 +15,8 @@ use App\RealStatePackage;
 use App\Ubigeo;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use App\FloorSector;
 
 class IndexController extends BaseController
 {
@@ -603,6 +605,32 @@ class IndexController extends BaseController
             $parkings = $packageInfo->departmentsRel()->where('sector_id',2)->get(); 
             $warehouses = $packageInfo->departmentsRel()->where('sector_id',3)->get(); 
 
+            /*$department["parkings"] = $parkings;
+            $department["warehouses"] = $warehouses;*/
+
+            if(count($parkings)){
+                foreach ($parkings as $keyDep => $valueDep) {
+                    $parkingOnFloor = DB::table('floors_sector_departments')->where('department_id',$valueDep->id)->first();
+                    if($parkingOnFloor){
+                        $valueDep["floorView"] = FloorSector::find($parkingOnFloor->floor_id);
+                    }
+                    else{
+                        $valueDep["floorView"] = NULL;
+                    }
+                }
+            }
+            if(count($warehouses)){
+                foreach ($warehouses as $keyDep => $valueDep) {
+                    $warehouseOnFloor = DB::table('floors_sector_departments')->where('department_id',$valueDep->id)->first();
+                    if($warehouseOnFloor){
+                        $valueDep["floorView"] = FloorSector::find($warehouseOnFloor->floor_id);
+                    }
+                    else{
+                        $valueDep["floorView"] = NULL;
+                    }
+                }
+            }
+
             $department["parkings"] = $parkings;
             $department["warehouses"] = $warehouses;
 
@@ -667,8 +695,34 @@ class IndexController extends BaseController
             $parkings = $packageInfo->departmentsRel()->where('sector_id',2)->get(); 
             $warehouses = $packageInfo->departmentsRel()->where('sector_id',3)->get(); 
 
+            /*$department["parkings"] = $parkings;
+            $department["warehouses"] = $warehouses;*/
+            if(count($parkings)){
+                foreach ($parkings as $keyDep => $valueDep) {
+                    $parkingOnFloor = DB::table('floors_sector_departments')->where('department_id',$valueDep->id)->first();
+                    if($parkingOnFloor){
+                        $valueDep["floorView"] = FloorSector::find($parkingOnFloor->floor_id);
+                    }
+                    else{
+                        $valueDep["floorView"] = NULL;
+                    }
+                }
+            }
+            if(count($warehouses)){
+                foreach ($warehouses as $keyDep => $valueDep) {
+                    $warehouseOnFloor = DB::table('floors_sector_departments')->where('department_id',$valueDep->id)->first();
+                    if($warehouseOnFloor){
+                        $valueDep["floorView"] = FloorSector::find($warehouseOnFloor->floor_id);
+                    }
+                    else{
+                        $valueDep["floorView"] = NULL;
+                    }
+                }
+            }
+
             $department["parkings"] = $parkings;
             $department["warehouses"] = $warehouses;
+            
             if($packageInfo){
                 //$packageInfo = $packageInfo->load('departmentsRel');
                 $areaTotal = number_format($packageInfo->departmentsRel->pluck('area')->sum(),2);

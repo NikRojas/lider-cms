@@ -36,7 +36,7 @@ class IndexController extends BaseController
     }
 
     public function getDepartmentsWithCombos(){
-        $departments = Department::selectRaw('id,slug,description,available,price,price_foreign,area,floor,view_id,type_department_id,project_id,image,sap_code,sector_id')->with('viewRel:id,name', 'tipologyRel:id,name,room,parent_type_department_id,image','tipologyRel.parentTypeDepartmentRel:id,room,name', 'projectRel:id,logo_colour,price_separation,name_es,name_en,code_ubigeo,project_status_id,master_currency_id,reservation_in_package,package_description', 'projectRel.ubigeoRel', 'projectRel.statusRel:id,name_es,name_en','projectRel.currencyRel:id,name,abbreviation,symbol')
+        $departments = Department::selectRaw('id,slug,description,available,price,price_foreign,area,floor,view_id,type_department_id,project_id,image,sap_code,sector_id')->with('viewRel:id,name', 'tipologyRel:id,name,room,parent_type_department_id,image','tipologyRel.parentTypeDepartmentRel:id,room,name', 'projectRel:id,logo_colour,price_separation,name_es,name_en,code_ubigeo,project_status_id,master_currency_id,reservation_in_package,package_description,active', 'projectRel.ubigeoRel', 'projectRel.statusRel:id,name_es,name_en','projectRel.currencyRel:id,name,abbreviation,symbol')
         ->where('available', 1)
         ->whereNotNull('view_id')
         ->whereNotNull('floor')
@@ -45,8 +45,9 @@ class IndexController extends BaseController
         ->whereIn('sector_id', [1,4])->get();
 
         //$combos = RealStatePackage::where('stock', 1)->where('status', 1)->
-        $combos = RealStatePackage::where('status', 1)->
-        with('departmentsRel:id,slug,description,available,price,price_foreign,area,floor,view_id,type_department_id,project_id,image,sap_code,sector_id','departmentsRel.viewRel:id,name','departmentsRel.tipologyRel:id,name,room,parent_type_department_id,image','departmentsRel.tipologyRel.parentTypeDepartmentRel:id,room,name','projectRel:id,logo_colour,price_separation,name_es,name_en,code_ubigeo,project_status_id,master_currency_id,reservation_in_package,package_description', 'projectRel.ubigeoRel', 'projectRel.statusRel:id,name_es,name_en','projectRel.currencyRel:id,name,abbreviation,symbol')
+        //$combos = RealStatePackage::where('status', 1)->
+        $combos = RealStatePackage::
+        with('departmentsRel:id,slug,description,available,price,price_foreign,area,floor,view_id,type_department_id,project_id,image,sap_code,sector_id','departmentsRel.viewRel:id,name','departmentsRel.tipologyRel:id,name,room,parent_type_department_id,image','departmentsRel.tipologyRel.parentTypeDepartmentRel:id,room,name','projectRel:id,logo_colour,price_separation,name_es,name_en,code_ubigeo,project_status_id,master_currency_id,reservation_in_package,package_description,active', 'projectRel.ubigeoRel', 'projectRel.statusRel:id,name_es,name_en','projectRel.currencyRel:id,name,abbreviation,symbol')
         ->get();
 
         $combosTemp = collect($combos);
@@ -125,6 +126,7 @@ class IndexController extends BaseController
         $ubigeo = $statuses = $rooms = $floors = $projects = $typeDepartments = $range = $views = [];
         $sort = $request->sort_by;
         $data = $this->getDepartmentsWithCombos();
+        $data = $data->where('projectRel.active',1);
         //Tablas Relacionadas
         if ($request->statuses) {
             $statuses = $request->statuses;
@@ -237,6 +239,7 @@ class IndexController extends BaseController
     public function getProjects($statuses = false, $rooms = false, $floors = false, $views = false, $types = false, $ubigeo = false)
     {
         $data = $this->getDepartmentsWithCombos();
+        $data = $data->where('projectRel.active',1);
         if ($views) {
             $data = $data->whereIn('view_id', $views);
         }
@@ -264,6 +267,7 @@ class IndexController extends BaseController
     public function getStatusEstates($projects = false, $rooms = false, $floors = false, $views = false, $types = false, $ubigeo = false)
     {
         $data = $this->getDepartmentsWithCombos();
+        $data = $data->where('projectRel.active',1);
         if($ubigeo){
             $ubigeoFormat = $this->getUbigeoFormat($ubigeo);
             $ubigeoDistricts = $ubigeoFormat["districts"];
@@ -291,6 +295,7 @@ class IndexController extends BaseController
     public function getRoomsEstates($statuses = false, $projects = false, $floors = false, $views = false, $types = false, $ubigeo = false)
     {
         $data = $this->getDepartmentsWithCombos();
+        $data = $data->where('projectRel.active',1);
         if ($views) {
             $data = $data->whereIn('view_id', $views);
         }
@@ -319,6 +324,7 @@ class IndexController extends BaseController
     public function getTypeEstates($statuses = false, $projects = false, $rooms = false, $floors = false, $views = false, $ubigeo = false)
     {
         $data = $this->getDepartmentsWithCombos();
+        $data = $data->where('projectRel.active',1);
         if ($views) {
             $data = $data->whereIn('view_id', $views);
         }
@@ -347,6 +353,7 @@ class IndexController extends BaseController
     public function getFloorsEstates($statuses = false, $projects = false, $rooms = false, $views = false, $types = false, $ubigeo = false)
     {
         $data = $this->getDepartmentsWithCombos();
+        $data = $data->where('projectRel.active',1);
         if($ubigeo){
             $ubigeoFormat = $this->getUbigeoFormat($ubigeo);
             $ubigeoDistricts = $ubigeoFormat["districts"];
@@ -376,6 +383,7 @@ class IndexController extends BaseController
     public function getViewsEstates($statuses = false, $projects = false, $rooms = false, $floors = false, $types = false, $ubigeo = false)
     {
         $data = $this->getDepartmentsWithCombos();
+        $data = $data->where('projectRel.active',1);
         if ($floors) {
             $data = $data->whereIn('floor', $floors);
         }
@@ -404,6 +412,7 @@ class IndexController extends BaseController
     public function getPricesEstates($statuses = false, $projects = false, $rooms = false, $floors = false, $views = false, $types = false, $ubigeo = false)
     {
         $departments = $this->getDepartmentsWithCombos();
+        $departments = $departments->where('projectRel.active',1);
         if ($views) {
             $departments = $departments->whereIn('view_id', $views);
         }
@@ -449,6 +458,7 @@ class IndexController extends BaseController
     public function getAreas($statuses = false, $projects = false, $rooms = false, $floors = false, $views = false, $types = false, $ubigeo = false)
     {
         $departments = $this->getDepartmentsWithCombos();
+        $departments = $departments->where('projectRel.active',1);
         if ($views) {
             $departments = $departments->whereIn('view_id', $views);
         }
@@ -486,6 +496,7 @@ class IndexController extends BaseController
     public function getUbigeoEstates($statuses = false, $projects = false, $rooms = false, $floors = false, $views = false, $types = false)
     {
         $departments = $this->getDepartmentsWithCombos();
+        $departments = $departments->where('projectRel.active',1);
         if ($statuses) {
             $departments = $departments->whereIn('projectRel.project_status_id', $statuses);
         }
@@ -523,7 +534,8 @@ class IndexController extends BaseController
     public function getDistricts($code, $statuses = false, $projects = false, $rooms = false, $floors = false, $views = false, $types = false)
     {
         $departments = $this->getDepartmentsWithCombos();
-        $departments->where('projectRel.ubigeoRel.code_department',$code);
+        $departments = $departments->where('projectRel.active',1);
+        $departments = $departments->where('projectRel.ubigeoRel.code_department',$code);
         if ($statuses) {
             $departments = $departments->whereIn('projectRel.project_status_id', $statuses);
         }

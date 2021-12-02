@@ -107,6 +107,13 @@ const app = new Vue({
         'configuration-logs-sap': () => import('./views/configuration/LogsSap.vue' /* webpackChunkName: "js/pages/configuration/logs-sap" */),
 
         'chatbot': () => import('./views/Chatbot.vue' /* webpackChunkName: "js/pages/chatbot" */),
+
+        'projects-floors-parking': () => import('./views/projects/floors/Parking.vue' /* webpackChunkName: "js/pages/projects/floors/parking" */),
+        'projects-floors-warehouse': () => import('./views/projects/floors/Warehouse.vue' /* webpackChunkName: "js/pages/projects/floors/warehouse" */),
+
+        'combos-index': () => import('./views/combos/Index.vue' /* webpackChunkName: "js/pages/combos/index" */),
+        'combos-create': () => import('./views/combos/Create.vue' /* webpackChunkName: "js/pages/combos/create" */),
+        'combos-edit': () => import('./views/combos/Edit.vue' /* webpackChunkName: "js/pages/combos/edit" */),
     }
 });
 import Validation from './functions/validation.js'

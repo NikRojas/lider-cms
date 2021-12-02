@@ -121,7 +121,8 @@
 
 <div class="main-content" id="main-content">
     <!--<div class="header-color bg-primary position-absolute w-100"></div>-->
-    <nav class="navbar navbar-top navbar-expand navbar-light position-relative bg-white py-2 d-md-block d-none" id="navbar-main">
+    <nav class="navbar navbar-top navbar-expand navbar-light position-relative bg-white py-2 d-md-block d-none" id="navbar-main" style="align-items: center;
+display: flex !important;">
         <div class="container-fluid">
             <button-icons></button-icons>
             <div class="d-inline-block ml-4">
@@ -136,7 +137,7 @@
                     <b-dropdown id="id_dropdown_navbar" class="border-0 pr-0" :lazy="true" variant="link" v-cloak>
                         <template slot="button-content">
                             <div class="media align-items-center">
-                                <span class="avatar rounded-circle bg-default" style="font-size: 20px !important;">
+                                <span class="avatar avatar-sm rounded-circle bg-default" style="font-size: 20px !important;">
                                     @if(Auth::user()->avatar)
                                     <img src="{{ route('cms.get-file',[ 'folder' => 'img', 'subfolder' => 'users', 'file' => Auth::user()->avatar ]) }}" alt="Usuario" />
                                     @else

@@ -169,7 +169,7 @@
                     <template v-if="charts.reservers_per_tipology.rows.length">
                       <tbody >
                         <tr v-for="(el,i) in charts.reservers_per_tipology.rows" :key="i">
-                          <td>{{el.name }}</td>
+                          <td v-html="el.name"></td>
                           <td>{{el.project}}</td>
                           <td>{{el.tipology}}</td>
                           <td>{{el.tipo}}</td>

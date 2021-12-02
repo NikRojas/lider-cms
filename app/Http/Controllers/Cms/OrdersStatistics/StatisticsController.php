@@ -278,12 +278,12 @@ class StatisticsController extends Controller
             switch ($date) {
                 case 'range':
                     if ($rangeType == "day") {
-                        $temp = Order::with('currencyRel', 'orderDetailsRel.departmentRel.tipologyRel.parentTypeDepartmentRel', 'orderDetailsRel.projectRel', 'transactionLatestRel')->get()->filter(function ($order) use ($statusesPaidId, $orderCycleClosed, $value2) {
+                        $temp = Order::with('packageRel','currencyRel', 'orderDetailsRel.departmentRel.tipologyRel.parentTypeDepartmentRel', 'orderDetailsRel.projectRel', 'transactionLatestRel')->get()->filter(function ($order) use ($statusesPaidId, $orderCycleClosed, $value2) {
                             return in_array($order->transactionLatestRel->transaction_status_id, $statusesPaidId) && $order->transactionLatestRel->order_cycle_id == $orderCycleClosed
                                 && (new Carbon($order->transactionLatestRel->transaction_date))->between($value2["dateValue"], $value2["dateValue2"]);
                         });
                     } else if ($rangeType == "month") {
-                        $temp = Order::with('currencyRel', 'orderDetailsRel.departmentRel.tipologyRel.parentTypeDepartmentRel', 'orderDetailsRel.projectRel', 'transactionLatestRel')->get()->filter(function ($order) use ($statusesPaidId, $orderCycleClosed, $value2) {
+                        $temp = Order::with('packageRel','currencyRel', 'orderDetailsRel.departmentRel.tipologyRel.parentTypeDepartmentRel', 'orderDetailsRel.projectRel', 'transactionLatestRel')->get()->filter(function ($order) use ($statusesPaidId, $orderCycleClosed, $value2) {
                             return in_array($order->transactionLatestRel->transaction_status_id, $statusesPaidId) && $order->transactionLatestRel->order_cycle_id == $orderCycleClosed
                                 && (new Carbon($order->transactionLatestRel->transaction_date))->month == $value2["dateValue"] && (new Carbon($order->transactionLatestRel->transaction_date))->year == $value2["dateYear"];
                         });
@@ -293,13 +293,13 @@ class StatisticsController extends Controller
                 case '7':
                 case '30':
                 case '90':
-                    $temp = Order::with('currencyRel', 'orderDetailsRel.departmentRel.tipologyRel.parentTypeDepartmentRel', 'orderDetailsRel.projectRel', 'transactionLatestRel')->get()->filter(function ($order) use ($statusesPaidId, $orderCycleClosed, $value2) {
+                    $temp = Order::with('packageRel','currencyRel', 'orderDetailsRel.departmentRel.tipologyRel.parentTypeDepartmentRel', 'orderDetailsRel.projectRel', 'transactionLatestRel')->get()->filter(function ($order) use ($statusesPaidId, $orderCycleClosed, $value2) {
                         return in_array($order->transactionLatestRel->transaction_status_id, $statusesPaidId) && $order->transactionLatestRel->order_cycle_id == $orderCycleClosed
                             && (new Carbon($order->transactionLatestRel->transaction_date))->between($value2["dateValue"], $value2["dateValue2"]);
                     });
                     break;
                 case 'this_year':
-                    $temp = Order::with('currencyRel', 'orderDetailsRel.departmentRel.tipologyRel.parentTypeDepartmentRel', 'orderDetailsRel.projectRel', 'transactionLatestRel')->get()->filter(function ($order) use ($statusesPaidId, $orderCycleClosed, $value2) {
+                    $temp = Order::with('packageRel','currencyRel', 'orderDetailsRel.departmentRel.tipologyRel.parentTypeDepartmentRel', 'orderDetailsRel.projectRel', 'transactionLatestRel')->get()->filter(function ($order) use ($statusesPaidId, $orderCycleClosed, $value2) {
                         return in_array($order->transactionLatestRel->transaction_status_id, $statusesPaidId) && $order->transactionLatestRel->order_cycle_id == $orderCycleClosed
                             && (new Carbon($order->transactionLatestRel->transaction_date))->month == $value2["dateValue"] && (new Carbon($order->transactionLatestRel->transaction_date))->year == $value2["dateYear"];
                     });
@@ -309,7 +309,14 @@ class StatisticsController extends Controller
         }
         $temp2 =  collect($temp2)->collapse()->unique()->all();
         foreach ($temp2 as $k => $v) {
-            $data[$k]["name"] = $v->orderDetailsRel[0]->departmentRel->description;
+            $description = NULL;
+            if($v->real_state_package_id){
+                $description .= '<div><b>'.$v->packageRel->description.'</b></div>';
+            }
+            foreach ($v->orderDetailsRel as $key21 => $value21) {
+                $description .= '<div>'.$value21->departmentRel->description.'</div>';
+            }
+            $data[$k]["name"] = $description;
             $data[$k]["project"] = $v->orderDetailsRel[0]->projectRel->name_es;
             $data[$k]["tipology"] = $v->orderDetailsRel[0]->departmentRel->tipologyRel->name;
             $data[$k]["tipo"] = $v->orderDetailsRel[0]->departmentRel->tipologyRel->parentTypeDepartmentRel->name;

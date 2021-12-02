@@ -38,6 +38,13 @@
         :elementParent="elementParent"
       />
 
+      <Pins
+        :routeEl="routePin"
+        :elementParent="elementParent"
+        :routeGetAllEls="routeGetAllPins"
+        :imagesUrl="imagesUrlLocation"
+      />
+
       <Location
         :routeLocation="routeLocation"
         :elementParent="elementParent"
@@ -63,6 +70,7 @@
 import GeneralInformation from "./GeneralInformation";
 import Location from "./Location";
 import Promotion from "./Promotion";
+import Pins from "./Pins";
 import BreadCrumb from "../../../components/BreadCrumb";
 export default {
   props: {
@@ -82,8 +90,11 @@ export default {
     routeOrderPromotion: String,
     messageOrderPromotion: String,
     imagesUrlPromotion: String,
+
+    routePin: String,
+    routeGetAllPins: String,
   },
-  components: { BreadCrumb, GeneralInformation, Location, Promotion },
+  components: { BreadCrumb, GeneralInformation, Location, Promotion, Pins },
   data() {
     return {
       project: {},

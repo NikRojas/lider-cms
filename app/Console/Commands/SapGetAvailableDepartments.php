@@ -110,44 +110,66 @@ class SapGetAvailableDepartments extends Command
                         #Obtener Departamento Actualizado por ID
                         $estates_temp = [];
                         foreach ($estatesExist as $keyEstatesExist => $valueEstatesExist) {
-                            $estates_temp[] = Department::where('id',$valueEstatesExist)->first();
+                            //$estates_temp[] = Department::where('id',$valueEstatesExist)->first();
+                            #Obtener Solo Departamentos y Casas
+                            $tempDepartment = Department::where('id',$valueEstatesExist)->whereNotNull('sector_id')->where(function ($q) {
+                                $q->where('sector_id', 1)->orWhere('sector_id', 4);
+                            })->first();
+                            if($tempDepartment){
+                                $estates_temp[] = $tempDepartment;
+                            }
                         }
                         #Agrupar por Departamentos por Tipologia
-                        $estatesByTypeDepartment = collect($estates_temp)->groupBy('type_department_id');
-                        $typeDepartmentIdsAvailable = [];
-                            //Log::info($value->name_es);
-                            #keyEstatesByTypeDepartment es el Id de la Tipologia y valueEstatesByTypeDepartment los Departamentos que se recibieron
-                            foreach ($estatesByTypeDepartment as $keyEstatesByTypeDepartment => $valueEstatesByTypeDepartment) {
-                                //Log::info("Id Tipologia". $keyEstatesByTypeDepartment);
-                                //Log::info($valueEstatesByTypeDepartment);
-                                $typeDepartmentIdsAvailable[] = $keyEstatesByTypeDepartment;
-                                $minArea = $valueEstatesByTypeDepartment->min('area');
-                                $minPrice = $valueEstatesByTypeDepartment->min('price');
-                                $minPriceForeign = $valueEstatesByTypeDepartment->min('price_foreign');
-                                $updateTypeDepartmentTemp = [];
-                                if($minArea){
-                                    $updateTypeDepartmentTemp = array_merge($updateTypeDepartmentTemp, ["area" => $minArea]);
+                        if(count($estates_temp) > 0){
+                            $estatesByTypeDepartment = collect($estates_temp)->groupBy('type_department_id');
+                            $typeDepartmentIdsAvailable = [];
+                                //Log::info($value->name_es);
+                                #keyEstatesByTypeDepartment es el Id de la Tipologia y valueEstatesByTypeDepartment los Departamentos que se recibieron
+                                foreach ($estatesByTypeDepartment as $keyEstatesByTypeDepartment => $valueEstatesByTypeDepartment) {
+                                    //Log::info("Id Tipologia". $keyEstatesByTypeDepartment);
+                                    //Log::info($valueEstatesByTypeDepartment);
+                                    $typeDepartmentIdsAvailable[] = $keyEstatesByTypeDepartment;
+                                    $minArea = $valueEstatesByTypeDepartment->min('area');
+                                    $minPrice = $valueEstatesByTypeDepartment->min('price');
+                                    $minPriceForeign = $valueEstatesByTypeDepartment->min('price_foreign');
+                                    $updateTypeDepartmentTemp = [];
+                                    if($minArea){
+                                        $updateTypeDepartmentTemp = array_merge($updateTypeDepartmentTemp, ["area" => $minArea]);
+                                    }
+                                    #Si esta lleno Precio Soles y Vacio Precio Dolares
+                                    if($minPrice && !$minPriceForeign){
+                                        $updateTypeDepartmentTemp = array_merge($updateTypeDepartmentTemp, ["price" => $minPrice, "type_currency" => 1]);
+                                    }
+                                    #Si esta lleno Precio Dolares y Vacio Precio Soles
+                                    if(!$minPrice && $minPriceForeign){
+                                        $updateTypeDepartmentTemp = array_merge($updateTypeDepartmentTemp, ["price" => $minPriceForeign, "type_currency" => 0]);
+                                    }
+                                    #No actualizar precio en tipologias de Namua e Infinitum
+                                    if($value->id != '4' && $value->id != '5'){
+                                        //Log::info("Proyecto: ".$value->id);
+                                        //$updateTypeDepartment = ProjectTypeDepartment::UpdateOrCreate(["id" => $keyEstatesByTypeDepartment ], array_merge($updateTypeDepartmentTemp, ["project_id" => $value->id]));
+                                        $checkIfTipologyExist = ProjectTypeDepartment::where('id',$keyEstatesByTypeDepartment)->first();
+                                        if($checkIfTipologyExist){
+                                            $updateTypeDepartment = ProjectTypeDepartment::UpdateOrCreate(["id" => $keyEstatesByTypeDepartment ], array_merge($updateTypeDepartmentTemp, ["project_id" => $value->id]));
+                                        }
+                                    }
                                 }
-                                #Si esta lleno Precio Soles y Vacio Precio Dolares
-                                if($minPrice && !$minPriceForeign){
-                                    $updateTypeDepartmentTemp = array_merge($updateTypeDepartmentTemp, ["price" => $minPrice, "type_currency" => 1]);
-                                }
-                                #Si esta lleno Precio Dolares y Vacio Precio Soles
-                                if(!$minPrice && $minPriceForeign){
-                                    $updateTypeDepartmentTemp = array_merge($updateTypeDepartmentTemp, ["price" => $minPriceForeign, "type_currency" => 0]);
-                                }
-                                #No actualizar precio en tipologias de Namua e Infinitum
-                                if($value->id != '4' && $value->id != '5'){
-                                    $updateTypeDepartment = ProjectTypeDepartment::UpdateOrCreate(["id" => $keyEstatesByTypeDepartment ], $updateTypeDepartmentTemp);
+                            $typeDepartmentsIds = $typeDepartments->pluck('id')->toArray();
+                            foreach ($typeDepartmentIdsAvailable as $keyEstateAvailable => $valueEstateAvailable) {
+                                //ProjectTypeDepartment::UpdateOrCreate(["id" => $valueEstateAvailable ], ["available" => true, "project_id" => $value->id]);
+                                $checkIfTipologyExist = ProjectTypeDepartment::where('id',$valueEstateAvailable)->first();
+                                if($checkIfTipologyExist){
+                                    ProjectTypeDepartment::UpdateOrCreate(["id" => $valueEstateAvailable ], ["available" => true, "project_id" => $value->id]);
                                 }
                             }
-                        $typeDepartmentsIds = $typeDepartments->pluck('id')->toArray();
-                        foreach ($typeDepartmentIdsAvailable as $keyEstateAvailable => $valueEstateAvailable) {
-                            ProjectTypeDepartment::UpdateOrCreate(["id" => $valueEstateAvailable ], ["available" => true]);
-                        }
-                        $typeDepartmentsUnavailable = array_diff($typeDepartmentsIds, $typeDepartmentIdsAvailable);
-                        foreach ($typeDepartmentsUnavailable as $keyEstateUnavailable => $valueEstateUnavailable) {
-                            ProjectTypeDepartment::UpdateOrCreate(["id" => $valueEstateUnavailable ], ["available" => false]);
+                            $typeDepartmentsUnavailable = array_diff($typeDepartmentsIds, $typeDepartmentIdsAvailable);
+                            foreach ($typeDepartmentsUnavailable as $keyEstateUnavailable => $valueEstateUnavailable) {
+                                //ProjectTypeDepartment::UpdateOrCreate(["id" => $valueEstateUnavailable ], ["available" => false, "project_id" => $value->id]);
+                                $checkIfTipologyExist = ProjectTypeDepartment::where('id',$valueEstateUnavailable)->first();
+                                if($checkIfTipologyExist){
+                                    ProjectTypeDepartment::UpdateOrCreate(["id" => $valueEstateUnavailable ], ["available" => false, "project_id" => $value->id]);
+                                }
+                            }
                         }
                     }
                     

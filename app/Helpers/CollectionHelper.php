@@ -17,7 +17,7 @@ class CollectionHelper
         
         $total = $results->count();
 
-        return self::paginator($results->forPage($page, $pageSize), $total, $pageSize, $page, [
+        return self::paginator($results->forPage($page, $pageSize)->values(), $total, $pageSize, $page, [
             'path' => Paginator::resolveCurrentPath(),
             'pageName' => 'page',
         ]);

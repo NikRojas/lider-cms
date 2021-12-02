@@ -265,4 +265,17 @@ class BaseController extends Controller
         );
         return $this->sendResponse($data, '');
     }
+
+    public function getUbigeoFormat($ubigeo){
+        $departments = $districts = [];
+        foreach ($ubigeo as $key => $value) {
+            $isDepartment = strlen($value);
+            if ($isDepartment == 2) {
+                $departments[] = $value;
+            } else {
+                $districts[] = $value;
+            }
+        }
+        return ["departments" => $departments, "districts" => $districts];
+    }
 }

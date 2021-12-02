@@ -68,4 +68,14 @@ class Order extends Model
     {
         return $this->hasOne('App\MasterCurrency', 'id', 'master_currency_id');
     }
+
+    public function departmentRel()
+    {
+        return $this->hasOne('App\Department', 'id', 'department_id');
+    }
+
+    public function packageRel()
+    {
+        return $this->hasOne('App\RealStatePackage', 'id', 'real_state_package_id');
+    }
 }

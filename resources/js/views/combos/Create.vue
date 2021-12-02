@@ -36,7 +36,7 @@
         </div>
       </div>
       <div class="container-fluid mt--6">
-        <div class="row mb-3">
+        <!--<div class="row mb-3">
           <div class="col-12 text-right">
             <b-form-checkbox
               size="lg"
@@ -47,7 +47,7 @@
               Mostrar Combo en la Web
             </b-form-checkbox>
           </div>
-        </div>
+        </div>-->
         <div class="row mb-4">
           <div class="col-12 col-lg-2">
             <h2>Datos Principales</h2>

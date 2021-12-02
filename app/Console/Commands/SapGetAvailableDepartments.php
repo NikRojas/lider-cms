@@ -146,7 +146,7 @@ class SapGetAvailableDepartments extends Command
                                     }
                                     #No actualizar precio en tipologias de Namua e Infinitum
                                     if($value->id != '4' && $value->id != '5'){
-                                        Log::info("Proyecto: ".$value->id);
+                                        //Log::info("Proyecto: ".$value->id);
                                         //$updateTypeDepartment = ProjectTypeDepartment::UpdateOrCreate(["id" => $keyEstatesByTypeDepartment ], array_merge($updateTypeDepartmentTemp, ["project_id" => $value->id]));
                                         $checkIfTipologyExist = ProjectTypeDepartment::where('id',$keyEstatesByTypeDepartment)->first();
                                         if($checkIfTipologyExist){

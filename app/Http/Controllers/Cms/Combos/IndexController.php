@@ -25,7 +25,8 @@ class IndexController extends Controller
 
     public function getAll(Request $request, CombosRepository $repo){
         $q = $request->q;
-        $headers = ["Id", "Proyecto", "Descripción", "Inmuebles","Mostrar en la Web", "Estado",'Precio Separación','Precio del Combo'];
+        //$headers = ["Id", "Proyecto", "Descripción", "Inmuebles","Mostrar en la Web", "Estado",'Precio Separación','Precio del Combo'];
+        $headers = ["Id", "Proyecto", "Descripción", "Inmuebles", "Estado",'Precio Separación','Precio del Combo'];
         if($q){
             $elements = $repo->datatable($request->itemsPerPage,$q);
         }

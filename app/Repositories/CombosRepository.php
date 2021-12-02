@@ -55,7 +55,7 @@ class CombosRepository
                 "project" => $element["projectRel"]["name_es"],
                 "descr" => $img,
                 "realStates" => $de,
-                "status" => $element->status ? 'Sí' : 'No',
+                //"status" => $element->status ? 'Sí' : 'No',
                 "stock" => $stock,
                 "precio_sep" => $element["projectRel"]["price_separation_format"],
                 "precio" => $element->projectRel->currencyRel->symbol.' '.number_format($price->sum(), 0, '.', ','),

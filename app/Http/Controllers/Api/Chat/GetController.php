@@ -26,7 +26,7 @@ class GetController extends BaseController
             ->whereHas('projectsRel', function ($query) {
                 $query->where('active', 1);
                 $query->whereHas('departmentsRel', function ($query2) {
-                    $query2->where('available', 1);
+                    $query2->where('available', 1)->whereIn('sector_id', [1,4]);
                 });
             })
             ->orderBy('department', 'desc')->groupBy('code_department')->get();
@@ -88,7 +88,7 @@ class GetController extends BaseController
         $data = $data->whereHas('projectsRel', function ($query) {
                 $query->where('active', 1);
                 $query->whereHas('departmentsRel', function ($query2) {
-                    $query2->where('available', 1);
+                    $query2->where('available', 1)->whereIn('sector_id', [1,4]);
                 });
             })
             ->where('code_district', '!=', '00')->orderBy('district')->get();
@@ -109,7 +109,7 @@ class GetController extends BaseController
         $district = $request->district;
         $data = Project::select('id', 'images','name_es', 'name_en', 'slug_es', 'slug_en','rooms_es','footage_es','logo','code_ubigeo')
         ->whereHas('departmentsRel', function ($query){
-            $query->where('available', 1);
+            $query->where('available', 1)->whereIn('sector_id', [1,4]);
         })->where('active', 1);
         if($district == 'Todos'){
             if($department != "Ambas"){
@@ -122,7 +122,7 @@ class GetController extends BaseController
                 $codeDepartments = Ubigeo::whereHas('projectsRel', function ($query) {
                     $query->where('active', 1);
                     $query->whereHas('departmentsRel', function ($query2) {
-                        $query2->where('available', 1);
+                        $query2->where('available', 1)->whereIn('sector_id', [1,4]);
                     });
                 })
                 ->where('code_district', '!=', '00')->get();
@@ -193,7 +193,7 @@ class GetController extends BaseController
         $name = $request->name;
         $name_es = $request->name_project;
         $project = Project::where('name_es',$name_es)->first();
-        $countDeps = Department::where('project_id',$project->id)->where('available',true)->count();
+        $countDeps = Department::where('project_id',$project->id)->whereIn('sector_id', [1,4])->where('available',true)->count();
         $customPayload = [];
         $prependText = "Buena elección <strong>".$name."</strong> 👌. Te redirecciono al proyecto.";
         $customPayload['notification'] = "Buena elección <strong>".$name."</strong> 👌. Te redirecciono al proyecto.";
@@ -210,15 +210,15 @@ class GetController extends BaseController
             //Sol
             $column_name = 'price';
             $symbol = 'S/ ';
-            $min = Department::where('project_id',$project->id)->where('available',true)->min($column_name);
-            $max = Department::where('project_id',$project->id)->where('available',true)->max($column_name);
+            $min = Department::where('project_id',$project->id)->whereIn('sector_id', [1,4])->where('available',true)->min($column_name);
+            $max = Department::where('project_id',$project->id)->whereIn('sector_id', [1,4])->where('available',true)->max($column_name);
             $secondText = "Los precios de los inmuebles van desde <strong>".number_format($min, 0, '.', ',')." nuevos soles</strong> hasta <strong>".number_format($max, 0, '.', ',')." nuevos soles</strong>";
         }
         else if($currency == 2){
             $column_name = 'price_foreign';
             $symbol = '$ ';
-            $min = Department::where('project_id',$project->id)->where('available',true)->min($column_name);
-            $max = Department::where('project_id',$project->id)->where('available',true)->max($column_name);
+            $min = Department::where('project_id',$project->id)->whereIn('sector_id', [1,4])->where('available',true)->min($column_name);
+            $max = Department::where('project_id',$project->id)->whereIn('sector_id', [1,4])->where('available',true)->max($column_name);
             $secondText = "Los precios de los inmuebles van desde <strong>".$symbol.number_format($min, 0, '.', ',')."</strong> hasta <strong>".$symbol.number_format($max, 0, '.', ',')."</strong>";
         }
         $customPayload['route'] = [

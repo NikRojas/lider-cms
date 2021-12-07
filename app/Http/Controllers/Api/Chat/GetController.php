@@ -279,7 +279,16 @@ class GetController extends BaseController
         $bonds = $project->load('bondsRel');
         $buttons = $this->getButtonsFlow1($project->id, $bonds, "Quiero cotizar un departamento", true);
         $customPayload['buttons'] = $buttons;
-        $customPayload['route_section'] = "#cotizar";
+        //$customPayload['route_section'] = "#cotizar";
+        $customPayload['route_section'] = [
+            "value" => "#cotizar",
+            "go_to" => [
+                "name" => 'project',
+                "params" => [
+                    "project" => $project->slug_es
+                ]
+            ]
+        ];
         $customPayload['notification'] = "👈 En esta sección podrás elegir un departamento, llenar tus datos y te llegará una cotización a tu correo";
         $customPayload['text'] = "👈 En esta sección podrás elegir un departamento, llenar tus datos y te llegará una cotización a tu correo";
         return $this->sendResponse($customPayload, '');

@@ -377,7 +377,7 @@ class PageController extends BaseController
         if (!$lead) {
             return $this->sendError("");
         }
-        $lead = $lead->load('projectRel.statusRel','advisorRel','projectTypeDepartmentRel','projectRel.financingOptionsRel');
+        $lead = $lead->load('projectRel.statusRel','projectRel.ubigeoRel','advisorRel','projectTypeDepartmentRel','projectRel.financingOptionsRel');
         $financingOptions = FinancingOption::where('active',true)->orderBy('index','asc')->get();
         $data = array(
             "lead" => $lead,

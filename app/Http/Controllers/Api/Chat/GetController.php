@@ -335,7 +335,10 @@ class GetController extends BaseController
         $customPayload['text'] = "En esta sección podrás realizar la separación de tu inmueble en el proyecto <strong>".$request->name_project."</strong>. 😄";
         $customPayload['notification'] = "En esta sección podrás realizar la separación de tu inmueble en el proyecto <strong>".$request->name_project."</strong>. 😄";
         $customPayload['route'] = [
-            "name" => 'reserve'
+            "name" => 'reserve',
+            "query" => [
+                "project" => $project->slug_es
+            ]
         ];
         return $this->sendResponse($customPayload, '');
     }

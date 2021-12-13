@@ -671,7 +671,7 @@ Route::get('/mail/reserve', function () {
 */
 /*
 Route::get('/mail/user/quotation', function () {
-    $lead = ProjectQuotation::with('projectRel.statusRel','advisorRel','projectTypeDepartmentRel','projectRel.financingOptionsRel')->find(7);
+    $lead = ProjectQuotation::with('projectRel.statusRel','projectRel.ubigeoRel','advisorRel','projectTypeDepartmentRel','projectRel.financingOptionsRel')->find(4032);
     $financingOptions = FinancingOption::where('active',true)->orderBy('index','asc')->get();
     return view('emails.user-quotation',["lead" => $lead, "financingOptions" => $financingOptions]);
 });
@@ -736,14 +736,14 @@ Route::get('/mail/user/quotation', function () {
     $lead = ProjectQuotation::with('projectRel.statusRel','advisorRel','projectTypeDepartmentRel','projectRel.financingOptionsRel')->find(7);
     $financingOptions = FinancingOption::where('active',true)->orderBy('index','asc')->get();
     return view('emails.user-quotation',["lead" => $lead, "financingOptions" => $financingOptions]);
-});
-
-/*Route::get('/mail/advisor/quotation', function () {
-    $lead = ProjectQuotation::with('projectRel.statusRel','advisorRel','projectTypeDepartmentRel')->first();
+});*/
+/*
+Route::get('/mail/advisor/quotation', function () {
+    $lead = ProjectQuotation::with('projectRel.statusRel','advisorRel','projectRel.ubigeoRel','projectTypeDepartmentRel')->first();
     return view('emails.advisor-quotation',["lead" => $lead]);
 });
-
-Route::get('/mail/applicant', function () {
+*/
+/*Route::get('/mail/applicant', function () {
     $applicant = Applicant::first();
     return view('emails.applicant',["applicant" => $applicant]);
 });

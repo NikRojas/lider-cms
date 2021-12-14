@@ -209,8 +209,41 @@ class SapGetAvailableDepartments extends Command
                 if($warehouse[0]->precio_usd > 0){
                     $price_foreign_warehouse = $warehouse[0]->precio_usd;
                 }
+                $priceProject = $priceForeignProject = NULL;
+                #Actualizar Precio Desde Soles y Dolares
+                if($value->master_currency_id == 1){
+                    $checkIfAtLeast1Dep = Department::where('project_id',$value->id)->where('available',1)->whereIn('sector_id', [1,4])->first();
+                    if($checkIfAtLeast1Dep){
+                        $priceProjectTemp = Department::where('project_id',$value->id)->where('available',1)->whereIn('sector_id', [1,4])->min('price');
+                        if($priceProjectTemp){
+                            $priceProject = $priceProjectTemp;
+                        }
+                        else{
+                            $priceProject = $value->price_total;
+                        }
+                    }
+                    else{
+                        $priceForeignProject = $value->price_total;
+                    }
+                }   
+                else if($value->master_currency_id == 2){
+                    $checkIfAtLeast1Dep = Department::where('project_id',$value->id)->where('available',1)->whereIn('sector_id', [1,4])->first();
+                    if($checkIfAtLeast1Dep){
+                        $priceForeignProjectTemp = Department::where('project_id',$value->id)->where('available',1)->whereIn('sector_id', [1,4])->min('price_foreign');
+                        if($priceForeignProjectTemp){
+                            $priceForeignProject = $priceForeignProjectTemp;
+                        }
+                        else{
+                            $priceForeignProject = $value->price_total_foreign;
+                        }
+                    }
+                    else{
+                        $priceForeignProject = $value->price_total_foreign;
+                    }
+                }
                 $updateProject = $value->update(['stock_parking' => $stock, 'price_parking_sap' => $price_parking, 'price_parking_foreign_sap' => $price_foreign_parking,
-                'stock_warehouse' => $stockWarehouse, 'price_warehouse_sap' => $price_warehouse, 'price_warehouse_foreign_sap' => $price_foreign_warehouse]);
+                'stock_warehouse' => $stockWarehouse, 'price_warehouse_sap' => $price_warehouse, 'price_warehouse_foreign_sap' => $price_foreign_warehouse, "price_total" => $priceProject,
+                "price_total_foreign" => $priceForeignProject]);
             }
             catch (\GuzzleHttp\Exception\RequestException $e) {
                 #Cuando sea cualquier código de error, se enviara un email al correo indicado.

@@ -121,7 +121,8 @@ class SendReserveToSap implements ShouldQueue
                 'tipo_documento' => $this->order->customerRel->documentTypeRel->sap_value,
                 //'inmueble' => $sapCode,
                 "inmuebles" => $sapCodesApi,
-                "vendedor" => $advisorSend->sap_code
+                "vendedor" => $advisorSend->sap_code,
+                "origen" => "S"
             ]]);
             Log::info([
                 'nro_documento' => $this->order->customerRel->document_number, 
@@ -133,7 +134,8 @@ class SendReserveToSap implements ShouldQueue
                 'tipo_documento' => $this->order->customerRel->documentTypeRel->sap_value,
                 //'inmueble' => $sapCode,
                 "inmuebles" => $sapCodesApi,
-                "vendedor" => $advisorSend->sap_code
+                "vendedor" => $advisorSend->sap_code,
+                "origen" => "S"
             ]);
             //Log::info((string) $responseSap->getBody());
             $status = $responseSap->getStatusCode();

@@ -374,7 +374,7 @@ class GetController extends BaseController
             }
         }
         $customPayload['carousel'] = $projects_related;
-        $customPayload['message_below'] = "Menú Inicio Botón";
+        $customPayload['text_below'] = "Menú Inicio Botón";
         $customPayload['text'] = "Tenemos disponibles los siguientes proyectos similares";
         return $this->sendResponse($customPayload, '');
     }

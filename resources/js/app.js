@@ -111,9 +111,9 @@ const app = new Vue({
         'projects-floors-parking': () => import('./views/projects/floors/Parking.vue' /* webpackChunkName: "js/pages/projects/floors/parking" */),
         'projects-floors-warehouse': () => import('./views/projects/floors/Warehouse.vue' /* webpackChunkName: "js/pages/projects/floors/warehouse" */),
 
-        'combos-index': () => import('./views/combos/Index.vue' /* webpackChunkName: "js/pages/combos/index" */),
-        'combos-create': () => import('./views/combos/Create.vue' /* webpackChunkName: "js/pages/combos/create" */),
-        'combos-edit': () => import('./views/combos/Edit.vue' /* webpackChunkName: "js/pages/combos/edit" */),
+        'projects-combos-index': () => import('./views/projects/combos/Index.vue' /* webpackChunkName: "js/pages/projects/combos/index" */),
+        'projects-combos-create': () => import('./views/projects/combos/Create.vue' /* webpackChunkName: "js/pages/projects/combos/create" */),
+        'projects-combos-edit': () => import('./views/projects/combos/Edit.vue' /* webpackChunkName: "js/pages/projects/combos/edit" */),
     }
 });
 import Validation from './functions/validation.js'

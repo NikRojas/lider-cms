@@ -242,10 +242,10 @@
 }
 </style>
 <script>
-import BreadCrumb from "../../components/BreadCrumb";
+import BreadCrumb from "../../../components/BreadCrumb";
 import vue2Dropzone from "vue2-dropzone";
 import { Money } from "v-money";
-import Button from "../../components/Button";
+import Button from "../../../components/Button";
 import { Skeleton } from "vue-loading-skeleton";
 import simplebar from "simplebar-vue";
 import "simplebar/dist/simplebar.min.css";
@@ -343,7 +343,7 @@ export default {
       }
       fd.append("_method", "put");
       axios
-        .post(this.routeUpdate + "/" + this.element.slug, fd)
+        .post(this.routeUpdate , fd)
         .then((response) => {
           this.requestServer = false;
           document.location.href = response.data.route;

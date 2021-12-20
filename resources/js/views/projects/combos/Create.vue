@@ -115,7 +115,7 @@
                       >
                     </div>
                   </div>
-                  <div class="col-12">
+                  <!--<div class="col-12">
                     <div class="form-group mb-0">
                       <label class="font-weight-bold" for="description"
                         >Selecciona el Proyecto</label
@@ -143,7 +143,7 @@
                         >{{ errors.project_id[0] }}</label
                       >
                     </div>
-                  </div>
+                  </div>-->
 
                   <div class="col-12" v-if="project && project.price_separation">
                     <label class="font-weight-bold" for="price_separation"
@@ -428,10 +428,10 @@
 }
 </style>
 <script>
-import BreadCrumb from "../../components/BreadCrumb";
+import BreadCrumb from "../../../components/BreadCrumb";
 import vue2Dropzone from "vue2-dropzone";
 import { Money } from "v-money";
-import Button from "../../components/Button";
+import Button from "../../../components/Button";
 import { Skeleton } from "vue-loading-skeleton";
 import simplebar from "simplebar-vue";
 import "simplebar/dist/simplebar.min.css";
@@ -443,6 +443,7 @@ export default {
     routeStore: String,
     routeReturn: String,
     routeDepartmentsGetAll: String,
+    elementParent: Object
   },
   components: {
     BreadCrumb,
@@ -505,6 +506,9 @@ export default {
       totalPricePark: 0,
       totalPrice: 0
     };
+  },
+  created(){
+    this.element.project_id = this.elementParent.id;
   },
   methods: {
     submit() {

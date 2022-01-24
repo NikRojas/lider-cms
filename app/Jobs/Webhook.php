@@ -20,7 +20,7 @@ class Webhook implements ShouldQueue
     private $lead;
     private $webhook_url;
     private $is_quotation;
-    private $advisor;
+    private $advisor = NULL;
 
     /**
      * Create a new job instance.

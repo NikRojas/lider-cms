@@ -348,6 +348,15 @@ Route::middleware(['auth'])->namespace('Cms')->name('cms.')->group(function () {
             Route::get('/{project}/json/get-all', 'CombosController@getAll')->name('get-all');
             Route::get('/{project}/json/get/{element}', 'CombosController@get')->name('get');
         });
+
+        Route::prefix('etapas')->name('etapas.')->group(function () {
+            Route::put('/actualizar/{project}/{element}', 'EtapasController@update')->name('update');
+            Route::delete('/eliminar/{project}/{element}', 'EtapasController@destroy')->name('destroy');
+            Route::get('/{project}', 'EtapasController@index')->name('index');
+            Route::post('/{project}', 'EtapasController@store')->name('store');
+            Route::get('/{project}/json/get-all', 'EtapasController@getAll')->name('get-all');
+            Route::get('/{project}/json/get/{element}', 'EtapasController@get')->name('get');
+        });
     });
 
     Route::namespace('AdvisorySystem')->prefix('sistema-asesores')->name('advisory-system.')->group(function () {

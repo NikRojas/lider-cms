@@ -301,6 +301,16 @@
                           <div class="col-12">
                             <a
                               :href="
+                                'proyectos/etapas/' + el.slug_es
+                              "
+                              class="btn btn-sm mb-2 btn-inverse-primary btn-block"
+                            >
+                              Ir a Etapas
+                            </a>
+                          </div>
+                          <div class="col-12">
+                            <a
+                              :href="
                                 'proyectos/credenciales-pasarela/' + el.slug_es
                               "
                               class="btn btn-sm mb-0 btn-inverse-primary btn-block"

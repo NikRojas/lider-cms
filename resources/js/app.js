@@ -114,6 +114,8 @@ const app = new Vue({
         'projects-combos-index': () => import('./views/projects/combos/Index.vue' /* webpackChunkName: "js/pages/projects/combos/index" */),
         'projects-combos-create': () => import('./views/projects/combos/Create.vue' /* webpackChunkName: "js/pages/projects/combos/create" */),
         'projects-combos-edit': () => import('./views/projects/combos/Edit.vue' /* webpackChunkName: "js/pages/projects/combos/edit" */),
+
+        'projects-etapas-index': () => import('./views/projects/etapas/Index.vue' /* webpackChunkName: "js/pages/projects/etapas/index" */),
     }
 });
 import Validation from './functions/validation.js'

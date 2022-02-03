@@ -110,7 +110,7 @@ class DepartmentsController extends Controller
                     foreach ($responseData->inmuebles as $key => $value) {
                         $sector = NULL;
                         $sector = ProjectSector::where('sap_code',$value->sector)->first();
-                        if($sector->name == "Departamento" && $sector->name == "Casa"){
+                        if($sector->name == "Departamento" || $sector->name == "Casa"){
                             $checkTipology = ProjectTypeDepartment::where('sap_code', $value->tipologia)->where('project_id', $element->id)->first();
                             #Verificar que Tipologia este registrado en la BD y sea el mismo proyecto
                             if (!$checkTipology) {

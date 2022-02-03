@@ -16,6 +16,11 @@ class Department extends Model
         return $this->belongsTo('App\ProjectView', 'view_id', 'id');
     }
 
+    public function etapaRel()
+    {
+        return $this->belongsTo('App\EtapaProyecto', 'etapa_id', 'id');
+    }
+
     public function projectRel()
     {
         return $this->belongsTo('App\Project', 'project_id', 'id');

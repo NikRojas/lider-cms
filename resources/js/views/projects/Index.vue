@@ -298,7 +298,7 @@
                               Ir a Combos
                             </a>
                           </div>
-                          <div class="col-12">
+                          <!--<div class="col-12">
                             <a
                               :href="
                                 'proyectos/etapas/' + el.slug_es
@@ -307,7 +307,7 @@
                             >
                               Ir a Etapas
                             </a>
-                          </div>
+                          </div>-->
                           <div class="col-12">
                             <a
                               :href="

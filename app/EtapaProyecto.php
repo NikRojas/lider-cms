@@ -16,12 +16,16 @@ class EtapaProyecto extends Model
         return $this->belongsTo('App\Project', 'project_id', 'id');
     }
 
+    public function departmentsRel()
+    {
+        return $this->hasMany('App\Department', 'etapa_id', 'id');
+    }
+
     public function getCanDeleteAttribute(){
-        /*$value = true;
-        if(!$this->stock){    
+        $value = true;
+        if($this->departmentsRel()->exists()){    
             $value = false;
         }
-        return $value;*/
-        return true;
+        return $value;
     }
 }

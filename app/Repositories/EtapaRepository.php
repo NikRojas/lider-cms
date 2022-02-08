@@ -28,7 +28,7 @@ class EtapaRepository
                 "descr" => $element["name"],
                 "sap" => $element["sap_code"],
                 "estatus_id" => $status["name_es"],
-                //"can_delete" => $element["can_delete"]
+                "can_delete" => $element["can_delete"]
             );
         }
         $elements = $elements->toArray();

@@ -40,7 +40,7 @@
         @delete="deleteEl"
         @update="editEl"
         :entries-prop.sync="elementsPerPage"
-        :messageCantDelete="'No se puede eliminar la etapa porque esta anidado a al menos un departamneto'"
+        :messageCantDelete="'No se puede eliminar la etapa porque esta anidado en al menos un departamneto'"
       ></DataTable>
     </div>
     <b-modal

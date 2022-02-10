@@ -21,6 +21,11 @@ class EtapaProyecto extends Model
         return $this->hasMany('App\Department', 'etapa_id', 'id');
     }
 
+    public function statusRel()
+    {
+        return $this->hasOne('App\ProjectStatus', 'id', 'project_status_id');
+    }
+
     public function getCanDeleteAttribute(){
         $value = true;
         if($this->departmentsRel()->exists()){    

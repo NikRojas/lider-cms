@@ -134,12 +134,12 @@ class DepartmentsController extends Controller
                                 //Log::info($sector->id);
                                 #Verificar si existe ya el Inmueble en la BD
                                 if ($findDepartment) {
-                                    $updateDeparment = Department::UpdateOrCreate(["id" => $findDepartment->id], ["description" => $value->descripcion, "area" => $value->area, "floor" => $value->piso, "view_id" => $checkView->id, "type_department_id" => $checkTipology->id, "sector_id" => $sector->id, "etapa_id" => $checkEtapa->id]);
+                                    $updateDeparment = Department::UpdateOrCreate(["id" => $findDepartment->id], ["description" => $value->descripcion, "area" => $value->area, "floor" => $value->piso, "view_id" => $checkView->id, "type_department_id" => $checkTipology->id, "sector_id" => $sector->id, "etapa_id" => $checkEtapa ? $checkEtapa->id : NULL]);
                                     if ($updateDeparment) {
                                         $registeredCount++;
                                     }
                                 } else {
-                                    $createDeparment = Department::UpdateOrCreate(["slug" => Str::random(20), "sap_code" => $value->codigo, "description" => $value->descripcion, "area" => $value->area, "floor" => $value->piso, "view_id" => $checkView->id, "type_department_id" => $checkTipology->id, "project_id" => $element->id, "sector_id" => $sector->id, "etapa_id" => $checkEtapa->id]);
+                                    $createDeparment = Department::UpdateOrCreate(["slug" => Str::random(20), "sap_code" => $value->codigo, "description" => $value->descripcion, "area" => $value->area, "floor" => $value->piso, "view_id" => $checkView->id, "type_department_id" => $checkTipology->id, "project_id" => $element->id, "sector_id" => $sector->id, "etapa_id" => $checkEtapa ? $checkEtapa->id : NULL]);
                                     if ($createDeparment) {
                                         $registeredCount++;
                                     }

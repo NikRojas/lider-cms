@@ -31,10 +31,11 @@
         </style>
 @endsection
 @section('content')
-    <combos-create :projects="{{ $projects }}" 
-    route-store="{{ route('cms.combos.store') }}" 
-    route-return="{{ route('cms.combos.index') }}"
+    <projects-combos-create :projects="{{ $projects }}" 
+    route-store="{{ route('cms.projects.combos.store', ['project' => $element->id]) }}" 
+    route-return="{{ route('cms.projects.combos.index', ['project' => $element->slug_es]) }}"
     images-url="{{ config('services.images_url') }}"
-    route-departments-get-all="{{ route('cms.combos.departments.get-all') }}"
-    app-url="{{ config('services.web_url') }}"></combos-create>
+    route-departments-get-all="{{ route('cms.projects.combos.departments.get-all', ['project' => $element->id]) }}"
+    :element-parent="{{ $element }}"
+    app-url="{{ config('services.web_url') }}"></projects-combos-create>
 @endsection

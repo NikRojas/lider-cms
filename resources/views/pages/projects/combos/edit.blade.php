@@ -31,11 +31,12 @@
         </style>
 @endsection
 @section('content')
-    <combos-edit :projects="{{ $projects }}" 
+    <projects-combos-edit :projects="{{ $projects }}" 
     :element-parent="{{ $elementR }}"
-    route-update="{{ route('cms.combos.store') }}" 
-    route-return="{{ route('cms.combos.index') }}"
+    :project="{{ $project }}"
+    route-update="{{ route('cms.projects.combos.update', ['project' => $project->id, 'element' => $elementR->slug]) }}" 
+    route-return="{{ route('cms.projects.combos.index', ['project' => $project->slug_es]) }}"
     images-url="{{ config('services.images_url') }}"
-    route-departments-get-all="{{ route('cms.combos.departments.get-all') }}"
-    app-url="{{ config('services.web_url') }}"></combos-edit>
+    route-departments-get-all="{{ route('cms.projects.combos.departments.get-all', ['project' => $project->id]) }}"
+    app-url="{{ config('services.web_url') }}"></projects-combos-edit>
 @endsection

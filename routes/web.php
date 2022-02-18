@@ -336,20 +336,27 @@ Route::middleware(['auth'])->namespace('Cms')->name('cms.')->group(function () {
             Route::delete('/{element}', 'TpsPinsController@destroy')->name('destroy');
             Route::put('/{element}', 'TpsPinsController@update')->name('update');
         });
-    });
 
-    #Combos
-    Route::namespace('Combos')->prefix('combos')->name('combos.')->group(function () {
-        Route::get('/', 'IndexController@index')->name('index');
-        Route::get('/nuevo', 'IndexController@create')->name('create');
-        Route::put('/order', 'IndexController@order')->name('order');
-        Route::get('/editar/{element}', 'IndexController@edit')->name('edit');
-        Route::post('/', 'IndexController@store')->name('store');
-        Route::get('/combos/json/get-all', 'IndexController@getAllDepartments')->name('departments.get-all');
-        Route::get('/json/get-all', 'IndexController@getAll')->name('get-all');
-        Route::get('/json/get/{element}', 'IndexController@get')->name('get');
-        Route::delete('/{element}', 'IndexController@destroy')->name('destroy');
-        Route::put('/{element}', 'IndexController@update')->name('update');
+        Route::prefix('combos')->name('combos.')->group(function () {
+            Route::put('/actualizar/{project}/{element}', 'CombosController@update')->name('update');
+            Route::delete('/{project}/eliminar/{element}', 'CombosController@destroy')->name('destroy');
+            Route::get('/{project}', 'CombosController@index')->name('index');
+            Route::get('/{project}/nuevo', 'CombosController@create')->name('create');
+            Route::get('/{project}/editar/{element}', 'CombosController@edit')->name('edit');
+            Route::post('/{project}', 'CombosController@store')->name('store');
+            Route::get('/{project}/combos/json/get-all', 'CombosController@getAllDepartments')->name('departments.get-all');
+            Route::get('/{project}/json/get-all', 'CombosController@getAll')->name('get-all');
+            Route::get('/{project}/json/get/{element}', 'CombosController@get')->name('get');
+        });
+
+        Route::prefix('etapas')->name('etapas.')->group(function () {
+            Route::put('/actualizar/{project}/{element}', 'EtapasController@update')->name('update');
+            Route::delete('/eliminar/{project}/{element}', 'EtapasController@destroy')->name('destroy');
+            Route::get('/{project}', 'EtapasController@index')->name('index');
+            Route::post('/{project}', 'EtapasController@store')->name('store');
+            Route::get('/{project}/json/get-all', 'EtapasController@getAll')->name('get-all');
+            Route::get('/{project}/json/get/{element}', 'EtapasController@get')->name('get');
+        });
     });
 
     Route::namespace('AdvisorySystem')->prefix('sistema-asesores')->name('advisory-system.')->group(function () {
@@ -597,155 +604,3 @@ Route::middleware(['auth'])->namespace('Cms')->name('cms.')->group(function () {
     Route::get('json/get-districts', 'CmsController@getDistrictsParent')->name('json.get-districts');
     Route::get('json/select/categories', 'CmsController@getCategories')->name('json.get-categories');
 });
-
-/*Route::get('/get-tipologies', function () {
-    $els = ProjectTypeDepartment::with('projectRel')->get();
-    $html = "<table>";
-    foreach ($els as $key => $value) {
-            $html.= "<tr>";
-            $html.= "<td>".$value["id"]."</td>";
-            $html.= "<td>".$value["projectRel"]["name_es"]."</td>";
-            $html.= "<td>".$value["name"]."</td>";
-            $html.= "<td>".$value["area"]."</td>";
-            $html.= "<td>".$value["slug"]."</td>";
-            $html.= "</tr>";
-    }
-    $html.= "</table>";
-    return $html;
-});*/
-
-/*Route::get('/send-to-sap', function () {
-    $order = Order::find(100000000);
-    SendReserveToSap::dispatch($order);
-    //return view('emails.orders.paid',["order" => $order]);
-});
-
-*/
-/*
-Route::get('/mail/reserve', function () {
-    //$order = Order::find(100000013);
-    //$order = Order::find(100000022);
-    $order = Order::find(100000017);
-    $order = $order->load('orderDetailsRel.departmentRel.projectRel.ubigeoRel','orderDetailsRel.departmentRel.tipologyRel.parentTypeDepartmentRel','orderDetailsRel.departmentRel.viewRel');
-    $deparment = $order->orderDetailsRel->filter(function ($item) {
-        return $item->departmentRel->sector_id == 1 || $item->departmentRel->sector_id == 4;
-    });
-    $deparment = $deparment[0]->departmentRel;
-    $warehouses = [];
-    $parkings = [];
-    if(count($order->orderDetailsRel) > 1){
-        $estates = $order->orderDetailsRel->pluck('departmentRel');
-        $parkings = $estates->filter(function ($item) {
-            return $item->sector_id == 2;
-        });
-        if(count($parkings)){
-            foreach ($parkings as $keyDep => $valueDep) {
-                $parkingOnFloor = DB::table('floors_sector_departments')->where('department_id',$valueDep->id)->first();
-                if($parkingOnFloor){
-                    $valueDep["floorView"] = FloorSector::find($parkingOnFloor->floor_id);
-                }
-                else{
-                    $valueDep["floorView"] = NULL;
-                }
-            }
-        }
-        $parkings = $parkings->values()->all();
-        $warehouses = $estates->filter(function ($item) {
-            return $item->sector_id == 3;
-        });
-        if(count($warehouses)){
-            foreach ($warehouses as $keyDep => $valueDep) {
-                $warehouseOnFloor = DB::table('floors_sector_departments')->where('department_id',$valueDep->id)->first();
-                if($warehouseOnFloor){
-                    $valueDep["floorView"] = FloorSector::find($warehouseOnFloor->floor_id);
-                }
-                else{
-                    $valueDep["floorView"] = NULL;
-                }
-            }
-        }
-        $warehouses = $warehouses->values()->all();
-    }
-    return view('emails.orders.paid',["order" => $order,"department" => $deparment, "warehouses" => $warehouses, "parkings" => $parkings]);
-});
-*/
-/*
-Route::get('/mail/user/quotation', function () {
-    $lead = ProjectQuotation::with('projectRel.statusRel','advisorRel','projectTypeDepartmentRel','projectRel.financingOptionsRel')->find(7);
-    $financingOptions = FinancingOption::where('active',true)->orderBy('index','asc')->get();
-    return view('emails.user-quotation',["lead" => $lead, "financingOptions" => $financingOptions]);
-});
-
-Route::get('send-to-sap/{element}','Cms\OrdersStatistics\OrdersController@sendToSap');
-Route::get('/mail/advisor/reserve', function () {
-    //$order = Order::find(100000008);
-    //$order = Order::find(100000017);
-    $order = Order::find(100000022);
-    $order = $order->load('orderDetailsRel.departmentRel.projectRel.ubigeoRel','orderDetailsRel.departmentRel.tipologyRel.parentTypeDepartmentRel','orderDetailsRel.departmentRel.viewRel');
-    $deparment = $order->orderDetailsRel->filter(function ($item) {
-        return $item->departmentRel->sector_id == 1 || $item->departmentRel->sector_id == 4;
-    });
-    $deparment = $deparment[0]->departmentRel;
-    $warehouses = [];
-    $parkings = [];
-    if(count($order->orderDetailsRel) > 1){
-        $estates = $order->orderDetailsRel->pluck('departmentRel');
-        $parkings = $estates->filter(function ($item) {
-            return $item->sector_id == 2;
-        });
-        if(count($parkings)){
-            foreach ($parkings as $keyDep => $valueDep) {
-                $parkingOnFloor = DB::table('floors_sector_departments')->where('department_id',$valueDep->id)->first();
-                if($parkingOnFloor){
-                    $valueDep["floorView"] = FloorSector::find($parkingOnFloor->floor_id);
-                }
-                else{
-                    $valueDep["floorView"] = NULL;
-                }
-            }
-        }
-        $parkings = $parkings->values()->all();
-        $warehouses = $estates->filter(function ($item) {
-            return $item->sector_id == 3;
-        });
-        if(count($warehouses)){
-            foreach ($warehouses as $keyDep => $valueDep) {
-                $warehouseOnFloor = DB::table('floors_sector_departments')->where('department_id',$valueDep->id)->first();
-                if($warehouseOnFloor){
-                    $valueDep["floorView"] = FloorSector::find($warehouseOnFloor->floor_id);
-                }
-                else{
-                    $valueDep["floorView"] = NULL;
-                }
-            }
-        }
-        $warehouses = $warehouses->values()->all();
-    }
-    return view('emails.orders.advisor-paid',["order" => $order,"department" => $deparment, "warehouses" => $warehouses, "parkings" => $parkings]);
-});
-Route::get('/mail/user', function () {
-    return view('emails.user-lead');
-});
-
-Route::get('/mail/advisor/lead', function () {
-    $lead = Lead::first();
-    return view('emails.advisor-lead',["lead" => $lead, "type" => "Tradicional"]);
-});
-
-Route::get('/mail/user/quotation', function () {
-    $lead = ProjectQuotation::with('projectRel.statusRel','advisorRel','projectTypeDepartmentRel','projectRel.financingOptionsRel')->find(7);
-    $financingOptions = FinancingOption::where('active',true)->orderBy('index','asc')->get();
-    return view('emails.user-quotation',["lead" => $lead, "financingOptions" => $financingOptions]);
-});
-
-/*Route::get('/mail/advisor/quotation', function () {
-    $lead = ProjectQuotation::with('projectRel.statusRel','advisorRel','projectTypeDepartmentRel')->first();
-    return view('emails.advisor-quotation',["lead" => $lead]);
-});
-
-Route::get('/mail/applicant', function () {
-    $applicant = Applicant::first();
-    return view('emails.applicant',["applicant" => $applicant]);
-});
-
-Route::get('/sap-departments/{element}','Cms\Projects\DepartmentsController@getSap');*/

@@ -335,7 +335,10 @@ class GetController extends BaseController
         $customPayload['text'] = "En esta sección podrás realizar la separación de tu inmueble en el proyecto <strong>".$request->name_project."</strong>. 😄";
         $customPayload['notification'] = "En esta sección podrás realizar la separación de tu inmueble en el proyecto <strong>".$request->name_project."</strong>. 😄";
         $customPayload['route'] = [
-            "name" => 'reserve'
+            "name" => 'reserve',
+            "query" => [
+                "project" => $project->slug_es
+            ]
         ];
         return $this->sendResponse($customPayload, '');
     }
@@ -371,6 +374,7 @@ class GetController extends BaseController
             }
         }
         $customPayload['carousel'] = $projects_related;
+        $customPayload['text_below'] = "Menú Inicio Botón";
         $customPayload['text'] = "Tenemos disponibles los siguientes proyectos similares";
         return $this->sendResponse($customPayload, '');
     }

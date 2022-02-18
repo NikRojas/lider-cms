@@ -37,7 +37,8 @@ return [
         'view' => 'La vista del inmueble',
         'type' => 'El tipo de inmueble',
         'image' => 'La imagen',
-        'elements' => 'Los elementos'
+        'elements' => 'Los elementos',
+        'etapa' => 'La etapa'
     ],
     'title' => [
         'error' => 'Error',

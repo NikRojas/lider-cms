@@ -6,14 +6,15 @@ use Carbon\Carbon;
 
 class CombosRepository 
 {
-    public function datatable($items_per_page,$q = false){
+    public function datatable($project_id, $items_per_page,$q = false){
         if ($q) {
             $elements = RealStatePackage::select('*')
+            ->where('project_id',$project_id)
             ->where(function($query) use ($q){
                 return $query->where('description', 'like', '%' . $q . '%');
             });
         } else {
-            $elements = RealStatePackage::select('*');
+            $elements = RealStatePackage::select('*')->where('project_id',$project_id);
         }
         $elements = $elements
             ->with('projectRel.currencyRel')
@@ -52,10 +53,9 @@ class CombosRepository
             }
             $data[] = array(
                 "id" => $element["slug"],
-                "project" => $element["projectRel"]["name_es"],
+                //"project" => $element["projectRel"]["name_es"],
                 "descr" => $img,
                 "realStates" => $de,
-                //"status" => $element->status ? 'Sí' : 'No',
                 "stock" => $stock,
                 "precio_sep" => $element["projectRel"]["price_separation_format"],
                 "precio" => $element->projectRel->currencyRel->symbol.' '.number_format($price->sum(), 0, '.', ','),

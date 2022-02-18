@@ -242,6 +242,38 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -249,6 +281,10 @@ __webpack_require__.r(__webpack_exports__);
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
+    isCombo: {
+      type: Boolean,
+      "default": false
+    },
     qProp: {
       type: String,
       required: false
@@ -903,32 +939,117 @@ var render = function() {
                                         : _vm._e(),
                                       _vm._v(" "),
                                       _vm.buttonUpdate == true
-                                        ? _c(
-                                            "a",
-                                            {
-                                              staticClass:
-                                                "btn btn-sm btn-icon-only rounded-circle btn-inverse-info",
-                                              attrs: { href: "#" },
-                                              on: {
-                                                click: function($event) {
-                                                  $event.preventDefault()
-                                                  return _vm.clickUpdate(
-                                                    element.id
+                                        ? [
+                                            !_vm.isCombo
+                                              ? [
+                                                  _c(
+                                                    "a",
+                                                    {
+                                                      staticClass:
+                                                        "btn btn-sm btn-icon-only rounded-circle btn-inverse-info",
+                                                      attrs: { href: "#" },
+                                                      on: {
+                                                        click: function(
+                                                          $event
+                                                        ) {
+                                                          $event.preventDefault()
+                                                          return _vm.clickUpdate(
+                                                            element.id
+                                                          )
+                                                        }
+                                                      }
+                                                    },
+                                                    [
+                                                      _c("jam-pencil", {
+                                                        staticClass:
+                                                          "current-color",
+                                                        attrs: {
+                                                          height: "18",
+                                                          width: "18"
+                                                        }
+                                                      })
+                                                    ],
+                                                    1
                                                   )
-                                                }
-                                              }
-                                            },
-                                            [
-                                              _c("jam-pencil", {
-                                                staticClass: "current-color",
-                                                attrs: {
-                                                  height: "18",
-                                                  width: "18"
-                                                }
-                                              })
-                                            ],
-                                            1
-                                          )
+                                                ]
+                                              : [
+                                                  typeof element.can_delete ==
+                                                  "undefined"
+                                                    ? [
+                                                        _c(
+                                                          "a",
+                                                          {
+                                                            staticClass:
+                                                              "btn btn-sm btn-icon-only rounded-circle btn-inverse-info",
+                                                            attrs: {
+                                                              href: "#"
+                                                            },
+                                                            on: {
+                                                              click: function(
+                                                                $event
+                                                              ) {
+                                                                $event.preventDefault()
+                                                                return _vm.clickUpdate(
+                                                                  element.id
+                                                                )
+                                                              }
+                                                            }
+                                                          },
+                                                          [
+                                                            _c("jam-pencil", {
+                                                              staticClass:
+                                                                "current-color",
+                                                              attrs: {
+                                                                height: "18",
+                                                                width: "18"
+                                                              }
+                                                            })
+                                                          ],
+                                                          1
+                                                        )
+                                                      ]
+                                                    : [
+                                                        element.can_delete
+                                                          ? _c(
+                                                              "a",
+                                                              {
+                                                                staticClass:
+                                                                  "btn btn-sm btn-icon-only rounded-circle btn-inverse-info",
+                                                                attrs: {
+                                                                  href: "#"
+                                                                },
+                                                                on: {
+                                                                  click: function(
+                                                                    $event
+                                                                  ) {
+                                                                    $event.preventDefault()
+                                                                    return _vm.clickUpdate(
+                                                                      element.id
+                                                                    )
+                                                                  }
+                                                                }
+                                                              },
+                                                              [
+                                                                _c(
+                                                                  "jam-pencil",
+                                                                  {
+                                                                    staticClass:
+                                                                      "current-color",
+                                                                    attrs: {
+                                                                      height:
+                                                                        "18",
+                                                                      width:
+                                                                        "18"
+                                                                    }
+                                                                  }
+                                                                )
+                                                              ],
+                                                              1
+                                                            )
+                                                          : _vm._e()
+                                                      ]
+                                                ]
+                                          ]
                                         : _vm._e(),
                                       _vm._v(" "),
                                       _vm.buttonDisable == true

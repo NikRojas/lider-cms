@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Cms\Combos;
+namespace App\Http\Controllers\Cms\Projects;
 
 use App\Department;
 use App\Http\Controllers\Controller;
@@ -14,46 +14,38 @@ use App\RealStatePackage;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 
-class IndexController extends Controller
+class CombosController extends Controller
 {
     use CmsTrait;
 
-    public function index()
+    public function index($project)
     {
-        return view('pages.combos.index');
+        $element = Project::where('slug_es', $project)->firstOrFail();
+        return view('pages.projects.combos.index', compact('element'));
     }
 
-    public function getAll(Request $request, CombosRepository $repo){
+    public function getAll($project_id, Request $request, CombosRepository $repo){
         $q = $request->q;
-        //$headers = ["Id", "Proyecto", "Descripción", "Inmuebles","Mostrar en la Web", "Estado",'Precio Separación','Precio del Combo'];
-        $headers = ["Id", "Proyecto", "Descripción", "Inmuebles", "Estado",'Precio Separación','Precio del Combo'];
+        $headers = ["Id", "Descripción", "Inmuebles", "Estado",'Precio Separación','Precio del Combo'];
         if($q){
-            $elements = $repo->datatable($request->itemsPerPage,$q);
+            $elements = $repo->datatable($project_id, $request->itemsPerPage,$q);
         }
         else{
-            $elements = $repo->datatable($request->itemsPerPage);
+            $elements = $repo->datatable($project_id, $request->itemsPerPage);
         }
         $elements["headers"] = $headers;
         return response()->json($elements);
     }
 
-    public function create()
+    public function create($project)
     {
+        $element = Project::where('slug_es', $project)->firstOrFail();
         $projects = Project::with('ubigeoRel')->get();
-        return view("pages.combos.create",compact('projects'));
+        return view("pages.projects.combos.create",compact('projects','element'));
     }
 
     public function getAllDepartments(Request $request){
-        /*$parkings = Department::where('project_id', $request->project)->where('available',1)->whereNotNull('sector_id')->where(function ($q) {
-            $q->where('sector_id', 2);
-          })->with('packageRel')->get();
-        $warehouses = Department::where('project_id', $request->project)->where('available',1)->whereNotNull('sector_id')->where(function ($q) {
-            $q->where('sector_id', 3);
-          })->with('packageRel')->get();
-        $departments = Department::where('project_id', $request->project)->where('available',1)->whereNotNull('sector_id')->where(function ($q) {
-            $q->whereIn('sector_id', [1,4]);
-          })->with('packageRel')->get();*/
-          $parkings = Department::where('project_id', $request->project)->whereNotNull('sector_id')->where(function ($q) {
+        $parkings = Department::where('project_id', $request->project)->whereNotNull('sector_id')->where(function ($q) {
             $q->where('sector_id', 2);
           })->with('packageRel')->get();
         $warehouses = Department::where('project_id', $request->project)->whereNotNull('sector_id')->where(function ($q) {
@@ -67,6 +59,7 @@ class IndexController extends Controller
 
     public function store(RealStatePackageRequest $request){
         $p_request = request(["project_id","description",'status']);
+        $project = Project::where('id',$request->project_id)->first();
         $imageName = NULL;
         if ($request->hasFile('image')) {
             $imageName = $this->setFileName('ci-', $request->file('image'));
@@ -86,18 +79,19 @@ class IndexController extends Controller
                 }
             });
             $request->session()->flash('success', trans('custom.message.create.success', ['name' => trans('custom.attribute.element')]));
-            return response()->json(["route" => route('cms.combos.index')], 200);
+            return response()->json(["route" => route('cms.projects.combos.index',['project' => $project->slug_es])], 200);
         } catch (\Exception $e) {
             if($imageName){
                 Storage::disk('public')->delete('img/projects/combos/'.$imageName);
             }
             $request->session()->flash('error', trans('custom.message.create.error', ['name' => trans('custom.attribute.element')]));
-            return response()->json(["route" => route('cms.combos.index')], 500);
+            return response()->json(["route" => route('cms.projects.combos.index',['project' => $project->slug_es])], 500);
         }
     }
 
-    public function update(RealStatePackageRequest $request, $element){
+    public function update(RealStatePackageRequest $request, $project, $element){
         $elementR = RealStatePackage::where('slug', $element)->firstOrFail();
+        $project = Project::where('id',$request->project_id)->first();
         $p_request = request(["project_id","description",'status']);
         if ($request->hasFile('image')) {
             $imageName = $this->setFileName('ci-', $request->file('image'));
@@ -117,15 +111,16 @@ class IndexController extends Controller
                 $rS = RealStatePackage::UpdateOrCreate([ "id" => $elementR->id], $p_request);
             });
             $request->session()->flash('success', trans('custom.message.update.success', ['name' => trans('custom.attribute.element')]));
-            return response()->json(["route" => route('cms.combos.index')], 200);
+            return response()->json(["route" => route('cms.projects.combos.index',['project' => $project->slug_es])], 200);
         } catch (\Exception $e) {
             $request->session()->flash('error', trans('custom.message.update.error', ['name' => trans('custom.attribute.element')]));
-            return response()->json(["route" => route('cms.combos.index')], 500);
+            return response()->json(["route" => route('cms.projects.combos.index',['project' => $project->slug_es])], 500);
         }
     }
 
-    public function edit($element)
+    public function edit($project, $element)
     {
+        $elementPro = Project::where('slug_es', $project)->firstOrFail();
         $elementR = RealStatePackage::where('slug', $element)->firstOrFail();
         $elementR = $elementR->load('projectRel.ubigeoRel');
         if($elementR->projectRel->master_currency_id == 1){
@@ -136,16 +131,16 @@ class IndexController extends Controller
         }
         $elementR["price_total"] = $price->sum();
         $projects = Project::with('ubigeoRel')->get();
-        return view("pages.combos.edit", compact('elementR','projects'));
+        return view("pages.projects.combos.edit", compact('elementR','projects'))->with('project',$elementPro);
     }
 
-    public function get($element)
+    public function get($project,$element)
     {
         $el = RealStatePackage::where('slug', $element)->first();
         return response()->json($el);
     }
 
-    public function destroy($element)
+    public function destroy($project, $element)
     {
         $el = RealStatePackage::where('slug', $element)->first();
         $image = $el->image;

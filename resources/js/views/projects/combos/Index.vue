@@ -5,7 +5,7 @@
         <div class="header-body">
           <div class="row align-items-center pt-0 pt-md-2 pb-4">
             <div class="col-6 col-md-7">
-              <BreadCrumb title="Combos" parent active="Combos"></BreadCrumb>
+              <BreadCrumb :title="'Combos Proyecto ' + elementParent.name_es" parent active="Combos"></BreadCrumb>
             </div>
             <div class="col-6 col-md-5 text-right">
               <a :href="routeCreate" class="btn btn-icon btn-inverse-primary">
@@ -13,6 +13,19 @@
                   <jam-tag class="current-color" />
                 </span>
                 <span class="btn-inner--text">Nuevo Combo</span>
+              </a>
+            </div>
+          </div>
+          <div class="row mb-3">
+            <div class="col-6 col-md-5">
+              <a
+                :href="routeReturn"
+                class="btn btn-icon btn-sm btn-inverse-light"
+              >
+                <span class="btn-inner--icon">
+                  <jam-arrow-left class="current-color" />
+                </span>
+                <span class="btn-inner--text">Regresar</span>
               </a>
             </div>
           </div>
@@ -48,11 +61,11 @@
   </div>
 </template> 
 <script>
-import BreadCrumb from "../../components/BreadCrumb";
+import BreadCrumb from "../../../components/BreadCrumb";
 import { Skeleton } from "vue-loading-skeleton";
-import NoData from "../../components/NoData";
-import DataTable from "../../components/DataTable";
-import Destroy from "../../components/modals/Destroy";
+import NoData from "../../../components/NoData";
+import DataTable from "../../../components/DataTable";
+import Destroy from "../../../components/modals/Destroy";
 export default {
   components: {
     BreadCrumb,
@@ -62,6 +75,7 @@ export default {
     Destroy
   },
   props: {
+    elementParent: Object,
     routeCreate: String,
     route: String,
     appUrl: String,
@@ -69,11 +83,13 @@ export default {
     routeOrder: String,
     messageOrder: String,
     imagesUrl: String,
+    routeSlug: String,
+    routeReturn: String
   },
   data() {
     return {
-       elements: {},
-       project: {},
+      elements: {},
+      project: {},
       element: {},
       modalDestroy: false,
       requestSubmit: false,
@@ -133,12 +149,12 @@ export default {
         .catch((error) => {});
     },
     editEl(id){
-      window.location.href = this.route + '/editar/' + id;
+      window.location.href = this.routeSlug + '/editar/' + id;
     },
     destroyConfirm(){
       this.requestSubmit = true;
       axios
-        .delete(this.route + "/" + this.element.slug)
+        .delete(this.routeSlug + "/eliminar/" + this.element.slug)
         .then((response) => {
           this.requestSubmit = false;
           this.restore();

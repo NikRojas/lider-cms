@@ -1248,7 +1248,7 @@
                       <img src="/files/img/info/mail.jpg" alt="" />
                     </div>
                   </div>
-                  <div class="col-12">
+                  <!--<div class="col-12">
                     <div class="form-group">
                       <label class="font-weight-bold" for="excerpt_quotation"
                         >Resumen del Proyecto</label
@@ -1287,31 +1287,11 @@
                         >{{ errors.price_parking[0] }}</label
                       >
                     </div>
-                  </div>
-                  <div class="col-12">
-                    <div class="form-group">
-                      <label class="font-weight-bold" for="condition_quotation"
-                        >Condiciones de la Proforma</label
-                      >
-                      <quill-Editor
-                        @keydown.enter.prevent
-                        v-model="element.condition_quotation"
-                        :options="editorOptions"
-                        class="ql-height-5"
-                        ref="ref_condition_quotation"
-                      ></quill-Editor>
-                      <label
-                        v-if="errors && errors.condition_quotation"
-                        class="mt-2 text-danger text-sm"
-                        for="condition_quotation"
-                        >{{ errors.condition_quotation[0] }}</label
-                      >
-                    </div>
-                  </div>
+                  </div>-->
                   <div class="col-12">
                     <div class="form-group">
                       <label class="font-weight-bold" for="commentary_quotation"
-                        >Comentario que incluye el inmueble</label
+                        >Condiciones de la cotización</label
                       >
                       <textarea
                         class="form-control"
@@ -1325,6 +1305,26 @@
                         class="mt-2 text-danger text-sm"
                         for="commentary_quotation"
                         >{{ errors.commentary_quotation[0] }}</label
+                      >
+                    </div>
+                  </div>
+                  <div class="col-12">
+                    <div class="form-group">
+                      <label class="font-weight-bold" for="condition_quotation"
+                        >Comentarios de la cotización</label
+                      >
+                      <quill-Editor
+                        @keydown.enter.prevent
+                        v-model="element.condition_quotation"
+                        :options="editorOptions"
+                        class="ql-height-5"
+                        ref="ref_condition_quotation"
+                      ></quill-Editor>
+                      <label
+                        v-if="errors && errors.condition_quotation"
+                        class="mt-2 text-danger text-sm"
+                        for="condition_quotation"
+                        >{{ errors.condition_quotation[0] }}</label
                       >
                     </div>
                   </div>

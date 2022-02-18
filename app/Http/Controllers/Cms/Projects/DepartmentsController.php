@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Cms\Projects;
 
 use App\Department;
+use App\EtapaProyecto;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Storage;
@@ -48,7 +49,7 @@ class DepartmentsController extends Controller
             }
         }
         $orderType = $request->order_type;
-        $headers = ["Id", "Código SAP", "Tipo Inmueble", "Descripción", "Área (m2)", "Piso", "Vista", "Tipología", "Tipo", "Stock", "Precio S/", "Precio $",'Actualizado el'];
+        $headers = ["Id", "Código SAP", "Tipo Inmueble", "Descripción", "Área (m2)", "Piso", "Vista", "Tipología", "Tipo", "Etapa", "Stock", "Precio S/", "Precio $",'Actualizado el'];
         if ($q) {
             $elements = $repo->datatable($request->project_id, $request->itemsPerPage, $q, $orderBy, $orderType);
         } else {
@@ -119,6 +120,10 @@ class DepartmentsController extends Controller
                             }
                             #Verificar que Vista esta registrado en la BD
                             $checkView = ProjectView::where('sap_code', $value->vista)->first();
+
+                            #Verificar etapa en la BD
+                            $checkEtapa = NULL;
+                            $checkEtapa = EtapaProyecto::where('project_id',$element->id)->where('sap_code',$value->etapa)->first();
                             if (!$checkView) {
                                 $notValidatedViewsCount++;
                                 $notValidatedViews[] = $value->codigo;
@@ -126,15 +131,15 @@ class DepartmentsController extends Controller
                             #Solo si la tipologia y la vista existe en la BD
                             if ($checkTipology && $checkView) {
                                 $findDepartment = Department::where("sap_code", $value->codigo)->first();
-                                Log::info($sector->id);
+                                //Log::info($sector->id);
                                 #Verificar si existe ya el Inmueble en la BD
                                 if ($findDepartment) {
-                                    $updateDeparment = Department::UpdateOrCreate(["id" => $findDepartment->id], ["description" => $value->descripcion, "area" => $value->area, "floor" => $value->piso, "view_id" => $checkView->id, "type_department_id" => $checkTipology->id, "sector_id" => $sector->id]);
+                                    $updateDeparment = Department::UpdateOrCreate(["id" => $findDepartment->id], ["description" => $value->descripcion, "area" => $value->area, "floor" => $value->piso, "view_id" => $checkView->id, "type_department_id" => $checkTipology->id, "sector_id" => $sector->id, "etapa_id" => $checkEtapa ? $checkEtapa->id : NULL]);
                                     if ($updateDeparment) {
                                         $registeredCount++;
                                     }
                                 } else {
-                                    $createDeparment = Department::UpdateOrCreate(["slug" => Str::random(20), "sap_code" => $value->codigo, "description" => $value->descripcion, "area" => $value->area, "floor" => $value->piso, "view_id" => $checkView->id, "type_department_id" => $checkTipology->id, "project_id" => $element->id, "sector_id" => $sector->id]);
+                                    $createDeparment = Department::UpdateOrCreate(["slug" => Str::random(20), "sap_code" => $value->codigo, "description" => $value->descripcion, "area" => $value->area, "floor" => $value->piso, "view_id" => $checkView->id, "type_department_id" => $checkTipology->id, "project_id" => $element->id, "sector_id" => $sector->id, "etapa_id" => $checkEtapa ? $checkEtapa->id : NULL]);
                                     if ($createDeparment) {
                                         $registeredCount++;
                                     }
@@ -173,7 +178,7 @@ class DepartmentsController extends Controller
                     $projectUpdated = Project::UpdateOrCreate(["id" => $element->id],["has_warehouse" => $hasWarehouse, "has_parking" => $hasParking] );
                     return response()->json(['title' => trans('custom.title.success'), 'message' => $message], 200);
                 } catch (\Exception $e) {
-                    //dd($e);
+                    dd($e);
                     return response()->json(['title' => trans('custom.title.error'), 'message' => trans('custom.message.sap.get_departments.error')], 500);
                 }
             } else {

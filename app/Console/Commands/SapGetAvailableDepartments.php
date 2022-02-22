@@ -241,9 +241,16 @@ class SapGetAvailableDepartments extends Command
                         $priceForeignProject = $value->price_total_foreign;
                     }
                 }
-                $updateProject = $value->update(['stock_parking' => $stock, 'price_parking_sap' => $price_parking, 'price_parking_foreign_sap' => $price_foreign_parking,
-                'stock_warehouse' => $stockWarehouse, 'price_warehouse_sap' => $price_warehouse, 'price_warehouse_foreign_sap' => $price_foreign_warehouse, "price_total" => $priceProject,
-                "price_total_foreign" => $priceForeignProject]);
+                #No actualizar precio desde en Namua ni Inifinitum
+                if($value->id != '4' && $value->id != '5'){
+                    $updateProject = $value->update(['stock_parking' => $stock, 'price_parking_sap' => $price_parking, 'price_parking_foreign_sap' => $price_foreign_parking,
+                    'stock_warehouse' => $stockWarehouse, 'price_warehouse_sap' => $price_warehouse, 'price_warehouse_foreign_sap' => $price_foreign_warehouse, "price_total" => $priceProject,
+                    "price_total_foreign" => $priceForeignProject]);
+                }
+                else{
+                    $updateProject = $value->update(['stock_parking' => $stock, 'price_parking_sap' => $price_parking, 'price_parking_foreign_sap' => $price_foreign_parking,
+                    'stock_warehouse' => $stockWarehouse, 'price_warehouse_sap' => $price_warehouse, 'price_warehouse_foreign_sap' => $price_foreign_warehouse]);
+                }
             }
             catch (\GuzzleHttp\Exception\RequestException $e) {
                 #Cuando sea cualquier código de error, se enviara un email al correo indicado.

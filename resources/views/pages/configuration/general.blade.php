@@ -6,5 +6,6 @@
     route-get-financing-options="{{ route('cms.configuration.general.financing-options.getAll') }}"
     route-order-financing-options="{{ route('cms.configuration.general.financing-options.order') }}"
     message-order="@lang('custom.message.order')"
+    route-get-tasa-seguro="{{ route('cms.configuration.general.tasa-seguro.getAll') }}"
   ></configuration-general>
 @endsection

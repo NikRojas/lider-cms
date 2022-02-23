@@ -14,6 +14,7 @@
     <div class="container-fluid mt--6">
        <Schedules :routeGet="routeGetSchedules" :routeOrder="routeOrderSchedules" route="schedules" :messageOrder="messageOrder"></Schedules>
         <FinancingOptions :routeGet="routeGetFinancingOptions" :routeOrder="routeOrderFinancingOptions" route="financing-options" :messageOrder="messageOrder"></FinancingOptions>
+        <TasaSeguro :routeGet="routeGetTasaSeguro" route="schedules" :messageOrder="messageOrder"></TasaSeguro>
     </div>
   </div>
 </template>
@@ -21,18 +22,21 @@
 import BreadCrumb from "../../../components/BreadCrumb";
 import Schedules from "./Schedules";
 import FinancingOptions from "./FinancingOptions";
+import TasaSeguro from "./TasaSeguro";
 export default {
   components: {
     BreadCrumb,
     Schedules,
-    FinancingOptions
+    FinancingOptions,
+    TasaSeguro
   },
   props: {
     messageOrder: String,
     routeGetSchedules: String,
     routeOrderSchedules: String,
     routeGetFinancingOptions: String,
-    routeOrderFinancingOptions: String
+    routeOrderFinancingOptions: String,
+    routeGetTasaSeguro: String
   },
   data() {
     return{

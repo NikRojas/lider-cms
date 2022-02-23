@@ -58,7 +58,8 @@ class DatabaseSeeder extends Seeder
         $this->call(MasterModulesOctuberTableSeeder::class);*/
 
         #Enero 2022
-        $this->call(TipoSeguroSeeder::class);
-        $this->call(TasaSeguroSeeder::class);
+        /*$this->call(TipoSeguroSeeder::class);
+        $this->call(TasaSeguroSeeder::class);*/
+        $this->call(MasterModulesFebreroTableSeeder::class);
     }
 }

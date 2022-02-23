@@ -60,6 +60,13 @@ Route::middleware(['auth'])->namespace('Cms')->name('cms.')->group(function () {
                 Route::put('/{element}', 'FinancingOptionsController@update')->name('update');
                 Route::get('/json/get/{element}', 'FinancingOptionsController@get')->name('get');
             });
+
+            Route::namespace('General')->name('tasa-seguro.')->prefix('tasa-seguro')->group(function () {
+                Route::get('/', 'TasaSeguroController@getAll')->name('getAll');
+
+                //Route::post('/', 'TasaSeguroController@store')->name('store');
+                Route::put('/', 'TasaSeguroController@update')->name('update');
+            });
         });
         Route::name('logs-sap.')->prefix('logs-sap')->group(function () {
             Route::get('/', 'LogsSapController@index')->name('index');
@@ -135,6 +142,16 @@ Route::middleware(['auth'])->namespace('Cms')->name('cms.')->group(function () {
             Route::delete('/{element}', 'TypesController@destroy')->name('destroy');
             Route::get('/json/get-all', 'TypesController@getAll')->name('get-all');
             Route::get('/json/get/{element}', 'TypesController@get')->name('get');
+        });
+
+        Route::name('types-seguros.')->prefix('tipo-seguros')->group(function () {
+            Route::get('/', 'TipoSegurosController@index')->name('index');
+            Route::post('/', 'TipoSegurosController@store')->name('store');
+            Route::put('/order', 'TipoSegurosController@order')->name('order');
+            Route::put('/{element}', 'TipoSegurosController@update')->name('update');
+            Route::delete('/{element}', 'TipoSegurosController@destroy')->name('destroy');
+            Route::get('/json/get-all', 'TipoSegurosController@getAll')->name('get-all');
+            Route::get('/json/get/{element}', 'TipoSegurosController@get')->name('get');
         });
     });
 

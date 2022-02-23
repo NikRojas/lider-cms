@@ -116,6 +116,8 @@ const app = new Vue({
         'projects-combos-edit': () => import('./views/projects/combos/Edit.vue' /* webpackChunkName: "js/pages/projects/combos/edit" */),
 
         'projects-etapas-index': () => import('./views/projects/etapas/Index.vue' /* webpackChunkName: "js/pages/projects/etapas/index" */),
+
+        'administration-types-seguros': () => import('./views/administration/TypesSeguros.vue' /* webpackChunkName: "js/pages/administration/types-seguros" */),
     }
 });
 import Validation from './functions/validation.js'

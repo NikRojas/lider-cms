@@ -2,7 +2,7 @@
   <div class="row mb-4">
     <div class="col-12">
       <h2>Carrusel de Pestaña</h2>
-      <p>Registra los items de la pestaña seleccionada</p>
+      <p>Registra los items de la pestaña seleccionada:</p>
     </div>
     <div class="col-12">
       <div class="row" v-if="navs.length">

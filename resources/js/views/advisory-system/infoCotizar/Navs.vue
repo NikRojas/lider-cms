@@ -3,8 +3,7 @@
     <div class="col-12 col-lg-3">
       <h2>Pestañas de Información</h2>
       <p>
-        Registra las pestañas y ordenalas segun el orden requerido, las cuales se utilizan en la seccion
-        <b>Info</b> en la pagina <b>Cotizar</b> de la Plataforma.
+        Registra las pestañas y ordénalas según el orden requerido, las cuales se utilizan en la sección <b>Info</b> en la página <b>Cotizar</b> de la Plataforma. 
       </p>
     </div>
     <div class="col-12 col-lg-9">

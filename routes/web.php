@@ -383,6 +383,23 @@ Route::middleware(['auth'])->namespace('Cms')->name('cms.')->group(function () {
             Route::post('/', 'GeneralInformationController@store')->name('store');
             Route::get('/json/get', 'GeneralInformationController@get')->name('get');
         });
+        Route::name('info-cotizar.')->prefix('informacion-cotizar')->group(function () {
+            #General Information
+            Route::get('/', 'InfoCotizarController@index')->name('index');
+            Route::post('/navs', 'InfoCotizarController@storeNavs')->name('store-navs');
+            Route::delete('/navs/delete/{nav}', 'InfoCotizarController@destroyNav')->name('destroy-nav');
+            Route::put('/navs/order', 'InfoCotizarController@orderNavs')->name('order-navs');
+            Route::put('/navs/{nav}', 'InfoCotizarController@updateNav')->name('update-navs');
+            Route::get('/navs/json/get/{nav}', 'InfoCotizarController@getNav')->name('get-navs');
+            Route::get('/navs/json/get-all', 'InfoCotizarController@getAllNavs')->name('get-all-navs');
+
+            Route::get('/steps/json/get-all/{id}', 'InfoCotizarController@getAllSteps')->name('get-all-steps');
+            Route::delete('/steps/delete/{step}', 'InfoCotizarController@destroyStep')->name('destroy-step');
+            Route::post('/steps', 'InfoCotizarController@storeSteps')->name('store-steps');
+            Route::put('/steps/order', 'InfoCotizarController@orderSteps')->name('order-steps');
+            Route::put('/steps/{step}', 'InfoCotizarController@updateStep')->name('update-steps');
+            Route::get('/steps/json/get/{step}', 'InfoCotizarController@getStep')->name('get-step');
+        });
     });
 
     Route::namespace('Content')->prefix('contenido')->name('content.')->group(function () {

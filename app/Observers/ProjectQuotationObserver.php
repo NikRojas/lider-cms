@@ -64,7 +64,6 @@ class ProjectQuotationObserver
             $description = 'Proyecto ' . $project->name_es . ' (Código SAP:'.$project->sap_code.') - Error.';
             $lsc = LogSapConnection::UpdateOrCreate(["slug" => $slug, "type" => $this->lscType, 'status' => $status, 'description' =>  (string) $description]);
         }
-        
         $advisorId = null;
         $project = $lead->projectRel;
         $advisors = $project->advisorsRel;
@@ -72,7 +71,6 @@ class ProjectQuotationObserver
         $advisorsPluckSinNull = $advisorsPluck;
         $asesoresDesdeSAPPluck = collect($asesoresDesdeSAP)->pluck('codigo')->values()->all();
         $asesoresFinal = array_intersect($advisorsPluckSinNull, $asesoresDesdeSAPPluck);
-        //Log::info($asesoresFinal);
         $ifItsFirstRecord = ProjectQuotation::count();
         //Is First Record
         if($ifItsFirstRecord == 1){
@@ -101,9 +99,17 @@ class ProjectQuotationObserver
                 $advisorId = array_pop($diff);
             }
         }
-        $lead->advisor_id = $advisorId;
+        //Comprobar si tiene asignado ya un asesor
+        $checkIfQuotationExist = ProjectQuotation::where('email',$lead->email)->where('id','!=',$lead->id)->where('project_id',$lead->project_id)->whereNotNull('advisor_id')->first();
+        if($checkIfQuotationExist){
+            $lead->advisor_id = $checkIfQuotationExist->advisor_id;
+        }
+        else{
+            $lead->advisor_id = $advisorId;
+        }
         $lead->save();
         $advisor = Advisor::find($advisorId);
+        //Log::info($advisor);
 
         $lead = $lead->load('projectRel.statusRel','projectRel.ubigeoRel','advisorRel','projectTypeDepartmentRel','projectRel.financingOptionsRel');
         if($lead->projectRel["send_to_email"]){

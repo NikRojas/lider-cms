@@ -27,6 +27,13 @@
     <!--<link href="{{ asset('css/font-awesome.min.css') }}" rel="stylesheet">-->
     <link href="{{ asset('css/fonts.css') }}" rel="stylesheet">
     <meta name="csrf-token" content="{{ csrf_token() }}">
+
+    <style>
+        .content-editor-step p{
+            margin-bottom: 5px;
+            line-height: 1.2;
+        }
+    </style>
     @yield('head')
 </head>
 <body @isset($class) class="{{ $class }}" @endisset @empty($class) class="sidebar-icon-only pr-0" @endempty id="body">

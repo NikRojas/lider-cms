@@ -60,6 +60,13 @@ Route::middleware(['auth'])->namespace('Cms')->name('cms.')->group(function () {
                 Route::put('/{element}', 'FinancingOptionsController@update')->name('update');
                 Route::get('/json/get/{element}', 'FinancingOptionsController@get')->name('get');
             });
+
+            Route::namespace('General')->name('tasa-seguro.')->prefix('tasa-seguro')->group(function () {
+                Route::get('/', 'TasaSeguroController@getAll')->name('getAll');
+
+                //Route::post('/', 'TasaSeguroController@store')->name('store');
+                Route::put('/', 'TasaSeguroController@update')->name('update');
+            });
         });
         Route::name('logs-sap.')->prefix('logs-sap')->group(function () {
             Route::get('/', 'LogsSapController@index')->name('index');
@@ -135,6 +142,16 @@ Route::middleware(['auth'])->namespace('Cms')->name('cms.')->group(function () {
             Route::delete('/{element}', 'TypesController@destroy')->name('destroy');
             Route::get('/json/get-all', 'TypesController@getAll')->name('get-all');
             Route::get('/json/get/{element}', 'TypesController@get')->name('get');
+        });
+
+        Route::name('types-seguros.')->prefix('tipo-seguros')->group(function () {
+            Route::get('/', 'TipoSegurosController@index')->name('index');
+            Route::post('/', 'TipoSegurosController@store')->name('store');
+            Route::put('/order', 'TipoSegurosController@order')->name('order');
+            Route::put('/{element}', 'TipoSegurosController@update')->name('update');
+            Route::delete('/{element}', 'TipoSegurosController@destroy')->name('destroy');
+            Route::get('/json/get-all', 'TipoSegurosController@getAll')->name('get-all');
+            Route::get('/json/get/{element}', 'TipoSegurosController@get')->name('get');
         });
     });
 
@@ -365,6 +382,23 @@ Route::middleware(['auth'])->namespace('Cms')->name('cms.')->group(function () {
             Route::get('/', 'GeneralInformationController@index')->name('index');
             Route::post('/', 'GeneralInformationController@store')->name('store');
             Route::get('/json/get', 'GeneralInformationController@get')->name('get');
+        });
+        Route::name('info-cotizar.')->prefix('informacion-cotizar')->group(function () {
+            #General Information
+            Route::get('/', 'InfoCotizarController@index')->name('index');
+            Route::post('/navs', 'InfoCotizarController@storeNavs')->name('store-navs');
+            Route::delete('/navs/delete/{nav}', 'InfoCotizarController@destroyNav')->name('destroy-nav');
+            Route::put('/navs/order', 'InfoCotizarController@orderNavs')->name('order-navs');
+            Route::put('/navs/{nav}', 'InfoCotizarController@updateNav')->name('update-navs');
+            Route::get('/navs/json/get/{nav}', 'InfoCotizarController@getNav')->name('get-navs');
+            Route::get('/navs/json/get-all', 'InfoCotizarController@getAllNavs')->name('get-all-navs');
+
+            Route::get('/steps/json/get-all/{id}', 'InfoCotizarController@getAllSteps')->name('get-all-steps');
+            Route::delete('/steps/delete/{step}', 'InfoCotizarController@destroyStep')->name('destroy-step');
+            Route::post('/steps', 'InfoCotizarController@storeSteps')->name('store-steps');
+            Route::put('/steps/order', 'InfoCotizarController@orderSteps')->name('order-steps');
+            Route::put('/steps/{step}', 'InfoCotizarController@updateStep')->name('update-steps');
+            Route::get('/steps/json/get/{step}', 'InfoCotizarController@getStep')->name('get-step');
         });
     });
 

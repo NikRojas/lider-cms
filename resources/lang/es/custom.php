@@ -38,7 +38,9 @@ return [
         'type' => 'El tipo de inmueble',
         'image' => 'La imagen',
         'elements' => 'Los elementos',
-        'etapa' => 'La etapa'
+        'etapa' => 'La etapa',
+        'tasa' => 'La tasa seguro del bien',
+        'type-seguro' => 'El tipo de seguro'
     ],
     'title' => [
         'error' => 'Error',

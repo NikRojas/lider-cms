@@ -230,6 +230,7 @@ export default {
         sap_code: '',
       };
       this.modalCreateUpdate = false;
+      this.modalDestroy = false;
     },
     deleteEl(id){
       this.modalDestroy = true;

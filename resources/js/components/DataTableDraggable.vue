@@ -119,6 +119,10 @@ export default {
       type: Boolean,
       required: true,
     },
+    loadingProp: {
+      type: Boolean,
+      required: false,
+    },
   },
   data() {
     return {
@@ -153,6 +157,12 @@ export default {
         this.orderElements = newValue.data;
         this.loading = false;
       }
+    },
+    loadingProp: function (newValue, oldValue) {
+      this.loading = newValue;
+    },
+    loading: function (newValue, oldValue) {
+      this.$emit("update:loadingProp", Boolean(newValue));
     },
   },
   computed: {

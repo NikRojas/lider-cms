@@ -103,13 +103,13 @@ class ProjectQuotationObserver
         $checkIfQuotationExist = ProjectQuotation::where('email',$lead->email)->where('id','!=',$lead->id)->where('project_id',$lead->project_id)->whereNotNull('advisor_id')->first();
         if($checkIfQuotationExist){
             $lead->advisor_id = $checkIfQuotationExist->advisor_id;
+            $advisorId = $checkIfQuotationExist->advisor_id;
         }
         else{
             $lead->advisor_id = $advisorId;
         }
         $lead->save();
         $advisor = Advisor::find($advisorId);
-        //Log::info($advisor);
 
         $lead = $lead->load('projectRel.statusRel','projectRel.ubigeoRel','advisorRel','projectTypeDepartmentRel','projectRel.financingOptionsRel');
         if($lead->projectRel["send_to_email"]){

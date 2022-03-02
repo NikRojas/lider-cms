@@ -22,7 +22,7 @@ class ProjectQuotationObserver
 
     public function created(ProjectQuotation $lead)
     {
-        $this->url = config('services.sap_url').$this->url;
+        /*$this->url = config('services.sap_url').$this->url;
         #Obtener Proyectos con Codigo SAP
         $project = Project::where('id', $lead->project_id)->first();
         #Obtener Credenciales
@@ -108,6 +108,34 @@ class ProjectQuotationObserver
         else{
             $lead->advisor_id = $advisorId;
         }
+        $lead->save();
+        $advisor = Advisor::find($advisorId);*/
+
+        $advisorId = null;
+        $project = $lead->projectRel;
+        $advisors = $project->advisorsRel;
+        $typeDepartment = $lead->projectTypeDepartmentRel;
+        $ifItsFirstRecord = ProjectQuotation::count();
+        //Is First Record
+        if($ifItsFirstRecord == 1){
+            $advisorId = $advisors->first()->id;
+        }
+        else{
+            $advisorsTotal = $advisors->count() - 1;
+            $lastLeads = ProjectQuotation::orderBy('created_at','desc')->skip(1)->take($advisorsTotal)->get();
+            $pluckAdvisors = $advisors->pluck('id');
+            $pluckAdvisorsLastLeads = $lastLeads->pluck('advisor_id');
+
+            $diff = $pluckAdvisors->diff($pluckAdvisorsLastLeads);
+            $diff = $diff->all();
+            if(!$diff){
+                $advisorId = $advisors->first()->id;
+            }
+            else{
+                $advisorId = array_pop($diff);
+            }
+        }
+        $lead->advisor_id = $advisorId;
         $lead->save();
         $advisor = Advisor::find($advisorId);
 

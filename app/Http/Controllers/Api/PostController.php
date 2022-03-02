@@ -73,7 +73,7 @@ class PostController extends BaseController
 		try {
             $el = ProjectQuotation::UpdateOrCreate(array_merge($el,["project_id" => $project->id, 'identifier_str' => $str]));
             return $this->sendResponse(["identifier" => $el->identifier_str], trans('custom.title.success'), 200);;
-        } catch (\Exception $e) {
+		} catch (\Exception $e) {
             return $this->sendError(trans('custom.title.error'), [], 500);
         }
     }

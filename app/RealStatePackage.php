@@ -36,8 +36,8 @@ class RealStatePackage extends Model
 
     public function getStatusCalculateAttribute(){
         $value = true;
-        foreach($this->departmentsRel as $value){
-            if(!$value->available){
+        foreach($this->departmentsRel as $value2){
+            if(!$value2->available){
                 $value = false;
                 break;
             }

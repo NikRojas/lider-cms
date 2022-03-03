@@ -12,6 +12,37 @@ use Illuminate\Http\Request;
 |
 */
 
+Route::get('/testCombo', function () {
+    $priceProject = 1000000;
+    $priceForeignProject = 40000;
+    $combosFinal = [];
+    $combos = App\RealStatePackage::select('*')->where('project_id',1)->with('projectRel.currencyRel')->get();
+    if(count($combos) > 0){
+        $combosFiltered = $combos->filter(function($combo){
+            return $combo->status_calculate == true;
+        });
+    }
+    if(count($combosFiltered) > 0){
+        foreach ($combosFiltered as $comboElement) {
+            if($comboElement->projectRel->master_currency_id == 1){
+                $price = $comboElement->departmentsRel->pluck('price');
+            }
+            else{
+                $price = $comboElement->departmentsRel->pluck('price_foreign');
+            }
+            $combosFinal[] = [
+                'id' => $comboElement->id,
+                'description' => $comboElement->description,
+                'price' => $price->sum()
+            ];
+        }
+        $combosCollect = collect($combosFinal);
+        $minPrice = $combosCollect->min('price');
+        $maxPrice = $combosCollect->max('price');
+    }
+    return response()->json($combosFinal);
+});
+
 Route::namespace('Api')->group(function() { 
     Route::get('layout', 'BaseController@layout');
     Route::get('sitemap-blog', 'BaseController@sitemapBlog');

@@ -243,7 +243,7 @@ class SapGetAvailableDepartments extends Command
                     }
                 }
 
-                $combos = RealStatePackage::select('*')->where('project_id',$value->id)->with('projectRel.currencyRel')->get();
+                /*$combos = RealStatePackage::select('*')->where('project_id',$value->id)->with('projectRel.currencyRel')->get();
                 $combosFinal = [];
                 $combosFiltered = [];
                 if(count($combos) > 0){
@@ -281,7 +281,7 @@ class SapGetAvailableDepartments extends Command
                         Log::info($value->name_es);
                         Log::info('Combo Dolares Min '.$priceForeignProject);
                     }
-                }
+                }*/
                 
                 #No actualizar precio desde en Namua ni Inifinitum
                 if($value->id != '4' && $value->id != '5'){

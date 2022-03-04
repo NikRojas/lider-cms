@@ -22,7 +22,7 @@ class ProjectQuotationObserver
 
     public function created(ProjectQuotation $lead)
     {
-        /*$this->url = config('services.sap_url').$this->url;
+        $this->url = config('services.sap_url').$this->url;
         #Obtener Proyectos con Codigo SAP
         $project = Project::where('id', $lead->project_id)->first();
         #Obtener Credenciales
@@ -64,6 +64,12 @@ class ProjectQuotationObserver
             $description = 'Proyecto ' . $project->name_es . ' (Código SAP:'.$project->sap_code.') - Error.';
             $lsc = LogSapConnection::UpdateOrCreate(["slug" => $slug, "type" => $this->lscType, 'status' => $status, 'description' =>  (string) $description]);
         }
+
+        #Test
+        //$asesoresDesdeSAP = [ ['id' => 1, 'codigo' => '01000015'], ['id' => 2, 'codigo' => '01000098']];
+        //$asesoresDesdeSAP = [ ['id' => 1, 'codigo' => '01033'], ['id' => 2, 'codigo' => '010044']];
+        #Test
+
         $advisorId = null;
         $project = $lead->projectRel;
         $advisors = $project->advisorsRel;
@@ -71,34 +77,69 @@ class ProjectQuotationObserver
         $advisorsPluckSinNull = $advisorsPluck;
         $asesoresDesdeSAPPluck = collect($asesoresDesdeSAP)->pluck('codigo')->values()->all();
         $asesoresFinal = array_intersect($advisorsPluckSinNull, $asesoresDesdeSAPPluck);
-        $ifItsFirstRecord = ProjectQuotation::count();
-        //Is First Record
-        if($ifItsFirstRecord == 1){
-            //$advisorId = $advisors->first()->id;
-            $advisorId = Advisor::where('sap_code',$asesoresFinal[0])->first()->id;
-        }
-        else{
-            $advisorsTotal = count($asesoresFinal) - 1;
-            $lastLeads = ProjectQuotation::orderBy('created_at','desc')->skip(1)->take($advisorsTotal)->get();
-            $pluckAdvisors = [];
-            foreach ($asesoresFinal as $key => $value) {
-                $el = null;
-                $el = Advisor::where('sap_code',$value)->first();
-                if($el){
-                    $pluckAdvisors[] = $el->id;
+        //Log::info('AsesoresIntersect');
+        //Log::info($asesoresFinal);
+        if(count($asesoresFinal) > 0){
+            $ifItsFirstRecord = ProjectQuotation::count();
+            //Is First Record
+            if($ifItsFirstRecord == 1){
+                //$advisorId = $advisors->first()->id;
+                $advisorId = Advisor::where('sap_code',$asesoresFinal[0])->first()->id;
+            }
+            else{
+                $advisorsTotal = count($asesoresFinal) - 1;
+                $lastLeads = ProjectQuotation::orderBy('created_at','desc')->skip(1)->take($advisorsTotal)->get();
+                $pluckAdvisors = [];
+                foreach ($asesoresFinal as $key => $value) {
+                    $el = null;
+                    $el = Advisor::where('sap_code',$value)->first();
+                    if($el){
+                        $pluckAdvisors[] = $el->id;
+                    }
+                }
+                $pluckAdvisors = collect($pluckAdvisors);
+                $pluckAdvisorsLastLeads = $lastLeads->pluck('advisor_id');
+                $diff = $pluckAdvisors->diff($pluckAdvisorsLastLeads);
+                $diff = $diff->all();
+                if(!$diff){
+                    $advisorId = $advisors->first()->id;
+                }
+                else{
+                    $advisorId = array_pop($diff);
                 }
             }
-            $pluckAdvisors = collect($pluckAdvisors);
-            $pluckAdvisorsLastLeads = $lastLeads->pluck('advisor_id');
-            $diff = $pluckAdvisors->diff($pluckAdvisorsLastLeads);
-            $diff = $diff->all();
-            if(!$diff){
+            //$lead->save();
+            //$advisor = Advisor::find($advisorId);
+        }
+        else{
+            $advisorId = null;
+            $project = $lead->projectRel;
+            $advisors = $project->advisorsRel;
+            $typeDepartment = $lead->projectTypeDepartmentRel;
+            $ifItsFirstRecord = ProjectQuotation::count();
+            //Is First Record
+            if($ifItsFirstRecord == 1){
                 $advisorId = $advisors->first()->id;
             }
             else{
-                $advisorId = array_pop($diff);
+                $advisorsTotal = $advisors->count() - 1;
+                $lastLeads = ProjectQuotation::orderBy('created_at','desc')->skip(1)->take($advisorsTotal)->get();
+                $pluckAdvisors = $advisors->pluck('id');
+                $pluckAdvisorsLastLeads = $lastLeads->pluck('advisor_id');
+
+                $diff = $pluckAdvisors->diff($pluckAdvisorsLastLeads);
+                $diff = $diff->all();
+                if(!$diff){
+                    $advisorId = $advisors->first()->id;
+                }
+                else{
+                    $advisorId = array_pop($diff);
+                }
             }
+            //$lead->advisor_id = $advisorId;
+            //$lead->save();
         }
+        $lead->advisor_id = $advisorId;
         //Comprobar si tiene asignado ya un asesor
         $checkIfQuotationExist = ProjectQuotation::where('email',$lead->email)->where('id','!=',$lead->id)->where('project_id',$lead->project_id)->whereNotNull('advisor_id')->first();
         if($checkIfQuotationExist){
@@ -109,36 +150,9 @@ class ProjectQuotationObserver
             $lead->advisor_id = $advisorId;
         }
         $lead->save();
-        $advisor = Advisor::find($advisorId);*/
-
-        $advisorId = null;
-        $project = $lead->projectRel;
-        $advisors = $project->advisorsRel;
-        $typeDepartment = $lead->projectTypeDepartmentRel;
-        $ifItsFirstRecord = ProjectQuotation::count();
-        //Is First Record
-        if($ifItsFirstRecord == 1){
-            $advisorId = $advisors->first()->id;
-        }
-        else{
-            $advisorsTotal = $advisors->count() - 1;
-            $lastLeads = ProjectQuotation::orderBy('created_at','desc')->skip(1)->take($advisorsTotal)->get();
-            $pluckAdvisors = $advisors->pluck('id');
-            $pluckAdvisorsLastLeads = $lastLeads->pluck('advisor_id');
-
-            $diff = $pluckAdvisors->diff($pluckAdvisorsLastLeads);
-            $diff = $diff->all();
-            if(!$diff){
-                $advisorId = $advisors->first()->id;
-            }
-            else{
-                $advisorId = array_pop($diff);
-            }
-        }
-        $lead->advisor_id = $advisorId;
-        $lead->save();
         $advisor = Advisor::find($advisorId);
-
+        //Log::info('AsesoresAsignado');
+        //Log::info($advisor);
         $lead = $lead->load('projectRel.statusRel','projectRel.ubigeoRel','advisorRel','projectTypeDepartmentRel','projectRel.financingOptionsRel');
         if($lead->projectRel["send_to_email"]){
             Notification::route('mail',$advisor->email)->notify(new ProjectQuotationNotification($lead));  

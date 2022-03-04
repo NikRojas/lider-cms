@@ -6,6 +6,7 @@ use App\Department;
 use App\LogSapConnection;
 use App\Project;
 use App\ProjectTypeDepartment;
+use App\RealStatePackage;
 use App\SapCredential;
 use GuzzleHttp\Client;
 use Illuminate\Console\Command;
@@ -241,6 +242,47 @@ class SapGetAvailableDepartments extends Command
                         $priceForeignProject = $value->price_total_foreign;
                     }
                 }
+
+                $combos = RealStatePackage::select('*')->where('project_id',$value->id)->with('projectRel.currencyRel')->get();
+                $combosFinal = [];
+                $combosFiltered = [];
+                if(count($combos) > 0){
+                    $combosFiltered = $combos->filter(function($combo){
+                        return $combo->status_calculate == true;
+                    });
+                }
+                if(count($combosFiltered) > 0){
+                    foreach ($combosFiltered as $comboElement) {
+                        if($comboElement->projectRel->master_currency_id == 1){
+                            $priceCombos = $comboElement->departmentsRel->pluck('price');
+                        }
+                        else{
+                            $priceCombos = $comboElement->departmentsRel->pluck('price_foreign');
+                        }
+                        $combosFinal[] = [
+                            'id' => $comboElement->id,
+                            'description' => $comboElement->description,
+                            'price' => $priceCombos->sum()
+                        ];
+                    }
+                    $combosCollect = collect($combosFinal);
+                    $minPriceCombo = $combosCollect->min('price');
+                    if($value->master_currency_id == 1){
+                        if($minPriceCombo < $priceProject){
+                            $priceProject = $minPriceCombo;
+                        }
+                        Log::info($value->name_es);
+                        Log::info('Combo Soles Min '.$priceProject);
+                    }
+                    else if($value->master_currency_id == 2){
+                        if($minPriceCombo < $priceForeignProject){
+                            $priceForeignProject = $minPriceCombo;
+                        }
+                        Log::info($value->name_es);
+                        Log::info('Combo Dolares Min '.$priceForeignProject);
+                    }
+                }
+                
                 #No actualizar precio desde en Namua ni Inifinitum
                 if($value->id != '4' && $value->id != '5'){
                     $updateProject = $value->update(['stock_parking' => $stock, 'price_parking_sap' => $price_parking, 'price_parking_foreign_sap' => $price_foreign_parking,

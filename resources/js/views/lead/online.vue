@@ -61,7 +61,7 @@
             </div>
           </div>
         </b-tab>
-        <b-tab
+        <!--<b-tab
           title="Emails Destino"
           title-link-class="border-0 shadow-none bg-white py-3"
           title-item-class="my-0"
@@ -200,7 +200,7 @@
               </div>
             </div>
           </div>
-        </b-tab>
+        </b-tab>-->
       </b-tabs>
     </div>
 

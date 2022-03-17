@@ -8,9 +8,11 @@ use App\AboutText;
 use App\AboutWarrantyElement;
 use App\Cami;
 use App\CamiElement;
+use App\CanalCitaOnline;
 use App\Category;
 use App\FinancingOption;
 use App\Http\Controllers\Api\BaseController;
+use App\MasterDocumentType;
 use App\MasterLeadMedium;
 use App\MasterLeadTimeDay;
 use App\Post;
@@ -132,6 +134,8 @@ class PageController extends BaseController
         $content = $this->getContentPage('online-appointment');
         $terms = $this->getContentPage('terms-conditions');
         $privacy = $this->getContentPage('privacy-policies');
+        $canales = CanalCitaOnline::get();
+        $typeDocuments = MasterDocumentType::get();
         $data = array(
             "page" => $page,
             "timeDay" => $timeDay,
@@ -139,7 +143,9 @@ class PageController extends BaseController
             "projects" => $projects,
             "content" => $content,
             'privacy' => $privacy,
-            'terms' => $terms
+            'terms' => $terms,
+            'canales' => $canales,
+            'typeDocuments' => $typeDocuments
         );
         return $this->sendResponse($data, '');
     }

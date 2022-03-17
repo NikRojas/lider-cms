@@ -47,4 +47,14 @@ class LeadVideocall extends Model
     public function getFullnameAttribute() {
         return $this->name.' '.$this->lastname;
     }
+
+    public function canalRel()
+    {
+        return $this->hasOne('App\CanalCitaOnline','id','id_canal');
+    }
+
+    public function documentTypeRel()
+    {
+        return $this->hasOne('App\MasterDocumentType','id','type_document_id');
+    }
 }

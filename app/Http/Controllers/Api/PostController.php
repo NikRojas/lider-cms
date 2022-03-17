@@ -34,7 +34,7 @@ class PostController extends BaseController
     }
 
     public function onlineAppointment(OnlineAppointmentRequest $request){
-        $el = request(['name','email','lastname','mobile','document_number','project_id','schedule','utm_source','utm_medium','utm_campaign','utm_term','utm_content']);
+        $el = request(['name','email','lastname','mobile','document_number','project_id','schedule','utm_source','utm_medium','utm_campaign','utm_term','utm_content','type_document_id','id_canal']);
 		try {
             $el = LeadVideocall::UpdateOrCreate($el);
             return $this->sendResponse([], trans('custom.title.success'), 200);;

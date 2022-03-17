@@ -75,7 +75,7 @@ class AppServiceProvider extends ServiceProvider
         });
         Applicant::observe(ApplicantObserver::class);
         Lead::observe(LeadObserver::class);
-        LeadVideocall::observe(LeadVideocallObserver::class);
+        //LeadVideocall::observe(LeadVideocallObserver::class);
         LeadSaleLand::observe(LeadSaleLandObserver::class);
         ProjectQuotation::observe(ProjectQuotationObserver::class);
         LogSapConnection::observe(LogSapConnectionObserver::class);

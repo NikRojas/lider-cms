@@ -61,6 +61,7 @@ class DatabaseSeeder extends Seeder
         /*$this->call(TipoSeguroSeeder::class);
         $this->call(TasaSeguroSeeder::class);
         $this->call(MasterModulesFebreroTableSeeder::class);*/
-        $this->call(MasterModulesInfoPestTableSeeder::class);
+        //$this->call(MasterModulesInfoPestTableSeeder::class);
+        $this->call(CanalCitaOnlineTableSeeder::class);
     }
 }

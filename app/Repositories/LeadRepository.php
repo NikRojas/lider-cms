@@ -58,19 +58,17 @@ class LeadRepository
             ->orWhere('lastname', 'like', '%'.$q.'%')
             ->orWhere('mobile', 'like', '%'.$q.'%')
             ->orWhere('document_number', 'like', '%'.$q.'%')
-            //->with('mediumRel', 'timeRel')
-            ->with('advisorRel','projectRel')
+            ->with('advisorRel','projectRel','documentTypeRel','canalRel')
             ->orderBy('created_at', 'desc')
             ->paginate($items_per_page);
         } else {
             $leads = LeadVideocall::
-            //->with('mediumRel', 'timeRel')
-            with('advisorRel','projectRel')
+            with('advisorRel','projectRel','documentTypeRel','canalRel')
             ->orderBy('created_at', 'desc')
             ->paginate($items_per_page);
         }
         foreach ($leads as $lead) {
-            $avatarHTML = "No asignado aún";
+            /*$avatarHTML = "No asignado aún";
             if($lead["advisorRel"]){
                 if($lead["advisorRel"]["avatar"]){
                     $avatar = asset('storage/img/advisors/'.$lead["advisorRel"]["avatar"]);
@@ -79,8 +77,23 @@ class LeadRepository
                 else{
                     $avatarHTML = "<div class='media align-items-center'><span class='avatar avatar-sm mr-2 rounded-circle bg-primary'><span style='font-size:16px!important;'>".$lead["advisorRel"]["avatar_initials"]."</span></span>".$lead['advisorRel']['name']."</div>";
                 }
+            }*/
+            $typeDocument = 'DNI';
+            if($lead['type_document_id']){
+                $typeDocument = $lead['documentTypeRel']['description'];
+            }
+            $canal = 'No registrado';
+            if($lead['id_canal']){
+                $canal = $lead['canalRel']['name'];
             }
 
+
+            $utm_source = $lead["utm_source"] ? $lead["utm_source"] : 'No registrado';
+            $utm_medium = $lead["utm_medium"] ? $lead["utm_medium"] : 'No registrado';
+            $utm_campaign = $lead["utm_campaign"] ? $lead["utm_campaign"] : 'No registrado';
+            $utm_term = $lead["utm_term"] ? $lead["utm_term"] : 'No registrado';
+            $utm_content = $lead["utm_content"] ? $lead["utm_content"] : 'No registrado';
+            $utm = '<div>UTM Source: '.$utm_source.'</div>'.'<div> UTM Medium: '.$utm_medium.'</div>'.'<div>UTM Campaign: '.$utm_campaign.'</div>'.'<div>UTM Term: '.$utm_term.'</div>'.'<div>UTM Content: '.$utm_content.'</div>';
             $image = asset('storage/img/projects/'.$lead["projectRel"]["images_format"][0]);
             $projectHTML = "<div class='media align-items-center'><span class='mr-3'><img height='55' width='auto' src='".$image."' /></span>".$lead["projectRel"]["name_es"]."</div>";
             $data[] = array(
@@ -88,17 +101,13 @@ class LeadRepository
                 "name" => $lead['fullname'],
                 "mobile" => $lead["mobile_format"],
                 "email" => $lead["email"],
-                "document_number" => $lead["document_number"],
+                "document_number" => $typeDocument.'<br>'.$lead["document_number"],
                 "schedule" => $lead["schedule"],
                 "project" => $projectHTML,
-                "advisor" => $avatarHTML,
+                //"advisor" => $avatarHTML,
+                'canal' => $canal,
+                'utm' => $utm,
                 "created" => $lead["created_at_format"],
-                'utm_source' => $lead["utm_source"] ? $lead["utm_source"] : 'No registrado',
-                'utm_medium' => $lead["utm_medium"] ? $lead["utm_medium"] : 'No registrado',
-                'utm_campaign' => $lead["utm_campaign"] ? $lead["utm_campaign"] : 'No registrado',
-                'utm_term' => $lead["utm_term"] ? $lead["utm_term"] : 'No registrado',
-                'utm_content' => $lead["utm_content"] ? $lead["utm_content"] : 'No registrado',
-                "webhook" => $lead["sended_to_webhook"] ? 'Enviado': 'No enviado'
             );
         }
         $leads = $leads->toArray();

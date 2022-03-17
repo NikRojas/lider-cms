@@ -126,7 +126,7 @@ class LeadOnlineController extends Controller
 
     public function allExport()
     {
-        $leads = LeadVideocall::with('advisorRel','projectRel')->orderBy('created_at', 'asc')->get();
+        $leads = LeadVideocall::with('advisorRel','projectRel','documentTypeRel','canalRel')->orderBy('created_at', 'asc')->get();
         return new LeadVideocallExport(null, null, $leads);
     }
 
@@ -134,7 +134,7 @@ class LeadOnlineController extends Controller
     {
         $from = date("Y-m-d H:i:s", strtotime($request->from));
         $to = date("Y-m-d H:i:s", strtotime($request->to));
-        $leads = LeadVideocall::with('advisorRel','projectRel')->whereBetween('created_at', [$from,$to])->orderBy('created_at', 'asc')->get();
+        $leads = LeadVideocall::with('advisorRel','projectRel','documentTypeRel','canalRel')->whereBetween('created_at', [$from,$to])->orderBy('created_at', 'asc')->get();
         return (new LeadVideocallExport($from,$to,$leads));
     }
 }

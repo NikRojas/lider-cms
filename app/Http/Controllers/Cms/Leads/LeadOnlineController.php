@@ -72,7 +72,8 @@ class LeadOnlineController extends Controller
     public function getAll(Request $request, LeadRepository $repo)
     {
         $q = $request->q;
-        $headers = ["id", "Nombre", "Teléfono", "Email", "DNI", "Horario", "Proyecto", "Asesor", "Registrado el","UTM Source","UTM Medium","UTM Campaign","UTM Term","UTM Content","Enviado a Webhook"];
+        //$headers = ["id", "Nombre", "Teléfono", "Email", "Documento", "Horario", "Proyecto", "Asesor",'Canal',"UTM","Enviado a Webhook", "Registrado el"];
+        $headers = ["id", "Nombre", "Teléfono", "Email", "Documento", "Horario", "Proyecto",'Canal',"UTM", "Registrado el"];
         if ($q) {
             $elements = $repo->datatableOnline($request->itemsPerPage, $q);
         } else {
@@ -125,7 +126,7 @@ class LeadOnlineController extends Controller
 
     public function allExport()
     {
-        $leads = LeadVideocall::with('advisorRel','projectRel')->orderBy('created_at', 'asc')->get();
+        $leads = LeadVideocall::with('advisorRel','projectRel','documentTypeRel','canalRel')->orderBy('created_at', 'asc')->get();
         return new LeadVideocallExport(null, null, $leads);
     }
 
@@ -133,7 +134,7 @@ class LeadOnlineController extends Controller
     {
         $from = date("Y-m-d H:i:s", strtotime($request->from));
         $to = date("Y-m-d H:i:s", strtotime($request->to));
-        $leads = LeadVideocall::with('advisorRel','projectRel')->whereBetween('created_at', [$from,$to])->orderBy('created_at', 'asc')->get();
+        $leads = LeadVideocall::with('advisorRel','projectRel','documentTypeRel','canalRel')->whereBetween('created_at', [$from,$to])->orderBy('created_at', 'asc')->get();
         return (new LeadVideocallExport($from,$to,$leads));
     }
 }

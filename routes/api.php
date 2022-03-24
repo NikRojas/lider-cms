@@ -33,6 +33,7 @@ Route::namespace('Api')->group(function() {
             Route::post('sell-land', 'PostController@sellLand');
         });
     });
+    Route::post('available/online-appointment', 'ConnectionController@availableSapOnlineAppointment');
     Route::prefix('page')->group(function() { 
         Route::get('home', 'PageController@home');
         Route::get('blog', 'PageController@blog');

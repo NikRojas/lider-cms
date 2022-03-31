@@ -130,11 +130,11 @@ class PageController extends BaseController
         $page = $this->getSeoPage('online-appointment', $request->locale);
         $timeDay = MasterLeadTimeDay::get();
         $projects = Project::select('id', 'logo','logo_colour', 'name_es', 'name_en','code_ubigeo','sap_code')->where('active', 1)
-        ->where('form_videocall',true)->with('ubigeoRel')->get();
+        ->where('form_videocall',true)->with('ubigeoRel')->orderBy('name_es')->get();
         $content = $this->getContentPage('online-appointment');
         $terms = $this->getContentPage('terms-conditions');
         $privacy = $this->getContentPage('privacy-policies');
-        $canales = CanalCitaOnline::get();
+        $canales = CanalCitaOnline::orderBy('name')->get();
         $typeDocuments = MasterDocumentType::get();
         $data = array(
             "page" => $page,

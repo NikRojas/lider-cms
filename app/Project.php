@@ -14,6 +14,7 @@ class Project extends Model
         'send_to_email' => 'boolean',
         'projects_related' => 'array',
         'form_videocall' => 'boolean',
+        'sync_tipologia' => 'boolean',
         'reservation_in_package' => 'boolean',
     ];
     protected $appends = ['images_format','price_total_format','price_total_foreign_format','price_format','id_video','price_separation_format','price_parking_format','price_parking_foreign_format',

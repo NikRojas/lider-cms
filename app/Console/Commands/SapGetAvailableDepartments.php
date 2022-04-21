@@ -145,9 +145,10 @@ class SapGetAvailableDepartments extends Command
                                     if(!$minPrice && $minPriceForeign){
                                         $updateTypeDepartmentTemp = array_merge($updateTypeDepartmentTemp, ["price" => $minPriceForeign, "type_currency" => 0]);
                                     }
-                                    #No actualizar precio en tipologias de Namua e Infinitum
-                                    if($value->id != '4' && $value->id != '5'){
-                                        //Log::info("Proyecto: ".$value->id);
+                                    #No actualizar datos de tipologias de Namua e Infinitum
+                                    //if($value->id != '4' && $value->id != '5'){
+                                    if($value->sync_tipologia){
+                                        Log::info("Proyecto: ".$value->id);
                                         //$updateTypeDepartment = ProjectTypeDepartment::UpdateOrCreate(["id" => $keyEstatesByTypeDepartment ], array_merge($updateTypeDepartmentTemp, ["project_id" => $value->id]));
                                         $checkIfTipologyExist = ProjectTypeDepartment::where('id',$keyEstatesByTypeDepartment)->first();
                                         if($checkIfTipologyExist){
@@ -160,7 +161,9 @@ class SapGetAvailableDepartments extends Command
                                 //ProjectTypeDepartment::UpdateOrCreate(["id" => $valueEstateAvailable ], ["available" => true, "project_id" => $value->id]);
                                 $checkIfTipologyExist = ProjectTypeDepartment::where('id',$valueEstateAvailable)->first();
                                 if($checkIfTipologyExist){
-                                    ProjectTypeDepartment::UpdateOrCreate(["id" => $valueEstateAvailable ], ["available" => true, "project_id" => $value->id]);
+                                    if($value->sync_tipologia){
+                                        ProjectTypeDepartment::UpdateOrCreate(["id" => $valueEstateAvailable ], ["available" => true, "project_id" => $value->id]);
+                                    }
                                 }
                             }
                             $typeDepartmentsUnavailable = array_diff($typeDepartmentsIds, $typeDepartmentIdsAvailable);
@@ -168,7 +171,9 @@ class SapGetAvailableDepartments extends Command
                                 //ProjectTypeDepartment::UpdateOrCreate(["id" => $valueEstateUnavailable ], ["available" => false, "project_id" => $value->id]);
                                 $checkIfTipologyExist = ProjectTypeDepartment::where('id',$valueEstateUnavailable)->first();
                                 if($checkIfTipologyExist){
-                                    ProjectTypeDepartment::UpdateOrCreate(["id" => $valueEstateUnavailable ], ["available" => false, "project_id" => $value->id]);
+                                    if($value->sync_tipologia){
+                                        ProjectTypeDepartment::UpdateOrCreate(["id" => $valueEstateUnavailable ], ["available" => false, "project_id" => $value->id]);
+                                    }
                                 }
                             }
                         }

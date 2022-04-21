@@ -250,6 +250,7 @@ Route::middleware(['auth'])->namespace('Cms')->name('cms.')->group(function () {
             Route::get('/json/get-all', 'TipologiesController@getAll')->name('get-all');
             Route::get('/json/get/{element}', 'TipologiesController@get')->name('get');
             Route::put('/order', 'TipologiesController@order')->name('order');
+            Route::put('/actualizar-sync', 'TipologiesController@updateSync')->name('actualizar-sync');
             Route::put('/{element}', 'TipologiesController@update')->name('update');
             Route::delete('/{element}', 'TipologiesController@destroy')->name('destroy');
             Route::put('/{element}', 'TipologiesController@update')->name('update');

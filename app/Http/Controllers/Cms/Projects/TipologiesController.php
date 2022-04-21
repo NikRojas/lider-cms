@@ -107,4 +107,18 @@ class TipologiesController extends Controller
       return response()->json(["route" => route('cms.projects.tipologies.index',["element" => $request->slug_es])],500);
     }
   }
+
+  public function updateSync(Request $request)
+  {
+    try {
+      $project = Project::find($request->project_id);
+      $project->sync_tipologia = $request->sync_tipologia;
+      $project->save();
+      //return response()->json(["route" => route('cms.projects.tipologies.index',["element" => $request->slug_es])]);
+      return response()->json(['title'=> trans('custom.title.success'), 'message'=> trans('custom.message.update.success', ['name' => trans('custom.attribute.tipology')]) ],200);
+    } catch (\Exception $e) {
+      return response()->json(['title' => trans('custom.title.error'), 'message' => trans('custom.message.update.error', ['name' =>  trans('custom.attribute.tipology')])], 500);
+      //return response()->json(["route" => route('cms.projects.tipologies.index',["element" => $request->slug_es])],500);
+    }
+  }
 }

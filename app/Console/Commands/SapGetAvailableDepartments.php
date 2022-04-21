@@ -148,7 +148,7 @@ class SapGetAvailableDepartments extends Command
                                     #No actualizar datos de tipologias de Namua e Infinitum
                                     //if($value->id != '4' && $value->id != '5'){
                                     if($value->sync_tipologia){
-                                        Log::info("Proyecto: ".$value->id);
+                                        //Log::info("Proyecto: ".$value->id);
                                         //$updateTypeDepartment = ProjectTypeDepartment::UpdateOrCreate(["id" => $keyEstatesByTypeDepartment ], array_merge($updateTypeDepartmentTemp, ["project_id" => $value->id]));
                                         $checkIfTipologyExist = ProjectTypeDepartment::where('id',$keyEstatesByTypeDepartment)->first();
                                         if($checkIfTipologyExist){

@@ -38,7 +38,7 @@ class ProjectQuotationObserver
             $responseSap = $client->request('GET', $this->url . $project->sap_code .'&correo='.$lead->email.'&telefono='.$lead->mobile, [
                 'headers' => ['Content-Type' => 'application/json', 'Authorization' => $sapCredentials->token]
             ]);
-            Log::info($this->url . $project->sap_code .'&correo='.$lead->email.'&telefono='.$lead->mobile);
+            //Log::info($this->url . $project->sap_code .'&correo='.$lead->email.'&telefono='.$lead->mobile);
             $status = $responseSap->getStatusCode();
             $responseData = json_decode($responseSap->getBody());
             $description = 'Proyecto ' . $project->name_es . ' (Código SAP:'.$project->sap_code.')';

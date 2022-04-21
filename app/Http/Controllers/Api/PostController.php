@@ -27,7 +27,7 @@ class PostController extends BaseController
         $el = request(['name','email']);
 		try {
             $el = Suscriber::UpdateOrCreate($el);
-            return $this->sendResponse([], trans('custom.title.success'), 200);;
+            return $this->sendResponse([], trans('custom.title.success'), 200);
         } catch (\Exception $e) {
             return $this->sendError(trans('custom.title.error'), [], 500);
         }

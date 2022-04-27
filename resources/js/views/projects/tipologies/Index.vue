@@ -41,6 +41,40 @@
       </div>
     </div>
     <div class="container-fluid mt--6">
+      <div class="row mb-4">
+            <div class="col-12 col-lg-2">
+              <h2>Sincronizar Tipologías</h2>
+              <p>Realiza la sincronización de tipologías con datos del SAP.</p>
+            </div>
+            <div class="col-12 col-lg-10">
+              <div class="card">
+                <div class="card-body">
+                  <p>
+                    Cuando está activado la sincronización de inmuebles; en la sección <b>"Inmuebles"</b> y este apartado, se actualizarán automáticamente su <b>Stock</b>, <b>Metraje</b> y su <b>Precio desde</b> de las tipologías creadas.
+                  </p>
+                  <div> 
+                    <b-form-checkbox
+                                  class="ml-0 mb-3"
+                                  size="lg"
+                                  v-model="elementParent.sync_tipologia"
+                                  name="check-button"
+                                  switch
+                                >
+                                  Activar</b-form-checkbox
+                                >
+                  </div>
+                  <div class="text-right">
+                    <Button
+                      @click="syncTipologies"
+                      :text="'Guardar'"
+                      :classes="['btn-primary']"
+                      :request-server="requestServerSincronization"
+                    ></Button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
       <div class="row" v-if="loadingEls">
         <div class="col-12 col-lg-4 mb-4" v-for="i in 4" :key="i">
           <Skeleton height="300px" />
@@ -456,6 +490,7 @@ export default {
         addRemoveLinks: true,
         dictRemoveFile: "Remover",
       },
+      requestServerSincronization: false
     };
   },
   methods: {
@@ -547,6 +582,44 @@ export default {
             return;
           }
           document.location.href = error.response.data.route;
+        });
+    },
+    syncTipologies() {
+      this.requestServerSincronization = true;
+      let data = {
+        project_id: this.elementParent.id,
+        sync_tipologia: this.project.sync_tipologia
+      }
+      axios({
+        method: "put",
+        url: this.route + "/actualizar-sync",
+        data: data,
+      })
+        .then((response) => {
+          this.requestServerSincronization = false;
+          Swal.fire({
+            title: response.data.title,
+            html: response.data.message,
+            type: "success",
+            confirmButtonText: "OK",
+            buttonsStyling: false,
+            customClass: {
+              confirmButton: "btn btn-inverse-primary",
+            },
+          });
+        })
+        .catch((error) => {
+          Swal.fire({
+            title: error.response.data.title,
+            text: error.response.data.message,
+            type: "error",
+            confirmButtonText: "OK",
+            buttonsStyling: false,
+            customClass: {
+              confirmButton: "btn btn-inverse-primary",
+            },
+          });
+          this.requestServerSincronization = false;
         });
     },
     deleteEl(id) {

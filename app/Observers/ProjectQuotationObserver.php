@@ -24,7 +24,7 @@ class ProjectQuotationObserver
     {
         $this->url = config('services.sap_url').$this->url;
         #Obtener Proyectos con Codigo SAP
-        $project = Project::where('id', $lead->project_id)->first();
+        $project = Project::where('id', $lead->project_id)->with('advisorsRel')->first();
         #Obtener Credenciales
         $sapCredentials = SapCredential::first();
         if (!$sapCredentials->token) {
@@ -144,8 +144,12 @@ class ProjectQuotationObserver
         //Comprobar si tiene asignado ya un asesor
         $checkIfQuotationExist = ProjectQuotation::where('email',$lead->email)->where('id','!=',$lead->id)->where('project_id',$lead->project_id)->whereNotNull('advisor_id')->first();
         if($checkIfQuotationExist){
-            $lead->advisor_id = $checkIfQuotationExist->advisor_id;
-            $advisorId = $checkIfQuotationExist->advisor_id;
+            //Comprobar si el asesor existe en la relacion de proyectos y asesores
+            $checkIfAdvisorStillInRelationship = $project->advisorsRel->contains($checkIfQuotationExist->advisor_id);
+            if($checkIfAdvisorStillInRelationship){
+                $lead->advisor_id = $checkIfQuotationExist->advisor_id;
+                $advisorId = $checkIfQuotationExist->advisor_id;
+            }
         }
         else{
             $lead->advisor_id = $advisorId;

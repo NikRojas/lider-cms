@@ -87,6 +87,7 @@ Route::namespace('Api')->group(function() {
             Route::get('project-other-projects', 'Chat\GetController@getProjectOtherProjects');
             Route::get('no-doubt', 'Chat\GetController@getNoDoubts');
             Route::get('project-contact', 'Chat\GetController@getProjectContact');
+            Route::get('landing', 'Chat\GetController@getLanding');
             //Route::get('contact-medium', 'Chat\GetController@contactMedium');
             //Route::get('contact-schedules', 'Chat\GetController@contactSchedules');
         });

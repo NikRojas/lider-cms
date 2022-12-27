@@ -466,4 +466,52 @@ class GetController extends BaseController
         $customPayload['buttons'] = $buttons;
         return $this->sendResponse($customPayload, '');
     }
+
+    public function getLanding(Request $request){
+        $name = $request->name;
+        $slug_es = $request->slug_project;
+        $project = Project::where('slug_es',$slug_es)->first();
+        $name_es = $project->name_es;
+        $countDeps = Department::where('project_id',$project->id)->whereIn('sector_id', [1,4])->where('available',true)->count();
+        $customPayload = [];
+        $prependText = "Buena elección <strong>".$name."</strong> 👌. Te brindaré información sobre el proyecto.";
+        //$customPayload['notification'] = "Buena elección <strong>".$name."</strong> 👌. Te redirecciono al proyecto.";
+        $firstText = "En el proyecto <strong>".$name_es."</strong> tenemos 🏢 <strong>".$countDeps." inmuebles en stock </strong>";
+        if($project->stock_parking){
+            $firstText .= " y <strong>".$project->stock_parking." estacionamientos</strong>.";
+        }
+        else{
+            $firstText .= ".";
+        }
+        $currency = $project->master_currency_id;
+        
+        if($currency == 1){
+            //Sol
+            $column_name = 'price';
+            $symbol = 'S/ ';
+            $min = Department::where('project_id',$project->id)->whereIn('sector_id', [1,4])->where('available',true)->min($column_name);
+            $max = Department::where('project_id',$project->id)->whereIn('sector_id', [1,4])->where('available',true)->max($column_name);
+            $secondText = "Los precios de los inmuebles van desde <strong>".number_format($min, 0, '.', ',')." nuevos soles</strong> hasta <strong>".number_format($max, 0, '.', ',')." nuevos soles</strong>";
+        }
+        else if($currency == 2){
+            $column_name = 'price_foreign';
+            $symbol = '$ ';
+            $min = Department::where('project_id',$project->id)->whereIn('sector_id', [1,4])->where('available',true)->min($column_name);
+            $max = Department::where('project_id',$project->id)->whereIn('sector_id', [1,4])->where('available',true)->max($column_name);
+            $secondText = "Los precios de los inmuebles van desde <strong>".$symbol.number_format($min, 0, '.', ',')."</strong> hasta <strong>".$symbol.number_format($max, 0, '.', ',')."</strong>";
+        }
+        /*$customPayload['route'] = [
+            "name" => 'project',
+            "params" => [
+                "project" => $project->slug_es
+            ]
+        ];*/
+        $customPayload['type'] = "buttons";
+        $customPayload['texts'] = [$prependText, $firstText,$secondText];
+        $customPayload['text_above'] = "¿Cómo puedo ayudarte con el proyecto <strong>".$name_es."</strong>? 😊";
+        $bonds = $project->load('bondsRel');
+        $buttons = $this->getButtonsFlow1($project->id, $bonds, false, false);
+        $customPayload['buttons'] = $buttons;
+        return $this->sendResponse($customPayload, '');
+    }
 }

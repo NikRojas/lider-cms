@@ -200,7 +200,7 @@ class GetController extends BaseController
         $customPayload = [];
         $prependText = "Buena elección <strong>".$name."</strong> 👌. Te redirecciono al proyecto.";
         $customPayload['notification'] = "Buena elección <strong>".$name."</strong> 👌. Te redirecciono al proyecto.";
-        $firstText = "En el proyecto <strong>".$name_es."</strong> tenemos 🏢 <strong>".$countDeps." inmuebles en stock </strong>";
+        $firstText = "En el proyecto <strong>".$project->name_es."</strong> tenemos 🏢 <strong>".$countDeps." inmuebles en stock </strong>";
         if($project->stock_parking){
             $firstText .= " y <strong>".$project->stock_parking." estacionamientos</strong>.";
         }
@@ -232,7 +232,7 @@ class GetController extends BaseController
         ];
         $customPayload['type'] = "buttons";
         $customPayload['texts'] = [$prependText, $firstText,$secondText];
-        $customPayload['text_above'] = "¿Cómo puedo ayudarte con el proyecto <strong>".$name_es."</strong>? 😊";
+        $customPayload['text_above'] = "¿Cómo puedo ayudarte con el proyecto <strong>".$project->name_es."</strong>? 😊";
         $bonds = $project->load('bondsRel');
         $buttons = $this->getButtonsFlow1($project->id, $bonds, false, false);
         $customPayload['buttons'] = $buttons;
@@ -486,7 +486,7 @@ class GetController extends BaseController
         $customPayload = [];
         $prependText = "Buena elección <strong>".$name."</strong> 👌. Te brindaré información sobre el proyecto.";
         //$customPayload['notification'] = "Buena elección <strong>".$name."</strong> 👌. Te redirecciono al proyecto.";
-        $firstText = "En el proyecto <strong>".$name_es."</strong> tenemos 🏢 <strong>".$countDeps." inmuebles en stock </strong>";
+        $firstText = "En el proyecto <strong>".$project->name_es."</strong> tenemos 🏢 <strong>".$countDeps." inmuebles en stock </strong>";
         if($project->stock_parking){
             $firstText .= " y <strong>".$project->stock_parking." estacionamientos</strong>.";
         }
@@ -518,7 +518,7 @@ class GetController extends BaseController
         ];*/
         $customPayload['type'] = "buttons";
         $customPayload['texts'] = [$prependText, $firstText,$secondText];
-        $customPayload['text_above'] = "¿Cómo puedo ayudarte con el proyecto <strong>".$name_es."</strong>? 😊";
+        $customPayload['text_above'] = "¿Cómo puedo ayudarte con el proyecto <strong>".$project->name_es."</strong>? 😊";
         $bonds = $project->load('bondsRel');
         $buttons = $this->getButtonsFlow1($project->id, $bonds, false, false);
         $customPayload['buttons'] = $buttons;

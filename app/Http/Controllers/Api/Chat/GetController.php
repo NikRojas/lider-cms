@@ -196,6 +196,9 @@ class GetController extends BaseController
         $name_es = $request->name_project;
         //$project = Project::where('name_es',$name_es)->first();
         $project = Project::where('slug_es',Str::slug($name_es))->first();
+        if(!$project){
+            $project = Project::where('name_es',$name_es)->first();
+        }
         $countDeps = Department::where('project_id',$project->id)->whereIn('sector_id', [1,4])->where('available',true)->count();
         $customPayload = [];
         $prependText = "Buena elección <strong>".$name."</strong> 👌. Te redirecciono al proyecto.";
@@ -242,6 +245,9 @@ class GetController extends BaseController
     public function getProjectPromos(Request $request){
         //$project = Project::where('name_es',$request->name_project)->first();
         $project = Project::where('slug_es',Str::slug($request->name_project))->first();
+        if(!$project){
+            $project = Project::where('name_es',$request->name_project)->first();
+        }
         $customPayload = [];
         $customPayload['type'] = "buttons";
         $bonds = $project->load('bondsRel');
@@ -260,6 +266,9 @@ class GetController extends BaseController
     public function getProjectBonds(Request $request){
         //$project = Project::where('name_es',$request->name_project)->first();
         $project = Project::where('slug_es',Str::slug($request->name_project))->first();
+        if(!$project){
+            $project = Project::where('name_es',$request->name_project)->first();
+        }
         $customPayload = [];
         $customPayload['type'] = "buttons";
         $bonds = $project->load('bondsRel');
@@ -280,6 +289,9 @@ class GetController extends BaseController
     public function getProjectQuotation(Request $request){
         //$project = Project::where('name_es',$request->name_project)->first();
         $project = Project::where('slug_es',Str::slug($request->name_project))->first();
+        if(!$project){
+            $project = Project::where('name_es',$request->name_project)->first();
+        }
         $customPayload = [];
         $customPayload['type'] = "buttons";
         $bonds = $project->load('bondsRel');
@@ -315,6 +327,9 @@ class GetController extends BaseController
         if($request->name_project){
             //$project = Project::where('name_es',$request->name_project)->first();
             $project = Project::where('slug_es',Str::slug($request->name_project))->first();
+            if(!$project){
+                $project = Project::where('name_es',$request->name_project)->first();
+            }
             $customPayload['route'] = [
                 "name" => 'online-appointment',
                 "query" => [
@@ -334,6 +349,9 @@ class GetController extends BaseController
     public function getProjectReserve(Request $request){
         //$project = Project::where('name_es',$request->name_project)->first();
         $project = Project::where('slug_es',Str::slug($request->name_project))->first();
+        if(!$project){
+            $project = Project::where('name_es',$request->name_project)->first();
+        }
         $customPayload = [];
         $customPayload['type'] = "buttons";
         $bonds = $project->load('bondsRel');
@@ -354,6 +372,9 @@ class GetController extends BaseController
     public function getProjectOtherProjects(Request $request){
         //$project = Project::where('name_es',$request->name_project)->first();
         $project = Project::where('slug_es',Str::slug($request->name_project))->first();
+        if(!$project){
+            $project = Project::where('name_es',$request->name_project)->first();
+        }
         $customPayload = [];
         $customPayload['type'] = "carousel";
         $projects_related = [];
@@ -456,6 +477,9 @@ class GetController extends BaseController
     public function getProjectContact(Request $request){
         //$project = Project::where('name_es',$request->name_project)->first();
         $project = Project::where('slug_es',Str::slug($request->name_project))->first();
+        if(!$project){
+            $project = Project::where('name_es',$request->name_project)->first();
+        }
         $customPayload = [];
         $customPayload['type'] = "buttons";
         $customPayload['text'] = "En esta sección podrás agendar una cita en el horario de tu preferencia 👈";

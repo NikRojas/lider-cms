@@ -274,7 +274,7 @@ class GetController extends BaseController
         $bonds = $project->load('bondsRel');
         $buttons = $this->getButtonsFlow1($project->id, $bonds, "Quiero saber qué bonos tiene el proyecto", true);
         $customPayload['buttons'] = $buttons;
-        $texts = [ "El proyecto <strong>".$request->name_project."</strong> cuenta con los siguientes bonos 👇" ];
+        $texts = [ "El proyecto <strong>".$project->name_es."</strong> cuenta con los siguientes bonos 👇" ];
         foreach ($bonds->bondsRel as $key => $value) {
             $tempValue = "<strong>".$value["name"]."</strong>";
             if($value["description"]){

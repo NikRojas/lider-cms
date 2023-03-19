@@ -137,13 +137,17 @@ class SapGetAvailableDepartments extends Command
                                     if($minArea){
                                         $updateTypeDepartmentTemp = array_merge($updateTypeDepartmentTemp, ["area" => $minArea]);
                                     }
-                                    #Si esta lleno Precio Soles y Vacio Precio Dolares
-                                    if($minPrice && !$minPriceForeign){
-                                        $updateTypeDepartmentTemp = array_merge($updateTypeDepartmentTemp, ["price" => $minPrice, "type_currency" => 1]);
+                                    if($value->master_currency_id == 1){
+                                        $typeCurrency = 1;
+                                        if($minPrice){
+                                            $updateTypeDepartmentTemp = array_merge($updateTypeDepartmentTemp, ["price" => $minPrice, "type_currency" => $typeCurrency]);
+                                        }
                                     }
-                                    #Si esta lleno Precio Dolares y Vacio Precio Soles
-                                    if(!$minPrice && $minPriceForeign){
-                                        $updateTypeDepartmentTemp = array_merge($updateTypeDepartmentTemp, ["price" => $minPriceForeign, "type_currency" => 0]);
+                                    else if($value->master_currency_id == 2){
+                                        $typeCurrency = 0;
+                                        if($minPriceForeign){
+                                            $updateTypeDepartmentTemp = array_merge($updateTypeDepartmentTemp, ["price" => $minPriceForeign, "type_currency" => $typeCurrency]);
+                                        }
                                     }
                                     #No actualizar datos de tipologias de Namua e Infinitum
                                     //if($value->id != '4' && $value->id != '5'){

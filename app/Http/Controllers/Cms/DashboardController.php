@@ -52,8 +52,8 @@ class DashboardController extends Controller
         $banks = Bank::get()->count();
         $projects = Project::with('departmentsRel','statusRel')->get();
         $suscribers = Suscriber::get()->count();
-        $customers = Customer::whereMonth('created_at', Carbon::now()->month)->get()->count();
-        $orders = Order::whereMonth('created_at', Carbon::now()->month)->get()->count();
+        $customers = Customer::whereMonth('created_at', Carbon::now()->month)->whereYear('created_at', Carbon::now()->year)->get()->count();
+        $orders = Order::whereMonth('created_at', Carbon::now()->month)->whereYear('created_at', Carbon::now()->year)->get()->count();
 
         foreach ($projects as $key => $value) {
             $projects[$key]["departmentsActive"] = Department::where('project_id',$value->id)->where('available',true)->count();

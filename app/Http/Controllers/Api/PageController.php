@@ -258,6 +258,39 @@ class PageController extends BaseController
         return $this->sendResponse($data, '');
     }
 
+    public function personalDataForm(Request $request)
+    {
+        $page = $this->getSeoPage('personal-data-form', $request->locale);
+        $content = $this->getContentPage('personal-data-form');
+        $contentFormat = [];
+        if(count($content) > 0){
+            foreach ($content as $key => $value) {
+                if($value["name"] == "Archivos"){
+                    $contentFormat[] = [
+                        "id" => $value['id'],
+                        "name" => $value["name"],
+                        "master_page_id" => $value["master_page_id"],
+                        "content_formatted" => $value["content_formatted"],
+                        "content" => [[
+                            "id" => $value["content"][0]["id"],
+                            "master_section_id" => $value["content"][0]["master_section_id"],
+                            "field" => $value["content"][0]["field"],
+                            "value" =>  json_decode($value["content"][0]["value"]),
+                        ]]
+                    ];
+                }
+                else{
+                    $contentFormat[] = $value;
+                }
+            }
+        }
+        $data = array(
+            "page" => $page,
+            "content" => $contentFormat
+        );
+        return $this->sendResponse($data, '');
+    }
+
     public function privacityPolicy(Request $request)
     {
         $page = $this->getSeoPage('privacy-policies', $request->locale);

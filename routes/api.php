@@ -40,6 +40,7 @@ Route::namespace('Api')->group(function() {
         Route::get('blog/category/{slug}', 'PageController@blogCategory');
         Route::get('blog/category/{slug}/{post}', 'PageController@blogCategoryPost');
         Route::get('online-appointment', 'PageController@onlineAppointment');
+        Route::get('personal-data-form', 'PageController@personalDataForm');
         Route::get('contact-us', 'PageController@contactUs');
         Route::get('sell-your-land', 'PageController@sellLand');
         Route::get('projects', 'PageController@projects');

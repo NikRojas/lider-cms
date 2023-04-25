@@ -30,10 +30,10 @@
             <div class="col-12" v-else>
               <div class="row">
                 <div class="col-12" v-for="item in pages" :key="item.id">
-                  <h3 class="font-weight-bold mb-4 text-dark">
+                  <h2 class="font-weight-bold mb-3 text-dark">
                     {{ item.name }} ({{ item.sections_count }}
                     secciones)
-                  </h3>
+                  </h2>
                   <div class="row">
                     <div
                       class="col-12 col-lg-6 col-xl-3"
@@ -251,6 +251,30 @@
                               </div>
                             </div>
                           </div>
+
+                          <div v-if="field.type == 'multiplefiles_buttons'">
+                            <MultipleFilesPersonalData
+                              fieldName="images"
+                              :errors="errors"
+                              :showIconField="true"
+                              :messageOrder="'Arrastre los elementos en el orden que desee mostrarlos'"
+                              :files.sync="field.value"
+                              :multimediaUrl="multimediaUrl"
+                              :filesParent="field.value"
+                              folder="forms"
+                            />
+
+                            <!--<MultipleFiles
+                              desc="La primera imagen se utilizará para el cover del video"
+                              fieldName="images"
+                              :errors="errors"
+                              :messageOrder="messageOrder"
+                              :files.sync="el.files"
+                              :imagesUrl="imagesUrl"
+                              folder="files/forms"
+                              :filesParent="el.images_format"
+                            />-->
+                          </div>
                         </div>
                       </div>
                     </div>
@@ -287,6 +311,7 @@ import BreadCrumb from "../../components/BreadCrumb";
 import SkeletonForm from "../../components/skeleton/form";
 import Destroy from "../../components/modals/Destroy";
 import Input from "../../components/form/Input";
+import MultipleFilesPersonalData from "../../components/form/MultipleFilesPersonalData";
 import Editor from "../../components/form/Editor";
 // import Loader from "../../components/Loader";
 export default {
@@ -296,6 +321,7 @@ export default {
     route: String,
     imagesUrl: String,
     videosUrl: String,
+    multimediaUrl: String,
     // routeOrder: String,
     // messageOrder: String,
   },
@@ -309,6 +335,7 @@ export default {
     BreadCrumb,
     SkeletonForm,
     Destroy,
+    MultipleFilesPersonalData
   },
   data() {
     return {
@@ -384,6 +411,16 @@ export default {
       const fd = new FormData();
       fd.append("section_id", this.section.id);
       fd.append("content", JSON.stringify(this.fields));
+      fd.append("contentFiles", JSON.stringify(this.fields));
+      if(this.section.name == "Archivos"){
+        if(this.fields[0].value && this.fields[0].value.length){
+          this.fields[0].value.forEach((el, i) => {
+            fd.append("file" + i, el.file);
+            fd.append("button_es" + i, el.button_es);
+            fd.append("button_en" + i, el.button_en);
+          });
+        }
+      }
       if (
         this.$refs.ref_image &&
         this.$refs.ref_image.length > 0 &&

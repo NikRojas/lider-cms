@@ -22,6 +22,7 @@ class CamiController extends Controller
 
     public function store(CamiRequest $request)
     {
+        dd($request->all());
         $request_cami = request(["title_es","title_en","description_es","description_en","url_video","title_projects_es","title_projects_en"]);
         $cami_registered = Cami::first();
 

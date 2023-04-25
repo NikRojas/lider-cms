@@ -62,6 +62,9 @@ class DatabaseSeeder extends Seeder
         $this->call(TasaSeguroSeeder::class);
         $this->call(MasterModulesFebreroTableSeeder::class);*/
         //$this->call(MasterModulesInfoPestTableSeeder::class);
-        $this->call(CanalCitaOnlineTableSeeder::class);
+        //$this->call(CanalCitaOnlineTableSeeder::class);
+
+        #Abril 2023
+        $this->call(MasterPageAbrilTableSeeder::class);
     }
 }

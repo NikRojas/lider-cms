@@ -12,6 +12,7 @@ use App\Content;
 use App\Http\Requests\Cms\Content\GeneralContentRequest;
 use Illuminate\Support\Facades\Storage;
 use App\Http\Traits\CmsTrait;
+use Illuminate\Support\Facades\Log;
 
 class GeneralContentController extends Controller
 {
@@ -49,8 +50,14 @@ class GeneralContentController extends Controller
             foreach ($element as $key2 => $value) {
                 foreach ($content as $key3 => $content_value) {
                     if($key2 == "variable" && $value == $content_value["field"]){
+                        //dd($content_value["field"]);
                         unset($data[$key]['value']);
-                        $data[$key]['value'] = $content_value["value"];
+                        $value = $content_value["value"];
+                        if($content_value["field"]){
+                            $value = json_decode($content_value["value"]);
+                        }
+                        //$data[$key]['value'] = $content_value["value"];
+                        $data[$key]['value'] = $value;
                         $data[$key]['value_es'] = $content_value["value_es"];
                         $data[$key]['value_en'] = $content_value["value_en"];
                     }
@@ -104,6 +111,52 @@ class GeneralContentController extends Controller
                         $element["value"] = $filename;
                         $content = Content::UpdateOrCreate(array_merge(["value"=> $element["value"], "field" => $element["variable"] ,"master_section_id"=>$section_id]));
                     }
+                }
+
+                else if($element["type"] == "multiplefiles_buttons"){
+                    //dd($value);
+                    //dd($request->all());
+                    $valueFormat = [];
+                   //foreach ($element["value"] as $keyEl => $valueEl) {
+                    for ($i=0; $i < count($value); $i++) { 
+                        $correlative = $i + 1;
+                        /*//${$correlative.'Name'} = $this->setFileName('fl-'.$correlative,$request->file($value[$i]['file']));
+                        $nameFile = $this->setFileName('fl-'.$correlative,$request->file($value[$i]['file']));
+                        $storeLogo = Storage::disk('public')->putFileAs('files/forms',$request->file($value[$i]['file']),$nameFile);
+                        $valueFormat[] = [
+                            "button_es" => $value[$i]['button_es'],
+                            "button_en" => $value[$i]['button_en'],
+                            "file" => $storeLogo
+                        ];*/
+                        $name = 'file'.$i;
+                        $storeLogo = NULL;
+                        ${$correlative.'Name'} = NULL;
+                        if($request->hasFile('file'.$i)){
+                            ${$correlative.'Name'} = $this->setFileName('is-'.$correlative,$request->file('file'.$i));
+                            $storeLogo = Storage::disk('public')->putFileAs('files/forms',$request->file('file'.$i),${$correlative.'Name'});
+                            /*if(!${$correlative.'Name'}){
+                                $request->session()->flash('error', trans('custom.message.create.error', ['name' => trans('custom.attribute.cami')]));
+                                Storage::disk('public')->delete('img/cami/'.${$correlative.'Name'});
+                                return response()->json(["route" => route('cms.cami.index')],500);
+                            }*/
+                            //$images[] = ${$correlative.'Name'};
+                        }
+                        else{
+                            //$images[] = $request->$name;
+                        }
+                        Log::info($storeLogo);
+                        $valueFormat[] = [
+                            "button_es" => $value[$i]['button_es'],
+                            "button_en" => $value[$i]['button_en'],
+                            "file" => ${$correlative.'Name'} ? ${$correlative.'Name'} : $value[$i]['file']
+                        ];
+                    }
+
+                    $content = Content::where("master_section_id",$section_id)->where("field",$element["variable"]);
+                    if($content){
+                        $content = $content->delete();
+                    }
+                    $content = Content::UpdateOrCreate(array_merge(["value"=> json_encode($valueFormat), "field" => $element["variable"] ,"master_section_id"=>$section_id]));
                 }
 
                 else{

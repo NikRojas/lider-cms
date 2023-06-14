@@ -3,6 +3,7 @@
 namespace App\Notifications;
 
 use App\FinancingOption;
+use App\SocialNetwork;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
@@ -13,9 +14,7 @@ class UserProjectQuotationNotification extends Notification implements ShouldQue
     use Queueable;
     private $lead;
     private $financingOptions;
-    /*private $project;
-    private $typeDepartment;
-    private $advisor;*/
+    private $socialNetworks;
 
     /**
      * Create a new notification instance.
@@ -26,10 +25,7 @@ class UserProjectQuotationNotification extends Notification implements ShouldQue
     public function __construct($lead)
     {
         $this->lead = $lead;
-        //$this->financingOptions = FinancingOption::where('active',true)->orderBy('index','asc')->get();
-        /*$this->project = $project->load('statusRel');
-        $this->typeDepartment = $typeDepartment;
-        $this->advisor = $advisor;*/
+        $this->socialNetworks = SocialNetwork::select('id','url','master_social_network_id')->with('master_social_networks:id,icon,name')->orderBy('index','asc')->get();  
     }
 
     /**
@@ -53,7 +49,8 @@ class UserProjectQuotationNotification extends Notification implements ShouldQue
     {
         return (new MailMessage)
                     ->subject(config('app.name').' - Cotización')
-                    ->view('emails.user-quotation', ['lead' => $this->lead, "financingOptions" => $this->financingOptions]);
+                    ->view('emails.user-quotation', ['lead' => $this->lead, "financingOptions" => $this->financingOptions,
+                "social_networks" => $this->socialNetworks]);
     }
 
     /**

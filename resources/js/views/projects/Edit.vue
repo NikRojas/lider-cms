@@ -12,26 +12,33 @@
                   active="Proyectos"
                 ></BreadCrumb>
               </div>
-              <div class="col-6 col-md text-right">
-                <span
-                  v-if="
-                    Object.keys(errors).length === 0 &&
-                    errors.constructor === Object
-                  "
-                ></span>
-                <span v-else class="d-block text-danger mb-2"
-                  >Algunos campos estan incorrectos</span
-                >
-                <Button
-                  :text="'Actualizar'"
-                  :classes="['btn-inverse-primary', 'mr-2']"
-                  :request-server="requestServer"
-                ></Button>
-                <a type="button" class="btn btn-secondary" :href="routeReturn"
-                  >Cancelar</a
-                >
-              </div>
+              
             </div>
+          </div>
+        </div>
+      </div>
+      <div  style="position: fixed; bottom: 0; left: 0; width: 100%; z-index: 1; background: white; " class="border py-3">
+        <div class="container-fluid ">
+          <div class="row">
+            <div class="col-12 col-md text-right">
+                    <span
+                      v-if="
+                        Object.keys(errors).length === 0 &&
+                        errors.constructor === Object
+                      "
+                    ></span>
+                    <span v-else class="d-inline-block text-danger mr-2"
+                      >Algunos campos estan incorrectos</span
+                    >
+                    <Button
+                      :text="'Actualizar'"
+                      :classes="['btn-inverse-primary', 'mr-2']"
+                      :request-server="requestServer"
+                    ></Button>
+                    <a type="button" class="btn btn-secondary" :href="routeReturn"
+                      >Cancelar</a
+                    >
+                  </div>
           </div>
         </div>
       </div>
@@ -465,10 +472,10 @@
                     <label for="id_imagen" class="font-weight-bold mb-0"
                       >Imagen</label
                     >
-                    <small class="text-muted d-block mb-0 lh-1"
+                    <small class=" d-block mb-0 lh-1"
                       >Resolución recomendada: 1200x900px</small
                     >
-                    <small class="text-muted d-block mb-2 lh-1"
+                    <small class=" d-block mb-2 lh-1"
                       >Tamaño recomendado: Menor a 100kb</small
                     >
                     <div class="row">
@@ -672,7 +679,7 @@
                     <p class="mb-0">Estos campos se actualizaran automaticamente cuando se obtenga la Disponibilidad de los Inmuebles del Proyecto</p>
                   </div>
 
-                  <div class="col-12 col-lg-6">
+                  <div class="col-6">
                     <div class="form-group">
                       <label class="font-weight-bold"
                         >El proyecto cuenta con estacionamientos?</label
@@ -687,7 +694,7 @@
                     </div>
                   </div>
 
-                  <div class="col-12 col-lg-6">
+                  <div class="col-6">
                     <div class="form-group">
                       <label class="font-weight-bold"
                         >El proyecto cuenta con depósito?</label
@@ -702,7 +709,7 @@
                     </div>
                   </div>
 
-                  <div class="col-12 col-lg-4 ">
+                  <div class="col-6">
                     <div class="form-group">
                       <label class="font-weight-bold" for="stock_parking"
                         >Stock Estacionamiento</label
@@ -723,7 +730,7 @@
                     </div>
                   </div>
 
-                  <div class="col-12 col-lg-4 ">
+                  <div class="col-6">
                     <div class="form-group">
                       <label class="font-weight-bold" for="price_parking_sap"
                         >Precio Estacionamiento Soles</label
@@ -738,7 +745,7 @@
                     </div>
                   </div>
 
-                  <div class="col-12 col-lg-4 ">
+                  <div class="col-6">
                     <div class="form-group">
                       <label
                         class="font-weight-bold"
@@ -755,7 +762,7 @@
                     </div>
                   </div>
 
-                  <div class="col-12 col-lg-4 ">
+                  <div class="col-6">
                     <div class="form-group">
                       <label class="font-weight-bold" for="stock_parking"
                         >Stock Depósito</label
@@ -776,7 +783,7 @@
                     </div>
                   </div>
 
-                  <div class="col-12 col-lg-4 ">
+                  <div class="col-6 ">
                     <div class="form-group">
                       <label class="font-weight-bold" for="price_warehouse_sap"
                         >Precio Depósito Soles</label
@@ -791,7 +798,7 @@
                     </div>
                   </div>
 
-                  <div class="col-12 col-lg-4 ">
+                  <div class="col-6 ">
                     <div class="form-group">
                       <label
                         class="font-weight-bold"
@@ -1248,46 +1255,64 @@
                       <img src="/files/img/info/mail.jpg" alt="" />
                     </div>
                   </div>
-                  <!--<div class="col-12">
-                    <div class="form-group">
-                      <label class="font-weight-bold" for="excerpt_quotation"
-                        >Resumen del Proyecto</label
+                  <div class="col-12 mb-4">
+                    <label for="id_imagen" class="font-weight-bold mb-0"
+                      >Banner superior</label
+                    >
+                    <small class=" d-block mb-0 lh-1"
+                      >Resolución recomendada: 600x200px</small
+                    >
+                    <small class=" d-block mb-2 lh-1"
+                      >Tamaño recomendado: Menor a 200kb</small
+                    >
+                    <div class="row">
+                      <div
+                        class="col-lg-4 mb-3 mb-lg-0"
+                        v-if="element.quotation_banner_top"
                       >
-                      <quill-Editor
-                        @keydown.enter.prevent
-                        v-model="element.excerpt_quotation"
-                        :options="editorOptions"
-                        class="ql-height-5"
-                        ref="ref_excerpt_quotation"
-                      ></quill-Editor>
-                      <label
-                        v-if="errors && errors.excerpt_quotation"
-                        class="mt-2 text-danger text-sm"
-                        for="excerpt_quotation"
-                        >{{ errors.excerpt_quotation[0] }}</label
+                        <img
+                          class="img-fluid"
+                          :src="imagesUrl + '/projects/' + element.quotation_banner_top"
+                          alt
+                          id="bannerTop"
+                          v-show="!deleteQuotationBanner"
+                        />
+
+                        <a class="mt-2 btn btn-sm "
+                        :class="!deleteQuotationBanner ? 'btn-outline-danger' : 'btn-outline-primary'"
+                        href="#" @click.prevent="clickDeleteQuotationBannerImage">
+                          {{ !deleteQuotationBanner ? 'Eliminar imagen' : 'Restaurar imagen' }}
+                        </a>
+                      </div>
+                      <div
+                        class=""
+                        :class="element.quotation_banner_top ? 'col-lg-8' : 'col-12'"
                       >
+                        <vue-dropzone
+                          ref="ref_quotation_banner_top"
+                          @vdropzone-file-added="
+                            $validateImageDropzone(
+                              $event,
+                              $refs.ref_quotation_banner_top.dropzone,
+                              1,
+                              250000,
+                              '200kb'
+                            )
+                          "
+                          id="id_quotation_banner_top"
+                          :options="dropzoneOptions"
+                          :duplicateCheck="true"
+                          :useCustomSlot="true"
+                        >
+                          <div class="dropzone-custom-content">
+                            <h5 class="dropzone-custom-title text-primary">
+                              Suelte el archivo aquí o haga click para cargarlo.
+                            </h5>
+                          </div>
+                        </vue-dropzone>
+                      </div>
                     </div>
                   </div>
-                  <div class="col-12">
-                    <div class="form-group">
-                      <label class="font-weight-bold" for="price_parking"
-                        >Precio Estacionamiento</label
-                      >
-                      <textarea
-                        class="form-control"
-                        v-model="element.price_parking"
-                        id="price_parking"
-                        cols="30"
-                        rows="3"
-                      ></textarea>
-                      <label
-                        v-if="errors && errors.price_parking"
-                        class="mt-2 text-danger text-sm"
-                        for="price_parking"
-                        >{{ errors.price_parking[0] }}</label
-                      >
-                    </div>
-                  </div>-->
                   <div class="col-12">
                     <div class="form-group">
                       <label class="font-weight-bold" for="commentary_quotation"
@@ -1603,9 +1628,13 @@ export default {
         dictRemoveFile: "Remover",
       },
       errors: {},
+      deleteQuotationBanner: false
     };
   },
   methods: {
+    clickDeleteQuotationBannerImage(){
+      this.deleteQuotationBanner = !this.deleteQuotationBanner;
+    },
     submit() {
       this.requestServer = true;
       const fd = new FormData();
@@ -1756,6 +1785,9 @@ export default {
       if (this.$refs.ref_map.dropzone.files[0]) {
         fd.append("iframe_map", this.$refs.ref_map.dropzone.files[0]);
       }
+      if (this.$refs.ref_quotation_banner_top.dropzone.files[0]) {
+        fd.append("quotation_banner_top", this.$refs.ref_quotation_banner_top.dropzone.files[0]);
+      }
       /*if (this.element.iframe_map) {
         fd.append("iframe_map", this.element.iframe_map);
       }*/
@@ -1772,6 +1804,11 @@ export default {
         fd.append("active", 1);
       } else {
         fd.append("active", 0);
+      }
+      if (this.deleteQuotationBanner == true) {
+        fd.append("deleteQuotationBanner", 1);
+      } else {
+        fd.append("deleteQuotationBanner", 0);
       }
       if (this.element.financial_entities) {
         fd.append(

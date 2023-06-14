@@ -5,10 +5,14 @@ use App\FinancingOption;
 use App\FloorSector;
 use App\Jobs\SendReserveToSap;
 use App\Lead;
+use App\Notifications\UserProjectQuotationNotification;
 use App\Order;
 use App\OrderDetail;
 use App\ProjectQuotation;
 use App\ProjectTypeDepartment;
+use App\SocialNetwork;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Facades\DB;
 
 Route::get('/', 'Cms\Auth\LoginController@showLoginForm')->name('login');

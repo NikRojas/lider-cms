@@ -12,14 +12,22 @@
                   active="Proyectos"
                 ></BreadCrumb>
               </div>
-              <div class="col-6 col-md text-right">
+              
+            </div>
+          </div>
+        </div>
+      </div>
+      <div  style="position: fixed; bottom: 0; left: 0; width: 100%; z-index: 1; background: white; " class="border py-3">
+        <div class="container-fluid ">
+          <div class="row">
+            <div class="col-12 col-md text-right">
                 <span
                   v-if="
                     Object.keys(errors).length === 0 &&
                     errors.constructor === Object
                   "
                 ></span>
-                <span v-else class="d-block text-danger mb-2"
+                <span v-else class="d-inline-block text-danger mb-2"
                   >Algunos campos estan incorrectos</span
                 >
                 <Button
@@ -31,7 +39,6 @@
                   >Cancelar</a
                 >
               </div>
-            </div>
           </div>
         </div>
       </div>
@@ -393,10 +400,10 @@
                     <label for="id_imagen" class="font-weight-bold mb-0"
                       >Imagen</label
                     >
-                    <small class="text-muted d-block mb-0 lh-1"
+                    <small class=" d-block mb-0 lh-1"
                       >Resolución recomendada: 1200x900px</small
                     >
-                    <small class="text-muted d-block mb-2 lh-1"
+                    <small class=" d-block mb-2 lh-1"
                       >Tamaño recomendado: Menor a 100kb</small
                     >
                     <vue-dropzone
@@ -1055,44 +1062,6 @@
                       >
                     </div>
                   </div>
-                  <!--<div class="col-12">
-                    <div class="form-group">
-                      <label class="font-weight-bold" for="iframe_map"
-                        >Iframe Google Maps</label
-                      >
-                      <textarea
-                        class="form-control"
-                        v-model="element.iframe_map"
-                        id="iframe_map"
-                        cols="30"
-                        rows="5"
-                      ></textarea>
-                      <div class="mt-2" style="opacity: 0.75">
-                        <a style="cursor: pointer" @click.prevent="info = !info"
-                          ><jam-info
-                            height="14px"
-                            class="current-color"
-                            width="14px"
-                          ></jam-info>
-                          Más Información
-                        </a>
-                      </div>
-                      <div class="mt-2" v-show="info">
-                        <div class="mb-2">
-                          Ir a Google Maps, buscar el proyecto que desee,
-                          seleccionar "Compartir -> Insertar Mapa" y darle click
-                          a "Copiar HTML"
-                        </div>
-                        <img src="/files/img/info/iframe.jpg" alt="" />
-                      </div>
-                      <label
-                        v-if="errors && errors.iframe_map"
-                        class="mt-2 text-danger text-sm"
-                        for="iframe_map"
-                        >{{ errors.iframe_map[0] }}</label
-                      >
-                    </div>
-                  </div>-->
                   <div class="col-12">
                     <div class="form-group">
                       <label class="font-weight-bold" for="banner"
@@ -1167,46 +1136,45 @@
                       <img src="/files/img/info/mail.jpg" alt="" />
                     </div>
                   </div>
-                  <!--<div class="col-12">
-                    <div class="form-group">
-                      <label class="font-weight-bold" for="excerpt_quotation"
-                        >Resumen del Proyecto</label
+                  <div class="col-12 mb-4">
+                    <label for="id_imagen" class="font-weight-bold mb-0"
+                      >Banner superior</label
+                    >
+                    <small class=" d-block mb-0 lh-1"
+                      >Resolución recomendada: 600x200px</small
+                    >
+                    <small class=" d-block mb-2 lh-1"
+                      >Tamaño recomendado: Menor a 200kb</small
+                    >
+                    <div class="row">
+                      <div
+                        class="col-12"
                       >
-                      <quill-Editor
-                        @keydown.enter.prevent
-                        v-model="element.excerpt_quotation"
-                        :options="editorOptions"
-                        class="ql-height-5"
-                        ref="ref_excerpt_quotation"
-                      ></quill-Editor>
-                      <label
-                        v-if="errors && errors.excerpt_quotation"
-                        class="mt-2 text-danger text-sm"
-                        for="excerpt_quotation"
-                        >{{ errors.excerpt_quotation[0] }}</label
-                      >
+                        <vue-dropzone
+                          ref="ref_quotation_banner_top"
+                          @vdropzone-file-added="
+                            $validateImageDropzone(
+                              $event,
+                              $refs.ref_quotation_banner_top.dropzone,
+                              1,
+                              250000,
+                              '200kb'
+                            )
+                          "
+                          id="id_quotation_banner_top"
+                          :options="dropzoneOptions"
+                          :duplicateCheck="true"
+                          :useCustomSlot="true"
+                        >
+                          <div class="dropzone-custom-content">
+                            <h5 class="dropzone-custom-title text-primary">
+                              Suelte el archivo aquí o haga click para cargarlo.
+                            </h5>
+                          </div>
+                        </vue-dropzone>
+                      </div>
                     </div>
                   </div>
-                  <div class="col-12">
-                    <div class="form-group">
-                      <label class="font-weight-bold" for="price_parking"
-                        >Precio Estacionamiento</label
-                      >
-                      <textarea
-                        class="form-control"
-                        v-model="element.price_parking"
-                        id="price_parking"
-                        cols="30"
-                        rows="3"
-                      ></textarea>
-                      <label
-                        v-if="errors && errors.price_parking"
-                        class="mt-2 text-danger text-sm"
-                        for="price_parking"
-                        >{{ errors.price_parking[0] }}</label
-                      >
-                    </div>
-                  </div>-->
                   <div class="col-12">
                     <div class="form-group">
                       <label class="font-weight-bold" for="commentary_quotation"
@@ -1763,6 +1731,9 @@ export default {
       }
       if (this.element.package_description) {
         fd.append("package_description", this.element.package_description);
+      }
+      if (this.$refs.ref_quotation_banner_top.dropzone.files[0]) {
+        fd.append("quotation_banner_top", this.$refs.ref_quotation_banner_top.dropzone.files[0]);
       }
       axios
         .post(this.routeStore, fd)

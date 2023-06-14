@@ -360,7 +360,7 @@ var render = function() {
           ? _c(
               "button",
               {
-                staticClass: "btn btn-inverse-info btn-sm ml-2",
+                staticClass: "btn btn-outline-primary btn-sm ml-2",
                 attrs: { type: "button" },
                 on: {
                   click: function($event) {
@@ -378,7 +378,7 @@ var render = function() {
           ? _c(
               "button",
               {
-                staticClass: "btn btn-inverse-info btn-sm ml-2",
+                staticClass: "btn btn-primary btn-sm ml-2",
                 attrs: { type: "button" },
                 on: { click: _vm.getSlug }
               },

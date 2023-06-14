@@ -487,7 +487,7 @@ var render = function() {
                       "div",
                       {
                         key: element.id,
-                        staticClass: "col-6 col-sm-3 col-lg-3 text-center mb-3",
+                        staticClass: "col-3 col-lg-2 text-center mb-3",
                         on: {
                           click: function($event) {
                             return _vm.add(element.id)
@@ -526,7 +526,7 @@ var render = function() {
                               attrs: {
                                 src:
                                   _vm.imagesUrl + "/features/" + element.image,
-                                height: "50",
+                                height: "30",
                                 alt: element.name_es
                               }
                             }),

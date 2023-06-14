@@ -14,7 +14,7 @@
       </p>
       <div class="row" v-if="elements && elements.length > 0">
         <div
-          class="col-6 col-sm-3 col-lg-4 text-center mb-3"
+          class="col-3 col-lg-2 text-center mb-3"
           v-for="element in elements"
           :key="element.id"
           @click="add(element.id)"
@@ -33,13 +33,13 @@
             </div>
             <span
               class="avatar avatar-lg rounded-circle bg-default object-fit--cover"
-              style="height: 80px; width: 80px"
+              style="height: 50px; width: 50px"
             >
               <img
                 :src="imagesUrl + '/advisors/' + element.avatar"
                 :alt="element.name"
               v-if="element.avatar"/>
-                    <span style="font-size: 2.5rem; font-weight:medium;" v-else>{{ element.avatar_initials }}</span>
+                    <span style="font-size: 1rem; font-weight:medium;" v-else>{{ element.avatar_initials }}</span>
             </span>
             <small class="text-uppercase d-block">{{ element.name }}</small>
           </div>

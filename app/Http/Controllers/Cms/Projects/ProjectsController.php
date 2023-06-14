@@ -125,6 +125,16 @@ class ProjectsController extends Controller
             }
             $project = array_merge($project, ["seo_image"=>$imageName]);
         }
+
+
+        if ($request->hasFile('quotation_banner_top')) {
+            $imageNameBannerTopQuotation = $this->setFileName('qbt-', $request->file('quotation_banner_top'));
+            $storeImageBannerQuotation = Storage::disk('public')->putFileAs('img/projects/', $request->file('quotation_banner_top'), $imageNameBannerTopQuotation);
+            if (!$storeImageBannerQuotation) {
+                return response()->json(['title'=> trans('custom.title.error'), 'message'=> trans('custom.errors.image') ], 500);
+            }
+            $project = array_merge($project, ["quotation_banner_top"=>$imageNameBannerTopQuotation]);
+        }
         
         $array_cards = array();
         array_push($array_cards, $cardName);
@@ -296,6 +306,23 @@ class ProjectsController extends Controller
             $request_project = array_merge($request_project, ["banner" => $element->banner]);
         }
 
+        if ($request->hasFile('quotation_banner_top')) {
+            $imageBannerTopQuotation = $this->setFileName('qbt-', $request->file('quotation_banner_top'));
+            $storeBannerQuotation = Storage::disk('public')->putFileAs('img/projects/', $request->file('quotation_banner_top'), $imageBannerTopQuotation);
+            if (!$storeBannerQuotation) {
+                Storage::disk('public')->delete('img/projects/'.$imageBannerTopQuotation);
+                $request->session()->flash('error', trans('custom.message.update.error', ['name' => trans('custom.attribute.project')]));
+                return response()->json(["route" => route('cms.projects.index')], 500);
+            }
+            $request_project = array_merge($request_project, ["quotation_banner_top" => $imageBannerTopQuotation]);
+        } else {
+            $request_project = array_merge($request_project, ["quotation_banner_top" => $element->quotation_banner_top]);
+        }
+
+        if($request->deleteQuotationBanner == 1){
+            $request_project = array_merge($request_project, ["quotation_banner_top" => NULL]);
+        }
+
         if ($request->hasFile('iframe_map')) {
             $imageMap = $this->setFileName('mp-', $request->file('iframe_map'));
             $storeMap = Storage::disk('public')->putFileAs('img/projects/', $request->file('iframe_map'), $imageMap);
@@ -334,35 +361,6 @@ class ProjectsController extends Controller
         } else {
             $request_project = array_merge($request_project, ["brochure" => $element->brochure]);
         }
-        /*
-        $images = [];
-        $imagesToRemove = [];
-        $imagesNotUpdated = [];
-        for ($i=0; $i < $request->images_count; $i++) {
-            $name = 'images'.$i;
-            $imagesNotUpdated[] = $request->$name;
-        }
-        $imagesToRemove = array_diff($element->images_format, $imagesNotUpdated);
-        foreach ($imagesToRemove as $key => $value) {
-            Storage::disk('public')->delete('img/projects/'.$value);
-        }
-        for ($i=0; $i < $request->images_count; $i++) {
-            $correlative = $i + 1;
-            $name = 'images'.$i;
-            if ($request->hasFile('images'.$i)) {
-                ${$correlative.'Name'} = $this->setFileName('is-'.$correlative, $request->file('images'.$i));
-                $storeLogo = Storage::disk('public')->putFileAs('img/projects/', $request->file('images'.$i), ${$correlative.'Name'});
-                if (!${$correlative.'Name'}) {
-                    $request->session()->flash('error', trans('custom.message.create.error', ['name' => trans('custom.attribute.project')]));
-                    Storage::disk('public')->delete('img/projects/'.${$correlative.'Name'});
-                    return response()->json(["route" => route('cms.projects.index')], 500);
-                }
-                $images[] = ${$correlative.'Name'};
-            } else {
-                $images[] = $request->$name;
-            }
-        }
-        */
         $request_project = array_merge($request_project, ["images" => json_encode($array_cards)]);
         
         if ($request->hasFile('banner') && $element->banner) {

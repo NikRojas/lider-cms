@@ -3,7 +3,7 @@
     <label class="font-weight-bold">Entidades Financieras:</label>
     <div v-if="loading">
       <div class="row">
-        <div class="col-6 col-sm-3 col-lg-4 mb-3" v-for="i in 4" :key="i">
+        <div class="col-6 col-sm-3 mb-3" v-for="i in 4" :key="i">
          <Skeleton height="70px" />
          </div>
       </div>
@@ -12,7 +12,7 @@
       <p v-if="elements && elements.length > 0">Seleccione las entidades financieras con las que se podra financiar el Proyecto</p>
       <div class="row" v-if="elements && elements.length > 0">
         <div
-          class="col-6 col-sm-3 col-lg-4 text-center mb-3"
+          class="col-6 col-sm-3 text-center mb-3"
           v-for="element in elements"
           :key="element.id"
           @click="add(element.id)"

@@ -44,11 +44,11 @@
       />
       <button
         type="button"
-        class="btn btn-inverse-info btn-sm ml-2"
+        class="btn btn-outline-primary btn-sm ml-2"
         v-if="!value[ 'editBlock_'+active ] && value[ 'slug_'+active ]"
         @click="value[ 'editBlock_'+active ] = !value[ 'editBlock_'+active ]"
       >Editar {{ type }}</button>
-      <button type="button" class="btn btn-inverse-info btn-sm ml-2" v-if="value[ 'editBlock_'+active ]" @click="getSlug">Aceptar</button>
+      <button type="button" class="btn btn-primary btn-sm ml-2" v-if="value[ 'editBlock_'+active ]" @click="getSlug">Aceptar</button>
     </div>
     <div v-for="(el,i) in errors" :key="i">
       <label class="text-danger text-sm mt-2 d-block" v-if="i == variable+'_'+active">{{ el[0] }}</label>

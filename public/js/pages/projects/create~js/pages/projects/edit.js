@@ -1012,7 +1012,7 @@ var render = function() {
                       "div",
                       {
                         key: element.id,
-                        staticClass: "col-6 col-sm-3 col-lg-4 text-center mb-3",
+                        staticClass: "col-3 col-lg-2 text-center mb-3",
                         on: {
                           click: function($event) {
                             return _vm.add(element.id)
@@ -1052,7 +1052,7 @@ var render = function() {
                               {
                                 staticClass:
                                   "avatar avatar-lg rounded-circle bg-default object-fit--cover",
-                                staticStyle: { height: "80px", width: "80px" }
+                                staticStyle: { height: "50px", width: "50px" }
                               },
                               [
                                 element.avatar
@@ -1069,7 +1069,7 @@ var render = function() {
                                       "span",
                                       {
                                         staticStyle: {
-                                          "font-size": "2.5rem",
+                                          "font-size": "1rem",
                                           "font-weight": "medium"
                                         }
                                       },
@@ -1318,7 +1318,7 @@ var render = function() {
             _vm._l(4, function(i) {
               return _c(
                 "div",
-                { key: i, staticClass: "col-6 col-sm-3 col-lg-4 mb-3" },
+                { key: i, staticClass: "col-6 col-sm-3 mb-3" },
                 [_c("Skeleton", { attrs: { height: "70px" } })],
                 1
               )
@@ -1345,7 +1345,7 @@ var render = function() {
                       "div",
                       {
                         key: element.id,
-                        staticClass: "col-6 col-sm-3 col-lg-4 text-center mb-3",
+                        staticClass: "col-6 col-sm-3 text-center mb-3",
                         on: {
                           click: function($event) {
                             return _vm.add(element.id)
@@ -1484,7 +1484,7 @@ var render = function() {
             _vm._l(4, function(i) {
               return _c(
                 "div",
-                { key: i, staticClass: "col-6 col-sm-3 col-lg-4 mb-3" },
+                { key: i, staticClass: "col-6 col-sm-3 col-lg-3 mb-3" },
                 [_c("Skeleton", { attrs: { height: "70px" } })],
                 1
               )
@@ -1511,7 +1511,7 @@ var render = function() {
                       "div",
                       {
                         key: element.id,
-                        staticClass: "col-6 col-sm-3 col-lg-4 text-center mb-3",
+                        staticClass: "col-6 col-sm-3 col-lg-3 text-center mb-3",
                         on: {
                           click: function($event) {
                             return _vm.add(element.id)
@@ -1644,7 +1644,7 @@ var render = function() {
             _vm._l(4, function(i) {
               return _c(
                 "div",
-                { key: i, staticClass: "col-6 col-sm-3 col-lg-4 mb-3" },
+                { key: i, staticClass: "col-6 col-sm-3 col-lg-2 mb-3" },
                 [_c("Skeleton", { attrs: { height: "70px" } })],
                 1
               )
@@ -1671,7 +1671,7 @@ var render = function() {
                       "div",
                       {
                         key: element.id,
-                        staticClass: "col-6 col-sm-3 col-lg-3 text-center mb-3",
+                        staticClass: "col-6 col-sm-3 col-lg-2 text-center mb-3",
                         on: {
                           click: function($event) {
                             return _vm.add(element.id)

@@ -12,7 +12,7 @@
       <p v-if="elements && elements.length > 0">Seleccione las características que tendrá el Proyecto</p>
       <div class="row" v-if="elements && elements.length > 0">
         <div
-          class="col-6 col-sm-3 col-lg-3 text-center mb-3"
+          class="col-3 col-lg-2 text-center mb-3"
           v-for="element in elements"
           :key="element.id"
           @click="add(element.id)"
@@ -23,7 +23,7 @@
             </div>
             <img
                 :src="imagesUrl+'/features/'+element.image"
-                height="50"
+                height="30"
                 :alt="element.name_es"
               />
             <small class="text-uppercase d-block">{{ element.name_es }}</small>

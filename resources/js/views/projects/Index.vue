@@ -25,7 +25,7 @@
     </div>
     <div class="container-fluid mt--6">
       <div class="row" v-if="loadingEls">
-        <div class="col-12 col-lg-4 mb-4" v-for="i in 6" :key="i">
+        <div class="col-12 col-lg-6 mb-4" v-for="i in 6" :key="i">
           <Skeleton height="400px" />
         </div>
       </div>
@@ -37,25 +37,25 @@
           <div class="col-12">
             <draggable class="row" v-model="elements" @change="handleChange">
               <div
-                class="col-12 col-md-6 col-lg-4 mb-4"
+                class="col-12 col-lg-6 mb-4"
                 v-for="el in elements"
                 :key="el.id"
               >
                 <div class="card">
                   <div class="card-body">
                     <div class="row mb-2">
-                      <div class="col-12 mb-2 mb-lg position-relative">
+                      <div class="col-12 mb-lg position-relative">
                         <div class="text-right position-relative">
                           <img
                             class="position-absolute"
                             style="right: 0"
-                            :src="imagesUrl + '/projects/' + el.logo_colour"
+                            :src="imagesUrl + '/projects/' + el.logo_colour" 
                             height="25"
                             :alt="el.name_es"
                           />
                         </div>
                         <img
-                          style="max-height: 200px"
+                          style="max-height: 150px"
                           class="img-fluid d-block"
                           :src="imagesUrl + '/projects/' + el.images_format[0]"
                           alt
@@ -89,7 +89,7 @@
                               >{{ el.status_rel.name_es }}</span
                             >
 
-                            <h1 class="mt-1">{{ el.name_es }}</h1>
+                            <h1 class="my-0">{{ el.name_es }}</h1>
 
                             <div class="">
                               <div class="row">
@@ -107,7 +107,7 @@
                                   >
                                 </div>
 
-                                <div class="col-12">
+                                <div class="col-6">
                                   <div>
                                     <h3
                                       class="d-inline-block font-weight-normal mb-0"
@@ -124,7 +124,8 @@
                                       No registrado
                                     </h3>
                                   </div>
-                                  <div>
+                                </div>
+                                  <div class="col-6">
                                     <h3
                                       class="d-inline-block font-weight-normal mb-0"
                                     >
@@ -141,7 +142,7 @@
                                     </h3>
                                   </div>
 
-                                  <div>
+                                  <div class="col-6">
                                     <h3
                                       class="d-inline-block font-weight-normal mb-0"
                                     >
@@ -151,7 +152,7 @@
                                       {{ el.tipologies_rel_count }}
                                     </h3>
                                   </div>
-                                  <div>
+                                  <div class="col-6">
                                     <h3
                                       class="d-inline-block font-weight-normal mb-0"
                                     >
@@ -161,13 +162,12 @@
                                       {{ el.departments_rel_count }}
                                     </h3>
                                   </div>
-                                </div>
 
                                 <div class="col-12">
                                   <hr class="mt-2 mb-2" />
                                 </div>
 
-                                <div class="col-12">
+                                <div class="col-6">
                                   <div>
                                     <h4
                                       class="d-inline-block mb-0 font-weight-normal"
@@ -178,6 +178,8 @@
                                       {{ el.quotations_rel_count }}
                                     </h4>
                                   </div>
+                                </div>
+                                <div class="col-6">
                                   <div>
                                     <h4
                                       class="d-inline-block mb-0 font-weight-normal"
@@ -188,6 +190,8 @@
                                       {{ el.files_rel_count }}
                                     </h4>
                                   </div>
+                                </div>
+                                <div class="col-6">
                                   <div>
                                     <h4
                                       class="d-inline-block mb-0 font-weight-normal"
@@ -199,7 +203,7 @@
                                     </h4>
                                   </div>
                                 </div>
-                                <div class="col-12">
+                                <div class="col-6">
                                   <div>
                                     <div v-if="el.price_total">
                                       <h4
@@ -223,7 +227,7 @@
                                     </div>
                                   </div>
                                 </div>
-                                <div class="col-12 h4 font-weight-normal mb-0">
+                                <div class="col-6 h4 font-weight-normal mb-0">
                                   Envio de Información de Cotizaciones al email
                                   de los asesores:
                                   <span
@@ -239,7 +243,7 @@
                                     }}</span
                                   >
                                 </div>
-                                <div class="col-12 h4 font-weight-normal">
+                                <div class="col-6 h4 font-weight-normal">
                                   Envio de Información de Cotizaciones por
                                   Webhook:
                                   <span
@@ -262,123 +266,129 @@
                       </div>
                     </div>
                     <div class="row">
-                      <div class="col-12 mb-2">
+                      <div class="col-12">
                         <div class="row">
-                          <div class="col-12">
+                          <div class="col-12 col-md-6 col-lg-4">
                             <a
                               :href="'proyectos/tipologias/' + el.slug_es"
-                              class="btn btn-sm mb-2 mr-0 btn-inverse-primary btn-block"
-                              >Ir a Tipologias</a
+                              class="btn btn-sm mb-2 btn-inverse-primary btn-block"
+                              ><jam-pencil class="current-color" height="18" width="18" /> Tipologias</a
                             >
                           </div>
-                          <div class="col-12">
+                          <div class="col-12 col-md-6 col-lg-4">
                             <a
                               :href="'proyectos/inmuebles/' + el.slug_es"
                               class="btn btn-sm mb-2 btn-inverse-primary btn-block"
-                              >Ir a Inmuebles del Proyecto</a
+                              ><jam-pencil class="current-color" height="18" width="18" /> Inmuebles</a
                             >
                           </div>
-                          <div class="col-12">
+                          <div class="col-12 col-md-6 col-lg-4">
                             <a
                               :href="
                                 'proyectos/pisos-estacionamientos-depositos/' + el.slug_es
                               "
                               class="btn btn-sm mb-2 btn-inverse-primary btn-block"
                             >
-                              Ir a Pisos de Estacionamientos y Depósitos
+                              <jam-pencil class="current-color" height="18" width="18" /> Estacionamientos y Depósitos
                             </a>
                           </div>
-                          <div class="col-12">
+                          <div class="col-12 col-md-6 col-lg-4">
                             <a
                               :href="
                                 'proyectos/combos/' + el.slug_es
                               "
                               class="btn btn-sm mb-2 btn-inverse-primary btn-block"
                             >
-                              Ir a Combos
+                              <jam-pencil class="current-color" height="18" width="18" /> Combos
                             </a>
                           </div>
-                          <div class="col-12">
+                          <div class="col-12 col-md-6 col-lg-4">
                             <a
                               :href="
                                 'proyectos/etapas/' + el.slug_es
                               "
                               class="btn btn-sm mb-2 btn-inverse-primary btn-block"
                             >
-                              Ir a Etapas
+                              <jam-pencil class="current-color" height="18" width="18" /> Etapas
                             </a>
                           </div>
-                          <div class="col-12">
+                          <div class="col-12 col-md-6 col-lg-4">
                             <a
                               :href="
                                 'proyectos/credenciales-pasarela/' + el.slug_es
                               "
-                              class="btn btn-sm mb-0 btn-inverse-primary btn-block"
+                              class="btn btn-sm mb-2 btn-inverse-primary btn-block"
                             >
-                              Ir a Credenciales Pasarela
+                              <jam-pencil class="current-color" height="18" width="18" /> Credenciales Pasarela
                             </a>
                           </div>
                         </div>
                       </div>
-                      <div class="col-12">
-                        <div
-                          class="d-flex"
-                          style="
-                            flex-flow: row wrap;
-                            justify-content: space-around;
-                          "
-                        >
+                      <div class="col-12 col-md-6 col-lg-4">
                           <a
                             :href="'proyectos/banners/' + el.slug_es"
-                            class="btn btn-sm mb-2 mr-0 btn-outline-primary"
-                            >Ir a Banners</a
+                            class="btn btn-sm mb-2 btn-outline-primary btn-block"
+                            ><jam-pencil class="current-color" height="18" width="18" /> Banners</a
                           >
 
+                      </div>
+                      <div class="col-12 col-md-6 col-lg-4">
                           <a
                             :href="'proyectos/documentos/' + el.slug_es"
-                            class="btn btn-sm mb-2 mr-0 btn-outline-primary"
-                            >Ir a Documentos</a
+                            class="btn btn-sm mb-2 btn-outline-primary btn-block"
+                            ><jam-pencil class="current-color" height="18" width="18" /> Documentos</a
                           >
+                      </div>
+                          <div class="col-12 col-md-6 col-lg-4">
                           <a
                             :href="'proyectos/galeria/' + el.slug_es"
-                            class="btn btn-sm mb-2 mr-0 btn-outline-primary"
-                            >Ir a Galería</a
+                            class="btn btn-sm mb-2 btn-outline-primary btn-block"
+                            ><jam-pencil class="current-color" height="18" width="18" /> Galería</a
                           >
+                      </div>
+                          <div class="col-12 col-md-6 col-lg-4">
                           <a
                             :href="'proyectos/tour-virtual/' + el.slug_es"
-                            class="btn btn-sm mb-2 mr-0 btn-outline-primary"
-                            >Ir a Tour Virtual</a
+                            class="btn btn-sm mb-2 btn-outline-primary btn-block"
+                            ><jam-pencil class="current-color" height="18" width="18" /> Tour Virtual</a
                           >
+                      </div>
+                          <div class="col-12 col-md-6 col-lg-4">
                           <a
                             :href="'proyectos/cotizaciones/' + el.slug_es"
-                            class="btn btn-sm mb-2 mr-0 btn-outline-primary"
-                            >Ir a Cotizaciones</a
+                            class="btn btn-sm mb-2 btn-outline-primary btn-block"
+                            ><jam-eye class="current-color" height="18" width="18" /> Cotizaciones</a
                           >
+                      </div>
+                          <div class="col-12 col-md-6 col-lg-4">
                           <a
                             :href="
                               'proyectos/informacion-plataforma-comercial/' +
                               el.slug_es
                             "
-                            class="btn btn-sm mb-2 mr-0 btn-outline-primary"
-                            >Ir a Información Plataforma Comercial</a
-                          >
-                        </div>
 
-                        <div class="d-flex">
-                          <div class="ml-auto d-inline">
+                        
+                            class="btn btn-sm mb-2 btn-outline-primary btn-block"
+                            ><jam-pencil class="current-color" height="18" width="18" /> Plataforma Comercial</a
+                          >
+                          </div>
+                          
+                        
+
+                      <div class="col-12 col-lg-6">
                             <a
                               :href="route + '/' + el.slug_es"
-                              class="btn btn-sm btn-inverse-primary"
+                              class="btn btn-sm mb-2 btn-inverse-primary btn-block"
                               >Ver Proyecto</a
                             >
+                      </div>
+                      <div class="col-12 col-lg-6">
                             <a
                               :href="route + '/editar/' + el.slug_es"
-                              class="btn btn-sm btn-inverse-info"
-                              >Editar</a
+                              class="btn btn-sm btn-inverse-info btn-block"
+                              >Editar Proyecto</a
                             >
-                          </div>
                         </div>
-                      </div>
                     </div>
                   </div>
                 </div>

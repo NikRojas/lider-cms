@@ -226,9 +226,9 @@
                         <span
                           class="avatar avatar-lg rounded-circle bg-default object-fit--cover"
                           style="
-                            height: 80px;
-                            width: 80px;
-                            font-size: 28px !important;
+                            height: 40px;
+                            width: 40px;
+                            font-size: 22px !important;
                           "
                         >
                           <img
@@ -627,7 +627,7 @@
                       >
                         <img
                           :src="imagesUrl + '/features/' + el.image"
-                          height="50"
+                          height="30"
                           :alt="el.name_es"
                         />
                         <h3 class="mb-1 font-weight-normal mt-2">
@@ -655,7 +655,7 @@
                       >
                         <img
                           :src="imagesUrl + '/banks/' + el.logo"
-                          height="50"
+                          height="30"
                           class="p-2 bg-dark"
                           :alt="el.name"
                         />
@@ -869,7 +869,7 @@
             <div class="card">
               <div class="card-body">
                 <div class="row">
-                  <div class="col-12 col-lg-6 mb-3">
+                  <!--<div class="col-12 col-lg-6 mb-3">
                     <h3 class="font-weight-normal">
                       <span class="d-block font-weight-bold"
                         >Resumen del Proyecto:</span
@@ -880,9 +880,29 @@
                       ></div>
                       <p v-else>No registrado.</p>
                     </h3>
-                  </div>
+                  </div>-->
 
                   <div class="col-12 col-lg-6 mb-3">
+                    <h3 class="font-weight-normal">
+                      <span class="d-block font-weight-bold"
+                        >Banner superior:</span
+                      >
+                      <div
+                        v-if="element.quotation_banner_top"
+                      >
+                        <img
+                          class="img-fluid"
+                          :src="imagesUrl + '/projects/' + element.quotation_banner_top"
+                          alt
+                        />
+                      </div>
+                      <div v-else>No registrado
+                        
+                      </div>
+                    </h3>
+                  </div>
+
+                  <!--<div class="col-12 col-lg-6 mb-3">
                     <h3 class="font-weight-normal">
                       <span class="d-block font-weight-bold"
                         >Precio Estacionamiento:</span
@@ -893,7 +913,7 @@
                       ></div>
                       <p v-else>No registrado.</p>
                     </h3>
-                  </div>
+                  </div>-->
 
                   <div class="col-12 col-lg-6 mb-3">
                     <h3 class="font-weight-normal">

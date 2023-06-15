@@ -25,7 +25,7 @@ return [
         'slide' => 'El slide',
         'advisor' => 'El asesor',
         'status' => 'El estado',
-        'project' => 'El projecto',
+        'project' => 'El proyecto',
         'tipology' => 'La tipología',
         'currency' => 'El tipo de moneda',
         'complaint' => 'El reclamo',

@@ -22,7 +22,7 @@ class ProjectQuotationObserver
 
     public function created(ProjectQuotation $lead)
     {
-        $this->url = config('services.sap_url').$this->url;
+        /*$this->url = config('services.sap_url').$this->url;
         #Obtener Proyectos con Codigo SAP
         $project = Project::where('id', $lead->project_id)->with('advisorsRel')->first();
         #Obtener Credenciales
@@ -166,6 +166,6 @@ class ProjectQuotationObserver
         Notification::route('mail',$lead->email)->notify(new UserProjectQuotationNotification($lead));  
         if($lead->projectRel["webhook_url_active"]){
             Webhook::dispatch($lead,$lead->projectRel["webhook_url"],$advisor->sap_code,1);
-        }
+        }*/
     }
 }

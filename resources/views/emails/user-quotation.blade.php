@@ -597,7 +597,7 @@
                         <div style="font-family:Ubuntu, Helvetica, Arial, sans-serif;font-size:13px;line-height:1;text-align:left;color:#000000;">
                         @foreach($social_networks as $el)
                         <a href="{{ $el->url }}" target="_blank" style="margin-right: 4px; text-decoration: none; ">
-                          <img src="{{ asset('storage/img/icons/'.$el->master_social_networks->name.'.png') }}"
+                          <img src="{{ asset('storage/img/icons/'.strtolower($el->master_social_networks->name).'.png') }}"
                           height="24px" width="24px" alt="">
                         </a>
                         @endforeach

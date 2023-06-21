@@ -614,7 +614,7 @@
                         <table border="0" cellpadding="0" cellspacing="0" role="presentation" style="border-collapse:collapse;border-spacing:0px;">
                           <tbody>
                             <tr>
-                              <td style="width:158px;"><img height="auto" src="https://admin.lider.com.pe/storage/img/logo.png" style="border:0;display:block;outline:none;text-decoration:none;height:auto;width:100%;font-size:13px;" width="158"></td>
+                              <td style="width:158px;"><img height="auto" src="{{ asset('storage/img/logo-box.png') }}" style="border:0;display:block;outline:none;text-decoration:none;height:auto;width:100%;font-size:13px;" width="158"></td>
                             </tr>
                           </tbody>
                         </table>

@@ -32,7 +32,7 @@ class ProjectQuotationObserver
         }
         $slug = Str::random(20);
         $asesoresDesdeSAP = NULL;
-        try {
+        /*try {
             $client = $responseSap = NULL;
             $client = new Client();
             $responseSap = $client->request('GET', $this->url . $project->sap_code .'&correo='.$lead->email.'&telefono='.$lead->mobile, [
@@ -64,10 +64,10 @@ class ProjectQuotationObserver
             $status = $e->getResponse()->getStatusCode();
             $description = 'Proyecto ' . $project->name_es . ' (Código SAP:'.$project->sap_code.') - Error.';
             $lsc = LogSapConnection::UpdateOrCreate(["slug" => $slug, "type" => $this->lscType, 'status' => $status, 'description' =>  (string) $description]);
-        }
+        }*/
 
         #Test
-        //$asesoresDesdeSAP = [ ['id' => 1, 'codigo' => '01000015'], ['id' => 2, 'codigo' => '01000098']];
+        $asesoresDesdeSAP = [ ['id' => 1, 'codigo' => '01000015'], ['id' => 2, 'codigo' => '01000098']];
         //$asesoresDesdeSAP = [ ['id' => 1, 'codigo' => '01033'], ['id' => 2, 'codigo' => '010044']];
         #Test
 
@@ -156,14 +156,17 @@ class ProjectQuotationObserver
         }
         $lead->save();
         $advisor = Advisor::find($advisorId);
-        //Log::info('AsesoresAsignado');
-        //Log::info($advisor);
+        Log::info('AsesoresAsignado');
+        Log::info($advisor);
+
         $lead = $lead->load('projectRel.statusRel','projectRel.ubigeoRel','advisorRel','projectTypeDepartmentRel','projectRel.financingOptionsRel');
-        if($lead->projectRel["send_to_email"]){
+        Log::info($lead->projectRel["send_to_email"]);
+        if($lead->projectRel["send_to_email"]){            
             Notification::route('mail',$advisor->email)->notify(new ProjectQuotationNotification($lead));  
         }
         //Log::info($advisor);
-        Notification::route('mail',$lead->email)->notify(new UserProjectQuotationNotification($lead));  
+        //Notification::route('mail',$lead->email)->notify(new UserProjectQuotationNotification($lead));  
+        Log::info($lead->projectRel["webhook_url_active"]);
         if($lead->projectRel["webhook_url_active"]){
             Webhook::dispatch($lead,$lead->projectRel["webhook_url"],$advisor->sap_code,1);
         }

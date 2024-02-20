@@ -42,6 +42,7 @@ class Webhook implements ShouldQueue
      */
     public function handle()
     {
+        Log::info('handle');
         $leadToSend = [];
         if($this->is_quotation){
             $leadToSend["fname"] = $this->lead->name;
@@ -87,6 +88,10 @@ class Webhook implements ShouldQueue
         $response = $client->request('POST', $this->webhook_url, ['json' => $leadToSend]);
         $status = $response->getStatusCode();
         if($this->is_quotation){
+
+
+
+            
             if($status == 200){
                 $toUpdate = ProjectQuotation::find($this->lead->id);
                 $toUpdate->sended_to_webhook = true;

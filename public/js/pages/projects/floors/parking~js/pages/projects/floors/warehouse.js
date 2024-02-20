@@ -265,7 +265,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n@media (max-width: 992px) {\n.modal-dialog.modal-lg {\r\n    max-width: 90% !important;\n}\n}\r\n", ""]);
+exports.push([module.i, "\n@media (max-width: 992px) {\n.modal-dialog.modal-lg {\n    max-width: 90% !important;\n}\n}\n", ""]);
 
 // exports
 
